@@ -259,7 +259,7 @@ public class Commands extends ListenerAdapter
 	{
 		final Message message = event.getMessage();
 		final String ball = "🎱 ";
-		final String risposta = ball+"says...";
+		final String risposta = ball+"says...\t";
 		final String[] risposte =
 		{
 			"Yes",
@@ -285,18 +285,17 @@ public class Commands extends ListenerAdapter
 			"Very doubtful."
 		};
 		
-		message.reply(risposta).queue();
-		long x = messageChannel.getLatestMessageIdLong();
-		messageChannel.retrieveMessageById(x).queue(
-			(message1 -> message1.editMessage("blergh!").queue()));
-		messageChannel.sendTyping().queue();
-		try { Thread.sleep(500+random.nextInt(500)); }
-		catch (InterruptedException e) { e.printStackTrace(); }
-		
-		Message m = messageChannel.getHistory().getMessageById(x);
-		if (m != null)
-			m.editMessage(risposta+risposte[random.nextInt(risposte.length)]).queue();
-		
+		message.reply(risposta).queue(message1 ->
+		{
+			messageChannel.sendTyping().queue();
+
+			try { Thread.sleep(1000+random.nextInt(500)); }
+			catch (InterruptedException e) { e.printStackTrace(); }
+
+			message1.editMessage(risposta+risposte[random.nextInt(risposte.length)]).queue();
+		});
+
+
 		
 		/*
 		channel.retrieveMessageById(id).queue((message) -> {
