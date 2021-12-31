@@ -74,6 +74,9 @@ public class Commands extends ListenerAdapter
 				react("nou");
 		}
 		
+		if (msgLowerCase.contains("sabaping"))
+			react("sabaping");
+		
 		
 	} // fine onMessageReceived()
 	
