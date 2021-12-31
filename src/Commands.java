@@ -1,6 +1,7 @@
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -221,7 +222,8 @@ public class Commands extends ListenerAdapter
 		embedBuilder.setTitle("BOwOt");
 		embedBuilder.setColor(0xFF0000);
 		
-		embedBuilder.build();
+		MessageEmbed embed = embedBuilder.build();
+		messageChannel.sendMessageEmbeds(embed).queue();
 		
 	} // fine info()
 	
