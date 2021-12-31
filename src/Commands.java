@@ -1,6 +1,7 @@
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Emote;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -53,7 +54,7 @@ public class Commands extends ListenerAdapter
 			case "!coinflip" -> coinflip(event);
 			case "!poll" -> poll(event);
 			case "!info" -> info();
-			case "!8ball" -> eightBall();
+			case "!8ball" -> eightBall(event);
 		}
 		
 		
@@ -254,8 +255,9 @@ public class Commands extends ListenerAdapter
 		
 	} // fine info()
 	
-	public void eightBall()
+	public void eightBall(MessageReceivedEvent event)
 	{
+		final Message message = event.getMessage();
 		final String ball = "🎱 ";
 		final String[] risposte =
 		{
@@ -281,12 +283,12 @@ public class Commands extends ListenerAdapter
 			"Outlook not so good.",
 			"Very doubtful."
 		};
-		
-		messageChannel.sendMessage(ball+"says...").queue();
+		String risposta = ball+"says...";
+		message.reply(risposta).queue();
 		messageChannel.sendTyping().queue();
 		try { Thread.sleep(500+random.nextInt(500)); }
 		catch (InterruptedException e) { e.printStackTrace(); }
-		messageChannel.sendMessage(risposte[random.nextInt(risposte.length)]).queue();
+		message.editMessage(risposta+risposte[random.nextInt(risposte.length)]).queue();
 		
 	} // fine eightBall()
 	
