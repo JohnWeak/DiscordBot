@@ -16,14 +16,15 @@ public class Commands extends ListenerAdapter
 	// public static final String prefix = "!";
 	private static final Random random = new Random();
 	private static MessageChannel messageChannel;
-	private static final String[] listaComandi = {"!vergognati", "!coinflip", "!poll", "!info"};
+	private static final String[] listaComandi = {"!vergognati", "!coinflip", "!poll", "!info", "!8ball"};
 	private static final String[] listaParole = {"pigeon", "owo", "pog", "òbito", "vergogna", "no"};
 	private static final String[] listaDescrizioni =
 	{
 		"Il bot risponderà usando la carta \"No u\"",
 		"Il bot lancerà una moneta",
 		"Permette di creare sondaggi",
-		"Visualizza le informazioni. Proprio quelle che stai leggendo!"
+		"Visualizza le informazioni. Proprio quelle che stai leggendo!",
+		"Chiedi un responso all'Entità Superiore: la magica palla 8."
 	};
 	
 	public void onMessageReceived(MessageReceivedEvent event)
@@ -51,6 +52,7 @@ public class Commands extends ListenerAdapter
 			case "!coinflip" -> coinflip(event);
 			case "!poll" -> poll(event);
 			case "!info" -> info();
+			case "!8ball" -> eightBall();
 		}
 		
 		
@@ -251,6 +253,37 @@ public class Commands extends ListenerAdapter
 		
 	} // fine info()
 	
+	public void eightBall()
+	{
+		final String[] risposte =
+		{
+			"Yes",
+			"It is certain.",
+			"It is decidedly so.",
+			"Without a doubt.",
+			"Yes definitely.",
+			"You may rely on it.",
+			"As I see it, yes.",
+			"Most likely.",
+			"Outlook good.",
+			"Yes.",
+			"Signs point to yes.",
+			"Reply hazy, try again.",
+			"Ask again later.",
+			"Better not tell you now.",
+			"Cannot predict now.",
+			"Concentrate and ask again.",
+			"Don't count on it.",
+			"My reply is no.",
+			"My sources say no.",
+			"Outlook not so good.",
+			"Very doubtful."
+		};
+		String ball = "U+1F3B1 ";
+		messageChannel.sendTyping().queue();
+		messageChannel.sendMessage(ball+risposte[random.nextInt(risposte.length)]).queue();
+		
+	} // fine eightBall()
 	
 	
 } // fine classe Commands
