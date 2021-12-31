@@ -50,7 +50,7 @@ public class Commands extends ListenerAdapter
 			case "!vergognati" -> vergognati(event);
 			case "!coinflip" -> coinflip(event);
 			case "!poll" -> poll(event);
-			case "!info" -> info(event);
+			case "!info" -> info();
 		}
 		
 		
@@ -228,18 +228,23 @@ public class Commands extends ListenerAdapter
 		
 	} // fine react()
 	
-	public void info(MessageReceivedEvent event)
+	public void info()
 	{
 		var embedBuilder = new EmbedBuilder();
-		String comandi;
+		String urlOwO = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--amf4Rvt7--%2Ft_Preview%2Fb_rgb%3A191919%2Cc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1518097892%2Fproduction%2Fdesigns%2F2348593_0.jpg&f=1&nofb=1";
+		String urlTitle = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 		
-		embedBuilder.setTitle("Informazioni");
-		embedBuilder.addField("BOwOt", "Questo bot include diversi comandi.", true);
+		embedBuilder.setTitle("Informazioni", urlTitle);
+		embedBuilder.setDescription("Questo bot permette di lanciare monete, creare sondaggi e, soprattutto, essere un rompiballe.");
+		
 		for (int i = 0; i < listaComandi.length; i++)
 			embedBuilder.addField("`"+listaComandi[i]+"`", "*"+listaDescrizioni[i]+"*", false);
 		
-		embedBuilder.setThumbnail("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ffreepngimg.com%2Fthumb%2Flemon%2F37353-5-lemon-hd.png&f=1&nofb=1");
+		embedBuilder.setThumbnail(urlOwO);
+		//embedBuilder.addField();
 		embedBuilder.setColor(0xFF0000);
+		embedBuilder.addBlankField(false);
+		embedBuilder.setFooter("Creato con ❤ da JohnWeak", urlOwO);
 		
 		MessageEmbed embed = embedBuilder.build();
 		messageChannel.sendMessageEmbeds(embed).queue();
