@@ -42,7 +42,7 @@ public class Commands extends ListenerAdapter
 			case "!vergognati" -> vergognati(event);
 			case "!coinflip" -> coinflip(event);
 			case "!poll" -> poll(event);
-		//	case "!info" -> info(event);
+			case "!info" -> info(event);
 		}
 		
 		
@@ -179,8 +179,9 @@ public class Commands extends ListenerAdapter
 		final String emotePog = "pogey:733659301645910038";
 		final String[] emoteObito = {"obi:670007761760681995", "ito:670007761697898527"};
 		final String[] emoteVergognati = {"vergognati:670009511053885450", "vergogna2:880100281315098685"};
+		final String[] emoteSabaPing = {"leftPowerUp:785565275608842250", "sabaPing:785561662605885502", "rightPowerUp:785565774953709578"};
 		
-		long id = messageChannel.getLatestMessageIdLong();
+		final long id = messageChannel.getLatestMessageIdLong();
 		String emoteDaUsare = switch (emote)
 		{
 			case "pigeon" -> emotePigeon;
@@ -192,10 +193,12 @@ public class Commands extends ListenerAdapter
 		};
 		
 		if (emote.equals("obito"))
-		{
-			messageChannel.addReactionById(id, emoteObito[0]).queue();
-			messageChannel.addReactionById(id, emoteObito[1]).queue();
-		}
+			for (String s : emoteObito)
+				messageChannel.addReactionById(id, s).queue();
+		
+		if (emote.equals("sabaping"))
+			for (String s : emoteSabaPing)
+				messageChannel.addReactionById(id, s).queue();
 		
 		try
 		{
@@ -204,6 +207,18 @@ public class Commands extends ListenerAdapter
 		catch (Exception e) { e.printStackTrace(); }
 		
 	} // fine react()
+	
+	public void info(MessageReceivedEvent event)
+	{
+		var embedBuilder = new EmbedBuilder();
+		
+		embedBuilder.setTitle("BOwOt");
+		embedBuilder.setColor(0xFF0000);
+		
+		
+		
+	} // fine info()
+	
 	
 	
 } // fine classe Commands
