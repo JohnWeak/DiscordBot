@@ -221,7 +221,7 @@ public class Commands extends ListenerAdapter
 		embedBuilder.setTitle("BOwOt");
 		embedBuilder.setColor(0xFF0000);
 		
-		
+		embedBuilder.build();
 		
 	} // fine info()
 	
