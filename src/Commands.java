@@ -285,10 +285,14 @@ public class Commands extends ListenerAdapter
 		};
 		String risposta = ball+"says...";
 		message.reply(risposta).queue();
+		long x = messageChannel.getLatestMessageIdLong();
 		messageChannel.sendTyping().queue();
 		try { Thread.sleep(500+random.nextInt(500)); }
 		catch (InterruptedException e) { e.printStackTrace(); }
-		message.editMessage(risposta+risposte[random.nextInt(risposte.length)]).queue();
+		
+		Message m = messageChannel.getHistory().getMessageById(x);
+		if (m != null)
+			m.editMessage(risposta+risposte[random.nextInt(risposte.length)]).queue();
 		
 	} // fine eightBall()
 	
