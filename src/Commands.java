@@ -256,6 +256,7 @@ public class Commands extends ListenerAdapter
 	
 	public void eightBall()
 	{
+		final String ball = "🎱 ";
 		final String[] risposte =
 		{
 			"Yes",
@@ -281,9 +282,11 @@ public class Commands extends ListenerAdapter
 			"Very doubtful."
 		};
 		
-		String ball = "🎱 ";
+		messageChannel.sendMessage(ball+"says...").queue();
 		messageChannel.sendTyping().queue();
-		messageChannel.sendMessage(ball+risposte[random.nextInt(risposte.length)]).queue();
+		try { Thread.sleep(500+random.nextInt(500)); }
+		catch (InterruptedException e) { e.printStackTrace(); }
+		messageChannel.sendMessage(risposte[random.nextInt(risposte.length)]).queue();
 		
 	} // fine eightBall()
 	
