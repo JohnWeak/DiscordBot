@@ -17,7 +17,14 @@ public class Commands extends ListenerAdapter
 	private static final Random random = new Random();
 	private static MessageChannel messageChannel;
 	private static final String[] listaComandi = {"!vergognati", "!coinflip", "!poll", "!info"};
-	private static final String[] listaParole= {"pigeon", "owo", "pog", "òbito", "vergogna", "no"};
+	private static final String[] listaParole = {"pigeon", "owo", "pog", "òbito", "vergogna", "no"};
+	private static final String[] listaDescrizioni =
+	{
+		"Il bot risponderà usando la carta \"No u\"",
+		"Il bot lancerà una moneta",
+		"Permette di creare sondaggi",
+		"Visualizza le informazioni. Proprio quelle che stai leggendo!"
+	};
 	
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
@@ -110,16 +117,22 @@ public class Commands extends ListenerAdapter
 		// args[2, 3, ...] = risposte
 		String msg = event.getMessage().getContentRaw();
 		
+		if (msg.length() <= 5)
+		{
+			sondaggio("Pog?", new String[]{"Pog sì", "Pog no", "Porgo Tensing"}, true);
+			return;
+		}
+		
 		String[] domandaERisposte = event.getMessage().getContentRaw().split("\\?");
 		String domanda = domandaERisposte[0].substring("!poll".length());
 		String[] risposte = msg.substring("!poll".length()+domanda.length()+1).split("/");
 		
 		System.out.printf("DomandaERisposte length: %d\nDomandaERisposte: %s\nDomanda length: %d\nDomanda: %s\nRisposte.length: %d\nRisposte: %s\n", domandaERisposte.length, Arrays.toString(domandaERisposte), domanda.length(), domanda, risposte.length, Arrays.toString(risposte));
 		
-		sondaggio(domanda, risposte);
+		sondaggio(domanda, risposte, false);
 	} // fine poll()
 	
-	public void sondaggio(String domanda, String[] risposte)
+	public void sondaggio(String domanda, String[] risposte, boolean flag)
 	{
 		risposte[0] = risposte[0].substring(0, risposte[0].length()-1).trim();
 		int sleepInterval = random.nextInt(500) + 1000;
@@ -136,7 +149,7 @@ public class Commands extends ListenerAdapter
 			"\uD83C\uDDFE", "\uD83C\uDDFF"
 		}; // array di lettere emoji A -> Z
 		
-		if (size < 2 || size > 20)
+		if (size < 2 || size > 20 || flag)
 		{
 			//embedBuilder.setAuthor("");
 			embedBuilder.setTitle("`!poll` - Istruzioni per l'uso");
@@ -218,8 +231,14 @@ public class Commands extends ListenerAdapter
 	public void info(MessageReceivedEvent event)
 	{
 		var embedBuilder = new EmbedBuilder();
+		String comandi;
 		
-		embedBuilder.setTitle("BOwOt");
+		embedBuilder.setTitle("Informazioni");
+		embedBuilder.addField("BOwOt", "Questo bot include diversi comandi.", true);
+		for (int i = 0; i < listaComandi.length; i++)
+			embedBuilder.addField("`"+listaComandi[i]+"`", "*"+listaDescrizioni[i]+"*", false);
+		
+		embedBuilder.setThumbnail("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ffreepngimg.com%2Fthumb%2Flemon%2F37353-5-lemon-hd.png&f=1&nofb=1");
 		embedBuilder.setColor(0xFF0000);
 		
 		MessageEmbed embed = embedBuilder.build();
