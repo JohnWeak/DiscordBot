@@ -182,14 +182,14 @@ public class Commands extends ListenerAdapter
 		
 		long id = messageChannel.getLatestMessageIdLong();
 		String emoteDaUsare = switch (emote)
-				                      {
-					                      case "pigeon" -> emotePigeon;
-					                      case "nou" -> emoteNou;
-					                      case "owo" -> emoteOwO;
-					                      case "pog" -> emotePog;
-					                      case "vergogna" -> emoteVergognati[random.nextInt(2)];
-					                      default -> "";
-				                      };
+		{
+			case "pigeon" -> emotePigeon;
+			case "nou" -> emoteNou;
+			case "owo" -> emoteOwO;
+			case "pog" -> emotePog;
+			case "vergogna" -> emoteVergognati[random.nextInt(2)];
+			default -> "";
+		};
 		
 		if (emote.equals("obito"))
 		{
