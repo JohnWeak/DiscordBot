@@ -203,11 +203,14 @@ public class Commands extends ListenerAdapter
 			for (String s : emoteSabaPing)
 				messageChannel.addReactionById(id, s).queue();
 		
-		try
+		if (!emoteDaUsare.equals(""))
 		{
-			messageChannel.addReactionById(id, emoteDaUsare).queue();
+			try
+			{
+				messageChannel.addReactionById(id, emoteDaUsare).queue();
+			}
+			catch (Exception e) { e.printStackTrace(); }
 		}
-		catch (Exception e) { e.printStackTrace(); }
 		
 	} // fine react()
 	
