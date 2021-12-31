@@ -259,6 +259,7 @@ public class Commands extends ListenerAdapter
 	{
 		final Message message = event.getMessage();
 		final String ball = "🎱 ";
+		final String risposta = ball+"says...";
 		final String[] risposte =
 		{
 			"Yes",
@@ -283,9 +284,11 @@ public class Commands extends ListenerAdapter
 			"Outlook not so good.",
 			"Very doubtful."
 		};
-		String risposta = ball+"says...";
+		
 		message.reply(risposta).queue();
 		long x = messageChannel.getLatestMessageIdLong();
+		messageChannel.retrieveMessageById(x).queue(
+			(message1 -> message1.editMessage("blergh!").queue()));
 		messageChannel.sendTyping().queue();
 		try { Thread.sleep(500+random.nextInt(500)); }
 		catch (InterruptedException e) { e.printStackTrace(); }
@@ -293,6 +296,18 @@ public class Commands extends ListenerAdapter
 		Message m = messageChannel.getHistory().getMessageById(x);
 		if (m != null)
 			m.editMessage(risposta+risposte[random.nextInt(risposte.length)]).queue();
+		
+		
+		/*
+		channel.retrieveMessageById(id).queue((message) -> {
+		// use the message here, its an async callback
+			message.addReaction(reaction).queue();
+			message.editMessage("bleh").queue();
+			System.out.println("Message Content: " + message.getContentDisplay());
+		}
+		*/
+		
+		
 		
 	} // fine eightBall()
 	
