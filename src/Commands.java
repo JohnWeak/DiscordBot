@@ -259,7 +259,7 @@ public class Commands extends ListenerAdapter
 	{
 		final Message message = event.getMessage();
 		final String ball = "🎱 ";
-		final String risposta = ball+"says...\t";
+		final String risposta = ball+"says... ";
 		final String[] risposte =
 		{
 			"Yes",
@@ -292,20 +292,8 @@ public class Commands extends ListenerAdapter
 			try { Thread.sleep(1000+random.nextInt(500)); }
 			catch (InterruptedException e) { e.printStackTrace(); }
 
-			message1.editMessage(risposta+risposte[random.nextInt(risposte.length)]).queue();
+			message1.editMessage(risposta+"*"+risposte[random.nextInt(risposte.length)]+"*").queue();
 		});
-
-
-		
-		/*
-		channel.retrieveMessageById(id).queue((message) -> {
-		// use the message here, its an async callback
-			message.addReaction(reaction).queue();
-			message.editMessage("bleh").queue();
-			System.out.println("Message Content: " + message.getContentDisplay());
-		}
-		*/
-		
 		
 		
 	} // fine eightBall()
