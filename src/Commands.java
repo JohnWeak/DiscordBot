@@ -157,7 +157,7 @@ public class Commands extends ListenerAdapter
 			//embedBuilder.setAuthor("");
 			embedBuilder.setTitle("`!poll` - Istruzioni per l'uso");
 			embedBuilder.addField("Sondaggio", "Per creare un sondaggio devi usare il comando `!poll` + `domanda?` + `[risposte]`\nSepara le risposte con uno slash `/`.", false);
-			embedBuilder.addField("Esempio", "`!poll domanda / opzione 1 / opzione 2 / opzione 3 ...`\n`!poll Cosa preferite? Pizza / Pollo / Panino / Sushi`", false);
+			embedBuilder.addField("Esempio", "`!poll domanda? opzione 1 / opzione 2 / opzione 3 ...`\n`!poll Cosa preferite? Pizza / Pollo / Panino / Sushi`", false);
 			embedBuilder.addField("Votazione", "Per votare, usa le reazioni!", false);
 			embedBuilder.setColor(0xFFFFFF);
 			
