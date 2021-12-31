@@ -1,5 +1,6 @@
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -279,7 +280,8 @@ public class Commands extends ListenerAdapter
 			"Outlook not so good.",
 			"Very doubtful."
 		};
-		String ball = "U+1F3B1 ";
+		
+		String ball = "🎱 ";
 		messageChannel.sendTyping().queue();
 		messageChannel.sendMessage(ball+risposte[random.nextInt(risposte.length)]).queue();
 		
