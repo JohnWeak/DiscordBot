@@ -385,7 +385,7 @@ public class Commands extends ListenerAdapter
 			embedBuilder.setFooter("**Shiny!**");
 		messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 		
-		System.out.printf("Uno: %s, shiny: %s\nDue: %s, shiny: %s",uno.getNome(), uno.isShiny(), due.getNome(), due.isShiny());
+		System.out.printf("\nUno: %s, shiny: %s\nDue: %s, shiny: %s",uno.getNome(), uno.isShiny(), due.getNome(), due.isShiny());
 	}
 	
 } // fine classe Commands
