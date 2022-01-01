@@ -349,10 +349,13 @@ public class Commands extends ListenerAdapter
 		try
 		{
 			String[] risultato = new Pokemon().requestName();
+			
 			EmbedBuilder embedBuilder = new EmbedBuilder();
 			embedBuilder.setTitle("È apparso un Pokemon selvatico!");
 			embedBuilder.setImage(risultato[1]);
 			embedBuilder.addField(risultato[0], "", false);
+			embedBuilder.setColor(0xFF0000);
+			embedBuilder.setFooter("Catturalo con !catch","https://upload.wikimedia.org/wikipedia/commons/5/53/Poké_Ball_icon.svg");
 			
 			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 		}
