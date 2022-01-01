@@ -28,7 +28,7 @@ public class Pokemon
 			URL url = new URL(urlGetPokemon + String.valueOf(pokemon_id));
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			con.setRequestProperty("Accept", "application/json");
-			risultato = con.getResponseMessage();
+			risultato = (String) con.getContent();
 			
 			con.disconnect();
 			
