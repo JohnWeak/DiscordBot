@@ -1,6 +1,5 @@
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -284,19 +283,34 @@ public class Commands extends ListenerAdapter
 			"Outlook not so good.",
 			"Very doubtful."
 		};
-		
+
+		messageChannel.sendTyping().queue();
+
+		pause(-1, -1);
+
 		message.reply(risposta).queue(message1 ->
 		{
-			messageChannel.sendTyping().queue();
 
-			try { Thread.sleep(1000+random.nextInt(500)); }
-			catch (InterruptedException e) { e.printStackTrace(); }
+			pause(-1,-1);
 
-			message1.editMessage(risposta+"*"+risposte[random.nextInt(risposte.length)]+"*").queue();
+			message1.editMessage(risposta+"**"+risposte[random.nextInt(risposte.length)]+"**").queue();
 		});
 		
 		
 	} // fine eightBall()
-	
+
+	private void pause(int millis, int bound)
+	{
+		if (millis < 0)
+			millis = 1500;
+
+		if (bound < 0)
+			bound = 500;
+
+		try { Thread.sleep(millis+random.nextInt(bound)); }
+		catch (InterruptedException e) { e.printStackTrace(); }
+	}
+
+
 	
 } // fine classe Commands
