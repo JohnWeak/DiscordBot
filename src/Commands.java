@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
+import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Random;
@@ -56,7 +57,7 @@ public class Commands extends ListenerAdapter
 			case "!poll" -> poll(event);
 			case "!info" -> info();
 			case "!8ball" -> eightBall(event);
-			case "!pokemon" -> pokemon(event);
+			case "!pokemon" -> pokemonZ(event);
 		}
 		
 		
@@ -343,7 +344,11 @@ public class Commands extends ListenerAdapter
 	
 	public void pokemonZ(MessageReceivedEvent event)
 	{
-	
+		try
+		{
+			new Pokemon().requestName();
+		}
+		catch (Exception e) {e.printStackTrace();}
 	} // fine metodo definitivo pokemon()
 
 	
