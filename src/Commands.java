@@ -6,8 +6,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
+
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Random;
@@ -355,7 +354,7 @@ public class Commands extends ListenerAdapter
 			embedBuilder.setImage(risultato[1]);
 			embedBuilder.addField(risultato[0], "", false);
 			embedBuilder.setColor(0xFF0000);
-			embedBuilder.setFooter("Catturalo con !catch","https://upload.wikimedia.org/wikipedia/commons/5/53/Poké_Ball_icon.svg");
+			embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
 			
 			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 		}
