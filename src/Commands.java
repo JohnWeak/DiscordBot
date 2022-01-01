@@ -347,12 +347,14 @@ public class Commands extends ListenerAdapter
 	{
 		try
 		{
-			String[] risultato = new Pokemon().requestName();
+			Pokemon pokemon = new Pokemon();
 			
 			EmbedBuilder embedBuilder = new EmbedBuilder();
 			embedBuilder.setTitle("È apparso un Pokemon selvatico!");
-			embedBuilder.setImage(risultato[1]);
-			embedBuilder.addField(risultato[0], "", false);
+			if (pokemon.isShiny())
+				embedBuilder.setImage(pokemon.getImg());
+			else
+				embedBuilder.setFooter(pokemon.getImg());
 			embedBuilder.setColor(0xFF0000);
 			embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
 			

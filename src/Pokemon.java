@@ -1,33 +1,60 @@
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-import javax.net.ssl.HttpsURLConnection;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
+
 import java.net.URL;
 import java.util.Locale;
 import java.util.Random;
 
 public class Pokemon
 {
-	private final URL urlGetPokemon = new URL("https://pokeapi.co/api/v2/pokemon/"); //  dopo pokemon/ inserire numero_id oppure nome
-	private static int pokemon_id = 261;
+	// private static int pokemon_id = 261;
 	// https://pokeapi.co/api/v2/pokemon/261/ -> Poochyena
 	
 	private String nome;
-	private int puntiFerita;
-	private boolean isShiny = false;
+	private String img;
+	private boolean shiny = false;
 	
-	public Pokemon() throws MalformedURLException
+	public Pokemon()
 	{
-	
+		shiny();
+		
+		try
+		{
+			String[] x = requestName();
+			nome = x[0];
+			img = x[1];
+		}
+		catch (Exception e) { e.printStackTrace(); }
+		
 	}
 	
+	public Pokemon(String nome)
+	{
+		shiny();
+		
+		this.nome = nome;
+		try
+		{
+			img = requestName()[1];
+		}catch (Exception e) { e.printStackTrace(); }
+		
+	}
 	
-	public String[] requestName() throws IOException
+	public Pokemon(String nome, String img)
+	{
+		shiny();
+		
+		this.nome = nome;
+		this.img = img;
+	}
+	
+	private String[] requestName() throws IOException
 	{
 		String[] risultato = new String[2];
 		
@@ -50,15 +77,54 @@ public class Pokemon
 		String name = (String) jsonObject.get("name");
 		name = name.substring(0,1).toUpperCase(Locale.ROOT) + name.substring(1);
 		
-		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"+x+".png";
+		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+x+".png";
+		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/shiny/pokemon"+x+".png";
 		System.out.println(connection.getResponseCode() + " " + connection.getResponseMessage());
 		System.out.printf("Nome: %s\tImmagine: %s\n", name, urlImg);
 		
 		risultato[0] = name;
-		risultato[1] = urlImg;
+		if (shiny)
+			risultato[1] = urlShinyImg;
+		else
+			risultato[1] = urlImg;
 		return risultato;
 	
 	} // fine requestName()
+	
+	private void shiny()
+	{
+		if (new Random().nextInt(8192) == 42)
+			shiny = true;
+	}
+	
+	
+	//GETTER
+	public String getNome()
+	{
+		return nome;
+	}
+	public String getImg()
+	{
+		return img;
+	}
+	public boolean isShiny()
+	{
+		return shiny;
+	}
+	
+	//SETTER
+	public void setNome(String nome)
+	{
+		this.nome = nome;
+	}
+	public void setPokemon_id(String img)
+	{
+		this.img = img;
+	}
+	public void setShiny(boolean shiny)
+	{
+		this.shiny = shiny;
+	}
 	
 	
 } // fine classe Pokemon
