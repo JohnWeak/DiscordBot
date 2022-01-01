@@ -18,7 +18,7 @@ public class Commands extends ListenerAdapter
 	// public static final String prefix = "!";
 	private static final Random random = new Random();
 	private static MessageChannel messageChannel;
-	private static final String[] listaComandi = {"!vergognati", "!coinflip", "!poll", "!info", "!8ball"};
+	private static final String[] listaComandi = {"!vergognati", "!coinflip", "!poll", "!info", "!8ball", "!pokemon"};
 	private static final String[] listaParole = {"pigeon", "owo", "pog", "òbito", "vergogna", "no"};
 	private static final String[] listaDescrizioni =
 	{
@@ -26,7 +26,8 @@ public class Commands extends ListenerAdapter
 		"Il bot lancerà una moneta",
 		"Permette di creare sondaggi",
 		"Visualizza le informazioni. Proprio quelle che stai leggendo!",
-		"Chiedi un responso all'Entità Superiore: la magica palla 8."
+		"Chiedi un responso all'Entità Superiore: la magica palla 8.",
+		"Acchiappali tutti!"
 	};
 	
 	private static int workInProgress = 0;
@@ -344,11 +345,15 @@ public class Commands extends ListenerAdapter
 	
 	public void pokemonZ(MessageReceivedEvent event)
 	{
+		String nome = "";
 		try
 		{
-			new Pokemon().requestName();
+			nome = new Pokemon().requestName();
 		}
 		catch (Exception e) {e.printStackTrace();}
+
+		messageChannel.sendMessage(nome).queue();
+
 	} // fine metodo definitivo pokemon()
 
 	
