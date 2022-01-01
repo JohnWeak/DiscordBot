@@ -26,9 +26,9 @@ public class Pokemon
 		
 		try
 		{
-			String[] x = requestName();
-			nome = x[0];
-			img = x[1];
+			String[] result = generatePokemon();
+			nome = result[0];
+			img = result[1];
 		}
 		catch (Exception e) { e.printStackTrace(); }
 		
@@ -41,7 +41,7 @@ public class Pokemon
 		this.nome = nome;
 		try
 		{
-			img = requestName()[1];
+			img = generatePokemon()[1];
 		}catch (Exception e) { e.printStackTrace(); }
 		
 	}
@@ -54,7 +54,7 @@ public class Pokemon
 		this.img = img;
 	}
 	
-	private String[] requestName() throws IOException
+	private String[] generatePokemon() throws IOException
 	{
 		String[] risultato = new String[2];
 		
@@ -87,9 +87,10 @@ public class Pokemon
 			risultato[1] = urlShinyImg;
 		else
 			risultato[1] = urlImg;
+		System.out.println(risultato);
 		return risultato;
 	
-	} // fine requestName()
+	}
 	
 	private void shiny()
 	{
