@@ -345,23 +345,45 @@ public class Commands extends ListenerAdapter
 	
 	public void pokemonZ(MessageReceivedEvent event)
 	{
-		try
+		Pokemon pokemon;
+		if (random.nextInt(20) == 9)
+			doubleEncounter(new Pokemon(), new Pokemon());
+		else
 		{
-			Pokemon pokemon = new Pokemon();
-			
-			EmbedBuilder embedBuilder = new EmbedBuilder();
-			embedBuilder.setTitle("È apparso un Pokemon selvatico!");
-			embedBuilder.setDescription(pokemon.getNome());
-			embedBuilder.setImage(pokemon.getImg());
-			embedBuilder.setColor(0xFF0000);
-			//embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
-			if (pokemon.isShiny())
-				embedBuilder.setFooter("**Shiny!**");
-			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
+			try
+			{
+				pokemon = new Pokemon();
+				
+				EmbedBuilder embedBuilder = new EmbedBuilder();
+				embedBuilder.setTitle("È apparso un Pokemon selvatico!");
+				embedBuilder.setDescription(pokemon.getNome());
+				embedBuilder.setImage(pokemon.getImg());
+				embedBuilder.setColor(0xFF0000);
+				//embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
+				if (pokemon.isShiny())
+					embedBuilder.setFooter("**Shiny!**");
+				messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
-		catch (Exception e) { e.printStackTrace(); }
-
 	} // fine metodo definitivo pokemon()
 
+	private void doubleEncounter(Pokemon uno, Pokemon due)
+	{
+		EmbedBuilder embedBuilder = new EmbedBuilder();
+		
+		embedBuilder.setTitle("Sono apparsi due Pokemon selvatici!");
+		embedBuilder.setDescription(uno.getNome() + " " + due.getNome());
+		embedBuilder.addField("uno", uno.getImg(), true);
+		embedBuilder.addField("due", due.getImg(), false);
+		embedBuilder.setColor(0xFF0000);
+		//embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
+		if (uno.isShiny() || due.isShiny())
+			embedBuilder.setFooter("**Shiny!**");
+		messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
+		
+	}
 	
 } // fine classe Commands
