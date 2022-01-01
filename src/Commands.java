@@ -376,8 +376,8 @@ public class Commands extends ListenerAdapter
 		
 		embedBuilder.setTitle("Sono apparsi due Pokemon selvatici!");
 		embedBuilder.setDescription(uno.getNome() + " " + due.getNome());
-		embedBuilder.addField("uno", uno.getImg(), true);
-		embedBuilder.addField("due", due.getImg(), false);
+		embedBuilder.setImage(uno.getImg());
+		embedBuilder.setImage(due.getImg());
 		embedBuilder.setColor(0xFF0000);
 		//embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
 		if (uno.isShiny() || due.isShiny())
