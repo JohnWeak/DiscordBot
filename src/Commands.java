@@ -319,7 +319,7 @@ public class Commands extends ListenerAdapter
 		String[] test =
 		{
 			"Congratulazioni, hai scoperto il comando segreto (che tanto segreto non è visto che compare in !info, ma fai finta di sì)",
-			"Sfortunatamente non fa ancora nulla, è un VIP: Very Important Project",
+			"Sfortunatamente il comando non fa ancora nulla, è un VIP: Very Important Project",
 			"Smettila, non è ancora operativo >:(",
 			"Dopo questo messaggio inizierò a ignorarti",
 			"Giuro.",
