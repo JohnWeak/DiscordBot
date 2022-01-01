@@ -28,6 +28,8 @@ public class Commands extends ListenerAdapter
 		"Chiedi un responso all'Entità Superiore: la magica palla 8."
 	};
 	
+	private static int workInProgress = 0;
+	
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
 		messageChannel = event.getChannel();
@@ -54,6 +56,7 @@ public class Commands extends ListenerAdapter
 			case "!poll" -> poll(event);
 			case "!info" -> info();
 			case "!8ball" -> eightBall(event);
+			case "!pokemon" -> pokemon(event);
 		}
 		
 		
@@ -309,8 +312,33 @@ public class Commands extends ListenerAdapter
 
 		try { Thread.sleep(millis+random.nextInt(bound)); }
 		catch (InterruptedException e) { e.printStackTrace(); }
-	}
+	} // fine pause()
 
+	public void pokemon(MessageReceivedEvent event)
+	{
+		String[] test =
+		{
+			"Congratulazioni, hai scoperto il comando segreto (che tanto segreto non è visto che compare in !info, ma fai finta di sì)",
+			"Sfortunatamente non fa ancora nulla, è un VIP: Very Important Project",
+			"Smettila, non è ancora operativo >:(",
+			"Dopo questo messaggio inizierò a ignorarti",
+			"Giuro.",
+			"Prometto.",
+			"Sei brutto >:("
+		};
+		
+		if (workInProgress < test.length)
+		{
+			messageChannel.sendMessage(test[workInProgress]).queue();
+			workInProgress++;
+		}
+		
+	} // fine metodo temporaneo pokemon()
+	
+	public void pokemonZ(MessageReceivedEvent event)
+	{
+	
+	} // fine metodo definitivo pokemon()
 
 	
 } // fine classe Commands
