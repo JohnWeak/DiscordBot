@@ -351,9 +351,10 @@ public class Commands extends ListenerAdapter
 			
 			EmbedBuilder embedBuilder = new EmbedBuilder();
 			embedBuilder.setTitle("È apparso un Pokemon selvatico!");
+			embedBuilder.setDescription(pokemon.getNome());
 			embedBuilder.setImage(pokemon.getImg());
 			embedBuilder.setColor(0xFF0000);
-			embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
+			//embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
 			
 			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 		}
