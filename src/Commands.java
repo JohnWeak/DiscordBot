@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.Locale;
@@ -345,14 +346,17 @@ public class Commands extends ListenerAdapter
 	
 	public void pokemonZ(MessageReceivedEvent event)
 	{
-		String nome = "";
 		try
 		{
-			nome = new Pokemon().requestName();
+			String[] risultato = new Pokemon().requestName();
+			EmbedBuilder embedBuilder = new EmbedBuilder();
+			embedBuilder.setTitle("È apparso un Pokemon selvatico!");
+			embedBuilder.setImage(risultato[1]);
+			embedBuilder.addField(risultato[0], "", false);
+			
+			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 		}
-		catch (Exception e) {e.printStackTrace();}
-
-		messageChannel.sendMessage(nome).queue();
+		catch (Exception e) { e.printStackTrace(); }
 
 	} // fine metodo definitivo pokemon()
 
