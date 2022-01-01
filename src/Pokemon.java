@@ -14,6 +14,8 @@ import java.util.Random;
 
 public class Pokemon
 {
+	private final static int max = 898; // pokedex completo
+	
 	// private static int pokemon_id = 261;
 	// https://pokeapi.co/api/v2/pokemon/261/ -> Poochyena
 	
@@ -60,7 +62,7 @@ public class Pokemon
 		String[] risultato = new String[2];
 		
 		Random random = new Random();
-		int x = random.nextInt(500);
+		int x = random.nextInt(max);
 		final URL url = new URL("https://pokeapi.co/api/v2/pokemon/"+x);
 		
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
