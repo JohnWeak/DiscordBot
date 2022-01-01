@@ -80,15 +80,15 @@ public class Pokemon
 		
 		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+x+".png";
 		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/shiny/pokemon"+x+".png";
-		System.out.println(connection.getResponseCode() + " " + connection.getResponseMessage());
-		System.out.printf("Nome: %s\tImmagine: %s\n", name, urlImg);
+		//System.out.println(connection.getResponseCode() + " " + connection.getResponseMessage());
+		//System.out.printf("Nome: %s\tImmagine: %s\n", name, urlImg);
 		
 		risultato[0] = name;
 		if (shiny)
 			risultato[1] = urlShinyImg;
 		else
 			risultato[1] = urlImg;
-		System.out.println(Arrays.toString(risultato));
+		System.out.println(Arrays.toString(risultato)+"\nShiny: "+shiny);
 		return risultato;
 	
 	}
