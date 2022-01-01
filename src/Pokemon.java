@@ -11,6 +11,4 @@ public class Pokemon
 	
 	
 	
-	
-	
 } // fine classe Pokemon

@@ -91,6 +91,10 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("sabaping"))
 			react("sabaping");
 		
+		if (msgLowerCase.contains("get"))
+			if (msgLowerCase.contains("rekt"))
+				react("getrekt");
+		
 		
 	} // fine onMessageReceived()
 	
@@ -203,6 +207,7 @@ public class Commands extends ListenerAdapter
 		final String[] emoteObito = {"obi:670007761760681995", "ito:670007761697898527"};
 		final String[] emoteVergognati = {"vergognati:670009511053885450", "vergogna2:880100281315098685"};
 		final String[] emoteSabaPing = {"leftPowerUp:785565275608842250", "sabaPing:785561662605885502", "rightPowerUp:785565774953709578"};
+		final String emoteGetRekt = "getrekt:742330625347944504";
 		
 		final long id = messageChannel.getLatestMessageIdLong();
 		String emoteDaUsare = switch (emote)
@@ -212,6 +217,7 @@ public class Commands extends ListenerAdapter
 			case "owo" -> emoteOwO;
 			case "pog" -> emotePog;
 			case "vergogna" -> emoteVergognati[random.nextInt(2)];
+			case "getrekt" -> emoteGetRekt;
 			default -> "";
 		};
 		
