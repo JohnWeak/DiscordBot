@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Random;
 
@@ -87,7 +88,7 @@ public class Pokemon
 			risultato[1] = urlShinyImg;
 		else
 			risultato[1] = urlImg;
-		System.out.println(risultato);
+		System.out.println(Arrays.toString(risultato));
 		return risultato;
 	
 	}
