@@ -355,7 +355,8 @@ public class Commands extends ListenerAdapter
 			embedBuilder.setImage(pokemon.getImg());
 			embedBuilder.setColor(0xFF0000);
 			//embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
-			
+			if (pokemon.isShiny())
+				embedBuilder.setFooter("Shiny!");
 			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 		}
 		catch (Exception e) { e.printStackTrace(); }
