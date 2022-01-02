@@ -348,6 +348,7 @@ public class Commands extends ListenerAdapter
 	public void pokemonZ(MessageReceivedEvent event)
 	{
 		Pokemon pokemon = new Pokemon();
+		EmbedBuilder embedBuilder;
 		
 		if (random.nextInt(10) == 9)
 		{
@@ -357,14 +358,7 @@ public class Commands extends ListenerAdapter
 		{
 			try
 			{
-				EmbedBuilder embedBuilder = new EmbedBuilder();
-				embedBuilder.setTitle("È apparso un Pokemon selvatico!");
-				embedBuilder.setDescription(pokemon.getNome());
-				embedBuilder.setImage(pokemon.getImg());
-				embedBuilder.setColor(0xFF0000);
-				//embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
-				if (pokemon.isShiny())
-					embedBuilder.setFooter("✨**Shiny!**");
+				embedBuilder = buildEmbed(pokemon);
 				messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 			} catch (Exception e)
 			{
@@ -375,24 +369,15 @@ public class Commands extends ListenerAdapter
 
 	private void doubleEncounter(Pokemon uno, Pokemon due)
 	{
-		EmbedBuilder embedBuilder = new EmbedBuilder();
+		EmbedBuilder embedBuilder;
 		String[] titolo = {"Primo Pokemon!", "Secondo Pokemon!"};
 		Pokemon[] pokemons = {uno, due};
 		messageChannel.sendMessage("Doppio Incontro!").queue();
 		
 		for (int i = 0; i < 2; i++)
 		{
-			embedBuilder.setTitle(titolo[i]);
-			embedBuilder.setDescription(pokemons[i].getNome());
-			embedBuilder.setImage(pokemons[i].getImg());
+			embedBuilder = buildEmbed(pokemons[i]);
 			//embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
-			if (pokemons[i].isShiny())
-			{
-				embedBuilder.setColor(Color.YELLOW);
-				embedBuilder.setFooter("**Shiny!**");
-			}
-			else
-				embedBuilder.setColor(0xFF0000);
 			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 			
 		}
@@ -404,13 +389,28 @@ public class Commands extends ListenerAdapter
 	{
 		Pokemon pokemon = new Pokemon(true);
 		
-		EmbedBuilder embedBuilder = new EmbedBuilder();
-		embedBuilder.setTitle(pokemon.getNome());
-		embedBuilder.setImage(pokemon.getImg());
-		embedBuilder.setColor(Color.YELLOW);
-		embedBuilder.setFooter("✨ Shiny! ✨");
+		EmbedBuilder embedBuilder = buildEmbed(pokemon);
 		
 		messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
+	}
+	
+	private EmbedBuilder buildEmbed(Pokemon pokemon)
+	{
+		EmbedBuilder embedBuilder = new EmbedBuilder();
+		
+		embedBuilder.setTitle(pokemon.getNome());
+		embedBuilder.setImage(pokemon.getImg());
+		if (pokemon.isShiny())
+		{
+			embedBuilder.setColor(Color.YELLOW);
+			embedBuilder.setFooter("✨ Shiny! ✨");
+		}
+		else
+		{
+			embedBuilder.setColor(Color.RED);
+		}
+		
+		return embedBuilder;
 	}
 	
 } // fine classe Commands
