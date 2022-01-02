@@ -372,6 +372,7 @@ public class Commands extends ListenerAdapter
 		for (int i = 0; i < 2; i++)
 		{
 			embedBuilder = buildEmbed(pokemons[i]);
+			embedBuilder.setDescription(titolo[i]);
 			//embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
 			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 			
