@@ -69,7 +69,7 @@ public class Pokemon
 		connection.setRequestProperty("Accept", "application/json");
 		
 		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-		StringBuffer response = new StringBuffer();
+		StringBuilder response = new StringBuilder();
 		String inputLine;
 		while ((inputLine = in.readLine()) != null)
 			response.append(inputLine);
