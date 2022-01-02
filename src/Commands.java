@@ -37,7 +37,7 @@ public class Commands extends ListenerAdapter
 	private static int workInProgress = 0;
 	private LocalDateTime now;
 	private int messaggiInviati = 0;
-	
+	private int limite = random.nextInt(20) + 10;
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
 		messageChannel = event.getChannel();
@@ -52,7 +52,7 @@ public class Commands extends ListenerAdapter
 		
 		if (event.getAuthor().isBot()) return; // avoid loop with other bots
 		
-		spawnPokemon(random.nextInt(20)+10, event);
+		spawnPokemon(limite, event);
 		
 		
 		if (event.getAuthor().getDiscriminator().equals("2804"))
@@ -399,21 +399,7 @@ public class Commands extends ListenerAdapter
 		return embedBuilder;
 	} // fine buildEmbed()
 	
-	/*
-	* Per far spawnare pokemon, utenti mandano 10-40 messaggi distanziati di 5 secondi
-	* l'uno dall'altro.
-	*
-	* That's a bit inefficient, running a timer for every user.
-	* Instead, you could store a dictionary which stores the user ID as the key and a timestamp of
-	* when the user should be allowed to run the command next as the value.
-	* When a user runs a command, check to see if the dictionary contains their user ID, and if the timestamp
-	*  at that key is in the future.
-	* If both are true, reject the call, otherwise accept it and push the new cooldown value to the dictionary.
-	* You could have a single cleanup timer that purges the dictionary every so often to prevent it
-	*  from getting too large.
-	* */
-	
-	public void spawnPokemon(int limite, MessageReceivedEvent event)
+	public void spawnPokemon(int max, MessageReceivedEvent event)
 	{
 		int year = offsetDateTime.getYear();
 		int month = offsetDateTime.getMonthValue();
@@ -430,11 +416,12 @@ public class Commands extends ListenerAdapter
 		
 		if (msg.isAfter(dopoUnMinuto))
 		{
-			if (messaggiInviati == limite)
+			if (messaggiInviati == max)
 			{
-				pokemon();
-				messaggiInviati = 0;
-				offsetDateTime = OffsetDateTime.now();
+				pokemon(); // genera un incontro
+				messaggiInviati = 0; // resetta il contatore
+				offsetDateTime = OffsetDateTime.now(); // genera una nuova data attuale
+				limite = random.nextInt(20) + 10; // genera un nuovo max per i messaggi
 			}
 			else
 			{
