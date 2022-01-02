@@ -43,11 +43,11 @@ public class Commands extends ListenerAdapter
 		if (event.getAuthor().isBot()) return; // avoid loop with other bots
 		
 		if (event.getAuthor().getDiscriminator().equals("2804"))
-			if (random.nextInt(6000) == 42) // 0,00016%
+			if (random.nextInt(6000) == 42) // 0,016%
 				messageChannel.sendMessage("Òbito vergognati").queue();
 		
 		if (event.getAuthor().getDiscriminator().equals("2241")) //2241 = Lex
-			if ( random.nextInt(120) == 42) // 0,008%
+			if ( random.nextInt(120) == 42) // 0,8%
 				messageChannel.addReactionById(event.getMessageIdLong(), "U+1F1F7 U+1F1F4").queue(); //unicode della bandiera della romania
 		
 		
@@ -73,7 +73,7 @@ public class Commands extends ListenerAdapter
 			react("pog");
 		
 		if (msgLowerCase.contains("òbito") || msgLowerCase.contains("obito"))
-			if (random.nextInt(4096) == 42) // 0,00024%
+			if (random.nextInt(4096) == 42) // 0,024%
 			{
 				react("obito");
 				react("vergogna");
