@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Commands extends ListenerAdapter
 {
@@ -65,7 +67,7 @@ public class Commands extends ListenerAdapter
 			case "!pokemonshinyvergognatismh" -> generateShiny();
 		}
 		
-		/*
+		
 		if (msgLowerCase.contains("pigeon"))
 			react("pigeon");
 		
@@ -87,7 +89,7 @@ public class Commands extends ListenerAdapter
 		
 		if (msgLowerCase.contains("no"))
 		{
-			Pattern pattern = Pattern.compile("n+o+ *u+", Pattern.CASE_INSENSITIVE);
+			Pattern pattern = Pattern.compile(" *n+o+ *u+ *", Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(msgLowerCase);
 			
 			if (matcher.matches())
@@ -100,7 +102,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("get"))
 			if (msgLowerCase.contains("rekt"))
 				react("getrekt");
-		*/
+		
 		
 	} // fine onMessageReceived()
 	
