@@ -93,7 +93,7 @@ public class Pokemon
 		nome = name.substring(0,1).toUpperCase(Locale.ROOT) + name.substring(1);
 		
 		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+x+".png";
-		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny"+x+".png";
+		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/"+x+".png";
 		
 		risultato[0] = nome;
 		
