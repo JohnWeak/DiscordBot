@@ -7,6 +7,9 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.awt.*;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -17,6 +20,7 @@ import java.util.regex.Pattern;
 public class Commands extends ListenerAdapter
 {
 	// public static final String prefix = "!";
+	private static OffsetDateTime offsetDateTime = OffsetDateTime.now();
 	private static final Random random = new Random();
 	private static MessageChannel messageChannel;
 	private static final String[] listaComandi = {"!vergognati", "!coinflip", "!poll", "!info", "!8ball", "!pokemon"};
@@ -31,6 +35,8 @@ public class Commands extends ListenerAdapter
 		"Acchiappali tutti!"
 	};
 	private static int workInProgress = 0;
+	private LocalDateTime now;
+	private int messaggiInviati = 0;
 	
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
@@ -43,8 +49,11 @@ public class Commands extends ListenerAdapter
 		List<Emote> e = event.getMessage().getEmotes();
 		for (Emote emote : e)
 			event.getMessage().addReaction(emote).queue();
-			
+		
 		if (event.getAuthor().isBot()) return; // avoid loop with other bots
+		
+		spawnPokemon(random.nextInt(20)+10, event);
+		
 		
 		if (event.getAuthor().getDiscriminator().equals("2804"))
 			if (random.nextInt(6000) == 42) // 0,016%
@@ -62,8 +71,7 @@ public class Commands extends ListenerAdapter
 			case "!poll" -> poll(event);
 			case "!info" -> info();
 			case "!8ball" -> eightBall(event);
-			case "!pokemon" -> pokemonZ(event);
-			case "!pokemonshinyvergognatismh" -> generateShiny();
+			case "!pokemon" -> pokemon();
 		}
 		
 		
@@ -326,29 +334,8 @@ public class Commands extends ListenerAdapter
 		try { Thread.sleep(millis+random.nextInt(bound)); }
 		catch (InterruptedException e) { e.printStackTrace(); }
 	} // fine pause()
-
-	public void pokemon(MessageReceivedEvent event)
-	{
-		String[] test =
-		{
-			"Congratulazioni, hai scoperto il comando segreto (che tanto segreto non è visto che compare in !info, ma fai finta di sì)",
-			"Sfortunatamente il comando non fa ancora nulla, è un VIP: Very Important Project",
-			"Smettila, non è ancora operativo >:(",
-			"Dopo questo messaggio inizierò a ignorarti",
-			"Giuro.",
-			"Prometto.",
-			"Sei brutto >:("
-		};
-		
-		if (workInProgress < test.length)
-		{
-			messageChannel.sendMessage(test[workInProgress]).queue();
-			workInProgress++;
-		}
-		
-	} // fine metodo temporaneo pokemon()
 	
-	public void pokemonZ(MessageReceivedEvent event)
+	public void pokemon()
 	{
 		Pokemon pokemon = new Pokemon();
 		EmbedBuilder embedBuilder;
@@ -426,6 +413,35 @@ public class Commands extends ListenerAdapter
 	*  from getting too large.
 	* */
 	
+	public void spawnPokemon(int limite, MessageReceivedEvent event)
+	{
+		int year = offsetDateTime.getYear();
+		int month = offsetDateTime.getMonthValue();
+		int day = offsetDateTime.getDayOfMonth();
+		int hour = offsetDateTime.getHour();
+		int minutes = offsetDateTime.getMinute();
+		int seconds = offsetDateTime.getSecond();
+		int nano = offsetDateTime.getNano();
+		ZoneOffset offset = offsetDateTime.getOffset();
+		int minutesPlus = minutes+1;
+		OffsetDateTime dopoUnMinuto = OffsetDateTime.of(year, month, day, hour, minutesPlus, seconds, nano, offset);
+		
+		OffsetDateTime msg = event.getMessage().getTimeCreated();
+		
+		if (msg.isAfter(dopoUnMinuto))
+		{
+			if (messaggiInviati == limite)
+			{
+				pokemon();
+				messaggiInviati = 0;
+				offsetDateTime = OffsetDateTime.now();
+			}
+			else
+			{
+				messaggiInviati++;
+			}
+		}
+	} // fine spawnPokemon
 	
 	
 } // fine classe Commands
