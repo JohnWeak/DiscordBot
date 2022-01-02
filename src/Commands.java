@@ -23,6 +23,7 @@ public class Commands extends ListenerAdapter
 	private static OffsetDateTime offsetDateTime = OffsetDateTime.now();
 	private static final Random random = new Random();
 	private static MessageChannel messageChannel;
+	private static MessageChannel pokemonChannel;
 	private static final String[] listaComandi = {"!vergognati", "!coinflip", "!poll", "!info", "!8ball", "!pokemon"};
 	private static final String[] listaParole = {"pigeon", "owo", "pog", "òbito", "vergogna", "no"};
 	private static final String[] listaDescrizioni =
@@ -41,6 +42,7 @@ public class Commands extends ListenerAdapter
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
 		messageChannel = event.getChannel();
+		pokemonChannel = event.getGuild().getTextChannelsByName("bot-owo", true).get(0);
 		String[] args = event.getMessage().getContentRaw().split(" ");
 		String comando = args[0];
 		String message = event.getMessage().getContentRaw();
@@ -347,7 +349,7 @@ public class Commands extends ListenerAdapter
 		else
 		{
 			embedBuilder = buildEmbed(pokemon);
-			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
+			pokemonChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 		
 		}
 	} // fine metodo definitivo pokemon()
@@ -357,28 +359,19 @@ public class Commands extends ListenerAdapter
 		EmbedBuilder embedBuilder;
 		String[] titolo = {"Primo Pokemon!", "Secondo Pokemon!"};
 		Pokemon[] pokemons = {uno, due};
-		messageChannel.sendMessage("Doppio Incontro!").queue();
+		pokemonChannel.sendMessage("Doppio Incontro!").queue();
 		
 		for (int i = 0; i < 2; i++)
 		{
 			embedBuilder = buildEmbed(pokemons[i]);
 			embedBuilder.setDescription(titolo[i]);
 			//embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
-			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
+			pokemonChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 			
 		}
 		
 		System.out.printf("\nUno: %s, shiny: %s\nDue: %s, shiny: %s\n",uno.getNome(), uno.isShiny(), due.getNome(), due.isShiny());
 	} // fine
-	
-	public void generateShiny()
-	{
-		Pokemon pokemon = new Pokemon(true);
-		
-		EmbedBuilder embedBuilder = buildEmbed(pokemon);
-		
-		messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
-	}
 	
 	private EmbedBuilder buildEmbed(Pokemon pokemon)
 	{
