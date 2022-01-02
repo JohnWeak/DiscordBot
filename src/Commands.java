@@ -410,7 +410,7 @@ public class Commands extends ListenerAdapter
 		embedBuilder.setTitle(pokemon.getNome());
 		embedBuilder.setImage(pokemon.getImg());
 		embedBuilder.setColor(Color.YELLOW);
-		embedBuilder.setFooter("test \uDBC0\uDDBF", "\uDBC0\uDDBF");
+		embedBuilder.setFooter("test \uDBC0\uDDBF");
 		messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 	}
 	
