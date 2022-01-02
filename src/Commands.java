@@ -23,7 +23,6 @@ public class Commands extends ListenerAdapter
 	private static OffsetDateTime offsetDateTime = OffsetDateTime.now();
 	private static final Random random = new Random();
 	private static MessageChannel messageChannel;
-	private static MessageChannel pokemonChannel;
 	private static final String[] listaComandi = {"!vergognati", "!coinflip", "!poll", "!info", "!8ball", "!pokemon"};
 	private static final String[] listaParole = {"pigeon", "owo", "pog", "òbito", "vergogna", "no"};
 	private static final String[] listaDescrizioni =
@@ -42,7 +41,7 @@ public class Commands extends ListenerAdapter
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
 		messageChannel = event.getChannel();
-		pokemonChannel = event.getGuild().getTextChannelsByName("bot-owo", true).get(0);
+		messageChannel = event.getGuild().getTextChannelsByName("bot-owo", true).get(0);
 		String[] args = event.getMessage().getContentRaw().split(" ");
 		String comando = args[0];
 		String message = event.getMessage().getContentRaw();
