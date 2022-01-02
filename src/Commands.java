@@ -396,7 +396,7 @@ public class Commands extends ListenerAdapter
 		}
 		
 		
-		System.out.printf("\nUno: %s, shiny: %s\nDue: %s, shiny: %s",uno.getNome(), uno.isShiny(), due.getNome(), due.isShiny());
+		System.out.printf("\nUno: %s, shiny: %s\nDue: %s, shiny: %s\n",uno.getNome(), uno.isShiny(), due.getNome(), due.isShiny());
 	} // fine
 	
 	public void generateShiny()

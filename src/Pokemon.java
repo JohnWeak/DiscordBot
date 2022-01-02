@@ -90,16 +90,20 @@ public class Pokemon
 		JSONObject jsonObject = (JSONObject) file;
 		
 		String name = (String) jsonObject.get("name");
-		name = name.substring(0,1).toUpperCase(Locale.ROOT) + name.substring(1);
+		nome = name.substring(0,1).toUpperCase(Locale.ROOT) + name.substring(1);
 		
 		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+x+".png";
 		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/shiny/pokemon"+x+".png";
 		
-		risultato[0] = name;
+		risultato[0] = nome;
+		
 		if (shiny)
-			risultato[1] = urlShinyImg;
+			img = urlShinyImg;
 		else
-			risultato[1] = urlImg;
+			img = urlImg;
+		
+		risultato[1] = img;
+		
 		System.out.println(Arrays.toString(risultato)+"\nShiny: "+shiny);
 		return risultato;
 	
