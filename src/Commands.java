@@ -417,6 +417,10 @@ public class Commands extends ListenerAdapter
 				messaggiInviati++;
 			}
 		}
+		
+		System.out.println("Limite: " + limite);
+		System.out.println("Messaggi inviati: " + messaggiInviati);
+		
 	} // fine spawnPokemon
 	
 	
