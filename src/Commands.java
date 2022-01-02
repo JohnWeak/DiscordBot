@@ -391,7 +391,7 @@ public class Commands extends ListenerAdapter
 			if (pokemons[i].isShiny())
 			{
 				embedBuilder.setColor(Color.YELLOW);
-				embedBuilder.setFooter("**Shiny!**");
+				embedBuilder.setFooter("**Shiny!**", "\uDBC0\uDDBF");
 			}
 			else
 				embedBuilder.setColor(0xFF0000);
@@ -410,6 +410,7 @@ public class Commands extends ListenerAdapter
 		embedBuilder.setTitle(pokemon.getNome());
 		embedBuilder.setImage(pokemon.getImg());
 		embedBuilder.setColor(Color.YELLOW);
+		embedBuilder.setFooter("test \uDBC0\uDDBF", "\uDBC0\uDDBF");
 		messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 	}
 	
