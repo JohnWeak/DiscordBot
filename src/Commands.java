@@ -30,7 +30,6 @@ public class Commands extends ListenerAdapter
 		"Chiedi un responso all'Entità Superiore: la magica palla 8.",
 		"Acchiappali tutti!"
 	};
-	
 	private static int workInProgress = 0;
 	
 	public void onMessageReceived(MessageReceivedEvent event)
@@ -52,7 +51,7 @@ public class Commands extends ListenerAdapter
 				messageChannel.sendMessage("Òbito vergognati").queue();
 		
 		if (event.getAuthor().getDiscriminator().equals("2241")) //2241 = Lex
-			if ( random.nextInt(120) == 42) // 0,8%
+			if (random.nextInt(120) == 42) // 0,8%
 				messageChannel.addReactionById(event.getMessageIdLong(), "U+1F1F7 U+1F1F4").queue(); //unicode della bandiera della romania
 		
 		
@@ -89,7 +88,7 @@ public class Commands extends ListenerAdapter
 		
 		if (msgLowerCase.contains("no"))
 		{
-			Pattern pattern = Pattern.compile(" *n+o+ *u+ *", Pattern.CASE_INSENSITIVE);
+			Pattern pattern = Pattern.compile(" *(?:no)+ *u+ *", Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(msgLowerCase);
 			
 			if (matcher.matches())
