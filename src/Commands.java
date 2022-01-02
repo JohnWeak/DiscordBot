@@ -374,16 +374,23 @@ public class Commands extends ListenerAdapter
 	private void doubleEncounter(Pokemon uno, Pokemon due)
 	{
 		EmbedBuilder embedBuilder = new EmbedBuilder();
+		String[] titolo = {"Primo Pokemon!", "Secondo Pokemon!"};
+		Pokemon[] pokemons = {uno, due};
+		messageChannel.sendMessage("Doppio Incontro!").queue();
 		
-		embedBuilder.setTitle("Sono apparsi due Pokemon selvatici!");
-		embedBuilder.setDescription(uno.getNome() + " " + due.getNome());
-		embedBuilder.setImage(uno.getImg());
-		embedBuilder.setImage(due.getImg());
-		embedBuilder.setColor(0xFF0000);
-		//embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
-		if (uno.isShiny() || due.isShiny())
-			embedBuilder.setFooter("**Shiny!**");
-		messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
+		for (int i = 0; i < 2; i++)
+		{
+			embedBuilder.setTitle(titolo[i]);
+			embedBuilder.setDescription(pokemons[i].getNome());
+			embedBuilder.setImage(pokemons[i].getImg());
+			embedBuilder.setColor(0xFF0000);
+			//embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
+			if (pokemons[i].isShiny())
+				embedBuilder.setFooter("**Shiny!**");
+			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
+			
+		}
+		
 		
 		System.out.printf("\nUno: %s, shiny: %s\nDue: %s, shiny: %s",uno.getNome(), uno.isShiny(), due.getNome(), due.isShiny());
 	}
