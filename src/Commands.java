@@ -1,11 +1,9 @@
-
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -407,9 +405,12 @@ public class Commands extends ListenerAdapter
 		}
 		
 		return embedBuilder;
-	}
+	} // fine buildEmbed()
 	
 	/*
+	* Per far spawnare pokemon, utenti mandano 10-40 messaggi distanziati di 5 secondi
+	* l'uno dall'altro.
+	*
 	* That's a bit inefficient, running a timer for every user.
 	* Instead, you could store a dictionary which stores the user ID as the key and a timestamp of
 	* when the user should be allowed to run the command next as the value.
