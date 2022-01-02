@@ -387,14 +387,17 @@ public class Commands extends ListenerAdapter
 			embedBuilder.setTitle(titolo[i]);
 			embedBuilder.setDescription(pokemons[i].getNome());
 			embedBuilder.setImage(pokemons[i].getImg());
-			embedBuilder.setColor(0xFF0000);
 			//embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
 			if (pokemons[i].isShiny())
+			{
+				embedBuilder.setColor(Color.YELLOW);
 				embedBuilder.setFooter("**Shiny!**");
+			}
+			else
+				embedBuilder.setColor(0xFF0000);
 			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 			
 		}
-		
 		
 		System.out.printf("\nUno: %s, shiny: %s\nDue: %s, shiny: %s\n",uno.getNome(), uno.isShiny(), due.getNome(), due.isShiny());
 	} // fine
