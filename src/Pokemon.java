@@ -57,6 +57,18 @@ public class Pokemon
 		this.img = img;
 	}
 	
+	public Pokemon(boolean shiny)
+	{
+		this.shiny = shiny;
+		try
+		{
+			String[] result = generatePokemon();
+			nome = result[0];
+			img = result[1];
+		}
+		catch (Exception e) { e.printStackTrace(); }
+	}
+	
 	private String[] generatePokemon() throws IOException
 	{
 		String[] risultato = new String[2];
@@ -82,8 +94,6 @@ public class Pokemon
 		
 		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+x+".png";
 		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/shiny/pokemon"+x+".png";
-		//System.out.println(connection.getResponseCode() + " " + connection.getResponseMessage());
-		//System.out.printf("Nome: %s\tImmagine: %s\n", name, urlImg);
 		
 		risultato[0] = name;
 		if (shiny)
@@ -121,7 +131,7 @@ public class Pokemon
 	{
 		this.nome = nome;
 	}
-	public void setPokemon_id(String img)
+	public void setPokemonId(String img)
 	{
 		this.img = img;
 	}

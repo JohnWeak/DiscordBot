@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Random;
@@ -59,6 +60,7 @@ public class Commands extends ListenerAdapter
 			case "!info" -> info();
 			case "!8ball" -> eightBall(event);
 			case "!pokemon" -> pokemonZ(event);
+			case "!pokemonshinyvergognatismh" -> generateShiny();
 		}
 		
 		
@@ -395,6 +397,17 @@ public class Commands extends ListenerAdapter
 		
 		
 		System.out.printf("\nUno: %s, shiny: %s\nDue: %s, shiny: %s",uno.getNome(), uno.isShiny(), due.getNome(), due.isShiny());
+	} // fine
+	
+	public void generateShiny()
+	{
+		Pokemon pokemon = new Pokemon(true);
+		
+		EmbedBuilder embedBuilder = new EmbedBuilder();
+		embedBuilder.setTitle(pokemon.getNome());
+		embedBuilder.setImage(pokemon.getImg());
+		embedBuilder.setColor(Color.YELLOW);
+		messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 	}
 	
 } // fine classe Commands
