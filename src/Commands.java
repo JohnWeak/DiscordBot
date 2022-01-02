@@ -408,7 +408,7 @@ public class Commands extends ListenerAdapter
 		embedBuilder.setTitle(pokemon.getNome());
 		embedBuilder.setImage(pokemon.getImg());
 		embedBuilder.setColor(Color.YELLOW);
-		embedBuilder.setFooter("✨**Shiny!**");
+		embedBuilder.setFooter("✨ Shiny! ✨");
 		
 		messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 	}
