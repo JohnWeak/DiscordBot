@@ -41,7 +41,6 @@ public class Commands extends ListenerAdapter
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
 		messageChannel = event.getChannel();
-		messageChannel = event.getGuild().getTextChannelsByName("bot-owo", true).get(0);
 		String[] args = event.getMessage().getContentRaw().split(" ");
 		String comando = args[0];
 		String message = event.getMessage().getContentRaw();
