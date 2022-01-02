@@ -364,7 +364,7 @@ public class Commands extends ListenerAdapter
 				embedBuilder.setColor(0xFF0000);
 				//embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
 				if (pokemon.isShiny())
-					embedBuilder.setFooter("**Shiny!**");
+					embedBuilder.setFooter("✨**Shiny!**");
 				messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 			} catch (Exception e)
 			{
@@ -408,7 +408,8 @@ public class Commands extends ListenerAdapter
 		embedBuilder.setTitle(pokemon.getNome());
 		embedBuilder.setImage(pokemon.getImg());
 		embedBuilder.setColor(Color.YELLOW);
-		embedBuilder.setFooter("test \uDBC0\uDDBF");
+		embedBuilder.setFooter("✨**Shiny!**");
+		
 		messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 	}
 	
