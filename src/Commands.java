@@ -348,7 +348,7 @@ public class Commands extends ListenerAdapter
 	{
 		Pokemon pokemon;
 		int chance = random.nextInt(10);
-		System.out.println(chance);
+		System.out.println("Numero generato: "+chance);
 		if (chance == 9)
 		{
 			doubleEncounter(new Pokemon(), new Pokemon());
