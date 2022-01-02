@@ -420,7 +420,7 @@ public class Commands extends ListenerAdapter
 	* You could have a single cleanup timer that purges the dictionary every so often to prevent it
 	*  from getting too large.
 	* */
-	
+	public void test(){}
 	
 	
 } // fine classe Commands
