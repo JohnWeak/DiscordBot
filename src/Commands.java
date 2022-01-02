@@ -347,7 +347,7 @@ public class Commands extends ListenerAdapter
 		else
 		{
 			embedBuilder = buildEmbed(pokemon);
-			pokemonChannel.sendMessageEmbeds(embedBuilder.build()).queue();
+			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 		
 		}
 	} // fine metodo definitivo pokemon()
@@ -357,14 +357,14 @@ public class Commands extends ListenerAdapter
 		EmbedBuilder embedBuilder;
 		String[] titolo = {"Primo Pokemon!", "Secondo Pokemon!"};
 		Pokemon[] pokemons = {uno, due};
-		pokemonChannel.sendMessage("Doppio Incontro!").queue();
+		messageChannel.sendMessage("Doppio Incontro!").queue();
 		
 		for (int i = 0; i < 2; i++)
 		{
 			embedBuilder = buildEmbed(pokemons[i]);
 			embedBuilder.setDescription(titolo[i]);
 			//embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
-			pokemonChannel.sendMessageEmbeds(embedBuilder.build()).queue();
+			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 			
 		}
 		
