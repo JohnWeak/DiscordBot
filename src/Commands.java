@@ -356,14 +356,9 @@ public class Commands extends ListenerAdapter
 		}
 		else
 		{
-			try
-			{
-				embedBuilder = buildEmbed(pokemon);
-				messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
-			} catch (Exception e)
-			{
-				e.printStackTrace();
-			}
+			embedBuilder = buildEmbed(pokemon);
+			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
+		
 		}
 	} // fine metodo definitivo pokemon()
 
