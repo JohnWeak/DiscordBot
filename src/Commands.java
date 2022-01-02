@@ -1,4 +1,5 @@
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -7,10 +8,9 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.awt.*;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Commands extends ListenerAdapter
 {
@@ -39,6 +39,10 @@ public class Commands extends ListenerAdapter
 		String message = event.getMessage().getContentRaw();
 		String msgLowerCase = message.toLowerCase(Locale.ROOT);
 		
+		List<Emote> e = event.getMessage().getEmotes();
+		for (Emote emote : e)
+			event.getMessage().addReaction(emote).queue();
+			
 		if (event.getAuthor().isBot()) return; // avoid loop with other bots
 		
 		if (event.getAuthor().getDiscriminator().equals("2804"))
@@ -61,7 +65,7 @@ public class Commands extends ListenerAdapter
 			case "!pokemonshinyvergognatismh" -> generateShiny();
 		}
 		
-		
+		/*
 		if (msgLowerCase.contains("pigeon"))
 			react("pigeon");
 		
@@ -96,7 +100,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("get"))
 			if (msgLowerCase.contains("rekt"))
 				react("getrekt");
-		
+		*/
 		
 	} // fine onMessageReceived()
 	
