@@ -88,7 +88,7 @@ public class Commands extends ListenerAdapter
 		
 		if (msgLowerCase.contains("no"))
 		{
-			Pattern pattern = Pattern.compile(" *n+o+ *u+ *", Pattern.CASE_INSENSITIVE);
+			Pattern pattern = Pattern.compile(".*n+o+ *u+.*", Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(msgLowerCase);
 			
 			if (matcher.matches())
