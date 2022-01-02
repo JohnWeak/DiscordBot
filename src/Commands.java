@@ -347,18 +347,16 @@ public class Commands extends ListenerAdapter
 	
 	public void pokemonZ(MessageReceivedEvent event)
 	{
-		Pokemon pokemon;
+		Pokemon pokemon = new Pokemon();
 		
 		if (random.nextInt(10) == 9)
 		{
-			doubleEncounter(new Pokemon(), new Pokemon());
+			doubleEncounter(pokemon, new Pokemon());
 		}
 		else
 		{
 			try
 			{
-				pokemon = new Pokemon();
-				
 				EmbedBuilder embedBuilder = new EmbedBuilder();
 				embedBuilder.setTitle("È apparso un Pokemon selvatico!");
 				embedBuilder.setDescription(pokemon.getNome());
@@ -391,7 +389,7 @@ public class Commands extends ListenerAdapter
 			if (pokemons[i].isShiny())
 			{
 				embedBuilder.setColor(Color.YELLOW);
-				embedBuilder.setFooter("**Shiny!**", "\uDBC0\uDDBF");
+				embedBuilder.setFooter("**Shiny!**");
 			}
 			else
 				embedBuilder.setColor(0xFF0000);
