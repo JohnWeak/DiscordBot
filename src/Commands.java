@@ -347,8 +347,12 @@ public class Commands extends ListenerAdapter
 	public void pokemonZ(MessageReceivedEvent event)
 	{
 		Pokemon pokemon;
-		if (random.nextInt(10) == 9)
+		int chance = random.nextInt(10);
+		System.out.println(chance);
+		if (chance == 9)
+		{
 			doubleEncounter(new Pokemon(), new Pokemon());
+		}
 		else
 		{
 			try
