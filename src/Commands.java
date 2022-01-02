@@ -7,7 +7,6 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.awt.*;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Arrays;
@@ -34,10 +33,9 @@ public class Commands extends ListenerAdapter
 		"Chiedi un responso all'Entità Superiore: la magica palla 8.",
 		"Acchiappali tutti!"
 	};
-	private static int workInProgress = 0;
-	private LocalDateTime now;
-	private int messaggiInviati = 0;
-	private int limite = random.nextInt(20) + 10;
+	private static int messaggiInviati = 0;
+	private static int limite = random.nextInt(20) + 10;
+	
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
 		messageChannel = event.getChannel();
