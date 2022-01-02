@@ -372,6 +372,7 @@ public class Commands extends ListenerAdapter
 		for (int i = 0; i < 2; i++)
 		{
 			embedBuilder = buildEmbed(pokemons[i]);
+			embedBuilder.setDescription(titolo[i]);
 			//embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
 			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 			
@@ -407,5 +408,17 @@ public class Commands extends ListenerAdapter
 		
 		return embedBuilder;
 	}
+	
+	/*
+	* That's a bit inefficient, running a timer for every user.
+	* Instead, you could store a dictionary which stores the user ID as the key and a timestamp of
+	* when the user should be allowed to run the command next as the value.
+	* When a user runs a command, check to see if the dictionary contains their user ID, and if the timestamp
+	*  at that key is in the future.
+	* If both are true, reject the call, otherwise accept it and push the new cooldown value to the dictionary.
+	* You could have a single cleanup timer that purges the dictionary every so often to prevent it
+	*  from getting too large.
+	* */
+	
 	
 } // fine classe Commands
