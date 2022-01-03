@@ -51,7 +51,7 @@ public class Commands extends ListenerAdapter
 		
 		List<Emote> e = event.getMessage().getEmotes();
 
-		if (event.getAuthor().isBot()) return; // avoid loop with other bots
+		if (event.getAuthor().isBot()) return; // Per evitare problemi con altri bot
 
 		for (Emote emote : e)
 			event.getMessage().addReaction(emote).queue();
