@@ -24,7 +24,7 @@ public class Commands extends ListenerAdapter
 {
 	// public static final String prefix = "!";
 	private static final File file = new File("valori.txt");
-	private static OffsetDateTime offsetDateTime = OffsetDateTime.now();
+	private static OffsetDateTime lastMsgSent = OffsetDateTime.now();
 	private static final Random random = new Random();
 	private static MessageChannel messageChannel;
 	private static final String[] listaComandi = {"!vergognati", "!coinflip", "!poll", "!info", "!8ball", "!pokemon"};
@@ -406,8 +406,25 @@ public class Commands extends ListenerAdapter
 		return embedBuilder;
 	} // fine buildEmbed()
 	
+	private void generateNamePokemon()
+	{
+		String[] nomi = null;
+		FileWriter fileWriter;
+		try
+		{
+			nomi = new Pokemon().generatePokemon();
+			fileWriter = new FileWriter("nomiPokemon.txt"); //TOD
+		}catch (IOException e) {}
+		
+		if (nomi == null)
+			System.out.println("Errore nel recuperare i nomi dei pokemon");
+		
+	}
+	
 	public void spawnPokemon(MessageReceivedEvent event)
 	{
+		OffsetDateTime sentMsg = event.getMessage().getTimeCreated();
+		
 		int[] valori = new int[2];
 		Scanner scanner;
 		FileWriter fileWriter;
@@ -427,27 +444,13 @@ public class Commands extends ListenerAdapter
 
 		//valori[0] : limite (max) messaggi
 		//valori[1] : messaggiInviati
-
-		int year = offsetDateTime.getYear();
-		int month = offsetDateTime.getMonthValue();
-		int day = offsetDateTime.getDayOfMonth();
-		int hour = offsetDateTime.getHour();
-		int minutes = offsetDateTime.getMinute();
-		int seconds = offsetDateTime.getSecond();
-		int nano = offsetDateTime.getNano();
-		ZoneOffset offset = offsetDateTime.getOffset();
-		int minutesPlus = minutes+1;
-		OffsetDateTime dopoUnMinuto = OffsetDateTime.of(year, month, day, hour, minutesPlus, seconds, nano, offset);
 		
-		OffsetDateTime msg = event.getMessage().getTimeCreated();
-		
-		if (msg.isAfter(dopoUnMinuto))
+		if (sentMsg.isAfter(lastMsgSent))
 		{
 			if (messaggiInviati == valori[0])
 			{
 				pokemon(); // genera un incontro
 				messaggiInviati = 0; // resetta il contatore
-				offsetDateTime = OffsetDateTime.now(); // genera una nuova data attuale
 				limite = random.nextInt(10) + 5; // genera un nuovo max per i messaggi
 			}
 			else
@@ -456,7 +459,24 @@ public class Commands extends ListenerAdapter
 			}
 			valori[0] = limite;
 			valori[1] = messaggiInviati;
+			
+			//TODO: aggiornare dopoUnMinuto
 		}
+		else
+		{
+			int year = sentMsg.getYear();
+			int month = sentMsg.getMonthValue();
+			int day = sentMsg.getDayOfMonth();
+			int hour = sentMsg.getHour();
+			int minutes = sentMsg.getMinute();
+			int seconds = sentMsg.getSecond();
+			int nano = sentMsg.getNano();
+			ZoneOffset offset = sentMsg.getOffset();
+			int minutesPlus = minutes+1;
+			
+			lastMsgSent = OffsetDateTime.of(year, month, day, hour, minutesPlus, seconds, nano, offset);
+		}
+		
 		try
 		{
 			fileWriter = new FileWriter(file);
