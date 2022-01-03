@@ -57,7 +57,6 @@ public class Commands extends ListenerAdapter
 			event.getMessage().addReaction(emote).queue();
 		
 
-		
 		spawnPokemon(event);
 		
 		
@@ -419,10 +418,10 @@ public class Commands extends ListenerAdapter
 			for (int i = 0; i < 2; i++)
 				valori[i] = scanner.nextInt();
 
+			scanner.close();
+
 			limite = valori[0];
 			messaggiInviati = valori[1];
-
-			scanner.close();
 		}
 		catch (FileNotFoundException e) { System.out.println("File non trovato!"); }
 
