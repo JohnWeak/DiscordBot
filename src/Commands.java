@@ -415,13 +415,14 @@ public class Commands extends ListenerAdapter
 		try
 		{
 			nomi = new Pokemon().generateNameList();
-			fileWriter = new FileWriter(nomiPkmn);
-			for (String nome : nomi)
-				fileWriter.append(nome);
+			fileWriter = new FileWriter(nomiPkmn, true);
+			for (int i = 0; i < nomi.length; i++)
+				fileWriter.append(nomi[i]+"\n");
+
+			fileWriter.close();
+
 			
-			System.out.println("Nomi aggiunti al file: OK");
-			
-		}catch (IOException e) {}
+		}catch (IOException ignored) {}
 		
 		if (nomi == null)
 			System.out.println("Errore nel recuperare i nomi dei pokemon");
