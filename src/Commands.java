@@ -24,6 +24,7 @@ public class Commands extends ListenerAdapter
 {
 	// public static final String prefix = "!";
 	private static final File file = new File("valori.txt");
+	private static final File nomiPkmn = new File("nomiPokemon.txt");
 	private static OffsetDateTime lastMsgSent = OffsetDateTime.now();
 	private static final Random random = new Random();
 	private static MessageChannel messageChannel;
@@ -414,7 +415,7 @@ public class Commands extends ListenerAdapter
 		try
 		{
 			nomi = new Pokemon().generateNameList();
-			fileWriter = new FileWriter("nomiPokemon.txt");
+			fileWriter = new FileWriter(nomiPkmn);
 			for (String nome : nomi)
 				fileWriter.append(nome).append("\n");
 			
