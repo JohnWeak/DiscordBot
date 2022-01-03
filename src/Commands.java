@@ -413,7 +413,7 @@ public class Commands extends ListenerAdapter
 		try
 		{
 			nomi = new Pokemon().generatePokemon();
-			fileWriter = new FileWriter("nomiPokemon.txt"); //TOD
+			fileWriter = new FileWriter("nomiPokemon.txt");
 		}catch (IOException e) {}
 		
 		if (nomi == null)
