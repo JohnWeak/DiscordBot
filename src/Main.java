@@ -10,8 +10,8 @@ public class Main
 	public static void main(String[] args) throws LoginException
 	{
 		JDABuilder jda = JDABuilder.createDefault("ODM2NTg2ODYyMjEzNzI2MjI4.YIgKOg.zFvGCTzAF1ffIUB_M5OnN_U29HI");
-		jda.setActivity(Activity.playing("4D Chess"));
-		jda.setStatus(OnlineStatus.IDLE);
+		jda.setActivity(Activity.playing("Minecraft"));
+		jda.setStatus(OnlineStatus.ONLINE);
 		jda.addEventListeners(new Commands());
 		jda.build();
 	} // fine metodo main()
