@@ -7,18 +7,21 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-import java.util.Locale;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Commands extends ListenerAdapter
 {
 	// public static final String prefix = "!";
+	private static final File file = new File("valori.txt");
 	private static OffsetDateTime offsetDateTime = OffsetDateTime.now();
 	private static final Random random = new Random();
 	private static MessageChannel messageChannel;
@@ -50,7 +53,7 @@ public class Commands extends ListenerAdapter
 		
 		if (event.getAuthor().isBot()) return; // avoid loop with other bots
 		
-		spawnPokemon(limite, event);
+		spawnPokemon(event);
 		
 		
 		if (event.getAuthor().getDiscriminator().equals("2804"))
@@ -388,8 +391,25 @@ public class Commands extends ListenerAdapter
 		return embedBuilder;
 	} // fine buildEmbed()
 	
-	public void spawnPokemon(int max, MessageReceivedEvent event)
+	public void spawnPokemon(MessageReceivedEvent event)
 	{
+		int[] valori = {0, 0};
+		Scanner scanner;
+		FileWriter fileWriter;
+
+		try
+		{
+			scanner = new Scanner(file);
+			for (int i = 0; i < 2; i++)
+				valori[i] = scanner.nextInt();
+
+			scanner.close();
+		}
+		catch (FileNotFoundException e) { System.out.println("File non trovato!"); }
+
+		//valori[0] : limite (max) messaggi
+		//valori[1] : messaggiInviati
+
 		int year = offsetDateTime.getYear();
 		int month = offsetDateTime.getMonthValue();
 		int day = offsetDateTime.getDayOfMonth();
@@ -405,21 +425,34 @@ public class Commands extends ListenerAdapter
 		
 		if (msg.isAfter(dopoUnMinuto))
 		{
-			if (messaggiInviati == max)
+			if (messaggiInviati == valori[0])
 			{
 				pokemon(); // genera un incontro
 				messaggiInviati = 0; // resetta il contatore
 				offsetDateTime = OffsetDateTime.now(); // genera una nuova data attuale
-				limite = random.nextInt(20) + 10; // genera un nuovo max per i messaggi
+				limite = random.nextInt(10) + 10; // genera un nuovo max per i messaggi
 			}
 			else
 			{
 				messaggiInviati++;
 			}
+
+			valori[0] = limite;
+			valori[1] = messaggiInviati;
+
+
 		}
 		
 		System.out.println("Limite: " + limite);
 		System.out.println("Messaggi inviati: " + messaggiInviati);
+
+		try
+		{
+			fileWriter = new FileWriter(file);
+			fileWriter.write(valori[0]+"\n"+valori[1]);
+			fileWriter.close();
+
+		}catch (IOException e) { System.out.println("Errore nella scrittura del file!"); }
 		
 	} // fine spawnPokemon
 	
