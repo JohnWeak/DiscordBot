@@ -78,7 +78,6 @@ public class Commands extends ListenerAdapter
 			case "!info" -> info();
 			case "!8ball" -> eightBall(event);
 			case "!pokemon" -> pokemon();
-			case "!maiusc" -> maiuscolizza();
 		}
 		
 		
@@ -129,40 +128,6 @@ public class Commands extends ListenerAdapter
 	
 	
 	} // fine onSlashCommand()
-	
-	private void maiuscolizza()
-	{
-		File nomiDue = new File("nomiDue.txt");
-		ArrayList<String> nomi = new ArrayList<>();
-		int size;
-		String temp = "";
-		Scanner scanner;
-		FileWriter fileWriter;
-		try
-		{
-			fileWriter = new FileWriter(nomiDue);
-			scanner = new Scanner(nomiPkmn);
-			
-			while (scanner.hasNext())
-			{
-				nomi.add(scanner.nextLine());
-			}
-			size = nomi.size();
-			for (int i = 0; i < size; i++)
-			{
-				temp = nomi.get(i);
-				temp = temp.substring(0,1).toUpperCase(Locale.ROOT) + temp.substring(1);
-				nomi.set(i, temp);
-			
-				fileWriter.write(temp+"\n");
-			}
-			
-			scanner.close();
-			fileWriter.close();
-		} catch (IOException e) {}
-		
-		
-	}
 	
 	public void vergognati(MessageReceivedEvent event)
 	{
