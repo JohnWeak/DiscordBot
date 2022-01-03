@@ -78,7 +78,6 @@ public class Commands extends ListenerAdapter
 			case "!info" -> info();
 			case "!8ball" -> eightBall(event);
 			case "!pokemon" -> pokemon();
-			case "!generaNomi" -> generateNamePokemon();
 		}
 		
 		
@@ -407,27 +406,6 @@ public class Commands extends ListenerAdapter
 		
 		return embedBuilder;
 	} // fine buildEmbed()
-	
-	private void generateNamePokemon()
-	{
-		String[] nomi = null;
-		FileWriter fileWriter;
-		try
-		{
-			nomi = new Pokemon().generateNameList();
-			fileWriter = new FileWriter(nomiPkmn, true);
-			for (int i = 0; i < nomi.length; i++)
-				fileWriter.append(nomi[i]+"\n");
-
-			fileWriter.close();
-
-			
-		}catch (IOException ignored) {}
-		
-		if (nomi == null)
-			System.out.println("Errore nel recuperare i nomi dei pokemon");
-		
-	}
 	
 	public void spawnPokemon(MessageReceivedEvent event)
 	{
