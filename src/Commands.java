@@ -393,7 +393,7 @@ public class Commands extends ListenerAdapter
 	
 	public void spawnPokemon(MessageReceivedEvent event)
 	{
-		int[] valori = {0, 0};
+		int[] valori = new int[2];
 		Scanner scanner;
 		FileWriter fileWriter;
 
@@ -402,6 +402,9 @@ public class Commands extends ListenerAdapter
 			scanner = new Scanner(file);
 			for (int i = 0; i < 2; i++)
 				valori[i] = scanner.nextInt();
+
+			limite = valori[0];
+			messaggiInviati = valori[1];
 
 			scanner.close();
 		}
@@ -442,9 +445,6 @@ public class Commands extends ListenerAdapter
 
 
 		}
-		
-		System.out.println("Limite: " + limite);
-		System.out.println("Messaggi inviati: " + messaggiInviati);
 
 		try
 		{
@@ -453,7 +453,11 @@ public class Commands extends ListenerAdapter
 			fileWriter.close();
 
 		}catch (IOException e) { System.out.println("Errore nella scrittura del file!"); }
-		
+
+		System.out.println("Valori nel file: " + Arrays.toString(valori));
+		System.out.printf("Valori nelle variabili: [limite: %d, messaggiInviati: %d]\n", limite, messaggiInviati);
+
+
 	} // fine spawnPokemon
 	
 	
