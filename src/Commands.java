@@ -417,7 +417,7 @@ public class Commands extends ListenerAdapter
 			nomi = new Pokemon().generateNameList();
 			fileWriter = new FileWriter(nomiPkmn);
 			for (String nome : nomi)
-				fileWriter.append(nome).append("\n");
+				fileWriter.append(nome);
 			
 			System.out.println("Nomi aggiunti al file: OK");
 			

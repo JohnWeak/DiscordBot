@@ -131,7 +131,7 @@ public class Pokemon
 		String[] listaNomi = new String[numeroTotalePokemon];
 		JSONObject jsonObject;
 		
-		for (int i = 1; i < numeroTotalePokemon; i++)
+		for (int i = 1; i < 5; i++)
 		{
 			jsonObject = requestApi(i);
 			listaNomi[i-1] = (String) jsonObject.get("name");
