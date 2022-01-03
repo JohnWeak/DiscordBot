@@ -132,6 +132,7 @@ public class Commands extends ListenerAdapter
 	
 	private void maiuscolizza()
 	{
+		File nomiDue = new File("nomiDue.txt");
 		ArrayList<String> nomi = new ArrayList<>();
 		int size;
 		String temp = "";
@@ -139,7 +140,7 @@ public class Commands extends ListenerAdapter
 		FileWriter fileWriter;
 		try
 		{
-			fileWriter = new FileWriter(nomiPkmn);
+			fileWriter = new FileWriter(nomiDue);
 			scanner = new Scanner(nomiPkmn);
 			
 			while (scanner.hasNext())
