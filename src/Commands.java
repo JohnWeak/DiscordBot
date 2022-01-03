@@ -78,7 +78,7 @@ public class Commands extends ListenerAdapter
 			case "!info" -> info();
 			case "!8ball" -> eightBall(event);
 			case "!pokemon" -> pokemon();
-			case "!maisc" -> maiuscolizza();
+			case "!maiusc" -> maiuscolizza();
 		}
 		
 		
@@ -132,19 +132,30 @@ public class Commands extends ListenerAdapter
 	
 	private void maiuscolizza()
 	{
-		String nome = "";
+		ArrayList<String> nomi = new ArrayList<>();
+		int size;
+		String temp = "";
 		Scanner scanner;
 		FileWriter fileWriter;
 		try
 		{
 			fileWriter = new FileWriter(nomiPkmn);
 			scanner = new Scanner(nomiPkmn);
+			
 			while (scanner.hasNext())
 			{
-				nome = scanner.nextLine();
-				nome = nome.substring(0,1).toUpperCase(Locale.ROOT) + nome.substring(1);
-				fileWriter.append(nome);
+				nomi.add(scanner.nextLine());
 			}
+			size = nomi.size();
+			for (int i = 0; i < size; i++)
+			{
+				temp = nomi.get(i);
+				temp = temp.substring(0,1).toUpperCase(Locale.ROOT) + temp.substring(1);
+				nomi.set(i, temp);
+			}
+			
+			fileWriter.write(String.valueOf(nomi));
+			
 			scanner.close();
 			fileWriter.close();
 		} catch (IOException e) {}
