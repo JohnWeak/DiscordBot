@@ -37,7 +37,7 @@ public class Commands extends ListenerAdapter
 		"Acchiappali tutti!"
 	};
 	private static int messaggiInviati = 0;
-	private static int limite = random.nextInt(20) + 10;
+	private static int limite;
 	
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
@@ -430,7 +430,7 @@ public class Commands extends ListenerAdapter
 				pokemon(); // genera un incontro
 				messaggiInviati = 0; // resetta il contatore
 				offsetDateTime = OffsetDateTime.now(); // genera una nuova data attuale
-				limite = random.nextInt(10) + 10; // genera un nuovo max per i messaggi
+				limite = random.nextInt(10) + 5; // genera un nuovo max per i messaggi
 			}
 			else
 			{
