@@ -67,25 +67,14 @@ public class Pokemon
 		catch (Exception e) { e.printStackTrace(); }
 	}
 	
-	public String[] generatePokemon() throws IOException
+	private String[] generatePokemon()
 	{
 		String[] risultato = new String[2];
-		
+		JSONObject jsonObject;
 		Random random = new Random();
 		int x = random.nextInt(max);
-		final URL url = new URL("https://pokeapi.co/api/v2/pokemon/"+x);
 		
-		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		connection.setRequestProperty("Accept", "application/json");
-		
-		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-		StringBuilder response = new StringBuilder();
-		String inputLine;
-		while ((inputLine = in.readLine()) != null)
-			response.append(inputLine);
-		
-		Object file = JSONValue.parse(String.valueOf(response));
-		JSONObject jsonObject = (JSONObject) file;
+		jsonObject = requestApi(x);
 		
 		String name = (String) jsonObject.get("name");
 		nome = name.substring(0,1).toUpperCase(Locale.ROOT) + name.substring(1);
@@ -112,6 +101,45 @@ public class Pokemon
 		if (new Random().nextInt(8192) == 42)
 			shiny = true;
 	}
+	
+	private JSONObject requestApi(int numeroPkmn)
+	{
+		Object file = null;
+		try
+		{
+			final URL url = new URL("https://pokeapi.co/api/v2/pokemon/" + numeroPkmn);
+			
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestProperty("Accept", "application/json");
+			
+			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			StringBuilder response = new StringBuilder();
+			String inputLine;
+			while ((inputLine = in.readLine()) != null)
+				response.append(inputLine);
+			
+			file = JSONValue.parse(String.valueOf(response));
+			
+		}
+		catch (IOException e) { System.out.println("Errore nel mandare la richiesta di nomi con API"); }
+		return (JSONObject) file;
+	}
+	
+	public String[] generateNameList()
+	{
+		int numeroTotalePokemon = 899;
+		String[] listaNomi = new String[numeroTotalePokemon];
+		JSONObject jsonObject;
+		
+		for (int i = 1; i < numeroTotalePokemon; i++)
+		{
+			jsonObject = requestApi(i);
+			listaNomi[i-1] = (String) jsonObject.get("name");
+		}
+		
+		return listaNomi;
+	}
+	
 	
 	
 	//GETTER

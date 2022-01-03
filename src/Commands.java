@@ -413,7 +413,7 @@ public class Commands extends ListenerAdapter
 		FileWriter fileWriter;
 		try
 		{
-			nomi = new Pokemon().generatePokemon();
+			nomi = new Pokemon().generateNameList();
 			fileWriter = new FileWriter("nomiPokemon.txt");
 			for (String nome : nomi)
 				fileWriter.append(nome).append("\n");
