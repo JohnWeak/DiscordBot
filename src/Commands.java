@@ -414,6 +414,11 @@ public class Commands extends ListenerAdapter
 		{
 			nomi = new Pokemon().generatePokemon();
 			fileWriter = new FileWriter("nomiPokemon.txt");
+			for (String nome : nomi)
+				fileWriter.append(nome).append("\n");
+			
+			System.out.println("Nomi aggiunti al file: OK");
+			
 		}catch (IOException e) {}
 		
 		if (nomi == null)
