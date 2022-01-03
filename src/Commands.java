@@ -3,8 +3,10 @@ import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.io.File;
@@ -13,8 +15,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,7 +28,7 @@ public class Commands extends ListenerAdapter
 	private static final Random random = new Random();
 	private static MessageChannel messageChannel;
 	private static final String[] listaComandi = {"!vergognati", "!coinflip", "!poll", "!info", "!8ball", "!pokemon"};
-	private static final String[] listaParole = {"pigeon", "owo", "pog", "òbito", "vergogna", "no"};
+	// private static final String[] listaParole = {"pigeon", "owo", "pog", "òbito", "vergogna", "no"};
 	private static final String[] listaDescrizioni =
 	{
 		"Il bot risponderà usando la carta \"No u\"",
@@ -113,6 +115,17 @@ public class Commands extends ListenerAdapter
 		
 		
 	} // fine onMessageReceived()
+	
+	public void onSlashCommand(@NotNull SlashCommandEvent event)
+	{
+		String c = event.getName();
+		
+		if (c.equals("test"))
+			messageChannel.sendMessage("test eseguito con successo!").queue();
+	
+	
+	} // fine onSlashCommand()
+	
 	
 	public void vergognati(MessageReceivedEvent event)
 	{
@@ -439,13 +452,9 @@ public class Commands extends ListenerAdapter
 			{
 				messaggiInviati++;
 			}
-
 			valori[0] = limite;
 			valori[1] = messaggiInviati;
-
-
 		}
-
 		try
 		{
 			fileWriter = new FileWriter(file);
