@@ -154,7 +154,7 @@ public class Commands extends ListenerAdapter
 				temp = temp.substring(0,1).toUpperCase(Locale.ROOT) + temp.substring(1);
 				nomi.set(i, temp);
 			
-				fileWriter.write(nomi.get(i));
+				fileWriter.write(temp+"\n");
 			}
 			
 			scanner.close();
