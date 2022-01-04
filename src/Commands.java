@@ -1,8 +1,5 @@
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Emote;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -54,6 +51,8 @@ public class Commands extends ListenerAdapter
 		for (Emote emote : e)
 			event.getMessage().addReaction(emote).queue();
 		
+		TextChannel textChannel = event.getGuild().getTextChannelsByName("bot-owo", true).get(0);
+		textChannel.sendMessage("prova pog").queue();
 
 		spawnPokemon(event);
 		
