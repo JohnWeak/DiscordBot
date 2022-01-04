@@ -8,13 +8,15 @@ public class Pokemon
 {
 	private final static int max = 898; // pokedex completo
 	private static final File nomiPokemon = new File("nomiPokemon.txt");
-	
+	private static final Random random = new Random();
+
 	// private static int pokemon_id = 261;
 	// https://pokeapi.co/api/v2/pokemon/261/ -> Poochyena
 	
 	private String nome;
 	private String img;
 	private boolean shiny = false;
+	private String descrizione;
 	
 	public Pokemon()
 	{
@@ -22,7 +24,7 @@ public class Pokemon
 		
 		try
 		{
-			String[] result = generatePokemon();
+			String[] result = generatePokemon(random.nextInt(max)+1);
 			nome = result[0];
 			img = result[1];
 		}
@@ -37,10 +39,33 @@ public class Pokemon
 		this.nome = nome;
 		try
 		{
-			img = generatePokemon()[1];
+			img = generatePokemon(random.nextInt(max)+1)[1];
 		}catch (Exception e) { e.printStackTrace(); }
 		
 	}
+
+	public Pokemon(String nome, String descrizione, boolean shiny)
+	{
+		int id = 1;
+		this.shiny = shiny;
+
+		this.nome = nome;
+		try
+		{
+			Scanner scanner = new Scanner(nomiPokemon);
+			while (scanner.hasNextLine())
+				if (nome.equalsIgnoreCase(scanner.nextLine()))
+					break;
+				else
+					id++;
+
+
+			img = generatePokemon(id)[1];
+		}catch (Exception e) { e.printStackTrace(); }
+
+		this.descrizione = descrizione;
+	}
+
 	
 	public Pokemon(String nome, String img)
 	{
@@ -55,32 +80,31 @@ public class Pokemon
 		this.shiny = shiny;
 		try
 		{
-			String[] result = generatePokemon();
+			String[] result = generatePokemon(random.nextInt(max)+1);
 			nome = result[0];
 			img = result[1];
 		}
 		catch (Exception e) { e.printStackTrace(); }
 	}
 	
-	private String[] generatePokemon()
+	private String[] generatePokemon(int id)
 	{
+		if (id <= 0)
+			id = random.nextInt(max)+1;
 		Scanner scanner;
 		String[] risultato = new String[2];
-		
-		Random random = new Random();
-		int x = random.nextInt(max) +1; // 1 -> 898
 		
 		try
 		{
 			scanner = new Scanner(nomiPokemon);
-			for (int i = 0; i < x; i++)
+			for (int i = 0; i < id; i++)
 				nome = scanner.nextLine();
 			
 		}catch (FileNotFoundException e) {}
 		
 		
-		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+x+".png";
-		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/"+x+".png";
+		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+id+".png";
+		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/"+id+".png";
 		
 		risultato[0] = nome;
 		
@@ -118,7 +142,11 @@ public class Pokemon
 	{
 		return shiny;
 	}
-	
+	public String getDescrizione()
+	{
+		return descrizione;
+	}
+
 	//SETTER
 	public void setNome(String nome)
 	{
@@ -132,6 +160,8 @@ public class Pokemon
 	{
 		this.shiny = shiny;
 	}
-	
-	
+	public void setDescrizione(String descrizione)
+	{
+		this.descrizione = descrizione;
+	}
 } // fine classe Pokemon

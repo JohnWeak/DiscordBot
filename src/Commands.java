@@ -1,3 +1,4 @@
+import com.fasterxml.jackson.core.JsonParser;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Message;
@@ -22,7 +23,7 @@ import java.util.regex.Pattern;
 public class Commands extends ListenerAdapter
 {
 	// public static final String prefix = "!";
-	private static final File file = new File("valori.txt");
+	private static final File valori = new File("valori.txt");
 	private static final File nomiPkmn = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
 	private static MessageChannel messageChannel;
@@ -371,7 +372,12 @@ public class Commands extends ListenerAdapter
 		String[] msg = event.getMessage().getContentRaw().split(" ");
 		if (msg.length > 1 && !msg[1].isEmpty())
 		{
-			search(msg[1]);
+			String nome = msg[1];
+			JSONObject jsonObject = search(msg[1]);
+			String description = jsonObject.get("description").toString();
+			Pokemon pokemon = new Pokemon(nome, description, false);
+
+			messageChannel.sendMessageEmbeds(buildEmbed(pokemon).build()).queue();
 			return ;
 		}
 		
@@ -391,19 +397,17 @@ public class Commands extends ListenerAdapter
 		}
 	} // fine metodo definitivo pokemon()
 
-	void search(String pokemon)
+	private JSONObject search(String pokemon)
 	{
-		
-		JSONObject jsonObject;
 		URL url;
-		Object file;
+		Object file = null;
 		
 		try
 		{
 			url = new URL("https://pokeapi.glitch.me/v1/pokemon/" + pokemon);
 			Scanner scanner = new Scanner(nomiPkmn);
 			while (scanner.hasNext())
-				if (pokemon.equals(scanner.nextLine()))
+				if (pokemon.equalsIgnoreCase(scanner.nextLine()))
 				{
 					HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 					connection.setRequestProperty("Accept", "application/json");
@@ -412,13 +416,14 @@ public class Commands extends ListenerAdapter
 					StringBuilder response = new StringBuilder();
 					String inputLine;
 					while ((inputLine = in.readLine()) != null)
+						if (!inputLine.equals("[") && (!inputLine.equals("]")))
 						response.append(inputLine);
 					
 					file = JSONValue.parse(String.valueOf(response));
-					System.out.println(file);
 				}
-				
 		}catch (IOException e) { System.out.println("Errore nell'apertura del file: " + nomiPkmn); }
+
+		return (JSONObject) file;
 	}
 	
 	private void doubleEncounter(Pokemon uno, Pokemon due)
@@ -443,9 +448,19 @@ public class Commands extends ListenerAdapter
 	private EmbedBuilder buildEmbed(Pokemon pokemon)
 	{
 		EmbedBuilder embedBuilder = new EmbedBuilder();
-		
+		String descrizione;
+
 		embedBuilder.setTitle(pokemon.getNome());
-		embedBuilder.setImage(pokemon.getImg());
+		if ((descrizione = pokemon.getDescrizione()) != null)
+		{
+			embedBuilder.addField("Pokedex Entry", "*"+descrizione+"*", false);
+			embedBuilder.setThumbnail(pokemon.getImg());
+		}
+		else
+		{
+			embedBuilder.setImage(pokemon.getImg());
+		}
+
 		if (pokemon.isShiny())
 		{
 			embedBuilder.setColor(Color.YELLOW);
@@ -455,6 +470,7 @@ public class Commands extends ListenerAdapter
 		{
 			embedBuilder.setColor(Color.RED);
 		}
+
 		
 		return embedBuilder;
 	} // fine buildEmbed()
@@ -467,7 +483,7 @@ public class Commands extends ListenerAdapter
 
 		try
 		{
-			scanner = new Scanner(file);
+			scanner = new Scanner(Commands.valori);
 			for (int i = 0; i < 2; i++)
 				valori[i] = scanner.nextInt();
 
@@ -496,7 +512,7 @@ public class Commands extends ListenerAdapter
 		
 		try
 		{
-			fileWriter = new FileWriter(file);
+			fileWriter = new FileWriter(Commands.valori);
 			fileWriter.write(valori[0]+"\n"+valori[1]);
 			fileWriter.close();
 
