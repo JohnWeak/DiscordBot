@@ -17,6 +17,10 @@ public class Pokemon
 	private String img;
 	private boolean shiny = false;
 	private String descrizione;
+	private String[] tipo = new String[2];
+	private String generazione;
+	private String dexNumber;
+	private String[] lineaEvolutiva;
 	
 	public Pokemon()
 	{
@@ -146,6 +150,22 @@ public class Pokemon
 	{
 		return descrizione;
 	}
+	public String[] getTipo()
+	{
+		return tipo;
+	}
+	public String getGenerazione()
+	{
+		return generazione;
+	}
+	public String getDexNumber()
+	{
+		return dexNumber;
+	}
+	public String[] getLineaEvolutiva()
+	{
+		return lineaEvolutiva;
+	}
 
 	//SETTER
 	public void setNome(String nome)
@@ -163,5 +183,21 @@ public class Pokemon
 	public void setDescrizione(String descrizione)
 	{
 		this.descrizione = descrizione;
+	}
+	public void setTipo(String[] tipi)
+	{
+		this.tipo = tipi;
+	}
+	public void setGenerazione(String generazione)
+	{
+		this.generazione = generazione;
+	}
+	public void setDexNumber(String dexNumber)
+	{
+		this.dexNumber = dexNumber;
+	}
+	public void setLineaEvolutiva(String[] lineaEvolutiva)
+	{
+		this.lineaEvolutiva = lineaEvolutiva;
 	}
 } // fine classe Pokemon

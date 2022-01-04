@@ -53,6 +53,9 @@ public class Commands extends ListenerAdapter
 	
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
+		String author = event.getAuthor().getName();
+		String msg = event.getMessage().getContentRaw();
+		System.out.printf("<%s> %s\n\n", author, msg);
 		messageChannel = event.getChannel();
 		String[] args = event.getMessage().getContentRaw().split(" ");
 		String comando = args[0];
@@ -373,6 +376,10 @@ public class Commands extends ListenerAdapter
 	{
 		if (event.getMessage().getContentRaw().contains("!pokemon"))
 		{
+			String[] tipo = {" ", " "};
+			String generazione = "";
+			String numeroPokedex = "";
+			String[] lineaEvolutiva = {"1","2","3"};
 			String[] msg = event.getMessage().getContentRaw().split(" ");
 			if (msg.length > 1 && !msg[1].isEmpty())
 			{
@@ -381,8 +388,19 @@ public class Commands extends ListenerAdapter
 
 				JSONObject jsonObject = (JSONObject) jsonArray.get(0);
 				String description = (String) jsonObject.get("description");
+				JSONArray types = (JSONArray) jsonObject.get("types");
+
+				for(int i = 0; i < types.size(); i++)
+					tipo[i] = types.get(i).toString();
+
+				generazione = String.valueOf(jsonObject.get("gen"));
+				numeroPokedex = (String) jsonObject.get("number");
 
 				Pokemon pokemon = new Pokemon(nome, description, false);
+
+				pokemon.setTipo(tipo);
+				pokemon.setGenerazione(generazione);
+				pokemon.setDexNumber(numeroPokedex);
 
 				messageChannel.sendMessageEmbeds(buildEmbed(pokemon).build()).queue();
 				return ;
@@ -459,10 +477,27 @@ public class Commands extends ListenerAdapter
 	{
 		EmbedBuilder embedBuilder = new EmbedBuilder();
 		String descrizione;
+		String[] tipi = pokemon.getTipo();
 
 		embedBuilder.setTitle(pokemon.getNome());
 		if ((descrizione = pokemon.getDescrizione()) != null)
 		{
+			String type;
+			if (tipi[1].equals(" "))
+			{
+				type = "Type";
+				embedBuilder.addField("**"+type+"**", ""+tipi[0], true);
+
+			}
+			else
+			{
+				type = "Types";
+				embedBuilder.addField("**"+type+"**", tipi[0]+" / "+tipi[1], true);
+
+			}
+			embedBuilder.addField("Generation", ""+pokemon.getGenerazione(), true);
+			embedBuilder.addField("National Dex", ""+pokemon.getDexNumber(), true);
+
 			embedBuilder.addField("Pokedex Entry", "*"+descrizione+"*", false);
 			embedBuilder.setThumbnail(pokemon.getImg());
 		}
