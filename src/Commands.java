@@ -58,8 +58,8 @@ public class Commands extends ListenerAdapter
 		spawnPokemon(event);
 		
 		
-		if (event.getAuthor().getDiscriminator().equals("0935")) // 2804 -> Òbito
-			if (true)//if (random.nextInt(100) == 42) // 1%
+		if (event.getAuthor().getDiscriminator().equals("2804")) // 2804 -> Òbito
+			if (random.nextInt(100) == 42) // 1%
 				event.getMessage().reply("Òbito vergognati").queue((message1 ->
 				{
 					react("obito");
