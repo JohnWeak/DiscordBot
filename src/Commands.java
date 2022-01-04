@@ -9,7 +9,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
+import org.json.simple.JSONArray;
 
 import java.awt.*;
 import java.io.*;
@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class Commands extends ListenerAdapter
 {
@@ -56,7 +58,7 @@ public class Commands extends ListenerAdapter
 		String comando = args[0];
 		String message = event.getMessage().getContentRaw();
 		String msgLowerCase = message.toLowerCase(Locale.ROOT);
-		
+
 		List<Emote> e = event.getMessage().getEmotes();
 
 		if (event.getAuthor().isBot()) return; // Per evitare problemi con altri bot
@@ -369,16 +371,22 @@ public class Commands extends ListenerAdapter
 	
 	public void pokemon(MessageReceivedEvent event)
 	{
-		String[] msg = event.getMessage().getContentRaw().split(" ");
-		if (msg.length > 1 && !msg[1].isEmpty())
+		if (event.getMessage().getContentRaw().contains("!pokemon"))
 		{
-			String nome = msg[1];
-			JSONObject jsonObject = search(msg[1]);
-			String description = jsonObject.get("description").toString();
-			Pokemon pokemon = new Pokemon(nome, description, false);
+			String[] msg = event.getMessage().getContentRaw().split(" ");
+			if (msg.length > 1 && !msg[1].isEmpty())
+			{
+				String nome = msg[1];
+				JSONArray jsonArray = search(msg[1]);
 
-			messageChannel.sendMessageEmbeds(buildEmbed(pokemon).build()).queue();
-			return ;
+				JSONObject jsonObject = (JSONObject) jsonArray.get(0);
+				String description = (String) jsonObject.get("description");
+
+				Pokemon pokemon = new Pokemon(nome, description, false);
+
+				messageChannel.sendMessageEmbeds(buildEmbed(pokemon).build()).queue();
+				return ;
+			}
 		}
 		
 		
@@ -397,11 +405,12 @@ public class Commands extends ListenerAdapter
 		}
 	} // fine metodo definitivo pokemon()
 
-	private JSONObject search(String pokemon)
+	private JSONArray search(String pokemon)
 	{
 		URL url;
-		Object file = null;
-		
+		JSONArray jsonArray = new JSONArray();
+		JSONParser jsonParser = new JSONParser();
+
 		try
 		{
 			url = new URL("https://pokeapi.glitch.me/v1/pokemon/" + pokemon);
@@ -416,14 +425,15 @@ public class Commands extends ListenerAdapter
 					StringBuilder response = new StringBuilder();
 					String inputLine;
 					while ((inputLine = in.readLine()) != null)
-						if (!inputLine.equals("[") && (!inputLine.equals("]")))
-						response.append(inputLine);
-					
-					file = JSONValue.parse(String.valueOf(response));
-				}
-		}catch (IOException e) { System.out.println("Errore nell'apertura del file: " + nomiPkmn); }
+							response.append(inputLine);
 
-		return (JSONObject) file;
+					jsonArray = (JSONArray) jsonParser.parse(String.valueOf(response));
+
+
+				}
+		}catch (IOException | ParseException e) { System.out.println("Errore nell'apertura del file: " + nomiPkmn); }
+
+		return jsonArray;
 	}
 	
 	private void doubleEncounter(Pokemon uno, Pokemon due)
