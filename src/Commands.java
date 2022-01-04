@@ -7,12 +7,13 @@ import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -22,7 +23,7 @@ public class Commands extends ListenerAdapter
 {
 	// public static final String prefix = "!";
 	private static final File file = new File("valori.txt");
-	// private static final File nomiPkmn = new File("nomiPokemon.txt");
+	private static final File nomiPkmn = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
 	private static MessageChannel messageChannel;
 	private static final String[] listaComandi = {"!vergognati", "!coinflip", "!poll", "!info", "!8ball", "!pokemon"};
@@ -86,7 +87,7 @@ public class Commands extends ListenerAdapter
 			case "!poll" -> poll(event);
 			case "!info" -> info();
 			case "!8ball" -> eightBall(event);
-			case "!pokemon" -> pokemon();
+			case "!pokemon" -> pokemon(event);
 		}
 		
 		
@@ -365,8 +366,16 @@ public class Commands extends ListenerAdapter
 		catch (InterruptedException e) { e.printStackTrace(); }
 	} // fine pause()
 	
-	public void pokemon()
+	public void pokemon(MessageReceivedEvent event)
 	{
+		String[] msg = event.getMessage().getContentRaw().split("");
+		if (msg.length > 1)
+		{
+			search(msg[1]);
+			return ;
+		}
+		
+		
 		Pokemon pokemon = new Pokemon();
 		EmbedBuilder embedBuilder;
 		
@@ -382,6 +391,35 @@ public class Commands extends ListenerAdapter
 		}
 	} // fine metodo definitivo pokemon()
 
+	void search(String pokemon)
+	{
+		JSONObject jsonObject;
+		URL url;
+		Object file;
+		
+		try
+		{
+			url = new URL("https://pokeapi.glitch.me/v1/pokemon/" + pokemon);
+			Scanner scanner = new Scanner(nomiPkmn);
+			while (scanner.hasNext())
+				if (pokemon.equals(scanner.nextLine()))
+				{
+					HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+					connection.setRequestProperty("Accept", "application/json");
+					
+					BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+					StringBuilder response = new StringBuilder();
+					String inputLine;
+					while ((inputLine = in.readLine()) != null)
+						response.append(inputLine);
+					
+					file = JSONValue.parse(String.valueOf(response));
+					System.out.println(file);
+				}
+				
+		}catch (IOException e) { System.out.println("Errore nell'apertura del file: " + nomiPkmn); }
+	}
+	
 	private void doubleEncounter(Pokemon uno, Pokemon due)
 	{
 		EmbedBuilder embedBuilder;
@@ -444,7 +482,7 @@ public class Commands extends ListenerAdapter
 		
 		if (messaggiInviati == valori[0])
 		{
-			pokemon(); // genera un incontro
+			pokemon(event); // genera un incontro
 			messaggiInviati = 0; // resetta il contatore
 			limite = random.nextInt(10) + 5; // genera un nuovo max per i messaggi
 		}

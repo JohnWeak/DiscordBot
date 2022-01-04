@@ -14,14 +14,14 @@ public class NameList
 	
 	}
 	
-	private JSONObject requestApi(int numeroPkmn)
+	private JSONObject requestApi(URL url, String numeroPkmn)
 	{
 		Object file = null;
 		try
 		{
-			final URL url = new URL("https://pokeapi.co/api/v2/pokemon/" + numeroPkmn);
+			URL newUrl = new URL(url + numeroPkmn);
 			
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			HttpURLConnection connection = (HttpURLConnection) newUrl.openConnection();
 			connection.setRequestProperty("Accept", "application/json");
 			
 			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -37,15 +37,16 @@ public class NameList
 		return (JSONObject) file;
 	}
 	
-	public String[] generateNameList()
+	public String[] generateNameList(URL url)
 	{
 		int numeroTotalePokemon = 899;
+		
 		String[] listaNomi = new String[numeroTotalePokemon];
 		JSONObject jsonObject;
 		
 		for (int i = 1; i < numeroTotalePokemon; i++)
 		{
-			jsonObject = requestApi(i);
+			jsonObject = requestApi(url, String.valueOf(i));
 			listaNomi[i-1] = (String) jsonObject.get("name");
 		}
 		return listaNomi;
@@ -59,7 +60,9 @@ public class NameList
 		FileWriter fileWriter;
 		try
 		{
-			nomi = new NameList().generateNameList();
+			URL url = new URL("https://pokeapi.co/api/v2/pokemon/");
+			
+			nomi = new NameList().generateNameList(url);
 			fileWriter = new FileWriter(nomiPkmn, true);
 			int length = nomi.length;
 			for (int i = 0; i < length; i++)
