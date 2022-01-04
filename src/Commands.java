@@ -368,7 +368,7 @@ public class Commands extends ListenerAdapter
 	
 	public void pokemon(MessageReceivedEvent event)
 	{
-		String[] msg = event.getMessage().getContentRaw().split("");
+		String[] msg = event.getMessage().getContentRaw().split(" ");
 		if (msg.length > 1)
 		{
 			search(msg[1]);
