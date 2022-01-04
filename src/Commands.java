@@ -13,8 +13,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -25,7 +23,6 @@ public class Commands extends ListenerAdapter
 	// public static final String prefix = "!";
 	private static final File file = new File("valori.txt");
 	private static final File nomiPkmn = new File("nomiPokemon.txt");
-	private static OffsetDateTime lastMsgSent = OffsetDateTime.now();
 	private static final Random random = new Random();
 	private static MessageChannel messageChannel;
 	private static final String[] listaComandi = {"!vergognati", "!coinflip", "!poll", "!info", "!8ball", "!pokemon"};
@@ -61,9 +58,13 @@ public class Commands extends ListenerAdapter
 		spawnPokemon(event);
 		
 		
-		if (event.getAuthor().getDiscriminator().equals("2804"))
-			if (random.nextInt(1000) == 42) // 0,1%
-				messageChannel.sendMessage("Òbito vergognati").queue();
+		if (event.getAuthor().getDiscriminator().equals("0935")) // 2804 -> Òbito
+			if (true)//if (random.nextInt(100) == 42) // 1%
+				event.getMessage().reply("Òbito vergognati").queue((message1 ->
+				{
+					react("obito");
+					react("vergogna");
+				}));
 		
 		if (event.getAuthor().getDiscriminator().equals("2241")) //2241 = Lex
 			if (random.nextInt(10) == 9) // 10%
@@ -129,7 +130,7 @@ public class Commands extends ListenerAdapter
 		if (c.equals("test"))
 			messageChannel.sendMessage("test eseguito con successo!").queue();
 	
-	
+	//FIXME: come diavolo si fa?!
 	} // fine onSlashCommand()
 	
 	public void vergognati(MessageReceivedEvent event)
@@ -413,8 +414,6 @@ public class Commands extends ListenerAdapter
 	
 	public void spawnPokemon(MessageReceivedEvent event)
 	{
-		OffsetDateTime sentMsg = event.getMessage().getTimeCreated();
-		
 		int[] valori = new int[2];
 		Scanner scanner;
 		FileWriter fileWriter;
@@ -435,37 +434,18 @@ public class Commands extends ListenerAdapter
 		//valori[0] : limite (max) messaggi
 		//valori[1] : messaggiInviati
 		
-		if (sentMsg.isAfter(lastMsgSent))
+		if (messaggiInviati == valori[0])
 		{
-			if (messaggiInviati == valori[0])
-			{
-				pokemon(); // genera un incontro
-				messaggiInviati = 0; // resetta il contatore
-				limite = random.nextInt(10) + 5; // genera un nuovo max per i messaggi
-			}
-			else
-			{
-				messaggiInviati++;
-			}
-			valori[0] = limite;
-			valori[1] = messaggiInviati;
-			
-			//TODO: aggiornare dopoUnMinuto
+			pokemon(); // genera un incontro
+			messaggiInviati = 0; // resetta il contatore
+			limite = random.nextInt(10) + 5; // genera un nuovo max per i messaggi
 		}
 		else
 		{
-			int year = sentMsg.getYear();
-			int month = sentMsg.getMonthValue();
-			int day = sentMsg.getDayOfMonth();
-			int hour = sentMsg.getHour();
-			int minutes = sentMsg.getMinute();
-			int seconds = sentMsg.getSecond();
-			int nano = sentMsg.getNano();
-			ZoneOffset offset = sentMsg.getOffset();
-			int minutesPlus = minutes+1;
-			
-			lastMsgSent = OffsetDateTime.of(year, month, day, hour, minutesPlus, seconds, nano, offset);
+			messaggiInviati++;
 		}
+		valori[0] = limite;
+		valori[1] = messaggiInviati;
 		
 		try
 		{

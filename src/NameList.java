@@ -14,11 +14,6 @@ public class NameList
 	
 	}
 	
-	
-	// TODO: Maiuscolare ogni nome di pokemon
-	//  nome = name.substring(0,1).toUpperCase(Locale.ROOT) + name.substring(1);
-	
-	
 	private JSONObject requestApi(int numeroPkmn)
 	{
 		Object file = null;
