@@ -1,5 +1,8 @@
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.Emote;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -19,7 +22,7 @@ public class Commands extends ListenerAdapter
 {
 	// public static final String prefix = "!";
 	private static final File file = new File("valori.txt");
-	private static final File nomiPkmn = new File("nomiPokemon.txt");
+	// private static final File nomiPkmn = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
 	private static MessageChannel messageChannel;
 	private static final String[] listaComandi = {"!vergognati", "!coinflip", "!poll", "!info", "!8ball", "!pokemon"};
@@ -36,6 +39,14 @@ public class Commands extends ListenerAdapter
 	private static int messaggiInviati = 0;
 	private static int limite;
 	
+	
+	/*
+		Òbito: 2804
+		Enigmo: 7166
+		Lex: 2241
+		Gion: 0935
+	*/
+	
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
 		messageChannel = event.getChannel();
@@ -50,11 +61,9 @@ public class Commands extends ListenerAdapter
 
 		for (Emote emote : e)
 			event.getMessage().addReaction(emote).queue();
-		
-		TextChannel textChannel = event.getGuild().getTextChannelsByName("bot-owo", true).get(0);
-		textChannel.sendMessage("prova pog").queue();
 
-		spawnPokemon(event);
+		if (!msgLowerCase.contains("!pokemon")) // genera un pokemon casuale soltanto se non viene eseguito il comando
+			spawnPokemon(event);
 		
 		
 		if (event.getAuthor().getDiscriminator().equals("2804")) // 2804 -> Òbito
