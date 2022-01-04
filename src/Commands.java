@@ -389,6 +389,10 @@ public class Commands extends ListenerAdapter
 				JSONObject jsonObject = (JSONObject) jsonArray.get(0);
 				String description = (String) jsonObject.get("description");
 				JSONArray types = (JSONArray) jsonObject.get("types");
+				JSONObject family = (JSONObject) jsonObject.get("family");
+				JSONArray evoLine = (JSONArray) family.get("evolutionLine");
+
+				System.out.println("Evoluzioni: "+evoLine);
 
 				for(int i = 0; i < types.size(); i++)
 					tipo[i] = types.get(i).toString();
@@ -396,13 +400,17 @@ public class Commands extends ListenerAdapter
 				generazione = String.valueOf(jsonObject.get("gen"));
 				numeroPokedex = (String) jsonObject.get("number");
 
+				for (int i = 0; i < evoLine.size(); i++)
+					lineaEvolutiva[i] = evoLine.get(i).toString();
+
 				Pokemon pokemon = new Pokemon(nome, description, false);
 
 				pokemon.setTipo(tipo);
 				pokemon.setGenerazione(generazione);
 				pokemon.setDexNumber(numeroPokedex);
+				pokemon.setLineaEvolutiva(lineaEvolutiva);
 
-				messageChannel.sendMessageEmbeds(buildEmbed(pokemon).build()).queue();
+				messageChannel.sendMessageEmbeds(buildEmbed(pokemon, true).build()).queue();
 				return ;
 			}
 		}
@@ -417,7 +425,7 @@ public class Commands extends ListenerAdapter
 		}
 		else
 		{
-			embedBuilder = buildEmbed(pokemon);
+			embedBuilder = buildEmbed(pokemon, false);
 			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 		
 		}
@@ -463,7 +471,7 @@ public class Commands extends ListenerAdapter
 		
 		for (int i = 0; i < 2; i++)
 		{
-			embedBuilder = buildEmbed(pokemons[i]);
+			embedBuilder = buildEmbed(pokemons[i], false);
 			embedBuilder.setDescription(titolo[i]);
 			//embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
 			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
@@ -473,28 +481,52 @@ public class Commands extends ListenerAdapter
 		System.out.printf("\nUno: %s, shiny: %s\nDue: %s, shiny: %s\n",uno.getNome(), uno.isShiny(), due.getNome(), due.isShiny());
 	} // fine
 	
-	private EmbedBuilder buildEmbed(Pokemon pokemon)
+	private EmbedBuilder buildEmbed(Pokemon pokemon, boolean pokedex)
 	{
 		EmbedBuilder embedBuilder = new EmbedBuilder();
 		String descrizione;
 		String[] tipi = pokemon.getTipo();
+		StringBuilder stringBuilder = new StringBuilder();
+		String types = "";
+		String[] lineaEvo = pokemon.getLineaEvolutiva();
+		String lineaEvolutiva;
 
+		if (pokedex)
+		{
+			stringBuilder.append(tipi[0]);
+			if (!(tipi[1].equals(" ")))
+			{
+				stringBuilder.append(" / ").append(tipi[1]);
+			}
+			types = String.valueOf(stringBuilder);
+			stringBuilder.delete(0, stringBuilder.length()); // pulizia per riciclarlo per la linea evolutiva
+			stringBuilder.append(lineaEvo[0]); //esiste per forza
+			if (!(lineaEvo[1].equals("2")))
+			{
+				stringBuilder.append(" > ").append(lineaEvo[1]);
+				if (!(lineaEvo[2]).equals("3"))
+				{
+					stringBuilder.append(" > ").append(lineaEvo[2]);
+				}
+			}
+			else
+			{
+				stringBuilder.append(" doesn't evolve.");
+			}
+			lineaEvolutiva = String.valueOf(stringBuilder);
+			embedBuilder.setFooter(""+lineaEvolutiva, "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F5%2F53%2FPok%25C3%25A9_Ball_icon.svg%2F1026px-Pok%25C3%25A9_Ball_icon.svg.png&f=1&nofb=1");
+
+		}
 		embedBuilder.setTitle(pokemon.getNome());
 		if ((descrizione = pokemon.getDescrizione()) != null)
 		{
 			String type;
 			if (tipi[1].equals(" "))
-			{
 				type = "Type";
-				embedBuilder.addField("**"+type+"**", ""+tipi[0], true);
-
-			}
 			else
-			{
 				type = "Types";
-				embedBuilder.addField("**"+type+"**", tipi[0]+" / "+tipi[1], true);
 
-			}
+			embedBuilder.addField("**"+type+"**", ""+types, true);
 			embedBuilder.addField("Generation", ""+pokemon.getGenerazione(), true);
 			embedBuilder.addField("National Dex", ""+pokemon.getDexNumber(), true);
 
@@ -516,7 +548,7 @@ public class Commands extends ListenerAdapter
 			embedBuilder.setColor(Color.RED);
 		}
 
-		
+
 		return embedBuilder;
 	} // fine buildEmbed()
 	
