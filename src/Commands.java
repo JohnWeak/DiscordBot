@@ -478,7 +478,12 @@ public class Commands extends ListenerAdapter
 			embedBuilder = buildEmbed(pokemons[i], false);
 			embedBuilder.setDescription(titolo[i]);
 			//embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
-			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
+			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue(message ->
+			{
+				message.addReaction("👍🏻").queue();
+				message.addReaction("❤️").queue();
+				message.addReaction("👎🏻").queue();
+			});
 			
 		}
 		
