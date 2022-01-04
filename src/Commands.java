@@ -1,4 +1,3 @@
-import com.fasterxml.jackson.core.JsonParser;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Message;
@@ -8,8 +7,10 @@ import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.awt.*;
 import java.io.*;
@@ -19,8 +20,6 @@ import java.util.List;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 public class Commands extends ListenerAdapter
 {
@@ -426,7 +425,12 @@ public class Commands extends ListenerAdapter
 		else
 		{
 			embedBuilder = buildEmbed(pokemon, false);
-			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
+			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue((message ->
+			{
+				message.addReaction("👍🏻").queue();
+				message.addReaction("❤️").queue();
+				message.addReaction("👎🏻").queue();
+			}));
 		
 		}
 	} // fine metodo definitivo pokemon()
