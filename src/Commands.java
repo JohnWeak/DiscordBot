@@ -91,7 +91,7 @@ public class Commands extends ListenerAdapter
 			react("pog");
 		
 		if (msgLowerCase.contains("òbito") || msgLowerCase.contains("obito"))
-			if (random.nextInt(1000) == 42) // 0,1%
+			if (random.nextInt(50) == 42) // 2%
 			{
 				react("obito");
 				react("vergogna");
