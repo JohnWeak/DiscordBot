@@ -369,7 +369,7 @@ public class Commands extends ListenerAdapter
 	public void pokemon(MessageReceivedEvent event)
 	{
 		String[] msg = event.getMessage().getContentRaw().split(" ");
-		if (msg.length > 1)
+		if (msg.length > 1 && !msg[1].isEmpty())
 		{
 			search(msg[1]);
 			return ;
@@ -393,6 +393,7 @@ public class Commands extends ListenerAdapter
 
 	void search(String pokemon)
 	{
+		
 		JSONObject jsonObject;
 		URL url;
 		Object file;
