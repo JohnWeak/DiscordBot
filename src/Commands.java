@@ -409,6 +409,8 @@ public class Commands extends ListenerAdapter
 				pokemon.setDexNumber(numeroPokedex);
 				pokemon.setLineaEvolutiva(lineaEvolutiva);
 
+				messageChannel.sendTyping().queue();
+				pause(1000, 500);
 				messageChannel.sendMessageEmbeds(buildEmbed(pokemon, true).build()).queue();
 				return ;
 			}
