@@ -67,7 +67,7 @@ public class Commands extends ListenerAdapter
 		if (event.getAuthor().getDiscriminator().equals("8456"))
 		{
 			react("owo");
-			react("vergognati");
+			react("vergogna");
 			return; // così da evitare problemi
 		}
 		
@@ -381,67 +381,79 @@ public class Commands extends ListenerAdapter
 	
 	public void pokemon(MessageReceivedEvent event)
 	{
+		String[] msg = event.getMessage().getContentRaw().split(" ");
+
 		if (event.getMessage().getContentRaw().contains("!pokemon"))
 		{
 			String[] tipo = {" ", " "};
 			String generazione = "";
 			String numeroPokedex = "";
 			String[] lineaEvolutiva = {"1","2","3"};
-			String[] msg = event.getMessage().getContentRaw().split(" ");
+
 			if (msg.length > 1 && !msg[1].isEmpty())
 			{
 				String nome = msg[1];
 				JSONArray jsonArray = search(msg[1]);
 
-				JSONObject jsonObject = (JSONObject) jsonArray.get(0);
-				String description = (String) jsonObject.get("description");
-				JSONArray types = (JSONArray) jsonObject.get("types");
-				JSONObject family = (JSONObject) jsonObject.get("family");
-				JSONArray evoLine = (JSONArray) family.get("evolutionLine");
+				try
+				{
+					JSONObject jsonObject = (JSONObject) jsonArray.get(0);
+					String description = (String) jsonObject.get("description");
+					JSONArray types = (JSONArray) jsonObject.get("types");
+					JSONObject family = (JSONObject) jsonObject.get("family");
+					JSONArray evoLine = (JSONArray) family.get("evolutionLine");
 
-				System.out.println("Evoluzioni: "+evoLine);
+					System.out.println("Evoluzioni: " + evoLine);
 
-				for(int i = 0; i < types.size(); i++)
-					tipo[i] = types.get(i).toString();
+					for (int i = 0; i < types.size(); i++)
+					{
+						tipo[i] = types.get(i).toString();
+					}
 
-				generazione = String.valueOf(jsonObject.get("gen"));
-				numeroPokedex = (String) jsonObject.get("number");
+					generazione = String.valueOf(jsonObject.get("gen"));
+					numeroPokedex = (String) jsonObject.get("number");
 
-				for (int i = 0; i < evoLine.size(); i++)
-					lineaEvolutiva[i] = evoLine.get(i).toString();
+					for (int i = 0; i < evoLine.size(); i++)
+					{
+						lineaEvolutiva[i] = evoLine.get(i).toString();
+					}
 
-				Pokemon pokemon = new Pokemon(nome, description, false);
+					Pokemon pokemon = new Pokemon(nome, description, false);
 
-				pokemon.setTipo(tipo);
-				pokemon.setGenerazione(generazione);
-				pokemon.setDexNumber(numeroPokedex);
-				pokemon.setLineaEvolutiva(lineaEvolutiva);
+					pokemon.setTipo(tipo);
+					pokemon.setGenerazione(generazione);
+					pokemon.setDexNumber(numeroPokedex);
+					pokemon.setLineaEvolutiva(lineaEvolutiva);
 
-				messageChannel.sendTyping().queue();
-				pause(1000, 500);
-				messageChannel.sendMessageEmbeds(buildEmbed(pokemon, true).build()).queue();
-				return ;
+					messageChannel.sendTyping().queue();
+					pause(1000, 500);
+					messageChannel.sendMessageEmbeds(buildEmbed(pokemon, true).build()).queue();
+					return;
+				}
+				catch (IndexOutOfBoundsException e) { System.out.println("Il pokemon cercato ("+nome+") non è presente nell'API"); }
 			}
-		}
-		
-		
-		Pokemon pokemon = new Pokemon();
-		EmbedBuilder embedBuilder;
-		
-		if (random.nextInt(10) == 9)
-		{
-			doubleEncounter(pokemon, new Pokemon());
-		}
-		else
-		{
-			embedBuilder = buildEmbed(pokemon, false);
-			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue((message ->
+			else if (msg.length == 1)
 			{
-				message.addReaction("👍🏻").queue();
-				message.addReaction("❤️").queue();
-				message.addReaction("👎🏻").queue();
-			}));
-		
+				Pokemon pokemon = new Pokemon();
+				EmbedBuilder embedBuilder;
+
+				if (random.nextInt(10) == 9)
+				{
+					doubleEncounter(pokemon, new Pokemon());
+				}
+				else
+				{
+					embedBuilder = buildEmbed(pokemon, false);
+					messageChannel.sendTyping().queue();
+					pause(500, 500);
+					messageChannel.sendMessageEmbeds(embedBuilder.build()).queue((message ->
+					{
+						message.addReaction("👍🏻").queue();
+						message.addReaction("❤️").queue();
+						message.addReaction("👎🏻").queue();
+					}));
+				}
+			}
 		}
 	} // fine metodo definitivo pokemon()
 
