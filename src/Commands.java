@@ -63,6 +63,14 @@ public class Commands extends ListenerAdapter
 
 		List<Emote> e = event.getMessage().getEmotes();
 
+		// dire all'altro bot OwO di vergognarsi
+		if (event.getAuthor().getDiscriminator().equals("8456"))
+		{
+			react("owo");
+			react("vergognati");
+			return; // così da evitare problemi
+		}
+		
 		if (event.getAuthor().isBot()) return; // Per evitare problemi con altri bot
 
 		for (Emote emote : e)
