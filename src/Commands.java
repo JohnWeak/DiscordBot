@@ -123,14 +123,8 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("vergogna"))
 			react("vergogna");
 		
-		if (msgLowerCase.contains("no"))
-		{
-			Pattern pattern = Pattern.compile(".*n+o+ *u+.*", Pattern.CASE_INSENSITIVE);
-			Matcher matcher = pattern.matcher(msgLowerCase);
-			
-			if (matcher.matches())
-				react("nou");
-		}
+		if (msgLowerCase.contains("no u") || msgLowerCase.contains("nou"))
+			react("nou");
 		
 		if (msgLowerCase.contains("sabaping"))
 			react("sabaping");
@@ -147,8 +141,10 @@ public class Commands extends ListenerAdapter
 	
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
 	{
-		String c = event.getName();
-		
+		String c = event.getCommandString();
+
+		System.out.println("Comando: " + c);
+
 		if (c.equals("test"))
 			messageChannel.sendMessage("test eseguito con successo!").queue();
 	
