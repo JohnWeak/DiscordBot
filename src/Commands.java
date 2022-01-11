@@ -135,6 +135,12 @@ public class Commands extends ListenerAdapter
 
 		if (msgLowerCase.contains("smh"))
 			react("smh");
+
+		if (msgLowerCase.contains("giorno"))
+			react("giorno");
+
+		//if (msgLowerCase.contains(""))
+		//	react("");
 		
 		
 	} // fine onMessageReceived()
@@ -262,6 +268,8 @@ public class Commands extends ListenerAdapter
 		final String[] emoteSabaPing = {"leftPowerUp:785565275608842250", "sabaPing:785561662605885502", "rightPowerUp:785565774953709578"};
 		final String emoteGetRekt = "getrekt:742330625347944504";
 		final String emoteSmh = "smh:880423534365659176";
+		final String emoteGiorno = "GiOrNo:618591225582321703";
+		// final String emoteNuova = "";
 		
 		final long id = messageChannel.getLatestMessageIdLong();
 		String emoteDaUsare = switch (emote)
@@ -273,9 +281,11 @@ public class Commands extends ListenerAdapter
 			case "vergogna" -> emoteVergognati[random.nextInt(2)];
 			case "getrekt" -> emoteGetRekt;
 			case "smh" -> emoteSmh;
+			case "giorno" -> emoteGiorno;
+			//case "" -> emoteNuova;
 			default -> "";
 		};
-		
+
 		if (emote.equals("obito"))
 			for (String s : emoteObito)
 				messageChannel.addReactionById(id, s).queue();
