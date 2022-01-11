@@ -41,7 +41,7 @@ public class Commands extends ListenerAdapter
 	};
 	private static int messaggiInviati = 0;
 	private static int limite;
-	
+	private static String author;
 	
 	/*
 		Òbito: 2804
@@ -52,7 +52,7 @@ public class Commands extends ListenerAdapter
 	
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
-		String author = event.getAuthor().getName();
+		author = event.getAuthor().getName();
 		String msg = event.getMessage().getContentRaw();
 		System.out.printf("<%s> %s\n\n", author, msg);
 		messageChannel = event.getChannel();
@@ -189,6 +189,7 @@ public class Commands extends ListenerAdapter
 		if (msg.length() <= 5)
 		{
 			sondaggio("Pog?", new String[]{"Pog sì", "Pog no", "Porgo Tensing"}, true);
+			//flag = true fa comparire il messaggio di utilizzo del comando !poll
 			return;
 		}
 		
@@ -220,7 +221,7 @@ public class Commands extends ListenerAdapter
 		
 		if (size < 2 || size > 20 || flag)
 		{
-			//embedBuilder.setAuthor("");
+			//embedBuilder.setFooter("");
 			embedBuilder.setTitle("`!poll` - Istruzioni per l'uso");
 			embedBuilder.addField("Sondaggio", "Per creare un sondaggio devi usare il comando `!poll` + `domanda?` + `[risposte]`\nSepara le risposte con uno slash `/`.", false);
 			embedBuilder.addField("Esempio", "`!poll domanda? opzione 1 / opzione 2 / opzione 3 ...`\n`!poll Cosa preferite? Pizza / Pollo / Panino / Sushi`", false);
@@ -235,7 +236,7 @@ public class Commands extends ListenerAdapter
 		else
 		{
 			String descrizione = "";
-			
+			//embedBuilder.setFooter(author + " ha posto la domanda");
 			embedBuilder.setTitle(domanda+"?");
 			for (int i = 0; i < risposte.length; i++)
 				descrizione = descrizione.concat(letters[i] + "\t" + risposte[i]) + "\n";
