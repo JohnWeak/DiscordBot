@@ -42,7 +42,7 @@ public class Commands extends ListenerAdapter
 	private static int messaggiInviati = 0;
 	private static int limite;
 	private static String author;
-	
+
 	/*
 		Òbito: 2804
 		Enigmo: 7166
@@ -89,7 +89,7 @@ public class Commands extends ListenerAdapter
 				}));
 		
 		if (event.getAuthor().getDiscriminator().equals("2241")) //2241 = Lex
-			if (random.nextInt(10) == 9) // 10%
+			if (random.nextInt(20) == 9) // 5%
 				messageChannel.addReactionById(event.getMessageIdLong(), "U+1F1F7 U+1F1F4").queue(); //unicode della bandiera della romania
 		
 		
