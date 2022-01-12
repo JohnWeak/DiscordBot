@@ -61,19 +61,19 @@ public class Commands extends ListenerAdapter
 		String message = event.getMessage().getContentRaw();
 		String msgLowerCase = message.toLowerCase(Locale.ROOT);
 
-		List<Emote> e = event.getMessage().getEmotes();
+		List<Emote> emoteList = event.getMessage().getEmotes();
 
 		// dire all'altro bot OwO di vergognarsi
 		if (event.getAuthor().getDiscriminator().equals("8456"))
 		{
 			react("owo");
 			react("vergogna");
-			return; // così da evitare problemi
+			return;
 		}
 		
 		if (event.getAuthor().isBot()) return; // Per evitare problemi con altri bot
 
-		for (Emote emote : e)
+		for (Emote emote : emoteList)
 			event.getMessage().addReaction(emote).queue();
 
 		if (!msgLowerCase.contains("!pokemon")) // genera un pokemon casuale soltanto se non viene eseguito il comando
