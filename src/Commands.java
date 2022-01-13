@@ -23,6 +23,7 @@ import java.util.regex.Pattern;
 
 public class Commands extends ListenerAdapter
 {
+	private static int msgCount = 0;
 	// public static final String prefix = "!";
 	private static final File valori = new File("valori.txt");
 	private static final File nomiPkmn = new File("nomiPokemon.txt");
@@ -42,19 +43,23 @@ public class Commands extends ListenerAdapter
 	private static int messaggiInviati = 0;
 	private static int limite;
 	private static String author;
+	private static final String[] utenti = {"Òbito#2804", "Enigmo#7166", "Alex#2241", "Gion#0935", "OwO#8456"};
 
-	/*
-		Òbito: 2804
-		Enigmo: 7166
-		Lex: 2241
-		Gion: 0935
-	*/
 	
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
+		String guild = event.getGuild().toString().split("\\(")[0].split(":")[1];
 		author = event.getAuthor().getName();
 		String msg = event.getMessage().getContentRaw();
-		System.out.printf("<%s> %s\n\n", author, msg);
+		final String mockupCode = "String %s = \"%s\"; // in %s\n\t";
+
+		if (msgCount == 0)
+		{
+			System.out.print("public class MessageHistory\n{\n\t");
+			msgCount++;
+		}
+
+		System.out.printf(mockupCode, author, msg, guild);
 		messageChannel = event.getChannel();
 		String[] args = event.getMessage().getContentRaw().split(" ");
 		String comando = args[0];
@@ -633,8 +638,8 @@ public class Commands extends ListenerAdapter
 
 		}catch (IOException e) { System.out.println("Errore nella scrittura del file!"); }
 
-		System.out.println("Valori nel file: " + Arrays.toString(valori));
-		System.out.printf("Valori nelle variabili: [limite: %d, messaggiInviati: %d]\n", limite, messaggiInviati);
+		//System.out.println("Valori nel file: " + Arrays.toString(valori));
+		//System.out.printf("Valori nelle variabili: [limite: %d, messaggiInviati: %d]\n", limite, messaggiInviati);
 
 
 	} // fine spawnPokemon
