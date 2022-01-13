@@ -51,23 +51,26 @@ public class Commands extends ListenerAdapter
 		String guild = event.getGuild().toString().split("\\(")[0].split(":")[1];
 		author = event.getAuthor().getName();
 		String msg = event.getMessage().getContentRaw();
-		final String mockupCode = "\tString %s = \"%s\"; // in %s";
+		final String mockupCode = "\tString %s = \"%s\"; // in \"%s\" (%s)";
 
-		if (msgCount == 0)
-		{
-			System.out.print("public class MessageHistory\n{\n");
-			msgCount++;
-		}
-
-		System.out.printf(mockupCode, author, msg, guild);
-		System.out.print("\n}\r");
 		messageChannel = event.getChannel();
+		String messageChannelString = "#"+messageChannel.toString().split(":")[1].split("\\(")[0];
 		String[] args = event.getMessage().getContentRaw().split(" ");
 		String comando = args[0];
 		String message = event.getMessage().getContentRaw();
 		String msgLowerCase = message.toLowerCase(Locale.ROOT);
 
 		List<Emote> emoteList = event.getMessage().getEmotes();
+
+
+		if (msgCount == 0)
+		{
+			System.out.print("public class MessageHistory\n{\n");
+			msgCount++;
+		}
+		System.out.printf(mockupCode, author, msg, messageChannelString, guild);
+		System.out.print("\n}\r");
+
 
 		// dire all'altro bot OwO di vergognarsi
 		if (event.getAuthor().getDiscriminator().equals("8456"))
@@ -85,7 +88,8 @@ public class Commands extends ListenerAdapter
 		if (!msgLowerCase.contains("!pokemon")) // genera un pokemon casuale soltanto se non viene eseguito il comando
 			spawnPokemon(event);
 		
-		
+
+
 		if (event.getAuthor().getDiscriminator().equals("2804")) // 2804 -> Òbito
 			if (random.nextInt(100) == 42) // 1%
 				event.getMessage().reply("Òbito vergognati").queue((message1 ->
