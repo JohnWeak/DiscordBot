@@ -51,15 +51,16 @@ public class Commands extends ListenerAdapter
 		String guild = event.getGuild().toString().split("\\(")[0].split(":")[1];
 		author = event.getAuthor().getName();
 		String msg = event.getMessage().getContentRaw();
-		final String mockupCode = "String %s = \"%s\"; // in %s\n\t";
+		final String mockupCode = "\tString %s = \"%s\"; // in %s";
 
 		if (msgCount == 0)
 		{
-			System.out.print("public class MessageHistory\n{\n\t");
+			System.out.print("public class MessageHistory\n{\n");
 			msgCount++;
 		}
 
 		System.out.printf(mockupCode, author, msg, guild);
+		System.out.print("\n}\r");
 		messageChannel = event.getChannel();
 		String[] args = event.getMessage().getContentRaw().split(" ");
 		String comando = args[0];
