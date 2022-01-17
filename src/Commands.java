@@ -89,19 +89,31 @@ public class Commands extends ListenerAdapter
 			spawnPokemon(event);
 		
 
+		if (random.nextInt(20) == 9) // 5% chance di reagire con emote personali
+		{
+			String discriminator = event.getAuthor().getDiscriminator();
 
-		if (event.getAuthor().getDiscriminator().equals("2804")) // 2804 -> Òbito
-			if (random.nextInt(100) == 42) // 1%
+			if (discriminator.equals("2804")) // Òbito
 				event.getMessage().reply("Òbito vergognati").queue((message1 ->
 				{
 					react("obito");
 					react("vergogna");
 				}));
-		
-		if (event.getAuthor().getDiscriminator().equals("2241")) //2241 = Lex
-			if (random.nextInt(20) == 9) // 5%
+
+			if (discriminator.equals("2241")) // Lex
 				messageChannel.addReactionById(event.getMessageIdLong(), "U+1F1F7 U+1F1F4").queue(); //unicode della bandiera della romania
-		
+
+
+			if (discriminator.equals("0935")) // Gion
+				react("smh");
+
+
+			if (discriminator.equals("7166")) // Enigmo
+				react("pigeon");
+
+
+		} // fine if reazioni
+
 		
 		switch (comando)
 		{
@@ -207,7 +219,7 @@ public class Commands extends ListenerAdapter
 		String domanda = domandaERisposte[0].substring("!poll".length());
 		String[] risposte = msg.substring("!poll".length()+domanda.length()+1).split("/");
 		
-		System.out.printf("DomandaERisposte length: %d\nDomandaERisposte: %s\nDomanda length: %d\nDomanda: %s\nRisposte.length: %d\nRisposte: %s\n", domandaERisposte.length, Arrays.toString(domandaERisposte), domanda.length(), domanda, risposte.length, Arrays.toString(risposte));
+		//System.out.printf("DomandaERisposte length: %d\nDomandaERisposte: %s\nDomanda length: %d\nDomanda: %s\nRisposte.length: %d\nRisposte: %s\n", domandaERisposte.length, Arrays.toString(domandaERisposte), domanda.length(), domanda, risposte.length, Arrays.toString(risposte));
 		
 		sondaggio(domanda, risposte, false);
 	} // fine poll()
