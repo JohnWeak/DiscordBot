@@ -3,9 +3,11 @@ import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
@@ -45,16 +47,20 @@ public class Commands extends ListenerAdapter
 	private static int limite;
 	private static String author;
 	private static final String[] utenti = {"Òbito#2804", "Enigmo#7166", "Alex#2241", "Gion#0935", "OwO#8456"};
+	private static long id;
+
 
 	public void onReady(@NotNull ReadyEvent event)
 	{
 		String nome = event.getJDA().getSelfUser().getName();
+
 		System.out.printf("%s si è connesso a Discord!\n\n", nome);
 		System.out.print("public class MessageHistory\n{\n");
 	}
 
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
+		id = event.getMessageIdLong();
 		String guild = event.getGuild().toString().split("\\(")[0].split(":")[1];
 		author = event.getAuthor().getName();
 		String msg = event.getMessage().getContentRaw();
@@ -69,6 +75,8 @@ public class Commands extends ListenerAdapter
 
 		List<Emote> emoteList = event.getMessage().getEmotes();
 
+
+
 		System.out.printf(mockupCode, author, msg, messageChannelString, guild);
 		System.out.print("\n}\r");
 
@@ -76,8 +84,8 @@ public class Commands extends ListenerAdapter
 		// dire all'altro bot OwO di vergognarsi
 		if (event.getAuthor().getDiscriminator().equals("8456"))
 		{
-			react("owo");
-			react("vergogna");
+			react(id,"owo");
+			react(id,"vergogna");
 			return;
 		}
 		
@@ -92,25 +100,26 @@ public class Commands extends ListenerAdapter
 
 		if (random.nextInt(20) == 9) // 5% chance di reagire con emote personali
 		{
+			long id = event.getMessageIdLong();
 			String discriminator = event.getAuthor().getDiscriminator();
 
 			if (discriminator.equals("2804")) // Òbito
-				event.getMessage().reply("Òbito vergognati").queue((message1 ->
-				{
-					react("obito");
-					react("vergogna");
-				}));
+			{
+				event.getMessage().reply("Òbito vergognati").queue();
+				react(id, "obito");
+				react(id, "vergognati");
+			}
 
 			if (discriminator.equals("2241")) // Lex
-				messageChannel.addReactionById(event.getMessageIdLong(), "U+1F1F7 U+1F1F4").queue(); //unicode della bandiera della romania
+				messageChannel.addReactionById(id, "U+1F1F7 U+1F1F4").queue(); //unicode della bandiera della romania
 
 
 			if (discriminator.equals("0935")) // Gion
-				react("smh");
+				react(id,"smh");
 
 
 			if (discriminator.equals("7166")) // Enigmo
-				react("pigeon");
+				react(id,"pigeon");
 
 
 		} // fine if reazioni
@@ -128,46 +137,46 @@ public class Commands extends ListenerAdapter
 		
 		
 		if (msgLowerCase.contains("pigeon"))
-			react("pigeon");
+			react(id,"pigeon");
 		
 		if (msgLowerCase.contains("owo"))
-			react("owo");
+			react(id,"owo");
 		
 		if (msgLowerCase.contains("pog"))
-			react("pog");
+			react(id,"pog");
 		
 		if (msgLowerCase.contains("òbito") || msgLowerCase.contains("obito"))
 			if (random.nextInt(50) == 42) // 2%
 			{
-				react("obito");
-				react("vergogna");
+				react(id,"obito");
+				react(id,"vergogna");
 			}
 		
 		if (msgLowerCase.contains("vergogna"))
-			react("vergogna");
+			react(id,"vergogna");
 		
 		if (msgLowerCase.contains("no u") || msgLowerCase.contains("nou"))
-			react("nou");
+			react(id,"nou");
 		
 		if (msgLowerCase.contains("sabaping"))
-			react("sabaping");
+			react(id,"sabaping");
 		
 		if (msgLowerCase.contains("get"))
 			if (msgLowerCase.contains("rekt"))
-				react("getrekt");
+				react(id,"getrekt");
 
 		if (msgLowerCase.contains("smh"))
-			react("smh");
+			react(id,"smh");
 
 		if (msgLowerCase.contains("giorno"))
-			react("giorno");
+			react(id,"giorno");
 
 		//if (msgLowerCase.contains(""))
 		//	react("");
 		
 		
 	} // fine onMessageReceived()
-	
+
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
 	{
 		String c = event.getCommandString();
@@ -281,21 +290,20 @@ public class Commands extends ListenerAdapter
 		
 	} // fine sondaggio()
 	
-	public void react(String emote)
+	public void react(long id, String emote)
 	{
 		final String emoteOwO = "OwO:604351952205381659";
 		final String emoteNou = "nou:671402740186087425";
 		final String emotePigeon = "pigeon:647556750962065418";
 		final String emotePog = "pogey:733659301645910038";
 		final String[] emoteObito = {"obi:670007761760681995", "ito:670007761697898527"};
-		final String[] emoteVergognati = {"vergognati:670009511053885450", "vergogna2:880100281315098685"};
+		final String[] emoteVergognati = {"vergognati:670009511053885450", "vergognati2:880100281315098685"};
 		final String[] emoteSabaPing = {"leftPowerUp:785565275608842250", "sabaPing:785561662605885502", "rightPowerUp:785565774953709578"};
 		final String emoteGetRekt = "getrekt:742330625347944504";
 		final String emoteSmh = "smh:880423534365659176";
 		final String emoteGiorno = "GiOrNo:618591225582321703";
 		// final String emoteNuova = "";
-		
-		final long id = messageChannel.getLatestMessageIdLong();
+
 		String emoteDaUsare = switch (emote)
 		{
 			case "pigeon" -> emotePigeon;
@@ -324,7 +332,7 @@ public class Commands extends ListenerAdapter
 			{
 				messageChannel.addReactionById(id, emoteDaUsare).queue();
 			}
-			catch (Exception e) { e.printStackTrace(); }
+			catch (Exception ignored) {}
 		}
 		
 	} // fine react()
