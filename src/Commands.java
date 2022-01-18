@@ -93,26 +93,20 @@ public class Commands extends ListenerAdapter
 		if (random.nextInt(20) == 9) // 5% chance di reagire con emote personali
 		{
 			String discriminator = event.getAuthor().getDiscriminator();
-
-			if (discriminator.equals("2804")) // Òbito
+			
+			switch (discriminator)
+			{
+				case "2804" ->
 				event.getMessage().reply("Òbito vergognati").queue((message1 ->
 				{
 					react("obito");
 					react("vergogna");
 				}));
-
-			if (discriminator.equals("2241")) // Lex
-				messageChannel.addReactionById(event.getMessageIdLong(), "U+1F1F7 U+1F1F4").queue(); //unicode della bandiera della romania
-
-
-			if (discriminator.equals("0935")) // Gion
-				react("smh");
-
-
-			if (discriminator.equals("7166")) // Enigmo
-				react("pigeon");
-
-
+				case "2241" -> messageChannel.addReactionById(event.getMessageIdLong(), "U+1F1F7 U+1F1F4").queue(); //unicode della bandiera della romania
+				case "0935" -> react("smh");
+				case "7166" -> react("pigeon");
+			}
+		
 		} // fine if reazioni
 
 		
