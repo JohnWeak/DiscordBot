@@ -64,19 +64,17 @@ public class Commands extends ListenerAdapter
 		id = event.getMessageIdLong();
 		String guild = event.getGuild().toString().split("\\(")[0].split(":")[1];
 		author = event.getAuthor().getName();
-		String msg = event.getMessage().getContentRaw();
+		var message = event.getMessage();
 		final String mockupCode = "\tString %s = \"%s\"; // in \"%s\" (%s)";
 
 		messageChannel = event.getChannel();
 		String messageChannelString = "#"+messageChannel.toString().split(":")[1].split("\\(")[0];
 		String[] args = event.getMessage().getContentRaw().split(" ");
 		String comando = args[0];
-		String message = event.getMessage().getContentRaw();
-		String msgLowerCase = message.toLowerCase(Locale.ROOT);
+		String msg = event.getMessage().getContentRaw();
+		String msgLowerCase = msg.toLowerCase(Locale.ROOT);
 
 		List<Emote> emoteList = event.getMessage().getEmotes();
-
-
 
 		System.out.printf(mockupCode, author, msg, messageChannelString, guild);
 		System.out.print("\n}\r");
@@ -102,26 +100,21 @@ public class Commands extends ListenerAdapter
 
 		if (random.nextInt(20) == 9) // 5% chance di reagire con emote personali
 		{
-			long id = event.getMessageIdLong();
 			String discriminator = event.getAuthor().getDiscriminator();
 
-			if (discriminator.equals("2804")) // Òbito
+
+			switch(discriminator)
 			{
-				event.getMessage().reply("Òbito vergognati").queue();
-				react("obito");
-				react("vergognati");
+				case "2804" -> // Òbito
+				{
+					message.reply("Òbito vergognati").queue();
+					react("obito");
+					react("vergognati");
+				}
+				case "2241" -> react("romania"); // Alex
+				case "0935" -> react("smh"); // Gion
+				case "7166" -> react("pigeon"); // Enigmo
 			}
-
-			if (discriminator.equals("2241")) // Lex
-				messageChannel.addReactionById(id, "U+1F1F7 U+1F1F4").queue(); //unicode della bandiera della romania
-
-
-			if (discriminator.equals("0935")) // Gion
-				react("smh");
-
-
-			if (discriminator.equals("7166")) // Enigmo
-				react("pigeon");
 
 
 		} // fine if reazioni
@@ -304,7 +297,8 @@ public class Commands extends ListenerAdapter
 		final String emoteGetRekt = "getrekt:742330625347944504";
 		final String emoteSmh = "smh:880423534365659176";
 		final String emoteGiorno = "GiOrNo:618591225582321703";
-		// final String emoteNuova = "";
+		final String emoteBandieraRomania = "U+1F1F7 U+1F1F4";
+
 
 		String emoteDaUsare = switch (emote)
 		{
@@ -316,7 +310,7 @@ public class Commands extends ListenerAdapter
 			case "getrekt" -> emoteGetRekt;
 			case "smh" -> emoteSmh;
 			case "giorno" -> emoteGiorno;
-			//case "" -> emoteNuova;
+			case "romania" -> emoteBandieraRomania;
 			default -> "";
 		};
 
