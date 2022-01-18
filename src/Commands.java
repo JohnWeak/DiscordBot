@@ -50,6 +50,7 @@ public class Commands extends ListenerAdapter
 	private static long id;
 
 
+
 	public void onReady(@NotNull ReadyEvent event)
 	{
 		String nome = event.getJDA().getSelfUser().getName();
