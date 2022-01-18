@@ -3,6 +3,7 @@ import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -45,7 +46,13 @@ public class Commands extends ListenerAdapter
 	private static String author;
 	private static final String[] utenti = {"Òbito#2804", "Enigmo#7166", "Alex#2241", "Gion#0935", "OwO#8456"};
 
-	
+	public void onReady(@NotNull ReadyEvent event)
+	{
+		String nome = event.getJDA().getSelfUser().getName();
+		System.out.printf("%s si è connesso a Discord!\n\n", nome);
+		System.out.print("public class MessageHistory\n{\n");
+	}
+
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
 		String guild = event.getGuild().toString().split("\\(")[0].split(":")[1];
@@ -62,12 +69,6 @@ public class Commands extends ListenerAdapter
 
 		List<Emote> emoteList = event.getMessage().getEmotes();
 
-
-		if (msgCount == 0)
-		{
-			System.out.print("public class MessageHistory\n{\n");
-			msgCount++;
-		}
 		System.out.printf(mockupCode, author, msg, messageChannelString, guild);
 		System.out.print("\n}\r");
 
