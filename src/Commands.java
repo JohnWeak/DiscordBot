@@ -99,6 +99,7 @@ public class Commands extends ListenerAdapter
 			spawnPokemon(event);
 		
 
+
 		if (random.nextInt(20) == 9) // 5% chance di reagire con emote personali
 		{
 			long id = event.getMessageIdLong();
