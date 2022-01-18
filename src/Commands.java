@@ -85,8 +85,8 @@ public class Commands extends ListenerAdapter
 		// dire all'altro bot OwO di vergognarsi
 		if (event.getAuthor().getDiscriminator().equals("8456"))
 		{
-			react(id,"owo");
-			react(id,"vergogna");
+			react("owo");
+			react("vergogna");
 			return;
 		}
 		
@@ -108,8 +108,8 @@ public class Commands extends ListenerAdapter
 			if (discriminator.equals("2804")) // Òbito
 			{
 				event.getMessage().reply("Òbito vergognati").queue();
-				react(id, "obito");
-				react(id, "vergognati");
+				react("obito");
+				react("vergognati");
 			}
 
 			if (discriminator.equals("2241")) // Lex
@@ -117,11 +117,11 @@ public class Commands extends ListenerAdapter
 
 
 			if (discriminator.equals("0935")) // Gion
-				react(id,"smh");
+				react("smh");
 
 
 			if (discriminator.equals("7166")) // Enigmo
-				react(id,"pigeon");
+				react("pigeon");
 
 
 		} // fine if reazioni
@@ -139,39 +139,39 @@ public class Commands extends ListenerAdapter
 		
 		
 		if (msgLowerCase.contains("pigeon"))
-			react(id,"pigeon");
+			react("pigeon");
 		
 		if (msgLowerCase.contains("owo"))
-			react(id,"owo");
+			react("owo");
 		
 		if (msgLowerCase.contains("pog"))
-			react(id,"pog");
+			react("pog");
 		
 		if (msgLowerCase.contains("òbito") || msgLowerCase.contains("obito"))
 			if (random.nextInt(50) == 42) // 2%
 			{
-				react(id,"obito");
-				react(id,"vergogna");
+				react("obito");
+				react("vergogna");
 			}
 		
 		if (msgLowerCase.contains("vergogna"))
-			react(id,"vergogna");
+			react("vergogna");
 		
 		if (msgLowerCase.contains("no u") || msgLowerCase.contains("nou"))
-			react(id,"nou");
+			react("nou");
 		
 		if (msgLowerCase.contains("sabaping"))
-			react(id,"sabaping");
+			react("sabaping");
 		
 		if (msgLowerCase.contains("get"))
 			if (msgLowerCase.contains("rekt"))
-				react(id,"getrekt");
+				react("getrekt");
 
 		if (msgLowerCase.contains("smh"))
-			react(id,"smh");
+			react("smh");
 
 		if (msgLowerCase.contains("giorno"))
-			react(id,"giorno");
+			react("giorno");
 
 		//if (msgLowerCase.contains(""))
 		//	react("");
@@ -292,7 +292,7 @@ public class Commands extends ListenerAdapter
 		
 	} // fine sondaggio()
 	
-	public void react(long id, String emote)
+	public void react(String emote)
 	{
 		final String emoteOwO = "OwO:604351952205381659";
 		final String emoteNou = "nou:671402740186087425";
