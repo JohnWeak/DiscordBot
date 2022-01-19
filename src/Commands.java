@@ -32,11 +32,10 @@ public class Commands extends ListenerAdapter
 	private static final File nomiPkmn = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
 	private static MessageChannel messageChannel;
-	private static final String[] listaComandi = {"!vergognati", "!coinflip", "!poll", "!info", "!8ball", "!pokemon"};
+	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon"};
 	// private static final String[] listaParole = {"pigeon", "owo", "pog", "òbito", "vergogna", "no"};
 	private static final String[] listaDescrizioni =
 	{
-		"Il bot risponderà usando la carta \"No u\"",
 		"Il bot lancerà una moneta",
 		"Permette di creare sondaggi",
 		"Visualizza le informazioni. Proprio quelle che stai leggendo!",
@@ -45,7 +44,7 @@ public class Commands extends ListenerAdapter
 	};
 	private static int messaggiInviati = 0;
 	private static int limite;
-	private static String author;
+	private static String authorName;
 	private static final String[] utenti = {"Òbito#2804", "Enigmo#7166", "Alex#2241", "Gion#0935", "OwO#8456"};
 	private static long id;
 
@@ -63,7 +62,8 @@ public class Commands extends ListenerAdapter
 	{
 		id = event.getMessageIdLong();
 		String guild = event.getGuild().toString().split("\\(")[0].split(":")[1];
-		author = event.getAuthor().getName();
+		authorName = event.getAuthor().getName();
+		var author = event.getAuthor();
 		var message = event.getMessage();
 		final String mockupCode = "\tString %s = \"%s\"; // in \"%s\" (%s)";
 
@@ -76,7 +76,7 @@ public class Commands extends ListenerAdapter
 
 		List<Emote> emoteList = event.getMessage().getEmotes();
 
-		System.out.printf(mockupCode, author, msg, messageChannelString, guild);
+		System.out.printf(mockupCode, authorName, msg, messageChannelString, guild);
 		System.out.print("\n}\r");
 
 
@@ -88,10 +88,10 @@ public class Commands extends ListenerAdapter
 			return;
 		}
 		
-		if (event.getAuthor().isBot()) return; // Per evitare problemi con altri bot
+		if (author.isBot()) return; // Per evitare problemi con altri bot
 
 		for (Emote emote : emoteList)
-			event.getMessage().addReaction(emote).queue();
+			message.addReaction(emote).queue();
 
 		if (!msgLowerCase.contains("!pokemon")) // genera un pokemon casuale soltanto se non viene eseguito il comando
 			spawnPokemon(event);
@@ -100,7 +100,7 @@ public class Commands extends ListenerAdapter
 
 		if (random.nextInt(20) == 9) // 5% chance di reagire con emote personali
 		{
-			String discriminator = event.getAuthor().getDiscriminator();
+			String discriminator = author.getDiscriminator();
 
 
 			switch(discriminator)
@@ -122,7 +122,6 @@ public class Commands extends ListenerAdapter
 		
 		switch (comando)
 		{
-			case "!vergognati" -> vergognati(event);
 			case "!coinflip" -> coinflip(event);
 			case "!poll" -> poll(event);
 			case "!info" -> info();
@@ -183,15 +182,7 @@ public class Commands extends ListenerAdapter
 	
 	//FIXME: come diavolo si fa?!
 	} // fine onSlashCommand()
-	
-	public void vergognati(MessageReceivedEvent event)
-	{
-		final String emoteNou = "<:nou:671402740186087425>";
-		final String emoteNouLess = "nou:671402740186087425";
-		
-		event.getChannel().sendTyping().queue();
-		event.getMessage().reply(emoteNou).queue(message -> message.addReaction(emoteNouLess).queue());
-	}
+
 	
 	public void coinflip(MessageReceivedEvent event)
 	{
