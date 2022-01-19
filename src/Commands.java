@@ -81,7 +81,7 @@ public class Commands extends ListenerAdapter
 
 
 		// dire all'altro bot OwO di vergognarsi
-		if (event.getAuthor().getDiscriminator().equals("8456"))
+		if (author.getDiscriminator().equals("8456"))
 		{
 			react("owo");
 			react("vergogna");
