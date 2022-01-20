@@ -411,8 +411,8 @@ public class Commands extends ListenerAdapter
 		if (event.getMessage().getContentRaw().contains("!pokemon"))
 		{
 			String[] tipo = {" ", " "};
-			String generazione = "";
-			String numeroPokedex = "";
+			String generazione;
+			String numeroPokedex;
 			String[] lineaEvolutiva = {"1","2","3"};
 
 			if (msg.length > 1 && !msg[1].isEmpty())
@@ -453,9 +453,8 @@ public class Commands extends ListenerAdapter
 					messageChannel.sendTyping().queue();
 					pause(1000, 500);
 					messageChannel.sendMessageEmbeds(buildEmbed(pokemon, true).build()).queue();
-					return;
 				}
-				catch (IndexOutOfBoundsException e) { System.out.println("Il pokemon cercato ("+nome+") non è presente nell'API"); }
+				catch (IndexOutOfBoundsException e) { System.out.printf("Il pokemon cercato (%s) non è presente nell'API", nome); }
 			}
 			else if (msg.length == 1)
 			{

@@ -104,18 +104,15 @@ public class Pokemon
 			for (int i = 0; i < id; i++)
 				nome = scanner.nextLine();
 			
-		}catch (FileNotFoundException e) {}
+		}catch (FileNotFoundException ignored) {}
 		
 		
 		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+id+".png";
 		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/"+id+".png";
 		
 		risultato[0] = nome;
-		
-		if (shiny)
-			img = urlShinyImg;
-		else
-			img = urlImg;
+
+		img = (shiny ? urlShinyImg : urlImg);
 		
 		risultato[1] = img;
 		
