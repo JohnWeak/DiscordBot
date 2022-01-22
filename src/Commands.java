@@ -19,6 +19,7 @@ import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DateFormat;
 import java.util.List;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -47,6 +48,7 @@ public class Commands extends ListenerAdapter
 	private static String authorName;
 	private static final String[] utenti = {"Òbito#2804", "Enigmo#7166", "Alex#2241", "Gion#0935", "OwO#8456"};
 	private static long id;
+	private static final Locale locale = Locale.ITALIAN;
 
 
 
@@ -65,7 +67,10 @@ public class Commands extends ListenerAdapter
 		authorName = event.getAuthor().getName();
 		var author = event.getAuthor();
 		var message = event.getMessage();
-		final String mockupCode = "\tString %s = \"%s\"; // in \"%s\" (%s)";
+		final String mockupCode = "\tString %s = \"%s\"; // in \"%s\" (%s) - %s";
+		var date = new Date();
+		var dFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
+		var dataFormattata = dFormat.format(date);
 
 		messageChannel = event.getChannel();
 		String messageChannelString = "#"+messageChannel.toString().split(":")[1].split("\\(")[0];
@@ -76,7 +81,7 @@ public class Commands extends ListenerAdapter
 
 		List<Emote> emoteList = event.getMessage().getEmotes();
 
-		System.out.printf(mockupCode, authorName, msg, messageChannelString, guild);
+		System.out.printf(mockupCode, authorName, msg, messageChannelString, guild, dataFormattata);
 		System.out.print("\n}\r");
 
 
@@ -107,9 +112,9 @@ public class Commands extends ListenerAdapter
 			{
 				case "2804" -> // Òbito
 				{
-					message.reply("Òbito vergognati").queue();
 					react("obito");
-					react("vergognati");
+					react("vergogna");
+					message.reply("Òbito vergognati").queue();
 				}
 				case "2241" -> react("romania"); // Alex
 				case "0935" -> react("smh"); // Gion
@@ -427,8 +432,6 @@ public class Commands extends ListenerAdapter
 					JSONArray types = (JSONArray) jsonObject.get("types");
 					JSONObject family = (JSONObject) jsonObject.get("family");
 					JSONArray evoLine = (JSONArray) family.get("evolutionLine");
-
-					System.out.println("Evoluzioni: " + evoLine);
 
 					for (int i = 0; i < types.size(); i++)
 					{
