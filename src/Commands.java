@@ -1,8 +1,5 @@
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Emote;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
@@ -49,7 +46,8 @@ public class Commands extends ListenerAdapter
 	private static final String[] utenti = {"Òbito#2804", "Enigmo#7166", "Alex#2241", "Gion#0935", "OwO#8456"};
 	private static long id;
 	private static final Locale locale = Locale.ITALIAN;
-
+	private static Message message;
+	private static User author;
 
 
 	public void onReady(@NotNull ReadyEvent event)
@@ -65,8 +63,9 @@ public class Commands extends ListenerAdapter
 		id = event.getMessageIdLong();
 		String guild = event.getGuild().toString().split("\\(")[0].split(":")[1];
 		authorName = event.getAuthor().getName();
-		var author = event.getAuthor();
-		var message = event.getMessage();
+		author = event.getAuthor();
+		message = event.getMessage();
+
 		final String mockupCode = "\tString %s = \"%s\"; // in \"%s\" (%s) - %s";
 		var date = new Date();
 		var dFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
@@ -101,7 +100,8 @@ public class Commands extends ListenerAdapter
 		if (!msgLowerCase.contains("!pokemon")) // genera un pokemon casuale soltanto se non viene eseguito il comando
 			spawnPokemon(event);
 		
-
+		if (msgLowerCase.contains("!testenigmo"))
+			triggeraEnigmo();
 
 		if (random.nextInt(20) == 9) // 5% chance di reagire con emote personali
 		{
@@ -118,7 +118,12 @@ public class Commands extends ListenerAdapter
 				}
 				case "2241" -> react("romania"); // Alex
 				case "0935" -> react("smh"); // Gion
-				case "7166" -> react("pigeon"); // Enigmo
+				case "7166" ->
+				{
+					react("pigeon"); // Enigmo
+					if (random.nextInt(100) <= 33) // un ulteriore 33% di chance di mandargli una foto di Yano da OddTaxi
+						triggeraEnigmo();
+				}
 			}
 
 
@@ -193,12 +198,12 @@ public class Commands extends ListenerAdapter
 	{
 		final String testa = "<:pogey:733659301645910038>";
 		final String croce = "<:pigeon:647556750962065418>";
-		String autore = event.getAuthor().getName()+" lancia una moneta...";
+		String autore = authorName+" lancia una moneta...";
 		
 		if (random.nextInt(2) == 1) // testa
-			event.getChannel().sendMessage(autore+"\n**È uscito** " + testa + "**! (Testa)**").queue(message -> message.addReaction("pogey:733659301645910038").queue());
+			messageChannel.sendMessage(autore+"\n**È uscito** " + testa + "**! (Testa)**").queue(message -> message.addReaction("pogey:733659301645910038").queue());
 		else
-			event.getChannel().sendMessage(autore+"\n**È uscito** " + croce + "**! (Croce)**").queue(message -> message.addReaction("pigeon:647556750962065418").queue());
+			messageChannel.sendMessage(autore+"\n**È uscito** " + croce + "**! (Croce)**").queue(message -> message.addReaction("pigeon:647556750962065418").queue());
 		
 	} // fine coinflip()
 	
@@ -207,7 +212,7 @@ public class Commands extends ListenerAdapter
 		// args[0] = "!poll"
 		// args[1] = domanda
 		// args[2, 3, ...] = risposte
-		String msg = event.getMessage().getContentRaw();
+		String msg = message.getContentRaw();
 		
 		if (msg.length() <= 5)
 		{
@@ -280,7 +285,25 @@ public class Commands extends ListenerAdapter
 		}
 		
 	} // fine sondaggio()
-	
+
+	public void triggeraEnigmo()
+	{
+		final String yano = "https://ramenparados.com/wp-content/uploads/2021/01/21.png";
+		messageChannel.sendTyping().queue();
+		try { Thread.sleep(1000); }
+		catch (Exception ignored) {}
+
+		var embedBuilder = new EmbedBuilder();
+		embedBuilder.setTitle("Enigmo get rekt");
+		embedBuilder.setImage(yano);
+		embedBuilder.setFooter("Yano best personaggio");
+		embedBuilder.setColor(0xcb4d4d);
+
+		messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
+	}
+
+
+
 	public void react(String emote)
 	{
 		final String emoteOwO = "OwO:604351952205381659";
