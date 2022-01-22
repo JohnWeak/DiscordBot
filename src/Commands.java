@@ -83,16 +83,17 @@ public class Commands extends ListenerAdapter
 		System.out.printf(mockupCode, authorName, msg, messageChannelString, guild, dataFormattata);
 		System.out.print("\n}\r");
 
-
-		// dire all'altro bot OwO di vergognarsi
-		if (author.getDiscriminator().equals("8456"))
+		
+		if (author.isBot())
 		{
-			react("owo");
-			react("vergogna");
+			if (author.getDiscriminator().equals("8456"))
+			{
+				react("owo");
+				react("vergogna");
+			}
+			// return a priori, se però il messaggio lo manda l'altro bot OwO prima gli mette le reazioni e poi return
 			return;
 		}
-		
-		if (author.isBot()) return; // Per evitare problemi con altri bot
 
 		for (Emote emote : emoteList)
 			message.addReaction(emote).queue();
@@ -100,13 +101,12 @@ public class Commands extends ListenerAdapter
 		if (!msgLowerCase.contains("!pokemon")) // genera un pokemon casuale soltanto se non viene eseguito il comando
 			spawnPokemon(event);
 		
-		if (msgLowerCase.contains("!testenigmo"))
-			triggeraEnigmo();
+		//	if (msgLowerCase.contains("!testenigmo"))
+			//	triggeraEnigmo();
 
 		if (random.nextInt(20) == 9) // 5% chance di reagire con emote personali
 		{
 			String discriminator = author.getDiscriminator();
-
 
 			switch(discriminator)
 			{
