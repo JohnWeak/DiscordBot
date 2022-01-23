@@ -585,6 +585,7 @@ public class Commands extends ListenerAdapter
 			}
 			catch (ArrayIndexOutOfBoundsException ignored) {}
 		}));
+		//
 
 	} // fine sendMessage()
 
