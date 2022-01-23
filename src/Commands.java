@@ -47,6 +47,7 @@ public class Commands extends ListenerAdapter
 	private static long id;
 	private static final Locale locale = Locale.ITALIAN;
 	private static Message message;
+	private static String messageRaw;
 	private static User author;
 
 
@@ -62,9 +63,11 @@ public class Commands extends ListenerAdapter
 	{
 		id = event.getMessageIdLong();
 		String guild = event.getGuild().toString().split("\\(")[0].split(":")[1];
-		authorName = event.getAuthor().getName();
+
 		author = event.getAuthor();
+		authorName = author.getName();
 		message = event.getMessage();
+		messageRaw = message.getContentRaw();
 
 		final String mockupCode = "\tString %s = \"%s\"; // in \"%s\" (%s) - %s";
 		var date = new Date();
@@ -181,16 +184,12 @@ public class Commands extends ListenerAdapter
 		
 	} // fine onMessageReceived()
 
+
+
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
 	{
-		String c = event.getCommandString();
 
-		System.out.println("Comando: " + c);
 
-		if (c.equals("test"))
-			messageChannel.sendMessage("test eseguito con successo!").queue();
-	
-	//FIXME: come diavolo si fa?!
 	} // fine onSlashCommand()
 
 	
@@ -290,8 +289,7 @@ public class Commands extends ListenerAdapter
 	{
 		final String yano = "https://ramenparados.com/wp-content/uploads/2021/01/21.png";
 		messageChannel.sendTyping().queue();
-		try { Thread.sleep(1000); }
-		catch (Exception ignored) {}
+		pause(1000, 0);
 
 		var embedBuilder = new EmbedBuilder();
 		embedBuilder.setTitle("Enigmo get rekt");
@@ -434,7 +432,7 @@ public class Commands extends ListenerAdapter
 	
 	public void pokemon(MessageReceivedEvent event)
 	{
-		String[] msg = event.getMessage().getContentRaw().split(" ");
+		String[] msg = messageRaw.split(" ");
 
 		if (event.getMessage().getContentRaw().contains("!pokemon"))
 		{
@@ -482,29 +480,32 @@ public class Commands extends ListenerAdapter
 				}
 				catch (IndexOutOfBoundsException e) { System.out.printf("Il pokemon cercato (%s) non è presente nell'API", nome); }
 			}
-			else if (msg.length == 1)
-			{
-				Pokemon pokemon = new Pokemon();
-				EmbedBuilder embedBuilder;
+		}
+		else
+		{
+			var pokemon = new Pokemon();
+			EmbedBuilder embedBuilder;
 
-				if (random.nextInt(10) == 9)
+			if (random.nextInt(20) == 9)
+			{
+				doubleEncounter(pokemon, new Pokemon());
+			}
+			else
+			{
+				var titolo = "A wild ".concat(pokemon.getNome().concat(" appears!"));
+				embedBuilder = buildEmbed(pokemon, false);
+				embedBuilder.setTitle(titolo);
+				messageChannel.sendTyping().queue();
+				pause(500, 500);
+				messageChannel.sendMessageEmbeds(embedBuilder.build()).queue((message ->
 				{
-					doubleEncounter(pokemon, new Pokemon());
-				}
-				else
-				{
-					embedBuilder = buildEmbed(pokemon, false);
-					messageChannel.sendTyping().queue();
-					pause(500, 500);
-					messageChannel.sendMessageEmbeds(embedBuilder.build()).queue((message ->
-					{
-						message.addReaction("👍🏻").queue();
-						message.addReaction("❤️").queue();
-						message.addReaction("👎🏻").queue();
-					}));
-				}
+					message.addReaction("👍🏻").queue();
+					message.addReaction("❤️").queue();
+					message.addReaction("👎🏻").queue();
+				}));
 			}
 		}
+
 	} // fine metodo definitivo pokemon()
 
 	private JSONArray search(String pokemon)
