@@ -484,7 +484,7 @@ public class Commands extends ListenerAdapter
 		else
 		{
 			var pokemon = new Pokemon();
-			EmbedBuilder embedBuilder;
+			var nomi = new String[] {"", ""};
 
 			if (random.nextInt(20) == 9)
 			{
@@ -492,21 +492,26 @@ public class Commands extends ListenerAdapter
 			}
 			else
 			{
-				var titolo = "A wild ".concat(pokemon.getNome().concat(" appears!"));
-				embedBuilder = buildEmbed(pokemon, false);
-				embedBuilder.setTitle(titolo);
-				messageChannel.sendTyping().queue();
-				pause(500, 500);
-				messageChannel.sendMessageEmbeds(embedBuilder.build()).queue((message ->
-				{
-					message.addReaction("👍🏻").queue();
-					message.addReaction("❤️").queue();
-					message.addReaction("👎🏻").queue();
-				}));
+				singleEncounter(pokemon);
 			}
 		}
 
 	} // fine metodo definitivo pokemon()
+
+	private void singleEncounter(Pokemon pokemon)
+	{
+		EmbedBuilder embedBuilder;
+		String[] nomi = {pokemon.getNome(), ""};
+		var titolo = "A wild ".concat(pokemon.getNome().concat(" appears!"));
+		embedBuilder = buildEmbed(pokemon, false);
+		embedBuilder.setTitle(titolo);
+		messageChannel.sendTyping().queue();
+		pause(500, 500);
+
+		sendMessage(nomi, embedBuilder);
+
+	} // fine singleEncounter
+
 
 	private JSONArray search(String pokemon)
 	{
@@ -544,6 +549,7 @@ public class Commands extends ListenerAdapter
 		EmbedBuilder embedBuilder;
 		String[] titolo = {"Primo Pokemon!", "Secondo Pokemon!"};
 		Pokemon[] pokemons = {uno, due};
+		var nomi = new String[] { uno.getNome(), due.getNome() };
 		messageChannel.sendMessage("Doppio Incontro!").queue();
 		
 		for (int i = 0; i < 2; i++)
@@ -551,18 +557,38 @@ public class Commands extends ListenerAdapter
 			embedBuilder = buildEmbed(pokemons[i], false);
 			embedBuilder.setDescription(titolo[i]);
 			//embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
-			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue(message ->
-			{
-				message.addReaction("👍🏻").queue();
-				message.addReaction("❤️").queue();
-				message.addReaction("👎🏻").queue();
-			});
+
+			sendMessage(nomi, embedBuilder);
 			
 		}
 		
 		System.out.printf("\nUno: %s, shiny: %s\nDue: %s, shiny: %s\n",uno.getNome(), uno.isShiny(), due.getNome(), due.isShiny());
 	} // fine
-	
+
+	private void sendMessage(String[] pokemonNames, EmbedBuilder embedBuilder)
+	{
+		messageChannel.sendMessageEmbeds(embedBuilder.build()).queue((message ->
+		{
+			try
+			{
+				if (pokemonNames[0].equalsIgnoreCase("poochyena") || pokemonNames[1].equalsIgnoreCase("poochyena"))
+				{
+					react("pog");
+					message.addReaction("❤️").queue();
+				}
+				else
+				{
+					message.addReaction("👍🏻").queue();
+					message.addReaction("❤️").queue();
+					message.addReaction("👎🏻").queue();
+				}
+			}
+			catch (ArrayIndexOutOfBoundsException ignored) {}
+		}));
+
+	} // fine sendMessage()
+
+
 	private EmbedBuilder buildEmbed(Pokemon pokemon, boolean pokedex)
 	{
 		EmbedBuilder embedBuilder = new EmbedBuilder();
