@@ -420,10 +420,10 @@ public class Commands extends ListenerAdapter
 
 	private void pause(int millis, int bound)
 	{
-		if (millis < 0)
+		if (millis < 1)
 			millis = 1500;
 
-		if (bound < 0)
+		if (bound < 1)
 			bound = 500;
 
 		try { Thread.sleep(millis+random.nextInt(bound)); }
@@ -434,7 +434,7 @@ public class Commands extends ListenerAdapter
 	{
 		String[] msg = messageRaw.split(" ");
 
-		if (event.getMessage().getContentRaw().contains("!pokemon"))
+		if (messageRaw.contains("!pokemon"))
 		{
 			String[] tipo = {" ", " "};
 			String generazione;
@@ -484,19 +484,14 @@ public class Commands extends ListenerAdapter
 		else
 		{
 			var pokemon = new Pokemon();
-			var nomi = new String[] {"", ""};
 
 			if (random.nextInt(20) == 9)
-			{
 				doubleEncounter(pokemon, new Pokemon());
-			}
 			else
-			{
 				singleEncounter(pokemon);
-			}
 		}
 
-	} // fine metodo definitivo pokemon()
+	} // fine pokemon()
 
 	private void singleEncounter(Pokemon pokemon)
 	{
@@ -585,7 +580,6 @@ public class Commands extends ListenerAdapter
 			}
 			catch (ArrayIndexOutOfBoundsException ignored) {}
 		}));
-		//
 
 	} // fine sendMessage()
 
