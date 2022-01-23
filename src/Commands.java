@@ -68,22 +68,21 @@ public class Commands extends ListenerAdapter
 		authorName = author.getName();
 		message = event.getMessage();
 		messageRaw = message.getContentRaw();
-
+		messageChannel = event.getChannel();
+		
 		final String mockupCode = "\tString %s = \"%s\"; // in \"%s\" (%s) - %s";
 		var date = new Date();
 		var dFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
 		var dataFormattata = dFormat.format(date);
 
-		messageChannel = event.getChannel();
 		String messageChannelString = "#"+messageChannel.toString().split(":")[1].split("\\(")[0];
-		String[] args = event.getMessage().getContentRaw().split(" ");
+		String[] args = messageRaw.split(" ");
 		String comando = args[0];
-		String msg = event.getMessage().getContentRaw();
-		String msgLowerCase = msg.toLowerCase(Locale.ROOT);
+		String msgLowerCase = messageRaw.toLowerCase(Locale.ROOT);
 
-		List<Emote> emoteList = event.getMessage().getEmotes();
+		List<Emote> emoteList = message.getEmotes();
 
-		System.out.printf(mockupCode, authorName, msg, messageChannelString, guild, dataFormattata);
+		System.out.printf(mockupCode, authorName, messageRaw, messageChannelString, guild, dataFormattata);
 		System.out.print("\n}\r");
 
 		
@@ -102,7 +101,7 @@ public class Commands extends ListenerAdapter
 			message.addReaction(emote).queue();
 
 		if (!msgLowerCase.contains("!pokemon")) // genera un pokemon casuale soltanto se non viene eseguito il comando
-			spawnPokemon(event);
+			spawnPokemon();
 		
 		//	if (msgLowerCase.contains("!testenigmo"))
 			//	triggeraEnigmo();
@@ -119,7 +118,7 @@ public class Commands extends ListenerAdapter
 					react("vergogna");
 					message.reply("Òbito vergognati").queue();
 				}
-				case "2241" -> react("romania"); // Alex
+				case "2241" -> messageChannel.addReactionById(id, "🇷🇴").queue(); // Alex
 				case "0935" -> react("smh"); // Gion
 				case "7166" ->
 				{
@@ -139,7 +138,7 @@ public class Commands extends ListenerAdapter
 			case "!poll" -> poll(event);
 			case "!info" -> info();
 			case "!8ball" -> eightBall(event);
-			case "!pokemon" -> pokemon(event);
+			case "!pokemon" -> pokemon();
 		}
 		
 		
@@ -178,8 +177,11 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("giorno"))
 			react("giorno");
 
-		//if (msgLowerCase.contains(""))
-		//	react("");
+		if (msgLowerCase.contains("uomo colpo"))
+		{
+			messageChannel.addReactionById(id,"4️⃣").queue();
+			messageChannel.addReactionById(id, "7️⃣").queue();
+		}
 		
 		
 	} // fine onMessageReceived()
@@ -314,7 +316,7 @@ public class Commands extends ListenerAdapter
 		final String emoteGetRekt = "getrekt:742330625347944504";
 		final String emoteSmh = "smh:880423534365659176";
 		final String emoteGiorno = "GiOrNo:618591225582321703";
-		final String emoteBandieraRomania = "U+1F1F7 U+1F1F4";
+		// final String emoteBandieraRomania = "U+1F1F7 U+1F1F4";
 
 
 		String emoteDaUsare = switch (emote)
@@ -327,7 +329,7 @@ public class Commands extends ListenerAdapter
 			case "getrekt" -> emoteGetRekt;
 			case "smh" -> emoteSmh;
 			case "giorno" -> emoteGiorno;
-			case "romania" -> emoteBandieraRomania;
+		//	case "romania" -> emoteBandieraRomania;
 			default -> "";
 		};
 
@@ -430,7 +432,7 @@ public class Commands extends ListenerAdapter
 		catch (InterruptedException e) { e.printStackTrace(); }
 	} // fine pause()
 	
-	public void pokemon(MessageReceivedEvent event)
+	public void pokemon()
 	{
 		String[] msg = messageRaw.split(" ");
 
@@ -655,7 +657,7 @@ public class Commands extends ListenerAdapter
 		return embedBuilder;
 	} // fine buildEmbed()
 	
-	public void spawnPokemon(MessageReceivedEvent event)
+	public void spawnPokemon()
 	{
 		int[] valori = new int[2];
 		Scanner scanner;
@@ -679,7 +681,7 @@ public class Commands extends ListenerAdapter
 		
 		if (messaggiInviati == valori[0])
 		{
-			pokemon(event); // genera un incontro
+			pokemon(); // genera un incontro
 			messaggiInviati = 0; // resetta il contatore
 			limite = random.nextInt(10) + 5; // genera un nuovo max per i messaggi
 		}
