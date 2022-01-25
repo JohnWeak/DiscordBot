@@ -321,10 +321,10 @@ public class Commands extends ListenerAdapter
 		{
 			"\uD83C\uDDED", // H
 			"\uD83C\uDDEE", // I
-			"\uD83C\uDDF7", // T
-			"\uD83C\uDDF0", // M
+			"\uD83C\uDDF7", // R
+			"\uD83C\uDDF0", // K
 			"\uD83C\uDDE6", // A
-			"\uD83C\uDDF1", // N
+			"\uD83C\uDDF3", // N
 			
 		};
 
