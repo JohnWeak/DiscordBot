@@ -317,8 +317,16 @@ public class Commands extends ListenerAdapter
 		final String emoteSmh = "smh:880423534365659176";
 		final String emoteGiorno = "GiOrNo:618591225582321703";
 		// final String emoteBandieraRomania = "U+1F1F7 U+1F1F4";
-		final String[] emoteHitman = {"U+0048"};
-		
+		final String[] emoteHitman =
+		{
+			"\uD83C\uDDED", // H
+			"\uD83C\uDDEE", // I
+			"\uD83C\uDDF7", // T
+			"\uD83C\uDDF0", // M
+			"\uD83C\uDDE6", // A
+			"\uD83C\uDDF1", // N
+			
+		};
 
 		String emoteDaUsare = switch (emote)
 		{
