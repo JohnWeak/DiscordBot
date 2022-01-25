@@ -451,7 +451,7 @@ public class Commands extends ListenerAdapter
 			if (msg.length > 1 && !msg[1].isEmpty())
 			{
 				String nome = msg[1];
-				JSONArray jsonArray = search(msg[1]);
+				JSONArray jsonArray = search(nome);
 
 				try
 				{
@@ -474,7 +474,7 @@ public class Commands extends ListenerAdapter
 						lineaEvolutiva[i] = evoLine.get(i).toString();
 					}
 
-					Pokemon pokemon = new Pokemon(nome, description, false);
+					var pokemon = new Pokemon(nome, description, false);
 
 					pokemon.setTipo(tipo);
 					pokemon.setGenerazione(generazione);
@@ -485,7 +485,7 @@ public class Commands extends ListenerAdapter
 					pause(1000, 500);
 					messageChannel.sendMessageEmbeds(buildEmbed(pokemon, true).build()).queue();
 				}
-				catch (IndexOutOfBoundsException e) { System.out.printf("Il pokemon cercato (%s) non è presente nell'API", nome); }
+				catch (IndexOutOfBoundsException e) { System.out.printf("Il pokemon cercato (%s) non è presente nell'API\n}", nome); }
 			}
 		}
 		else
@@ -561,7 +561,6 @@ public class Commands extends ListenerAdapter
 			//embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
 
 			sendMessage(nomi, embedBuilder);
-			
 		}
 		
 		System.out.printf("\nUno: %s, shiny: %s\nDue: %s, shiny: %s\n",uno.getNome(), uno.isShiny(), due.getNome(), due.isShiny());
@@ -627,7 +626,7 @@ public class Commands extends ListenerAdapter
 			embedBuilder.setFooter(""+lineaEvolutiva, "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F5%2F53%2FPok%25C3%25A9_Ball_icon.svg%2F1026px-Pok%25C3%25A9_Ball_icon.svg.png&f=1&nofb=1");
 
 		}
-		embedBuilder.setTitle(pokemon.getNome());
+		embedBuilder.setTitle(pokemon.getNome().toUpperCase());
 		if ((descrizione = pokemon.getDescrizione()) != null)
 		{
 			String type;
