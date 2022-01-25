@@ -316,7 +316,6 @@ public class Commands extends ListenerAdapter
 		final String emoteGetRekt = "getrekt:742330625347944504";
 		final String emoteSmh = "smh:880423534365659176";
 		final String emoteGiorno = "GiOrNo:618591225582321703";
-		// final String emoteBandieraRomania = "U+1F1F7 U+1F1F4";
 		final String[] emoteHitman =
 		{
 			"\uD83C\uDDED", // H
@@ -337,7 +336,6 @@ public class Commands extends ListenerAdapter
 			case "getrekt" -> emoteGetRekt;
 			case "smh" -> emoteSmh;
 			case "giorno" -> emoteGiorno;
-		//	case "romania" -> emoteBandieraRomania;
 			default -> "";
 		};
 
@@ -359,7 +357,7 @@ public class Commands extends ListenerAdapter
 			{
 				messageChannel.addReactionById(id, emoteDaUsare).queue();
 			}
-			catch (Exception ignored) {}
+			catch (Exception e) { System.out.printf("Errore nell'aggiunta della reazione \"%s\"\n\t", emoteDaUsare); }
 		}
 		
 	} // fine react()
