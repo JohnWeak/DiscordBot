@@ -179,8 +179,8 @@ public class Commands extends ListenerAdapter
 
 		if (msgLowerCase.contains("uomo colpo"))
 		{
-			messageChannel.addReactionById(id,"4️⃣").queue();
-			messageChannel.addReactionById(id, "7️⃣").queue();
+			react("pog");
+			react("hitman");
 		}
 		
 		
@@ -317,6 +317,7 @@ public class Commands extends ListenerAdapter
 		final String emoteSmh = "smh:880423534365659176";
 		final String emoteGiorno = "GiOrNo:618591225582321703";
 		// final String emoteBandieraRomania = "U+1F1F7 U+1F1F4";
+		final String[] emoteHitman = {"regional_indicator_h"};
 
 
 		String emoteDaUsare = switch (emote)
@@ -339,6 +340,10 @@ public class Commands extends ListenerAdapter
 		
 		if (emote.equals("sabaping"))
 			for (String s : emoteSabaPing)
+				messageChannel.addReactionById(id, s).queue();
+		
+		if (emote.equals("hitman"))
+			for (String s : emoteHitman)
 				messageChannel.addReactionById(id, s).queue();
 		
 		if (!emoteDaUsare.equals(""))
