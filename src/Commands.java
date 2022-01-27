@@ -142,7 +142,7 @@ public class Commands extends ListenerAdapter
 						triggera(1);
 				}
 			}
-
+//
 
 		} // fine if reazioni
 
