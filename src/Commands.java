@@ -43,7 +43,8 @@ public class Commands extends ListenerAdapter
 	private static int messaggiInviati = 0;
 	private static int limite;
 	private static String authorName;
-	private static final String[] utenti = {"Òbito#2804", "Enigmo#7166", "Alex#2241", "Gion#0935", "OwO#8456"};
+	private static final String[] nomeUtenti = {"Òbito#2804", "Enigmo#7166", "Alex#2241", "Gion#0935", "OwO#8456"};
+	private static final ArrayList<String> utenti = new ArrayList<>();
 	private static long id;
 	private static final Locale locale = Locale.ITALIAN;
 	private static Message message;
@@ -54,7 +55,9 @@ public class Commands extends ListenerAdapter
 	public void onReady(@NotNull ReadyEvent event)
 	{
 		String nome = event.getJDA().getSelfUser().getName();
-
+		
+		Collections.addAll(utenti, nomeUtenti);
+		
 		System.out.printf("%s si è connesso a Discord!\n\n", nome);
 		System.out.print("public class MessageHistory\n{\n");
 	}
@@ -124,7 +127,7 @@ public class Commands extends ListenerAdapter
 				{
 					react("pigeon"); // Enigmo
 					if (random.nextInt(100) <= 33) // un ulteriore 33% di chance di mandargli una foto di Yano da OddTaxi
-						triggeraEnigmo();
+						triggera(1);
 				}
 			}
 
@@ -139,6 +142,7 @@ public class Commands extends ListenerAdapter
 			case "!info" -> info();
 			case "!8ball" -> eightBall(event);
 			case "!pokemon" -> pokemon();
+			case "!triggera" -> triggera(3);
 		}
 		
 		
@@ -287,17 +291,92 @@ public class Commands extends ListenerAdapter
 		
 	} // fine sondaggio()
 
-	public void triggeraEnigmo()
+	public void triggera(int idUtente) //TODO: triggerare tutti
 	{
-		final String yano = "https://ramenparados.com/wp-content/uploads/2021/01/21.png";
+		String title, image, footer, color;
+		short risultato = (short) random.nextInt(2);
+
+		final String titolo = "Get rekt ";
+		final String[] immagineEnigmo =
+		{
+			"https://ramenparados.com/wp-content/uploads/2021/01/21.png",
+			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2F736x%2F2b%2Fa6%2F4b%2F2ba64b426bbbb365252a54e2312118e9.jpg&f=1&nofb=1"
+		};
+		
+		final String[] immagineLex =
+		{
+			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fst.motortrendenespanol.com%2Fuploads%2Fsites%2F5%2F2017%2F07%2FTesla-Model-3-lead-.jpg&f=1&nofb=1",
+			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fvitaitaliantours.com%2Fwp-content%2Fuploads%2F2016%2F03%2FNeapolitan-Pizza-Margherita.jpg&f=1&nofb=1"
+		};
+		
+		final String[] immagineObito =
+		{
+			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstocks2.com%2Fassets%2Fstocks%2Fgm%2Fgme%2Fgme-daily-rsi.png&f=1&nofb=1",
+			"lex.png"
+		};
+		
+		final String[] immagineGion =
+		{
+			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2F1.bp.blogspot.com%2F-9rnsA1ZxZy8%2FVetkw9DnL9I%2FAAAAAAAABA0%2F7h5Svdbg9zw%2Fs1600%2Fminions%2B2015%2Bscreenshot%2B4.jpg&f=1&nofb=1",
+			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.vox-cdn.com%2Fthumbor%2Fs3AsF2kLAo350xTuRsw7lxgs2Qg%3D%2F0x0%3A2000x1333%2F1200x800%2Ffilters%3Afocal(840x507%3A1160x827)%2Fcdn.vox-cdn.com%2Fuploads%2Fchorus_image%2Fimage%2F55188531%2Fhawaiian_pizza_sh.0.jpg&f=1&nofb=1"
+		};
+		
+		final String testoFooter = "";
+		final String colore = "0x0000FF";
+		
 		messageChannel.sendTyping().queue();
 		pause(1000, 0);
 
 		var embedBuilder = new EmbedBuilder();
-		embedBuilder.setTitle("Enigmo get rekt");
-		embedBuilder.setImage(yano);
-		embedBuilder.setFooter("Yano best personaggio");
-		embedBuilder.setColor(0xcb4d4d);
+		
+		switch (idUtente)
+		{
+			case 0 -> // Òbito
+			{
+				title = titolo.concat("Òbito");
+				image = immagineObito[risultato];
+				footer = testoFooter;
+				color = colore;
+			}
+			
+			case 1 -> // Enigmo
+			{
+				title = titolo.concat("Enigmo");
+				image = immagineEnigmo[risultato];
+				footer = testoFooter;
+				color = colore;
+			}
+			
+			case 2 -> // Lex
+			{
+				title = titolo.concat("Lex");
+				image = immagineLex[risultato];
+				footer = testoFooter;
+				color = colore;
+			}
+			
+			case 3 -> // Gion
+			{
+				title = titolo.concat("Gion");
+				image = immagineGion[risultato];
+				footer = testoFooter;
+				color = colore;
+			}
+			
+			
+			default ->
+			{
+				title = "Errore";
+				image = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F5%2F55%2FQuestion_Mark.svg%2F1200px-Question_Mark.svg.png&f=1&nofb=1";
+				footer = "Errore ingredibile";
+				color = "0x424242";
+			}
+		}
+		
+		embedBuilder.setTitle(title);
+		embedBuilder.setImage(image);
+		embedBuilder.setFooter(footer);
+		embedBuilder.setColor(Color.decode(color));
 
 		messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
 	}
