@@ -126,12 +126,14 @@ public class Commands extends ListenerAdapter
 				case "2241" ->  // Alex
 				{
 					messageChannel.addReactionById(id, "🇷🇴").queue();
-					triggera(2);
+					if (random.nextInt(100) <= 33)
+						triggera(2);
 				}
 				case "0935" -> // Gion
 				{
 					react("smh");
-					triggera(3);
+					if (random.nextInt(100) <= 33)
+						triggera(3);
 				}
 				case "7166" -> // Enigmo
 				{
