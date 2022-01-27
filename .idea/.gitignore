@@ -6,3 +6,6 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
+# File XML locali, diversi sui due computer. Ignorali, dannazione. 
+*.xml
