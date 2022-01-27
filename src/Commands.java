@@ -120,13 +120,23 @@ public class Commands extends ListenerAdapter
 					react("obito");
 					react("vergogna");
 					message.reply("Òbito vergognati").queue();
+					if (random.nextInt(100) <= 33)
+						triggera(0);
 				}
-				case "2241" -> messageChannel.addReactionById(id, "🇷🇴").queue(); // Alex
-				case "0935" -> react("smh"); // Gion
-				case "7166" ->
+				case "2241" ->  // Alex
 				{
-					react("pigeon"); // Enigmo
-					if (random.nextInt(100) <= 33) // un ulteriore 33% di chance di mandargli una foto di Yano da OddTaxi
+					messageChannel.addReactionById(id, "🇷🇴").queue();
+					triggera(2);
+				}
+				case "0935" -> // Gion
+				{
+					react("smh");
+					triggera(3);
+				}
+				case "7166" -> // Enigmo
+				{
+					react("pigeon");
+					if (random.nextInt(100) <= 33)
 						triggera(1);
 				}
 			}
