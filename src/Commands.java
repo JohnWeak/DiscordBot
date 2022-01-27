@@ -142,7 +142,7 @@ public class Commands extends ListenerAdapter
 			case "!info" -> info();
 			case "!8ball" -> eightBall(event);
 			case "!pokemon" -> pokemon();
-			case "!triggera" -> triggera(3);
+			case "!triggera" -> triggera(0);
 		}
 		
 		
@@ -291,12 +291,19 @@ public class Commands extends ListenerAdapter
 		
 	} // fine sondaggio()
 
-	public void triggera(int idUtente) //TODO: triggerare tutti
+	public void triggera(int idUtente)
 	{
 		String title, image, footer, color;
 		short risultato = (short) random.nextInt(2);
 
 		final String titolo = "Get rekt ";
+
+		final String[] immagineObito =
+		{
+			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstocks2.com%2Fassets%2Fstocks%2Fgm%2Fgme%2Fgme-daily-rsi.png&f=1&nofb=1",
+			"https://scontent.fnap5-1.fna.fbcdn.net/v/t1.6435-9/36686816_812263365633695_5089614023322763264_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=174925&_nc_ohc=sFL5GEX7jv4AX_KyE9g&_nc_ht=scontent.fnap5-1.fna&oh=00_AT_oGm-J17HN6LGRMIH_NOSDf3Fya36yAs9gtKmHKu-qxg&oe=6219896F"
+		};
+
 		final String[] immagineEnigmo =
 		{
 			"https://ramenparados.com/wp-content/uploads/2021/01/21.png",
@@ -308,12 +315,7 @@ public class Commands extends ListenerAdapter
 			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fst.motortrendenespanol.com%2Fuploads%2Fsites%2F5%2F2017%2F07%2FTesla-Model-3-lead-.jpg&f=1&nofb=1",
 			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fvitaitaliantours.com%2Fwp-content%2Fuploads%2F2016%2F03%2FNeapolitan-Pizza-Margherita.jpg&f=1&nofb=1"
 		};
-		
-		final String[] immagineObito =
-		{
-			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstocks2.com%2Fassets%2Fstocks%2Fgm%2Fgme%2Fgme-daily-rsi.png&f=1&nofb=1",
-			"lex.png"
-		};
+
 		
 		final String[] immagineGion =
 		{
@@ -322,7 +324,6 @@ public class Commands extends ListenerAdapter
 		};
 		
 		final String testoFooter = "";
-		final String colore = "0x0000FF";
 		
 		messageChannel.sendTyping().queue();
 		pause(1000, 0);
@@ -336,7 +337,7 @@ public class Commands extends ListenerAdapter
 				title = titolo.concat("Òbito");
 				image = immagineObito[risultato];
 				footer = testoFooter;
-				color = colore;
+				color = ( risultato == 0 ? "0xFFFFFF" : "0xC59FC9");
 			}
 			
 			case 1 -> // Enigmo
@@ -344,7 +345,7 @@ public class Commands extends ListenerAdapter
 				title = titolo.concat("Enigmo");
 				image = immagineEnigmo[risultato];
 				footer = testoFooter;
-				color = colore;
+				color = ( risultato == 0 ? "0xCB4D4D" : "0xE5D152");
 			}
 			
 			case 2 -> // Lex
@@ -352,7 +353,7 @@ public class Commands extends ListenerAdapter
 				title = titolo.concat("Lex");
 				image = immagineLex[risultato];
 				footer = testoFooter;
-				color = colore;
+				color = ( risultato == 0 ? "0xD80000" : "0x207522");
 			}
 			
 			case 3 -> // Gion
@@ -360,7 +361,7 @@ public class Commands extends ListenerAdapter
 				title = titolo.concat("Gion");
 				image = immagineGion[risultato];
 				footer = testoFooter;
-				color = colore;
+				color = ( risultato == 0 ? "0XDDCD4f" : "0xEAE28A");
 			}
 			
 			
