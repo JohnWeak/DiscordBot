@@ -122,6 +122,7 @@ public class Commands extends ListenerAdapter
 					react("obito");
 					react("vergogna");
 					message.reply("Òbito vergognati").queue();
+
 					personaDaTriggerare = 0;
 				}
 				case "7166" -> // Enigmo
