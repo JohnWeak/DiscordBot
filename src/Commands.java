@@ -112,6 +112,8 @@ public class Commands extends ListenerAdapter
 		if (random.nextInt(20) == 9) // 5% chance di reagire con emote personali
 		{
 			String discriminator = author.getDiscriminator();
+			var trigger = random.nextInt(100);
+			var personaDaTriggerare = -1;
 
 			switch(discriminator)
 			{
@@ -120,29 +122,28 @@ public class Commands extends ListenerAdapter
 					react("obito");
 					react("vergogna");
 					message.reply("Òbito vergognati").queue();
-					if (random.nextInt(100) <= 33)
-						triggera(0);
-				}
-				case "2241" ->  // Alex
-				{
-					messageChannel.addReactionById(id, "🇷🇴").queue();
-					if (random.nextInt(100) <= 33)
-						triggera(2);
-				}
-				case "0935" -> // Gion
-				{
-					react("smh");
-					if (random.nextInt(100) <= 33)
-						triggera(3);
+					personaDaTriggerare = 0;
 				}
 				case "7166" -> // Enigmo
 				{
 					react("pigeon");
-					if (random.nextInt(100) <= 33)
-						triggera(1);
+					personaDaTriggerare = 1;
 				}
+				case "2241" ->  // Alex
+				{
+					messageChannel.addReactionById(id, "🇷🇴").queue();
+					personaDaTriggerare = 2;
+				}
+				case "0935" -> // Gion
+				{
+					react("smh");
+					personaDaTriggerare = 3;
+				}
+				default -> personaDaTriggerare = -2;
 			}
-//
+
+			if (trigger <= 33)
+				triggera(personaDaTriggerare);
 
 		} // fine if reazioni
 
@@ -154,7 +155,6 @@ public class Commands extends ListenerAdapter
 			case "!info" -> info();
 			case "!8ball" -> eightBall(event);
 			case "!pokemon" -> pokemon();
-			case "!triggera" -> triggera(0);
 		}
 		
 		
@@ -305,6 +305,9 @@ public class Commands extends ListenerAdapter
 
 	public void triggera(int idUtente)
 	{
+		if (idUtente < 0 || idUtente > 3)
+			return;
+
 		String title, image, footer, color;
 		short risultato = (short) random.nextInt(2);
 
