@@ -112,40 +112,33 @@ public class Commands extends ListenerAdapter
 		if (random.nextInt(20) == 9) // 5% chance di reagire con emote personali
 		{
 			String discriminator = author.getDiscriminator();
-			var trigger = random.nextInt(100);
-			var personaDaTriggerare = -1;
-
-			switch(discriminator)
+			var trigger = random.nextInt(2); // 0 - 1
+			
+			if (trigger == 0)
+				triggera(discriminator);
+			else
 			{
-				case "2804" -> // Òbito
+				switch(discriminator)
 				{
-					react("obito");
-					react("vergogna");
-					message.reply("Òbito vergognati").queue();
-
-					personaDaTriggerare = 0;
-				}
-				case "7166" -> // Enigmo
-				{
-					react("pigeon");
-					personaDaTriggerare = 1;
-				}
-				case "2241" ->  // Alex
-				{
-					messageChannel.addReactionById(id, "🇷🇴").queue();
-					personaDaTriggerare = 2;
-				}
-				case "0935" -> // Gion
-				{
-					react("smh");
-					personaDaTriggerare = 3;
-				}
-				default -> personaDaTriggerare = -2;
-			}
-
-			if (trigger <= 33)
-				triggera(personaDaTriggerare);
-
+					case "2804" -> // Òbito
+					{
+						react("obito");
+						react("vergogna");
+						message.reply("Òbito vergognati").queue();
+					}
+					case "7166" -> // Enigmo
+						react("pigeon");
+					
+					case "2241" ->  // Alex
+						messageChannel.addReactionById(id, "🇷🇴").queue();
+					
+					case "0935" -> // Gion
+						react("smh");
+					
+				} // fine switch
+				
+			} // fine else
+			
 		} // fine if reazioni
 
 		
@@ -304,11 +297,8 @@ public class Commands extends ListenerAdapter
 		
 	} // fine sondaggio()
 
-	public void triggera(int idUtente)
+	public void triggera(String discriminator)
 	{
-		if (idUtente < 0 || idUtente > 3)
-			return;
-
 		String title, image, footer, color;
 		short risultato = (short) random.nextInt(2);
 
@@ -346,9 +336,9 @@ public class Commands extends ListenerAdapter
 
 		var embedBuilder = new EmbedBuilder();
 		
-		switch (idUtente)
+		switch (discriminator)
 		{
-			case 0 -> // Òbito
+			case "2804" -> // Òbito
 			{
 				title = titolo.concat("Òbito");
 				image = immagineObito[risultato];
@@ -356,7 +346,7 @@ public class Commands extends ListenerAdapter
 				color = ( risultato == 0 ? "0xFFFFFF" : "0xC59FC9");
 			}
 			
-			case 1 -> // Enigmo
+			case "7166" -> // Enigmo
 			{
 				title = titolo.concat("Enigmo");
 				image = immagineEnigmo[risultato];
@@ -364,7 +354,7 @@ public class Commands extends ListenerAdapter
 				color = ( risultato == 0 ? "0xCB4D4D" : "0xE5D152");
 			}
 			
-			case 2 -> // Lex
+			case "2241" -> // Lex
 			{
 				title = titolo.concat("Lex");
 				image = immagineLex[risultato];
@@ -372,7 +362,7 @@ public class Commands extends ListenerAdapter
 				color = ( risultato == 0 ? "0xD80000" : "0x207522");
 			}
 			
-			case 3 -> // Gion
+			case "0935" -> // Gion
 			{
 				title = titolo.concat("Gion");
 				image = immagineGion[risultato];
@@ -396,9 +386,8 @@ public class Commands extends ListenerAdapter
 		embedBuilder.setColor(Color.decode(color));
 
 		messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
-	}
-
-
+	
+	} // fine triggera()
 
 	public void react(String emote)
 	{
