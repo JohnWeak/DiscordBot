@@ -404,8 +404,8 @@ public class Commands extends ListenerAdapter
 		final String emoteGetRekt = "getrekt:742330625347944504";
 		final String emoteSmh = "smh:880423534365659176";
 		final String emoteGiorno = "GiOrNo:618591225582321703";
-		final int[] emoteHitman = {7, 8, 20, 13, 0, 14}; // posizioni nell'alfabeto
-		final int[] emoteXCOM = {23, 2, 15, 13}; // posizioni nell'alfabeto
+		final int[] emoteHitman = {7, 8, 19, 12, 0, 13}; // posizioni nell'alfabeto
+		final int[] emoteXCOM = {23, 2, 14, 12}; // posizioni nell'alfabeto
 		final String[] letters =
 		{
 			"\uD83C\uDDE6", // A
