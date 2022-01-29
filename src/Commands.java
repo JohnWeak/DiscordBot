@@ -187,13 +187,13 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("giorno"))
 			react("giorno");
 
-		if (msgLowerCase.contains("uomo colpo"))
+		if (msgLowerCase.contains("uomo colpo") || msgLowerCase.contains("hitman"))
 		{
 			react("pog");
 			react("hitman");
 		}
 		
-		if (msgLowerCase.contains("icsom") || msgLowerCase.contains("xcom"))
+		if (msgLowerCase.contains("icscom") || msgLowerCase.contains("xcom"))
 			react("xcom");
 		
 		
@@ -250,14 +250,12 @@ public class Commands extends ListenerAdapter
 		int sleepInterval = random.nextInt(500) + 1000;
 		final int size = risposte.length;
 		EmbedBuilder embedBuilder = new EmbedBuilder();
-		final String[] letters = new String[]
+		final String[] letters =
 		{
-			"\uD83C\uDDE6", "\uD83C\uDDE7", "\uD83C\uDDE8", "\uD83C\uDDE9",
-			"\uD83C\uDDEA", "\uD83C\uDDEB", "\uD83C\uDDEC", "\uD83C\uDDED",
-			"\uD83C\uDDEE", "\uD83C\uDDEF", "\uD83C\uDDF0", "\uD83C\uDDF1",
-			"\uD83C\uDDF2", "\uD83C\uDDF3", "\uD83C\uDDF4", "\uD83C\uDDF5",
-			"\uD83C\uDDF6", "\uD83C\uDDF7", "\uD83C\uDDF8", "\uD83C\uDDF9",
-			"\uD83C\uDDFA", "\uD83C\uDDFB", "\uD83C\uDDFC", "\uD83C\uDDFD",
+			"\uD83C\uDDE6", "\uD83C\uDDE7", "\uD83C\uDDE8", "\uD83C\uDDE9", "\uD83C\uDDEA", "\uD83C\uDDEB",
+			"\uD83C\uDDEC", "\uD83C\uDDED", "\uD83C\uDDEE", "\uD83C\uDDEF", "\uD83C\uDDF0", "\uD83C\uDDF1",
+			"\uD83C\uDDF2", "\uD83C\uDDF3", "\uD83C\uDDF4", "\uD83C\uDDF5", "\uD83C\uDDF6", "\uD83C\uDDF7",
+			"\uD83C\uDDF8", "\uD83C\uDDF9", "\uD83C\uDDFA", "\uD83C\uDDFB", "\uD83C\uDDFC", "\uD83C\uDDFD",
 			"\uD83C\uDDFE", "\uD83C\uDDFF"
 		}; // array di lettere emoji A -> Z
 		
