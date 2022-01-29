@@ -193,6 +193,9 @@ public class Commands extends ListenerAdapter
 			react("hitman");
 		}
 		
+		if (msgLowerCase.contains("icsom") || msgLowerCase.contains("xcom"))
+			react("xcom");
+		
 		
 	} // fine onMessageReceived()
 
@@ -410,7 +413,14 @@ public class Commands extends ListenerAdapter
 			"\uD83C\uDDE6", // A
 			"\uD83C\uDDF3", // N
 		};
-
+		final String[] emoteXCOM =
+		{
+			"\uD83C\uDEFD", // X
+			"\uD83C\uDDE8", // C
+			"\uD83C\uDDF4", // O
+			"\uD83C\uDDF2", // M
+		};
+		
 		String emoteDaUsare = switch (emote)
 		{
 			case "pigeon" -> emotePigeon;
@@ -434,6 +444,10 @@ public class Commands extends ListenerAdapter
 		
 		if (emote.equals("hitman"))
 			for (String s : emoteHitman)
+				messageChannel.addReactionById(id, s).queue();
+		
+		if (emote.equals("xcom"))
+			for (String s : emoteXCOM)
 				messageChannel.addReactionById(id, s).queue();
 		
 		if (!emoteDaUsare.equals(""))
