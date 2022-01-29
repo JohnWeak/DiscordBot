@@ -187,14 +187,15 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("giorno"))
 			react("giorno");
 
-		if (msgLowerCase.contains("uomo colpo") || msgLowerCase.contains("hitman"))
+		if (msgLowerCase.contains("uomo colpo") || msgLowerCase.contains("hitman") || msgLowerCase.contains("icscom") || msgLowerCase.contains("xcom"))
 		{
 			react("pog");
-			react("hitman");
+			
+			if (msgLowerCase.contains("icscom") || msgLowerCase.contains("xcom"))
+				react("xcom");
+			else
+				react("hitman");
 		}
-		
-		if (msgLowerCase.contains("icscom") || msgLowerCase.contains("xcom"))
-			react("xcom");
 		
 		
 	} // fine onMessageReceived()
