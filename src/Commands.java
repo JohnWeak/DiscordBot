@@ -404,21 +404,36 @@ public class Commands extends ListenerAdapter
 		final String emoteGetRekt = "getrekt:742330625347944504";
 		final String emoteSmh = "smh:880423534365659176";
 		final String emoteGiorno = "GiOrNo:618591225582321703";
-		final String[] emoteHitman =
+		final int[] emoteHitman = {7, 8, 20, 13, 0, 14}; // posizioni nell'alfabeto
+		final int[] emoteXCOM = {23, 2, 15, 13}; // posizioni nell'alfabeto
+		final String[] letters =
 		{
+			"\uD83C\uDDE6", // A
+			"\uD83C\uDDE7", // B
+			"\uD83C\uDDE8", // C
+			"\uD83C\uDDE9", // D
+			"\uD83C\uDDEA", // E
+			"\uD83C\uDDEB", // F
+			"\uD83C\uDDEC", // G
 			"\uD83C\uDDED", // H
 			"\uD83C\uDDEE", // I
-			"\uD83C\uDDF9", // T
+			"\uD83C\uDDEF", // J
+			"\uD83C\uDDF0", // K
+			"\uD83C\uDDF1", // L
 			"\uD83C\uDDF2", // M
-			"\uD83C\uDDE6", // A
 			"\uD83C\uDDF3", // N
-		};
-		final String[] emoteXCOM =
-		{
-			"\uD83C\uDEFD", // X
-			"\uD83C\uDDE8", // C
 			"\uD83C\uDDF4", // O
-			"\uD83C\uDDF2", // M
+			"\uD83C\uDDF5", // P
+			"\uD83C\uDDF6", // Q
+			"\uD83C\uDDF7", // R
+			"\uD83C\uDDF8", // S
+			"\uD83C\uDDF9", // T
+			"\uD83C\uDDFA", // U
+			"\uD83C\uDDFB", // V
+			"\uD83C\uDDFC", // W
+			"\uD83C\uDDFD", // X
+			"\uD83C\uDDFE", // Y
+			"\uD83C\uDDFF"  // Z
 		};
 		
 		String emoteDaUsare = switch (emote)
@@ -443,12 +458,12 @@ public class Commands extends ListenerAdapter
 				messageChannel.addReactionById(id, s).queue();
 		
 		if (emote.equals("hitman"))
-			for (String s : emoteHitman)
-				messageChannel.addReactionById(id, s).queue();
+			for (int i : emoteHitman)
+				messageChannel.addReactionById(id, letters[i]).queue();
 		
 		if (emote.equals("xcom"))
-			for (String s : emoteXCOM)
-				messageChannel.addReactionById(id, s).queue();
+			for (int i : emoteXCOM)
+				messageChannel.addReactionById(id, letters[i]).queue();
 		
 		if (!emoteDaUsare.equals(""))
 		{
