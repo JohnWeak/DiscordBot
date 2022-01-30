@@ -21,6 +21,7 @@ public class Pokemon
 	private String generazione;
 	private String dexNumber;
 	private String[] lineaEvolutiva;
+	private int[] individualValues = new int[6];
 	
 	public Pokemon()
 	{
@@ -71,14 +72,6 @@ public class Pokemon
 	}
 
 	
-	public Pokemon(String nome, String img)
-	{
-		shiny();
-		
-		this.nome = nome;
-		this.img = img;
-	}
-	
 	public Pokemon(boolean shiny)
 	{
 		this.shiny = shiny;
@@ -97,6 +90,8 @@ public class Pokemon
 			id = random.nextInt(max)+1;
 		Scanner scanner;
 		String[] risultato = new String[2];
+		
+		generateIVs();
 		
 		try
 		{
@@ -118,7 +113,6 @@ public class Pokemon
 		
 		System.out.println(Arrays.toString(risultato)+"\nShiny: "+shiny);
 		return risultato;
-	
 	}
 	
 	private void shiny()
@@ -127,6 +121,12 @@ public class Pokemon
 			shiny = true;
 	}
 	
+	private void generateIVs()
+	{
+		// [HP, ATK, DEF, SPA, SPD, SPE]
+		for (int index : individualValues)
+			individualValues[index] = random.nextInt(100) + 1;
+	}
 	
 	
 	
@@ -163,7 +163,11 @@ public class Pokemon
 	{
 		return lineaEvolutiva;
 	}
-
+	public int[] getIndividualValues()
+	{
+		return individualValues;
+	}
+	
 	//SETTER
 	public void setNome(String nome)
 	{
@@ -196,5 +200,9 @@ public class Pokemon
 	public void setLineaEvolutiva(String[] lineaEvolutiva)
 	{
 		this.lineaEvolutiva = lineaEvolutiva;
+	}
+	public void setIndividualValues(int[] individualValues)
+	{
+		this.individualValues = individualValues;
 	}
 } // fine classe Pokemon
