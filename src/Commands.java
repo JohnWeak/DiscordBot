@@ -24,8 +24,6 @@ import java.util.regex.Pattern;
 
 public class Commands extends ListenerAdapter
 {
-	private static int msgCount = 0;
-	// public static final String prefix = "!";
 	private static final File valori = new File("valori.txt");
 	private static final File nomiPkmn = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
