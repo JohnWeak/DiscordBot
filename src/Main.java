@@ -21,6 +21,8 @@ public class Main
 	
 	private static void selectActivity()
 	{
+		var random = new Random();
+
 		final String[] games =
 		{
 			"Minecraft", "Dead Space", "Hitman 2", "Rimworld", "Darkest Dungeon", "FTL: Faster Than Light",
@@ -54,12 +56,11 @@ public class Main
 
 		final String[] easterEgg =
 		{
-			"Òbito che consegna pizze", "Òbito che perde soldi in borsa", "Enigmo che simpa per Yano"
+			"Òbito mentre consegna pizze", "Òbito che perde soldi in borsa", "Enigmo che simpa per Yano"
 		};
-		
-		var random = new Random();
-		int bound = random.nextInt(5);
-		switch (bound)
+
+		int scelta = random.nextInt(5);
+		switch (scelta)
 		{
 			case 0 -> jda.setActivity(Activity.playing(games[random.nextInt(games.length)]));
 			case 1 -> jda.setActivity(Activity.watching(anime[random.nextInt(anime.length)]));
