@@ -51,15 +51,21 @@ public class Main
 			"Dr. House", "Lie to me", "Mr. Robot", "Sherlock", "The Mentalist", "Forever", "Elementary",
 			"Breaking Bad", "Limitless", "Squid Game"
 		};
+
+		final String[] easterEgg =
+		{
+			"Òbito che consegna pizze", "Òbito che perde soldi in borsa", "Enigmo che simpa per Yano"
+		};
 		
 		var random = new Random();
-		int bound = random.nextInt(4);
+		int bound = random.nextInt(5);
 		switch (bound)
 		{
 			case 0 -> jda.setActivity(Activity.playing(games[random.nextInt(games.length)]));
 			case 1 -> jda.setActivity(Activity.watching(anime[random.nextInt(anime.length)]));
 			case 2 -> jda.setActivity(Activity.watching(movies[random.nextInt(movies.length)]));
 			case 3 -> jda.setActivity(Activity.watching(series[random.nextInt(series.length)]));
+			case 4 -> jda.setActivity(Activity.watching(easterEgg[random.nextInt(easterEgg.length)]));
 		}
 	} // fine selectActivity()
 	
