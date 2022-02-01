@@ -13,16 +13,20 @@ public class Main
 	public static void main(String[] args) throws LoginException
 	{
 		jda = JDABuilder.createDefault("ODM2NTg2ODYyMjEzNzI2MjI4.YIgKOg.zFvGCTzAF1ffIUB_M5OnN_U29HI");
-		selectActivity();
+		jda.setActivity(selectActivity());
 		jda.setStatus(OnlineStatus.ONLINE);
 		jda.addEventListeners(new Commands());
 		jda.build();
+		
 	} // fine metodo main()
 	
-	private static void selectActivity()
+	
+	private static Activity selectActivity()
 	{
 		var random = new Random();
-
+		String giocoScelto = null, showScelto = null, easterEggScelto = null;
+		Activity activity = null;
+		
 		final String[] games =
 		{
 			"Minecraft", "Dead Space", "Hitman 2", "Rimworld", "Darkest Dungeon", "FTL: Faster Than Light",
@@ -56,18 +60,35 @@ public class Main
 
 		final String[] easterEgg =
 		{
-			"Òbito mentre consegna pizze", "Òbito che perde soldi in borsa", "Enigmo che simpa per Yano"
+			"Òbito che perde soldi in borsa", "Enigmo che simpa per Yano",
+			"Gion che mangia una pizza con ananas", "Lex che guida un'auto elettrica",
+			"il mondo bruciare", "una partita di calcio", "gli americani che si sparano fra loro"
 		};
-
-		int scelta = random.nextInt(5);
-		switch (scelta)
+		
+		int percent = random.nextInt(100);
+		
+		if (percent <= 45) // watch: 0-45
 		{
-			case 0 -> jda.setActivity(Activity.playing(games[random.nextInt(games.length)]));
-			case 1 -> jda.setActivity(Activity.watching(anime[random.nextInt(anime.length)]));
-			case 2 -> jda.setActivity(Activity.watching(movies[random.nextInt(movies.length)]));
-			case 3 -> jda.setActivity(Activity.watching(series[random.nextInt(series.length)]));
-			case 4 -> jda.setActivity(Activity.watching(easterEgg[random.nextInt(easterEgg.length)]));
+			switch (random.nextInt(3))
+			{
+				case 0 -> showScelto = anime[random.nextInt(anime.length)];
+				case 1 -> showScelto = movies[random.nextInt(movies.length)];
+				case 2 -> showScelto = series[random.nextInt(series.length)];
+			}
+			activity = Activity.watching(showScelto);
 		}
+		else if (percent <= 95)// play: 46-95
+		{
+			giocoScelto = games[random.nextInt(games.length)];
+			activity = Activity.playing(giocoScelto);
+		}
+		else // easter egg: 96-100
+		{
+			easterEggScelto = easterEgg[random.nextInt(easterEgg.length)];
+			activity = Activity.watching(easterEggScelto);
+		}
+		
+		return activity;
 	} // fine selectActivity()
 	
 } // fine classe Main
