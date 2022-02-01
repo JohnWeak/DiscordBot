@@ -59,13 +59,13 @@ public class Commands extends ListenerAdapter
 		System.out.printf("%s si è connesso a Discord!\n\n", nome);
 		System.out.print("public class MessageHistory\n{\n");
 		
-		TextChannel textChannel = event.getJDA().getTextChannelsByName("\uD83E\uDD16bot-owo", true).get(0);
+		TextChannel canaleBot = event.getJDA().getTextChannelsByName("\uD83E\uDD16bot-owo", true).get(0);
 
 		String activity = act.getType().toString();
 		String nomeActivity = act.getName();
-		String frasePrima = activity.equals("WATCHING") ? "Sto guardando" : "Sto giocando a";
+		String activityTradotta = activity.equals("WATCHING") ? "Sto guardando" : "Sto giocando a";
 		
-		textChannel.sendMessage("`"+frasePrima+" "+nomeActivity+"`").queue();
+		canaleBot.sendMessage(activityTradotta + " " + nomeActivity).queue();
 	}
 
 	public void onMessageReceived(MessageReceivedEvent event)
