@@ -53,16 +53,18 @@ public class Commands extends ListenerAdapter
 	public void onReady(@NotNull ReadyEvent event)
 	{
 		String nome = event.getJDA().getSelfUser().getName();
-
+		Activity act = Objects.requireNonNull(event.getJDA().getPresence().getActivity());
 		Collections.addAll(utenti, nomeUtenti);
 		
 		System.out.printf("%s si è connesso a Discord!\n\n", nome);
 		System.out.print("public class MessageHistory\n{\n");
 		
 		TextChannel textChannel = event.getJDA().getTextChannelsByName("\uD83E\uDD16bot-owo", true).get(0);
-		String test = Objects.requireNonNull(Objects.requireNonNull(event.getJDA().getPresence().getActivity()).asRichPresence()).toString();
 
-		textChannel.sendMessage(test).queue();
+		String activity = act.getType().toString();
+		String nomeActivity = act.getName();
+
+		textChannel.sendMessage(activity+"/"+nomeActivity).queue();
 	}
 
 	public void onMessageReceived(MessageReceivedEvent event)
