@@ -63,8 +63,9 @@ public class Commands extends ListenerAdapter
 
 		String activity = act.getType().toString();
 		String nomeActivity = act.getName();
-
-		textChannel.sendMessage(activity+"/"+nomeActivity).queue();
+		String frasePrima = activity.equals("WATCHING") ? "Sto guardando" : "Sto giocando a";
+		
+		textChannel.sendMessage(frasePrima+" "+nomeActivity).queue();
 	}
 
 	public void onMessageReceived(MessageReceivedEvent event)
