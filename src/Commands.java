@@ -60,7 +60,9 @@ public class Commands extends ListenerAdapter
 		System.out.print("public class MessageHistory\n{\n");
 		
 		TextChannel textChannel = event.getJDA().getTextChannelsByName("\uD83E\uDD16bot-owo", true).get(0);
-		textChannel.sendMessage("").queue();
+		String test = Objects.requireNonNull(event.getJDA().getPresence().getActivity()).toString();
+		
+		textChannel.sendMessage(test).queue();
 	}
 
 	public void onMessageReceived(MessageReceivedEvent event)
