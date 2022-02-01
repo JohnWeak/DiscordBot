@@ -63,7 +63,7 @@ public class Commands extends ListenerAdapter
 		TextChannel textChannel = event.getJDA().getTextChannelsByName("\uD83E\uDD16bot-owo", true).get(0);
 		String activity = act.getType().toString();
 		String nomeActivity = act.getName();
-		
+		//
 		textChannel.sendMessage(activity+"/"+nomeActivity).queue();
 	}
 
