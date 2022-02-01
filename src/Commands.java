@@ -59,7 +59,7 @@ public class Commands extends ListenerAdapter
 		System.out.printf("%s si è connesso a Discord!\n\n", nome);
 		System.out.print("public class MessageHistory\n{\n");
 		
-		TextChannel textChannel = event.getJDA().getTextChannelsByName("bot-owo", true).get(0);
+		TextChannel textChannel = event.getJDA().getTextChannelsByName("\uD83E\uDD16bot-owo", true).get(0);
 		textChannel.sendMessage("MESSAGE").queue();
 	}
 
