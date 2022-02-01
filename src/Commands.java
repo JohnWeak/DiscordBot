@@ -60,7 +60,7 @@ public class Commands extends ListenerAdapter
 		System.out.print("public class MessageHistory\n{\n");
 		
 		TextChannel textChannel = event.getJDA().getTextChannelsByName("\uD83E\uDD16bot-owo", true).get(0);
-		textChannel.sendMessage(event.getJDA().getPresence().toString()).queue();
+		textChannel.sendMessage("").queue();
 	}
 
 	public void onMessageReceived(MessageReceivedEvent event)
@@ -98,6 +98,11 @@ public class Commands extends ListenerAdapter
 				react("vergogna");
 			}
 			// return a priori, se però il messaggio lo manda l'altro bot OwO prima gli mette le reazioni e poi return
+			
+			if (author.getDiscriminator().equals("5269"))
+				if (random.nextInt(1000) == 42) // 0,1%
+					message.reply("BOwOt vergognati").queue();
+			
 			return;
 		}
 
