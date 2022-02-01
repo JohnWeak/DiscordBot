@@ -23,8 +23,8 @@ public class Main
 	private static Activity selectActivity()
 	{
 		var random = new Random();
-		String giocoScelto = null, showScelto = null, easterEggScelto = null;
-		Activity activity = null;
+		String giocoScelto, showScelto = null, easterEggScelto;
+		Activity activity;
 		
 		final String[] games =
 		{
