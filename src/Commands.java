@@ -53,11 +53,14 @@ public class Commands extends ListenerAdapter
 	public void onReady(@NotNull ReadyEvent event)
 	{
 		String nome = event.getJDA().getSelfUser().getName();
-		
+
 		Collections.addAll(utenti, nomeUtenti);
 		
 		System.out.printf("%s si è connesso a Discord!\n\n", nome);
 		System.out.print("public class MessageHistory\n{\n");
+		
+		TextChannel textChannel = event.getJDA().getTextChannelsByName("bot-owo", true).get(0);
+		textChannel.sendMessage("MESSAGE").queue();
 	}
 
 	public void onMessageReceived(MessageReceivedEvent event)

@@ -17,7 +17,6 @@ public class Main
 		jda.setStatus(OnlineStatus.ONLINE);
 		jda.addEventListeners(new Commands());
 		jda.build();
-		
 	} // fine metodo main()
 	
 	
