@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.managers.Presence;
 import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -54,17 +53,16 @@ public class Commands extends ListenerAdapter
 	public void onReady(@NotNull ReadyEvent event)
 	{
 		String nome = event.getJDA().getSelfUser().getName();
-		Activity act = Objects.requireNonNull(event.getJDA().getPresence().getActivity());
+
 		Collections.addAll(utenti, nomeUtenti);
 		
 		System.out.printf("%s si è connesso a Discord!\n\n", nome);
 		System.out.print("public class MessageHistory\n{\n");
 		
 		TextChannel textChannel = event.getJDA().getTextChannelsByName("\uD83E\uDD16bot-owo", true).get(0);
-		String activity = act.getType().toString();
-		String nomeActivity = act.getName();
-		//
-		textChannel.sendMessage(activity+"/"+nomeActivity).queue();
+		String test = Objects.requireNonNull(Objects.requireNonNull(event.getJDA().getPresence().getActivity()).asRichPresence()).toString();
+
+		textChannel.sendMessage(test).queue();
 	}
 
 	public void onMessageReceived(MessageReceivedEvent event)
