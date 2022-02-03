@@ -156,7 +156,7 @@ public class Commands extends ListenerAdapter
 		
 		switch (comando)
 		{
-			case "!coinflip" -> coinflip(event);
+			case "!coinflip" -> coinflip();
 			case "!poll" -> poll(event);
 			case "!info" -> info();
 			case "!8ball" -> eightBall(event);
@@ -213,6 +213,7 @@ public class Commands extends ListenerAdapter
 		
 	} // fine onMessageReceived()
 
+	public void shutdownEvent(){}
 
 
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
@@ -222,17 +223,34 @@ public class Commands extends ListenerAdapter
 	} // fine onSlashCommand()
 
 	
-	public void coinflip(MessageReceivedEvent event)
+	public void coinflip()
 	{
 		final String testa = "<:pogey:733659301645910038>";
 		final String croce = "<:pigeon:647556750962065418>";
-		String autore = authorName+" lancia una moneta...";
-		
+		String lancioMoneta = authorName+" lancia una moneta...";
+
+		var headsOrTails = random.nextBoolean();
+		var responso = lancioMoneta+"\n**È uscito** ";
+		var testaStringa = "**"+testa+"! (Testa)**";
+		var croceStringa = "**"+croce+"! (Croce)**";
+
+		responso = headsOrTails ? responso.concat(testaStringa) : responso.concat(croceStringa);
+		messageChannel.sendMessage(responso).queue(m ->
+		{
+			if (headsOrTails)
+				react("pog");
+			else
+				react("pigeon");
+		});
+
+		/*
 		if (random.nextInt(2) == 1) // testa
-			messageChannel.sendMessage(autore+"\n**È uscito** " + testa + "**! (Testa)**").queue(message -> message.addReaction("pogey:733659301645910038").queue());
+			messageChannel.sendMessage(lancioMoneta+"\n**È uscito** " + testa + "**! (Testa)**").queue(message -> message.addReaction("pogey:733659301645910038").queue());
 		else
-			messageChannel.sendMessage(autore+"\n**È uscito** " + croce + "**! (Croce)**").queue(message -> message.addReaction("pigeon:647556750962065418").queue());
-		
+			messageChannel.sendMessage(lancioMoneta+"\n**È uscito** " + croce + "**! (Croce)**").queue(message -> message.addReaction("pigeon:647556750962065418").queue());
+		*/
+		messageChannel.sendMessage("").queue();
+
 	} // fine coinflip()
 	
 	public void poll(MessageReceivedEvent event)
