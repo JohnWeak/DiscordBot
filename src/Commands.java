@@ -230,23 +230,23 @@ public class Commands extends ListenerAdapter
 		var responso = lancioMoneta+"\n**È uscito** ";
 		var testaStringa = "**"+testaEmote+"! (Testa)**";
 		var croceStringa = "**"+croceEmote+"! (Croce)**";
-
+		
 		responso = headsOrTails ? responso.concat(testaStringa) : responso.concat(croceStringa);
-		messageChannel.sendMessage(responso).queue(lambda ->
+		
+		messageChannel.sendTyping().queue();
+		pause(500, 500);
+		String finalResponso = responso; // perché se no il lambda piange
+		message.reply(lancioMoneta).queue(m ->
 		{
-			if (headsOrTails)
-				react("pog");
-			else
-				react("pigeon");
+			pause(500, 500);
+			message.editMessage(finalResponso).queue(m2 ->
+			{
+				if (headsOrTails)
+					react("pog");
+				else
+					react("pigeon");
+			});
 		});
-
-		/*
-		if (random.nextInt(2) == 1) // testaEmote
-			messageChannel.sendMessage(lancioMoneta+"\n**È uscito** " + testaEmote + "**! (Testa)**").queue(message -> message.addReaction("pogey:733659301645910038").queue());
-		else
-			messageChannel.sendMessage(lancioMoneta+"\n**È uscito** " + croceEmote + "**! (Croce)**").queue(message -> message.addReaction("pigeon:647556750962065418").queue());
-		*/
-		messageChannel.sendMessage("").queue();
 
 	} // fine coinflip()
 	
