@@ -157,9 +157,9 @@ public class Commands extends ListenerAdapter
 		switch (comando)
 		{
 			case "!coinflip" -> coinflip();
-			case "!poll" -> poll(event);
+			case "!poll" -> poll();
 			case "!info" -> info();
-			case "!8ball" -> eightBall(event);
+			case "!8ball" -> eightBall();
 			case "!pokemon" -> pokemon();
 		}
 		
@@ -253,7 +253,7 @@ public class Commands extends ListenerAdapter
 
 	} // fine coinflip()
 	
-	public void poll(MessageReceivedEvent event)
+	public void poll()
 	{
 		// args[0] = "!poll"
 		// args[1] = domanda
@@ -267,7 +267,7 @@ public class Commands extends ListenerAdapter
 			return;
 		}
 		
-		String[] domandaERisposte = event.getMessage().getContentRaw().split("\\?");
+		String[] domandaERisposte = messageRaw.split("\\?");
 		String domanda = domandaERisposte[0].substring("!poll".length());
 		String[] risposte = msg.substring("!poll".length()+domanda.length()+1).split("/");
 		
@@ -531,9 +531,8 @@ public class Commands extends ListenerAdapter
 		
 	} // fine info()
 	
-	public void eightBall(MessageReceivedEvent event)
+	public void eightBall()
 	{
-		final Message message = event.getMessage();
 		final String ball = "🎱 ";
 		final String risposta = ball+"says... ";
 		final String[] risposte =
