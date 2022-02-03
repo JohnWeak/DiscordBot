@@ -212,10 +212,7 @@ public class Commands extends ListenerAdapter
 		
 		
 	} // fine onMessageReceived()
-
-	public void shutdownEvent(){}
-
-
+	
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
 	{
 
