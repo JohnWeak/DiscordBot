@@ -222,17 +222,17 @@ public class Commands extends ListenerAdapter
 	
 	public void coinflip()
 	{
-		final String testa = "<:pogey:733659301645910038>";
-		final String croce = "<:pigeon:647556750962065418>";
+		final String testaEmote = "<:pogey:733659301645910038>";
+		final String croceEmote = "<:pigeon:647556750962065418>";
 		String lancioMoneta = authorName+" lancia una moneta...";
 
 		var headsOrTails = random.nextBoolean();
 		var responso = lancioMoneta+"\n**È uscito** ";
-		var testaStringa = "**"+testa+"! (Testa)**";
-		var croceStringa = "**"+croce+"! (Croce)**";
+		var testaStringa = "**"+testaEmote+"! (Testa)**";
+		var croceStringa = "**"+croceEmote+"! (Croce)**";
 
 		responso = headsOrTails ? responso.concat(testaStringa) : responso.concat(croceStringa);
-		messageChannel.sendMessage(responso).queue(m ->
+		messageChannel.sendMessage(responso).queue(lambda ->
 		{
 			if (headsOrTails)
 				react("pog");
@@ -241,10 +241,10 @@ public class Commands extends ListenerAdapter
 		});
 
 		/*
-		if (random.nextInt(2) == 1) // testa
-			messageChannel.sendMessage(lancioMoneta+"\n**È uscito** " + testa + "**! (Testa)**").queue(message -> message.addReaction("pogey:733659301645910038").queue());
+		if (random.nextInt(2) == 1) // testaEmote
+			messageChannel.sendMessage(lancioMoneta+"\n**È uscito** " + testaEmote + "**! (Testa)**").queue(message -> message.addReaction("pogey:733659301645910038").queue());
 		else
-			messageChannel.sendMessage(lancioMoneta+"\n**È uscito** " + croce + "**! (Croce)**").queue(message -> message.addReaction("pigeon:647556750962065418").queue());
+			messageChannel.sendMessage(lancioMoneta+"\n**È uscito** " + croceEmote + "**! (Croce)**").queue(message -> message.addReaction("pigeon:647556750962065418").queue());
 		*/
 		messageChannel.sendMessage("").queue();
 
@@ -255,9 +255,8 @@ public class Commands extends ListenerAdapter
 		// args[0] = "!poll"
 		// args[1] = domanda
 		// args[2, 3, ...] = risposte
-		String msg = message.getContentRaw();
 		
-		if (msg.length() <= 5)
+		if (messageRaw.length() <= 5)
 		{
 			sondaggio("Pog?", new String[]{"Pog sì", "Pog no", "Porgo Tensing"}, true);
 			//flag = true fa comparire il messaggio di utilizzo del comando !poll
@@ -266,7 +265,7 @@ public class Commands extends ListenerAdapter
 		
 		String[] domandaERisposte = messageRaw.split("\\?");
 		String domanda = domandaERisposte[0].substring("!poll".length());
-		String[] risposte = msg.substring("!poll".length()+domanda.length()+1).split("/");
+		String[] risposte = messageRaw.substring("!poll".length()+domanda.length()+1).split("/");
 		
 		//System.out.printf("DomandaERisposte length: %d\nDomandaERisposte: %s\nDomanda length: %d\nDomanda: %s\nRisposte.length: %d\nRisposte: %s\n", domandaERisposte.length, Arrays.toString(domandaERisposte), domanda.length(), domanda, risposte.length, Arrays.toString(risposte));
 		
@@ -278,7 +277,7 @@ public class Commands extends ListenerAdapter
 		risposte[0] = risposte[0].substring(0, risposte[0].length()-1).trim();
 		int sleepInterval = random.nextInt(500) + 1000;
 		final int size = risposte.length;
-		EmbedBuilder embedBuilder = new EmbedBuilder();
+		var embedBuilder = new EmbedBuilder();
 		final String[] letters =
 		{
 			"\uD83C\uDDE6", "\uD83C\uDDE7", "\uD83C\uDDE8", "\uD83C\uDDE9", "\uD83C\uDDEA", "\uD83C\uDDEB",
@@ -373,7 +372,7 @@ public class Commands extends ListenerAdapter
 				title = titolo.concat("Òbito");
 				image = immagineObito[risultato];
 				footer = testoFooter;
-				color = ( risultato == 0 ? "0xFFFFFF" : "0xC59FC9");
+				color = (risultato == 0) ? "0xFFFFFF" : "0xC59FC9";
 			}
 			
 			case "7166" -> // Enigmo
@@ -381,7 +380,7 @@ public class Commands extends ListenerAdapter
 				title = titolo.concat("Enigmo");
 				image = immagineEnigmo[risultato];
 				footer = testoFooter;
-				color = ( risultato == 0 ? "0xCB4D4D" : "0xE5D152");
+				color = (risultato == 0) ? "0xCB4D4D" : "0xE5D152";
 			}
 			
 			case "2241" -> // Lex
@@ -389,7 +388,7 @@ public class Commands extends ListenerAdapter
 				title = titolo.concat("Lex");
 				image = immagineLex[risultato];
 				footer = testoFooter;
-				color = ( risultato == 0 ? "0xD80000" : "0x207522");
+				color = (risultato == 0) ? "0xD80000" : "0x207522";
 			}
 			
 			case "0935" -> // Gion
@@ -397,7 +396,7 @@ public class Commands extends ListenerAdapter
 				title = titolo.concat("Gion");
 				image = immagineGion[risultato];
 				footer = testoFooter;
-				color = ( risultato == 0 ? "0XDDCD4f" : "0xEAE28A");
+				color = (risultato == 0) ? "0XDDCD4f" : "0xEAE28A";
 			}
 			
 			
