@@ -246,7 +246,7 @@ public class Commands extends ListenerAdapter
 				else
 					react("pigeon");
 			});
-		});
+		});//
 
 	} // fine coinflip()
 	
