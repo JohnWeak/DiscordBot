@@ -246,7 +246,7 @@ public class Commands extends ListenerAdapter
 		else
 			messageChannel.sendMessage(lancioMoneta+"\n**È uscito** " + croceEmote + "**! (Croce)**").queue(message -> message.addReaction("pigeon:647556750962065418").queue());
 		*/
-		messageChannel.sendMessage("").queue();
+
 
 	} // fine coinflip()
 	
