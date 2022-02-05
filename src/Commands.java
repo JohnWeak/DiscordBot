@@ -210,6 +210,10 @@ public class Commands extends ListenerAdapter
 				react("hitman");
 		}
 		
+		if (msgLowerCase.contains("poochyena"))
+			message.reply("Poochyena? More like POGhyena!").queue(lambda -> react("pog"));
+			
+		
 		
 	} // fine onMessageReceived()
 	
