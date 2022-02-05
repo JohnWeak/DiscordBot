@@ -183,7 +183,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("vergogna"))
 			react("vergogna");
 		
-		if (msgLowerCase.contains("no u") || msgLowerCase.contains("nou"))
+		if (msgLowerCase.contains(" no u ") || msgLowerCase.contains("no u "))
 			react("nou");
 		
 		if (msgLowerCase.contains("sabaping"))
