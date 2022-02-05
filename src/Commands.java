@@ -234,9 +234,9 @@ public class Commands extends ListenerAdapter
 		var responso = lancioMoneta+"\n**È uscito** ";
 		var testaStringa = "**"+testaEmote+"! (Testa)**";
 		var croceStringa = "**"+croceEmote+"! (Croce)**";
-		
-		responso = headsOrTails ? responso.concat(testaStringa) : responso.concat(croceStringa);
-		
+
+		responso = responso.concat(headsOrTails ? testaStringa : croceStringa);
+
 		messageChannel.sendTyping().queue();
 		pause(500, 500);
 		String finalResponso = responso; // perché se no il lambda piange
