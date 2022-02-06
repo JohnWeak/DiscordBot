@@ -63,7 +63,7 @@ public class Commands extends ListenerAdapter
 
 		String activity = act.getType().toString();
 		String nomeActivity = act.getName();
-		String avvio = "Ehi, mi sono appena avviato e ";
+		String avvio = "Salve, oggi ";
 		String activityTradotta = activity.equals("WATCHING") ? "guardo " : "gioco a ";
 		
 		canaleBot.sendMessage(avvio + activityTradotta + nomeActivity).queue();
