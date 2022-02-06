@@ -533,8 +533,7 @@ public class Commands extends ListenerAdapter
 	
 	public void eightBall()
 	{
-		final String ball = "🎱 ";
-		final String risposta = ball+"says... ";
+		final String ball = "🎱 says... ";
 		final String[] risposte =
 		{
 			"Yes",
@@ -564,12 +563,10 @@ public class Commands extends ListenerAdapter
 
 		pause(-1, -1);
 
-		message.reply(risposta).queue(message1 ->
+		message.reply(ball).queue(message1 ->
 		{
-
 			pause(-1,-1);
-
-			message1.editMessage(risposta+"**"+risposte[random.nextInt(risposte.length)]+"**").queue();
+			message1.editMessage(ball+"**"+risposte[random.nextInt(risposte.length)]+"**").queue();
 		});
 		
 		
