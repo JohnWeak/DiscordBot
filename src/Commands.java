@@ -161,6 +161,7 @@ public class Commands extends ListenerAdapter
 			case "!info" -> info();
 			case "!8ball" -> eightBall();
 			case "!pokemon" -> pokemon();
+			case "!colpevolezza" -> colpevolezza();
 		}
 		
 		
@@ -434,6 +435,7 @@ public class Commands extends ListenerAdapter
 		final String emoteGetRekt = "getrekt:742330625347944504";
 		final String emoteSmh = "smh:880423534365659176";
 		final String emoteGiorno = "GiOrNo:618591225582321703";
+		final String emoteDansGame = "dansgame:848955120157720576";
 		final int[] emoteHitman = {7, 8, 19, 12, 0, 13}; // posizioni nell'alfabeto
 		final int[] emoteXCOM = {23, 2, 14, 12}; // posizioni nell'alfabeto
 		final String[] letters =
@@ -476,6 +478,7 @@ public class Commands extends ListenerAdapter
 			case "getrekt" -> emoteGetRekt;
 			case "smh" -> emoteSmh;
 			case "giorno" -> emoteGiorno;
+			case "dansgame" -> emoteDansGame;
 			default -> "";
 		};
 
@@ -505,6 +508,50 @@ public class Commands extends ListenerAdapter
 		}
 		
 	} // fine react()
+	
+	private void colpevolezza()
+	{
+		var utenteTaggato = message.getMentionedUsers();
+		
+		if (utenteTaggato.isEmpty())
+			messageChannel.sendMessage("Per questo comando è necessario taggare un utente.").queue();
+		else if (utenteTaggato.get(0).getDiscriminator().equals(author.getDiscriminator()))
+			react("pigeon");
+		else
+		{
+			final int colpa = random.nextInt(100) + 1;
+			final String utente = utenteTaggato.get(0).getName();
+			final String risposta = authorName
+				.concat(" sostiene che ")
+				.concat(utente)
+				.concat(" sia ")
+				.concat(String.valueOf(colpa))
+				.concat("% colpevole.");
+			
+			messageChannel.sendMessage(risposta).queue(lambda ->
+			{
+				if (colpa < 20)
+					react("pigeon");
+				else if (colpa < 50)
+					react("smh");
+				else if (colpa < 80)
+					react("dansgame");
+				else
+					react("pog");
+			});
+		}
+		
+		if (utenteTaggato.size() > 1)
+			messageChannel.sendMessage("La prossima volta tagga soltanto una persona e vergognati").queue(lambda ->
+			{
+				react("pigeon");
+				react("vergognati");
+				pause(2000, 5);
+				lambda.delete().queue();
+			});
+		
+		
+	} // fine colpevolezza()
 	
 	public void info()
 	{
