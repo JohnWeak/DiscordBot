@@ -512,7 +512,7 @@ public class Commands extends ListenerAdapter
 	private void colpevolezza()
 	{
 		var utenteTaggato = message.getMentionedUsers();
-		String urlOwO = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--amf4Rvt7--%2Ft_Preview%2Fb_rgb%3A191919%2Cc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1518097892%2Fproduction%2Fdesigns%2F2348593_0.jpg&f=1&nofb=1";
+		final String urlOwO = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--amf4Rvt7--%2Ft_Preview%2Fb_rgb%3A191919%2Cc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1518097892%2Fproduction%2Fdesigns%2F2348593_0.jpg&f=1&nofb=1";
 		
 		if (utenteTaggato.isEmpty())
 			messageChannel.sendMessage("Per questo comando è necessario taggare un utente.").queue();
@@ -529,7 +529,7 @@ public class Commands extends ListenerAdapter
 				case 1, 8, 11, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89 -> index = 1;
 			}
 			
-			final String risposta = String.format("%s sostiene che %s sia colpevole %s %d%", authorName, utente, articolo[index], colpa);
+			final String risposta = String.format("%s sostiene che %s sia colpevole %s %d%%", authorName, utente, articolo[index], colpa);
 			
 			var embed = new EmbedBuilder()
 				.setTitle(risposta)
