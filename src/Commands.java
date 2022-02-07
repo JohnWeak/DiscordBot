@@ -161,7 +161,7 @@ public class Commands extends ListenerAdapter
 			case "!info" -> info();
 			case "!8ball" -> eightBall();
 			case "!pokemon" -> pokemon();
-			case "!colpevolezza" -> colpevolezza();
+			case "!colpevolezza", "!colpevole" -> colpevolezza();
 		}
 		
 		
