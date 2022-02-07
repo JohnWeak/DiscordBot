@@ -162,7 +162,6 @@ public class Commands extends ListenerAdapter
 			case "!8ball" -> eightBall();
 			case "!pokemon" -> pokemon();
 			case "!colpevolezza" -> colpevolezza();
-			case "!ce" -> colpEmbed();
 		}
 		
 		
@@ -513,50 +512,6 @@ public class Commands extends ListenerAdapter
 	private void colpevolezza()
 	{
 		var utenteTaggato = message.getMentionedUsers();
-		
-		if (utenteTaggato.isEmpty())
-			messageChannel.sendMessage("Per questo comando è necessario taggare un utente.").queue();
-		else if (utenteTaggato.get(0).getDiscriminator().equals(author.getDiscriminator()))
-			react("pigeon");
-		else
-		{
-			final int colpa = random.nextInt(100) + 1;
-			final String utente = utenteTaggato.get(0).getName();
-			final String risposta = authorName
-				.concat(" sostiene che ")
-				.concat(utente)
-				.concat(" sia ")
-				.concat(String.valueOf(colpa))
-				.concat("% colpevole.");
-			
-			messageChannel.sendMessage(risposta).queue(lambda ->
-			{
-				if (colpa < 20)
-					react("pigeon");
-				else if (colpa < 50)
-					react("smh");
-				else if (colpa < 80)
-					react("dansgame");
-				else
-					react("pog");
-			});
-		}
-		
-		if (utenteTaggato.size() > 1)
-			messageChannel.sendMessage("La prossima volta tagga soltanto una persona e vergognati").queue(lambda ->
-			{
-				react("pigeon");
-				react("vergognati");
-				pause(2000, 5);
-				lambda.delete().queue();
-			});
-		
-		
-	} // fine colpevolezza()
-	
-	private void colpEmbed()
-	{
-		var utenteTaggato = message.getMentionedUsers();
 		String urlOwO = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--amf4Rvt7--%2Ft_Preview%2Fb_rgb%3A191919%2Cc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1518097892%2Fproduction%2Fdesigns%2F2348593_0.jpg&f=1&nofb=1";
 		
 		if (utenteTaggato.isEmpty())
@@ -600,7 +555,8 @@ public class Commands extends ListenerAdapter
 				pause(2000, 5);
 				lambda.delete().queue();
 			});
-	}
+		
+	} // fine colpevolezza()
 	
 	public void info()
 	{
