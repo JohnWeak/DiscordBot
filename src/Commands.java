@@ -522,17 +522,19 @@ public class Commands extends ListenerAdapter
 		{
 			final int colpa = random.nextInt(100) + 1;
 			final String utente = utenteTaggato.get(0).getName();
-			final String risposta = authorName
-					.concat(" sostiene che ")
-					.concat(utente)
-					.concat(" sia ")
-					.concat(String.valueOf(colpa))
-					.concat("% colpevole.");
+			int index = 0;
+			String[] articolo = {"al", "all'"};
+			switch (colpa)
+			{
+				case 1, 8, 11, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89 -> index = 1;
+			}
+			
+			final String risposta = String.format("%s sostiene che %s sia colpevole %s %d%", authorName, utente, articolo[index], colpa);
 			
 			var embed = new EmbedBuilder()
 				.setTitle(risposta)
-				.setColor(0xFF0000)
-				.setFooter("", urlOwO);
+				.setColor(0xFF0000);
+//				.setFooter("", urlOwO);
 			
 			messageChannel.sendMessageEmbeds(embed.build()).queue(lambda ->
 			{
