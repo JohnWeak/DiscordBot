@@ -165,6 +165,7 @@ public class Commands extends ListenerAdapter
 			case "!8ball" -> eightBall();
 			case "!pokemon" -> pokemon();
 			case "!colpevolezza", "!colpevole" -> colpevolezza();
+			case "!carta" -> cartaDaGioco();
 		}
 		
 		
@@ -244,6 +245,23 @@ public class Commands extends ListenerAdapter
 		return new String(chars);
 	} // fine camelCase()
 	
+	private void cartaDaGioco()
+	{
+		final String[] seme = {"H", "D", "C", "S"}; // Hearts, Diamonds, Clubs, Spades
+		final String[] numero = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "0", "J", "Q", "K"};
+		final var semeScelto = seme[random.nextInt(4)];
+		final var numeroScelto = numero[random.nextInt(13)];
+		final var color = semeScelto.equals("H") || semeScelto.equals("D") ? Color.red : Color.black;
+		final var immagineCartaAPI = "https://www.deckofcardsapi.com/static/img/"+numeroScelto+semeScelto+".png";
+		
+		var embed = new EmbedBuilder();
+		embed.setTitle("Ecco qui la tua carta")
+			 .setImage(immagineCartaAPI)
+			 .setColor(color);
+		
+		messageChannel.sendMessageEmbeds(embed.build()).queue();
+		
+	} // fine cartaDaGioco()
 	
 	public void coinflip()
 	{
