@@ -141,7 +141,7 @@ public class Commands extends ListenerAdapter
 					case "7166" -> // Enigmo
 					{
 						react("pigeon");
-						message.reply(camelCase(messageRaw)).queue();
+						message.reply(camelCase(messageRaw)).queue(lambda -> react("pigeon"));
 					}
 					
 					case "2241" ->  // Alex
