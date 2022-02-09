@@ -238,7 +238,7 @@ public class Commands extends ListenerAdapter
 		for (int i = 0; i < len; i++)
 		{
 			c = chars[i];
-			chars[i] = (i % 2 == 0 ? Character.toLowerCase(c) : Character.toUpperCase(c));
+			chars[i] = (i % 2 == 0 ? Character.toUpperCase(c) : Character.toLowerCase(c));
 		}
 		
 		return new String(chars);
