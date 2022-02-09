@@ -124,9 +124,9 @@ public class Commands extends ListenerAdapter
 		if (random.nextInt(20) == 9) // 5% chance di reagire con emote personali
 		{
 			String discriminator = author.getDiscriminator();
-			var trigger = random.nextInt(2); // 0 - 1
+			var trigger = random.nextBoolean();
 			
-			if (trigger == 0)
+			if (trigger)
 				triggera(discriminator);
 			else
 			{
@@ -139,7 +139,10 @@ public class Commands extends ListenerAdapter
 						message.reply("Òbito vergognati").queue();
 					}
 					case "7166" -> // Enigmo
+					{
 						react("pigeon");
+						message.reply(camelCase(messageRaw)).queue();
+					}
 					
 					case "2241" ->  // Alex
 						messageChannel.addReactionById(id, "🇷🇴").queue();
@@ -224,6 +227,21 @@ public class Commands extends ListenerAdapter
 
 	} // fine onSlashCommand()
 
+	private String camelCase(String msg)
+	{
+		var chars = msg.toCharArray();
+		var len = chars.length;
+		char c;
+		
+		for (int i = 0; i < len; i++)
+		{
+			c = chars[i];
+			chars[i] = (i % 2 == 0 ? Character.toLowerCase(c) : Character.toUpperCase(c));
+		}
+		
+		return new String(chars);
+	} // fine camelCase()
+	
 	
 	public void coinflip()
 	{
