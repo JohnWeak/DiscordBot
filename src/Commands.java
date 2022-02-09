@@ -274,7 +274,7 @@ public class Commands extends ListenerAdapter
 			case "K" -> n = "Re";
 		}
 		
-		String titolo = n + "di" + s;
+		String titolo = n + " di " + s;
 		
 		embed.setTitle(titolo)
 			 .setImage(immagineCartaAPI)
