@@ -252,10 +252,31 @@ public class Commands extends ListenerAdapter
 		final var semeScelto = seme[random.nextInt(4)];
 		final var numeroScelto = numero[random.nextInt(13)];
 		final var color = semeScelto.equals("H") || semeScelto.equals("D") ? Color.red : Color.black;
-		final var immagineCartaAPI = "https://www.deckofcardsapi.com/static/img/"+numeroScelto+semeScelto+".png";
-		
+		final var immagineCartaAPI = "https://www.deckofcardsapi.com/static/img/" + numeroScelto + semeScelto + ".png";
+		// a questo punto posso riciclare semeScelto e numeroScelto, poiché il link è già stato formato
 		var embed = new EmbedBuilder();
-		embed.setTitle("Ecco qui la tua carta")
+		var s = semeScelto;
+		var n = numeroScelto;
+		
+		switch (semeScelto)
+		{
+			case "H" -> s = "Cuori";
+			case "D" -> s = "Quadri";
+			case "C" -> s = "Fiori";
+			case "S" -> s = "Picche";
+		}
+		switch (numeroScelto)
+		{
+			case "A" -> n = "Asso";
+			case "0" -> n = "10";
+			case "J" -> n = "Jack";
+			case "Q" -> n = "Regina";
+			case "K" -> n = "Re";
+		}
+		
+		String titolo = n + "di" + s;
+		
+		embed.setTitle(titolo)
 			 .setImage(immagineCartaAPI)
 			 .setColor(color);
 		
