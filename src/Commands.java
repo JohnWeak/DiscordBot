@@ -217,8 +217,8 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("poochyena"))
 			message.reply("Poochyena? More like POGhyena!").queue(lambda -> react("pog"));
 			
-		if (msgLowerCase.contains("camelcase"))
-			message.reply(camelCase(messageRaw)).queue();
+		//if (msgLowerCase.contains("camelcase"))
+		//	message.reply(camelCase(messageRaw)).queue();
 		
 		
 	} // fine onMessageReceived()
