@@ -363,12 +363,12 @@ public class Commands extends ListenerAdapter
 			{
 				messageChannel.sendMessage("Vince lo sfidato: " + sfidato.getName()).queue();
 			}
-			else // valori uguali? Allora guardiamo i semi
+			else
 			{
-				// Cuori > Quadri > Fiori > Picche
+				// valori uguali? Allora confrontiamo i semi per decidere il risultato.
+				// siccome i valori sono uguali, riciclo le variabili
+				// (valori arbitrari per evitare problemi con debug)
 				
-				// siccome i valori sono uguali, riciclo le variabili per confrontare i semi
-				// (adesso sono valori arbitrari per evitare problemi con debug)
 				switch (cardSfidante.getSeme())
 				{
 					case "Cuori" -> valoreUno = 50;
@@ -386,22 +386,15 @@ public class Commands extends ListenerAdapter
 				}
 				
 				if (valoreUno > valoreDue)
-				{
 					messageChannel.sendMessage("Vince lo sfidante: " + sfidante.getName()).queue();
-				}
 				else if (valoreUno < valoreDue)
-				{
 					messageChannel.sendMessage("Vince lo sfidato: " + sfidato.getName()).queue();
-				}
 				else
-				{
 					messageChannel.sendMessage("WTF, avete pescato la stessa carta dal mazzo?\nVergognatevi.").queue(lambda -> react("vergogna"));
-				}
 				
 			}
 			
-			duelloAttivo = false;
-			sfidato = null;
+			resetDuel();
 		}
 	} // fine accettaDuello()
 	
@@ -418,9 +411,7 @@ public class Commands extends ListenerAdapter
 				x ? "sfidato" : "sfidante",
 				x ? "rifiuta" : "ritira");
 		
-		sfidante = null;
-		sfidato = null;
-		duelloAttivo = false;
+		resetDuel();
 		
 		messageChannel.sendMessage(messaggioRifiuto).queue();
 		
@@ -439,7 +430,14 @@ public class Commands extends ListenerAdapter
 			return 2;
 		
 		return 3;
-	}
+	} // fine checkForSuit()
+	
+	private void resetDuel()
+	{
+		sfidante = null;
+		sfidato = null;
+		duelloAttivo = false;
+	} // fine resetDuel()
 	
 	public void coinflip()
 	{
