@@ -248,7 +248,7 @@ public class Commands extends ListenerAdapter
 	private void sendCarta(Card carta)
 	{
 		final var titolo = titoloCarta(carta);
-		final var immagineCartaAPI = linkImmagineCarta(carta);
+		final var immagineCartaAPI = linkImmagine(carta);
 		final var color= coloreCarta(carta);
 		var embed = new EmbedBuilder();
 		
@@ -265,14 +265,14 @@ public class Commands extends ListenerAdapter
 		return carta.getValore() + " di " + carta.getSeme();
 	}
 	
-	public String linkImmagineCarta(Card carta)
+	public String linkImmagine(Card carta)
 	{
-		return "https://www.deckofcardsapi.com/static/img/" + carta.getValore() + carta.getSeme() + ".png";
+		return carta.getLink();
 	}
 	
 	public Color coloreCarta(Card carta)
 	{
-		return carta.getSeme().equals("H") || carta.getSeme().equals("D") ? Color.red : Color.black;
+		return carta.getSeme().equals("Cuori") || carta.getSeme().equals("Quadri") ? Color.red : Color.black;
 	}
 	
 	private void duelloDiCarte()
@@ -343,7 +343,7 @@ public class Commands extends ListenerAdapter
 			{
 				embed
 					.setTitle("Carta di " + duellanti[i].getName() + "\n" + titoloCarta(carte[i]))
-					.setImage(carte[i].getLink())
+					.setImage(linkImmagine(carte[i]))
 					.setColor(coloreCarta(carte[i]));
 				messageChannel.sendMessageEmbeds(embed.build()).queue();
 			}
@@ -361,6 +361,7 @@ public class Commands extends ListenerAdapter
 				// Cuori > Quadri > Fiori > Picche
 				
 				// siccome i valori sono uguali, riciclo le variabili per confrontare i semi
+				// (adesso sono valori arbitrari per evitare problemi con debug)
 				switch (cardSfidante.getSeme())
 				{
 					case "Cuori" -> valoreUno = 50;
