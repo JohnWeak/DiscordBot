@@ -166,6 +166,7 @@ public class Commands extends ListenerAdapter
 			case "!carta" -> sendCarta(new Card());
 			case "!duello" -> duelloDiCarte();
 			case "!accetto" -> accettaDuello();
+			case "!rifiuto" -> rifiutaDuello();
 		}
 		
 		
@@ -294,7 +295,9 @@ public class Commands extends ListenerAdapter
 			messageChannel.sendMessageEmbeds(new EmbedBuilder().setImage(link).build()).queue(m -> react("pigeon"));
 		else
 		{
-			messageChannel.sendMessage(authorName+" ti sfida a duello! Accetti, <@" + utenti.get(0).getId() + ">?\nPer accettare, rispondi con `!accetto`").queue();
+			messageChannel.sendMessage(author.getAsTag()+" ti sfida a duello! Accetti, <@" + utenti.get(0).getId() + ">?"
+					                           + "\n*Per accettare, rispondi con* `!accetto`"
+					                           + "\n*Per rifiutare, rispondi con* `!rifiuto`").queue();
 			duelloAttivo = true;
 			sfidante = author;
 			sfidato = utenti.get(0);
@@ -397,6 +400,27 @@ public class Commands extends ListenerAdapter
 			sfidato = null;
 		}
 	} // fine accettaDuello()
+	
+	public void rifiutaDuello()
+	{
+		if (!duelloAttivo)
+		{
+			return;
+		}
+		
+		final boolean x = author.getDiscriminator().equals(sfidato.getDiscriminator());
+		
+		String messaggioRifiuto = String.format("Lo %s %s il duello.",
+				x ? "sfidato" : "sfidante",
+				x ? "rifiuta" : "ritira");
+		
+		sfidante = null;
+		sfidato = null;
+		duelloAttivo = false;
+		
+		messageChannel.sendMessage(messaggioRifiuto).queue();
+		
+	} // fine rifiutaDuello()
 	
 	public void coinflip()
 	{
