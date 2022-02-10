@@ -351,7 +351,7 @@ public class Commands extends ListenerAdapter
 					.setTitle("Carta di " + duellanti[i].getName())
 					.setImage(linkImmagine(carte[i]))
 					.setColor(coloreCarta(carte[i]))
-					.setFooter(simboli[checkForSuit(carte[i])] + titoloCarta(carte[i]));
+					.setFooter(simboli[checkForSuit(carte[i])] + " " + titoloCarta(carte[i]));
 				messageChannel.sendMessageEmbeds(embed.build()).queue();
 			}
 			
