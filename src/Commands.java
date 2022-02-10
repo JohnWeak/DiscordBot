@@ -289,7 +289,7 @@ public class Commands extends ListenerAdapter
 			messageChannel.sendMessageEmbeds(new EmbedBuilder().setImage(link).build()).queue(m -> react("pigeon"));
 		else
 		{
-			messageChannel.sendMessage(authorName+" ti sfida a duello! Accetti, <@" + utenti.get(0).getId() + ">?").queue();
+			messageChannel.sendMessage(authorName+" ti sfida a duello! Accetti, <@" + utenti.get(0).getId() + ">?\nPer accettare, rispondi con `!accetto`").queue();
 			duelloAttivo = true;
 			sfidante = author;
 			sfidato = utenti.get(0);
