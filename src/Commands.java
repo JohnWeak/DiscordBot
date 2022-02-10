@@ -308,6 +308,7 @@ public class Commands extends ListenerAdapter
 	
 	private void accettaDuello()
 	{
+		String[] simboli = {"♥️", "♦️", "♣️", "♠️"};
 		int valoreUno, valoreDue;
 		var embed = new EmbedBuilder();
 		Card[] carte = new Card[2];
@@ -344,10 +345,13 @@ public class Commands extends ListenerAdapter
 			
 			for (int i = 0; i < 2; i++)
 			{
+				checkForSuit(carte[i]);
+				
 				embed
-					.setTitle("Carta di " + duellanti[i].getName() + "\n" + titoloCarta(carte[i]))
+					.setTitle("Carta di " + duellanti[i].getName())
 					.setImage(linkImmagine(carte[i]))
-					.setColor(coloreCarta(carte[i]));
+					.setColor(coloreCarta(carte[i]))
+					.setFooter(simboli[checkForSuit(carte[i])] + titoloCarta(carte[i]));
 				messageChannel.sendMessageEmbeds(embed.build()).queue();
 			}
 			
@@ -421,6 +425,21 @@ public class Commands extends ListenerAdapter
 		messageChannel.sendMessage(messaggioRifiuto).queue();
 		
 	} // fine rifiutaDuello()
+	
+	private int checkForSuit(Card carta)
+	{
+		String seme = carta.getSeme();
+		if (seme.equals("Cuori"))
+			return 0;
+		
+		if (seme.equals("Quadri"))
+			return 1;
+		
+		if (seme.equals("Fiori"))
+			return 2;
+		
+		return 3;
+	}
 	
 	public void coinflip()
 	{
