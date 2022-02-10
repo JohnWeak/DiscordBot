@@ -166,6 +166,7 @@ public class Commands extends ListenerAdapter
 			case "!pokemon" -> pokemon();
 			case "!colpevolezza", "!colpevole" -> colpevolezza();
 			case "!carta" -> cartaDaGioco();
+			case "!duello" -> duelloDiCarte();
 		}
 		
 		
@@ -283,6 +284,28 @@ public class Commands extends ListenerAdapter
 		messageChannel.sendMessageEmbeds(embed.build()).queue();
 		
 	} // fine cartaDaGioco()
+	
+	private void duelloDiCarte()
+	{
+		var utenti = message.getMentionedUsers();
+		var autore = author.getDiscriminator();
+		final var link = "https://i.kym-cdn.com/photos/images/original/001/228/324/4a4.gif";
+		String[] idUtenti = {autore, ""};
+		if (utenti.isEmpty())
+			messageChannel.sendMessage("Devi menzionare un utente per poter duellare!").queue();
+		else if (utenti.get(0).getDiscriminator().equals(autore))
+			messageChannel.sendMessageEmbeds(new EmbedBuilder().setImage(link).build()).queue(m->react("pigeon"));
+		else
+		{
+			messageChannel.sendMessage(autore+" ti sfida a duello! Accetti, " + utenti.get(0) + "?").queue();
+			
+			
+			
+		}
+		
+		
+	} // fine duelloDiCarte()
+	
 	
 	public void coinflip()
 	{
