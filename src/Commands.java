@@ -277,10 +277,15 @@ public class Commands extends ListenerAdapter
 	
 	private void duelloDiCarte()
 	{
+		if (duelloAttivo)
+		{
+			messageChannel.sendMessage("C'è già un duello attivo!").queue();
+			return;
+		}
+		
 		var utenti = message.getMentionedUsers();
 		var autore = author.getDiscriminator();
 		final var link = "https://i.kym-cdn.com/photos/images/original/001/228/324/4a4.gif";
-		String[] idUtenti = {autore, ""};
 		if (utenti.isEmpty())
 			messageChannel.sendMessage("Devi menzionare un utente per poter duellare!").queue();
 		else if (utenti.get(0).isBot())
