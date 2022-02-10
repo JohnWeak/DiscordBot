@@ -343,7 +343,7 @@ public class Commands extends ListenerAdapter
 			{
 				embed
 					.setTitle("Carta di " + duellanti[i].getName() + "\n" + titoloCarta(carte[i]))
-					.setImage(linkImmagineCarta(carte[i]))
+					.setImage(carte[i].getLink())
 					.setColor(coloreCarta(carte[i]));
 				messageChannel.sendMessageEmbeds(embed.build()).queue();
 			}
