@@ -1,10 +1,8 @@
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
@@ -19,8 +17,6 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.util.List;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Commands extends ListenerAdapter
 {
@@ -48,7 +44,9 @@ public class Commands extends ListenerAdapter
 	private static Message message;
 	private static String messageRaw;
 	private static User author;
-
+	private static boolean duelloAttivo = false;
+	private static User sfidante = null;
+	private static User sfidato = null;
 
 	public void onReady(@NotNull ReadyEvent event)
 	{
@@ -165,8 +163,9 @@ public class Commands extends ListenerAdapter
 			case "!8ball" -> eightBall();
 			case "!pokemon" -> pokemon();
 			case "!colpevolezza", "!colpevole" -> colpevolezza();
-			case "!carta" -> cartaDaGioco();
+			case "!carta" -> sendCarta(new Card());
 			case "!duello" -> duelloDiCarte();
+			case "!accetto" -> accettaDuello();
 		}
 		
 		
@@ -246,44 +245,35 @@ public class Commands extends ListenerAdapter
 		return new String(chars);
 	} // fine camelCase()
 	
-	private void cartaDaGioco()
+	private void sendCarta(Card carta)
 	{
-		final String[] seme = {"H", "D", "C", "S"}; // Hearts, Diamonds, Clubs, Spades
-		final String[] numero = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "0", "J", "Q", "K"};
-		final var semeScelto = seme[random.nextInt(4)];
-		final var numeroScelto = numero[random.nextInt(13)];
-		final var color = semeScelto.equals("H") || semeScelto.equals("D") ? Color.red : Color.black;
-		final var immagineCartaAPI = "https://www.deckofcardsapi.com/static/img/" + numeroScelto + semeScelto + ".png";
-		// a questo punto posso riciclare semeScelto e numeroScelto, poiché il link è già stato formato
+		final var titolo = titoloCarta(carta);
+		final var immagineCartaAPI = linkImmagineCarta(carta);
+		final var color= coloreCarta(carta);
 		var embed = new EmbedBuilder();
-		var s = semeScelto;
-		var n = numeroScelto;
-		
-		switch (semeScelto)
-		{
-			case "H" -> s = "Cuori";
-			case "D" -> s = "Quadri";
-			case "C" -> s = "Fiori";
-			case "S" -> s = "Picche";
-		}
-		switch (numeroScelto)
-		{
-			case "A" -> n = "Asso";
-			case "0" -> n = "10";
-			case "J" -> n = "Jack";
-			case "Q" -> n = "Regina";
-			case "K" -> n = "Re";
-		}
-		
-		String titolo = n + " di " + s;
 		
 		embed.setTitle(titolo)
-			 .setImage(immagineCartaAPI)
-			 .setColor(color);
+				.setImage(immagineCartaAPI)
+				.setColor(color);
 		
 		messageChannel.sendMessageEmbeds(embed.build()).queue();
 		
-	} // fine cartaDaGioco()
+	} // fine sendCarta
+	
+	public String titoloCarta(Card carta)
+	{
+		return carta.getValore() + " di " + carta.getSeme();
+	}
+	
+	public String linkImmagineCarta(Card carta)
+	{
+		return "https://www.deckofcardsapi.com/static/img/" + carta.getValore() + carta.getSeme() + ".png";
+	}
+	
+	public Color coloreCarta(Card carta)
+	{
+		return carta.getSeme().equals("H") || carta.getSeme().equals("D") ? Color.red : Color.black;
+	}
 	
 	private void duelloDiCarte()
 	{
@@ -293,18 +283,114 @@ public class Commands extends ListenerAdapter
 		String[] idUtenti = {autore, ""};
 		if (utenti.isEmpty())
 			messageChannel.sendMessage("Devi menzionare un utente per poter duellare!").queue();
+		else if (utenti.get(0).isBot())
+			messageChannel.sendMessage("Non puoi sfidare un bot a duello, smh").queue(m -> react("smh"));
 		else if (utenti.get(0).getDiscriminator().equals(autore))
-			messageChannel.sendMessageEmbeds(new EmbedBuilder().setImage(link).build()).queue(m->react("pigeon"));
+			messageChannel.sendMessageEmbeds(new EmbedBuilder().setImage(link).build()).queue(m -> react("pigeon"));
 		else
 		{
 			messageChannel.sendMessage(authorName+" ti sfida a duello! Accetti, <@" + utenti.get(0).getId() + ">?").queue();
-			
-			
+			duelloAttivo = true;
+			sfidante = author;
+			sfidato = utenti.get(0);
 		}
 		
 		
 	} // fine duelloDiCarte()
 	
+	private void accettaDuello()
+	{
+		int valoreUno, valoreDue;
+		var embed = new EmbedBuilder();
+		Card[] carte = new Card[2];
+		User[] duellanti = new User[2];
+		
+		if (!duelloAttivo || sfidato == null)
+			return;
+		
+		if (author.getDiscriminator().equals(sfidato.getDiscriminator()))
+		{
+			Card cardSfidante, cardSfidato;
+			cardSfidante = new Card();
+			cardSfidato = new Card();
+			
+			carte[0] = cardSfidante;
+			carte[1] = cardSfidato;
+			
+			duellanti[0] = sfidante;
+			duellanti[1] = sfidato;
+			
+			switch (cardSfidante.getValore())
+			{
+				case "Asso" -> valoreUno = 11;
+				case "Jack", "Regina", "Re" -> valoreUno = 10;
+				default -> valoreUno = Integer.parseInt(cardSfidante.getValore());
+			}
+			
+			switch (cardSfidato.getValore())
+			{
+				case "Asso" -> valoreDue = 11;
+				case "Jack", "Regina", "Re" -> valoreDue = 10;
+				default -> valoreDue = Integer.parseInt(cardSfidato.getValore());
+			}
+			
+			for (int i = 0; i < 2; i++)
+			{
+				embed
+					.setTitle("Carta di " + duellanti[i].getName() + "\n" + titoloCarta(carte[i]))
+					.setImage(linkImmagineCarta(carte[i]))
+					.setColor(coloreCarta(carte[i]));
+				messageChannel.sendMessageEmbeds(embed.build()).queue();
+			}
+			
+			if (valoreUno > valoreDue)
+			{
+				messageChannel.sendMessage("Vince lo sfidante: " + sfidante.getName()).queue();
+			}
+			else if (valoreUno < valoreDue)
+			{
+				messageChannel.sendMessage("Vince lo sfidato: " + sfidato.getName()).queue();
+			}
+			else // valori uguali? Allora guardiamo i semi
+			{
+				// Cuori > Quadri > Fiori > Picche
+				
+				// siccome i valori sono uguali, riciclo le variabili per confrontare i semi
+				switch (cardSfidante.getSeme())
+				{
+					case "Cuori" -> valoreUno = 50;
+					case "Quadri" -> valoreUno = 49;
+					case "Fiori" -> valoreUno = 48;
+					case "Picche" -> valoreUno = 47;
+				}
+				
+				switch (cardSfidato.getSeme())
+				{
+					case "Cuori" -> valoreDue = 50;
+					case "Quadri" -> valoreDue = 49;
+					case "Fiori" -> valoreDue = 48;
+					case "Picche" -> valoreDue = 47;
+				}
+				
+				if (valoreUno > valoreDue)
+				{
+					messageChannel.sendMessage("Vince lo sfidante: " + sfidante.getName()).queue();
+				}
+				else if (valoreUno < valoreDue)
+				{
+					messageChannel.sendMessage("Vince lo sfidato: " + sfidato.getName()).queue();
+				}
+				else
+				{
+					messageChannel.sendMessage("WTF, avete pescato la stessa carta dal mazzo?\nVergognatevi.").queue(lambda -> react("vergogna"));
+				}
+				
+			}
+			
+			duelloAttivo = false;
+			sfidato = null;
+		}
+	} // fine accettaDuello()
 	
 	public void coinflip()
 	{
