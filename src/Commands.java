@@ -920,7 +920,7 @@ public class Commands extends ListenerAdapter
 	{
 		EmbedBuilder embedBuilder;
 		String[] nomi = {pokemon.getNome(), ""};
-		var titolo = "A wild ".concat(pokemon.getNome().concat(" appears!"));
+		final var titolo = "A wild " + pokemon.getNome() + " appears!";
 		embedBuilder = buildEmbed(pokemon, false);
 		embedBuilder.setTitle(titolo);
 		channel.sendTyping().queue();
@@ -957,7 +957,7 @@ public class Commands extends ListenerAdapter
 
 
 				}
-		}catch (IOException | ParseException e) { System.out.println("Errore nell'apertura del file: " + nomiPkmn); }
+		} catch (IOException | ParseException e) { System.out.println("Errore nell'apertura del file: " + nomiPkmn); }
 
 		return jsonArray;
 	}
