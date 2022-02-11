@@ -24,7 +24,7 @@ public class Commands extends ListenerAdapter
 	private static final File nomiPkmn = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
 	private static MessageChannel messageChannel;
-	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon"};
+	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon", "!carta", "!duello"};
 	// private static final String[] listaParole = {"pigeon", "owo", "pog", "òbito", "vergogna", "no"};
 	private static final String[] listaDescrizioni =
 	{
@@ -32,7 +32,9 @@ public class Commands extends ListenerAdapter
 		"Permette di creare sondaggi",
 		"Visualizza le informazioni. Proprio quelle che stai leggendo!",
 		"Chiedi un responso all'Entità Superiore: la magica palla 8.",
-		"Acchiappali tutti!"
+		"Acchiappali tutti!",
+		"Genera una carta da gioco",
+		"Sfida un giocatore ad un duello di carte"
 	};
 	private static int messaggiInviati = 0;
 	private static int limite;
