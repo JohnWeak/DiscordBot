@@ -29,10 +29,11 @@ public class Main
 		final String[] games =
 		{
 			"Minecraft", "Dead Space", "Hitman 2", "Rimworld", "Darkest Dungeon", "FTL: Faster Than Light",
-			"Terraria", "Team Fortress 2", "God of War", "Farming Simulator", "Portal", "A Plague Tale",
+			"Terraria", "Team Fortress 2", "Farming Simulator", "Portal", "A Plague Tale",
 			"Subnautica", "OneShot", "Child of Light", "Ghost Trick: Phantom Detective", "XCOM 2",
 			"Papers, Please", "Celeste", "The Stanley Parable", "To The Moon", "GTA: San Andreas",
-			"Fallout: New Vegas", "Half-Life 2", "Divinity: Original Sin 2", "Dark Souls"
+			"Fallout: New Vegas", "Half-Life 2", "Divinity: Original Sin 2", "Dark Souls", "Hollow Knight",
+			"Celeste", "Total War: Shogun 2"
 		};
 		
 		final String[] anime =
