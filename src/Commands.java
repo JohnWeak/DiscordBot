@@ -23,7 +23,7 @@ public class Commands extends ListenerAdapter
 	private static final File valori = new File("valori.txt");
 	private static final File nomiPkmn = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
-	private static MessageChannel messageChannel;
+	private static MessageChannel channel;
 	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon", "!carta", "!duello"};
 	// private static final String[] listaParole = {"pigeon", "owo", "pog", "òbito", "vergogna", "no"};
 	private static final String[] listaDescrizioni =
@@ -79,14 +79,14 @@ public class Commands extends ListenerAdapter
 		authorName = author.getName();
 		message = event.getMessage();
 		messageRaw = message.getContentRaw();
-		messageChannel = event.getChannel();
+		channel = event.getChannel();
 		
 		final String mockupCode = "\tString %s = \"%s\"; // in \"%s\" (%s) - %s";
 		var date = new Date();
 		var dFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
 		var dataFormattata = dFormat.format(date);
 
-		String messageChannelString = "#"+messageChannel.toString().split(":")[1].split("\\(")[0];
+		String messageChannelString = "#"+ channel.toString().split(":")[1].split("\\(")[0];
 		String[] args = messageRaw.split(" ");
 		String comando = args[0];
 		String msgLowerCase = messageRaw.toLowerCase(Locale.ROOT);
@@ -146,7 +146,7 @@ public class Commands extends ListenerAdapter
 					}
 					
 					case "2241" ->  // Alex
-						messageChannel.addReactionById(id, "🇷🇴").queue();
+						channel.addReactionById(id, "🇷🇴").queue();
 					
 					case "0935" -> // Gion
 						react("smh");
@@ -262,7 +262,7 @@ public class Commands extends ListenerAdapter
 				.setColor(color)
 				.setFooter(seme);
 		
-		messageChannel.sendMessageEmbeds(embed.build()).queue();
+		channel.sendMessageEmbeds(embed.build()).queue();
 		
 	} // fine sendCarta
 	
@@ -297,7 +297,7 @@ public class Commands extends ListenerAdapter
 	{
 		if (duelloAttivo)
 		{
-			messageChannel.sendMessage("C'è già un duello attivo!").queue();
+			channel.sendMessage("C'è già un duello attivo!").queue();
 			return;
 		}
 		
@@ -305,14 +305,14 @@ public class Commands extends ListenerAdapter
 		var autore = author.getDiscriminator();
 		final var link = "https://i.kym-cdn.com/photos/images/original/001/228/324/4a4.gif";
 		if (utenti.isEmpty())
-			messageChannel.sendMessage("Devi menzionare un utente per poter duellare!").queue();
+			channel.sendMessage("Devi menzionare un utente per poter duellare!").queue();
 		else if (utenti.get(0).isBot())
-			messageChannel.sendMessage("Non puoi sfidare un bot a duello, smh").queue(m -> react("smh"));
+			channel.sendMessage("Non puoi sfidare un bot a duello, smh").queue(m -> react("smh"));
 		else if (utenti.get(0).getDiscriminator().equals(autore))
-			messageChannel.sendMessageEmbeds(new EmbedBuilder().setImage(link).build()).queue(m -> react("pigeon"));
+			channel.sendMessageEmbeds(new EmbedBuilder().setImage(link).build()).queue(m -> react("pigeon"));
 		else
 		{
-			messageChannel.sendMessage(authorName+" ti sfida a duello! Accetti, <@" + utenti.get(0).getId() + ">?"
+			channel.sendMessage(authorName+" ti sfida a duello! Accetti, <@" + utenti.get(0).getId() + ">?"
 					                           + "\n*Per accettare, rispondi con* `!accetto`"
 					                           + "\n*Per rifiutare, rispondi con* `!rifiuto`").queue();
 			duelloAttivo = true;
@@ -366,16 +366,16 @@ public class Commands extends ListenerAdapter
 					.setImage(linkImmagine(carte[i]))
 					.setColor(coloreCarta(carte[i]))
 					.setFooter(semeCarta(carte[i]) + " " + titoloCarta(carte[i]));
-				messageChannel.sendMessageEmbeds(embed.build()).queue();
+				channel.sendMessageEmbeds(embed.build()).queue();
 			}
 			
 			if (valoreUno > valoreDue)
 			{
-				messageChannel.sendMessage("Vince lo sfidante: " + sfidante.getName()).queue();
+				channel.sendMessage("Vince lo sfidante: " + sfidante.getName()).queue();
 			}
 			else if (valoreUno < valoreDue)
 			{
-				messageChannel.sendMessage("Vince lo sfidato: " + sfidato.getName()).queue();
+				channel.sendMessage("Vince lo sfidato: " + sfidato.getName()).queue();
 			}
 			else
 			{
@@ -400,11 +400,11 @@ public class Commands extends ListenerAdapter
 				}
 				
 				if (valoreUno > valoreDue)
-					messageChannel.sendMessage("Vince lo sfidante: " + sfidante.getName()).queue();
+					channel.sendMessage("Vince lo sfidante: " + sfidante.getName()).queue();
 				else if (valoreUno < valoreDue)
-					messageChannel.sendMessage("Vince lo sfidato: " + sfidato.getName()).queue();
+					channel.sendMessage("Vince lo sfidato: " + sfidato.getName()).queue();
 				else
-					messageChannel.sendMessage("WTF, avete pescato la stessa carta dal mazzo?\nVergognatevi.").queue(lambda -> react("vergogna"));
+					channel.sendMessage("WTF, avete pescato la stessa carta dal mazzo?\nVergognatevi.").queue(lambda -> react("vergogna"));
 				
 			}
 			
@@ -416,7 +416,7 @@ public class Commands extends ListenerAdapter
 	{
 		if (!duelloAttivo)
 		{
-			messageChannel.sendMessage("Non c'è nessun duello, smh.").queue();
+			channel.sendMessage("Non c'è nessun duello, smh.").queue();
 			return;
 		}
 		
@@ -428,7 +428,7 @@ public class Commands extends ListenerAdapter
 		
 		resetDuel();
 		
-		messageChannel.sendMessage(messaggioRifiuto).queue();
+		channel.sendMessage(messaggioRifiuto).queue();
 		
 	} // fine rifiutaDuello()
 	
@@ -452,7 +452,7 @@ public class Commands extends ListenerAdapter
 
 		responso = responso.concat(headsOrTails ? testaStringa : croceStringa);
 
-		messageChannel.sendTyping().queue();
+		channel.sendTyping().queue();
 		pause(500, 500);
 		String finalResponso = responso; // perché se no il lambda piange
 		message.reply(lancioMoneta).queue(m ->
@@ -515,10 +515,10 @@ public class Commands extends ListenerAdapter
 			embedBuilder.addField("Votazione", "Per votare, usa le reazioni!", false);
 			embedBuilder.setColor(0xFFFFFF);
 			
-			messageChannel.sendTyping().queue();
+			channel.sendTyping().queue();
 			try { Thread.sleep(sleepInterval); }
 			catch (InterruptedException e) { e.printStackTrace(); }
-			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
+			channel.sendMessageEmbeds(embedBuilder.build()).queue();
 		}
 		else
 		{
@@ -530,12 +530,12 @@ public class Commands extends ListenerAdapter
 			embedBuilder.setDescription(descrizione);
 			embedBuilder.setColor(0xFF0000);
 			
-			messageChannel.sendTyping().queue();
+			channel.sendTyping().queue();
 			
 			try { Thread.sleep(sleepInterval); }
 			catch (InterruptedException e) { e.printStackTrace(); }
 			
-			messageChannel.sendMessageEmbeds(embedBuilder.build()).queue((message) ->
+			channel.sendMessageEmbeds(embedBuilder.build()).queue((message) ->
 			{
 				for (int i = 0; i < size; i++)
 					message.addReaction(letters[i]).queue();
@@ -579,7 +579,7 @@ public class Commands extends ListenerAdapter
 		
 		final String testoFooter = "";
 		
-		messageChannel.sendTyping().queue();
+		channel.sendTyping().queue();
 		pause(1000, 0);
 
 		var embedBuilder = new EmbedBuilder();
@@ -633,7 +633,7 @@ public class Commands extends ListenerAdapter
 		embedBuilder.setFooter(footer);
 		embedBuilder.setColor(Color.decode(color));
 
-		messageChannel.sendMessageEmbeds(embedBuilder.build()).queue();
+		channel.sendMessageEmbeds(embedBuilder.build()).queue();
 	
 	} // fine triggera()
 
@@ -698,25 +698,25 @@ public class Commands extends ListenerAdapter
 
 		if (emote.equals("obito"))
 			for (String s : emoteObito)
-				messageChannel.addReactionById(id, s).queue();
+				channel.addReactionById(id, s).queue();
 		
 		if (emote.equals("sabaping"))
 			for (String s : emoteSabaPing)
-				messageChannel.addReactionById(id, s).queue();
+				channel.addReactionById(id, s).queue();
 		
 		if (emote.equals("hitman"))
 			for (int i : emoteHitman)
-				messageChannel.addReactionById(id, letters[i]).queue();
+				channel.addReactionById(id, letters[i]).queue();
 		
 		if (emote.equals("xcom"))
 			for (int i : emoteXCOM)
-				messageChannel.addReactionById(id, letters[i]).queue();
+				channel.addReactionById(id, letters[i]).queue();
 		
 		if (!emoteDaUsare.equals(""))
 		{
 			try
 			{
-				messageChannel.addReactionById(id, emoteDaUsare).queue();
+				channel.addReactionById(id, emoteDaUsare).queue();
 			}
 			catch (Exception e) { System.out.printf("Errore nell'aggiunta della reazione \"%s\"\n\t", emoteDaUsare); }
 		}
@@ -729,7 +729,7 @@ public class Commands extends ListenerAdapter
 		final String urlOwO = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--amf4Rvt7--%2Ft_Preview%2Fb_rgb%3A191919%2Cc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1518097892%2Fproduction%2Fdesigns%2F2348593_0.jpg&f=1&nofb=1";
 		
 		if (utenteTaggato.isEmpty())
-			messageChannel.sendMessage("Per questo comando è necessario taggare un utente.").queue();
+			channel.sendMessage("Per questo comando è necessario taggare un utente.").queue();
 		else if (utenteTaggato.get(0).getDiscriminator().equals(author.getDiscriminator()))
 			react("pigeon");
 		else
@@ -750,7 +750,7 @@ public class Commands extends ListenerAdapter
 				.setColor(0xFF0000);
 //				.setFooter("", urlOwO);
 			
-			messageChannel.sendMessageEmbeds(embed.build()).queue(lambda ->
+			channel.sendMessageEmbeds(embed.build()).queue(lambda ->
 			{
 				if (colpa < 20)
 					react("pigeon");
@@ -764,7 +764,7 @@ public class Commands extends ListenerAdapter
 		}
 		
 		if (utenteTaggato.size() > 1)
-			messageChannel.sendMessage("La prossima volta tagga soltanto una persona e vergognati").queue(lambda ->
+			channel.sendMessage("La prossima volta tagga soltanto una persona e vergognati").queue(lambda ->
 			{
 				react("pigeon");
 				react("vergognati");
@@ -795,7 +795,7 @@ public class Commands extends ListenerAdapter
 		embedBuilder.setFooter("Creato con ❤ da JohnWeak", urlOwO);
 		
 		MessageEmbed embed = embedBuilder.build();
-		messageChannel.sendMessageEmbeds(embed).queue();
+		channel.sendMessageEmbeds(embed).queue();
 		
 	} // fine info()
 	
@@ -827,7 +827,7 @@ public class Commands extends ListenerAdapter
 			"Very doubtful."
 		};
 
-		messageChannel.sendTyping().queue();
+		channel.sendTyping().queue();
 
 		pause(-1, -1);
 
@@ -896,9 +896,9 @@ public class Commands extends ListenerAdapter
 					pokemon.setDexNumber(numeroPokedex);
 					pokemon.setLineaEvolutiva(lineaEvolutiva);
 
-					messageChannel.sendTyping().queue();
+					channel.sendTyping().queue();
 					pause(1000, 500);
-					messageChannel.sendMessageEmbeds(buildEmbed(pokemon, true).build()).queue();
+					channel.sendMessageEmbeds(buildEmbed(pokemon, true).build()).queue();
 				}
 				catch (IndexOutOfBoundsException e) { System.out.printf("Il pokemon cercato (%s) non è presente nell'API\n}", nome); }
 			}
@@ -922,7 +922,7 @@ public class Commands extends ListenerAdapter
 		var titolo = "A wild ".concat(pokemon.getNome().concat(" appears!"));
 		embedBuilder = buildEmbed(pokemon, false);
 		embedBuilder.setTitle(titolo);
-		messageChannel.sendTyping().queue();
+		channel.sendTyping().queue();
 		pause(500, 500);
 
 		sendMessage(nomi, embedBuilder);
@@ -967,7 +967,7 @@ public class Commands extends ListenerAdapter
 		String[] titolo = {"Primo Pokemon!", "Secondo Pokemon!"};
 		Pokemon[] pokemons = {uno, due};
 		var nomi = new String[] { uno.getNome(), due.getNome() };
-		messageChannel.sendMessage("Doppio Incontro!").queue();
+		channel.sendMessage("Doppio Incontro!").queue();
 		
 		for (int i = 0; i < 2; i++)
 		{
@@ -983,7 +983,7 @@ public class Commands extends ListenerAdapter
 
 	private void sendMessage(String[] pokemonNames, EmbedBuilder embedBuilder)
 	{
-		messageChannel.sendMessageEmbeds(embedBuilder.build()).queue((message ->
+		channel.sendMessageEmbeds(embedBuilder.build()).queue((message ->
 		{
 			try
 			{
