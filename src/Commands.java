@@ -118,9 +118,6 @@ public class Commands extends ListenerAdapter
 
 		if (!msgLowerCase.contains("!pokemon")) // genera un pokemon casuale soltanto se non viene eseguito il comando
 			spawnPokemon();
-		
-		//	if (msgLowerCase.contains("!testenigmo"))
-			//	triggeraEnigmo();
 
 		if (random.nextInt(20) == 9) // 5% chance di reagire con emote personali
 		{
@@ -903,6 +900,9 @@ public class Commands extends ListenerAdapter
 				}
 				catch (IndexOutOfBoundsException e) { System.out.printf("Il pokemon cercato (%s) non è presente nell'API\n}", nome); }
 			}
+			else
+				channel.sendMessage("Usa `!pokemon <nome>` per cercare un Pokemon").queue();
+			
 		}
 		else
 		{
