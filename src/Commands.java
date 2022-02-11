@@ -47,6 +47,7 @@ public class Commands extends ListenerAdapter
 	private static boolean duelloAttivo = false;
 	private static User sfidante = null;
 	private static User sfidato = null;
+	private static final String[] simboli = {"♥️", "♦️", "♣️", "♠️"};
 
 	public void onReady(@NotNull ReadyEvent event)
 	{
@@ -251,11 +252,13 @@ public class Commands extends ListenerAdapter
 		final var titolo = titoloCarta(carta);
 		final var immagineCartaAPI = linkImmagine(carta);
 		final var color= coloreCarta(carta);
+		final var seme = semeCarta(carta);
 		var embed = new EmbedBuilder();
 		
 		embed.setTitle(titolo)
 				.setImage(immagineCartaAPI)
-				.setColor(color);
+				.setColor(color)
+				.setFooter(seme);
 		
 		messageChannel.sendMessageEmbeds(embed.build()).queue();
 		
@@ -275,6 +278,18 @@ public class Commands extends ListenerAdapter
 	{
 		return carta.getSeme().equals("Cuori") || carta.getSeme().equals("Quadri") ? Color.red : Color.black;
 	}
+	
+	public String semeCarta(Card carta)
+	{
+		return switch (carta.getSeme())
+		{
+			case "Cuori" -> simboli[0];
+			case "Quadri" -> simboli[1];
+			case "Fiori" -> simboli[2];
+			case "Picche" -> simboli[3];
+		};
+	}
+	
 	
 	private void duelloDiCarte()
 	{
@@ -308,7 +323,6 @@ public class Commands extends ListenerAdapter
 	
 	private void accettaDuello()
 	{
-		String[] simboli = {"♥️", "♦️", "♣️", "♠️"};
 		int valoreUno, valoreDue;
 		var embed = new EmbedBuilder();
 		Card[] carte = new Card[2];
@@ -345,13 +359,11 @@ public class Commands extends ListenerAdapter
 			
 			for (int i = 0; i < 2; i++)
 			{
-				checkForSuit(carte[i]);
-				
 				embed
 					.setTitle("Carta di " + duellanti[i].getName())
 					.setImage(linkImmagine(carte[i]))
 					.setColor(coloreCarta(carte[i]))
-					.setFooter(simboli[checkForSuit(carte[i])] + " " + titoloCarta(carte[i]));
+					.setFooter(semeCarta(carte[i]) + " " + titoloCarta(carte[i]));
 				messageChannel.sendMessageEmbeds(embed.build()).queue();
 			}
 			
@@ -417,21 +429,6 @@ public class Commands extends ListenerAdapter
 		messageChannel.sendMessage(messaggioRifiuto).queue();
 		
 	} // fine rifiutaDuello()
-	
-	private int checkForSuit(Card carta)
-	{
-		String seme = carta.getSeme();
-		if (seme.equals("Cuori"))
-			return 0;
-		
-		if (seme.equals("Quadri"))
-			return 1;
-		
-		if (seme.equals("Fiori"))
-			return 2;
-		
-		return 3;
-	} // fine checkForSuit()
 	
 	private void resetDuel()
 	{
