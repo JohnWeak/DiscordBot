@@ -402,6 +402,7 @@ public class Commands extends ListenerAdapter
 	{
 		if (!duelloAttivo)
 		{
+			messageChannel.sendMessage("Non c'è nessun duello, smh.").queue();
 			return;
 		}
 		
