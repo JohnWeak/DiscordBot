@@ -142,7 +142,6 @@ public class Commands extends ListenerAdapter
 					case "7166" -> // Enigmo
 					{
 						react("pigeon");
-						message.reply(camelCase(messageRaw)).queue(lambda -> react("pigeon"));
 					}
 					
 					case "2241" ->  // Alex
@@ -152,7 +151,9 @@ public class Commands extends ListenerAdapter
 						react("smh");
 					
 				} // fine switch
-				
+
+				message.reply(camelCase(messageRaw)).queue(lambda -> react("pigeon"));
+
 			} // fine else
 			
 		} // fine if reazioni
