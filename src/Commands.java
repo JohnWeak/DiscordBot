@@ -330,7 +330,10 @@ public class Commands extends ListenerAdapter
 		User[] duellanti = new User[2];
 		
 		if (!duelloAttivo || sfidato == null)
+		{
+			react("pigeon");
 			return;
+		}
 		
 		if (author.getDiscriminator().equals(sfidato.getDiscriminator()))
 		{
