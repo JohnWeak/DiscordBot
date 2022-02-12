@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Card
@@ -36,6 +37,16 @@ public class Card
 		link = linkTemp[0] + linkTemp[1] + linkTemp[2] + linkTemp[3];
 		
 	} // fine costruttore
+	
+	public Card(String valore, String seme)
+	{
+		this.valore = valore;
+		this.seme = seme;
+		
+		//TODO: crea un metodo per definire il link delle immagini delle carte,
+		// poiché questo costruttore sarà chiamato dal mazzo di carte.
+		// Evitare di usare più volte il codice ai righi 16 e 37: (link = temp[0] + temp[1]...)
+	}
 	
 	// GETTER
 	public String getSeme()
