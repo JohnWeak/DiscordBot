@@ -42,6 +42,17 @@ public class Card
 	{
 		return seme;
 	}
+	public int getSemeInt()
+	{
+		return switch (seme)
+		{
+			case "Cuori" -> 50;
+			case "Quadri" -> 49;
+			case "Fiori" -> 48;
+			case "Picche" -> 47;
+			default -> -1;
+		};
+	}
 	public String getValoreString()
 	{
 		return valore;

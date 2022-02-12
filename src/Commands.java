@@ -324,11 +324,16 @@ public class Commands extends ListenerAdapter
 	
 	private void accettaDuello()
 	{
-		int valoreUno, valoreDue;
 		var embed = new EmbedBuilder();
 		int[] valori = new int[2];
 		Card[] carte = new Card[2];
 		User[] duellanti = new User[2];
+		String[] messaggioVittoria =
+		{
+			"Vince lo sfidante: **" + sfidante.getName() + ".**",
+			"Vince lo sfidato: **" + sfidato.getName() + ".**",
+			"WTF, avete pescato la stessa carta dal mazzo? Vergognatevi."
+		};
 		
 		if (!duelloAttivo || sfidato == null)
 		{
@@ -362,37 +367,30 @@ public class Commands extends ListenerAdapter
 			}
 			
 			if (valori[0] > valori[1])
-				channel.sendMessage("Vince lo sfidante: " + sfidante.getName()).queue();
+				channel.sendMessage(messaggioVittoria[0]).queue();
 			else if (valori[0] < valori[1])
-				channel.sendMessage("Vince lo sfidato: " + sfidato.getName()).queue();
+				channel.sendMessage(messaggioVittoria[1]).queue();
 			else
 			{
 				// valori uguali? Allora confrontiamo i semi per decidere il risultato.
 				// siccome i valori sono uguali, riciclo le variabili
-				// (valori arbitrari per evitare problemi con debug)
 				
-				valoreUno = switch (cardSfidante.getSeme())
-				{
-					case "Cuori" -> 50;
-					case "Quadri" -> 49;
-					case "Fiori" -> 48;
-					case "Picche" -> 47;
-				};
+				valori[0] = cardSfidante.getSemeInt();
+				valori[1] = cardSfidante.getSemeInt();
 				
-				valoreDue = switch (cardSfidato.getSeme())
-				{
-					case "Cuori" -> 50;
-					case "Quadri" -> 49;
-					case "Fiori" -> 48;
-					case "Picche" -> 47;
-				};
+				if (valori[0] < 0 || valori[1] < 0)
+					channel.sendMessage("Errore Catastrofico:" +
+							"\nValori[0] = " + valori[0] +
+							"\nValori[1] = " + valori[1] +
+							"\nAutodistruzione imminente.")
+							.queue();
 				
-				if (valoreUno > valoreDue)
-					channel.sendMessage("Vince lo sfidante: " + sfidante.getName()).queue();
-				else if (valoreUno < valoreDue)
-					channel.sendMessage("Vince lo sfidato: " + sfidato.getName()).queue();
+				if (valori[0] > valori[1])
+					channel.sendMessage(messaggioVittoria[0]).queue();
+				else if (valori[0] < valori[1])
+					channel.sendMessage(messaggioVittoria[1]).queue();
 				else
-					channel.sendMessage("WTF, avete pescato la stessa carta dal mazzo?\nVergognatevi.").queue(lambda -> react("vergogna"));
+					channel.sendMessage(messaggioVittoria[2]).queue(lambda -> react("vergogna"));
 				
 			}
 			
