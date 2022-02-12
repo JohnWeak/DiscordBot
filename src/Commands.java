@@ -326,6 +326,7 @@ public class Commands extends ListenerAdapter
 	{
 		int valoreUno, valoreDue;
 		var embed = new EmbedBuilder();
+		int[] valori = new int[2];
 		Card[] carte = new Card[2];
 		User[] duellanti = new User[2];
 		
@@ -346,7 +347,8 @@ public class Commands extends ListenerAdapter
 			
 			duellanti[0] = sfidante;
 			duellanti[1] = sfidato;
-			
+
+
 			valoreUno = switch (cardSfidante.getValore())
 			{
 				case "Asso" -> 11;
