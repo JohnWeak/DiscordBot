@@ -296,7 +296,7 @@ public class Commands extends ListenerAdapter
 	{
 		if (duelloAttivo)
 		{
-			channel.sendMessage("C'è già un duello attivo!").queue();
+			channel.sendMessage("C'è già un duello in atto! Attendi la fine dello scontro per iniziarne un altro.").queue();
 			return;
 		}
 		
