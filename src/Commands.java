@@ -266,7 +266,7 @@ public class Commands extends ListenerAdapter
 	
 	public String titoloCarta(Card carta)
 	{
-		return carta.getValore() + " di " + carta.getSeme();
+		return carta.getValoreString() + " di " + carta.getSeme();
 	}
 	
 	public String linkImmagine(Card carta)
@@ -348,20 +348,8 @@ public class Commands extends ListenerAdapter
 			duellanti[0] = sfidante;
 			duellanti[1] = sfidato;
 
-
-			valoreUno = switch (cardSfidante.getValore())
-			{
-				case "Asso" -> 11;
-				case "Jack", "Regina", "Re" -> 10;
-				default -> Integer.parseInt(cardSfidante.getValore());
-			};
-			
-			valoreDue = switch (cardSfidato.getValore())
-			{
-				case "Asso" -> 11;
-				case "Jack", "Regina", "Re" -> 10;
-				default -> Integer.parseInt(cardSfidato.getValore());
-			};
+			valori[0] = cardSfidante.getValoreInt();
+			valori[1] = cardSfidato.getValoreInt();
 			
 			for (int i = 0; i < 2; i++)
 			{
@@ -373,9 +361,9 @@ public class Commands extends ListenerAdapter
 				channel.sendMessageEmbeds(embed.build()).queue();
 			}
 			
-			if (valoreUno > valoreDue)
+			if (valori[0] > valori[1])
 				channel.sendMessage("Vince lo sfidante: " + sfidante.getName()).queue();
-			else if (valoreUno < valoreDue)
+			else if (valori[0] < valori[1])
 				channel.sendMessage("Vince lo sfidato: " + sfidato.getName()).queue();
 			else
 			{

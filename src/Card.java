@@ -42,9 +42,18 @@ public class Card
 	{
 		return seme;
 	}
-	public String getValore()
+	public String getValoreString()
 	{
 		return valore;
+	}
+	public int getValoreInt()
+	{
+		return switch (valore)
+		{
+			case "Asso" -> 11;
+			case "Jack", "Regina", "Re" -> 10;
+			default -> Integer.parseInt(valore);
+		};
 	}
 	public String getLink()
 	{
