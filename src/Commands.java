@@ -372,13 +372,9 @@ public class Commands extends ListenerAdapter
 			}
 			
 			if (valoreUno > valoreDue)
-			{
 				channel.sendMessage("Vince lo sfidante: " + sfidante.getName()).queue();
-			}
 			else if (valoreUno < valoreDue)
-			{
 				channel.sendMessage("Vince lo sfidato: " + sfidato.getName()).queue();
-			}
 			else
 			{
 				// valori uguali? Allora confrontiamo i semi per decidere il risultato.
