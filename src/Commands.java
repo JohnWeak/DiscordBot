@@ -378,7 +378,7 @@ public class Commands extends ListenerAdapter
 				valori[0] = cardSfidante.getSemeInt();
 				valori[1] = cardSfidante.getSemeInt();
 				
-				if (valori[0] < 0 || valori[1] < 0)
+				if (valori[0] < 1 || valori[1] < 1)
 					channel.sendMessage("Errore Catastrofico:" +
 							"\nValori[0] = " + valori[0] +
 							"\nValori[1] = " + valori[1] +
