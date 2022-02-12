@@ -287,6 +287,7 @@ public class Commands extends ListenerAdapter
 			case "Quadri" -> simboli[1];
 			case "Fiori" -> simboli[2];
 			case "Picche" -> simboli[3];
+			default -> null;
 		};
 	}
 	
