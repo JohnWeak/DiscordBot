@@ -347,19 +347,19 @@ public class Commands extends ListenerAdapter
 			duellanti[0] = sfidante;
 			duellanti[1] = sfidato;
 			
-			switch (cardSfidante.getValore())
+			valoreUno = switch (cardSfidante.getValore())
 			{
-				case "Asso" -> valoreUno = 11;
-				case "Jack", "Regina", "Re" -> valoreUno = 10;
-				default -> valoreUno = Integer.parseInt(cardSfidante.getValore());
-			}
+				case "Asso" -> 11;
+				case "Jack", "Regina", "Re" -> 10;
+				default -> Integer.parseInt(cardSfidante.getValore());
+			};
 			
-			switch (cardSfidato.getValore())
+			valoreDue = switch (cardSfidato.getValore())
 			{
-				case "Asso" -> valoreDue = 11;
-				case "Jack", "Regina", "Re" -> valoreDue = 10;
-				default -> valoreDue = Integer.parseInt(cardSfidato.getValore());
-			}
+				case "Asso" -> 11;
+				case "Jack", "Regina", "Re" -> 10;
+				default -> Integer.parseInt(cardSfidato.getValore());
+			};
 			
 			for (int i = 0; i < 2; i++)
 			{
@@ -381,21 +381,21 @@ public class Commands extends ListenerAdapter
 				// siccome i valori sono uguali, riciclo le variabili
 				// (valori arbitrari per evitare problemi con debug)
 				
-				switch (cardSfidante.getSeme())
+				valoreUno = switch (cardSfidante.getSeme())
 				{
-					case "Cuori" -> valoreUno = 50;
-					case "Quadri" -> valoreUno = 49;
-					case "Fiori" -> valoreUno = 48;
-					case "Picche" -> valoreUno = 47;
-				}
+					case "Cuori" -> 50;
+					case "Quadri" -> 49;
+					case "Fiori" -> 48;
+					case "Picche" -> 47;
+				};
 				
-				switch (cardSfidato.getSeme())
+				valoreDue = switch (cardSfidato.getSeme())
 				{
-					case "Cuori" -> valoreDue = 50;
-					case "Quadri" -> valoreDue = 49;
-					case "Fiori" -> valoreDue = 48;
-					case "Picche" -> valoreDue = 47;
-				}
+					case "Cuori" -> 50;
+					case "Quadri" -> 49;
+					case "Fiori" -> 48;
+					case "Picche" -> 47;
+				};
 				
 				if (valoreUno > valoreDue)
 					channel.sendMessage("Vince lo sfidante: " + sfidante.getName()).queue();
