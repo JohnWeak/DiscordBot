@@ -50,10 +50,11 @@ public class Commands extends ListenerAdapter
 	private static User sfidante = null;
 	private static User sfidato = null;
 	private static final String[] simboli = {"♥️", "♦️", "♣️", "♠️"};
-
+	
 	public void onReady(@NotNull ReadyEvent event)
 	{
 		String nome = event.getJDA().getSelfUser().getName();
+		var x= event.getJDA().upsertCommand("test", "Enigmo vergognati");
 		Activity act = Objects.requireNonNull(event.getJDA().getPresence().getActivity());
 		Collections.addAll(utenti, nomeUtenti);
 		
@@ -228,7 +229,8 @@ public class Commands extends ListenerAdapter
 	
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
 	{
-
+		if (event.getName().equals("test"))
+			message.reply("Enigmo vergognati").queue(l -> react("vergogna"));
 
 	} // fine onSlashCommand()
 
