@@ -55,6 +55,7 @@ public class Commands extends ListenerAdapter
 	{
 		String nome = event.getJDA().getSelfUser().getName();
 		event.getJDA().upsertCommand("test", "Enigmo vergognati").queue();
+		event.getJDA().updateCommands().queue();
 		Activity act = Objects.requireNonNull(event.getJDA().getPresence().getActivity());
 		Collections.addAll(utenti, nomeUtenti);
 		
