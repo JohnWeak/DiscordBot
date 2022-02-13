@@ -54,8 +54,8 @@ public class Commands extends ListenerAdapter
 	public void onReady(@NotNull ReadyEvent event)
 	{
 		String nome = event.getJDA().getSelfUser().getName();
-		event.getJDA().upsertCommand("test", "Enigmo vergognati").queue();
-		event.getJDA().updateCommands().queue();
+		//event.getJDA().upsertCommand("test", "Enigmo vergognati").queue();
+		//event.getJDA().updateCommands().queue();
 		Activity act = Objects.requireNonNull(event.getJDA().getPresence().getActivity());
 		Collections.addAll(utenti, nomeUtenti);
 		
@@ -65,7 +65,7 @@ public class Commands extends ListenerAdapter
 		TextChannel canaleBot = event.getJDA().getTextChannelsByName("\uD83E\uDD16bot-owo", true).get(0);
 
 		String activity = act.getType().toString();
-		String nomeActivity = act.getName();
+		String nomeActivity = "**" + act.getName() + "**";
 		String avvio = "Salve, oggi ";
 		String activityTradotta = activity.equals("WATCHING") ? "guardo " : "gioco a ";
 		
