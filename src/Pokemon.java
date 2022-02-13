@@ -22,6 +22,7 @@ public class Pokemon
 	private String dexNumber;
 	private String[] lineaEvolutiva;
 	private int[] individualValues = new int[6];
+	private boolean catturato = false;
 	
 	public Pokemon()
 	{
@@ -167,6 +168,10 @@ public class Pokemon
 	{
 		return individualValues;
 	}
+	public boolean isCatturato()
+	{
+		return catturato;
+	}
 	
 	//SETTER
 	public void setNome(String nome)
@@ -204,5 +209,9 @@ public class Pokemon
 	public void setIndividualValues(int[] individualValues)
 	{
 		this.individualValues = individualValues;
+	}
+	public void setCatturato(boolean catturato)
+	{
+		this.catturato = catturato;
 	}
 } // fine classe Pokemon
