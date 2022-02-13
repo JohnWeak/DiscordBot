@@ -54,20 +54,20 @@ public class Commands extends ListenerAdapter
 	public void onReady(@NotNull ReadyEvent event)
 	{
 		String nome = event.getJDA().getSelfUser().getName();
-		//event.getJDA().upsertCommand("test", "Enigmo vergognati").queue();
-		//event.getJDA().updateCommands().queue();
+		// event.getJDA().upsertCommand("test", "Enigmo vergognati").queue();
+		// event.getJDA().updateCommands().queue();
 		Activity act = Objects.requireNonNull(event.getJDA().getPresence().getActivity());
 		Collections.addAll(utenti, nomeUtenti);
 		
 		System.out.printf("%s si è connesso a Discord!\n\n", nome);
 		System.out.print("public class MessageHistory\n{\n");
 		
-		TextChannel canaleBot = event.getJDA().getTextChannelsByName("\uD83E\uDD16bot-owo", true).get(0);
+		var canaleBot = event.getJDA().getTextChannelsByName("\uD83E\uDD16bot-owo", true).get(0);
 
-		String activity = act.getType().toString();
-		String nomeActivity = "**" + act.getName() + "**";
-		String avvio = "Salve, oggi ";
-		String activityTradotta = activity.equals("WATCHING") ? "guardo " : "gioco a ";
+		var activity = act.getType().toString();
+		var nomeActivity = "**" + act.getName() + "**";
+		var avvio = "Salve, oggi ";
+		var activityTradotta = activity.equals("WATCHING") ? "guardo " : "gioco a ";
 		
 		canaleBot.sendMessage(avvio + activityTradotta + nomeActivity).queue();
 	}
