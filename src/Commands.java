@@ -537,8 +537,8 @@ public class Commands extends ListenerAdapter
 	public void triggera(String discriminator)
 	{
 		String title, image, footer, color;
-		short risultato = (short) random.nextInt(2);
-
+		int risultato;
+		
 		final String titolo = "Get rekt ";
 
 		final String[] immagineObito =
@@ -549,8 +549,7 @@ public class Commands extends ListenerAdapter
 
 		final String[] immagineEnigmo =
 		{
-			"https://ramenparados.com/wp-content/uploads/2021/01/21.png",
-			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2F736x%2F2b%2Fa6%2F4b%2F2ba64b426bbbb365252a54e2312118e9.jpg&f=1&nofb=1"
+			"https://ramenparados.com/wp-content/uploads/2021/01/21.png"
 		};
 		
 		final String[] immagineLex =
@@ -577,6 +576,7 @@ public class Commands extends ListenerAdapter
 		{
 			case "2804" -> // Òbito
 			{
+				risultato = random.nextInt(immagineObito.length);
 				title = titolo.concat("Òbito");
 				image = immagineObito[risultato];
 				footer = testoFooter;
@@ -585,6 +585,7 @@ public class Commands extends ListenerAdapter
 			
 			case "7166" -> // Enigmo
 			{
+				risultato = random.nextInt(immagineEnigmo.length);
 				title = titolo.concat("Enigmo");
 				image = immagineEnigmo[risultato];
 				footer = testoFooter;
@@ -593,6 +594,7 @@ public class Commands extends ListenerAdapter
 			
 			case "2241" -> // Lex
 			{
+				risultato = random.nextInt(immagineLex.length);
 				title = titolo.concat("Lex");
 				image = immagineLex[risultato];
 				footer = testoFooter;
@@ -601,6 +603,7 @@ public class Commands extends ListenerAdapter
 			
 			case "0935" -> // Gion
 			{
+				risultato = random.nextInt(immagineGion.length);
 				title = titolo.concat("Gion");
 				image = immagineGion[risultato];
 				footer = testoFooter;
