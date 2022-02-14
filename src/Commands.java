@@ -110,7 +110,7 @@ public class Commands extends ListenerAdapter
 			
 			if (author.getDiscriminator().equals("5269"))
 				if (random.nextInt(1000) == 42) // 0,1%
-					message.reply("BOwOt vergognati").queue();
+					message.reply("BOwOt vergognati").queue(lambda -> react("vergogna"));
 			
 			return;
 		}
