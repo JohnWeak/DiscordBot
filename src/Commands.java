@@ -121,7 +121,7 @@ public class Commands extends ListenerAdapter
 		if (!msgLowerCase.contains("!pokemon")) // genera un pokemon casuale soltanto se non viene eseguito il comando
 			spawnPokemon();
 
-		if (random.nextInt(20) == 9) // 5% chance di reagire con emote personali
+		if (random.nextInt(500) == 42) // chance di reagire con emote personali
 		{
 			String discriminator = author.getDiscriminator();
 			var trigger = random.nextBoolean();
