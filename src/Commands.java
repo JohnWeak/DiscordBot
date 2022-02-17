@@ -160,7 +160,7 @@ public class Commands extends ListenerAdapter
 		
 		switch (comando)
 		{
-			case "!coinflip" -> coinflip();
+			case "!coinflip", "!cf" -> coinflip();
 			case "!poll" -> poll();
 			case "!info" -> info();
 			case "!8ball" -> eightBall();
@@ -741,12 +741,12 @@ public class Commands extends ListenerAdapter
 		{
 			final int colpa = random.nextInt(100) + 1;
 			final String utente = utenteTaggato.get(0).getName();
-			int index = 0;
 			String[] particella = {"al", "all'"};
-			switch (colpa)
+			int index = switch (colpa)
 			{
-				case 1, 8, 11, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89 -> index = 1;
-			}
+				case 1, 8, 11, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89 -> 1;
+				default -> 0;
+			};
 			
 			final String risposta = String.format("%s sostiene che %s sia colpevole %s %d%%", authorName, utente, particella[index], colpa);
 			
@@ -866,11 +866,12 @@ public class Commands extends ListenerAdapter
 			String[] tipo = {" ", " "};
 			String generazione;
 			String numeroPokedex;
-			String[] lineaEvolutiva = {"1","2","3"};
+			String[] lineaEvolutiva = {"1", "2", "3"};
 
 			if (msg.length > 1 && !msg[1].isEmpty())
 			{
 				String nome = msg[1];
+				channel.sendTyping().queue();
 				JSONArray jsonArray = search(nome);
 
 				try
@@ -905,7 +906,11 @@ public class Commands extends ListenerAdapter
 					pause(1000, 500);
 					channel.sendMessageEmbeds(buildEmbed(pokemon, true).build()).queue();
 				}
-				catch (IndexOutOfBoundsException e) { System.out.printf("Il pokemon cercato (%s) non è presente nell'API\n}", nome); }
+				catch (IndexOutOfBoundsException e)
+				{
+					final String testo = "Il Pokedex non ha informazioni riguardo `" + nome + "`.";
+					channel.sendMessage(testo).queue();
+				}
 			}
 			else
 				channel.sendMessage("Usa `!pokemon <nome>` per cercare un Pokemon").queue();
@@ -1125,12 +1130,8 @@ public class Commands extends ListenerAdapter
 			fileWriter.write(valori[0]+"\n"+valori[1]);
 			fileWriter.close();
 
-		}catch (IOException e) { System.out.println("Errore nella scrittura del file!"); }
-
-		//System.out.println("Valori nel file: " + Arrays.toString(valori));
-		//System.out.printf("Valori nelle variabili: [limite: %d, messaggiInviati: %d]\n", limite, messaggiInviati);
-
-
+		} catch (IOException e) { System.out.println("Errore nella scrittura del file!"); }
+		
 	} // fine spawnPokemon
 	
 	
