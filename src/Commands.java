@@ -25,7 +25,6 @@ public class Commands extends ListenerAdapter
 	private static final Random random = new Random();
 	private static MessageChannel channel;
 	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon", "!carta", "!duello"};
-	// private static final String[] listaParole = {"pigeon", "owo", "pog", "òbito", "vergogna", "no"};
 	private static final String[] listaDescrizioni =
 	{
 		"Il bot lancerà una moneta",
@@ -158,7 +157,7 @@ public class Commands extends ListenerAdapter
 		} // fine if reazioni
 
 		
-		switch (comando)
+		switch (comando.toLowerCase(Locale.ROOT))
 		{
 			case "!coinflip", "!cf" -> coinflip();
 			case "!poll" -> poll();
@@ -167,7 +166,7 @@ public class Commands extends ListenerAdapter
 			case "!pokemon" -> pokemon();
 			case "!colpevolezza", "!colpevole" -> colpevolezza();
 			case "!carta" -> sendCarta(new Card());
-			case "!duello" -> duelloDiCarte();
+			case "!duello", "!duellocarte" -> duelloDiCarte();
 			case "!accetto" -> accettaDuello(false);
 			case "!rifiuto" -> rifiutaDuello();
 		}
@@ -794,7 +793,6 @@ public class Commands extends ListenerAdapter
 			embedBuilder.addField("`"+listaComandi[i]+"`", "*"+listaDescrizioni[i]+"*", false);
 		
 		embedBuilder.setThumbnail(urlOwO);
-		//embedBuilder.addField();
 		embedBuilder.setColor(0xFF0000);
 		embedBuilder.addBlankField(false);
 		embedBuilder.setFooter("Creato con ❤ da JohnWeak", urlOwO);
