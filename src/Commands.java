@@ -357,7 +357,7 @@ public class Commands extends ListenerAdapter
 			return;
 		}
 		
-		if (author.getDiscriminator().equals(sfidato.getDiscriminator()) || flag)
+		if (flag || author.getDiscriminator().equals(sfidato.getDiscriminator()))
 		{
 			Card cardSfidante, cardSfidato;
 			cardSfidante = new Card();
