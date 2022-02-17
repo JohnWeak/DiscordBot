@@ -309,7 +309,15 @@ public class Commands extends ListenerAdapter
 		if (utenti.isEmpty())
 			channel.sendMessage("Devi menzionare un utente per poter duellare!").queue();
 		else if (utenti.get(0).isBot())
-			channel.sendMessage("Non puoi sfidare un bot a duello, smh").queue(m -> react("smh"));
+		{
+			if (utenti.get(0).getDiscriminator().equals("5269"))
+			{
+				setDuel(utenti.get(0));
+				accettaDuello();
+			}
+			else
+				channel.sendMessage("Non puoi sfidare un bot a duello, smh").queue(m -> react("smh"));
+		}
 		else if (utenti.get(0).getDiscriminator().equals(autore))
 			channel.sendMessageEmbeds(new EmbedBuilder().setImage(link).build()).queue(m -> react("pigeon"));
 		else
@@ -317,13 +325,18 @@ public class Commands extends ListenerAdapter
 			channel.sendMessage(authorName+" ti sfida a duello! Accetti, <@" + utenti.get(0).getId() + ">?"
 					                           + "\n*Per accettare, rispondi con* `!accetto`"
 					                           + "\n*Per rifiutare, rispondi con* `!rifiuto`").queue();
-			duelloAttivo = true;
-			sfidante = author;
-			sfidato = utenti.get(0);
+			setDuel(utenti.get(0));
 		}
 		
 		
 	} // fine duelloDiCarte()
+	
+	private void setDuel(User utente)
+	{
+		duelloAttivo = true;
+		sfidante = author;
+		sfidato = utente;
+	} // fine attivaDuello()
 	
 	private void accettaDuello()
 	{
