@@ -168,7 +168,7 @@ public class Commands extends ListenerAdapter
 			case "!colpevolezza", "!colpevole" -> colpevolezza();
 			case "!carta" -> sendCarta(new Card());
 			case "!duello" -> duelloDiCarte();
-			case "!accetto" -> accettaDuello();
+			case "!accetto" -> accettaDuello(false);
 			case "!rifiuto" -> rifiutaDuello();
 		}
 		
@@ -313,7 +313,7 @@ public class Commands extends ListenerAdapter
 			if (utenti.get(0).getDiscriminator().equals("5269"))
 			{
 				setDuel(utenti.get(0));
-				accettaDuello();
+				accettaDuello(true);
 			}
 			else
 				channel.sendMessage("Non puoi sfidare un bot a duello, smh").queue(m -> react("smh"));
@@ -338,7 +338,7 @@ public class Commands extends ListenerAdapter
 		sfidato = utente;
 	} // fine attivaDuello()
 	
-	private void accettaDuello()
+	private void accettaDuello(boolean flag)
 	{
 		var embed = new EmbedBuilder();
 		int[] valori = new int[2];
@@ -357,7 +357,7 @@ public class Commands extends ListenerAdapter
 			return;
 		}
 		
-		if (author.getDiscriminator().equals(sfidato.getDiscriminator()))
+		if (author.getDiscriminator().equals(sfidato.getDiscriminator()) || flag)
 		{
 			Card cardSfidante, cardSfidato;
 			cardSfidante = new Card();
