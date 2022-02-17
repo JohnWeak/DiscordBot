@@ -316,7 +316,7 @@ public class Commands extends ListenerAdapter
 				accettaDuello(true);
 			}
 			else
-				channel.sendMessage("Non puoi sfidare un bot a duello, smh").queue(m -> react("smh"));
+				channel.sendMessage("**" + authorName + ", non duellerai con alcun bot all'infuori di me**").queue(m -> react("smh"));
 		}
 		else if (utenti.get(0).getDiscriminator().equals(autore))
 			channel.sendMessageEmbeds(new EmbedBuilder().setImage(link).build()).queue(m -> react("pigeon"));
