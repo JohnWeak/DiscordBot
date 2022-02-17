@@ -53,8 +53,6 @@ public class Commands extends ListenerAdapter
 	public void onReady(@NotNull ReadyEvent event)
 	{
 		String nome = event.getJDA().getSelfUser().getName();
-		// event.getJDA().upsertCommand("test", "Questo è un comando di prova").queue();
-		// event.getJDA().updateCommands().queue();
 		Activity act = Objects.requireNonNull(event.getJDA().getPresence().getActivity());
 		Collections.addAll(utenti, nomeUtenti);
 		
@@ -69,7 +67,7 @@ public class Commands extends ListenerAdapter
 		var activityTradotta = activity.equals("WATCHING") ? "guardo " : "gioco a ";
 		
 		canaleBot.sendMessage(avvio + activityTradotta + nomeActivity).queue();
-	}
+	} // fine onReady()
 
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
@@ -96,7 +94,6 @@ public class Commands extends ListenerAdapter
 
 		System.out.printf(mockupCode, authorName, messageRaw, messageChannelString, guild, dataFormattata);
 		System.out.print("\n}\r");
-
 		
 		if (author.isBot())
 		{
