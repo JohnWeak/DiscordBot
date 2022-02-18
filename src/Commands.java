@@ -218,6 +218,12 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("poochyena"))
 			react("pog");
 		
+		if (msgLowerCase.contains("cl__z"))
+			message.reply("Sempre sia lodato").queue();
+		
+		if (msgLowerCase.contains("scarab"))
+			react("scarab");
+		
 		
 	} // fine onMessageReceived()
 	
@@ -648,6 +654,7 @@ public class Commands extends ListenerAdapter
 		final String emoteSmh = "smh:880423534365659176";
 		final String emoteGiorno = "GiOrNo:618591225582321703";
 		final String emoteDansGame = "dansgame:848955120157720576";
+		final String[] scarab = {"leftPowerUp:785565275608842250", "scarab:847008906994778122", "rightPowerUp:785565774953709578"};
 		final int[] emoteHitman = {7, 8, 19, 12, 0, 13}; // posizioni nell'alfabeto
 		final int[] emoteXCOM = {23, 2, 14, 12}; // posizioni nell'alfabeto
 		final String[] letters =
@@ -695,12 +702,12 @@ public class Commands extends ListenerAdapter
 		};
 
 		if (emote.equals("obito"))
-			for (String s : emoteObito)
-				channel.addReactionById(id, s).queue();
+			for (String str : emoteObito)
+				channel.addReactionById(id, str).queue();
 		
 		if (emote.equals("sabaping"))
-			for (String s : emoteSabaPing)
-				channel.addReactionById(id, s).queue();
+			for (String str : emoteSabaPing)
+				channel.addReactionById(id, str).queue();
 		
 		if (emote.equals("hitman"))
 			for (int i : emoteHitman)
@@ -709,6 +716,10 @@ public class Commands extends ListenerAdapter
 		if (emote.equals("xcom"))
 			for (int i : emoteXCOM)
 				channel.addReactionById(id, letters[i]).queue();
+		
+		if (emote.equals("scarab"))
+			for (String str : scarab)
+				channel.addReactionById(id, str).queue();
 		
 		if (!emoteDaUsare.equals(""))
 		{
