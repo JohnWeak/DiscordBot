@@ -49,6 +49,7 @@ public class Commands extends ListenerAdapter
 	private static User sfidante = null;
 	private static User sfidato = null;
 	private static final String[] simboli = {"♥️", "♦️", "♣️", "♠️"};
+	private static String sceltaBot;
 	
 	/** onReady() viene eseguita soltanto all'avvio del bot */
 	public void onReady(@NotNull ReadyEvent event)
@@ -225,6 +226,9 @@ public class Commands extends ListenerAdapter
 		
 		if (msgLowerCase.contains("scarab"))
 			react("scarab");
+		
+		if (msgLowerCase.contains("!scf") || msgLowerCase.contains("!sassocartaoforbice"))
+			sassoCartaForbici();
 		
 		
 	} // fine onMessageReceived()
@@ -465,11 +469,10 @@ public class Commands extends ListenerAdapter
 		var testaStringa = "**"+testaEmote+"! (Testa)**";
 		var croceStringa = "**"+croceEmote+"! (Croce)**";
 
-		responso = responso.concat(headsOrTails ? testaStringa : croceStringa);
+		var finalResponso = responso.concat(headsOrTails ? testaStringa : croceStringa);
 
 		channel.sendTyping().queue();
 		pause(500, 500);
-		String finalResponso = responso; // perché se no il lambda piange
 		message.reply(lancioMoneta).queue(m ->
 		{
 			pause(500, 500);
@@ -481,6 +484,52 @@ public class Commands extends ListenerAdapter
 		});
 
 	} // fine coinflip()
+	
+	public void sassoCartaForbici()
+	{
+		String[] opzioni = {"sasso", "carta", "forbici"};
+		var msgSpezzato = messageRaw.toLowerCase(Locale.ROOT).split(" ");
+		var listaUtenti = message.getMentionedUsers();
+		int x = random.nextInt(3);
+		var discriminator = "";
+		String sceltaUtente;
+		
+		if (listaUtenti.isEmpty())
+		{
+			sceltaBot = opzioni[x];
+			
+			if (!(msgSpezzato[1].equals("sasso") || msgSpezzato[1].equals("forbici") || msgSpezzato[1].equals("carta")))
+			{
+				channel.sendMessage("Non è una scelta valida, smh").queue();
+				return;
+			}
+			
+			sceltaUtente = msgSpezzato[1];
+			
+			channel.sendMessage(sceltaBot + "!").queue();
+			
+			if (sceltaUtente.equalsIgnoreCase(sceltaBot))
+				channel.sendMessage("Ingredibile, avete scelto entrambi **" + sceltaBot + "**!").queue();
+			else if (sceltaUtente.equalsIgnoreCase("sasso"))
+				if (sceltaBot.equalsIgnoreCase("carta"))
+					channel.sendMessage("La carta avvolge il sasso. Hai perso.").queue();
+				else
+					channel.sendMessage("Il sasso rompe le forbici. Hai vinto!").queue();
+			else if (sceltaUtente.equalsIgnoreCase("carta"))
+				if (sceltaBot.equalsIgnoreCase("forbici"))
+					channel.sendMessage("Le forbici tagliano la carta. Hai perso.").queue();
+				else
+					channel.sendMessage("La carta avvolge il sasso. Hai vinto!").queue();
+				
+			return;
+		}
+		 // gioca contro un'altra persona
+		discriminator = listaUtenti.get(0).getDiscriminator();
+		var y=discriminator.toLowerCase(Locale.ROOT); //da cancellare
+		
+		
+	} // fine sassoCartaForbice()
+	
 	
 	/** Verifica ci siano le condizioni giuste per creare un sondaggio */
 	public void poll()
@@ -656,7 +705,7 @@ public class Commands extends ListenerAdapter
 	
 	} // fine triggera()
 
-	/** Aggiunge reazioni ai messaggi */
+	/** Aggiunge una reazione all'ultimo messaggio inviato */
 	public void react(String emote)
 	{
 		final String emoteOwO = "OwO:604351952205381659";
