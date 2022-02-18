@@ -485,8 +485,10 @@ public class Commands extends ListenerAdapter
 
 	} // fine coinflip()
 	
+	/** Una partita di Sasso-Carta-Forbici */
 	public void sassoCartaForbici()
 	{
+		final var immagineGiancarlo = "https://i.pinimg.com/originals/a7/68/bb/a768bbbb169aac9f0b445c80fa3b039a.jpg";
 		String[] opzioni = {"sasso", "carta", "forbici"};
 		var msgSpezzato = messageRaw.toLowerCase(Locale.ROOT).split(" ");
 		var listaUtenti = message.getMentionedUsers();
@@ -506,10 +508,16 @@ public class Commands extends ListenerAdapter
 			
 			sceltaUtente = msgSpezzato[1];
 			
-			channel.sendMessage(sceltaBot + "!").queue();
+			var embed = new EmbedBuilder()
+					.setTitle("Io ho scelto " + sceltaBot)
+					.addField("Tu hai scelto", sceltaUtente, false)
+					.setImage(immagineGiancarlo)
+					.setFooter("Non siamo uguali.");
+			
+			channel.sendMessageEmbeds(embed.build()).queue();
 			
 			if (sceltaUtente.equalsIgnoreCase(sceltaBot))
-				channel.sendMessage("Ingredibile, avete scelto entrambi **" + sceltaBot + "**!").queue();
+				channel.sendMessage("Ingredibile, avete scelto entrambi **" + sceltaBot + "**! Pareggio.").queue();
 			else if (sceltaUtente.equalsIgnoreCase("sasso"))
 				if (sceltaBot.equalsIgnoreCase("carta"))
 					channel.sendMessage("La carta avvolge il sasso. Hai perso.").queue();
@@ -521,11 +529,13 @@ public class Commands extends ListenerAdapter
 				else
 					channel.sendMessage("La carta avvolge il sasso. Hai vinto!").queue();
 				
+				
 			return;
 		}
-		 // gioca contro un'altra persona
+		
+		// gioca contro un'altra persona
 		discriminator = listaUtenti.get(0).getDiscriminator();
-		var y=discriminator.toLowerCase(Locale.ROOT); //da cancellare
+		var y= discriminator.toLowerCase(Locale.ROOT); //da cancellare
 		
 		
 	} // fine sassoCartaForbice()
