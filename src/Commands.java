@@ -461,10 +461,8 @@ public class Commands extends ListenerAdapter
 			pause(500, 500);
 			message.editMessage(finalResponso).queue(m2 ->
 			{
-				if (headsOrTails)
-					react("pog");
-				else
-					react("pigeon");
+				var str = headsOrTails ? "pog" : "pigeon";
+				react(str);
 			});
 		});
 
