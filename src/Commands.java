@@ -50,6 +50,7 @@ public class Commands extends ListenerAdapter
 	private static User sfidato = null;
 	private static final String[] simboli = {"♥️", "♦️", "♣️", "♠️"};
 	
+	/** onReady() viene eseguita soltanto all'avvio del bot */
 	public void onReady(@NotNull ReadyEvent event)
 	{
 		String nome = event.getJDA().getSelfUser().getName();
@@ -69,6 +70,7 @@ public class Commands extends ListenerAdapter
 		canaleBot.sendMessage(avvio + activityTradotta + nomeActivity).queue();
 	} // fine onReady()
 
+	/** Gestisce i messaggi inviati in qualsiasi canale testuale di qualsiasi server in cui è presente il bot */
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
 		id = event.getMessageIdLong();
@@ -227,6 +229,7 @@ public class Commands extends ListenerAdapter
 		
 	} // fine onMessageReceived()
 	
+	/** Gestisce i comandi slash, ad esempio /duello (ancora da implementare) */
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
 	{
 		if (event.getName().equals("test"))
@@ -234,6 +237,7 @@ public class Commands extends ListenerAdapter
 
 	} // fine onSlashCommand()
 
+	/** Trasforma il testo da normale a CaMeL cAsE */
 	private String camelCase(String msg)
 	{
 		var chars = msg.toCharArray();
@@ -249,6 +253,7 @@ public class Commands extends ListenerAdapter
 		return new String(chars);
 	} // fine camelCase()
 	
+	/** Invia una carta in chat come se fosse stata pescata dal mazzo */
 	private void sendCarta(Card carta)
 	{
 		final var titolo = titoloCarta(carta);
@@ -266,21 +271,25 @@ public class Commands extends ListenerAdapter
 		
 	} // fine sendCarta
 	
+	/** Restituisce il titolo della carta sotto forma di stringa */
 	public String titoloCarta(Card carta)
 	{
 		return carta.getValoreString() + " di " + carta.getSeme();
 	}
 	
+	/** Restituisce il link dell'immagine della carta sotto forma di stringa */
 	public String linkImmagine(Card carta)
 	{
 		return carta.getLink();
 	}
 	
+	/** Restituisce il colore della carta sotto forma di Color */
 	public Color coloreCarta(Card carta)
 	{
 		return carta.getSeme().equals("Cuori") || carta.getSeme().equals("Quadri") ? Color.red : Color.black;
 	}
 	
+	/** Restituisce il valore del seme della carta sotto forma di stringa */
 	public String semeCarta(Card carta)
 	{
 		return switch (carta.getSeme())
@@ -293,7 +302,7 @@ public class Commands extends ListenerAdapter
 		};
 	}
 	
-	
+	/** Permette a due persone di pescare una carta ciascuno. Vince il valore maggiore. */
 	private void duelloDiCarte()
 	{
 		if (duelloAttivo)
@@ -330,6 +339,7 @@ public class Commands extends ListenerAdapter
 		
 	} // fine duelloDiCarte()
 	
+	/** Se il duello inizia, imposta le variabili "duelloAttivo", "sfidante" e "sfidato" */
 	private void setDuel(User utente)
 	{
 		duelloAttivo = true;
@@ -337,6 +347,7 @@ public class Commands extends ListenerAdapter
 		sfidato = utente;
 	} // fine attivaDuello()
 	
+	/** Permette allo sfidato di accettare il duello */
 	private void accettaDuello(boolean flag)
 	{
 		var embed = new EmbedBuilder();
@@ -413,6 +424,7 @@ public class Commands extends ListenerAdapter
 		}
 	} // fine accettaDuello()
 	
+	/** Permette al duellante di rifiutare/ritirarsi il/dal duello prima che inizi */
 	public void rifiutaDuello()
 	{
 		if (!duelloAttivo)
@@ -433,13 +445,15 @@ public class Commands extends ListenerAdapter
 		
 	} // fine rifiutaDuello()
 	
+	/** Resetta le variabili "duelloAttivo", "sfidante" e "sfidato" a false, null e null rispettivamente */
 	private void resetDuel()
 	{
+		duelloAttivo = false;
 		sfidante = null;
 		sfidato = null;
-		duelloAttivo = false;
 	} // fine resetDuel()
 	
+	/** Lancia una moneta */
 	public void coinflip()
 	{
 		final String testaEmote = "<:pogey:733659301645910038>";
@@ -468,6 +482,7 @@ public class Commands extends ListenerAdapter
 
 	} // fine coinflip()
 	
+	/** Verifica ci siano le condizioni giuste per creare un sondaggio */
 	public void poll()
 	{
 		// args[0] = "!poll"
@@ -490,6 +505,7 @@ public class Commands extends ListenerAdapter
 		sondaggio(domanda, risposte, false);
 	} // fine poll()
 	
+	/** Crea un sondaggio. Se non sono soddisfatte le condizioni, mostra un messaggio su come usare il comando !poll */
 	public void sondaggio(String domanda, String[] risposte, boolean flag)
 	{
 		risposte[0] = risposte[0].substring(0, risposte[0].length()-1).trim();
@@ -544,6 +560,7 @@ public class Commands extends ListenerAdapter
 		
 	} // fine sondaggio()
 
+	/** Infastidisce le persone */
 	public void triggera(String discriminator)
 	{
 		String title, image, footer, color;
@@ -639,6 +656,7 @@ public class Commands extends ListenerAdapter
 	
 	} // fine triggera()
 
+	/** Aggiunge reazioni ai messaggi */
 	public void react(String emote)
 	{
 		final String emoteOwO = "OwO:604351952205381659";
@@ -730,6 +748,7 @@ public class Commands extends ListenerAdapter
 		
 	} // fine react()
 	
+	/** Lascia che RNGesus decida quanto è colpevole l'utente taggato */
 	private void colpevolezza()
 	{
 		var utenteTaggato = message.getMentionedUsers();
@@ -781,6 +800,7 @@ public class Commands extends ListenerAdapter
 		
 	} // fine colpevolezza()
 	
+	/** Mostra un embed con le informazioni del bot */
 	public void info()
 	{
 		var embedBuilder = new EmbedBuilder();
@@ -805,6 +825,7 @@ public class Commands extends ListenerAdapter
 		
 	} // fine info()
 	
+	/** Genera un responso usando la magica palla 8 */
 	public void eightBall()
 	{
 		final String ball = "🎱 says... ";
@@ -846,6 +867,7 @@ public class Commands extends ListenerAdapter
 		
 	} // fine eightBall()
 
+	/** Mette in pausa il thread per tot secondi (default: 1500-2000 ms) */
 	private void pause(int millis, int bound)
 	{
 		if (millis < 1)
@@ -858,6 +880,7 @@ public class Commands extends ListenerAdapter
 		catch (InterruptedException e) { e.printStackTrace(); }
 	} // fine pause()
 	
+	/** Cerca un Pokemon nell'API. Se non lo trova mostra un messaggio di errore. */
 	public void pokemon()
 	{
 		String[] msg = messageRaw.split(" ");
@@ -929,6 +952,7 @@ public class Commands extends ListenerAdapter
 
 	} // fine pokemon()
 
+	/** Genera un incontro con un pokemon selvatico */
 	private void singleEncounter(Pokemon pokemon)
 	{
 		EmbedBuilder embedBuilder;
@@ -943,7 +967,7 @@ public class Commands extends ListenerAdapter
 
 	} // fine singleEncounter
 
-
+	/** Effettua la ricerca del pokemon nell'API */
 	private JSONArray search(String pokemon)
 	{
 		URL url;
@@ -973,8 +997,9 @@ public class Commands extends ListenerAdapter
 		} catch (IOException | ParseException e) { System.out.println("Errore nell'apertura del file: " + nomiPkmn); }
 
 		return jsonArray;
-	}
+	} // fine search()
 	
+	/** Genera un doppio incontro con Pokemon selvatici */
 	private void doubleEncounter(Pokemon uno, Pokemon due)
 	{
 		EmbedBuilder embedBuilder;
@@ -995,6 +1020,7 @@ public class Commands extends ListenerAdapter
 		System.out.printf("\n\tUno: %s, shiny: %s\n\tDue: %s, shiny: %s\n\t",uno.getNome(), uno.isShiny(), due.getNome(), due.isShiny());
 	} // fine
 
+	/** Manda il messaggio con i Pokemon nel canale e aggiunge le reazioni like/dislike al messaggio */
 	private void sendMessage(String[] pokemonNames, EmbedBuilder embedBuilder)
 	{
 		channel.sendMessageEmbeds(embedBuilder.build()).queue((message ->
@@ -1018,7 +1044,7 @@ public class Commands extends ListenerAdapter
 
 	} // fine sendMessage()
 
-
+	/** Genera un embed con il Pokemon */
 	private EmbedBuilder buildEmbed(Pokemon pokemon, boolean pokedex)
 	{
 		EmbedBuilder embedBuilder = new EmbedBuilder();
@@ -1090,6 +1116,7 @@ public class Commands extends ListenerAdapter
 		return embedBuilder;
 	} // fine buildEmbed()
 	
+	/** Fa spawnare un Pokemon */
 	public void spawnPokemon()
 	{
 		int[] valori = new int[2];
