@@ -80,6 +80,7 @@ public class Commands extends ListenerAdapter
 		messageRaw = message.getContentRaw();
 		channel = event.getChannel();
 		
+		final String discriminator = author.getDiscriminator();
 		final String mockupCode = "\tString %s = \"%s\"; // in \"%s\" (%s) - %s";
 		var date = new Date();
 		var dFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
@@ -119,7 +120,6 @@ public class Commands extends ListenerAdapter
 
 		if (random.nextInt(500) == 42) // chance di reagire con emote personali
 		{
-			String discriminator = author.getDiscriminator();
 			var trigger = random.nextBoolean();
 			
 			if (trigger)
@@ -216,10 +216,7 @@ public class Commands extends ListenerAdapter
 		}
 		
 		if (msgLowerCase.contains("poochyena"))
-			message.reply("Poochyena? More like POGhyena!").queue(lambda -> react("pog"));
-			
-		//if (msgLowerCase.contains("camelcase"))
-		//	message.reply(camelCase(messageRaw)).queue();
+			react("pog");
 		
 		
 	} // fine onMessageReceived()
