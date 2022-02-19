@@ -989,7 +989,8 @@ public class Commands extends ListenerAdapter
 		
 	} // fine eightBall()
 
-	/** Mette in pausa il thread per tot secondi (default: 1500-2000 ms) */
+	/** Mette in pausa il thread per un totale di secondi pari a millisecondi + un valore casuale fra 0 e 'bound'.
+	 * Parametri negativi faranno sì che vengano usati i valori di default (millis=1500 e bound=500) */
 	private void pause(int millis, int bound)
 	{
 		if (millis < 1)
