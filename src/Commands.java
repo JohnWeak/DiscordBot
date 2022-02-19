@@ -45,6 +45,8 @@ public class Commands extends ListenerAdapter
 	private static Message message;
 	private static String messageRaw;
 	private static User author;
+	private static ArrayList<Challenge> listaSfide = new ArrayList<>();
+	private static final String[] challenge = {"Duello Carte", "Sasso Carta Forbici"};
 	private static boolean duelloAttivo = false;
 	private static User sfidante = null;
 	private static User sfidato = null;
@@ -485,15 +487,14 @@ public class Commands extends ListenerAdapter
 
 	} // fine coinflip()
 	
-	/** Una partita di Sasso-Carta-Forbici */
+	/** Genera una partita di Sasso-Carta-Forbici, sia contro il bot che contro un giocatore */
 	public void sassoCartaForbici()
 	{
+		final int sfida = 1;
 		final var immagineGiancarlo = "https://i.pinimg.com/originals/a7/68/bb/a768bbbb169aac9f0b445c80fa3b039a.jpg";
 		String[] opzioni = {"sasso", "carta", "forbici"};
 		var msgSpezzato = messageRaw.toLowerCase(Locale.ROOT).split(" ");
 		var listaUtenti = message.getMentionedUsers();
-		var x = random.nextInt(3);
-		var discriminator = "";
 		
 		if (msgSpezzato[1].isEmpty())
 		{
@@ -508,9 +509,9 @@ public class Commands extends ListenerAdapter
 		}
 		
 		
-		if (listaUtenti.isEmpty())
+		if (listaUtenti.isEmpty()) // gioca contro il bot
 		{
-			sceltaBot = opzioni[x];
+			sceltaBot = opzioni[random.nextInt(3)];
 			
 			if (!(msgSpezzato[1].equals("sasso") || msgSpezzato[1].equals("forbici") || msgSpezzato[1].equals("forbice") || msgSpezzato[1].equals("carta")))
 			{
@@ -545,12 +546,33 @@ public class Commands extends ListenerAdapter
 			return;
 		}
 		
-		// gioca contro un'altra persona
-		discriminator = listaUtenti.get(0).getDiscriminator();
-		var y= discriminator.toLowerCase(Locale.ROOT); //da cancellare
+		// A questo punto la lista utenti non è vuota, quindi gioca contro un utente
+		
+		
+		setSfida(listaUtenti.get(0), challenge[sfida]);
 		
 		
 	} // fine sassoCartaForbice()
+	
+	/** Crea un oggetto di tipo Challenge e tiene conto di chi è sfidato, chi è lo sfidante e su quale gioco. */
+	private void setSfida(User sfidato, String tipoSfida)
+	{
+		var size = listaSfide.size();
+		for (int i = 0; i < size; i++)
+		{
+			var challenge = listaSfide.get(0);
+			if (challenge.getSfidante().equals(author))
+				if (challenge.getSfidato().equals(sfidato))
+					if (challenge.getTipoSfida().equals(tipoSfida))
+					{
+						channel.sendMessage("Voi due avete già una sfida in corso.").queue();
+						return;
+					}
+		}
+		
+		listaSfide.add(new Challenge(sfidante, sfidato, tipoSfida));
+		
+	} // fine setSfida()
 	
 	
 	/** Verifica ci siano le condizioni giuste per creare un sondaggio */
