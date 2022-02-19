@@ -216,8 +216,7 @@ public class Commands extends ListenerAdapter
 			
 			if (msgLowerCase.contains("icscom") || msgLowerCase.contains("xcom"))
 				react("xcom");
-			
-			if (msgLowerCase.contains("uomo colpo") || msgLowerCase.contains("hitman"))
+			else
 				react("hitman");
 		}
 		
