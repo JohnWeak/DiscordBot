@@ -48,6 +48,7 @@ public class Commands extends ListenerAdapter
 	private static ArrayList<Challenge> listaSfide = new ArrayList<>();
 	private static final String[] challenge = {"Duello Carte", "Sasso Carta Forbici"};
 	private static boolean duelloAttivo = false;
+	private static boolean sfidaAttiva = false;
 	private static User sfidante = null;
 	private static User sfidato = null;
 	private static final String[] simboli = {"♥️", "♦️", "♣️", "♠️"};
@@ -548,6 +549,7 @@ public class Commands extends ListenerAdapter
 		
 		// A questo punto la lista utenti non è vuota, quindi gioca contro un utente
 		
+		//TODO: definire la sfida con l'utente
 		
 		setSfida(listaUtenti.get(0), challenge[sfida]);
 		
@@ -557,23 +559,51 @@ public class Commands extends ListenerAdapter
 	/** Crea un oggetto di tipo Challenge e tiene conto di chi è sfidato, chi è lo sfidante e su quale gioco. */
 	private void setSfida(User sfidato, String tipoSfida)
 	{
-		var size = listaSfide.size();
-		for (int i = 0; i < size; i++)
+		for (Challenge challenge : listaSfide)
 		{
-			var challenge = listaSfide.get(0);
 			if (challenge.getSfidante().equals(author))
+			{
 				if (challenge.getSfidato().equals(sfidato))
+				{
 					if (challenge.getTipoSfida().equals(tipoSfida))
 					{
 						channel.sendMessage("Voi due avete già una sfida in corso.").queue();
 						return;
 					}
+					else
+					{
+						listaSfide.add(new Challenge(sfidante, sfidato, tipoSfida));
+						sfidaAttiva = true;
+					}
+				}
+			}
 		}
-		
-		listaSfide.add(new Challenge(sfidante, sfidato, tipoSfida));
 		
 	} // fine setSfida()
 	
+	/** Controlla che ci sia una sfida in atto, che chi ha inviato il comando di accettazione sia effettivamente
+	 * lo sfidato e gestisce la sfida in corso */
+	public void accettaSfida()
+	{
+		if (!sfidaAttiva || !authorName.equals(sfidato.getName()))
+		{
+			// se non c'è sfida o la persona che invia il comando non è lo sfidato => ignora
+			channel.sendMessage("Non sei stato sfidato, vergognati").queue( lambda -> react("vergogna"));
+			return ;
+		}
+		
+		// se si arriva qui vuol dire che c'è una sfida attiva
+		// e la persona che ha inviato il comando è proprio lo sfidato
+		for (Challenge challenge : listaSfide)
+			if (author.equals(challenge.getSfidato()))
+				if (sfidante.equals(challenge.getSfidante()))
+					switch (challenge.getTipoSfida())
+					{
+						case "Duello Carte" -> duelloDiCarte();
+						case "Sasso Carta Forbici" -> sassoCartaForbici();
+					}
+		
+	} // fine accettaSfida()
 	
 	/** Verifica ci siano le condizioni giuste per creare un sondaggio */
 	public void poll()
@@ -921,7 +951,7 @@ public class Commands extends ListenerAdapter
 	/** Genera un responso usando la magica palla 8 */
 	public void eightBall()
 	{
-		final String ball = "🎱 says... ";
+		final String ballResponse = "🎱 says... ";
 		final String[] risposte =
 		{
 			"Yes",
@@ -951,12 +981,11 @@ public class Commands extends ListenerAdapter
 
 		pause(-1, -1);
 
-		message.reply(ball).queue(message1 ->
+		message.reply(ballResponse).queue(message1 ->
 		{
 			pause(-1,-1);
-			message1.editMessage(ball+"**"+risposte[random.nextInt(risposte.length)]+"**").queue();
+			message1.editMessage(ballResponse+"**"+risposte[random.nextInt(risposte.length)]+"**").queue();
 		});
-		
 		
 	} // fine eightBall()
 
