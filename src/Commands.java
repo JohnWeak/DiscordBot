@@ -492,21 +492,33 @@ public class Commands extends ListenerAdapter
 		String[] opzioni = {"sasso", "carta", "forbici"};
 		var msgSpezzato = messageRaw.toLowerCase(Locale.ROOT).split(" ");
 		var listaUtenti = message.getMentionedUsers();
-		int x = random.nextInt(3);
+		var x = random.nextInt(3);
 		var discriminator = "";
-		String sceltaUtente;
+		
+		if (msgSpezzato[1].isEmpty())
+		{
+			var embed = new EmbedBuilder()
+				.setTitle("Sasso / Carta / Forbici")
+				.addField("Utilizzo", "Scrivi `!scf` <\"sasso\" oppure \"carta\" oppure \"forbici\">", false)
+				.setColor(0xFF0000);
+			
+			channel.sendMessageEmbeds(embed.build()).queue();
+			
+			return;
+		}
+		
 		
 		if (listaUtenti.isEmpty())
 		{
 			sceltaBot = opzioni[x];
 			
-			if (!(msgSpezzato[1].equals("sasso") || msgSpezzato[1].equals("forbici") || msgSpezzato[1].equals("carta")))
+			if (!(msgSpezzato[1].equals("sasso") || msgSpezzato[1].equals("forbici") || msgSpezzato[1].equals("forbice") || msgSpezzato[1].equals("carta")))
 			{
-				channel.sendMessage("Non è una scelta valida, smh").queue();
+				channel.sendMessage("Non è una scelta valida, smh").queue(m -> react("smh"));
 				return;
 			}
 			
-			sceltaUtente = msgSpezzato[1];
+			var sceltaUtente = msgSpezzato[1];
 			
 			var embed = new EmbedBuilder()
 					.setTitle("Io ho scelto " + sceltaBot)
