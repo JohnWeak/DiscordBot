@@ -266,12 +266,11 @@ public class Commands extends ListenerAdapter
 		final var immagineCartaAPI = linkImmagine(carta);
 		final var color= coloreCarta(carta);
 		final var seme = semeCarta(carta);
-		var embed = new EmbedBuilder();
-		
-		embed.setTitle(titolo)
-				.setImage(immagineCartaAPI)
-				.setColor(color)
-				.setFooter(seme);
+		var embed = new EmbedBuilder()
+			.setTitle(titolo)
+			.setImage(immagineCartaAPI)
+			.setColor(color)
+			.setFooter(seme);
 		
 		channel.sendMessageEmbeds(embed.build()).queue();
 		
