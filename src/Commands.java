@@ -339,6 +339,7 @@ public class Commands extends ListenerAdapter
 					                           + "\n*Per accettare, rispondi con* `!accetto`"
 					                           + "\n*Per rifiutare, rispondi con* `!rifiuto`").queue();
 			setDuel(utenti.get(0));
+			//TODO: passare al metodo nuovo di sfida
 		}
 		
 		
