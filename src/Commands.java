@@ -111,7 +111,7 @@ public class Commands extends ListenerAdapter
 			}
 			// return a priori, se però il messaggio lo manda l'altro bot OwO prima gli mette le reazioni e poi return
 			
-			if (author.getDiscriminator().equals("5269"))
+			if (author.getDiscriminator().equals("5269")) // self own
 				if (random.nextInt(1000) == 42) // 0,1%
 					message.reply("BOwOt vergognati").queue(lambda -> react("vergogna"));
 			
