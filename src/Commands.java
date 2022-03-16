@@ -232,6 +232,9 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("!scf") || msgLowerCase.contains("!sassocartaoforbice"))
 			sassoCartaForbici();
 		
+		if (msgLowerCase.contains("russia"))
+			message.reply("Ucraina Est*").queue();
+		
 		
 	} // fine onMessageReceived()
 	
