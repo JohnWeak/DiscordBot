@@ -229,6 +229,9 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("scarab"))
 			react("scarab");
 		
+		if (msgLowerCase.contains("ingredibile"))
+			react("ingredibile");
+		
 		if (msgLowerCase.contains("!scf") || msgLowerCase.contains("!sassocartaoforbice"))
 			sassoCartaForbici();
 		
@@ -810,6 +813,7 @@ public class Commands extends ListenerAdapter
 		final String emoteSmh = "smh:880423534365659176";
 		final String emoteGiorno = "GiOrNo:618591225582321703";
 		final String emoteDansGame = "dansgame:848955120157720576";
+		final String emoteIngredibile = "ingredibile:593532244434485259";
 		final String[] scarab = {"leftPowerUp:785565275608842250", "scarab:847008906994778122", "rightPowerUp:785565774953709578"};
 		final int[] emoteHitman = {7, 8, 19, 12, 0, 13}; // posizioni nell'alfabeto
 		final int[] emoteXCOM = {23, 2, 14, 12}; // posizioni nell'alfabeto
@@ -854,6 +858,7 @@ public class Commands extends ListenerAdapter
 			case "smh" -> emoteSmh;
 			case "giorno" -> emoteGiorno;
 			case "dansgame" -> emoteDansGame;
+			case "ingredibile" -> emoteIngredibile;
 			default -> "";
 		};
 
