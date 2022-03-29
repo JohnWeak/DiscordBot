@@ -2,7 +2,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
@@ -53,10 +55,12 @@ public class Commands extends ListenerAdapter
 	private static User sfidato = null;
 	private static final String[] simboli = {"♥️", "♦️", "♣️", "♠️"};
 	private static String sceltaBot;
+	private static int x; //da cancellare
 	
 	/** onReady() viene eseguita soltanto all'avvio del bot */
 	public void onReady(@NotNull ReadyEvent event)
 	{
+		x = 0; // da cancellare
 		String nome = event.getJDA().getSelfUser().getName();
 		Activity act = Objects.requireNonNull(event.getJDA().getPresence().getActivity());
 		Collections.addAll(utenti, nomeUtenti);
@@ -74,6 +78,12 @@ public class Commands extends ListenerAdapter
 		canaleBot.sendMessage(avvio + activityTradotta + nomeActivity).queue();
 	} // fine onReady()
 
+	public void onMessageUpdate(@NotNull MessageUpdateEvent event)
+	{
+		if (x < 3)
+			channel.sendMessage("pog").queue(lambda -> x++);
+	}
+	
 	/** Gestisce i messaggi inviati in qualsiasi canale testuale di qualsiasi server in cui è presente il bot */
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
