@@ -55,12 +55,10 @@ public class Commands extends ListenerAdapter
 	private static User sfidato = null;
 	private static final String[] simboli = {"♥️", "♦️", "♣️", "♠️"};
 	private static String sceltaBot;
-	private static int x; //da cancellare
 	
 	/** onReady() viene eseguita soltanto all'avvio del bot */
 	public void onReady(@NotNull ReadyEvent event)
 	{
-		x = 0; // da cancellare
 		String nome = event.getJDA().getSelfUser().getName();
 		Activity act = Objects.requireNonNull(event.getJDA().getPresence().getActivity());
 		Collections.addAll(utenti, nomeUtenti);
@@ -171,7 +169,7 @@ public class Commands extends ListenerAdapter
 					
 				} // fine switch
 				
-				message.reply(camelCase(messageRaw)).queue(lambda -> react("pigeon"));
+				message.reply(camelCase(messageRaw)).queue(lambda -> react("dansgame"));
 				
 			} // fine else
 			
