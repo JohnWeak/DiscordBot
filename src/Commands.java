@@ -113,9 +113,11 @@ public class Commands extends ListenerAdapter
 	public void checkForKeywords(String msgLowerCase)
 	{
 		final String discriminator = author.getDiscriminator();
-		String[] args = messageRaw.split(" ");
-		String comando = args[0].toLowerCase(Locale.ROOT);
-		List<Emote> emoteList = message.getEmotes();
+		final String[] args = messageRaw.split(" ");
+		final String comando = args[0].toLowerCase(Locale.ROOT);
+		final List<Emote> emoteList = message.getEmotes();
+		boolean reply = false;
+		String msgReply = "";
 		
 		if (author.isBot())
 		{
@@ -151,21 +153,21 @@ public class Commands extends ListenerAdapter
 				switch(discriminator)
 				{
 					case "2804" -> // Òbito
-							{
-								react("obito");
-								react("vergogna");
-								message.reply("Òbito vergognati").queue();
-							}
+					{
+						react("obito");
+						react("vergogna");
+						message.reply("Òbito vergognati").queue();
+					}
 					case "7166" -> // Enigmo
-							{
-								react("pigeon");
-							}
+					{
+						react("pigeon");
+					}
 					
 					case "2241" ->  // Alex
-							channel.addReactionById(id, "🇷🇴").queue();
+						channel.addReactionById(id, "🇷🇴").queue();
 					
 					case "0935" -> // Gion
-							react("smh");
+						react("smh");
 					
 				} // fine switch
 				
@@ -237,10 +239,16 @@ public class Commands extends ListenerAdapter
 		}
 		
 		if (msgLowerCase.contains("poochyena"))
+		{
 			react("pog");
+			react("♥");
+		}
 		
 		if (msgLowerCase.contains("cl__z"))
-			message.reply("Sempre sia lodato").queue();
+		{
+			reply = true;
+			msgReply += "Sempre sia lodato\n";
+		}
 		
 		if (msgLowerCase.contains("scarab"))
 			react("scarab");
@@ -252,23 +260,32 @@ public class Commands extends ListenerAdapter
 			sassoCartaForbici();
 		
 		if (msgLowerCase.contains("russia"))
-			message.reply("Ucraina Est*").queue();
+		{
+			reply = true;
+			msgReply += "Ucraina Est*\n";
+		}
 		
 		if (msgLowerCase.contains("winnie the pooh") || msgLowerCase.contains("xi jinping"))
-			message.reply("⣿⣿⣿⣿⣿⠟⠋⠄⠄⠄⠄⠄⠄⠄⢁⠈⢻⢿⣿⣿⣿⣿⣿⣿⣿ \n" +
-					              "⣿⣿⣿⣿⣿⠃⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⡀⠭⢿⣿⣿⣿⣿ \n" +
-					              "⣿⣿⣿⣿⡟⠄⢀⣾⣿⣿⣿⣷⣶⣿⣷⣶⣶⡆⠄⠄⠄⣿⣿⣿⣿ \n" +
-					              "⣿⣿⣿⣿⡇⢀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠄⠄⢸⣿⣿⣿⣿ \n" +
-					              "⣿⣿⣿⣿⣇⣼⣿⣿⠿⠶⠙⣿⡟⠡⣴⣿⣽⣿⣧⠄⢸⣿⣿⣿⣿ \n" +
-					              "⣿⣿⣿⣿⣿⣾⣿⣿⣟⣭⣾⣿⣷⣶⣶⣴⣶⣿⣿⢄⣿⣿⣿⣿⣿ \n" +
-					              "⣿⣿⣿⣿⣿⣿⣿⣿⡟⣩⣿⣿⣿⡏⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿ \n" +
-					              "⣿⣿⣿⣿⣿⣿⣹⡋⠘⠷⣦⣀⣠⡶⠁⠈⠁⠄⣿⣿⣿⣿⣿⣿⣿ \n" +
-					              "⣿⣿⣿⣿⣿⣿⣍⠃⣴⣶⡔⠒⠄⣠⢀⠄⠄⠄⡨⣿⣿⣿⣿⣿⣿ \n" +
-					              "⣿⣿⣿⣿⣿⣿⣿⣦⡘⠿⣷⣿⠿⠟⠃⠄⠄⣠⡇⠈⠻⣿⣿⣿⣿ \n" +
-					              "⣿⣿⣿⣿⡿⠟⠋⢁⣷⣠⠄⠄⠄⠄⣀⣠⣾⡟⠄⠄⠄⠄⠉⠙⠻ \n" +
-					              "⡿⠟⠋⠁⠄⠄⠄⢸⣿⣿⡯⢓⣴⣾⣿⣿⡟⠄⠄⠄⠄⠄⠄⠄⠄ \n" +
-					              "⠄⠄⠄⠄⠄⠄⠄⣿⡟⣷⠄⠹⣿⣿⣿⡿⠁⠄⠄⠄⠄⠄⠄⠄⠄").queue();
+		{
+			reply = true;
+			msgReply += """
+					⣿⣿⣿⣿⣿⠟⠋⠄⠄⠄⠄⠄⠄⠄⢁⠈⢻⢿⣿⣿⣿⣿⣿⣿⣿\s
+					⣿⣿⣿⣿⣿⠃⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⡀⠭⢿⣿⣿⣿⣿\s
+					⣿⣿⣿⣿⡟⠄⢀⣾⣿⣿⣿⣷⣶⣿⣷⣶⣶⡆⠄⠄⠄⣿⣿⣿⣿\s
+					⣿⣿⣿⣿⡇⢀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠄⠄⢸⣿⣿⣿⣿\s
+					⣿⣿⣿⣿⣇⣼⣿⣿⠿⠶⠙⣿⡟⠡⣴⣿⣽⣿⣧⠄⢸⣿⣿⣿⣿\s
+					⣿⣿⣿⣿⣿⣾⣿⣿⣟⣭⣾⣿⣷⣶⣶⣴⣶⣿⣿⢄⣿⣿⣿⣿⣿\s
+					⣿⣿⣿⣿⣿⣿⣿⣿⡟⣩⣿⣿⣿⡏⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\s
+					⣿⣿⣿⣿⣿⣿⣹⡋⠘⠷⣦⣀⣠⡶⠁⠈⠁⠄⣿⣿⣿⣿⣿⣿⣿\s
+					⣿⣿⣿⣿⣿⣿⣍⠃⣴⣶⡔⠒⠄⣠⢀⠄⠄⠄⡨⣿⣿⣿⣿⣿⣿\s
+					⣿⣿⣿⣿⣿⣿⣿⣦⡘⠿⣷⣿⠿⠟⠃⠄⠄⣠⡇⠈⠻⣿⣿⣿⣿\s
+					⣿⣿⣿⣿⡿⠟⠋⢁⣷⣠⠄⠄⠄⠄⣀⣠⣾⡟⠄⠄⠄⠄⠉⠙⠻\s
+					⡿⠟⠋⠁⠄⠄⠄⢸⣿⣿⡯⢓⣴⣾⣿⣿⡟⠄⠄⠄⠄⠄⠄⠄⠄\s
+					⠄⠄⠄⠄⠄⠄⠄⣿⡟⣷⠄⠹⣿⣿⣿⡿⠁⠄⠄⠄⠄⠄⠄⠄⠄""";
+		}
 		
+		if (reply)
+			message.reply(msgReply).queue();
 		
 	} // fine checkForKeywords()
 	
