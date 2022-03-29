@@ -81,7 +81,7 @@ public class Commands extends ListenerAdapter
 	public void onMessageUpdate(@NotNull MessageUpdateEvent event)
 	{
 		if (x < 3)
-			channel.sendMessage("pog").queue(lambda -> x++);
+			channel.sendMessage("pog").queue(lambda -> x++);// da cancellare
 	}
 	
 	/** Gestisce i messaggi inviati in qualsiasi canale testuale di qualsiasi server in cui è presente il bot */
