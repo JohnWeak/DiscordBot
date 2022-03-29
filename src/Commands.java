@@ -80,9 +80,8 @@ public class Commands extends ListenerAdapter
 
 	public void onMessageUpdate(@NotNull MessageUpdateEvent event)
 	{
-		if (x < 3)
-			channel.sendMessage("pog").queue(lambda -> x++);// da cancellare
-	}
+		checkForKeywords(event.getMessage().getContentRaw().toLowerCase(Locale.ROOT));
+	} // fine onMessageUpdate()
 	
 	/** Gestisce i messaggi inviati in qualsiasi canale testuale di qualsiasi server in cui è presente il bot */
 	public void onMessageReceived(MessageReceivedEvent event)
@@ -96,25 +95,31 @@ public class Commands extends ListenerAdapter
 		messageRaw = message.getContentRaw();
 		channel = event.getChannel();
 		
-		final String discriminator = author.getDiscriminator();
+		
 		final String mockupCode = "\tString %s = \"%s\"; // in \"%s\" (%s) - %s";
 		var date = new Date();
 		var dFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
 		var dataFormattata = dFormat.format(date);
 
 		String messageChannelString = "#"+ channel.toString().split(":")[1].split("\\(")[0];
-		String[] args = messageRaw.split(" ");
-		String comando = args[0].toLowerCase(Locale.ROOT);
-		String msgLowerCase = messageRaw.toLowerCase(Locale.ROOT);
-
-		List<Emote> emoteList = message.getEmotes();
-
+		
 		System.out.printf(mockupCode, authorName, messageRaw, messageChannelString, guild, dataFormattata);
 		System.out.print("\n}\r");
 		
+		checkForKeywords(messageRaw.toLowerCase(Locale.ROOT));
+		
+	} // fine onMessageReceived()
+	
+	public void checkForKeywords(String msgLowerCase)
+	{
+		final String discriminator = author.getDiscriminator();
+		String[] args = messageRaw.split(" ");
+		String comando = args[0].toLowerCase(Locale.ROOT);
+		List<Emote> emoteList = message.getEmotes();
+		
 		if (author.isBot())
 		{
-			if (author.getDiscriminator().equals("8456"))
+			if (discriminator.equals("8456"))
 			{
 				react("owo");
 				react("vergogna");
@@ -127,13 +132,13 @@ public class Commands extends ListenerAdapter
 			
 			return;
 		}
-
+		
 		for (Emote emote : emoteList)
 			message.addReaction(emote).queue();
-
+		
 		if (!msgLowerCase.contains("!pokemon")) // genera un pokemon casuale soltanto se non viene eseguito il comando
 			spawnPokemon();
-
+		
 		if (random.nextInt(500) == 42) // chance di reagire con emote personali
 		{
 			var trigger = random.nextBoolean();
@@ -145,30 +150,30 @@ public class Commands extends ListenerAdapter
 				switch(discriminator)
 				{
 					case "2804" -> // Òbito
-					{
-						react("obito");
-						react("vergogna");
-						message.reply("Òbito vergognati").queue();
-					}
+							{
+								react("obito");
+								react("vergogna");
+								message.reply("Òbito vergognati").queue();
+							}
 					case "7166" -> // Enigmo
-					{
-						react("pigeon");
-					}
+							{
+								react("pigeon");
+							}
 					
 					case "2241" ->  // Alex
-						channel.addReactionById(id, "🇷🇴").queue();
+							channel.addReactionById(id, "🇷🇴").queue();
 					
 					case "0935" -> // Gion
-						react("smh");
+							react("smh");
 					
 				} // fine switch
-
+				
 				message.reply(camelCase(messageRaw)).queue(lambda -> react("pigeon"));
-
+				
 			} // fine else
 			
 		} // fine if reazioni
-
+		
 		
 		switch (comando)
 		{
@@ -213,13 +218,13 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("get"))
 			if (msgLowerCase.contains("rekt"))
 				react("getrekt");
-
+		
 		if (msgLowerCase.contains("smh"))
 			react("smh");
-
+		
 		if (msgLowerCase.contains("giorno"))
 			react("giorno");
-
+		
 		if (msgLowerCase.contains("uomo colpo") || msgLowerCase.contains("hitman") || msgLowerCase.contains("icscom") || msgLowerCase.contains("xcom"))
 		{
 			react("pog");
@@ -264,7 +269,8 @@ public class Commands extends ListenerAdapter
 					              "⠄⠄⠄⠄⠄⠄⠄⣿⡟⣷⠄⠹⣿⣿⣿⡿⠁⠄⠄⠄⠄⠄⠄⠄⠄").queue();
 		
 		
-	} // fine onMessageReceived()
+	} // fine checkForKeywords()
+	
 	
 	/** Gestisce i comandi slash, ad esempio /duello (ancora da implementare) */
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
