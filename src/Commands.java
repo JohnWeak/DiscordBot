@@ -104,7 +104,7 @@ public class Commands extends ListenerAdapter
 
 		String messageChannelString = "#"+ channel.toString().split(":")[1].split("\\(")[0];
 		String[] args = messageRaw.split(" ");
-		String comando = args[0];
+		String comando = args[0].toLowerCase(Locale.ROOT);
 		String msgLowerCase = messageRaw.toLowerCase(Locale.ROOT);
 
 		List<Emote> emoteList = message.getEmotes();
@@ -170,7 +170,7 @@ public class Commands extends ListenerAdapter
 		} // fine if reazioni
 
 		
-		switch (comando.toLowerCase(Locale.ROOT))
+		switch (comando)
 		{
 			case "!coinflip", "!cf" -> coinflip();
 			case "!poll" -> poll();
