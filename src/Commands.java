@@ -133,6 +133,7 @@ public class Commands extends ListenerAdapter
 			return;
 		}
 		
+		message.clearReactions().queue();
 		for (Emote emote : emoteList)
 			message.addReaction(emote).queue();
 		
