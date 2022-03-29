@@ -79,21 +79,14 @@ public class Commands extends ListenerAdapter
 	/** Questo metodo decide cosa fare quando un messaggio viene modificato */
 	public void onMessageUpdate(@NotNull MessageUpdateEvent event)
 	{
+		identifyLatestMessage(null, event);
 		checkForKeywords(event.getMessage().getContentRaw().toLowerCase(Locale.ROOT));
 	} // fine onMessageUpdate()
 	
 	/** Gestisce i messaggi inviati in qualsiasi canale testuale di qualsiasi server in cui è presente il bot */
-	public void onMessageReceived(MessageReceivedEvent event)
+	public void onMessageReceived(@NotNull MessageReceivedEvent event)
 	{
-		id = event.getMessageIdLong();
-		String guild = event.getGuild().toString().split("\\(")[0].split(":")[1];
-
-		author = event.getAuthor();
-		authorName = author.getName();
-		message = event.getMessage();
-		messageRaw = message.getContentRaw();
-		channel = event.getChannel();
-		
+		identifyLatestMessage(event, null);
 		
 		final String mockupCode = "\tString %s = \"%s\"; // in \"%s\" (%s) - %s";
 		var date = new Date();
@@ -101,6 +94,7 @@ public class Commands extends ListenerAdapter
 		var dataFormattata = dFormat.format(date);
 
 		String messageChannelString = "#"+ channel.toString().split(":")[1].split("\\(")[0];
+		String guild = event.getGuild().toString().split("\\(")[0].split(":")[1];
 		
 		System.out.printf(mockupCode, authorName, messageRaw, messageChannelString, guild, dataFormattata);
 		System.out.print("\n}\r");
@@ -108,6 +102,30 @@ public class Commands extends ListenerAdapter
 		checkForKeywords(messageRaw.toLowerCase(Locale.ROOT));
 		
 	} // fine onMessageReceived()
+	
+	private void identifyLatestMessage(MessageReceivedEvent received, MessageUpdateEvent updated)
+	{
+		if (received != null)
+		{
+			id = received.getMessageIdLong();
+			author = received.getAuthor();
+			authorName = author.getName();
+			message = received.getMessage();
+			messageRaw = message.getContentRaw();
+			channel = received.getChannel();
+		}
+		else
+		{
+			id = updated.getMessageIdLong();
+			author = updated.getAuthor();
+			authorName = author.getName();
+			message = updated.getMessage();
+			messageRaw = message.getContentRaw();
+			channel = updated.getChannel();
+		}
+		
+	} // fine identifyLatestMessage()
+	
 	
 	/** Controlla che il messaggio abbia le parole chiave per attivare i comandi (o le reazioni) del bot*/
 	public void checkForKeywords(String msgLowerCase)
@@ -268,20 +286,19 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("winnie the pooh") || msgLowerCase.contains("xi jinping"))
 		{
 			reply = true;
-			msgReply += """
-					⣿⣿⣿⣿⣿⠟⠋⠄⠄⠄⠄⠄⠄⠄⢁⠈⢻⢿⣿⣿⣿⣿⣿⣿⣿\s
-					⣿⣿⣿⣿⣿⠃⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⡀⠭⢿⣿⣿⣿⣿\s
-					⣿⣿⣿⣿⡟⠄⢀⣾⣿⣿⣿⣷⣶⣿⣷⣶⣶⡆⠄⠄⠄⣿⣿⣿⣿\s
-					⣿⣿⣿⣿⡇⢀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠄⠄⢸⣿⣿⣿⣿\s
-					⣿⣿⣿⣿⣇⣼⣿⣿⠿⠶⠙⣿⡟⠡⣴⣿⣽⣿⣧⠄⢸⣿⣿⣿⣿\s
-					⣿⣿⣿⣿⣿⣾⣿⣿⣟⣭⣾⣿⣷⣶⣶⣴⣶⣿⣿⢄⣿⣿⣿⣿⣿\s
-					⣿⣿⣿⣿⣿⣿⣿⣿⡟⣩⣿⣿⣿⡏⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\s
-					⣿⣿⣿⣿⣿⣿⣹⡋⠘⠷⣦⣀⣠⡶⠁⠈⠁⠄⣿⣿⣿⣿⣿⣿⣿\s
-					⣿⣿⣿⣿⣿⣿⣍⠃⣴⣶⡔⠒⠄⣠⢀⠄⠄⠄⡨⣿⣿⣿⣿⣿⣿\s
-					⣿⣿⣿⣿⣿⣿⣿⣦⡘⠿⣷⣿⠿⠟⠃⠄⠄⣠⡇⠈⠻⣿⣿⣿⣿\s
-					⣿⣿⣿⣿⡿⠟⠋⢁⣷⣠⠄⠄⠄⠄⣀⣠⣾⡟⠄⠄⠄⠄⠉⠙⠻\s
-					⡿⠟⠋⠁⠄⠄⠄⢸⣿⣿⡯⢓⣴⣾⣿⣿⡟⠄⠄⠄⠄⠄⠄⠄⠄\s
-					⠄⠄⠄⠄⠄⠄⠄⣿⡟⣷⠄⠹⣿⣿⣿⡿⠁⠄⠄⠄⠄⠄⠄⠄⠄""";
+			msgReply += "⣿⣿⣿⣿⣿⠟⠋⠄⠄⠄⠄⠄⠄⠄⢁⠈⢻⢿⣿⣿⣿⣿⣿⣿⣿ \n" +
+					    "⣿⣿⣿⣿⣿⠃⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⡀⠭⢿⣿⣿⣿⣿ \n" +
+					    "⣿⣿⣿⣿⡟⠄⢀⣾⣿⣿⣿⣷⣶⣿⣷⣶⣶⡆⠄⠄⠄⣿⣿⣿⣿ \n" +
+					    "⣿⣿⣿⣿⡇⢀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠄⠄⢸⣿⣿⣿⣿ \n" +
+					    "⣿⣿⣿⣿⣇⣼⣿⣿⠿⠶⠙⣿⡟⠡⣴⣿⣽⣿⣧⠄⢸⣿⣿⣿⣿ \n" +
+					    "⣿⣿⣿⣿⣿⣾⣿⣿⣟⣭⣾⣿⣷⣶⣶⣴⣶⣿⣿⢄⣿⣿⣿⣿⣿ \n" +
+					    "⣿⣿⣿⣿⣿⣿⣿⣿⡟⣩⣿⣿⣿⡏⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿ \n" +
+					    "⣿⣿⣿⣿⣿⣿⣹⡋⠘⠷⣦⣀⣠⡶⠁⠈⠁⠄⣿⣿⣿⣿⣿⣿⣿ \n" +
+					    "⣿⣿⣿⣿⣿⣿⣍⠃⣴⣶⡔⠒⠄⣠⢀⠄⠄⠄⡨⣿⣿⣿⣿⣿⣿ \n" +
+					    "⣿⣿⣿⣿⣿⣿⣿⣦⡘⠿⣷⣿⠿⠟⠃⠄⠄⣠⡇⠈⠻⣿⣿⣿⣿ \n" +
+					    "⣿⣿⣿⣿⡿⠟⠋⢁⣷⣠⠄⠄⠄⠄⣀⣠⣾⡟⠄⠄⠄⠄⠉⠙⠻ \n" +
+					    "⡿⠟⠋⠁⠄⠄⠄⢸⣿⣿⡯⢓⣴⣾⣿⣿⡟⠄⠄⠄⠄⠄⠄⠄⠄ \n" +
+					    "⠄⠄⠄⠄⠄⠄⠄⣿⡟⣷⠄⠹⣿⣿⣿⡿⠁⠄⠄⠄⠄⠄⠄⠄⠄";
 		}
 		
 		if (reply)
