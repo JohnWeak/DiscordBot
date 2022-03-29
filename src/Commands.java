@@ -78,6 +78,7 @@ public class Commands extends ListenerAdapter
 		canaleBot.sendMessage(avvio + activityTradotta + nomeActivity).queue();
 	} // fine onReady()
 
+	/** Questo metodo decide cosa fare quando un messaggio viene modificato */
 	public void onMessageUpdate(@NotNull MessageUpdateEvent event)
 	{
 		checkForKeywords(event.getMessage().getContentRaw().toLowerCase(Locale.ROOT));
@@ -110,6 +111,7 @@ public class Commands extends ListenerAdapter
 		
 	} // fine onMessageReceived()
 	
+	/** Controlla che il messaggio abbia le parole chiave per attivare i comandi (o le reazioni) del bot*/
 	public void checkForKeywords(String msgLowerCase)
 	{
 		final String discriminator = author.getDiscriminator();
