@@ -105,6 +105,8 @@ public class Commands extends ListenerAdapter
 	
 	private void identifyLatestMessage(MessageReceivedEvent received, MessageUpdateEvent updated)
 	{
+		final List<Emote> emoteList = message.getEmotes();
+
 		if (received != null)
 		{
 			id = received.getMessageIdLong();
@@ -122,6 +124,10 @@ public class Commands extends ListenerAdapter
 			message = updated.getMessage();
 			messageRaw = message.getContentRaw();
 			channel = updated.getChannel();
+
+			message.clearReactions().queue();
+			for (Emote emote : emoteList)
+				message.addReaction(emote).queue();
 		}
 		
 	} // fine identifyLatestMessage()
@@ -133,7 +139,6 @@ public class Commands extends ListenerAdapter
 		final String discriminator = author.getDiscriminator();
 		final String[] args = messageRaw.split(" ");
 		final String comando = args[0].toLowerCase(Locale.ROOT);
-		final List<Emote> emoteList = message.getEmotes();
 		boolean reply = false;
 		String msgReply = "";
 		
@@ -152,10 +157,6 @@ public class Commands extends ListenerAdapter
 			
 			return;
 		}
-		
-		message.clearReactions().queue();
-		for (Emote emote : emoteList)
-			message.addReaction(emote).queue();
 		
 		if (!msgLowerCase.contains("!pokemon")) // genera un pokemon casuale soltanto se non viene eseguito il comando
 			spawnPokemon();
