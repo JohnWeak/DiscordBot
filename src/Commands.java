@@ -212,7 +212,7 @@ public class Commands extends ListenerAdapter
 		}
 		
 		
-		if (msgLowerCase.contains("pigeon"))
+		if (msgLowerCase.contains("pigeon") || msgLowerCase.contains("piccione"))
 			react("pigeon");
 		
 		if (msgLowerCase.contains("owo"))
