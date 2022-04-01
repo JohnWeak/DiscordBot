@@ -12,7 +12,9 @@ public class Main
 	
 	public static void main(String[] args) throws LoginException
 	{
-		jda = JDABuilder.createDefault("ODM2NTg2ODYyMjEzNzI2MjI4.YIgKOg.zFvGCTzAF1ffIUB_M5OnN_U29HI");
+		final String token = "ODM2NTg2ODYyMjEzNzI2MjI4.YIgKOg.zFvGCTzAF1ffIUB_M5OnN_U29HI";
+
+		jda = JDABuilder.createDefault(token);
 		jda.setActivity(selectActivity());
 		jda.setStatus(OnlineStatus.ONLINE);
 		jda.addEventListeners(new Commands());
