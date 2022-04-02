@@ -106,7 +106,9 @@ public class Commands extends ListenerAdapter
 	/** Questo metodo tiene conto di quale è l'ultimo messaggio che viene inviato/modificato */
 	private void identifyLatestMessage(MessageReceivedEvent received, MessageUpdateEvent updated)
 	{
-		final List<Emote> emoteList = message.getEmotes();
+		List<Emote> emoteList = new ArrayList<>();
+		if (message != null)
+			 emoteList = message.getEmotes();
 
 		if (received != null)
 		{
