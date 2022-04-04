@@ -217,56 +217,57 @@ public class Commands extends ListenerAdapter
 			case "!rifiuto" -> rifiutaDuello();
 		}
 		
+		var reazioni = new ArrayList<String>();
 		
 		if (msgLowerCase.contains("pigeon") || msgLowerCase.contains("piccione"))
-			react("pigeon");
+			reazioni.add("pigeon");
 		
 		if (msgLowerCase.contains("owo"))
-			react("owo");
+			reazioni.add("owo");
 		
 		if (msgLowerCase.contains("pog"))
-			react("pog");
+			reazioni.add("pog");
 		
 		if (msgLowerCase.contains("òbito") || msgLowerCase.contains("obito"))
 			if (random.nextInt(50) == 42) // 2%
 			{
-				react("obito");
-				react("vergogna");
+				reazioni.add("obito");
+				reazioni.add("vergogna");
 			}
 		
 		if (msgLowerCase.contains("vergogna"))
-			react("vergogna");
+			reazioni.add("vergogna");
 		
 		if (msgLowerCase.contains("no u"))
-			react("nou");
+			reazioni.add("nou");
 		
 		if (msgLowerCase.contains("sabaping"))
-			react("sabaping");
+			reazioni.add("sabaping");
 		
 		if (msgLowerCase.contains("get"))
 			if (msgLowerCase.contains("rekt"))
-				react("getrekt");
+				reazioni.add("getrekt");
 		
 		if (msgLowerCase.contains("smh"))
-			react("smh");
+			reazioni.add("smh");
 		
 		if (msgLowerCase.contains("giorno"))
-			react("giorno");
+			reazioni.add("giorno");
 		
 		if (msgLowerCase.contains("uomo colpo") || msgLowerCase.contains("hitman") || msgLowerCase.contains("icscom") || msgLowerCase.contains("xcom"))
 		{
-			react("pog");
+			reazioni.add("pog");
 			
 			if (msgLowerCase.contains("icscom") || msgLowerCase.contains("xcom"))
-				react("xcom");
+				reazioni.add("xcom");
 			else
-				react("hitman");
+				reazioni.add("hitman");
 		}
 		
 		if (msgLowerCase.contains("poochyena"))
 		{
-			react("pog");
-			react("♥");
+			reazioni.add("pog");
+			reazioni.add("♥");
 		}
 		
 		if (msgLowerCase.contains("cl__z"))
@@ -276,10 +277,18 @@ public class Commands extends ListenerAdapter
 		}
 		
 		if (msgLowerCase.contains("scarab"))
-			react("scarab");
+			reazioni.add("scarab");
 		
 		if (msgLowerCase.contains("ingredibile"))
-			react("ingredibile");
+			reazioni.add("ingredibile");
+		
+		if (!reazioni.isEmpty())
+		{
+			for (String emote : reazioni)
+				react(emote);
+			
+			reazioni.clear();
+		}
 		
 		if (msgLowerCase.contains("!scf") || msgLowerCase.contains("!sassocartaoforbice"))
 			sassoCartaForbici();
