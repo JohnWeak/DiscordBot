@@ -193,7 +193,10 @@ public class Commands extends ListenerAdapter
 					
 				} // fine switch
 				
-				message.reply(camelCase(messageRaw)).queue(lambda -> react("dansgame"));
+				final String[] reazione = {"dansgame", "pigeon", "smh"};
+				final var scelta = random.nextInt(reazione.length);
+				
+				message.reply(camelCase(messageRaw)).queue(lambda -> react(reazione[scelta]));
 				
 			} // fine else
 			
