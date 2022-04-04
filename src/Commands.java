@@ -420,7 +420,7 @@ public class Commands extends ListenerAdapter
 				channel.sendMessage("**" + authorName + ", non duellerai con alcun bot all'infuori di me**").queue(m -> react("smh"));
 		}
 		else if (utenti.get(0).getDiscriminator().equals(autore))
-			channel.sendMessageEmbeds(new EmbedBuilder().setImage(link).build()).queue(m -> react("pigeon"));
+			channel.sendMessageEmbeds(new EmbedBuilder().setImage(link).setColor(0xFF0000).build()).queue(m -> react("pigeon"));
 		else
 		{
 			channel.sendMessage(authorName+" ti sfida a duello! Accetti, <@" + utenti.get(0).getId() + ">?"
