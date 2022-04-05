@@ -443,6 +443,12 @@ public class Commands extends ListenerAdapter
 	/** Permette allo sfidato di accettare il duello */
 	private void accettaDuello(boolean flag)
 	{
+		if (!duelloAttivo || sfidato == null)
+		{
+			react("pigeon");
+			return;
+		}
+		
 		var embed = new EmbedBuilder();
 		int[] valori = new int[2];
 		Card[] carte = new Card[2];
@@ -453,12 +459,6 @@ public class Commands extends ListenerAdapter
 			"Vince lo sfidato: **" + sfidato.getName() + ".**",
 			"WTF, avete pescato la stessa carta dal mazzo? Vergognatevi."
 		};
-		
-		if (!duelloAttivo || sfidato == null)
-		{
-			react("pigeon");
-			return;
-		}
 		
 		if (flag || author.getDiscriminator().equals(sfidato.getDiscriminator()))
 		{
