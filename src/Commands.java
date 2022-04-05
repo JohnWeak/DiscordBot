@@ -610,18 +610,21 @@ public class Commands extends ListenerAdapter
 				return;
 			}
 			
-			var embed = new EmbedBuilder()
-					.setTitle("Sasso Carta Forbici")
-					.addField("La tua scelta", "**"+sceltaUtente+"**", true)
-					.addField("La mia scelta", "**"+sceltaBot+"**", true)
-					.setImage(immagineGiancarlo)
-					.setFooter("Non siamo uguali.")
-					.build();
-			
-			channel.sendMessageEmbeds(embed).queue();
+			if (!sceltaUtente.equalsIgnoreCase(sceltaBot))
+			{
+				var embed = new EmbedBuilder()
+						.setTitle("Sasso Carta Forbici")
+						.addField("La tua scelta", "**" + sceltaUtente + "**", true)
+						.addField("La mia scelta", "**" + sceltaBot + "**", true)
+						.setImage(immagineGiancarlo)
+						.setFooter("Non siamo uguali.")
+						.build();
+				
+				channel.sendMessageEmbeds(embed).queue();
+			}
 			
 			if (sceltaUtente.equalsIgnoreCase(sceltaBot))
-				channel.sendMessage("Ingredibile, avete scelto entrambi **" + sceltaBot + "**! Pareggio.").queue();
+				channel.sendMessage("Ingredibile, abbiamo scelto entrambi **" + sceltaBot + "**! Pareggio.").queue();
 			else if (sceltaUtente.equalsIgnoreCase("sasso"))
 				if (sceltaBot.equalsIgnoreCase("carta"))
 					channel.sendMessage("La carta avvolge il sasso. Hai perso.").queue();
