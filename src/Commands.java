@@ -317,6 +317,9 @@ public class Commands extends ListenerAdapter
 					    "⠄⠄⠄⠄⠄⠄⠄⣿⡟⣷⠄⠹⣿⣿⣿⡿⠁⠄⠄⠄⠄⠄⠄⠄⠄";
 		}
 		
+		if (msgLowerCase.equalsIgnoreCase("cancella questo messaggio"))
+			message.delete().queue();
+			
 		if (reply)
 			message.reply(msgReply).queue();
 		
