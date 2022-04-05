@@ -602,22 +602,22 @@ public class Commands extends ListenerAdapter
 		if (listaUtenti.isEmpty()) // gioca contro il bot
 		{
 			sceltaBot = opzioni[random.nextInt(3)];
+			var sceltaUtente = msgSpezzato[1].toLowerCase(Locale.ROOT);
 			
-			if (!(msgSpezzato[1].equals("sasso") || msgSpezzato[1].equals("forbici") || msgSpezzato[1].equals("forbice") || msgSpezzato[1].equals("carta")))
+			if (!(sceltaUtente.equals("sasso") || sceltaUtente.equals("forbici") || sceltaUtente.equals("forbice") || sceltaUtente.equals("carta")))
 			{
 				channel.sendMessage("Non è una scelta valida, smh").queue(m -> react("smh"));
 				return;
 			}
 			
-			var sceltaUtente = msgSpezzato[1];
-			
 			var embed = new EmbedBuilder()
 					.setTitle("Io ho scelto " + sceltaBot)
 					.addField("Tu hai scelto", sceltaUtente, false)
 					.setImage(immagineGiancarlo)
-					.setFooter("Non siamo uguali.");
+					.setFooter("Non siamo uguali.")
+					.build();
 			
-			channel.sendMessageEmbeds(embed.build()).queue();
+			channel.sendMessageEmbeds(embed).queue();
 			
 			if (sceltaUtente.equalsIgnoreCase(sceltaBot))
 				channel.sendMessage("Ingredibile, avete scelto entrambi **" + sceltaBot + "**! Pareggio.").queue();
