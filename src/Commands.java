@@ -408,7 +408,7 @@ public class Commands extends ListenerAdapter
 		var autore = author.getDiscriminator();
 		final var link = "https://i.kym-cdn.com/photos/images/original/001/228/324/4a4.gif";
 		if (utenti.isEmpty())
-			channel.sendMessage("Devi menzionare un utente per poter duellare!").queue();
+			channel.sendMessage("Devi menzionare un utente per poter duellare!\n`!duello @utente`").queue();
 		else if (utenti.get(0).isBot())
 		{
 			if (utenti.get(0).getDiscriminator().equals("5269"))
