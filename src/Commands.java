@@ -568,11 +568,7 @@ public class Commands extends ListenerAdapter
 		message.reply(lancioMoneta).queue(m ->
 		{
 			pause(500, 500);
-			message.editMessage(finalResponso).queue(m2 ->
-			{
-				var str = headsOrTails ? "pog" : "pigeon";
-				react(str);
-			});
+			message.editMessage(finalResponso).queue(m2 -> react(headsOrTails ? "pog" : "pigeon"));
 		});
 
 	} // fine coinflip()
