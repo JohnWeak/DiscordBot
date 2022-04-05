@@ -611,8 +611,9 @@ public class Commands extends ListenerAdapter
 			}
 			
 			var embed = new EmbedBuilder()
-					.setTitle("Io ho scelto " + sceltaBot)
-					.addField("Tu hai scelto", sceltaUtente, false)
+					.setTitle("Sasso Carta Forbici")
+					.addField("La tua scelta", "**"+sceltaUtente+"**", true)
+					.addField("La mia scelta", "**"+sceltaBot+"**", true)
 					.setImage(immagineGiancarlo)
 					.setFooter("Non siamo uguali.")
 					.build();
