@@ -594,7 +594,6 @@ public class Commands extends ListenerAdapter
 			return;
 		}
 		
-		
 		if (listaUtenti.isEmpty()) // gioca contro il bot
 		{
 			sceltaBot = opzioni[random.nextInt(3)];
