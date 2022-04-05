@@ -318,7 +318,10 @@ public class Commands extends ListenerAdapter
 		}
 		
 		if (msgLowerCase.equalsIgnoreCase("cancella questo messaggio"))
+		{
+			var x = channel.getHistory();
 			message.delete().queue();
+		}
 			
 		if (reply)
 			message.reply(msgReply).queue();
