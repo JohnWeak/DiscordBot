@@ -428,9 +428,8 @@ public class Commands extends ListenerAdapter
 					                           + "\n*Per rifiutare, rispondi con* `!rifiuto`").queue();
 			setDuel(utenti.get(0));
 			//TODO: passare al metodo nuovo di sfida
+			// quale?
 		}
-		
-		
 	} // fine duelloDiCarte()
 	
 	/** Se il duello inizia, imposta le variabili "duelloAttivo", "sfidante" e "sfidato" */
@@ -475,6 +474,9 @@ public class Commands extends ListenerAdapter
 
 			valori[0] = cardSfidante.getValoreInt();
 			valori[1] = cardSfidato.getValoreInt();
+			
+			channel.sendTyping().queue();
+			pause(500, 500);
 			
 			for (int i = 0; i < 2; i++)
 			{
@@ -523,7 +525,7 @@ public class Commands extends ListenerAdapter
 	{
 		if (!duelloAttivo)
 		{
-			channel.sendMessage("Non c'è nessun duello, smh.").queue();
+			channel.sendMessage("Non c'è nessun duello, smh.").queue(lambda -> react("smh"));
 			return;
 		}
 		
@@ -533,10 +535,9 @@ public class Commands extends ListenerAdapter
 				x ? "sfidato" : "sfidante",
 				x ? "rifiuta" : "ritira");
 		
-		resetDuel();
-		
 		channel.sendMessage(messaggioRifiuto).queue();
 		
+		resetDuel();
 	} // fine rifiutaDuello()
 	
 	/** Resetta le variabili "duelloAttivo", "sfidante" e "sfidato" a false, null e null rispettivamente */
