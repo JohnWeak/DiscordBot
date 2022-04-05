@@ -485,6 +485,7 @@ public class Commands extends ListenerAdapter
 					.setImage(linkImmagine(carte[i]))
 					.setColor(coloreCarta(carte[i]))
 					.setFooter(semeCarta(carte[i]) + " " + titoloCarta(carte[i]));
+		
 				channel.sendMessageEmbeds(embed.build()).queue();
 			}
 			
