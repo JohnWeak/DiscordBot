@@ -206,6 +206,7 @@ public class Commands extends ListenerAdapter
 		switch (comando)
 		{
 			case "!coinflip", "!cf" -> coinflip();
+			case "!scf" -> sassoCartaForbici();
 			case "!poll" -> poll();
 			case "!info" -> info();
 			case "!8ball" -> eightBall();
@@ -593,8 +594,8 @@ public class Commands extends ListenerAdapter
 		{
 			var embed = new EmbedBuilder()
 				.setTitle("Sasso / Carta / Forbici")
-				.addField("Utilizzo", "Scrivi `!scf` <\"sasso\" oppure \"carta\" oppure \"forbici\">", false)
-				.setColor(0xFF0000);
+				.setColor(Color.red)
+				.addField("Utilizzo", "Scrivi `!scf` <\"sasso\" oppure \"carta\" oppure \"forbici\">", false);
 			
 			channel.sendMessageEmbeds(embed.build()).queue();
 			
@@ -612,18 +613,18 @@ public class Commands extends ListenerAdapter
 				return;
 			}
 			
-			if (!sceltaUtente.equalsIgnoreCase(sceltaBot))
-			{
-				var embed = new EmbedBuilder()
-						.setTitle("Sasso Carta Forbici")
-						.addField("La tua scelta", "**" + sceltaUtente + "**", true)
-						.addField("La mia scelta", "**" + sceltaBot + "**", true)
-						.setImage(immagineGiancarlo)
-						.setFooter("Non siamo uguali.")
-						.build();
+			sceltaUtente = capitalize(sceltaUtente);
+			sceltaBot = capitalize(sceltaBot);
 				
-				channel.sendMessageEmbeds(embed).queue();
-			}
+			var embed = new EmbedBuilder()
+				.setTitle("Sasso Carta Forbici")
+				.setColor(Color.red)
+				.addField("Tu hai scelto", "**" + sceltaUtente + "**", true)
+				.addField("Io ho scelto", "**" + sceltaBot + "**", true)
+				.setImage(immagineGiancarlo)
+				.setFooter("Non siamo uguali.")
+				.build();
+			channel.sendMessageEmbeds(embed).queue();
 			
 			if (sceltaUtente.equalsIgnoreCase(sceltaBot))
 				channel.sendMessage("Ingredibile, abbiamo scelto entrambi **" + sceltaBot + "**! Pareggio.").queue();
@@ -650,6 +651,14 @@ public class Commands extends ListenerAdapter
 		
 		
 	} // fine sassoCartaForbice()
+	
+	private String capitalize(String str)
+	{
+		if(str == null || str.isEmpty())
+			return str;
+		
+		return str.substring(0, 1).toUpperCase() + str.substring(1);
+	}
 	
 	/** Crea un oggetto di tipo Challenge e tiene conto di chi è sfidato, chi è lo sfidante e su quale gioco. */
 	private void setSfida(User sfidato, String tipoSfida)
