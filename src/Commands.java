@@ -617,7 +617,7 @@ public class Commands extends ListenerAdapter
 			sceltaBot = capitalize(sceltaBot);
 				
 			var embed = new EmbedBuilder()
-				.setTitle("Sasso Carta Forbici")
+				.setTitle("**SASSO/CARTA/FORBICI**")
 				.setColor(Color.red)
 				.addField("Tu hai scelto", "**" + sceltaUtente + "**", true)
 				.addField("Io ho scelto", "**" + sceltaBot + "**", true)
