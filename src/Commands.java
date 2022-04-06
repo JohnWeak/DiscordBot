@@ -587,7 +587,7 @@ public class Commands extends ListenerAdapter
 		var msgSpezzato = messageRaw.toLowerCase(Locale.ROOT).split(" ");
 		var listaUtenti = message.getMentionedUsers();
 		
-		if (msgSpezzato[1].isEmpty())
+		if (messageRaw.length() < 5 || msgSpezzato[1].isEmpty())
 		{
 			var embed = new EmbedBuilder()
 				.setTitle("Sasso / Carta / Forbici")
