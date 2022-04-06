@@ -652,9 +652,11 @@ public class Commands extends ListenerAdapter
 		
 	} // fine sassoCartaForbice()
 	
+	/**Prende in input una stringa e cambia la prima lettera da minuscola in maiuscola*/
 	private String capitalize(String str)
 	{
-		if(str == null || str.isEmpty())
+		// se la stringa è nulla/vuota oppure la prima lettera è già maiuscola, ignora
+		if(str == null || str.isEmpty() || str.substring(0,1).matches("[A-Z]"))
 			return str;
 		
 		return str.substring(0, 1).toUpperCase() + str.substring(1);
