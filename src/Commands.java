@@ -291,9 +291,6 @@ public class Commands extends ListenerAdapter
 			reazioni.clear();
 		}
 		
-		if (msgLowerCase.contains("!scf") || msgLowerCase.contains("!sassocartaoforbice"))
-			sassoCartaForbici();
-		
 		if (msgLowerCase.contains("russia"))
 		{
 			reply = true;
