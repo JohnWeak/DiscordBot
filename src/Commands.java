@@ -626,15 +626,19 @@ public class Commands extends ListenerAdapter
 			if (sceltaUtente.equalsIgnoreCase(sceltaBot))
 				channel.sendMessage("Ingredibile, abbiamo scelto entrambi **" + sceltaBot + "**! Pareggio.").queue();
 			else if (sceltaUtente.equalsIgnoreCase("sasso"))
+			{
 				if (sceltaBot.equalsIgnoreCase("carta"))
 					channel.sendMessage("La carta avvolge il sasso. Hai perso.").queue();
 				else
 					channel.sendMessage("Il sasso rompe le forbici. Hai vinto!").queue();
+			}
 			else if (sceltaUtente.equalsIgnoreCase("carta"))
+			{
 				if (sceltaBot.equalsIgnoreCase("forbici"))
 					channel.sendMessage("Le forbici tagliano la carta. Hai perso.").queue();
 				else
 					channel.sendMessage("La carta avvolge il sasso. Hai vinto!").queue();
+			}
 				
 				
 			return;
