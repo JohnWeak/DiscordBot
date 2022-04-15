@@ -124,11 +124,20 @@ public class Commands extends ListenerAdapter
 			message = updated.getMessage();
 			messageRaw = message.getContentRaw();
 			channel = updated.getChannel();
-
-			message.clearReactions().queue();
 		}
 		
 	} // fine identifyLatestMessage()
+	
+	/**Inserisce come reazioni tutte le emote che trova nel messaggio*/
+	private void aggiungiReazioni()
+	{
+		List<Emote> emoteList = new ArrayList<>();
+		if (message != null)
+			emoteList = message.getEmotes();
+		
+		for (Emote emote : emoteList)
+			message.addReaction(emote).queue();
+	} // fine aggiungiReazioni()
 	
 	
 	/** Controlla che il messaggio abbia le parole chiave per attivare i comandi (o le reazioni) del bot*/
@@ -321,18 +330,6 @@ public class Commands extends ListenerAdapter
 			message.reply(msgReply).queue();
 		
 	} // fine checkForKeywords()
-	
-	/**Inserisce come reazioni tutte le emote che trova nel messaggio*/
-	private void aggiungiReazioni()
-	{
-		List<Emote> emoteList = new ArrayList<>();
-		if (message != null)
-			emoteList = message.getEmotes();
-		
-		for (Emote emote : emoteList)
-			message.addReaction(emote).queue();
-	} // fine aggiungiReazioni()
-	
 	
 	/** Gestisce i comandi slash, ad esempio /duello (ancora da implementare) */
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
