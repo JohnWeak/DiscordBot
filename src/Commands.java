@@ -80,14 +80,13 @@ public class Commands extends ListenerAdapter
 	public void onMessageUpdate(@NotNull MessageUpdateEvent event)
 	{
 		identifyLatestMessage(null, event);
-		checkForKeywords(event.getMessage().getContentRaw().toLowerCase(Locale.ROOT));
+		aggiungiReazioni();
+		checkForKeywords(messageRaw.toLowerCase(Locale.ROOT));
 	} // fine onMessageUpdate()
 	
 	/** Gestisce i messaggi inviati in qualsiasi canale testuale di qualsiasi server in cui è presente il bot */
 	public void onMessageReceived(@NotNull MessageReceivedEvent event)
 	{
-		identifyLatestMessage(event, null);
-		
 		final String mockupCode = "\tString %s = \"%s\"; // in \"%s\" (%s) - %s";
 		var date = new Date();
 		var dFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
@@ -99,6 +98,8 @@ public class Commands extends ListenerAdapter
 		System.out.printf(mockupCode, authorName, messageRaw, messageChannelString, guild, dataFormattata);
 		System.out.print("\n}\r");
 		
+		identifyLatestMessage(event, null);
+		aggiungiReazioni();
 		checkForKeywords(messageRaw.toLowerCase(Locale.ROOT));
 		
 	} // fine onMessageReceived()
@@ -106,10 +107,6 @@ public class Commands extends ListenerAdapter
 	/** Questo metodo tiene conto di quale è l'ultimo messaggio che viene inviato/modificato */
 	private void identifyLatestMessage(MessageReceivedEvent received, MessageUpdateEvent updated)
 	{
-		List<Emote> emoteList = new ArrayList<>();
-		if (message != null)
-			 emoteList = message.getEmotes();
-
 		if (received != null)
 		{
 			id = received.getMessageIdLong();
@@ -129,8 +126,6 @@ public class Commands extends ListenerAdapter
 			channel = updated.getChannel();
 
 			message.clearReactions().queue();
-			for (Emote emote : emoteList)
-				message.addReaction(emote).queue();
 		}
 		
 	} // fine identifyLatestMessage()
@@ -326,6 +321,17 @@ public class Commands extends ListenerAdapter
 			message.reply(msgReply).queue();
 		
 	} // fine checkForKeywords()
+	
+	/**Inserisce come reazioni tutte le emote che trova nel messaggio*/
+	private void aggiungiReazioni()
+	{
+		List<Emote> emoteList = new ArrayList<>();
+		if (message != null)
+			emoteList = message.getEmotes();
+		
+		for (Emote emote : emoteList)
+			message.addReaction(emote).queue();
+	} // fine aggiungiReazioni()
 	
 	
 	/** Gestisce i comandi slash, ad esempio /duello (ancora da implementare) */
