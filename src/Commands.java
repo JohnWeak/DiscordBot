@@ -87,6 +87,8 @@ public class Commands extends ListenerAdapter
 	/** Gestisce i messaggi inviati in qualsiasi canale testuale di qualsiasi server in cui è presente il bot */
 	public void onMessageReceived(@NotNull MessageReceivedEvent event)
 	{
+		identifyLatestMessage(event, null);
+		
 		final String mockupCode = "\tString %s = \"%s\"; // in \"%s\" (%s) - %s";
 		var date = new Date();
 		var dFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
@@ -98,7 +100,6 @@ public class Commands extends ListenerAdapter
 		System.out.printf(mockupCode, authorName, messageRaw, messageChannelString, guild, dataFormattata);
 		System.out.print("\n}\r");
 		
-		identifyLatestMessage(event, null);
 		aggiungiReazioni();
 		checkForKeywords(messageRaw.toLowerCase(Locale.ROOT));
 		
