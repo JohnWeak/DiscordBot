@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.internal.utils.Checks;
 import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -137,7 +138,8 @@ public class Commands extends ListenerAdapter
 			emoteList = message.getEmotes();
 		
 		for (Emote emote : emoteList)
-			message.addReaction(emote).queue();
+			if (emote.isAvailable())
+				message.addReaction(emote).queue();
 	} // fine aggiungiReazioni()
 	
 	
