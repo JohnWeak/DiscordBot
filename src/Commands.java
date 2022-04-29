@@ -81,6 +81,8 @@ public class Commands extends ListenerAdapter
 	public void onMessageUpdate(@NotNull MessageUpdateEvent event)
 	{
 		identifyLatestMessage(null, event);
+		var reactions = message.getReactions();
+		
 		aggiungiReazioni();
 		checkForKeywords(messageRaw.toLowerCase(Locale.ROOT));
 	} // fine onMessageUpdate()
@@ -134,12 +136,19 @@ public class Commands extends ListenerAdapter
 	private void aggiungiReazioni()
 	{
 		List<Emote> emoteList = new ArrayList<>();
+		
 		if (message != null)
 			emoteList = message.getEmotes();
 		
 		for (Emote emote : emoteList)
-			if (emote.isAvailable())
+		{
+			try
+			{
 				message.addReaction(emote).queue();
+			}
+			catch (Exception ignored) {}
+		}
+		
 	} // fine aggiungiReazioni()
 	
 	
