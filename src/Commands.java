@@ -81,7 +81,7 @@ public class Commands extends ListenerAdapter
 	public void onMessageUpdate(@NotNull MessageUpdateEvent event)
 	{
 		identifyLatestMessage(null, event);
-		var reactions = message.getReactions();
+		//var reactions = message.getReactions();
 		
 		aggiungiReazioni();
 		checkForKeywords(messageRaw.toLowerCase(Locale.ROOT));
@@ -298,6 +298,9 @@ public class Commands extends ListenerAdapter
 		
 		if (msgLowerCase.contains("ingredibile"))
 			reazioni.add("ingredibile");
+		
+		if (msgLowerCase.contains("wtf"))
+			react("wtf");
 		
 		if (!reazioni.isEmpty())
 		{
@@ -917,6 +920,7 @@ public class Commands extends ListenerAdapter
 		final String emoteDansGame = "dansgame:848955120157720576";
 		final String emoteIngredibile = "ingredibile:593532244434485259";
 		final String[] scarab = {"leftPowerUp:785565275608842250", "scarab:847008906994778122", "rightPowerUp:785565774953709578"};
+		final String emoteWTF = "WTF:670033776524656641";
 		final int[] emoteHitman = {7, 8, 19, 12, 0, 13}; // posizioni nell'alfabeto
 		final int[] emoteXCOM = {23, 2, 14, 12}; // posizioni nell'alfabeto
 		final String[] letters =
@@ -961,6 +965,7 @@ public class Commands extends ListenerAdapter
 			case "giorno" -> emoteGiorno;
 			case "dansgame" -> emoteDansGame;
 			case "ingredibile" -> emoteIngredibile;
+			case "wtf" -> emoteWTF;
 			default -> "";
 		};
 
