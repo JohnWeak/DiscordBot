@@ -57,12 +57,9 @@ public class Commands extends ListenerAdapter
 	private static final String[] simboli = {"♥️", "♦️", "♣️", "♠️"};
 	private static String sceltaBot;
 	
-	/** onReady() viene eseguita soltanto all'avvio del bot */
-	public void onReady(@NotNull ReadyEvent event)
+	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
+	private String getSaluto()
 	{
-		String nome = event.getJDA().getSelfUser().getName();
-		Activity act = Objects.requireNonNull(event.getJDA().getPresence().getActivity());
-		Collections.addAll(utenti, nomeUtenti);
 		var c = new GregorianCalendar();
 		var saluto = "";
 		var hour = c.get(Calendar.HOUR_OF_DAY);
@@ -72,7 +69,19 @@ public class Commands extends ListenerAdapter
 			saluto = "Buon pomeriggio, ";
 		else
 			saluto = "Buonasera, ";
-			
+		
+		return saluto;
+	}
+	
+	
+	/** onReady() viene eseguita soltanto all'avvio del bot */
+	public void onReady(@NotNull ReadyEvent event)
+	{
+		String nome = event.getJDA().getSelfUser().getName();
+		Activity act = Objects.requireNonNull(event.getJDA().getPresence().getActivity());
+		Collections.addAll(utenti, nomeUtenti);
+		
+		var saluto = getSaluto();
 		
 		System.out.printf("%s si è connesso a Discord!\n\n", nome);
 		System.out.print("public class MessageHistory\n{\n");
