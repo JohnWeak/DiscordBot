@@ -81,8 +81,6 @@ public class Commands extends ListenerAdapter
 		Activity act = Objects.requireNonNull(event.getJDA().getPresence().getActivity());
 		Collections.addAll(utenti, nomeUtenti);
 		
-		var saluto = getSaluto();
-		
 		System.out.printf("%s si è connesso a Discord!\n\n", nome);
 		System.out.print("public class MessageHistory\n{\n");
 		
@@ -92,7 +90,7 @@ public class Commands extends ListenerAdapter
 		var nomeActivity = "**" + act.getName() + "**";
 		var activityTradotta = activity.equals("WATCHING") ? "guardo " : "gioco a ";
 		
-		canaleBot.sendMessage(saluto + "oggi " + activityTradotta + nomeActivity).queue();
+		canaleBot.sendMessage(getSaluto() + "oggi " + activityTradotta + nomeActivity).queue();
 	} // fine onReady()
 
 	/** Questo metodo decide cosa fare quando un messaggio viene modificato */
