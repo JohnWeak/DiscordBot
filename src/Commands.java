@@ -63,6 +63,16 @@ public class Commands extends ListenerAdapter
 		String nome = event.getJDA().getSelfUser().getName();
 		Activity act = Objects.requireNonNull(event.getJDA().getPresence().getActivity());
 		Collections.addAll(utenti, nomeUtenti);
+		var c = new GregorianCalendar();
+		var saluto = "";
+		var hour = c.get(Calendar.HOUR_OF_DAY);
+		if (hour > 6 && hour < 13)
+			saluto = "Buongiorno, ";
+		else if (hour >= 13 && hour < 18)
+			saluto = "Buon pomeriggio, ";
+		else
+			saluto = "Buonasera, ";
+			
 		
 		System.out.printf("%s si è connesso a Discord!\n\n", nome);
 		System.out.print("public class MessageHistory\n{\n");
@@ -71,10 +81,9 @@ public class Commands extends ListenerAdapter
 
 		var activity = act.getType().toString();
 		var nomeActivity = "**" + act.getName() + "**";
-		var avvio = "Salve, oggi ";
 		var activityTradotta = activity.equals("WATCHING") ? "guardo " : "gioco a ";
 		
-		canaleBot.sendMessage(avvio + activityTradotta + nomeActivity).queue();
+		canaleBot.sendMessage(saluto + "oggi " + activityTradotta + nomeActivity).queue();
 	} // fine onReady()
 
 	/** Questo metodo decide cosa fare quando un messaggio viene modificato */
