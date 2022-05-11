@@ -63,6 +63,7 @@ public class Commands extends ListenerAdapter
 		var c = new GregorianCalendar();
 		var saluto = "";
 		var hour = c.get(Calendar.HOUR_OF_DAY);
+		
 		if (hour > 6 && hour < 13)
 			saluto = "Buongiorno, ";
 		else if (hour >= 13 && hour < 18)
@@ -71,7 +72,7 @@ public class Commands extends ListenerAdapter
 			saluto = "Buonasera, ";
 		
 		return saluto;
-	}
+	} // fine getSaluto()
 	
 	
 	/** onReady() viene eseguita soltanto all'avvio del bot */
