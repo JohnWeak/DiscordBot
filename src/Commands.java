@@ -42,7 +42,7 @@ public class Commands extends ListenerAdapter
 	private static int messaggiInviati = 0;
 	private static int limite;
 	private static String authorName;
-	private static final String[] nomeUtenti = {"Òbito#2804", "Enigmo#7166", "Alex#2241", "Gion#0935", "OwO#8456"};
+	private static final String[] nomeUtenti = {"1LRosso#2804", "Enigmo#7166", "Alex#2241", "Gion#0935", "OwO#8456"};
 	private static final ArrayList<String> utenti = new ArrayList<>();
 	private static long id;
 	private static final Locale locale = Locale.ITALIAN;
