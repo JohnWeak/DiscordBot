@@ -27,7 +27,7 @@ public class Commands extends ListenerAdapter
 	private static final File nomiPkmn = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
 	private static MessageChannel channel;
-	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon", "!carta", "!duello"};
+	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon", "!carta", "!duello", "!colpevole"};
 	private static final String[] listaDescrizioni =
 	{
 		"Il bot lancerà una moneta",
@@ -36,7 +36,8 @@ public class Commands extends ListenerAdapter
 		"Chiedi un responso all'Entità Superiore: la magica palla 8.",
 		"Acchiappali tutti!",
 		"Genera una carta da gioco",
-		"Sfida un giocatore ad un duello di carte"
+		"Sfida un giocatore ad un duello di carte",
+		"Lascia che RNGesus decida la percentuale di colpevolezza di un altro utente"
 	};
 	private static int messaggiInviati = 0;
 	private static int limite;
@@ -251,6 +252,7 @@ public class Commands extends ListenerAdapter
 			case "!rifiuto" -> rifiutaDuello();
 		}
 		
+		// arraylist per contenere le reazioni da aggiungere al messaggio
 		var reazioni = new ArrayList<String>();
 		
 		if (msgLowerCase.contains("pigeon") || msgLowerCase.contains("piccione"))
@@ -319,6 +321,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("wtf"))
 			react("wtf");
 		
+		// a questo punto smetto di controllare se ci siano reazioni e le aggiungo effettivamente al messaggio
 		if (!reazioni.isEmpty())
 		{
 			for (String emote : reazioni)
@@ -352,11 +355,7 @@ public class Commands extends ListenerAdapter
 		}
 		
 		if (msgLowerCase.equalsIgnoreCase("cancella questo messaggio"))
-		{
-			var x = channel.getHistory();
-			System.out.println(x);
 			message.delete().queue();
-		}
 			
 		if (reply)
 			message.reply(msgReply).queue();
@@ -936,10 +935,10 @@ public class Commands extends ListenerAdapter
 		final String emoteGiorno = "GiOrNo:618591225582321703";
 		final String emoteDansGame = "dansgame:848955120157720576";
 		final String emoteIngredibile = "ingredibile:593532244434485259";
-		final String[] scarab = {"leftPowerUp:785565275608842250", "scarab:847008906994778122", "rightPowerUp:785565774953709578"};
+		final String[] emoteScarab = {"leftPowerUp:785565275608842250", "scarab:847008906994778122", "rightPowerUp:785565774953709578"};
 		final String emoteWTF = "WTF:670033776524656641";
-		final int[] emoteHitman = {7, 8, 19, 12, 0, 13}; // posizioni nell'alfabeto
-		final int[] emoteXCOM = {23, 2, 14, 12}; // posizioni nell'alfabeto
+		final int[] emoteHitman = {7, 8, 19, 12, 0, 13}; // posizioni lettere nell'alfabeto
+		final int[] emoteXCOM = {23, 2, 14, 12}; // posizioni lettere nell'alfabeto
 		final String[] letters =
 		{
 			"\uD83C\uDDE6", // A
@@ -1003,7 +1002,7 @@ public class Commands extends ListenerAdapter
 				channel.addReactionById(id, letters[i]).queue();
 		
 		if (emote.equals("scarab"))
-			for (String str : scarab)
+			for (String str : emoteScarab)
 				channel.addReactionById(id, str).queue();
 		
 		if (!emoteDaUsare.equals(""))
@@ -1042,8 +1041,8 @@ public class Commands extends ListenerAdapter
 			
 			var embed = new EmbedBuilder()
 				.setTitle(risposta)
-				.setColor(0xFF0000);
-//				.setFooter("", urlOwO);
+				.setColor(0xFF0000)
+				.setFooter("", urlOwO);
 			
 			channel.sendMessageEmbeds(embed.build()).queue(lambda ->
 			{
