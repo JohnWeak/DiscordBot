@@ -42,8 +42,6 @@ public class Commands extends ListenerAdapter
 	private static int messaggiInviati = 0;
 	private static int limite;
 	private static String authorName;
-	private static final String[] nomeUtenti = {"1LRosso#2804", "Enigmo#7166", "Alex#2241", "Gion#0935", "OwO#8456"};
-	private static final ArrayList<String> utenti = new ArrayList<>();
 	private static long id;
 	private static final Locale locale = Locale.ITALIAN;
 	private static Message message;
@@ -81,7 +79,6 @@ public class Commands extends ListenerAdapter
 	{
 		String nome = event.getJDA().getSelfUser().getName();
 		Activity act = Objects.requireNonNull(event.getJDA().getPresence().getActivity());
-		Collections.addAll(utenti, nomeUtenti);
 		
 		System.out.printf("%s si è connesso a Discord!\n\n", nome);
 		System.out.print("public class MessageHistory\n{\n");
@@ -206,7 +203,7 @@ public class Commands extends ListenerAdapter
 				triggera(discriminator);
 			else
 			{
-				switch(discriminator)
+				switch (discriminator)
 				{
 					case "2804" -> // Òbito
 					{
