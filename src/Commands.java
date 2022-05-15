@@ -374,6 +374,9 @@ public class Commands extends ListenerAdapter
 			msgReply += "🤚🏻\n";
 		}
 		
+		//if (msgLowerCase.contains("")) { }
+		
+		
 		if (reply)
 			message.reply(msgReply).queue();
 		
