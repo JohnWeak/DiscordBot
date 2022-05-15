@@ -354,6 +354,26 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.equalsIgnoreCase("cancella questo messaggio"))
 			message.delete().queue();
 			
+		if (msgLowerCase.contains("non vedo l'ora"))
+		{
+			reply = true;
+			var date = new GregorianCalendar();
+			var hour = date.get(Calendar.HOUR_OF_DAY);
+			var minutes = date.get(Calendar.MINUTE);
+			if (hour == 1)
+				msgReply += "È l' " + hour + ":" + minutes;
+			else
+				msgReply += "Sono le " + hour + ":" + minutes;
+			
+			msgReply += "\n";
+		}
+		
+		if (msgLowerCase.contains("dammi il 5") || msgLowerCase.contains("high five") || msgLowerCase.contains("dammi il cinque"))
+		{
+			reply = true;
+			msgReply += "🤚🏻\n";
+		}
+		
 		if (reply)
 			message.reply(msgReply).queue();
 		
