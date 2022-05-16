@@ -63,12 +63,16 @@ public class Commands extends ListenerAdapter
 		var saluto = "";
 		var hour = c.get(Calendar.HOUR_OF_DAY);
 		
-		if (hour > 6 && hour < 13)
+		if (hour > 0 && hour < 7)
+			saluto = "Buona mattina, ";
+		else if (hour >= 7 && hour < 13)
 			saluto = "Buongiorno, ";
 		else if (hour >= 13 && hour < 18)
 			saluto = "Buon pomeriggio, ";
-		else
+		else if (hour >= 18 && hour < 21)
 			saluto = "Buonasera, ";
+		else
+			saluto = "Buonanotte, ";
 		
 		return saluto;
 	} // fine getSaluto()
@@ -348,7 +352,7 @@ public class Commands extends ListenerAdapter
 					    "⣿⣿⣿⣿⣿⣿⣿⣦⡘⠿⣷⣿⠿⠟⠃⠄⠄⣠⡇⠈⠻⣿⣿⣿⣿ \n" +
 					    "⣿⣿⣿⣿⡿⠟⠋⢁⣷⣠⠄⠄⠄⠄⣀⣠⣾⡟⠄⠄⠄⠄⠉⠙⠻ \n" +
 					    "⡿⠟⠋⠁⠄⠄⠄⢸⣿⣿⡯⢓⣴⣾⣿⣿⡟⠄⠄⠄⠄⠄⠄⠄⠄ \n" +
-					    "⠄⠄⠄⠄⠄⠄⠄⣿⡟⣷⠄⠹⣿⣿⣿⡿⠁⠄⠄⠄⠄⠄⠄⠄⠄";
+					    "⠄⠄⠄⠄⠄⠄⠄⣿⡟⣷⠄⠹⣿⣿⣿⡿⠁⠄⠄⠄⠄⠄⠄⠄⠄ \n";
 		}
 		
 		if (msgLowerCase.equalsIgnoreCase("cancella questo messaggio"))
