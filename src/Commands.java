@@ -319,7 +319,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("ingredibile"))
 			reazioni.add("ingredibile");
 		
-		if (msgLowerCase.contains("wtf"))
+		if (msgLowerCase.contains("wtf") || msgLowerCase.contains("what the fuck"))
 			react("wtf");
 		
 		// a questo punto smetto di controllare se ci siano reazioni e le aggiungo effettivamente al messaggio
@@ -401,19 +401,17 @@ public class Commands extends ListenerAdapter
 		}
 		
 		//if (msgLowerCase.contains("")) { }
-		
-		
+	
 		
 		if (reply)
 			message.reply(msgReply).queue();
 		
 	} // fine checkForKeywords()
 	
-	/** Gestisce i comandi slash, ad esempio /duello (ancora da implementare) */
+	/** Gestisce i comandi slash (ancora da implementare) */
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
 	{
-		if (event.getName().equals("test"))
-			message.reply("Enigmo vergognati").queue(l -> react("vergogna"));
+		// ???
 
 	} // fine onSlashCommand()
 
