@@ -355,8 +355,17 @@ public class Commands extends ListenerAdapter
 					    "⠄⠄⠄⠄⠄⠄⠄⣿⡟⣷⠄⠹⣿⣿⣿⡿⠁⠄⠄⠄⠄⠄⠄⠄⠄ \n";
 		}
 		
-		if (msgLowerCase.equalsIgnoreCase("cancella questo messaggio"))
-			message.delete().queue();
+		if (msgLowerCase.equals("cancella questo messaggio"))
+		{
+			if (random.nextInt(50) == 42)
+				message.reply("No").queue(l -> react("getrekt"));
+			else
+			{
+				channel.sendTyping().queue();
+				pause(500, 500);
+				message.delete().queue();
+			}
+		}
 			
 		if (msgLowerCase.contains("non vedo l'ora"))
 		{
@@ -364,6 +373,7 @@ public class Commands extends ListenerAdapter
 			var date = new GregorianCalendar();
 			var hour = date.get(Calendar.HOUR_OF_DAY);
 			var minutes = date.get(Calendar.MINUTE);
+			
 			if (hour == 0)
 				msgReply = "È ";
 			else if (hour == 1)
@@ -371,7 +381,21 @@ public class Commands extends ListenerAdapter
 			else
 				msgReply += "Sono le ";
 			
-			msgReply += hour + ":" + minutes + "\n";
+			if (random.nextInt(2) == 0)
+				msgReply += hour + ":" + minutes + "\n";
+			else
+			{
+				var orario = new Ore(hour, minutes);
+				
+				msgReply += orario.getOra();
+				
+				if (minutes == 0)
+					msgReply += "";
+				else if (minutes == 1)
+					msgReply += " e uno";
+				else
+					msgReply += "e " + orario.getMinuti();
+			}
 		}
 		
 		if (msgLowerCase.contains("dammi il 5") || msgLowerCase.contains("high five") || msgLowerCase.contains("dammi il cinque"))
@@ -381,6 +405,7 @@ public class Commands extends ListenerAdapter
 		}
 		
 		//if (msgLowerCase.contains("")) { }
+		
 		
 		
 		if (reply)
