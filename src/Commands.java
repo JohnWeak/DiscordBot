@@ -394,6 +394,15 @@ public class Commands extends ListenerAdapter
 			}
 		}
 		
+		if (msgLowerCase.contains("ciao"))
+		{
+			final int bound = 1000;
+			if (random.nextInt(bound) < bound-1)
+				message.reply("Ciao anche a te").queue();
+			else
+				message.reply("No, vaffanculo").queue();
+		}
+		
 		if (msgLowerCase.contains("dammi il 5") || msgLowerCase.contains("high five") || msgLowerCase.contains("dammi il cinque"))
 		{
 			reply = true;
