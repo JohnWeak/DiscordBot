@@ -360,11 +360,7 @@ public class Commands extends ListenerAdapter
 			if (random.nextInt(50) == 42)
 				message.reply("No").queue(l -> react("getrekt"));
 			else
-			{
-				channel.sendTyping().queue();
-				pause(500, 500);
 				message.delete().queue();
-			}
 		}
 			
 		if (msgLowerCase.contains("non vedo l'ora"))
