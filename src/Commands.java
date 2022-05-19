@@ -396,7 +396,7 @@ public class Commands extends ListenerAdapter
 		
 		if (msgLowerCase.contains("ciao"))
 		{
-			final int bound = 1000;
+			final int bound = 100;
 			if (random.nextInt(bound) < bound-1)
 				message.reply("Ciao anche a te").queue();
 			else
