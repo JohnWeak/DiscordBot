@@ -394,13 +394,20 @@ public class Commands extends ListenerAdapter
 			}
 		}
 		
-		if (msgLowerCase.contains("ciao"))
+		final String[] saluti = {"ciao", "buondì", "saluti", "distinti saluti", "buongiorno", "buon pomeriggio", "buonasera", "salve"};
+		boolean flag = true;
+		for (String s : saluti)
 		{
-			final int bound = 100;
-			if (random.nextInt(bound) < bound-1)
-				message.reply("Ciao anche a te").queue();
-			else
-				message.reply("No, vaffanculo").queue();
+			if (flag && msgLowerCase.contains(s))
+			{
+				flag = false;
+				final int bound = 100;
+				if (random.nextInt(bound) < bound - 1)
+					message.reply(getSaluto() + " anche a te").queue();
+				else
+					message.reply("No, vaffanculo >:(").queue();
+			}
+			
 		}
 		
 		if (msgLowerCase.contains("dammi il 5") || msgLowerCase.contains("high five") || msgLowerCase.contains("dammi il cinque"))
