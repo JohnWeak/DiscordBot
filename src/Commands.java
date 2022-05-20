@@ -69,7 +69,7 @@ public class Commands extends ListenerAdapter
 			saluto = "Buongiorno";
 		else if (hour >= 13 && hour < 18)
 			saluto = "Buon pomeriggio";
-		else if (hour >= 18 && hour < 21)
+		else if (hour >= 18 && hour < 23)
 			saluto = "Buonasera";
 		else
 			saluto = "Buonanotte";
