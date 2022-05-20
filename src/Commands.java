@@ -390,7 +390,7 @@ public class Commands extends ListenerAdapter
 				else if (minutes == 1)
 					msgReply += " e uno";
 				else
-					msgReply += "e " + orario.getMinuti();
+					msgReply += " e " + orario.getMinuti();
 			}
 		}
 		
