@@ -386,7 +386,7 @@ public class Commands extends ListenerAdapter
 				msgReply += orario.getOra();
 				
 				if (minutes == 0)
-					msgReply += "";
+					msgReply += ""; //
 				else if (minutes == 1)
 					msgReply += " e uno";
 				else
