@@ -64,15 +64,15 @@ public class Commands extends ListenerAdapter
 		var hour = c.get(Calendar.HOUR_OF_DAY);
 		
 		if (hour > 0 && hour < 7)
-			saluto = "Buona mattina, ";
+			saluto = "Buona mattina";
 		else if (hour >= 7 && hour < 13)
-			saluto = "Buongiorno, ";
+			saluto = "Buongiorno";
 		else if (hour >= 13 && hour < 18)
-			saluto = "Buon pomeriggio, ";
+			saluto = "Buon pomeriggio";
 		else if (hour >= 18 && hour < 21)
-			saluto = "Buonasera, ";
+			saluto = "Buonasera";
 		else
-			saluto = "Buonanotte, ";
+			saluto = "Buonanotte";
 		
 		return saluto;
 	} // fine getSaluto()
@@ -93,7 +93,7 @@ public class Commands extends ListenerAdapter
 		var nomeActivity = "**" + act.getName() + "**";
 		var activityTradotta = activity.equals("WATCHING") ? "guardo " : "gioco a ";
 		
-		canaleBot.sendMessage(getSaluto() + "oggi " + activityTradotta + nomeActivity).queue();
+		canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
 	} // fine onReady()
 
 	/** Questo metodo decide cosa fare quando un messaggio viene modificato */
@@ -358,7 +358,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.equals("cancella questo messaggio"))
 		{
 			if (random.nextInt(50) == 42)
-				message.reply("No").queue(l -> react("getrekt"));
+				message.reply("No.").queue(l -> react("getrekt"));
 			else
 				message.delete().queue();
 		}
