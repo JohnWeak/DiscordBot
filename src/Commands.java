@@ -415,7 +415,7 @@ public class Commands extends ListenerAdapter
 			msgReply += "🤚🏻\n";
 		}
 		
-		if (msgLowerCase.contains("grazie"))
+		if (msgLowerCase.contains("grazie") && random.nextInt(50) == 42)
 		{
 			reply = true;
 			msgReply += "Grazie, graziella e grazie al cazzo\n";
