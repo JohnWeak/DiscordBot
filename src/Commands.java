@@ -401,7 +401,7 @@ public class Commands extends ListenerAdapter
 			if (flag && msgLowerCase.contains(s))
 			{
 				flag = false;
-				final int bound = 100;
+				final int bound = 1000;
 				if (random.nextInt(bound) < bound - 1)
 					message.reply(getSaluto() + " anche a te").queue();
 				else
