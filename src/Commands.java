@@ -1257,7 +1257,7 @@ public class Commands extends ListenerAdapter
 					
 					Pokemon pokemon;
 					
-					if (!msg[2].isEmpty() && msg[2].equalsIgnoreCase("shiny"))
+					if (!msg[2].isEmpty() && (msg[2].equalsIgnoreCase("shiny") || msg[2].equalsIgnoreCase("s")))
 						pokemon = new Pokemon(nome, description, true);
 					else
 						pokemon = new Pokemon(nome, description, false);
