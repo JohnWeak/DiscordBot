@@ -1162,7 +1162,7 @@ public class Commands extends ListenerAdapter
 		embedBuilder.setThumbnail(urlOwO);
 		embedBuilder.setColor(0xFF0000);
 		embedBuilder.addBlankField(false);
-		embedBuilder.setFooter("Creato con ❤ da JohnWeak", urlOwO);
+		embedBuilder.setFooter("Creato con ❤️ da JohnWeak", urlOwO);
 		
 		MessageEmbed embed = embedBuilder.build();
 		channel.sendMessageEmbeds(embed).queue();
@@ -1172,30 +1172,26 @@ public class Commands extends ListenerAdapter
 	/** Genera un responso usando la magica palla 8 */
 	public void eightBall()
 	{
-		final String ballResponse = "🎱 says... ";
+		final String ballResponse = "🎱 afferma... ";
 		final String[] risposte =
 		{
-			"Yes",
-			"It is certain.",
-			"It is decidedly so.",
-			"Without a doubt.",
-			"Yes definitely.",
-			"You may rely on it.",
-			"As I see it, yes.",
-			"Most likely.",
-			"Outlook good.",
-			"Yes.",
-			"Signs point to yes.",
-			"Reply hazy, try again.",
-			"Ask again later.",
-			"Better not tell you now.",
-			"Cannot predict now.",
-			"Concentrate and ask again.",
-			"Don't count on it.",
-			"My reply is no.",
-			"My sources say no.",
-			"Outlook not so good.",
-			"Very doubtful."
+			"Sì.",
+			"È certo.",
+			"È decisamente un sì.",
+			"Senza dubbio.",
+			"Sì, assolutamente.",
+			"Puoi contarci.",
+			"Per come la vedo io, sì.",
+			"Molto probabile.",
+			"Il responso è positivo.",
+			"I segni presagiscono di sì.",
+			"Non ci contare.",
+			"La mia risposta è no.",
+			"Le mie fonti dicono di no.",
+			"Il responso non è favorevole.",
+			"Ci sono molti dubbi al riguardo.",
+			"Gli astri non ti sorridono",
+			"No."
 		};
 
 		channel.sendTyping().queue();
@@ -1204,7 +1200,7 @@ public class Commands extends ListenerAdapter
 
 		message.reply(ballResponse).queue(message1 ->
 		{
-			pause(-1,-1);
+			pause(-1,1500);
 			message1.editMessage(ballResponse+"**"+risposte[random.nextInt(risposte.length)]+"**").queue();
 		});
 		
@@ -1251,19 +1247,20 @@ public class Commands extends ListenerAdapter
 					JSONArray evoLine = (JSONArray) family.get("evolutionLine");
 
 					for (int i = 0; i < types.size(); i++)
-					{
 						tipo[i] = types.get(i).toString();
-					}
 
 					generazione = String.valueOf(jsonObject.get("gen"));
 					numeroPokedex = (String) jsonObject.get("number");
 
 					for (int i = 0; i < evoLine.size(); i++)
-					{
 						lineaEvolutiva[i] = evoLine.get(i).toString();
-					}
-
-					var pokemon = new Pokemon(nome, description, false);
+					
+					Pokemon pokemon;
+					
+					if (!msg[2].isEmpty() && msg[2].equalsIgnoreCase("shiny"))
+						pokemon = new Pokemon(nome, description, true);
+					else
+						pokemon = new Pokemon(nome, description, false);
 
 					pokemon.setTipo(tipo);
 					pokemon.setGenerazione(generazione);
@@ -1281,7 +1278,7 @@ public class Commands extends ListenerAdapter
 				}
 			}
 			else
-				channel.sendMessage("Usa `!pokemon <nome>` per cercare un Pokemon").queue();
+				channel.sendMessage("Usa `!pokemon <nome> [shiny]` per cercare un Pokemon").queue();
 			
 		}
 		else
@@ -1302,8 +1299,8 @@ public class Commands extends ListenerAdapter
 		EmbedBuilder embedBuilder;
 		String[] nomi = {pokemon.getNome(), ""};
 		final var titolo = "A wild " + pokemon.getNome() + " appears!";
-		embedBuilder = buildEmbed(pokemon, false);
-		embedBuilder.setTitle(titolo);
+		embedBuilder = buildEmbed(pokemon, false)
+			.setTitle(titolo);
 		channel.sendTyping().queue();
 		pause(500, 500);
 
