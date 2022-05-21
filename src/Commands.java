@@ -1223,7 +1223,7 @@ public class Commands extends ListenerAdapter
 	/** Cerca un Pokemon nell'API. Se non lo trova mostra un messaggio di errore. */
 	public void pokemon()
 	{
-		String[] msg = messageRaw.split(" ");
+		String[] msg = messageRaw.toLowerCase(Locale.ROOT).split(" ");
 
 		if (messageRaw.contains("!pokemon"))
 		{
@@ -1278,7 +1278,7 @@ public class Commands extends ListenerAdapter
 				}
 			}
 			else
-				channel.sendMessage("Usa `!pokemon <nome> [shiny]` per cercare un Pokemon").queue();
+				channel.sendMessage("Usa `!pokemon <nome> [shiny / s]` per cercare un Pokemon").queue();
 			
 		}
 		else
@@ -1299,8 +1299,7 @@ public class Commands extends ListenerAdapter
 		EmbedBuilder embedBuilder;
 		String[] nomi = {pokemon.getNome(), ""};
 		final var titolo = "A wild " + pokemon.getNome() + " appears!";
-		embedBuilder = buildEmbed(pokemon, false)
-			.setTitle(titolo);
+		embedBuilder = buildEmbed(pokemon, false).setTitle(titolo);
 		channel.sendTyping().queue();
 		pause(500, 500);
 
