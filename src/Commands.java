@@ -407,7 +407,6 @@ public class Commands extends ListenerAdapter
 				else
 					message.reply("No, vaffanculo >:(").queue();
 			}
-			
 		}
 		
 		if (msgLowerCase.contains("dammi il 5") || msgLowerCase.contains("high five") || msgLowerCase.contains("dammi il cinque"))
