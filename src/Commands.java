@@ -2,12 +2,12 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.internal.utils.Checks;
+
 import org.jetbrains.annotations.NotNull;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -55,6 +55,7 @@ public class Commands extends ListenerAdapter
 	private static User sfidato = null;
 	private static final String[] simboli = {"♥️", "♦️", "♣️", "♠️"};
 	private static String sceltaBot;
+	private static TextChannel canaleBotPokemon;
 	
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
 	private String getSaluto()
@@ -62,14 +63,22 @@ public class Commands extends ListenerAdapter
 		var c = new GregorianCalendar();
 		var saluto = "";
 		var hour = c.get(Calendar.HOUR_OF_DAY);
+		var x = c.get(Calendar.MONTH);
+		short tramonto;
+		
+		switch (c.get(Calendar.MONTH)) // se è estate, il tramonto avviene più tardi
+		{
+			case 4, 5, 6, 7 -> tramonto = 20;
+			default -> tramonto = 17;
+		}
 		
 		if (hour > 0 && hour < 7)
 			saluto = "Buona mattina";
 		else if (hour >= 7 && hour < 13)
 			saluto = "Buongiorno";
-		else if (hour >= 13 && hour < 18)
+		else if (hour >= 13 && hour < tramonto)
 			saluto = "Buon pomeriggio";
-		else if (hour >= 18 && hour < 23)
+		else if (hour >= tramonto && hour < 23)
 			saluto = "Buonasera";
 		else
 			saluto = "Buonanotte";
@@ -88,7 +97,8 @@ public class Commands extends ListenerAdapter
 		System.out.print("public class MessageHistory\n{\n");
 		
 		var canaleBot = event.getJDA().getTextChannelsByName("\uD83E\uDD16bot-owo", true).get(0);
-
+		canaleBotPokemon = event.getJDA().getTextChannelsByName("pokémowon", true).get(0);
+		
 		var activity = act.getType().toString();
 		var nomeActivity = "**" + act.getName() + "**";
 		var activityTradotta = activity.equals("WATCHING") ? "guardo " : "gioco a ";
@@ -1357,7 +1367,7 @@ public class Commands extends ListenerAdapter
 	/** Manda il messaggio con i Pokemon nel canale e aggiunge le reazioni like/dislike al messaggio */
 	private void sendMessage(String[] pokemonNames, EmbedBuilder embedBuilder)
 	{
-		channel.sendMessageEmbeds(embedBuilder.build()).queue((message ->
+		canaleBotPokemon.sendMessageEmbeds(embedBuilder.build()).queue((message ->
 		{
 			try
 			{
