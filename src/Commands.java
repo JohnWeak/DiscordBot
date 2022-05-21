@@ -416,6 +416,12 @@ public class Commands extends ListenerAdapter
 			msgReply += "🤚🏻\n";
 		}
 		
+		if (msgLowerCase.contains("grazie"))
+		{
+			reply = true;
+			msgReply += "Grazie, graziella e grazie al cazzo\n";
+		}
+		
 		//if (msgLowerCase.contains("")) { }
 	
 		
