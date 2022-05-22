@@ -1275,7 +1275,7 @@ public class Commands extends ListenerAdapter
 				catch (IndexOutOfBoundsException e)
 				{
 					final String testo = "Il Pokedex non ha informazioni riguardo `" + nome + "`.";
-					channel.sendMessage(testo).queue();
+					channel.sendMessage(testo + "\n" + e).queue();
 				}
 			}
 			else
