@@ -1236,7 +1236,7 @@ public class Commands extends ListenerAdapter
 			if (msg.length > 1 && !msg[1].isEmpty())
 			{
 				String nome = msg[1];
-				channel.sendTyping().queue();
+				canaleBotPokemon.sendTyping().queue();
 				JSONArray jsonArray = search(nome);
 
 				try
@@ -1268,9 +1268,9 @@ public class Commands extends ListenerAdapter
 					pokemon.setDexNumber(numeroPokedex);
 					pokemon.setLineaEvolutiva(lineaEvolutiva);
 
-					channel.sendTyping().queue();
+					canaleBotPokemon.sendTyping().queue();
 					pause(1000, 500);
-					channel.sendMessageEmbeds(buildEmbed(pokemon, true).build()).queue();
+					canaleBotPokemon.sendMessageEmbeds(buildEmbed(pokemon, true).build()).queue();
 				}
 				catch (IndexOutOfBoundsException e)
 				{
@@ -1301,7 +1301,7 @@ public class Commands extends ListenerAdapter
 		String[] nomi = {pokemon.getNome(), ""};
 		final var titolo = "A wild " + pokemon.getNome() + " appears!";
 		embedBuilder = buildEmbed(pokemon, false).setTitle(titolo);
-		channel.sendTyping().queue();
+		canaleBotPokemon.sendTyping().queue();
 		pause(500, 500);
 
 		sendMessage(nomi, embedBuilder);
