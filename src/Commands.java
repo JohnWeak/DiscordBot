@@ -1322,11 +1322,11 @@ public class Commands extends ListenerAdapter
 			while (scanner.hasNext())
 				if (pokemon.equalsIgnoreCase(scanner.nextLine()))
 				{
-					HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+					var connection = (HttpURLConnection) url.openConnection();
 					connection.setRequestProperty("Accept", "application/json");
 					
-					BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-					StringBuilder response = new StringBuilder();
+					var in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+					var response = new StringBuilder();
 					String inputLine;
 					while ((inputLine = in.readLine()) != null)
 							response.append(inputLine);

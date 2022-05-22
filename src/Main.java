@@ -35,7 +35,7 @@ public class Main
 			"Subnautica", "OneShot", "Child of Light", "Ghost Trick: Phantom Detective", "XCOM 2",
 			"Papers, Please", "Celeste", "The Stanley Parable", "To The Moon", "GTA: San Andreas",
 			"Fallout: New Vegas", "Half-Life 2", "Divinity: Original Sin 2", "Dark Souls", "Hollow Knight",
-			"Celeste", "Total War: Shogun 2"
+			"Celeste", "Total War: Shogun 2", "Lawn Moving Simulator"
 		};
 		
 		final String[] anime =
@@ -84,7 +84,7 @@ public class Main
 			giocoScelto = games[random.nextInt(games.length)];
 			activity = Activity.playing(giocoScelto);
 		}
-		else // easter egg: 96-100
+		else // easter egg: 96-99
 		{
 			easterEggScelto = easterEgg[random.nextInt(easterEgg.length)];
 			activity = Activity.watching(easterEggScelto);
