@@ -1172,19 +1172,18 @@ public class Commands extends ListenerAdapter
 	/** Genera un responso usando la magica palla 8 */
 	public void eightBall()
 	{
-		final String ballResponse = "🎱 afferma... ";
+		final String ballResponse = "La 🎱 dichiara... ";
 		final String[] risposte =
 		{
 			"Sì.",
 			"È certo.",
 			"È decisamente un sì.",
 			"Senza dubbio.",
-			"Sì, assolutamente.",
 			"Puoi contarci.",
-			"Per come la vedo io, sì.",
 			"Molto probabile.",
 			"Il responso è positivo.",
 			"I segni presagiscono di sì.",
+			"Il presagio non è né positivo né negativo",
 			"Non ci contare.",
 			"La mia risposta è no.",
 			"Le mie fonti dicono di no.",
@@ -1200,8 +1199,9 @@ public class Commands extends ListenerAdapter
 
 		message.reply(ballResponse).queue(message1 ->
 		{
+			String newResponse = "La 🎱 dichiara: ";
 			pause(-1,1500);
-			message1.editMessage(ballResponse+"**"+risposte[random.nextInt(risposte.length)]+"**").queue();
+			message1.editMessage(newResponse+"**"+risposte[random.nextInt(risposte.length)]+"**").queue();
 		});
 		
 	} // fine eightBall()
@@ -1223,9 +1223,10 @@ public class Commands extends ListenerAdapter
 	/** Cerca un Pokemon nell'API. Se non lo trova mostra un messaggio di errore. */
 	public void pokemon()
 	{
-		String[] msg = messageRaw.toLowerCase(Locale.ROOT).split(" ");
+		String msgLowercase = messageRaw.toLowerCase(Locale.ROOT);
+		String[] msg = msgLowercase.split(" ");
 
-		if (messageRaw.contains("!pokemon"))
+		if (msgLowercase.contains("!pokemon"))
 		{
 			String[] tipo = {" ", " "};
 			String generazione;
@@ -1257,7 +1258,7 @@ public class Commands extends ListenerAdapter
 					
 					Pokemon pokemon;
 					
-					if (!msg[2].isEmpty() && (msg[2].equalsIgnoreCase("shiny") || msg[2].equalsIgnoreCase("s")))
+					if (!msg[2].isEmpty() && (msg[2].equals("shiny") || msg[2].equals("s")))
 						pokemon = new Pokemon(nome, description, true);
 					else
 						pokemon = new Pokemon(nome, description, false);
@@ -1346,7 +1347,7 @@ public class Commands extends ListenerAdapter
 		String[] titolo = {"Primo Pokemon!", "Secondo Pokemon!"};
 		Pokemon[] pokemons = {uno, due};
 		var nomi = new String[] { uno.getNome(), due.getNome() };
-		channel.sendMessage("Doppio Incontro!").queue();
+		canaleBotPokemon.sendMessage("Doppio Incontro!").queue();
 		
 		for (int i = 0; i < 2; i++)
 		{

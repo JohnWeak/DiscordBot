@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Pokemon
 {
-	private final static int max = 898; // pokedex completo
+	private final static int max = 898; // fino a gen 8
 	private static final File nomiPokemon = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
 
@@ -89,6 +89,7 @@ public class Pokemon
 	{
 		if (id <= 0)
 			id = random.nextInt(max)+1;
+		
 		Scanner scanner;
 		String[] risultato = new String[2];
 		
@@ -118,7 +119,7 @@ public class Pokemon
 	
 	private void shiny()
 	{
-		if (new Random().nextInt(8192) == 42)
+		if (random.nextInt(8192) == 42)
 			shiny = true;
 	}
 	
