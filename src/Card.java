@@ -57,10 +57,11 @@ public class Card
 	{
 		return switch (seme)
 		{
-			case "Cuori" -> 50;
-			case "Quadri" -> 49;
-			case "Fiori" -> 48;
-			case "Picche" -> 47;
+			case "Cuori" -> 45;
+			case "Quadri" -> 44;
+			case "Fiori" -> 43;
+			case "Picche" -> 42;
+			
 			default -> -1;
 		};
 	}
@@ -72,8 +73,11 @@ public class Card
 	{
 		return switch (valore)
 		{
-			case "Asso" -> 11;
-			case "Jack", "Regina", "Re" -> 10;
+			case "Asso" -> 14;
+			case "Re" -> 13;
+			case "Regina" -> 12;
+			case "Jack" -> 11;
+			
 			default -> Integer.parseInt(valore);
 		};
 	}

@@ -669,7 +669,7 @@ public class Commands extends ListenerAdapter
 	{
 		final String testaEmote = "<:pogey:733659301645910038>";
 		final String croceEmote = "<:pigeon:647556750962065418>";
-		String lancioMoneta = authorName+" lancia una moneta...";
+		String lancioMoneta = authorName + " lancia una moneta...";
 
 		var headsOrTails = random.nextBoolean();
 		var responso = lancioMoneta+"\n**È uscito** ";
