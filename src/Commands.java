@@ -1419,7 +1419,8 @@ public class Commands extends ListenerAdapter
 				stringBuilder.append(" doesn't evolve.");
 			}
 			lineaEvolutiva = String.valueOf(stringBuilder);
-			embedBuilder.setFooter(""+lineaEvolutiva, "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F5%2F53%2FPok%25C3%25A9_Ball_icon.svg%2F1026px-Pok%25C3%25A9_Ball_icon.svg.png&f=1&nofb=1");
+			final String iconURL = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F5%2F53%2FPok%25C3%25A9_Ball_icon.svg%2F1026px-Pok%25C3%25A9_Ball_icon.svg.png&f=1&nofb=1";
+			embedBuilder.setFooter(""+lineaEvolutiva, ""+iconURL);
 
 		}
 		embedBuilder.setTitle(pokemon.getNome().toUpperCase());
