@@ -1101,7 +1101,7 @@ public class Commands extends ListenerAdapter
 		if (utenteTaggato.isEmpty())
 			channel.sendMessage("Per questo comando è necessario taggare un utente.").queue();
 		else if (utenteTaggato.get(0).getDiscriminator().equals(author.getDiscriminator()))
-			react("pigeon");
+			message.reply("Congratulazioni, sei colpevole.").queue(lambda -> react("pigeon"));
 		else
 		{
 			final int colpa = random.nextInt(100) + 1;
@@ -1183,13 +1183,13 @@ public class Commands extends ListenerAdapter
 			"Molto probabile.",
 			"Il responso è positivo.",
 			"I segni presagiscono di sì.",
-			"Il presagio non è né positivo né negativo",
+			"Il presagio non è né positivo né negativo.",
 			"Non ci contare.",
 			"La mia risposta è no.",
 			"Le mie fonti dicono di no.",
 			"Il responso non è favorevole.",
 			"Ci sono molti dubbi al riguardo.",
-			"Gli astri non ti sorridono",
+			"Gli astri non ti sorridono.",
 			"No."
 		};
 
