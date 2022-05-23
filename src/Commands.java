@@ -370,7 +370,11 @@ public class Commands extends ListenerAdapter
 			if (random.nextInt(50) == 42)
 				message.reply("No.").queue(l -> react("getrekt"));
 			else
+			{
+				channel.sendTyping().queue();
+				pause(500, -1);
 				message.delete().queue();
+			}
 		}
 			
 		if (msgLowerCase.contains("non vedo l'ora"))
@@ -431,8 +435,13 @@ public class Commands extends ListenerAdapter
 			msgReply += "Grazie, graziella e grazie al cazzo\n";
 		}
 		
-		//if (msgLowerCase.contains("")) { }
-	
+		if (msgLowerCase.equals("cosa") && random.nextInt(20) == 1)
+		{
+			reply = true;
+			msgReply += "La pantera rosa";
+		}
+		
+		//if (msgLowerCase.contains("") && random.nextInt(42) == 0){}
 		
 		if (reply)
 			message.reply(msgReply).queue();
