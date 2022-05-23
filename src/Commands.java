@@ -1256,13 +1256,10 @@ public class Commands extends ListenerAdapter
 					for (int i = 0; i < evoLine.size(); i++)
 						lineaEvolutiva[i] = evoLine.get(i).toString();
 					
-					Pokemon pokemon;
-					
-					if (!msg[2].isEmpty() && (msg[2].equals("shiny") || msg[2].equals("s")))
-						pokemon = new Pokemon(nome, description, true);
-					else
-						pokemon = new Pokemon(nome, description, false);
+					boolean flag = !msg[2].isEmpty() && (msg[2].equals("shiny") || msg[2].equals("s"));
 
+					var pokemon = new Pokemon(nome, description, flag);
+					
 					pokemon.setTipo(tipo);
 					pokemon.setGenerazione(generazione);
 					pokemon.setDexNumber(numeroPokedex);
