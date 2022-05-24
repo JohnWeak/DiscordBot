@@ -1282,6 +1282,7 @@ public class Commands extends ListenerAdapter
 				{
 					final String testo = "Il Pokedex non ha informazioni riguardo `" + nome + "`.";
 					channel.sendMessage(testo + "\n" + e).queue();
+					e.printStackTrace();
 				}
 			}
 			else
