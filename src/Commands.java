@@ -1266,7 +1266,6 @@ public class Commands extends ListenerAdapter
 						lineaEvolutiva[i] = evoLine.get(i).toString();
 					
 					boolean flag = (msg.length > 2) && (msg[2].equals("shiny") || msg[2].equals("s"));
-					
 					var pokemon = new Pokemon(nome, description, flag);
 					
 					pokemon.setTipo(tipo);
@@ -1450,17 +1449,12 @@ public class Commands extends ListenerAdapter
 		{
 			embedBuilder.setImage(pokemon.getImg());
 		}
-
+		
+		var color = pokemon.isShiny() ? 0xFFD020 : 0xFF0000;
+		embedBuilder.setColor(color);
+		
 		if (pokemon.isShiny())
-		{
-			embedBuilder.setColor(Color.YELLOW);
 			embedBuilder.setFooter("✨ Shiny! ✨");
-		}
-		else
-		{
-			embedBuilder.setColor(Color.RED);
-		}
-
 
 		return embedBuilder;
 	} // fine buildEmbed()
