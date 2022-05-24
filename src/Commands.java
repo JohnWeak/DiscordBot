@@ -1265,7 +1265,12 @@ public class Commands extends ListenerAdapter
 					for (int i = 0; i < evoLine.size(); i++)
 						lineaEvolutiva[i] = evoLine.get(i).toString();
 					
-					boolean flag = !msg[2].isEmpty() && (msg[2].equals("shiny") || msg[2].equals("s"));
+					boolean flag = false;
+					if (!msg[2].isEmpty())
+					{
+						if (msg[2].equals("shiny") || msg[2].equals("s"))
+							flag = true;
+					}
 
 					var pokemon = new Pokemon(nome, description, flag);
 					
@@ -1274,9 +1279,9 @@ public class Commands extends ListenerAdapter
 					pokemon.setDexNumber(numeroPokedex);
 					pokemon.setLineaEvolutiva(lineaEvolutiva);
 
-					canaleBotPokemon.sendTyping().queue();
+					channel.sendTyping().queue();
 					pause(1000, 500);
-					canaleBotPokemon.sendMessageEmbeds(buildEmbed(pokemon, true).build()).queue();
+					channel.sendMessageEmbeds(buildEmbed(pokemon, true).build()).queue();
 				}
 				catch (IndexOutOfBoundsException e)
 				{
