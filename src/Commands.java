@@ -1513,7 +1513,7 @@ public class Commands extends ListenerAdapter
 	{
 		int anno = currentYear;
 		var msg = messageRaw.toLowerCase().split(" ");
-		if (msg.length >= 1)
+		if (msg.length > 1)
 			try
 			{
 				anno = Integer.parseInt(msg[1]);
