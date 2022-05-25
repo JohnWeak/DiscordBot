@@ -1565,17 +1565,23 @@ public class Commands extends ListenerAdapter
 			var x = (String) (objs).get(0).get("date");
 			var y = x.split("T")[0].split("-");
 			var data = y[2] + " " + getMese(Integer.parseInt(y[1])) + " "+ y[0];
-			
-			System.out.println("Negli Stati Uniti ci sono state " + jsonArray.size() + " sparatorie nel " + anno + ".\n");
-			System.out.println("La più recente è avvenuta il " + data + " in " + citta + ", " + stato);
-			if (Integer.parseInt(morti) > 0)
-				System.out.println("Sono morte " + morti + " persone.");
+
+			final var sparatorie = "Negli Stati Uniti ci sono state" + jsonArray.size() + " sparatorie nel " + anno + ".\n";
+			final var recente = "La più recente è avvenuta il " + data + " in " + citta + ", " + stato + "\n";
+			final var personeMorte = "Sono morte " + morti + " persone.\n";
+			final var personaMorta = "E' morta una persona.\n";
+			final var noVittime = "Per fortuna non ci sono state vittime.\n";
+			final var personeFerite = "I feriti ammontano a " + feriti + ".\n";
+
+			var finalResp = sparatorie + recente;
+
+			if (Integer.parseInt(morti) > 1)
+				channel.sendMessage(finalResp + personeMorte + personeFerite).queue();
+			else if (Integer.parseInt(morti) == 1)
+				channel.sendMessage(finalResp + personaMorta + personeFerite).queue();
 			else
-				System.out.println("Per fortuna non ci sono state vittime.");
-			System.out.println("I feriti ammontano a " + feriti + ".");
-			
-			
-			//System.out.println(strings.get(4));
+				channel.sendMessage(finalResp + noVittime + personeFerite).queue();
+
 		}
 		catch (IOException | ParseException ignored) {}
 	} // fine massShooting()
