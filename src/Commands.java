@@ -1527,22 +1527,33 @@ public class Commands extends ListenerAdapter
 			return;
 		}
 		
-		final var url = "https://mass-shooting-tracker-data.s3.us-east-2.amazonaws.com/"+anno+"-data.json";
+		//final var url = "https://mass-shooting-tracker-data.s3.us-east-2.amazonaws.com/"+anno+"-data.json";
 		final var filePath = "ms"+anno+".json";
+		
+		JSONArray jsonArray = new JSONArray();
+		JSONParser jsonParser = new JSONParser();
+		
 		var file = new File(""+filePath);
 		try
 		{
-			var in = new BufferedInputStream(new URL(url).openStream());
-			var fileOutputStream = new FileOutputStream("" + filePath);
-			var dataBuffer = new byte[1024];
-			int bytesRead;
-			while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1)
-				fileOutputStream.write(dataBuffer, 0, bytesRead);
+			final var url = new URL("https://mass-shooting-tracker-data.s3.us-east-2.amazonaws.com/"+anno+"-data.json");
+			//var in = new BufferedInputStream(new URL(url).openStream());
+			//var fileOutputStream = new FileOutputStream("" + filePath);
+			//var dataBuffer = new byte[1024];
+			//int bytesRead;
+			//while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1)
+			//	fileOutputStream.write(dataBuffer, 0, bytesRead);
 			
-			var jsonParser = new JSONParser();
-			var obj = jsonParser.parse(new FileReader(filePath));
-			var jsonObject = (JSONObject) obj;
-			var jsonArray = (JSONArray) ((JSONObject) obj).get("date");
+			var connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestProperty("Accept", "application/json");
+			
+			var in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			var response = new StringBuilder();
+			String inputLine;
+			while ((inputLine = in.readLine()) != null)
+				response.append(inputLine);
+			
+			jsonArray = (JSONArray) jsonParser.parse(String.valueOf(response));
 			
 			channel.sendMessage(jsonArray.toString()).queue();
 		}
