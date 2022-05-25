@@ -1530,8 +1530,6 @@ public class Commands extends ListenerAdapter
 		JSONArray jsonArray;
 		JSONParser jsonParser = new JSONParser();
 		
-		//var file = new File(""+filePath);
-		
 		try
 		{
 			final var url = new URL("https://mass-shooting-tracker-data.s3.us-east-2.amazonaws.com/"+anno+"-data.json");
@@ -1549,41 +1547,51 @@ public class Commands extends ListenerAdapter
 			var objs = new ArrayList<JSONObject>();
 			
 			for (Object o : jsonArray)
-			{
-				//	System.out.println("Data: " + data);
-				//	System.out.println("Luogo: " + jsonObject.get("city") + ", " + jsonObject.get("state"));
-				//	System.out.println("Morti: " + jsonObject.get("killed"));
-				//	System.out.println("Feriti: " + jsonObject.get("wounded") + "\n");
-				
 				objs.add((JSONObject) o);
-			}
 			
-			var citta = (String) objs.get(0).get("city");
-			var stato = (String) objs.get(0).get("state");
-			var morti = (String) objs.get(0).get("killed");
-			var feriti = (String) objs.get(0).get("wounded");
-			var x = (String) (objs).get(0).get("date");
+			var scelta = 0; // se è anno corrente, prende più recente, altrimenti ne prende una a caso
+			
+			if (anno != currentYear)
+				scelta = random.nextInt(objs.size());
+			
+			
+			var citta = (String) objs.get(scelta).get("city");
+			var stato = (String) objs.get(scelta).get("state");
+			var morti = (String) objs.get(scelta).get("killed");
+			var feriti = (String) objs.get(scelta).get("wounded");
+			var x = (String) (objs).get(scelta).get("date");
 			var y = x.split("T")[0].split("-");
 			var data = y[2] + " " + getMese(Integer.parseInt(y[1])) + " "+ y[0];
 
 			final var sparatorie = "Negli Stati Uniti ci sono state **" + jsonArray.size() + "** sparatorie nel " + anno + ".\n";
 			final var recente = "La più recente è avvenuta il " + data + " in **" + citta + ", " + stato + "**\n";
+			final var caso = "Una è accaduta il " + data + " in **" + citta + ", " + stato + "**\n";
 			final var personeMorte = "Sono morte **" + morti + "** persone.\n";
 			final var personaMorta = "E' morta **1** persona.\n";
 			final var noVittime = "Per fortuna non ci sono state vittime.\n";
 			final var personeFerite = "I feriti ammontano a **" + feriti + "**.\n";
-
-			var finalResp = sparatorie + recente;
-
-			if (Integer.parseInt(morti) > 1)
-				channel.sendMessage(finalResp + personeMorte + personeFerite).queue();
-			else if (Integer.parseInt(morti) == 1)
-				channel.sendMessage(finalResp + personaMorta + personeFerite).queue();
+			var finalResp = "";
+			
+			if (anno == currentYear)
+				finalResp = sparatorie + recente;
 			else
-				channel.sendMessage(finalResp + noVittime + personeFerite).queue();
+				finalResp = sparatorie + caso;
+			
+			if (Integer.parseInt(morti) > 1)
+				finalResp += personeMorte + personeFerite;
+			else if (Integer.parseInt(morti) == 1)
+				finalResp += personaMorta + personeFerite;
+			else
+				finalResp += noVittime + personeFerite;
+			
+			channel.sendMessage(finalResp).queue();
 
 		}
-		catch (IOException | ParseException ignored) {}
+		catch (IOException | ParseException e)
+		{
+			channel.sendMessage("S'è svampato.\n" + e).queue();
+			e.printStackTrace();
+		}
 	} // fine massShooting()
 	
 	private static String getMese(int mese)
