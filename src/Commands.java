@@ -28,7 +28,7 @@ public class Commands extends ListenerAdapter
 	private static final File nomiPkmn = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
 	private static MessageChannel channel;
-	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon", "!carta", "!duello", "!colpevole"};
+	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon", "!carta", "!duello", "!colpevole", "!massshooting"};
 	private static final String[] listaDescrizioni =
 	{
 		"Il bot lancerà una moneta",
@@ -38,7 +38,8 @@ public class Commands extends ListenerAdapter
 		"Acchiappali tutti!",
 		"Genera una carta da gioco",
 		"Sfida un giocatore ad un duello di carte",
-		"Lascia che RNGesus decida la percentuale di colpevolezza di un altro utente"
+		"Lascia che RNGesus decida la percentuale di colpevolezza di un altro utente",
+		"Ottieni il resoconto delle sparatorie di massa negli USA. Avviso: non è uno scherzo."
 	};
 	private static int messaggiInviati = 0;
 	private static int limite;
