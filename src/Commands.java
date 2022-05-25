@@ -1554,8 +1554,7 @@ public class Commands extends ListenerAdapter
 				response.append(inputLine);
 			
 			jsonArray = (JSONArray) jsonParser.parse(String.valueOf(response));
-			
-			channel.sendMessage(jsonArray.toString()).queue();
+			System.out.println(jsonArray.toString());
 		}
 		catch (IOException | ParseException ignored) {}
 		
