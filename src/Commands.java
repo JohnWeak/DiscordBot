@@ -1568,7 +1568,7 @@ public class Commands extends ListenerAdapter
 
 			final var sparatorie = "Negli Stati Uniti ci sono state **" + jsonArray.size() + "** sparatorie nel " + anno + ".\n";
 			final var recente = "La più recente è avvenuta il " + data + " in **" + citta + ", " + stato + "**\n";
-			final var caso = "Una è accaduta il " + data + " in **" + citta + ", " + stato + "**\n";
+			final var caso = "Per esempio, una si è verificata il " + data + " in **" + citta + ", " + stato + "**\n";
 			final var personeMorte = "Sono morte **" + morti + "** persone.\n";
 			final var personaMorta = "È morta **1** persona.\n";
 			final var noVittime = "Per fortuna non ci sono state vittime.\n";
