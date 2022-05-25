@@ -1570,10 +1570,10 @@ public class Commands extends ListenerAdapter
 			final var recente = "La più recente è avvenuta il " + data + " in **" + citta + ", " + stato + "**\n";
 			final var caso = "Una è accaduta il " + data + " in **" + citta + ", " + stato + "**\n";
 			final var personeMorte = "Sono morte **" + morti + "** persone.\n";
-			final var personaMorta = "E' morta **1** persona.\n";
+			final var personaMorta = "È morta **1** persona.\n";
 			final var noVittime = "Per fortuna non ci sono state vittime.\n";
 			final var personeFerite = "I feriti ammontano a **" + feriti + "**.\n";
-			final var totaleMorti = "In totale sono morte **" + mortiAnno + "** persone durante l'anno\n";
+			final var totaleMorti = "In totale sono morte **" + mortiAnno + "** persone durante l'anno.\n";
 			var finalResp = "";
 			
 			if (anno == currentYear)
