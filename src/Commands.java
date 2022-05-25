@@ -1527,22 +1527,14 @@ public class Commands extends ListenerAdapter
 			return;
 		}
 		
-		//final var url = "https://mass-shooting-tracker-data.s3.us-east-2.amazonaws.com/"+anno+"-data.json";
-		final var filePath = "ms"+anno+".json";
-		
-		JSONArray jsonArray = new JSONArray();
+		JSONArray jsonArray;
 		JSONParser jsonParser = new JSONParser();
 		
-		var file = new File(""+filePath);
+		//var file = new File(""+filePath);
+		
 		try
 		{
 			final var url = new URL("https://mass-shooting-tracker-data.s3.us-east-2.amazonaws.com/"+anno+"-data.json");
-			//var in = new BufferedInputStream(new URL(url).openStream());
-			//var fileOutputStream = new FileOutputStream("" + filePath);
-			//var dataBuffer = new byte[1024];
-			//int bytesRead;
-			//while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1)
-			//	fileOutputStream.write(dataBuffer, 0, bytesRead);
 			
 			var connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestProperty("Accept", "application/json");
@@ -1554,10 +1546,60 @@ public class Commands extends ListenerAdapter
 				response.append(inputLine);
 			
 			jsonArray = (JSONArray) jsonParser.parse(String.valueOf(response));
-			System.out.println(jsonArray.toString());
+			var objs = new ArrayList<JSONObject>();
+			
+			for (Object o : jsonArray)
+			{
+				//	System.out.println("Data: " + data);
+				//	System.out.println("Luogo: " + jsonObject.get("city") + ", " + jsonObject.get("state"));
+				//	System.out.println("Morti: " + jsonObject.get("killed"));
+				//	System.out.println("Feriti: " + jsonObject.get("wounded") + "\n");
+				
+				objs.add((JSONObject) o);
+			}
+			
+			var citta = (String) objs.get(0).get("city");
+			var stato = (String) objs.get(0).get("state");
+			var morti = (String) objs.get(0).get("killed");
+			var feriti = (String) objs.get(0).get("wounded");
+			var x = (String) (objs).get(0).get("date");
+			var y = x.split("T")[0].split("-");
+			var data = y[2] + " " + getMese(Integer.parseInt(y[1])) + " "+ y[0];
+			
+			System.out.println("Negli Stati Uniti ci sono state " + jsonArray.size() + " sparatorie nel " + anno + ".\n");
+			System.out.println("La più recente è avvenuta il " + data + " in " + citta + ", " + stato);
+			if (Integer.parseInt(morti) > 0)
+				System.out.println("Sono morte " + morti + " persone.");
+			else
+				System.out.println("Per fortuna non ci sono state vittime.");
+			System.out.println("I feriti ammontano a " + feriti + ".");
+			
+			
+			//System.out.println(strings.get(4));
 		}
 		catch (IOException | ParseException ignored) {}
-		
 	} // fine massShooting()
+	
+	private static String getMese(int mese)
+	{
+		return switch (mese)
+		{
+			case 1 -> "gennaio";
+			case 2 -> "febbraio";
+			case 3 -> "marzo";
+			case 4 -> "aprile";
+			case 5 -> "maggio";
+			case 6 -> "giugno";
+			case 7 -> "luglio";
+			case 8 -> "agosto";
+			case 9 -> "settembre";
+			case 10 -> "ottobre";
+			case 11 -> "novembre";
+			case 12 -> "dicembre";
+			
+			default -> throw new IllegalStateException("Unexpected value: " + mese);
+		};
+	}// fine getMese()
+	
 	
 } // fine classe Commands
