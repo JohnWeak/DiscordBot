@@ -1512,7 +1512,7 @@ public class Commands extends ListenerAdapter
 	private void massShooting()
 	{
 		int anno = currentYear;
-		var msg = messageRaw.toLowerCase().split("");
+		var msg = messageRaw.toLowerCase().split(" ");
 		if (msg.length >= 1)
 			try
 			{
