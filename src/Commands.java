@@ -16,6 +16,7 @@ import org.json.simple.parser.ParseException;
 import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.util.List;
@@ -56,6 +57,7 @@ public class Commands extends ListenerAdapter
 	private static final String[] simboli = {"♥️", "♦️", "♣️", "♠️"};
 	private static String sceltaBot;
 	private static TextChannel canaleBotPokemon;
+	private static final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
 	private String getSaluto()
@@ -261,6 +263,7 @@ public class Commands extends ListenerAdapter
 			case "!duello", "!duellocarte" -> duelloDiCarte();
 			case "!accetto" -> accettaDuello(false);
 			case "!rifiuto" -> rifiutaDuello();
+			case "!massshooting", "!ms" -> massShooting();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -1141,7 +1144,7 @@ public class Commands extends ListenerAdapter
 					react("pog");
 			});
 		}
-		
+		/*
 		if (utenteTaggato.size() > 1)
 			channel.sendMessage("La prossima volta tagga soltanto una persona e vergognati").queue(lambda ->
 			{
@@ -1150,6 +1153,7 @@ public class Commands extends ListenerAdapter
 				pause(2000, 5);
 				lambda.delete().queue();
 			});
+		*/
 		
 	} // fine colpevolezza()
 	
@@ -1503,7 +1507,47 @@ public class Commands extends ListenerAdapter
 
 		} catch (IOException e) { System.out.println("Errore nella scrittura del file!"); }
 		
-	} // fine spawnPokemon
+	} // fine spawnPokemon()
 	
+	private void massShooting()
+	{
+		int anno = currentYear;
+		var msg = messageRaw.toLowerCase().split("");
+		if (msg.length >= 1)
+			try
+			{
+				anno = Integer.parseInt(msg[1]);
+			}
+			catch (NumberFormatException e) {e.printStackTrace();}
+		
+		
+		if (anno < 2013 || anno > currentYear)
+		{
+			channel.sendMessage("`L'anno dev'essere compreso fra il 2013 e il presente.`").queue();
+			return;
+		}
+		
+		final var url = "https://mass-shooting-tracker-data.s3.us-east-2.amazonaws.com/"+anno+"-data.json";
+		final var filePath = "ms"+anno+".json";
+		var file = new File(""+filePath);
+		try
+		{
+			var in = new BufferedInputStream(new URL(url).openStream());
+			var fileOutputStream = new FileOutputStream("" + filePath);
+			var dataBuffer = new byte[1024];
+			int bytesRead;
+			while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1)
+				fileOutputStream.write(dataBuffer, 0, bytesRead);
+			
+			var jsonParser = new JSONParser();
+			var obj = jsonParser.parse(new FileReader(filePath));
+			var jsonObject = (JSONObject) obj;
+			var jsonArray = (JSONArray) ((JSONObject) obj).get("date");
+			
+			channel.sendMessage(jsonArray.toString()).queue();
+		}
+		catch (IOException | ParseException ignored) {}
+		
+	} // fine massShooting()
 	
 } // fine classe Commands
