@@ -1566,12 +1566,12 @@ public class Commands extends ListenerAdapter
 			var y = x.split("T")[0].split("-");
 			var data = y[2] + " " + getMese(Integer.parseInt(y[1])) + " "+ y[0];
 
-			final var sparatorie = "Negli Stati Uniti ci sono state" + jsonArray.size() + " sparatorie nel " + anno + ".\n";
-			final var recente = "La più recente è avvenuta il " + data + " in " + citta + ", " + stato + "\n";
-			final var personeMorte = "Sono morte " + morti + " persone.\n";
-			final var personaMorta = "E' morta una persona.\n";
+			final var sparatorie = "Negli Stati Uniti ci sono state **" + jsonArray.size() + "** sparatorie nel " + anno + ".\n";
+			final var recente = "La più recente è avvenuta il " + data + " in **" + citta + ", " + stato + "**\n";
+			final var personeMorte = "Sono morte **" + morti + "** persone.\n";
+			final var personaMorta = "E' morta **1** persona.\n";
 			final var noVittime = "Per fortuna non ci sono state vittime.\n";
-			final var personeFerite = "I feriti ammontano a " + feriti + ".\n";
+			final var personeFerite = "I feriti ammontano a **" + feriti + "**.\n";
 
 			var finalResp = sparatorie + recente;
 
