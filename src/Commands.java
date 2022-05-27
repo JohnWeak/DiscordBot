@@ -380,6 +380,12 @@ public class Commands extends ListenerAdapter
 				message.delete().queue();
 			}
 		}
+		
+		if ((msgLowerCase.contains("ehilò") || msgLowerCase.contains("ehila")) && author.getDiscriminator().equals("4781"))
+		{
+			reply = true;
+			msgReply += "Salve!";
+		}
 			
 		if (msgLowerCase.contains("non vedo l'ora"))
 		{
