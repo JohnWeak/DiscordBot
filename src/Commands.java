@@ -381,7 +381,7 @@ public class Commands extends ListenerAdapter
 			}
 		}
 		
-		if ((msgLowerCase.contains("ehilò") || msgLowerCase.contains("ehila")) && author.getDiscriminator().equals("4781"))
+		if ((msgLowerCase.contains("ehilà") || msgLowerCase.contains("ehila")) && author.getDiscriminator().equals("4781"))
 		{
 			reply = true;
 			msgReply += "Salve!";
@@ -1574,8 +1574,8 @@ public class Commands extends ListenerAdapter
 			var data = y[2] + " " + getMese(Integer.parseInt(y[1])) + " "+ y[0];
 
 			final var sparatorie = "Negli Stati Uniti ci sono state **" + jsonArray.size() + "** sparatorie nel " + anno + ".\n";
-			final var recente = "La più recente è avvenuta il " + data + " in **" + citta + ", " + stato + "**\n";
-			final var caso = "Per esempio, una si è verificata il " + data + " in **" + citta + ", " + stato + "**\n";
+			final var recente = "La più recente è avvenuta il " + data + " in **" + citta + ", " + stato + "**.\n";
+			final var caso = "Per esempio, una si è verificata il " + data + " in **" + citta + ", " + stato + "**.\n";
 			final var personeMorte = "Sono morte **" + morti + "** persone.\n";
 			final var personaMorta = "È morta **1** persona.\n";
 			final var noVittime = "Per fortuna non ci sono state vittime.\n";
@@ -1588,12 +1588,21 @@ public class Commands extends ListenerAdapter
 			else
 				finalResp = sparatorie + caso;
 			
+			finalResp += switch (Integer.parseInt(morti))
+			{
+				case 0 -> noVittime;
+				case 1 -> personaMorta;
+				default -> personeMorte;
+			};
+			
+			/*
 			if (Integer.parseInt(morti) > 1)
 				finalResp += personeMorte;
 			else if (Integer.parseInt(morti) == 1)
 				finalResp += personaMorta;
 			else
 				finalResp += noVittime;
+			*/
 			
 			finalResp += personeFerite + totaleMorti;
 			
