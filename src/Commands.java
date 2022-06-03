@@ -28,7 +28,7 @@ public class Commands extends ListenerAdapter
 	private static final File nomiPkmn = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
 	private static MessageChannel channel;
-	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon", "!carta", "!duello", "!colpevole", "!massshooting"};
+	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon", "!carta", "!duello", "!colpevole", "!bestemmia", "!massshooting"};
 	private static final String[] listaDescrizioni =
 	{
 		"Il bot lancerà una moneta",
@@ -39,6 +39,7 @@ public class Commands extends ListenerAdapter
 		"Genera una carta da gioco",
 		"Sfida un giocatore ad un duello di carte",
 		"Lascia che RNGesus decida la percentuale di colpevolezza di un altro utente",
+		"Quando serve incolpare qualcuno ai piani alti",
 		"Ottieni il resoconto delle sparatorie di massa negli USA. Sono dati reali."
 	};
 	private static int messaggiInviati = 0;
@@ -59,6 +60,10 @@ public class Commands extends ListenerAdapter
 	private static String sceltaBot;
 	private static TextChannel canaleBotPokemon;
 	private static final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
+	private static final String NUMENIGMO = "7166";
+	private static final String NUMOBITO = "2804";
+	private static final String NUMGION = "0935";
+	private static final String NUMLEX = "2241";
 	
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
 	private String getSaluto()
@@ -222,21 +227,19 @@ public class Commands extends ListenerAdapter
 			{
 				switch (discriminator)
 				{
-					case "2804" -> // Òbito
+					case NUMOBITO ->
 					{
 						react("obito");
 						react("vergogna");
 						message.reply("Òbito vergognati").queue();
 					}
-					case "7166" -> // Enigmo
-					{
+					case NUMENIGMO ->
 						react("pigeon");
-					}
 					
-					case "2241" ->  // Alex
+					case NUMLEX ->
 						channel.addReactionById(id, "🇷🇴").queue();
 					
-					case "0935" -> // Gion
+					case NUMGION ->
 						react("smh");
 					
 				} // fine switch
@@ -265,6 +268,7 @@ public class Commands extends ListenerAdapter
 			case "!accetto" -> accettaDuello(false);
 			case "!rifiuto" -> rifiutaDuello();
 			case "!massshooting", "!ms" -> massShooting();
+			case "!bestemmia" -> bestemmia();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -451,6 +455,11 @@ public class Commands extends ListenerAdapter
 			msgReply += "La pantera rosa";
 		}
 		
+		if (msgLowerCase.contains("deez nuts") && discriminator.equals(NUMENIGMO))
+		{
+			reply = true;
+			msgReply += "\"deez nuts\" DEEZ NUTS, Enigmo!";
+		}
 		//if (msgLowerCase.contains("") && random.nextInt(42) == 0){}
 		
 		if (reply)
@@ -868,8 +877,8 @@ public class Commands extends ListenerAdapter
 	public void sondaggio(String domanda, String[] risposte, boolean flag)
 	{
 		risposte[0] = risposte[0].substring(0, risposte[0].length()-1).trim();
-		int sleepInterval = random.nextInt(500) + 1000;
-		final int size = risposte.length;
+		var sleepInterval = random.nextInt(500) + 1000;
+		final var size = risposte.length;
 		var embedBuilder = new EmbedBuilder();
 		final String[] letters =
 		{
@@ -880,7 +889,7 @@ public class Commands extends ListenerAdapter
 			"\uD83C\uDDFE", "\uD83C\uDDFF"
 		}; // array di lettere emoji A -> Z
 		
-		if (size < 2 || size > 20 || flag)
+		if (size < 2 || size > letters.length || flag)
 		{
 			//embedBuilder.setFooter("");
 			embedBuilder.setTitle("`!poll` - Istruzioni per l'uso");
@@ -897,9 +906,9 @@ public class Commands extends ListenerAdapter
 		else
 		{
 			String descrizione = "";
-			//embedBuilder.setFooter(author + " ha posto la domanda");
 			embedBuilder.setTitle(domanda+"?");
-			for (int i = 0; i < risposte.length; i++)
+			var lenghtRisposte = risposte.length;
+			for (int i = 0; i < lenghtRisposte; i++)
 				descrizione = descrizione.concat(letters[i] + "\t" + risposte[i]) + "\n";
 			embedBuilder.setDescription(descrizione);
 			embedBuilder.setColor(0xFF0000);
@@ -1064,7 +1073,7 @@ public class Commands extends ListenerAdapter
 			"\uD83C\uDDFF"  // Z
 		};
 		
-		String emoteDaUsare = switch (emote)
+		var emoteDaUsare = switch (emote)
 		{
 			case "pigeon" -> emotePigeon;
 			case "nou" -> emoteNou;
@@ -1349,8 +1358,6 @@ public class Commands extends ListenerAdapter
 							response.append(inputLine);
 
 					jsonArray = (JSONArray) jsonParser.parse(String.valueOf(response));
-
-
 				}
 		} catch (IOException | ParseException e) { System.out.println("Errore nell'apertura del file: " + nomiPkmn); }
 
@@ -1516,6 +1523,7 @@ public class Commands extends ListenerAdapter
 		
 	} // fine spawnPokemon()
 	
+	/**Ottieni un resoconto della sparatoria più recente in USA oppure ottieni un resoconto di una sparatoria scelta casualmente nell'anno da te specificato.*/
 	private void massShooting()
 	{
 		int anno = currentYear;
@@ -1564,7 +1572,6 @@ public class Commands extends ListenerAdapter
 			if (anno != currentYear)
 				scelta = random.nextInt(objs.size());
 			
-			
 			var citta = (String) objs.get(scelta).get("city");
 			var stato = (String) objs.get(scelta).get("state");
 			var morti = (String) objs.get(scelta).get("killed");
@@ -1594,15 +1601,6 @@ public class Commands extends ListenerAdapter
 				case 1 -> personaMorta;
 				default -> personeMorte;
 			};
-			
-			/*
-			if (Integer.parseInt(morti) > 1)
-				finalResp += personeMorte;
-			else if (Integer.parseInt(morti) == 1)
-				finalResp += personaMorta;
-			else
-				finalResp += noVittime;
-			*/
 			
 			finalResp += personeFerite + totaleMorti;
 			
@@ -1635,7 +1633,60 @@ public class Commands extends ListenerAdapter
 			
 			default -> throw new IllegalStateException("Unexpected value: " + mese);
 		};
-	}// fine getMese()
+	} // fine getMese()
+	
+	/***/
+	private void bestemmia()
+	{
+		if (true) //todo: da finire e poi rimuovere l'if
+		{
+			final var est = random.nextInt(97)+3; // 3-99
+			final String[] tempo = {"mesi", "giorni", "ore", "minuti", "secondi"};
+			channel.sendMessage("Work in progress. ETA: "+est+" "+tempo[random.nextInt(tempo.length)]).queue();
+			return;
+		}
+		
+		final var spazio = " ";
+		String particella;
+		
+		String[] divinita = {"Dio", "Gesù", "Gesù bambino", "Madonna"};
+		particella = particella(random.nextInt(divinita.length));
+		String[] animale = {"cane", "porco", "anfibio", "rettile", "pesce", "capra"};
+		String[] azione = {"che guarda", "che ride", "che corre", "che cammina", "che scappa", "che mangia", "che fa una capriola", "che guida"};
+		String[] guardaCosa = {"la nazionale che perde contro una squadra fondata ieri", "che tocca una pianta carnivora, facendosi mordere il dito", "una celebrità su instagram, ricca, che sostiene che la ricchezza non serva"};
+		String[] rideDiCosa = {"di quella volta che hai chiamato \"mamma\" la maestra alle elementari", "del goal che non hai segnato"+random.nextInt(10)+2 +" anni fa a calcetto"};
+		String[] correVersoCosa = {""};
+		String[] scappaDaCosa = {"da un leone affamato", "da un marito cornificato che vuole por"+particella+" un paio di domande"};
+		String[] mangiaCosa = {"una porzione di sushi avariato", "una pizza con l'ananas sopra", "una puttanesca", ""};
+		String[] guidaCosa = {"un fottutissimo pickup lungo 5 metri che consuma tantissimo (25L/100km)", "una macchina piccola con la marmitta modificata che fa un casino tremendo", "un motorino dalla cilindrata minore di zero e impenna pure"};
+		
+		var bstm = "";
+		bstm += divinita[random.nextInt(divinita.length)] + spazio;
+		bstm += animale[random.nextInt(animale.length)] + spazio;
+		bstm += azione[0] + spazio; //todo: cambiare con random
+		bstm += guardaCosa[random.nextInt(guardaCosa.length)] + spazio;
+		
+		channel.sendMessage(bstm).queue();
+		
+	} // fine bestemmia()
+	
+	private String particella(int x)
+	{
+		return switch (x)
+		{
+			case 0 -> "lui";
+			case 1 -> "lo";
+			case 2 -> "gli";
+			case 3 -> "le";
+			default -> "";
+		};
+	}
+	
+	/**Manda un messaggio in chat privata*/
+	private void sendMessage(User user, String content)
+	{
+		user.openPrivateChannel().flatMap(channel -> channel.sendMessage(content)).queue();
+	} // fine onPrivateMessageReceived()
 	
 	
 } // fine classe Commands
