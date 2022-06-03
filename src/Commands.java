@@ -1160,16 +1160,6 @@ public class Commands extends ListenerAdapter
 					react("pog");
 			});
 		}
-		/*
-		if (utenteTaggato.size() > 1)
-			channel.sendMessage("La prossima volta tagga soltanto una persona e vergognati").queue(lambda ->
-			{
-				react("pigeon");
-				react("vergognati");
-				pause(2000, 5);
-				lambda.delete().queue();
-			});
-		*/
 		
 	} // fine colpevolezza()
 	
@@ -1504,7 +1494,7 @@ public class Commands extends ListenerAdapter
 		{
 			pokemon(); // genera un incontro
 			messaggiInviati = 0; // resetta il contatore
-			limite = random.nextInt(10) + 5; // genera un nuovo max per i messaggi
+			limite = random.nextInt(40) + 10; // genera un nuovo max per i messaggi
 		}
 		else
 		{
@@ -1538,7 +1528,7 @@ public class Commands extends ListenerAdapter
 		
 		if (anno < 2013 || anno > currentYear)
 		{
-			channel.sendMessage("`L'anno dev'essere compreso fra il 2013 e il presente.`").queue();
+			channel.sendMessage("`L'anno dev'essere compreso fra il 2013 e il "+currentYear+".`").queue();
 			return;
 		}
 		
@@ -1653,7 +1643,8 @@ public class Commands extends ListenerAdapter
 		particella = particella(random.nextInt(divinita.length));
 		String[] animale = {"cane", "porco", "anfibio", "rettile", "pesce", "capra"};
 		String[] azione = {"che guarda", "che ride", "che corre", "che cammina", "che scappa", "che mangia", "che fa una capriola", "che guida"};
-		String[] guardaCosa = {"la nazionale che perde contro una squadra fondata ieri", "che tocca una pianta carnivora, facendosi mordere il dito", "una celebrità su instagram, ricca, che sostiene che la ricchezza non serva"};
+		String[] guardaCosa = {"la nazionale che perde contro una squadra fondata ieri", "una celebrità su instagram, ricca, che sostiene che la ricchezza non serva"};
+		String[] toccaCosa = {"che tocca una pianta carnivora, facendosi mordere il dito"};
 		String[] rideDiCosa = {"di quella volta che hai chiamato \"mamma\" la maestra alle elementari", "del goal che non hai segnato"+random.nextInt(10)+2 +" anni fa a calcetto"};
 		String[] correVersoCosa = {""};
 		String[] scappaDaCosa = {"da un leone affamato", "da un marito cornificato che vuole por"+particella+" un paio di domande"};
