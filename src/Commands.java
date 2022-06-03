@@ -1642,7 +1642,7 @@ public class Commands extends ListenerAdapter
 		{
 			final var est = random.nextInt(97)+3; // 3-99
 			final String[] tempo = {"mesi", "giorni", "ore", "minuti", "secondi"};
-			channel.sendMessage("Work in progress. ETA: "+est+" "+tempo[random.nextInt(tempo.length)]).queue();
+			channel.sendMessage("`Work in progress. ETA: "+est+" "+tempo[random.nextInt(tempo.length)]+"`").queue();
 			return;
 		}
 		
