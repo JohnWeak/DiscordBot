@@ -406,7 +406,13 @@ public class Commands extends ListenerAdapter
 				msgReply += "Sono le ";
 			
 			if (random.nextInt(2) == 0)
-				msgReply += hour + ":" + minutes + "\n";
+			{
+				msgReply += hour + ":";
+				if (minutes < 10)
+					msgReply += "0" + minutes + "\n";
+				else
+					msgReply += minutes + "\n";
+			}
 			else
 			{
 				var orario = new Ore(hour, minutes);
@@ -1127,9 +1133,14 @@ public class Commands extends ListenerAdapter
 		final String urlOwO = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--amf4Rvt7--%2Ft_Preview%2Fb_rgb%3A191919%2Cc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1518097892%2Fproduction%2Fdesigns%2F2348593_0.jpg&f=1&nofb=1";
 		
 		if (utenteTaggato.isEmpty())
-			channel.sendMessage("Per questo comando è necessario taggare un utente.").queue();
+		{
+			var emb = new EmbedBuilder()
+				.setColor(Color.red)
+				.setTitle("Scrivi `!colpevole <@utente> per usare questo comando`");
+			channel.sendMessageEmbeds(emb.build()).queue();
+		}
 		else if (utenteTaggato.get(0).getDiscriminator().equals(author.getDiscriminator()))
-			message.reply("Congratulazioni, sei colpevole.").queue(lambda -> react("pigeon"));
+			message.reply("Congratulazioni, sei colpevole al 100%.").queue(lambda -> react("pigeon"));
 		else
 		{
 			final int colpa = random.nextInt(100) + 1;
