@@ -466,6 +466,13 @@ public class Commands extends ListenerAdapter
 			reply = true;
 			msgReply += "\"deez nuts\" DEEZ NUTS, Enigmo!";
 		}
+		
+		if (msgLowerCase.contains("serve aiuto"))
+		{
+			reply = true;
+			msgReply += "Nemico assente!\n";
+		}
+		
 		//if (msgLowerCase.contains("") && random.nextInt(42) == 0){}
 		
 		if (reply)
