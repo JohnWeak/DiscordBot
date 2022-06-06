@@ -31,15 +31,15 @@ public class Commands extends ListenerAdapter
 	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon", "!carta", "!duello", "!colpevole", "!bestemmia", "!massshooting"};
 	private static final String[] listaDescrizioni =
 	{
-		"Il bot lancerà una moneta",
-		"Permette di creare sondaggi",
+		"Il bot lancerà una moneta.",
+		"Permette di creare sondaggi.",
 		"Visualizza le informazioni. Proprio quelle che stai leggendo!",
 		"Chiedi un responso all'Entità Superiore: la magica palla 8.",
 		"Acchiappali tutti!",
-		"Genera una carta da gioco",
-		"Sfida un giocatore ad un duello di carte",
-		"Lascia che RNGesus decida la percentuale di colpevolezza di un altro utente",
-		"Quando serve incolpare qualcuno ai piani alti",
+		"Genera una carta da gioco.",
+		"Sfida un giocatore ad un duello di carte.",
+		"Lascia che RNGesus decida la percentuale di colpevolezza di un altro utente.",
+		"Quando serve incolpare qualcuno ai piani alti.",
 		"Ottieni il resoconto delle sparatorie di massa negli USA. Sono dati reali."
 	};
 	private static int messaggiInviati = 0;
@@ -458,7 +458,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.equals("cosa") && random.nextInt(20) == 1)
 		{
 			reply = true;
-			msgReply += "La pantera rosa";
+			msgReply += "Cosa? La pantera rosa";
 		}
 		
 		if (msgLowerCase.contains("deez nuts") && discriminator.equals(NUMENIGMO))
