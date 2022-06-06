@@ -1420,11 +1420,11 @@ public class Commands extends ListenerAdapter
 	/** Genera un embed con il Pokemon */
 	private EmbedBuilder buildEmbed(Pokemon pokemon, boolean pokedex)
 	{
-		EmbedBuilder embedBuilder = new EmbedBuilder();
+		var embedBuilder = new EmbedBuilder();
 		String descrizione;
 		String[] tipi = pokemon.getTipo();
-		StringBuilder stringBuilder = new StringBuilder();
-		String types = "";
+		var stringBuilder = new StringBuilder();
+		var types = "";
 		String[] lineaEvo = pokemon.getLineaEvolutiva();
 		String lineaEvolutiva;
 
