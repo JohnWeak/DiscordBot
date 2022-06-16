@@ -391,7 +391,7 @@ public class Commands extends ListenerAdapter
 			msgReply += "Salve!";
 		}
 			
-		if (msgLowerCase.contains("non vedo l'ora"))
+		if (msgLowerCase.contains("non vedo l'ora") || msgLowerCase.contains("che ore sono") || msgLowerCase.contains("che ora è"))
 		{
 			reply = true;
 			var date = new GregorianCalendar();
