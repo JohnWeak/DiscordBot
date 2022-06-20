@@ -385,7 +385,7 @@ public class Commands extends ListenerAdapter
 			}
 		}
 		
-		if ((msgLowerCase.contains("ehilà") || msgLowerCase.contains("ehila")) && author.getDiscriminator().equals("4781"))
+		if ((msgLowerCase.contains("ehil")) && author.getDiscriminator().equals("4781"))
 		{
 			reply = true;
 			msgReply += "Salve!";
