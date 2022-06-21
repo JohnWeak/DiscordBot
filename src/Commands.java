@@ -397,13 +397,14 @@ public class Commands extends ListenerAdapter
 			var date = new GregorianCalendar();
 			var hour = date.get(Calendar.HOUR_OF_DAY);
 			var minutes = date.get(Calendar.MINUTE);
-			
-			if (hour == 0)
-				msgReply = "È ";
-			else if (hour == 1)
-				msgReply += "È l' ";
-			else
-				msgReply += "Sono le ";
+
+			msgReply += switch (hour)
+			{
+				case 0 -> "È ";
+				case 1 -> "È l' ";
+				default -> "Sono le ";
+			};
+
 			
 			if (random.nextInt(2) == 0)
 			{
@@ -418,13 +419,15 @@ public class Commands extends ListenerAdapter
 				var orario = new Ore(hour, minutes);
 				
 				msgReply += orario.getOra();
-				
-				if (minutes == 0)
-					msgReply += "";
-				else if (minutes == 1)
-					msgReply += " e uno";
-				else
-					msgReply += " e " + orario.getMinuti();
+
+				msgReply += switch (minutes)
+				{
+					case 0 -> "";
+					case 1 -> " e uno";
+					default -> " e " + orario.getMinuti();
+				};
+
+
 			}
 		}
 		
