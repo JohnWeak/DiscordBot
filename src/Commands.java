@@ -1852,15 +1852,15 @@ public class Commands extends ListenerAdapter
 				{
 					nameIsUs = name.equalsIgnoreCase("the legends");
 					
-					double[] percentage = new double[2];
+					String[] percentage = new String[2];
 					long[] attacks = new long[2];
 					long[] stars = new long[2];
 					
-					percentage[0] = (double) clan.get("destructionPercentage");
+					percentage[0] = String.format("%.2f", (double) clan.get("destructionPercentage"));
 					attacks[0] = (long) clan.get("attacks");
 					stars[0] = (long) clan.get("stars");
 					
-					percentage[1] = (double) opponent.get("destructionPercentage");
+					percentage[1] = String.format("%.2f", (double) opponent.get("destructionPercentage"));
 					attacks[1] = (long) opponent.get("attacks");
 					stars[1] = (long) opponent.get("stars");
 					
