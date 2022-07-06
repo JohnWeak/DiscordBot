@@ -1739,13 +1739,10 @@ public class Commands extends ListenerAdapter
 		try
 		{
 			final var currentWarURL = new URL(currentWar);
-			
 			var response = getResponse(currentWarURL);
-			
 			var jsonParser = new JSONParser();
 			Object obj = jsonParser.parse(response);
 			var jsonObject = (JSONObject) obj;
-			
 			var state = (String) jsonObject.get("state");
 			
 			if (state.equalsIgnoreCase("notinwar"))
@@ -1754,12 +1751,12 @@ public class Commands extends ListenerAdapter
 				return;
 			}
 			
-			double[] percentage = new double[2];
+			String[] percentage = new String[2];
 			long[] attacks = new long[2];
 			long[] stars = new long[2];
 			
 			var clan = (JSONObject) jsonObject.get("clan");
-			percentage[0] = (double) clan.get("destructionPercentage");
+			percentage[0] = String.format("%.2f", (double) clan.get("destructionPercentage"));
 			attacks[0] = (long) clan.get("attacks");
 			stars[0] = (long) clan.get("stars");
 			
@@ -1769,7 +1766,7 @@ public class Commands extends ListenerAdapter
 			var badgeL = (String) badge.get("large");
 			
 			var opponent = (JSONObject) jsonObject.get("opponent");
-			percentage[1] = (double) opponent.get("destructionPercentage");
+			percentage[1] = String.format("%.2f", (double) opponent.get("destructionPercentage"));
 			attacks[1] = (long) opponent.get("attacks");
 			stars[1] = (long) opponent.get("stars");
 			
