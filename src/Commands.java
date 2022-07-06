@@ -19,6 +19,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
+import java.time.Instant;
 import java.util.List;
 import java.util.*;
 
@@ -1774,23 +1775,29 @@ public class Commands extends ListenerAdapter
 			stars[1] = (long) opponent.get("stars");
 			
 			var embed = new EmbedBuilder()
-				.setTitle("WAR")
+				.setTitle("Guerra fra clan")
 				.setThumbnail(badgeSmall)
-				.addField("Stelle NOI",""+stars[0], true)
-				.addField("Stelle LORO",""+attacks[1], true);
+				.setColor(Color.red)
+				.setTimestamp(Instant.now());
 			
+			if (state.equalsIgnoreCase("notinwar"))
+				embed.addField("Non c'è nessuna guerra in corso", "smh", false);
+			else
+			{
+				embed
+					.addField("Stelle NOI", "" + stars[0], true)
+					.addField("Stelle LORO", "" + stars[1], true)
+					.addField("Attacchi", "" + attacks[0], false)
+					.addField("Attacchi", "" + attacks[1], false)
+				;
+			}
 			channel.sendMessageEmbeds(embed.build()).queue();
-			
-			System.out.println(percentage[0] +"\t"+percentage[1]);
-			System.out.println(attacks[0] +"\t"+attacks[1]);
-			System.out.println(stars[0] +"\t"+stars[1]);
 			
 		}
 		catch (IOException | ParseException e){System.out.println("\noh noes\n");}
 		
 		
-		
-	}
+	} // fine clashWar()
 	
 	
 	
