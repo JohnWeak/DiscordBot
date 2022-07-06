@@ -64,6 +64,7 @@ public class Commands extends ListenerAdapter
 	private static final String NUMOBITO = "2804";
 	private static final String NUMGION = "0935";
 	private static final String NUMLEX = "2241";
+	private static String bearer;
 	
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
 	private String getSaluto()
@@ -100,6 +101,8 @@ public class Commands extends ListenerAdapter
 	{
 		String nome = event.getJDA().getSelfUser().getName();
 		Activity act = Objects.requireNonNull(event.getJDA().getPresence().getActivity());
+		
+		bearer = new Bearer().getBearer();
 		
 		System.out.printf("%s si è connesso a Discord!\n\n", nome);
 		System.out.print("public class MessageHistory\n{\n");
@@ -269,6 +272,7 @@ public class Commands extends ListenerAdapter
 			case "!rifiuto" -> rifiutaDuello();
 			case "!massshooting", "!ms" -> massShooting();
 			case "!bestemmia" -> bestemmia();
+			case "!clash" -> clashCommands(messageRaw.toLowerCase());
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -1653,7 +1657,7 @@ public class Commands extends ListenerAdapter
 		{
 			final var est = random.nextInt(97)+3; // 3-99
 			final String[] tempo = {"mesi", "giorni", "ore", "minuti", "secondi"};
-			channel.sendMessage("`Work in progress. ETA: "+est+" "+tempo[random.nextInt(tempo.length)]+"`").queue();
+			channel.sendMessage("`Work in progress. ETA al completamento: "+est+" "+tempo[random.nextInt(tempo.length)]+"`").queue();
 			return;
 		}
 		
@@ -1699,6 +1703,99 @@ public class Commands extends ListenerAdapter
 	{
 		user.openPrivateChannel().flatMap(channel -> channel.sendMessage(content)).queue();
 	} // fine onPrivateMessageReceived()
+	
+	
+	public void clashCommands(String msgLowerCase)
+	{
+		switch (msgLowerCase)
+		{
+			case "!clashwar" -> clashWar();
+			// more commands
+			default -> channel.sendMessage("WTF").queue();
+		}
+		
+		
+	} // fine clashCommands()
+	
+	private String getResponse(URL url) throws IOException
+	{
+		var connection = (HttpURLConnection) url.openConnection();
+		
+		connection.setRequestProperty("accept", "application/json");
+		connection.setRequestProperty("authorization", bearer);
+		
+		var responseStream = connection.getInputStream();
+		
+		var in = new BufferedReader(new InputStreamReader(responseStream));
+		var inputLine = "";
+		
+		var response = new StringBuilder();
+		
+		while ((inputLine = in.readLine()) != null)
+			response.append(inputLine);
+		
+		in.close();
+		
+		return String.valueOf(response);
+	} // fine getResponse()
+	
+	private void clashWar()
+	{
+		final var hashtag = "%23";
+		final var clanTag = "PLQP8UJ8";
+		final var tagCompleto = hashtag + clanTag;
+		final var currentWar = "https://api.clashofclans.com/v1/clans/" + tagCompleto + "/currentwar";
+		try
+		{
+			final var currentWarURL = new URL(currentWar);
+			
+			var response = getResponse(currentWarURL);
+			var jsonParser = new JSONParser();
+			
+			Object obj = jsonParser.parse(response);
+			var jsonObject = (JSONObject) obj;
+			var state = (String) jsonObject.get("state");
+			
+			
+			//if (state.equalsIgnoreCase("notinwar"))
+			//	return;
+			
+			double[] percentage = new double[2];
+			long[] attacks = new long[2];
+			long[] stars = new long[2];
+			
+			var clan = (JSONObject) jsonObject.get("clan");
+			percentage[0] = (double) clan.get("destructionPercentage");
+			attacks[0] = (long) clan.get("attacks");
+			stars[0] = (long) clan.get("stars");
+			
+			var badge = (JSONObject) clan.get("badgeUrls");
+			var badgeSmall = (String) badge.get("small");
+			
+			var opponent = (JSONObject) jsonObject.get("opponent");
+			percentage[1] = (double) opponent.get("destructionPercentage");
+			attacks[1] = (long) opponent.get("attacks");
+			stars[1] = (long) opponent.get("stars");
+			
+			var embed = new EmbedBuilder()
+				.setTitle("WAR")
+				.setThumbnail(badgeSmall)
+				.addField("Stelle NOI",""+stars[0], true)
+				.addField("Stelle LORO",""+attacks[1], true);
+			
+			channel.sendMessageEmbeds(embed.build()).queue();
+			
+			System.out.println(percentage[0] +"\t"+percentage[1]);
+			System.out.println(attacks[0] +"\t"+attacks[1]);
+			System.out.println(stars[0] +"\t"+stars[1]);
+			
+		}
+		catch (IOException | ParseException e){System.out.println("\noh noes\n");}
+		
+		
+		
+	}
+	
 	
 	
 } // fine classe Commands
