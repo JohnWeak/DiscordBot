@@ -1764,7 +1764,9 @@ public class Commands extends ListenerAdapter
 			stars[0] = (long) clan.get("stars");
 			
 			var badge = (JSONObject) clan.get("badgeUrls");
+			var badgeS = (String) badge.get("small");
 			var badgeM = (String) badge.get("medium");
+			var badgeL = (String) badge.get("large");
 			
 			var opponent = (JSONObject) jsonObject.get("opponent");
 			percentage[1] = (double) opponent.get("destructionPercentage");
