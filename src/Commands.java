@@ -1818,14 +1818,14 @@ public class Commands extends ListenerAdapter
 			var warDays = (JSONObject) warTagsArray.get(dayOfWar);
 			var warTags = (JSONArray) warDays.get("warTags");
 			
-			search(warTags);
+			search(warTags, dayOfWar);
 			
 		}
 		catch (IOException | ParseException ignored){}
 		
 	} // fine clashWarLeague()
 	
-	private static void search(JSONArray tags)
+	private static void search(JSONArray tags, int dayOfWar)
 	{
 		final var legaURL = "https://api.clashofclans.com/v1/clanwarleagues/wars/%23";
 		
@@ -1869,7 +1869,7 @@ public class Commands extends ListenerAdapter
 					var distr = (nameIsUs?percentage[0]:percentage[1])+ "% vs "+ (nameIsUs?percentage[1]:percentage[0])+"%";
 					
 					var embed = new EmbedBuilder()
-						.setTitle("**War contro " + (nameIsUs ? oppName : name)+"**")
+						.setTitle("**War contro " + (nameIsUs ? oppName : name)+"** ("+dayOfWar+"/7)")
 						.setColor(Color.RED)
 						.setThumbnail(badgeM)
 						.addField("Stelle",""+st, true)
