@@ -1753,9 +1753,11 @@ public class Commands extends ListenerAdapter
 			var jsonObject = (JSONObject) obj;
 			var state = (String) jsonObject.get("state");
 			
-			
-			//if (state.equalsIgnoreCase("notinwar"))
-			//	return;
+			if (state.equalsIgnoreCase("notinwar"))
+			{
+				channel.sendMessage("Non siamo in guerra con nessun clan al momento. smh.").queue(m->react("smh"));
+				return;
+			}
 			
 			double[] percentage = new double[2];
 			long[] attacks = new long[2];
@@ -1767,31 +1769,17 @@ public class Commands extends ListenerAdapter
 			stars[0] = (long) clan.get("stars");
 			
 			var badge = (JSONObject) clan.get("badgeUrls");
-			var badgeSmall = (String) badge.get("small");
+			var badgeM = (String) badge.get("medium");
 			
 			var opponent = (JSONObject) jsonObject.get("opponent");
 			percentage[1] = (double) opponent.get("destructionPercentage");
 			attacks[1] = (long) opponent.get("attacks");
 			stars[1] = (long) opponent.get("stars");
 			
-			var embed = new EmbedBuilder()
-				.setTitle("Guerra fra clan")
-				.setThumbnail(badgeSmall)
-				.setColor(Color.red)
-				.setTimestamp(Instant.now());
+			var attacchiNoi = "TheLegends. Attacchi: **" + attacks[0]+"**. Stelle: **"+stars[0]+"**. Distruzione: **"+percentage[0]+"%**.\n";
+			var attacchiLoro = "Avversari. Attacchi: **" + attacks[1]+"**. Stelle: **"+stars[1]+"**. Distruzione: **"+percentage[1]+"%**.\n";
 			
-			if (state.equalsIgnoreCase("notinwar"))
-				embed.addField("Non c'è nessuna guerra in corso", "smh", false);
-			else
-			{
-				embed
-					.addField("Stelle NOI", "" + stars[0], true)
-					.addField("Stelle LORO", "" + stars[1], true)
-					.addField("Attacchi", "" + attacks[0], false)
-					.addField("Attacchi", "" + attacks[1], false)
-				;
-			}
-			channel.sendMessageEmbeds(embed.build()).queue();
+			channel.sendMessage("**WAR**\n"+attacchiNoi+attacchiLoro).queue();
 			
 		}
 		catch (IOException | ParseException e){System.out.println("\noh noes\n");}
