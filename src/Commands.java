@@ -1861,7 +1861,7 @@ public class Commands extends ListenerAdapter
 					var embed = new EmbedBuilder()
 						.setTitle("**War contro " + (nameIsUs ? oppName : name)+"**")
 						.setColor(Color.RED)
-						.setAuthor("War " + dayOfWar + "/7")
+						.setAuthor("War " + dayOfWar + "/7", "https://www.youtube.com/watch?v=dQw4w9WgXcQ", ""+badgeM)
 						.setThumbnail(badgeM)
 						.addField("Stelle",""+st+"\t", true)
 						.addField("Attacchi", ""+attacchi+"\t", true)
