@@ -66,6 +66,11 @@ public class Commands extends ListenerAdapter
 	private static final String NUMGION = "0935";
 	private static final String NUMLEX = "2241";
 	private static String bearer;
+	private static final String hashtag = "%23";
+	private static final String clanTag = "PLQP8UJ8";
+	private static final String tagCompleto = hashtag + clanTag;
+	private static final JSONParser jsonParser = new JSONParser();
+	
 	
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
 	private String getSaluto()
@@ -1711,10 +1716,13 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("war"))
 			clashWar();
 		
+		if (msgLowerCase.contains("lega") || msgLowerCase.contains("league"))
+			clashWarLeague();
+		
 		
 	} // fine clashCommands()
 	
-	private String getResponse(URL url) throws IOException
+	private static String getResponse(URL url) throws IOException
 	{
 		var connection = (HttpURLConnection) url.openConnection();
 		
@@ -1738,19 +1746,17 @@ public class Commands extends ListenerAdapter
 	
 	private void clashWar()
 	{
-		final var hashtag = "%23";
-		final var clanTag = "PLQP8UJ8";
-		final var tagCompleto = hashtag + clanTag;
 		final var currentWar = "https://api.clashofclans.com/v1/clans/" + tagCompleto + "/currentwar";
 		try
 		{
 			final var currentWarURL = new URL(currentWar);
 			
 			var response = getResponse(currentWarURL);
-			var jsonParser = new JSONParser();
 			
+			var jsonParser = new JSONParser();
 			Object obj = jsonParser.parse(response);
 			var jsonObject = (JSONObject) obj;
+			
 			var state = (String) jsonObject.get("state");
 			
 			if (state.equalsIgnoreCase("notinwar"))
@@ -1776,16 +1782,100 @@ public class Commands extends ListenerAdapter
 			attacks[1] = (long) opponent.get("attacks");
 			stars[1] = (long) opponent.get("stars");
 			
-			var attacchiNoi = "TheLegends. Attacchi: **" + attacks[0]+"**. Stelle: **"+stars[0]+"**. Distruzione: **"+percentage[0]+"%**.\n";
-			var attacchiLoro = "Avversari. Attacchi: **" + attacks[1]+"**. Stelle: **"+stars[1]+"**. Distruzione: **"+percentage[1]+"%**.\n";
+			var attacchiNoi = "TheLegends. Attacchi: **" +attacks[0]+"**. Stelle: **"+stars[0]+"**. Distruzione: **"+percentage[0]+"%**.\n";
+			var attacchiLoro = "Avversari. Attacchi: **" +attacks[1]+"**. Stelle: **"+stars[1]+"**. Distruzione: **"+percentage[1]+"%**.\n";
 			
 			channel.sendMessage("**WAR**\n"+attacchiNoi+attacchiLoro).queue();
 			
 		}
 		catch (IOException | ParseException e){System.out.println("\noh noes\n");}
-		
-		
 	} // fine clashWar()
+	
+	private void clashWarLeague()
+	{
+		var c = new GregorianCalendar();
+		var day = c.get(Calendar.DAY_OF_MONTH);
+		var dayOfWar = day-4; // -3 perché lega iniziata 3 giorni fa, -1 perché array parte da 0
+		
+		final var warLeague = "https://api.clashofclans.com/v1/clans/"+tagCompleto+"/currentwar/leaguegroup";
+		try
+		{
+			final var warLeagueURL = new URL(warLeague);
+			var response = getResponse(warLeagueURL);
+			
+			var jsonParser = new JSONParser();
+			Object obj = jsonParser.parse(response);
+			var jsonObject = (JSONObject) obj;
+			
+			if (((String) jsonObject.get("state")).equalsIgnoreCase("notinwar"))
+			{
+				channel.sendMessage("Non siamo in lega, smh.").queue(l->react("smh"));
+				return;
+			}
+			
+			var warTagsArray = (JSONArray) jsonObject.get("rounds");
+			
+			var warDays = (JSONObject) warTagsArray.get(dayOfWar);
+			var warTags = (JSONArray) warDays.get("warTags");
+			
+			var risultato = search(warTags);
+			channel.sendMessage(risultato).queue();
+			
+		}
+		catch (IOException | ParseException ignored){}
+		
+	} // fine clashWarLeague()
+	
+	private static String search(JSONArray tags)
+	{
+		final var legaURL = "https://api.clashofclans.com/v1/clanwarleagues/wars/%23";
+		
+		for (int i = 0; i < 4; i++)
+		{
+			var x = (String) tags.get(i);
+			x = x.substring(1);
+			
+			try
+			{
+				var url = new URL(legaURL+x);
+				var response = getResponse(url);
+				
+				Object obj = jsonParser.parse(response);
+				var jsonObject = (JSONObject) obj;
+				var clan = (JSONObject) jsonObject.get("clan");
+				var name = (String) clan.get("name");
+				var opponent = (JSONObject) jsonObject.get("opponent");
+				var oppName = (String) opponent.get("name");
+				var nameIsUs = true;
+				if (name.equalsIgnoreCase("the legends") || oppName.equalsIgnoreCase("the legends"))
+				{
+					nameIsUs = name.equalsIgnoreCase("the legends");
+					
+					double[] percentage = new double[2];
+					long[] attacks = new long[2];
+					long[] stars = new long[2];
+					
+					percentage[0] = (double) clan.get("destructionPercentage");
+					attacks[0] = (long) clan.get("attacks");
+					stars[0] = (long) clan.get("stars");
+					
+					percentage[1] = (double) opponent.get("destructionPercentage");
+					attacks[1] = (long) opponent.get("attacks");
+					stars[1] = (long) opponent.get("stars");
+					
+					var risp = "Guerra contro " + (nameIsUs ? oppName : name) + "\n";
+					risp += "Stelle: " + (nameIsUs ? stars[0]:stars[1]) + " vs " + (nameIsUs?stars[1]:stars[0])+"\n";
+					risp += "Attacchi sferrati: " + (nameIsUs ? attacks[0]:attacks[1])+" vs "+ (nameIsUs?attacks[1]:attacks[0])+"\n";
+					risp += "Distruzione: " + (nameIsUs?percentage[0]:percentage[1])+ " vs "+ (nameIsUs?percentage[1]:percentage[0])+"\n";
+					channel.sendMessage(risp).queue();
+				}
+				
+				
+			}catch (IOException | ParseException ignored){}
+		}
+		return "string";
+	} // fine search()
+	
 	
 	
 	
