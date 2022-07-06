@@ -1707,12 +1707,8 @@ public class Commands extends ListenerAdapter
 	
 	public void clashCommands(String msgLowerCase)
 	{
-		switch (msgLowerCase)
-		{
-			case "!clashwar" -> clashWar();
-			// more commands
-			default -> channel.sendMessage("WTF").queue();
-		}
+		if (msgLowerCase.contains("war"))
+			clashWar();
 		
 		
 	} // fine clashCommands()
