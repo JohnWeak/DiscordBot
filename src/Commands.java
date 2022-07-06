@@ -120,7 +120,7 @@ public class Commands extends ListenerAdapter
 		var nomeActivity = "**" + act.getName() + "**";
 		var activityTradotta = activity.equals("WATCHING") ? "guardo " : "gioco a ";
 		
-		// canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
+		canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
 	} // fine onReady()
 
 	/** Questo metodo decide cosa fare quando un messaggio viene modificato */
