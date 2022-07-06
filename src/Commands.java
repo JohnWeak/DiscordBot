@@ -1787,6 +1787,7 @@ public class Commands extends ListenerAdapter
 		var dayOfWar = day-4; // -3 perché lega iniziata 3 giorni fa, -1 perché array parte da 0
 		
 		final var warLeague = "https://api.clashofclans.com/v1/clans/"+tagCompleto+"/currentwar/leaguegroup";
+		channel.sendTyping().queue();
 		try
 		{
 			final var warLeagueURL = new URL(warLeague);
@@ -1832,11 +1833,13 @@ public class Commands extends ListenerAdapter
 				Object obj = jsonParser.parse(response);
 				var jsonObject = (JSONObject) obj;
 				var clan = (JSONObject) jsonObject.get("clan");
-				var badgeUrls = (JSONObject) clan.get("badgeUrls");
-				var badgeM = (String) badgeUrls.get("medium");
+				var clanBadgeUrls = (JSONObject) clan.get("badgeUrls");
+				var clanBadgeM = (String) clanBadgeUrls.get("medium");
 				var name = (String) clan.get("name");
 				var opponent = (JSONObject) jsonObject.get("opponent");
 				var oppName = (String) opponent.get("name");
+				var opponentBadgeUrls = (JSONObject) opponent.get("badgeUrls");
+				var opponentBadgeM = (String) opponentBadgeUrls.get("medium");
 				var nameIsUs = true;
 				if (name.equalsIgnoreCase("the legends") || oppName.equalsIgnoreCase("the legends"))
 				{
@@ -1861,8 +1864,8 @@ public class Commands extends ListenerAdapter
 					var embed = new EmbedBuilder()
 						.setTitle("**War contro " + (nameIsUs ? oppName : name)+"**")
 						.setColor(Color.RED)
-						.setAuthor("War " + dayOfWar + "/7", "https://www.youtube.com/watch?v=dQw4w9WgXcQ", ""+badgeM)
-						.setThumbnail(badgeM)
+						.setAuthor("Guerra " + dayOfWar + " di 7", "https://www.youtube.com/watch?v=dQw4w9WgXcQ", ""+opponentBadgeM)
+						.setThumbnail(clanBadgeM)
 						.addField("Stelle",""+st+"\t", true)
 						.addField("Attacchi", ""+attacchi+"\t", true)
 						.addField("Distruzione",""+distr+"\t",true)
