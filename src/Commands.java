@@ -278,7 +278,8 @@ public class Commands extends ListenerAdapter
 			case "!rifiuto" -> rifiutaDuello();
 			case "!massshooting", "!ms" -> massShooting();
 			case "!bestemmia" -> bestemmia();
-			case "!clash" -> clashCommands(messageRaw.toLowerCase());
+			case "!war" -> clashWar();
+			case "!lega" -> clashWarLeague();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -1710,18 +1711,6 @@ public class Commands extends ListenerAdapter
 		user.openPrivateChannel().flatMap(channel -> channel.sendMessage(content)).queue();
 	} // fine onPrivateMessageReceived()
 	
-	
-	public void clashCommands(String msgLowerCase)
-	{
-		if (msgLowerCase.contains("war"))
-			clashWar();
-		
-		if (msgLowerCase.contains("lega") || msgLowerCase.contains("league"))
-			clashWarLeague();
-		
-		
-	} // fine clashCommands()
-	
 	private static String getResponse(URL url) throws IOException
 	{
 		var connection = (HttpURLConnection) url.openConnection();
@@ -1870,8 +1859,9 @@ public class Commands extends ListenerAdapter
 					var distr = (nameIsUs?percentage[0]:percentage[1])+ "% vs "+ (nameIsUs?percentage[1]:percentage[0])+"%";
 					
 					var embed = new EmbedBuilder()
-						.setTitle("**War contro " + (nameIsUs ? oppName : name)+"** ("+dayOfWar+"/7)")
+						.setTitle("**War contro " + (nameIsUs ? oppName : name)+"**")
 						.setColor(Color.RED)
+						.setAuthor("War " + dayOfWar + "/7")
 						.setThumbnail(badgeM)
 						.addField("Stelle",""+st+"\t", true)
 						.addField("Attacchi", ""+attacchi+"\t", true)
