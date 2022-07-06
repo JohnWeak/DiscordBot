@@ -1842,6 +1842,8 @@ public class Commands extends ListenerAdapter
 				Object obj = jsonParser.parse(response);
 				var jsonObject = (JSONObject) obj;
 				var clan = (JSONObject) jsonObject.get("clan");
+				var badgeUrls = (JSONObject) clan.get("badgeUrls");
+				var badgeM = (String) badgeUrls.get("medium");
 				var name = (String) clan.get("name");
 				var opponent = (JSONObject) jsonObject.get("opponent");
 				var oppName = (String) opponent.get("name");
@@ -1869,6 +1871,7 @@ public class Commands extends ListenerAdapter
 					var embed = new EmbedBuilder()
 						.setTitle("**War contro " + (nameIsUs ? oppName : name)+"**")
 						.setColor(Color.RED)
+						.setThumbnail(badgeM)
 						.addField("Stelle",""+st, true)
 						.addField("Attacchi", ""+attacchi, true)
 						.addField("Distruzione",""+distr,true)
