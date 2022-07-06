@@ -1818,15 +1818,14 @@ public class Commands extends ListenerAdapter
 			var warDays = (JSONObject) warTagsArray.get(dayOfWar);
 			var warTags = (JSONArray) warDays.get("warTags");
 			
-			var risultato = search(warTags);
-			channel.sendMessage(risultato).queue();
+			search(warTags);
 			
 		}
 		catch (IOException | ParseException ignored){}
 		
 	} // fine clashWarLeague()
 	
-	private static String search(JSONArray tags)
+	private static void search(JSONArray tags)
 	{
 		final var legaURL = "https://api.clashofclans.com/v1/clanwarleagues/wars/%23";
 		
@@ -1863,17 +1862,25 @@ public class Commands extends ListenerAdapter
 					attacks[1] = (long) opponent.get("attacks");
 					stars[1] = (long) opponent.get("stars");
 					
-					var risp = "Guerra contro " + (nameIsUs ? oppName : name) + "\n";
-					risp += "Stelle: " + (nameIsUs ? stars[0]:stars[1]) + " vs " + (nameIsUs?stars[1]:stars[0])+"\n";
-					risp += "Attacchi sferrati: " + (nameIsUs ? attacks[0]:attacks[1])+" vs "+ (nameIsUs?attacks[1]:attacks[0])+"\n";
-					risp += "Distruzione: " + (nameIsUs?percentage[0]:percentage[1])+ " vs "+ (nameIsUs?percentage[1]:percentage[0])+"\n";
-					channel.sendMessage(risp).queue();
+					var st = (nameIsUs ? stars[0]:stars[1]) + " vs " + (nameIsUs?stars[1]:stars[0]);
+					var attacchi = (nameIsUs ? attacks[0]:attacks[1])+" vs "+ (nameIsUs?attacks[1]:attacks[0]);
+					var distr = (nameIsUs?percentage[0]:percentage[1])+ "% vs "+ (nameIsUs?percentage[1]:percentage[0])+"%";
+					
+					var embed = new EmbedBuilder()
+						.setTitle("**War contro " + (nameIsUs ? oppName : name)+"**")
+						.setColor(Color.RED)
+						.addField("Stelle",""+st, true)
+						.addField("Attacchi", ""+attacchi, true)
+						.addField("Distruzione",""+distr,true)
+					;
+					
+					channel.sendMessageEmbeds(embed.build()).queue();
+					
 				}
 				
 				
 			}catch (IOException | ParseException ignored){}
 		}
-		return "string";
 	} // fine search()
 	
 	
