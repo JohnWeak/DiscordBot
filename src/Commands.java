@@ -1827,6 +1827,7 @@ public class Commands extends ListenerAdapter
 	
 	private static void search(JSONArray tags, int dayOfWar)
 	{
+		dayOfWar++;
 		final var legaURL = "https://api.clashofclans.com/v1/clanwarleagues/wars/%23";
 		
 		for (int i = 0; i < 4; i++)
@@ -1872,9 +1873,9 @@ public class Commands extends ListenerAdapter
 						.setTitle("**War contro " + (nameIsUs ? oppName : name)+"** ("+dayOfWar+"/7)")
 						.setColor(Color.RED)
 						.setThumbnail(badgeM)
-						.addField("Stelle",""+st, true)
-						.addField("Attacchi", ""+attacchi, true)
-						.addField("Distruzione",""+distr,true)
+						.addField("Stelle",""+st+"\t", true)
+						.addField("Attacchi", ""+attacchi+"\t", true)
+						.addField("Distruzione",""+distr+"\t",true)
 					;
 					
 					channel.sendMessageEmbeds(embed.build()).queue();
