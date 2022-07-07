@@ -1874,6 +1874,8 @@ public class Commands extends ListenerAdapter
 						percentage[1] = "**" + percentage[1] + "**";
 					
 					
+					var nome = (nameIsUs ? name : oppName);
+					var nomeNemici = (nameIsUs ? oppName : name);
 					var st = (nameIsUs ? stars[0]:stars[1]) + " vs " + (nameIsUs?stars[1]:stars[0]);
 					var attacchi = (nameIsUs ? attacks[0]:attacks[1])+" vs "+ (nameIsUs?attacks[1]:attacks[0]);
 					var distr = (nameIsUs?percentage[0]:percentage[1])+ "% vs "+ (nameIsUs?percentage[1]:percentage[0])+"%";
@@ -1881,7 +1883,7 @@ public class Commands extends ListenerAdapter
 					
 					
 					var embed = new EmbedBuilder()
-						.setTitle("**War contro " + (nameIsUs ? oppName : name)+"**")
+						.setTitle("**" + nome + " contro " + nomeNemici +"**")
 						.setColor(Color.RED)
 						.setAuthor("Guerra " + dayOfWar + " di 7", "https://www.youtube.com/watch?v=dQw4w9WgXcQ", ""+opponentBadgeM)
 						.setThumbnail(clanBadgeM)
