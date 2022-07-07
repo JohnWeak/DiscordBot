@@ -1868,7 +1868,7 @@ public class Commands extends ListenerAdapter
 					else
 						attacks[1] = "**" + attacks[1] + "**";
 					
-					if (Integer.parseInt(percentage[0]) >= Integer.parseInt(percentage[1]))
+					if (Double.parseDouble(percentage[0]) >= Double.parseDouble(percentage[1]))
 						percentage[0] = "**" + percentage[0] + "**";
 					else
 						percentage[1] = "**" + percentage[1] + "**";
