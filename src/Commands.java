@@ -279,7 +279,7 @@ public class Commands extends ListenerAdapter
 			case "!massshooting", "!ms" -> massShooting();
 			case "!bestemmia" -> bestemmia();
 			case "!war" -> clashWar();
-			case "!lega" -> clashWarLeague();
+			case "!league" -> clashWarLeague();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -1886,6 +1886,7 @@ public class Commands extends ListenerAdapter
 	
 	private static String[] kurt(JSONObject clan)
 	{
+		final var kurtTag = "#PP28G9L2Y";
 		var members = (JSONArray) clan.get("members");
 		
 		String[] godOfWar = new String[2];
@@ -1895,13 +1896,13 @@ public class Commands extends ListenerAdapter
 		{
 			var m = (JSONObject) members.get(i);
 			var t = (String) m.get("tag");
-			if (t.equals("#PP28G9L2Y"))
+			if (t.equals(kurtTag))
 			{
 				try
 				{
 					var att = ((JSONObject) (((JSONArray) m.get("attacks")).get(0)));
 					stars = (long) att.get("stars");
-					percentage = String.format("%.2f", ((double) att.get("destructionPercentage")));
+					percentage = Long.toString((long) att.get("destructionPercentage"));
 				}
 				catch (Exception e) { return null; }
 			}
