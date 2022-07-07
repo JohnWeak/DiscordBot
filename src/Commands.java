@@ -1846,10 +1846,10 @@ public class Commands extends ListenerAdapter
 				{
 					nameIsUs = name.equalsIgnoreCase("the legends");
 					
-					String[] stars = new String[2];
-					String[] attacks = new String[2];
-					double[] perc = new double[2];
-					String[] percentage = new String[2];
+					var stars = new String[2];
+					var attacks = new String[2];
+					var perc = new double[2];
+					var percentage = new String[2];
 					
 					stars[0] = String.format("%d", (long) clan.get("stars"));
 					attacks[0] = String.format("%d", (long) clan.get("attacks"));
