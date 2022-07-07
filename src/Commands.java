@@ -1846,17 +1846,33 @@ public class Commands extends ListenerAdapter
 				{
 					nameIsUs = name.equalsIgnoreCase("the legends");
 					
+					String[] stars = new String[2];
+					String[] attacks = new String[2];
 					String[] percentage = new String[2];
-					long[] attacks = new long[2];
-					long[] stars = new long[2];
 					
+					stars[0] = String.format("%d", (long) clan.get("stars"));
+					attacks[0] = String.format("%d", (long) clan.get("attacks"));
 					percentage[0] = String.format("%.2f", (double) clan.get("destructionPercentage"));
-					attacks[0] = (long) clan.get("attacks");
-					stars[0] = (long) clan.get("stars");
 					
+					stars[1] = String.format("%d", (long) opponent.get("stars"));
+					attacks[1] = String.format("%d", (long) opponent.get("attacks"));
 					percentage[1] = String.format("%.2f", (double) opponent.get("destructionPercentage"));
-					attacks[1] = (long) opponent.get("attacks");
-					stars[1] = (long) opponent.get("stars");
+					
+					if (Integer.parseInt(stars[0]) >= Integer.parseInt(stars[1]))
+						stars[0] = "**" + stars[0] + "**";
+					else
+						stars[1] = "**" + stars[1] + "**";
+					
+					if (Integer.parseInt(attacks[0]) >= Integer.parseInt(attacks[1]))
+						attacks[0] = "**" + attacks[0]+ "**";
+					else
+						attacks[1] = "**" + attacks[1] + "**";
+					
+					if (Integer.parseInt(percentage[0]) >= Integer.parseInt(percentage[1]))
+						percentage[0] = "**" + percentage[0] + "**";
+					else
+						percentage[1] = "**" + percentage[1] + "**";
+					
 					
 					var st = (nameIsUs ? stars[0]:stars[1]) + " vs " + (nameIsUs?stars[1]:stars[0]);
 					var attacchi = (nameIsUs ? attacks[0]:attacks[1])+" vs "+ (nameIsUs?attacks[1]:attacks[0]);
