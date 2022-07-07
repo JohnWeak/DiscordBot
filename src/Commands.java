@@ -1854,12 +1854,12 @@ public class Commands extends ListenerAdapter
 					stars[0] = String.format("%d", (long) clan.get("stars"));
 					attacks[0] = String.format("%d", (long) clan.get("attacks"));
 					perc[0] = (double) clan.get("destructionPercentage");
-					percentage[0] = String.format("%.2f", perc[0]);
+					percentage[0] = String.format("%.2f", perc[0]) + "%";
 					
 					stars[1] = String.format("%d", (long) opponent.get("stars"));
 					attacks[1] = String.format("%d", (long) opponent.get("attacks"));
 					perc[1] = (double) opponent.get("destructionPercentage");
-					percentage[1] = String.format("%.2f", perc[1]);
+					percentage[1] = String.format("%.2f", perc[1]) + "%";
 					
 					if (Integer.parseInt(stars[0]) >= Integer.parseInt(stars[1]))
 						stars[0] = "**" + stars[0] + "**";
@@ -1881,7 +1881,7 @@ public class Commands extends ListenerAdapter
 					var nomeNemici = (nameIsUs ? oppName : name);
 					var st = (nameIsUs ? stars[0]:stars[1]) + " vs " + (nameIsUs?stars[1]:stars[0]);
 					var attacchi = (nameIsUs ? attacks[0]:attacks[1])+" vs "+ (nameIsUs?attacks[1]:attacks[0]);
-					var distr = (nameIsUs?percentage[0]:percentage[1])+ "% vs "+ (nameIsUs?percentage[1]:percentage[0])+"%";
+					var distr = (nameIsUs?percentage[0]:percentage[1])+ " vs "+ (nameIsUs?percentage[1]:percentage[0]);
 					var dioGuerra = (godOfWar == null? "Deve ancora attaccare." : "Ha attaccato, ottenendo "+godOfWar[0]+" stelle, " + godOfWar[1]+"%.");
 					
 					
