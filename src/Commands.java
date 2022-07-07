@@ -1872,7 +1872,7 @@ public class Commands extends ListenerAdapter
 						.addField("Stelle",""+st+"\t", true)
 						.addField("Attacchi", ""+attacchi+"\t", true)
 						.addField("Distruzione",""+distr+"\t",true)
-						.addField("Kurtalanli",""+dioGuerra,false)
+						.addField("Kurtalanlı",""+dioGuerra,false)
 					;
 					
 					channel.sendMessageEmbeds(embed.build()).queue();
