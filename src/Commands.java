@@ -1840,6 +1840,8 @@ public class Commands extends ListenerAdapter
 				var opponentBadgeUrls = (JSONObject) opponent.get("badgeUrls");
 				var opponentBadgeM = (String) opponentBadgeUrls.get("medium");
 				var nameIsUs = true;
+				var godOfWar = kurt(clan);
+				
 				if (name.equalsIgnoreCase("the legends") || oppName.equalsIgnoreCase("the legends"))
 				{
 					nameIsUs = name.equalsIgnoreCase("the legends");
@@ -1859,6 +1861,8 @@ public class Commands extends ListenerAdapter
 					var st = (nameIsUs ? stars[0]:stars[1]) + " vs " + (nameIsUs?stars[1]:stars[0]);
 					var attacchi = (nameIsUs ? attacks[0]:attacks[1])+" vs "+ (nameIsUs?attacks[1]:attacks[0]);
 					var distr = (nameIsUs?percentage[0]:percentage[1])+ "% vs "+ (nameIsUs?percentage[1]:percentage[0])+"%";
+					var dioGuerra = (godOfWar == null? "Deve ancora attaccare." : "Ha attaccato, ottenendo "+godOfWar[0]+" stelle, " + godOfWar[1]+"%.");
+					
 					
 					var embed = new EmbedBuilder()
 						.setTitle("**War contro " + (nameIsUs ? oppName : name)+"**")
@@ -1868,6 +1872,7 @@ public class Commands extends ListenerAdapter
 						.addField("Stelle",""+st+"\t", true)
 						.addField("Attacchi", ""+attacchi+"\t", true)
 						.addField("Distruzione",""+distr+"\t",true)
+						.addField("Kurtalanli",""+dioGuerra,false)
 					;
 					
 					channel.sendMessageEmbeds(embed.build()).queue();
@@ -1879,6 +1884,33 @@ public class Commands extends ListenerAdapter
 		}
 	} // fine search()
 	
+	private static String[] kurt(JSONObject clan)
+	{
+		var members = (JSONArray) clan.get("members");
+		
+		String[] godOfWar = new String[2];
+		long stars = 0;
+		var percentage = "";
+		for (int i = 0; i < 15; i++)
+		{
+			var m = (JSONObject) members.get(i);
+			var t = (String) m.get("tag");
+			if (t.equals("#PP28G9L2Y"))
+			{
+				try
+				{
+					var att = ((JSONObject) (((JSONArray) m.get("attacks")).get(0)));
+					stars = (long) att.get("stars");
+					percentage = String.format("%.2f", ((double) att.get("destructionPercentage")));
+				}
+				catch (Exception e) { return null; }
+			}
+		}
+		godOfWar[0] = String.valueOf(stars);
+		godOfWar[1] = percentage;
+		
+		return godOfWar;
+	} // fine kurt()
 	
 	
 	
