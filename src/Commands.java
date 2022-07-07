@@ -1848,15 +1848,18 @@ public class Commands extends ListenerAdapter
 					
 					String[] stars = new String[2];
 					String[] attacks = new String[2];
+					double[] perc = new double[2];
 					String[] percentage = new String[2];
 					
 					stars[0] = String.format("%d", (long) clan.get("stars"));
 					attacks[0] = String.format("%d", (long) clan.get("attacks"));
-					percentage[0] = String.format("%.2f", (double) clan.get("destructionPercentage"));
+					perc[0] = (double) clan.get("destructionPercentage");
+					percentage[0] = String.format("%.2f", perc[0]);
 					
 					stars[1] = String.format("%d", (long) opponent.get("stars"));
 					attacks[1] = String.format("%d", (long) opponent.get("attacks"));
-					percentage[1] = String.format("%.2f", (double) opponent.get("destructionPercentage"));
+					perc[1] = (double) opponent.get("destructionPercentage");
+					percentage[1] = String.format("%.2f", perc[1]);
 					
 					if (Integer.parseInt(stars[0]) >= Integer.parseInt(stars[1]))
 						stars[0] = "**" + stars[0] + "**";
@@ -1868,7 +1871,7 @@ public class Commands extends ListenerAdapter
 					else
 						attacks[1] = "**" + attacks[1] + "**";
 					
-					if (Double.parseDouble(percentage[0]) >= Double.parseDouble(percentage[1]))
+					if (perc[0] >= perc[1])
 						percentage[0] = "**" + percentage[0] + "**";
 					else
 						percentage[1] = "**" + percentage[1] + "**";
