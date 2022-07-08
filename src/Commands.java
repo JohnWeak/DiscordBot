@@ -1839,6 +1839,7 @@ public class Commands extends ListenerAdapter
 				var oppName = (String) opponent.get("name");
 				var opponentBadgeUrls = (JSONObject) opponent.get("badgeUrls");
 				var opponentBadgeM = (String) opponentBadgeUrls.get("medium");
+				var opponentBadgeL = (String) opponentBadgeUrls.get("large");
 				var nameIsUs = true;
 				var godOfWar = kurt(clan);
 				
@@ -1888,8 +1889,8 @@ public class Commands extends ListenerAdapter
 					var embed = new EmbedBuilder()
 						.setTitle("**" + nome + " contro " + nomeNemici +"**")
 						.setColor(Color.RED)
-						.setAuthor("Guerra " + dayOfWar + " di 7", "https://www.youtube.com/watch?v=dQw4w9WgXcQ", ""+opponentBadgeM)
-						.setThumbnail(clanBadgeM)
+						.setAuthor("Guerra " + dayOfWar + " di 7", "https://www.youtube.com/watch?v=dQw4w9WgXcQ", ""+clanBadgeM)
+						.setThumbnail(opponentBadgeL)
 						.addField("Stelle",""+st+"\t", true)
 						.addField("Attacchi", ""+attacchi+"\t", true)
 						.addField("Distruzione",""+distr+"\t",true)
