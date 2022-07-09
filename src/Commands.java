@@ -1901,22 +1901,23 @@ public class Commands extends ListenerAdapter
 					
 					var stars = new String[2];
 					var attacks = new String[2];
-					var perc = new double[2];
-					var percentage = new String[2];
+					var perc = new String[2];
 					
 					stars[0] = String.format("%d", (long) clan.get("stars"));
 					attacks[0] = String.format("%d", (long) clan.get("attacks"));
-					perc[0] = (double) clan.get("destructionPercentage");
-					percentage[0] = String.format("%.2f", perc[0]) + "%";
+					perc[0] = (String) clan.get("destructionPercentage");
+					
 					
 					stars[1] = String.format("%d", (long) opponent.get("stars"));
 					attacks[1] = String.format("%d", (long) opponent.get("attacks"));
-					perc[1] = (double) opponent.get("destructionPercentage");
-					percentage[1] = String.format("%.2f", perc[1]) + "%";
+					perc[1] = (String) opponent.get("destructionPercentage");
 					
 					var str = grassetto(stars);
 					var atk = grassetto(attacks);
-					var destr = grassetto(percentage);
+					var destr = grassetto(perc);
+					
+					perc[0] = String.format("%.2f", perc[0]);
+					perc[1] = String.format("%.2f", perc[1]);
 					
 					//if (Integer.parseInt(stars[0]) >= Integer.parseInt(stars[1]))
 					//	stars[0] = "**" + stars[0] + "**";
