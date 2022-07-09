@@ -1953,9 +1953,9 @@ public class Commands extends ListenerAdapter
 		var due = Double.parseDouble(numeri[1]);
 		
 		if (uno > due)
-			numeri[0] = "**" + numeri[0] + "**";
+			numeri[0] = String.format("**%.2f**", uno);
 		else
-			numeri[1] = "**"+ numeri[1] + "**";
+			numeri[1] = String.format("**%.2f**", due);
 		
 		return numeri;
 	}
