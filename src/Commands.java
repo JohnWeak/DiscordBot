@@ -70,7 +70,7 @@ public class Commands extends ListenerAdapter
 	private static final String clanTag = "PLQP8UJ8";
 	private static final String tagCompleto = hashtag + clanTag;
 	private static final JSONParser jsonParser = new JSONParser();
-	
+	private static TextChannel canaleBot;
 	
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
 	private String getSaluto()
@@ -113,12 +113,14 @@ public class Commands extends ListenerAdapter
 		System.out.printf("%s si è connesso a Discord!\n\n", nome);
 		System.out.print("public class MessageHistory\n{\n");
 		
-		var canaleBot = event.getJDA().getTextChannelsByName("\uD83E\uDD16bot-owo", true).get(0);
+		canaleBot = event.getJDA().getTextChannelsByName("\uD83E\uDD16bot-owo", true).get(0);
 		canaleBotPokemon = event.getJDA().getTextChannelsByName("pokémowon", true).get(0);
 		
 		var activity = act.getType().toString();
 		var nomeActivity = "**" + act.getName() + "**";
 		var activityTradotta = activity.equals("WATCHING") ? "guardo " : "gioco a ";
+		
+		new ThreadLeague().start();
 		
 		canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
 	} // fine onReady()
@@ -279,7 +281,7 @@ public class Commands extends ListenerAdapter
 			case "!massshooting", "!ms" -> massShooting();
 			case "!bestemmia" -> bestemmia();
 			case "!war" -> clashWar();
-			case "!league" -> clashWarLeague();
+			case "!league" -> clashWarLeague(false);
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -1733,7 +1735,7 @@ public class Commands extends ListenerAdapter
 		return String.valueOf(response);
 	} // fine getResponse()
 	
-	private void clashWar()
+	public void clashWar()
 	{
 		final var currentWar = "https://api.clashofclans.com/v1/clans/" + tagCompleto + "/currentwar";
 		try
@@ -1779,14 +1781,16 @@ public class Commands extends ListenerAdapter
 		catch (IOException | ParseException e){System.out.println("\noh noes\n");}
 	} // fine clashWar()
 	
-	private void clashWarLeague()
+	public void clashWarLeague(boolean thread)
 	{
+		var canale = thread ? canaleBot : channel;
+		
 		var c = new GregorianCalendar();
 		var day = c.get(Calendar.DAY_OF_MONTH);
 		var dayOfWar = day-4; // -3 perché lega iniziata 3 giorni fa, -1 perché array parte da 0
 		
 		final var warLeague = "https://api.clashofclans.com/v1/clans/"+tagCompleto+"/currentwar/leaguegroup";
-		channel.sendTyping().queue();
+		canale.sendTyping().queue();
 		try
 		{
 			final var warLeagueURL = new URL(warLeague);
@@ -1798,7 +1802,7 @@ public class Commands extends ListenerAdapter
 			
 			if (((String) jsonObject.get("state")).equalsIgnoreCase("notinwar"))
 			{
-				channel.sendMessage("Non siamo in lega, smh.").queue(l->react("smh"));
+				canale.sendMessage("Non siamo in lega, smh.").queue(l->react("smh"));
 				return;
 			}
 			
@@ -1807,16 +1811,19 @@ public class Commands extends ListenerAdapter
 			var warDays = (JSONObject) warTagsArray.get(dayOfWar);
 			var warTags = (JSONArray) warDays.get("warTags");
 			
-			search(warTags, dayOfWar);
-			
+			var embed = search(warTags, dayOfWar);
+			if (embed == null)
+				canale.sendMessage("Errore nel metodo `search()`").queue();
+			else
+				canale.sendMessageEmbeds(embed.build()).queue();
 		}
 		catch (IOException | ParseException ignored){}
-		
 	} // fine clashWarLeague()
 	
-	private static void search(JSONArray tags, int dayOfWar)
+	public static EmbedBuilder search(JSONArray tags, int dayOfWar)
 	{
 		dayOfWar++;
+		EmbedBuilder embed = null;
 		final var legaURL = "https://api.clashofclans.com/v1/clanwarleagues/wars/%23";
 		
 		for (int i = 0; i < 4; i++)
@@ -1886,9 +1893,10 @@ public class Commands extends ListenerAdapter
 					var dioGuerra = (godOfWar == null? "Deve ancora attaccare." : "Ha attaccato ottenendo "+godOfWar[0]+" stelle, " + godOfWar[1]+"%.");
 					
 					
-					var embed = new EmbedBuilder()
+					embed = new EmbedBuilder()
 						.setTitle("**" + nome + " contro " + nomeNemici +"**")
 						.setColor(Color.RED)
+						.setTimestamp(Instant.now())
 						.setAuthor("Guerra " + dayOfWar + " di 7", "https://www.youtube.com/watch?v=dQw4w9WgXcQ", ""+clanBadgeM)
 						.setThumbnail(opponentBadgeL)
 						.addField("Stelle",""+st+"\t", true)
@@ -1897,16 +1905,15 @@ public class Commands extends ListenerAdapter
 						.addField("Kurtalanlı",""+dioGuerra,false)
 					;
 					
-					channel.sendMessageEmbeds(embed.build()).queue();
-					
 				}
 				
 				
 			}catch (IOException | ParseException ignored){}
 		}
+		return embed;
 	} // fine search()
 	
-	private static String[] kurt(JSONObject clan)
+	public static String[] kurt(JSONObject clan)
 	{
 		final var kurtTag = "#PP28G9L2Y";
 		var members = (JSONArray) clan.get("members");
