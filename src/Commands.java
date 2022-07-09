@@ -1920,7 +1920,7 @@ public class Commands extends ListenerAdapter
 					var nomeNemici = (nameIsUs ? oppName : name);
 					var st = (nameIsUs ? str[0]:str[1]) + " vs " + (nameIsUs?str[1]:str[0]);
 					var attacchi = (nameIsUs ? atk[0]:atk[1])+" vs "+ (nameIsUs?atk[1]:atk[0]);
-					var distr = (nameIsUs?destr[0]:destr[1])+ " vs "+ (nameIsUs?destr[1]:destr[0]);
+					var distr = (nameIsUs?destr[0]:destr[1])+ "% vs "+ (nameIsUs?destr[1]:destr[0]) + "%";
 					var dioGuerra = (godOfWar == null? "Deve ancora attaccare." : "Ha attaccato ottenendo "+godOfWar[0]+" stelle, " + godOfWar[1]+"%.");
 					
 					
@@ -1950,9 +1950,25 @@ public class Commands extends ListenerAdapter
 		var due = Double.parseDouble(numeri[1]);
 		
 		if (uno > due)
-			numeri[0] = (uno % 1 == 0) ? String.format("**%f**", uno) : String.format("**%.2f**", uno);
+		{
+			if (uno % 1 == 0) // numero intero
+			{
+				numeri[0] = numeri[0].substring(0, numeri[0].indexOf("."));
+				numeri[0] = "**"+numeri[0]+"**";
+			}
+			else
+				numeri[0] = String.format("%.2f", uno);
+		}
 		else
-			numeri[1] = (due % 1 == 0) ? String.format("**%f**", due) : String.format("**%.2f**", due);
+		{
+			if (due % 1 == 0)
+			{
+				numeri[1] = numeri[1].substring(0, numeri[1].indexOf("."));
+				numeri[1] = "**"+numeri[1]+"**";
+			}
+			else
+				numeri[1] = String.format("%.2f", due);
+		}
 		
 		return numeri;
 	}
