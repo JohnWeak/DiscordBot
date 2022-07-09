@@ -1735,6 +1735,7 @@ public class Commands extends ListenerAdapter
 		return String.valueOf(response);
 	} // fine getResponse()
 	
+	/**Controlla se il clan è in war e mostra l'andamento*/
 	public void clashWar()
 	{
 		final var currentWar = "https://api.clashofclans.com/v1/clans/" + tagCompleto + "/currentwar";
@@ -1758,29 +1759,50 @@ public class Commands extends ListenerAdapter
 			long[] stars = new long[2];
 			
 			var clan = (JSONObject) jsonObject.get("clan");
+			var name = (String) clan.get("name");
 			percentage[0] = String.format("%.2f", (double) clan.get("destructionPercentage"));
 			attacks[0] = (long) clan.get("attacks");
 			stars[0] = (long) clan.get("stars");
 			
-			var badge = (JSONObject) clan.get("badgeUrls");
-			var badgeS = (String) badge.get("small");
-			var badgeM = (String) badge.get("medium");
-			var badgeL = (String) badge.get("large");
+			var clanBadgeUrls = (JSONObject) clan.get("badgeUrls");
+			var clanBadgeS = (String) clanBadgeUrls.get("small");
+			var clanBadgeM = (String) clanBadgeUrls.get("medium");
+			var clanBadgeL = (String) clanBadgeUrls.get("large");
 			
 			var opponent = (JSONObject) jsonObject.get("opponent");
+			var oppName = (String) opponent.get("name");
+			
+			var oppBagdeUrls = (JSONObject) opponent.get("badgeUrls");
+			var oppBadgeS = (String) oppBagdeUrls.get("small");
+			var oppBadgeM = (String) oppBagdeUrls.get("medium");
+			var oppBadgeL = (String) oppBagdeUrls.get("large");
+			
+			
 			percentage[1] = String.format("%.2f", (double) opponent.get("destructionPercentage"));
 			attacks[1] = (long) opponent.get("attacks");
 			stars[1] = (long) opponent.get("stars");
 			
-			var attacchiNoi = "TheLegends. Attacchi: **" +attacks[0]+"**. Stelle: **"+stars[0]+"**. Distruzione: **"+percentage[0]+"%**.\n";
-			var attacchiLoro = "Avversari. Attacchi: **" +attacks[1]+"**. Stelle: **"+stars[1]+"**. Distruzione: **"+percentage[1]+"%**.\n";
+			var st = stars[0] + " vs " + stars[1];
+			var attacchi = attacks[0] + " vs " +attacks[1];
+			var distr = percentage[0] + " vs " + percentage[1];
 			
-			channel.sendMessage("**WAR**\n"+attacchiNoi+attacchiLoro).queue();
+			var embed = new EmbedBuilder()
+				.setTitle("**" + name + " contro " + oppName +"**")
+				.setColor(Color.RED)
+				.setTimestamp(Instant.now())
+				.setAuthor("War", "https://www.youtube.com/watch?v=dQw4w9WgXcQ", ""+clanBadgeM)
+				.setThumbnail(oppBadgeL)
+				.addField("Stelle",""+st+"\t", true)
+				.addField("Attacchi", ""+attacchi+"\t", true)
+				.addField("Distruzione",""+distr+"\t",true)
+			;
+			channel.sendMessageEmbeds(embed.build()).queue();
 			
 		}
 		catch (IOException | ParseException e){System.out.println("\noh noes\n");}
 	} // fine clashWar()
 	
+	/**Controlla se il clan è attualmente in guerra nella lega tra clan*/
 	public boolean isClanInLeague()
 	{
 		final var warLeague = "https://api.clashofclans.com/v1/clans/"+tagCompleto+"/currentwar/leaguegroup";
@@ -1803,7 +1825,7 @@ public class Commands extends ListenerAdapter
 		return false;
 	} // fine isClanInLeague()
 	
-	
+	/**Ottiene e mostra le informazioni sulla war della lega tra clan*/
 	public void clashWarLeague(boolean thread)
 	{
 		var canale = thread ? canaleBot : channel;
