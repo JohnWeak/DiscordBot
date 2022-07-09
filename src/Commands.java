@@ -1916,23 +1916,8 @@ public class Commands extends ListenerAdapter
 					var atk = grassetto(attacks);
 					var destr = grassetto(perc);
 					
-					perc[0] = String.format("%.2f", perc[0]);
-					perc[1] = String.format("%.2f", perc[1]);
-					
-					//if (Integer.parseInt(stars[0]) >= Integer.parseInt(stars[1]))
-					//	stars[0] = "**" + stars[0] + "**";
-					//else
-					//	stars[1] = "**" + stars[1] + "**";
-					
-					//if (Integer.parseInt(attacks[0]) >= Integer.parseInt(attacks[1]))
-					//	attacks[0] = "**" + attacks[0]+ "**";
-					//else
-					//	attacks[1] = "**" + attacks[1] + "**";
-					
-					//if (perc[0] >= perc[1])
-					//	percentage[0] = "**" + percentage[0] + "**";
-					//else
-					//	percentage[1] = "**" + percentage[1] + "**";
+					perc[0] = String.format("%.2f", Double.parseDouble(perc[0]));
+					perc[1] = String.format("%.2f", Double.parseDouble(perc[1]));
 					
 					var nome = (nameIsUs ? name : oppName);
 					var nomeNemici = (nameIsUs ? oppName : name);
