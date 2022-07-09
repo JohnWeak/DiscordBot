@@ -1905,12 +1905,12 @@ public class Commands extends ListenerAdapter
 					
 					stars[0] = String.format("%d", (long) clan.get("stars"));
 					attacks[0] = String.format("%d", (long) clan.get("attacks"));
-					perc[0] = (String) clan.get("destructionPercentage");
+					perc[0] = String.valueOf((double) clan.get("destructionPercentage"));
 					
 					
 					stars[1] = String.format("%d", (long) opponent.get("stars"));
 					attacks[1] = String.format("%d", (long) opponent.get("attacks"));
-					perc[1] = (String) opponent.get("destructionPercentage");
+					perc[1] = String.valueOf((double) opponent.get("destructionPercentage"));
 					
 					var str = grassetto(stars);
 					var atk = grassetto(attacks);
