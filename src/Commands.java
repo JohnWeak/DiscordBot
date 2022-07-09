@@ -22,6 +22,7 @@ import java.text.DateFormat;
 import java.time.Instant;
 import java.util.List;
 import java.util.*;
+import java.util.function.DoubleBinaryOperator;
 
 public class Commands extends ListenerAdapter
 {
@@ -1755,14 +1756,14 @@ public class Commands extends ListenerAdapter
 			}
 			
 			String[] percentage = new String[2];
-			long[] attacks = new long[2];
-			long[] stars = new long[2];
+			String[] attacks = new String[2];
+			String[] stars = new String[2];
 			
 			var clan = (JSONObject) jsonObject.get("clan");
 			var name = (String) clan.get("name");
 			percentage[0] = String.format("%.2f", (double) clan.get("destructionPercentage"));
-			attacks[0] = (long) clan.get("attacks");
-			stars[0] = (long) clan.get("stars");
+			attacks[0] = (String) clan.get("attacks");
+			stars[0] = (String) clan.get("stars");
 			
 			var clanBadgeUrls = (JSONObject) clan.get("badgeUrls");
 			var clanBadgeS = (String) clanBadgeUrls.get("small");
@@ -1779,12 +1780,16 @@ public class Commands extends ListenerAdapter
 			
 			
 			percentage[1] = String.format("%.2f", (double) opponent.get("destructionPercentage"));
-			attacks[1] = (long) opponent.get("attacks");
-			stars[1] = (long) opponent.get("stars");
+			attacks[1] = (String) opponent.get("attacks");
+			stars[1] = (String) opponent.get("stars");
 			
-			var st = stars[0] + " vs " + stars[1];
-			var attacchi = attacks[0] + " vs " +attacks[1];
-			var distr = percentage[0] + " vs " + percentage[1];
+			var atk = grassetto(attacks);
+			var str = grassetto(stars);
+			var destr = grassetto(percentage);
+			
+			var st = str[0] + " vs " + str[1];
+			var attacchi = atk[0] + " vs " +atk[1];
+			var distr = destr[0] + " vs " + destr[1];
 			
 			var embed = new EmbedBuilder()
 				.setTitle("**" + name + " contro " + oppName +"**")
@@ -1910,27 +1915,30 @@ public class Commands extends ListenerAdapter
 					perc[1] = (double) opponent.get("destructionPercentage");
 					percentage[1] = String.format("%.2f", perc[1]) + "%";
 					
-					if (Integer.parseInt(stars[0]) >= Integer.parseInt(stars[1]))
-						stars[0] = "**" + stars[0] + "**";
-					else
-						stars[1] = "**" + stars[1] + "**";
+					var str = grassetto(stars);
+					var atk = grassetto(attacks);
+					var destr = grassetto(percentage);
 					
-					if (Integer.parseInt(attacks[0]) >= Integer.parseInt(attacks[1]))
-						attacks[0] = "**" + attacks[0]+ "**";
-					else
-						attacks[1] = "**" + attacks[1] + "**";
+					//if (Integer.parseInt(stars[0]) >= Integer.parseInt(stars[1]))
+					//	stars[0] = "**" + stars[0] + "**";
+					//else
+					//	stars[1] = "**" + stars[1] + "**";
 					
-					if (perc[0] >= perc[1])
-						percentage[0] = "**" + percentage[0] + "**";
-					else
-						percentage[1] = "**" + percentage[1] + "**";
+					//if (Integer.parseInt(attacks[0]) >= Integer.parseInt(attacks[1]))
+					//	attacks[0] = "**" + attacks[0]+ "**";
+					//else
+					//	attacks[1] = "**" + attacks[1] + "**";
 					
+					//if (perc[0] >= perc[1])
+					//	percentage[0] = "**" + percentage[0] + "**";
+					//else
+					//	percentage[1] = "**" + percentage[1] + "**";
 					
 					var nome = (nameIsUs ? name : oppName);
 					var nomeNemici = (nameIsUs ? oppName : name);
-					var st = (nameIsUs ? stars[0]:stars[1]) + " vs " + (nameIsUs?stars[1]:stars[0]);
-					var attacchi = (nameIsUs ? attacks[0]:attacks[1])+" vs "+ (nameIsUs?attacks[1]:attacks[0]);
-					var distr = (nameIsUs?percentage[0]:percentage[1])+ " vs "+ (nameIsUs?percentage[1]:percentage[0]);
+					var st = (nameIsUs ? str[0]:str[1]) + " vs " + (nameIsUs?str[1]:str[0]);
+					var attacchi = (nameIsUs ? atk[0]:atk[1])+" vs "+ (nameIsUs?atk[1]:atk[0]);
+					var distr = (nameIsUs?destr[0]:destr[1])+ " vs "+ (nameIsUs?destr[1]:destr[0]);
 					var dioGuerra = (godOfWar == null? "Deve ancora attaccare." : "Ha attaccato ottenendo "+godOfWar[0]+" stelle, " + godOfWar[1]+"%.");
 					
 					
@@ -1953,6 +1961,19 @@ public class Commands extends ListenerAdapter
 		}
 		return embed;
 	} // fine search()
+	
+	public static String[] grassetto(String[] numeri)
+	{
+		var uno = Double.parseDouble(numeri[0]);
+		var due = Double.parseDouble(numeri[1]);
+		
+		if (uno > due)
+			numeri[0] = "**" + numeri[0] + "**";
+		else
+			numeri[1] = "**"+ numeri[1] + "**";
+		
+		return numeri;
+	}
 	
 	public static String[] kurt(JSONObject clan)
 	{
