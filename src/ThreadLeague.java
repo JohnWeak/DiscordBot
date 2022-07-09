@@ -1,21 +1,24 @@
 public class ThreadLeague extends Thread
 {
-	private static final int max = 3;
+	private static final int max = 168 + 20; // ore di war totali + buffer
 	
 	public void run()
 	{
-		for (int i = 0; i < max; i++)
+		// se il clan è in lega, allora controlla l'andamento della war ora per ora
+		if (new Commands().isClanInLeague())
 		{
-			new Commands().clashWarLeague(true);
-			try
+			for (int i = 0; i < max; i++)
 			{
-				Thread.sleep(3600000);
-			} catch (InterruptedException e)
-			{
-				throw new RuntimeException(e);
+				new Commands().clashWarLeague(true);
+				try
+				{
+					Thread.sleep(3600000);
+				} catch (InterruptedException e)
+				{
+					throw new RuntimeException(e);
+				}
 			}
 		}
-		
 	} // fine run()
 	
 } // fine classe ThreadLeague

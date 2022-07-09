@@ -1781,16 +1781,10 @@ public class Commands extends ListenerAdapter
 		catch (IOException | ParseException e){System.out.println("\noh noes\n");}
 	} // fine clashWar()
 	
-	public void clashWarLeague(boolean thread)
+	public boolean isClanInLeague()
 	{
-		var canale = thread ? canaleBot : channel;
-		
-		var c = new GregorianCalendar();
-		var day = c.get(Calendar.DAY_OF_MONTH);
-		var dayOfWar = day-4; // -3 perché lega iniziata 3 giorni fa, -1 perché array parte da 0
-		
 		final var warLeague = "https://api.clashofclans.com/v1/clans/"+tagCompleto+"/currentwar/leaguegroup";
-		canale.sendTyping().queue();
+		
 		try
 		{
 			final var warLeagueURL = new URL(warLeague);
@@ -1802,22 +1796,47 @@ public class Commands extends ListenerAdapter
 			
 			if (((String) jsonObject.get("state")).equalsIgnoreCase("notinwar"))
 			{
-				canale.sendMessage("Non siamo in lega, smh.").queue(l->react("smh"));
-				return;
+				return true;
 			}
 			
-			var warTagsArray = (JSONArray) jsonObject.get("rounds");
-			
-			var warDays = (JSONObject) warTagsArray.get(dayOfWar);
-			var warTags = (JSONArray) warDays.get("warTags");
-			
-			var embed = search(warTags, dayOfWar);
-			if (embed == null)
-				canale.sendMessage("Errore nel metodo `search()`").queue();
-			else
-				canale.sendMessageEmbeds(embed.build()).queue();
+		}catch (IOException | ParseException ignored) {}
+		return false;
+	} // fine isClanInLeague()
+	
+	
+	public void clashWarLeague(boolean thread)
+	{
+		var canale = thread ? canaleBot : channel;
+		
+		if (isClanInLeague())
+		{
+			final var warLeague = "https://api.clashofclans.com/v1/clans/"+tagCompleto+"/currentwar/leaguegroup";
+			var c = new GregorianCalendar();
+			var day = c.get(Calendar.DAY_OF_MONTH);
+			var dayOfWar = day-4; // -3 perché lega iniziata 3 giorni fa, -1 perché array parte da 0
+			try
+			{
+				final var warLeagueURL = new URL(warLeague);
+				var response = getResponse(warLeagueURL);
+				
+				
+				var jsonParser = new JSONParser();
+				Object obj = jsonParser.parse(response);
+				var jsonObject = (JSONObject) obj;
+				
+				var warTagsArray = (JSONArray) jsonObject.get("rounds");
+				
+				var warDays = (JSONObject) warTagsArray.get(dayOfWar);
+				var warTags = (JSONArray) warDays.get("warTags");
+				
+				var embed = search(warTags, dayOfWar);
+				if (embed == null)
+					canale.sendMessage("Errore CATASTROFICO (non è vero) nel metodo `search()`").queue();
+				else
+					canale.sendMessageEmbeds(embed.build()).queue();
+			}catch (IOException | ParseException ignored) {}
 		}
-		catch (IOException | ParseException ignored){}
+	
 	} // fine clashWarLeague()
 	
 	public static EmbedBuilder search(JSONArray tags, int dayOfWar)
