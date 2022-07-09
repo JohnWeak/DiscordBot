@@ -1954,14 +1954,14 @@ public class Commands extends ListenerAdapter
 			if (uno % 1 == 0) // numero intero
 				numeri[0] = "**"+numeri[0]+"**";
 			else
-				numeri[0] = String.format("%.2f", uno);
+				numeri[0] = String.format("**%.2f**", uno);
 		}
 		else
 		{
 			if (due % 1 == 0)
 				numeri[1] = "**"+numeri[1]+"**";
 			else
-				numeri[1] = String.format("%.2f", due);
+				numeri[1] = String.format("**%.2f**", due);
 		}
 		
 		return numeri;
