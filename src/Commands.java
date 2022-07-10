@@ -1948,13 +1948,15 @@ public class Commands extends ListenerAdapter
 	{
 		var uno = Double.parseDouble(numeri[0]);
 		var due = Double.parseDouble(numeri[1]);
+		var unoIndex = numeri[0].indexOf(".");
+		var dueIndex = numeri[1].indexOf(".");
 		
-		if (uno % 1 == 0)
+		if (uno % 1 == 0 && unoIndex > 0)
 			numeri[0] = numeri[0].substring(0, numeri[0].indexOf("."));
 		else
 			numeri[0] = String.format("%.2f", uno);
 		
-		if (due % 1 == 0)
+		if (due % 1 == 0 && dueIndex > 0)
 			numeri[1] = numeri[1].substring(0, numeri[1].indexOf("."));
 		else
 			numeri[1] = String.format("%.2f", due);
