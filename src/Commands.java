@@ -1949,20 +1949,21 @@ public class Commands extends ListenerAdapter
 		var uno = Double.parseDouble(numeri[0]);
 		var due = Double.parseDouble(numeri[1]);
 		
-		if (uno >= due)
-		{
-			if (uno % 1 == 0) // numero intero
-				numeri[0] = "**" + numeri[0] + "**";
-			else
-				numeri[0] = String.format("**%.2f**", uno);
-		}
+		if (uno % 1 == 0)
+			numeri[0] = numeri[0].substring(0, numeri[0].indexOf("."));
 		else
-		{
-			if (due % 1 == 0)
-				numeri[1] = "**" + numeri[1] + "**";
-			else
-				numeri[1] = String.format("**%.2f**", due);
-		}
+			numeri[0] = String.format("%.2f", uno);
+		
+		if (due % 1 == 0)
+			numeri[1] = numeri[1].substring(0, numeri[1].indexOf("."));
+		else
+			numeri[1] = String.format("%.2f", due);
+		
+		
+		if (uno >= due)
+			numeri[0] = "**" + numeri[0] + "**";
+		else
+			numeri[1] = "**" + numeri[1] + "**";
 		
 		return numeri;
 	}
