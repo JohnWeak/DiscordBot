@@ -12,7 +12,7 @@ public class ThreadLeague extends Thread
 				new Commands().clashWarLeague(true);
 				try
 				{
-					Thread.sleep(3600000*2); // 3600000 = 1h
+					Thread.sleep(3600000*2); // 3600000ms = 1h
 				} catch (InterruptedException e)
 				{
 					throw new RuntimeException(e);
