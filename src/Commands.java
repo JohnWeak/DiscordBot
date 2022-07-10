@@ -1901,7 +1901,7 @@ public class Commands extends ListenerAdapter
 					
 					var stars = new String[2];
 					var attacks = new String[2];
-					var percentage = new String[2];
+					var percentage = new String[3];
 					
 					stars[0] = String.format("%d", (long) clan.get("stars"));
 					attacks[0] = String.format("%d", (long) clan.get("attacks"));
@@ -1916,12 +1916,23 @@ public class Commands extends ListenerAdapter
 					var atk = grassetto(attacks);
 					var destr = grassetto(percentage);
 					
+					if (destr[2].equals("0"))
+					{
+						destr[0] = destr[0] + "**%**";
+						destr[1] = destr[1] + "%";
+					}
+					else
+					{
+						destr[0] = destr[0] + "%";
+						destr[1] = destr[1] + "**%**";
+					}
+					
 					var nome = (nameIsUs ? name : oppName);
 					var nomeNemici = (nameIsUs ? oppName : name);
 					var st = (nameIsUs ? str[0]:str[1]) + " vs " + (nameIsUs?str[1]:str[0]);
-					var attacchi = (nameIsUs ? atk[0]:atk[1])+" vs "+ (nameIsUs?atk[1]:atk[0]);
-					var distr = (nameIsUs?destr[0]:destr[1])+ "% vs "+ (nameIsUs?destr[1]:destr[0]) + "%";
-					var dioGuerra = (godOfWar == null? "Deve ancora attaccare." : "Ha attaccato ottenendo "+godOfWar[0]+" stelle, " + godOfWar[1]+"%.");
+					var attacchi = (nameIsUs ? atk[0]:atk[1]) +" vs "+ (nameIsUs?atk[1]:atk[0]);
+					var distr = (nameIsUs?destr[0]:destr[1]) + " vs "+ (nameIsUs?destr[1]:destr[0]);
+					var dioGuerra = (godOfWar == null ? "Deve ancora attaccare" : "Ha attaccato ottenendo "+godOfWar[0]+" stelle (" + godOfWar[1]+"%)");
 					
 					
 					embed = new EmbedBuilder()
@@ -1966,6 +1977,9 @@ public class Commands extends ListenerAdapter
 			numeri[0] = "**" + numeri[0] + "**";
 		else
 			numeri[1] = "**" + numeri[1] + "**";
+		
+		if (numeri.length == 3) // se è array di distruzione
+			numeri[2] = (uno >= due ? "0" : "1");
 		
 		return numeri;
 	}
