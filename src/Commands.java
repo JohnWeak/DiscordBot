@@ -1901,20 +1901,20 @@ public class Commands extends ListenerAdapter
 					
 					var stars = new String[2];
 					var attacks = new String[2];
-					var perc = new String[2];
+					var percentage = new String[2];
 					
 					stars[0] = String.format("%d", (long) clan.get("stars"));
 					attacks[0] = String.format("%d", (long) clan.get("attacks"));
-					perc[0] = String.valueOf((double) clan.get("destructionPercentage"));
+					percentage[0] = String.valueOf((double) clan.get("destructionPercentage"));
 					
 					
 					stars[1] = String.format("%d", (long) opponent.get("stars"));
 					attacks[1] = String.format("%d", (long) opponent.get("attacks"));
-					perc[1] = String.valueOf((double) opponent.get("destructionPercentage"));
+					percentage[1] = String.valueOf((double) opponent.get("destructionPercentage"));
 					
 					var str = grassetto(stars);
 					var atk = grassetto(attacks);
-					var destr = grassetto(perc);
+					var destr = grassetto(percentage);
 					
 					var nome = (nameIsUs ? name : oppName);
 					var nomeNemici = (nameIsUs ? oppName : name);
@@ -1949,17 +1949,17 @@ public class Commands extends ListenerAdapter
 		var uno = Double.parseDouble(numeri[0]);
 		var due = Double.parseDouble(numeri[1]);
 		
-		if (uno > due)
+		if (uno >= due)
 		{
 			if (uno % 1 == 0) // numero intero
-				numeri[0] = "**"+numeri[0]+"**";
+				numeri[0] = "**" + numeri[0] + "**";
 			else
 				numeri[0] = String.format("**%.2f**", uno);
 		}
 		else
 		{
 			if (due % 1 == 0)
-				numeri[1] = "**"+numeri[1]+"**";
+				numeri[1] = "**" + numeri[1] + "**";
 			else
 				numeri[1] = String.format("**%.2f**", due);
 		}
