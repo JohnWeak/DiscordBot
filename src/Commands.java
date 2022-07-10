@@ -1953,12 +1953,12 @@ public class Commands extends ListenerAdapter
 		
 		if (uno % 1 == 0 && unoIndex > 0)
 			numeri[0] = numeri[0].substring(0, numeri[0].indexOf("."));
-		else
+		else if (uno % 1 != 0 && unoIndex > 0)
 			numeri[0] = String.format("%.2f", uno);
 		
 		if (due % 1 == 0 && dueIndex > 0)
 			numeri[1] = numeri[1].substring(0, numeri[1].indexOf("."));
-		else
+		else if (due % 1 != 0 && dueIndex > 0)
 			numeri[1] = String.format("%.2f", due);
 		
 		
