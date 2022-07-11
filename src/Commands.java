@@ -1993,10 +1993,11 @@ public class Commands extends ListenerAdapter
 		}
 		else
 		{
-			channel.sendMessage("Il bazooka ha fatto cilecca.").queue(l->
+			channel.sendMessage("Il bazooka ha fatto cilecca.").queue(msg ->
 			{
-				var msg = message.getIdLong();
-				pause(1000, 0); channel.deleteMessageById(msg).queue();
+				var m = msg.getIdLong();
+				pause(2000, 0);
+				channel.deleteMessageById(m).queue();
 			});
 		}
 		
