@@ -283,7 +283,7 @@ public class Commands extends ListenerAdapter
 			case "!war" -> clashWar();
 			case "!league" -> clashWarLeague(false);
 			case "!pigeonbazooka" -> pigeonBazooka();
-			case "!test" -> test();
+			case "!test" -> new ThreadTest().start();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -2004,9 +2004,8 @@ public class Commands extends ListenerAdapter
 		
 	} // fine pigeonBazooka()
 	
-	private void test()
+	public void test()
 	{
-		
 		final var msg1 = "Prova";
 		final var msg2 = "Test";
 		
