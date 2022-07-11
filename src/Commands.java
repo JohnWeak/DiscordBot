@@ -1786,12 +1786,12 @@ public class Commands extends ListenerAdapter
 			Object obj = jsonParser.parse(response);
 			var jsonObject = (JSONObject) obj;
 			
-			if (((String) jsonObject.get("state")).equalsIgnoreCase("notinwar"))
-				return false;
+			if (((String) jsonObject.get("state")).equalsIgnoreCase("inwar"))
+				return true;
 			
 		}catch (IOException | ParseException ignored) {}
 		
-		return true;
+		return false;
 	} // fine isClanInLeague()
 	
 	/**Ottiene e mostra le informazioni sulla war della lega tra clan*/
