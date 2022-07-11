@@ -479,7 +479,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("deez nuts") && discriminator.equals(NUMENIGMO))
 		{
 			reply = true;
-			msgReply += "\"deez nuts\" DEEZ NUTS, Enigmo!";
+			msgReply += "DEEZ NUTS, Enigmo!";
 		}
 		
 		if (msgLowerCase.contains("serve aiuto"))
