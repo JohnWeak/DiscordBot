@@ -2006,12 +2006,13 @@ public class Commands extends ListenerAdapter
 	
 	private void test()
 	{
+		
 		final var msg1 = "Prova";
 		final var msg2 = "Test";
 		
 		channel.sendMessage(""+msg1+msg2).queue(m ->
 		{
-			var idMSG = m.getId();
+			var idMSG = m.getIdLong();
 			pause(2000, 0);
 			for(int i = 0; i < 10; i++)
 			{
