@@ -30,7 +30,7 @@ public class Commands extends ListenerAdapter
 	private static final File nomiPkmn = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
 	private static MessageChannel channel;
-	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon", "!carta", "!duello", "!colpevole", "!bestemmia", "!massshooting"};
+	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon", "!carta", "!duello", "!colpevole", "!massshooting"};
 	private static final String[] listaDescrizioni =
 	{
 		"Il bot lancerà una moneta.",
@@ -41,7 +41,6 @@ public class Commands extends ListenerAdapter
 		"Genera una carta da gioco.",
 		"Sfida un giocatore ad un duello di carte.",
 		"Lascia che RNGesus decida la percentuale di colpevolezza di un altro utente.",
-		"Quando serve incolpare qualcuno ai piani alti.",
 		"Ottieni il resoconto delle sparatorie di massa negli USA. Sono dati reali."
 	};
 	private static int messaggiInviati = 0;
@@ -280,7 +279,6 @@ public class Commands extends ListenerAdapter
 			case "!accetto" -> accettaDuello(false);
 			case "!rifiuto" -> rifiutaDuello();
 			case "!massshooting", "!ms" -> massShooting();
-			case "!bestemmia" -> bestemmia();
 			case "!war" -> clashWar();
 			case "!league" -> clashWarLeague(false);
 		}
@@ -1660,41 +1658,6 @@ public class Commands extends ListenerAdapter
 		};
 	} // fine getMese()
 	
-	/***/
-	private void bestemmia()
-	{
-		if (true) //todo: da finire e poi rimuovere l'if
-		{
-			final var est = random.nextInt(97)+3; // 3-99
-			final String[] tempo = {"mesi", "giorni", "ore", "minuti", "secondi"};
-			channel.sendMessage("`Work in progress. ETA al completamento: "+est+" "+tempo[random.nextInt(tempo.length)]+"`").queue();
-			return;
-		}
-		
-		final var spazio = " ";
-		String particella;
-		
-		String[] divinita = {"Dio", "Gesù", "Gesù bambino", "Madonna"};
-		particella = particella(random.nextInt(divinita.length));
-		String[] animale = {"cane", "porco", "anfibio", "rettile", "pesce", "capra"};
-		String[] azione = {"che guarda", "che ride", "che corre", "che cammina", "che scappa", "che mangia", "che fa una capriola", "che guida"};
-		String[] guardaCosa = {"la nazionale che perde contro una squadra fondata ieri", "una celebrità su instagram, ricca, che sostiene che la ricchezza non serva"};
-		String[] toccaCosa = {"che tocca una pianta carnivora, facendosi mordere il dito"};
-		String[] rideDiCosa = {"di quella volta che hai chiamato \"mamma\" la maestra alle elementari", "del goal che non hai segnato"+random.nextInt(10)+2 +" anni fa a calcetto"};
-		String[] correVersoCosa = {""};
-		String[] scappaDaCosa = {"da un leone affamato", "da un marito cornificato che vuole por"+particella+" un paio di domande"};
-		String[] mangiaCosa = {"una porzione di sushi avariato", "una pizza con l'ananas sopra", "una puttanesca", ""};
-		String[] guidaCosa = {"un fottutissimo pickup lungo 5 metri che consuma tantissimo (25L/100km)", "una macchina piccola con la marmitta modificata che fa un casino tremendo", "un motorino dalla cilindrata minore di zero e impenna pure"};
-		
-		var bstm = "";
-		bstm += divinita[random.nextInt(divinita.length)] + spazio;
-		bstm += animale[random.nextInt(animale.length)] + spazio;
-		bstm += azione[0] + spazio; //todo: cambiare con random
-		bstm += guardaCosa[random.nextInt(guardaCosa.length)] + spazio;
-		
-		channel.sendMessage(bstm).queue();
-		
-	} // fine bestemmia()
 	
 	private String particella(int x)
 	{
@@ -1839,7 +1802,7 @@ public class Commands extends ListenerAdapter
 			final var warLeague = "https://api.clashofclans.com/v1/clans/"+tagCompleto+"/currentwar/leaguegroup";
 			var c = new GregorianCalendar();
 			var day = c.get(Calendar.DAY_OF_MONTH);
-			var dayOfWar = day-4; // -3 perché lega iniziata 3 giorni fa, -1 perché array parte da 0
+			var dayOfWar = 0; // TODO: usare il JSON per determinare il giorno di war
 			try
 			{
 				final var warLeagueURL = new URL(warLeague);
@@ -1857,7 +1820,7 @@ public class Commands extends ListenerAdapter
 				
 				var embed = search(warTags, dayOfWar);
 				if (embed == null)
-					canale.sendMessage("Errore CATASTROFICO (non è vero) nel metodo `search()`").queue();
+					canale.sendMessage("Errore CATASTROFICO ||(non è vero)|| nel metodo `search()`").queue();
 				else
 					canale.sendMessageEmbeds(embed.build()).queue();
 			}catch (IOException | ParseException ignored) {}
