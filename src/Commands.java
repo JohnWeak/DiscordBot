@@ -283,6 +283,7 @@ public class Commands extends ListenerAdapter
 			case "!war" -> clashWar();
 			case "!league" -> clashWarLeague(false);
 			case "!pigeonbazooka" -> pigeonBazooka();
+			case "!test" -> test();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -2002,6 +2003,25 @@ public class Commands extends ListenerAdapter
 		}
 		
 	} // fine pigeonBazooka()
+	
+	private void test()
+	{
+		final var msg1 = "Prova";
+		final var msg2 = "Test";
+		
+		channel.sendMessage(""+msg1+msg2).queue(m ->
+		{
+			var idMSG = m.getId();
+			pause(2000, 0);
+			for(int i = 0; i < 10; i++)
+			{
+				channel.editMessageById(idMSG, ".").queue();
+				channel.editMessageById(idMSG, "..").queue();
+				channel.editMessageById(idMSG, "...").queue();
+				channel.editMessageById(idMSG, "..").queue();
+			}
+		});
+	}
 	
 	
 } // fine classe Commands
