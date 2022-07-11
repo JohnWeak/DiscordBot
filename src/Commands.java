@@ -30,7 +30,7 @@ public class Commands extends ListenerAdapter
 	private static final File nomiPkmn = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
 	private static MessageChannel channel;
-	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon", "!carta", "!duello", "!colpevole", "!massshooting"};
+	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon", "!carta", "!duello", "!colpevole", "!massshooting", "!pigeonbazooka"};
 	private static final String[] listaDescrizioni =
 	{
 		"Il bot lancerà una moneta.",
@@ -41,7 +41,8 @@ public class Commands extends ListenerAdapter
 		"Genera una carta da gioco.",
 		"Sfida un giocatore ad un duello di carte.",
 		"Lascia che RNGesus decida la percentuale di colpevolezza di un altro utente.",
-		"Ottieni il resoconto delle sparatorie di massa negli USA. Sono dati reali."
+		"Ottieni il resoconto delle sparatorie di massa negli USA. Sono dati reali.",
+		"Perché a volte un solo pigeon non basta."
 	};
 	private static int messaggiInviati = 0;
 	private static int limite;
@@ -281,6 +282,7 @@ public class Commands extends ListenerAdapter
 			case "!massshooting", "!ms" -> massShooting();
 			case "!war" -> clashWar();
 			case "!league" -> clashWarLeague(false);
+			case "!pigeonbazooka" -> pigeonBazooka();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -1976,6 +1978,21 @@ public class Commands extends ListenerAdapter
 		return godOfWar;
 	} // fine kurt()
 	
+	public void pigeonBazooka()
+	{
+		var i = 0;
+		channel.sendTyping().queue();
+		pause(-1,-1);
+		if (random.nextInt(10000) == 42)
+		{
+			channel.sendMessage("Pigeon Bazooka attivato. Caricamento pigeon. Pronti a fare fuoco.").queue();
+			channel.sendTyping().queue();
+			pause(-1, -1);
+			for (i = 0; i < 50; i++)
+				channel.sendMessage("<pigeon:647556750962065418>").queue(l->react("pigeon"));
+		}
+		
+	} // fine pigeonBazooka()
 	
 	
 } // fine classe Commands
