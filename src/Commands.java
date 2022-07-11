@@ -1991,6 +1991,14 @@ public class Commands extends ListenerAdapter
 			for (i = 0; i < 50; i++)
 				channel.sendMessage("<pigeon:647556750962065418>").queue(l->react("pigeon"));
 		}
+		else
+		{
+			channel.sendMessage("Il bazooka ha fatto cilecca.").queue(l->
+			{
+				var msg = message.getIdLong();
+				pause(1000, 0); channel.deleteMessageById(msg).queue();
+			});
+		}
 		
 	} // fine pigeonBazooka()
 	
