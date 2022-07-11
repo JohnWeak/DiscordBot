@@ -2015,10 +2015,11 @@ public class Commands extends ListenerAdapter
 			pause(2000, 0);
 			for(int i = 0; i < 10; i++)
 			{
+				channel.editMessageById(idMSG, "...").queue();
+				channel.editMessageById(idMSG, "..").queue();
 				channel.editMessageById(idMSG, ".").queue();
 				channel.editMessageById(idMSG, "..").queue();
 				channel.editMessageById(idMSG, "...").queue();
-				channel.editMessageById(idMSG, "..").queue();
 			}
 		});
 	}
