@@ -1990,7 +1990,7 @@ public class Commands extends ListenerAdapter
 			channel.sendTyping().queue();
 			pause(-1, -1);
 			for (i = 0; i < 50; i++)
-				channel.sendMessage("<pigeon:647556750962065418>").queue(l->react("pigeon"));
+				channel.sendMessage("<:pigeon:647556750962065418>").queue(l->react("pigeon"));
 		}
 		else
 		{
