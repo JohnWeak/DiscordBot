@@ -123,7 +123,7 @@ public class Commands extends ListenerAdapter
 		
 		new ThreadLeague().start();
 		
-		canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
+		//canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
 	} // fine onReady()
 
 	/** Questo metodo decide cosa fare quando un messaggio viene modificato */
@@ -2001,6 +2001,7 @@ public class Commands extends ListenerAdapter
 			channel.sendTyping().queue();
 			pause(-1,-1);
 			var max = random.nextInt(5) + 5;
+			channel.sendMessage(""+max+" pigeon in arrivo!").queue();
 			for (i = 0; i < max; i++)
 				channel.sendMessage("<:pigeon:647556750962065418>").queue(l->react("pigeon"));
 		}
