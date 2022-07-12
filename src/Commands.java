@@ -283,7 +283,6 @@ public class Commands extends ListenerAdapter
 			case "!war" -> clashWar();
 			case "!league" -> clashWarLeague(false);
 			case "!pigeonbazooka", "!pb" -> pigeonBazooka();
-			case "!test" -> new ThreadTest().start();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
