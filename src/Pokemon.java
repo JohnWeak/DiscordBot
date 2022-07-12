@@ -37,18 +37,6 @@ public class Pokemon
 		catch (Exception e) { e.printStackTrace(); }
 		
 	}
-	
-	public Pokemon(String nome)
-	{
-		shiny();
-		
-		this.nome = nome;
-		try
-		{
-			img = generatePokemon(random.nextInt(max)+1)[1];
-		}catch (Exception e) { e.printStackTrace(); }
-		
-	}
 
 	public Pokemon(String nome, String descrizione, boolean shiny)
 	{
@@ -71,19 +59,7 @@ public class Pokemon
 
 		this.descrizione = descrizione;
 	}
-
 	
-	public Pokemon(boolean shiny)
-	{
-		this.shiny = shiny;
-		try
-		{
-			String[] result = generatePokemon(random.nextInt(max)+1);
-			nome = result[0];
-			img = result[1];
-		}
-		catch (Exception e) { e.printStackTrace(); }
-	}
 	
 	private String[] generatePokemon(int id)
 	{
