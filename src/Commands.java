@@ -1980,14 +1980,12 @@ public class Commands extends ListenerAdapter
 	
 	public void pigeonBazooka()
 	{
-		if (random.nextInt(1000) == 42 || author.getDiscriminator().equals(NUMGION))
+		if (random.nextInt(1000) == 42)
 		{
 			final var max = random.nextInt(5) + 5;
 			final var pigeonMessage = "Oh no! " + authorName + " ha attivato il <:pigeon:647556750962065418> bazooka!\n"+max+" pigeon in arrivo!";
 			var i = 0;
 			channel.sendMessage(""+pigeonMessage).queue();
-			channel.sendTyping().queue();
-			pause(-1, -1);
 			for (i = 0; i < max; i++)
 				channel.sendMessage("<:pigeon:647556750962065418>").queue(l->react("pigeon"));
 		}
