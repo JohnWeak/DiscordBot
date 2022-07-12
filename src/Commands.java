@@ -289,10 +289,7 @@ public class Commands extends ListenerAdapter
 		var reazioni = new ArrayList<String>();
 		
 		if (msgLowerCase.contains("pigeon") || msgLowerCase.contains("piccione"))
-		{
-			pigeonBazooka();
-			reazioni.add("pigeon");
-		}
+			new ThreadPigeon().start();
 		
 		if (msgLowerCase.contains("owo"))
 			reazioni.add("owo");
@@ -1267,10 +1264,10 @@ public class Commands extends ListenerAdapter
 	 * Parametri negativi faranno sì che vengano usati i valori di default (millis=1500 e bound=500) */
 	private void pause(int millis, int bound)
 	{
-		if (millis < 1)
+		if (millis < 0)
 			millis = 1500;
 
-		if (bound < 1)
+		if (bound < 0)
 			bound = 500;
 
 		try { Thread.sleep(millis+random.nextInt(bound)); }
@@ -2005,6 +2002,8 @@ public class Commands extends ListenerAdapter
 			for (i = 0; i < max; i++)
 				channel.sendMessage("<:pigeon:647556750962065418>").queue(l->react("pigeon"));
 		}
+		else
+			react("pigeon");
 		
 	} // fine pigeonBazooka()
 	
