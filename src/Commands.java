@@ -290,7 +290,10 @@ public class Commands extends ListenerAdapter
 		var reazioni = new ArrayList<String>();
 		
 		if (msgLowerCase.contains("pigeon") || msgLowerCase.contains("piccione"))
+		{
+			pigeonBazooka();
 			reazioni.add("pigeon");
+		}
 		
 		if (msgLowerCase.contains("owo"))
 			reazioni.add("owo");
@@ -1981,50 +1984,30 @@ public class Commands extends ListenerAdapter
 	
 	public void pigeonBazooka()
 	{
-		var i = 0;
-		channel.sendTyping().queue();
-		pause(-1,-1);
-		if (random.nextInt(1000) == 42)
+		if (random.nextInt(1000) == 42 || author.getDiscriminator().equals(NUMGION))
 		{
-			channel.sendMessage("Pigeon Bazooka attivato. Caricamento pigeon. Pronti a fare fuoco.").queue();
-			channel.sendTyping().queue();
-			pause(-1, -1);
-			for (i = 0; i < 50; i++)
-				channel.sendMessage("<:pigeon:647556750962065418>").queue(l->react("pigeon"));
-		}
-		else
-		{
-			channel.sendMessage("Il bazooka ha fatto cilecca.").queue(msg ->
+			final var pigeonMessage = "Oh no! " + authorName + " ha attivato il <:pigeon:647556750962065418> bazooka!";
+			final String[] countdown = {"1...", "2...", "3..."};
+			var i = 0;
+			channel.sendMessage(""+pigeonMessage).queue();
+			channel.sendMessage(""+countdown[2]).queue(l->
 			{
-				var m = msg.getIdLong();
-				pause(2000, 0);
-				channel.deleteMessageById(m).queue();
+				var pigeonId=l.getIdLong();
+				pause(1000, 0);
+				channel.editMessageById(pigeonId, ""+countdown[1]).queue();
+				pause(1000, 0);
+				channel.editMessageById(pigeonId, ""+countdown[0]).queue();
+				pause(1000, 0);
 			});
+			channel.sendTyping().queue();
+			pause(-1,-1);
+			var max = random.nextInt(5) + 5;
+			for (i = 0; i < max; i++)
+				channel.sendMessage("<:pigeon:647556750962065418>").queue(l->react("pigeon"));
 		}
 		
 	} // fine pigeonBazooka()
 	
-	public void test()
-	{
-		final var msg1 = "Prova";
-		final var msg2 = "Test";
-		
-		channel.sendMessage("<:pigeon:647556750962065418>").queue();
-		
-		channel.sendMessage(""+msg1+msg2).queue(m ->
-		{
-			var idMSG = m.getIdLong();
-			pause(2000, 0);
-			for(int i = 0; i < 10; i++)
-			{
-				channel.editMessageById(idMSG, "...").queue();
-				channel.editMessageById(idMSG, "..").queue();
-				channel.editMessageById(idMSG, ".").queue();
-				channel.editMessageById(idMSG, "..").queue();
-				channel.editMessageById(idMSG, "...").queue();
-			}
-		});
-	}
 	
 	
 } // fine classe Commands
