@@ -1982,28 +1982,12 @@ public class Commands extends ListenerAdapter
 	{
 		if (random.nextInt(1000) == 42 || author.getDiscriminator().equals(NUMGION))
 		{
-			var timer = new Timer();
-			var task = new TimerTask()
-			{
-				final String[] countdown = {"1...", "2...", "3..."};
-				@Override
-				public void run()
-				{
-					channel.sendMessage(""+countdown[2]).queue(l->
-					{
-						var pigeonId=l.getIdLong();
-						for (int i = 2; i > -1; i--) // 2 -> 1 -> 0
-							channel.editMessageById(pigeonId, ""+countdown[i]).queue();
-					});
-				}
-			};
-			
-			final var pigeonMessage = "Oh no! " + authorName + " ha attivato il <:pigeon:647556750962065418> bazooka!";
+			final var max = random.nextInt(5) + 5;
+			final var pigeonMessage = "Oh no! " + authorName + " ha attivato il <:pigeon:647556750962065418> bazooka!\n"+max+" pigeon in arrivo!";
 			var i = 0;
 			channel.sendMessage(""+pigeonMessage).queue();
 			channel.sendTyping().queue();
-			timer.schedule(task, 1000);
-			var max = random.nextInt(5) + 5;
+			pause(-1, -1);
 			channel.sendMessage(""+max+" pigeon in arrivo!").queue();
 			for (i = 0; i < max; i++)
 				channel.sendMessage("<:pigeon:647556750962065418>").queue(l->react("pigeon"));
