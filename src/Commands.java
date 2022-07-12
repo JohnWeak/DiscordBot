@@ -1982,21 +1982,31 @@ public class Commands extends ListenerAdapter
 	{
 		if (random.nextInt(1000) == 42 || author.getDiscriminator().equals(NUMGION))
 		{
+			var timer = new Timer();
+			var task = new TimerTask()
+			{
+				final String[] countdown = {"1...", "2...", "3..."};
+				@Override
+				public void run()
+				{
+					channel.sendMessage(""+countdown[2]).queue(l->
+					{
+						var pigeonId=l.getIdLong();
+						pause(1000, 0);
+						channel.editMessageById(pigeonId, ""+countdown[1]).queue();
+						pause(1000, 0);
+						channel.editMessageById(pigeonId, ""+countdown[0]).queue();
+						pause(1000, 0);
+					});
+				}
+			};
+			
 			final var pigeonMessage = "Oh no! " + authorName + " ha attivato il <:pigeon:647556750962065418> bazooka!";
-			final String[] countdown = {"1...", "2...", "3..."};
 			var i = 0;
 			channel.sendMessage(""+pigeonMessage).queue();
-			channel.sendMessage(""+countdown[2]).queue(l->
-			{
-				var pigeonId=l.getIdLong();
-				pause(1000, 0);
-				channel.editMessageById(pigeonId, ""+countdown[1]).queue();
-				pause(1000, 0);
-				channel.editMessageById(pigeonId, ""+countdown[0]).queue();
-				pause(1000, 0);
-			});
 			channel.sendTyping().queue();
 			pause(-1,-1);
+			timer.schedule(task, 1000);
 			var max = random.nextInt(5) + 5;
 			channel.sendMessage(""+max+" pigeon in arrivo!").queue();
 			for (i = 0; i < max; i++)
