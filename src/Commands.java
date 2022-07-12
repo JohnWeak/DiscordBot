@@ -1992,11 +1992,8 @@ public class Commands extends ListenerAdapter
 					channel.sendMessage(""+countdown[2]).queue(l->
 					{
 						var pigeonId=l.getIdLong();
-						pause(1000, 0);
-						channel.editMessageById(pigeonId, ""+countdown[1]).queue();
-						pause(1000, 0);
-						channel.editMessageById(pigeonId, ""+countdown[0]).queue();
-						pause(1000, 0);
+						for (int i = 2; i > -1; i--) // 2 -> 1 -> 0
+							channel.editMessageById(pigeonId, ""+countdown[i]).queue();
 					});
 				}
 			};
@@ -2005,7 +2002,6 @@ public class Commands extends ListenerAdapter
 			var i = 0;
 			channel.sendMessage(""+pigeonMessage).queue();
 			channel.sendTyping().queue();
-			pause(-1,-1);
 			timer.schedule(task, 1000);
 			var max = random.nextInt(5) + 5;
 			channel.sendMessage(""+max+" pigeon in arrivo!").queue();
