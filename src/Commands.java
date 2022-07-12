@@ -2009,6 +2009,8 @@ public class Commands extends ListenerAdapter
 		final var msg1 = "Prova";
 		final var msg2 = "Test";
 		
+		channel.sendMessage("<:pigeon:647556750962065418>").queue();
+		
 		channel.sendMessage(""+msg1+msg2).queue(m ->
 		{
 			var idMSG = m.getIdLong();
