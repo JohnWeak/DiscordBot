@@ -282,7 +282,7 @@ public class Commands extends ListenerAdapter
 			case "!massshooting", "!ms" -> massShooting();
 			case "!war" -> clashWar();
 			case "!league" -> clashWarLeague(false);
-			case "!pigeonbazooka" -> pigeonBazooka();
+			case "!pigeonbazooka", "!pb" -> pigeonBazooka();
 			case "!test" -> new ThreadTest().start();
 		}
 		
