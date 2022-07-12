@@ -1984,7 +1984,7 @@ public class Commands extends ListenerAdapter
 		var i = 0;
 		channel.sendTyping().queue();
 		pause(-1,-1);
-		if (random.nextInt(10000) == 42)
+		if (random.nextInt(10000) > -1)
 		{
 			channel.sendMessage("Pigeon Bazooka attivato. Caricamento pigeon. Pronti a fare fuoco.").queue();
 			channel.sendTyping().queue();
