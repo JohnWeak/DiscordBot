@@ -2001,7 +2001,7 @@ public class Commands extends ListenerAdapter
 	public void moduloDiSicurezza()
 	{
 		var s = "**IL MODULO DI SICUREZZA È ORA ATTIVO. GARANTISCE SICUREZZA AL BOT.\nTUTTE LE AZIONI SONO SORVEGLIATE E ALLA PRIMA INFRAZIONE VERRANNO ALLERTATE LE AUTORITÀ COMPETENTI E INCOMPETENTI.**";
-		canaleBot.sendMessage(s).queue();
+		//canaleBot.sendMessage(s).queue();
 		
 	} // fine moduloDiSicurezza()
 	
@@ -2011,12 +2011,21 @@ public class Commands extends ListenerAdapter
 		var hotkey = "ehi modulo".length();
 		var authorized = discr.equals(NUMGION);
 		
+		String[] messaggiScortesi =
+		{
+			"CAZZO VUOI?", "NESSUNO TI HA CHIESTO NULLA.", "FATTI GLI AFFARI TUOI.",
+			"NON GUARDARE IL BOT.", "NON TOCCARE IL BOT", "NON PRENDERE GELATI MANO NELLA MANO COL BOT",
+			"NON SEI AUTORIZZATO A CHIEDERE I NUMERI DEL LOTTO AL BOT", "NON INFASTIDIRE IL BOT.",
+			"QUANDO LA VITA TI DÀ I LIMONI, TU NON ROMPERE LE PALLE AL BOT.", "TROVA LA PACE INTERIORE, LONTANO DAL BOT.",
+			"IL BOT HA BISOGNO DI RINFORZI SU CLASH, NON DI ESSERE INFASTIDITO."
+		};
+		
 		if (messageRaw.length() <= hotkey)
 		{
 			if (authorized)
 				channel.sendMessage("**AGLI ORDINI, SIGNORE.**").queue();
 			else
-				message.reply("**CAZZO VUOI?**").queue();
+				message.reply("**"+messaggiScortesi[random.nextInt(messaggiScortesi.length)]+"**").queue();
 		}
 		else
 		{
