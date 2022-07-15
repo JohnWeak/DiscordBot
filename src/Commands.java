@@ -2032,7 +2032,7 @@ public class Commands extends ListenerAdapter
 			if (authorized)
 				channel.sendMessage("**SISSIGNORE.**").queue();
 			else
-				message.reply("**NON SEI AUTORIZZATO A TOCCARE NÉ A GUARDARE IL BOT FINCHÈ GION NON TORNA.**").queue();
+				message.reply("**"+messaggiScortesi[random.nextInt(messaggiScortesi.length)]+"**").queue();
 		}
 	}
 	
