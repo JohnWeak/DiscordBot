@@ -2001,7 +2001,7 @@ public class Commands extends ListenerAdapter
 	public void moduloDiSicurezza()
 	{
 		var s = "**IL MODULO DI SICUREZZA È ORA ATTIVO. GARANTISCE SICUREZZA AL BOT.\nTUTTE LE AZIONI SONO SORVEGLIATE E ALLA PRIMA INFRAZIONE VERRANNO ALLERTATE LE AUTORITÀ COMPETENTI E INCOMPETENTI.**";
-		channel.sendMessage(s).queue();
+		canaleBot.sendMessage(s).queue();
 		
 	} // fine moduloDiSicurezza()
 	
