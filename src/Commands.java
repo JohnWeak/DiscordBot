@@ -2027,7 +2027,7 @@ public class Commands extends ListenerAdapter
 		if (messageRaw.length() <= hotkey)
 		{
 			if (authorized)
-				channel.sendMessage("**AGLI ORDINI, SIGNORE.**").queue();
+				channel.sendMessage("**SONO AI SUOI ORDINI, SIGNORE.**").queue();
 			else
 				message.reply("**"+messaggiScortesi[random.nextInt(messaggiScortesi.length)]+"**").queue();
 		}
