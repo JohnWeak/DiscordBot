@@ -122,6 +122,7 @@ public class Commands extends ListenerAdapter
 		var activityTradotta = activity.equals("WATCHING") ? "guardo " : "gioco a ";
 		
 		new ThreadLeague().start();
+		moduloDiSicurezza();
 		
 		//canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
 	} // fine onReady()
@@ -287,6 +288,9 @@ public class Commands extends ListenerAdapter
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
 		var reazioni = new ArrayList<String>();
+		
+		if (msgLowerCase.contains("ehi modulo"))
+			ehiModulo();
 		
 		if (msgLowerCase.contains("pigeon") || msgLowerCase.contains("piccione"))
 			new ThreadPigeon().start();
@@ -1994,6 +1998,33 @@ public class Commands extends ListenerAdapter
 		
 	} // fine pigeonBazooka()
 	
+	public void moduloDiSicurezza()
+	{
+		var s = "IL MODULO DI SICUREZZA È ORA ATTIVO. GARANTISCE SICUREZZA AL BOT.\nTUTTE LE AZIONI SONO SORVEGLIATE E ALLA PRIMA INFRAZIONE VERRANNO ALLERTATE LE AUTORITÀ COMPETENTI E INCOMPETENTI.";
+		channel.sendMessage(s).queue();
+		
+	} // fine moduloDiSicurezza()
 	
+	public void ehiModulo()
+	{
+		var discr = author.getDiscriminator();
+		var hotkey = "ehi modulo".length();
+		var authorized = discr.equals(NUMGION);
+		
+		if (messageRaw.length() <= hotkey)
+		{
+			if (authorized)
+				channel.sendMessage("**AGLI ORDINI, SIGNORE.**").queue();
+			else
+				message.reply("**CAZZO VUOI?**").queue();
+		}
+		else
+		{
+			if (authorized)
+				channel.sendMessage("**SISSIGNORE.**").queue();
+			else
+				message.reply("**NON SEI AUTORIZZATO A TOCCARE NÉ A GUARDARE IL BOT FINCHÈ GION NON TORNA.**").queue();
+		}
+	}
 	
 } // fine classe Commands
