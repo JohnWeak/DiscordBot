@@ -494,6 +494,12 @@ public class Commands extends ListenerAdapter
 			msgReply += "Nemico assente!\n";
 		}
 		
+		if (msgLowerCase.contains("serve visione") || msgLowerCase.contains("we need vision"))
+		{
+			reply = true;
+			msgReply += "<:scouttrap:997501978521374771>";
+		}
+		
 		//if (msgLowerCase.contains("") && random.nextInt(42) == 0){}
 		
 		if (reply)
