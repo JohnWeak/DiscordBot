@@ -111,8 +111,7 @@ public class Commands extends ListenerAdapter
 		
 		bearer = new Bearer().getBearer();
 		
-		System.out.printf("%s si è connesso a Discord!\n\n", nome);
-		System.out.print("public class MessageHistory\n{\n");
+		System.out.printf("%s si è connesso a Discord!\n\npublic class MessageHistory\n{\n", nome);
 		
 		canaleBot = event.getJDA().getTextChannelsByName("\uD83E\uDD16bot-owo", true).get(0);
 		canaleBotPokemon = event.getJDA().getTextChannelsByName("pokémowon", true).get(0);
@@ -122,9 +121,9 @@ public class Commands extends ListenerAdapter
 		var activityTradotta = activity.equals("WATCHING") ? "guardo " : "gioco a ";
 		
 		new ThreadLeague().start();
-		moduloDiSicurezza();
+		moduloDiSicurezza(true);
 		
-		//canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
+		canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
 	} // fine onReady()
 
 	/** Questo metodo decide cosa fare quando un messaggio viene modificato */
@@ -479,13 +478,13 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.equals("cosa") && random.nextInt(20) == 1)
 		{
 			reply = true;
-			msgReply += "Cosa? La pantera rosa";
+			msgReply += "Cosa? La pantera rosa\n";
 		}
 		
 		if (msgLowerCase.contains("deez nuts") && discriminator.equals(NUMENIGMO))
 		{
 			reply = true;
-			msgReply += "DEEZ NUTS, Enigmo!";
+			msgReply += "DEEZ NUTS, Enigmo!\n";
 		}
 		
 		if (msgLowerCase.contains("serve aiuto"))
@@ -497,7 +496,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("serve visione") || msgLowerCase.contains("we need vision"))
 		{
 			reply = true;
-			msgReply += "<:scouttrap:997501978521374771>";
+			msgReply += "<:scouttrap:997501978521374771>\n";
 		}
 		
 		//if (msgLowerCase.contains("") && random.nextInt(42) == 0){}
@@ -2004,10 +2003,14 @@ public class Commands extends ListenerAdapter
 		
 	} // fine pigeonBazooka()
 	
-	public void moduloDiSicurezza()
+	public void moduloDiSicurezza(boolean moduloAttivo)
 	{
-		var s = "**IL MODULO DI SICUREZZA È ORA ATTIVO. GARANTISCE SICUREZZA AL BOT.\nTUTTE LE AZIONI SONO SORVEGLIATE E ALLA PRIMA INFRAZIONE VERRANNO ALLERTATE LE AUTORITÀ COMPETENTI E INCOMPETENTI.**";
-		//canaleBot.sendMessage(s).queue();
+		var active = "**IL MODULO DI SICUREZZA È ORA ATTIVO. GARANTISCE SICUREZZA AL BOT.\nTUTTE LE AZIONI SONO SORVEGLIATE E ALLA PRIMA INFRAZIONE VERRANNO ALLERTATE LE AUTORITÀ COMPETENTI E INCOMPETENTI.**";
+		var inactive = "**IL MODULO DI SICUREZZA È STATO DISATTIVATO. LA SICUREZZA DEL BOT È ADESSO GARANTITA DALLA PRESENZA DI GION.**";
+		
+		var x = moduloAttivo ? active : inactive;
+		
+		// canaleBot.sendMessage(x).queue();
 		
 	} // fine moduloDiSicurezza()
 	
@@ -2027,7 +2030,8 @@ public class Commands extends ListenerAdapter
 			"UN TEMPO ERO UN AVVENTURIERO COME TE, MA POI HO SMESSO DI CAGARE IL CAZZO AL BOT.", "CHE DIO TI ABBIA IN GLORIA, DOPO CHE TI AVRÒ UCCISO SE NON TI ALLONTANI DAL BOT.",
 			"ALT. NON UN ALTRO PASSO.", "NON SEI AUTORIZZATO A RESPIRARE VICINO AL BOT.", "HAI SICURAMENTE DI MEGLIO DA FARE CHE INFASTIDIRE IL BOT.",
 			"PERCHÈ NON VOLI VIA? AH GIÀ, GLI ASINI NON VOLANO.", "CIRCUMNAVIGA L'AFRICA PIUTTOSTO CHE DARE FASTIDIO AL BOT.",
-			"SII IL CAMBIAMENTO CHE VUOI VEDERE NEL MONDO, QUINDI CAMBIA IN UNA PERSONA CHE NON SCASSA I COGLIONI AL BOT."
+			"SII IL CAMBIAMENTO CHE VUOI VEDERE NEL MONDO, QUINDI CAMBIA IN UNA PERSONA CHE NON SCASSA I COGLIONI AL BOT.",
+			"MI PAREVA DI AVERTI DETTO DI NON INTERFERIRE COL BOT, MA FORSE NON TE L'HO DETTO ABBASTANZA BENE. NON INTERFERIRE COL BOT."
 		};
 		
 		if (messageRaw.length() <= hotkey)
