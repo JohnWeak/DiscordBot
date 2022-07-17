@@ -72,6 +72,7 @@ public class Commands extends ListenerAdapter
 	private static final String tagCompleto = hashtag + clanTag;
 	private static final JSONParser jsonParser = new JSONParser();
 	private static TextChannel canaleBot;
+	private static boolean moduloActive = true;
 	
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
 	private String getSaluto()
@@ -121,7 +122,7 @@ public class Commands extends ListenerAdapter
 		var activityTradotta = activity.equals("WATCHING") ? "guardo " : "gioco a ";
 		
 		new ThreadLeague().start();
-		moduloDiSicurezza(true);
+		moduloDiSicurezza();
 		
 		canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
 	} // fine onReady()
@@ -2003,12 +2004,12 @@ public class Commands extends ListenerAdapter
 		
 	} // fine pigeonBazooka()
 	
-	public void moduloDiSicurezza(boolean moduloAttivo)
+	public void moduloDiSicurezza()
 	{
 		var active = "**IL MODULO DI SICUREZZA È ORA ATTIVO. GARANTISCE SICUREZZA AL BOT.\nTUTTE LE AZIONI SONO SORVEGLIATE E ALLA PRIMA INFRAZIONE VERRANNO ALLERTATE LE AUTORITÀ COMPETENTI E INCOMPETENTI.**";
 		var inactive = "**IL MODULO DI SICUREZZA È STATO DISATTIVATO. LA SICUREZZA DEL BOT È ADESSO GARANTITA DALLA PRESENZA DI GION.**";
 		
-		var x = moduloAttivo ? active : inactive;
+		var x = moduloActive ? active : inactive;
 		
 		// canaleBot.sendMessage(x).queue();
 		
@@ -2016,6 +2017,9 @@ public class Commands extends ListenerAdapter
 	
 	public void ehiModulo()
 	{
+		if (!moduloActive)
+			return;
+		
 		var discr = author.getDiscriminator();
 		var hotkey = "ehi modulo".length();
 		var authorized = discr.equals(NUMGION);
