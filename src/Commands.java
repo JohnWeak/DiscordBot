@@ -2018,7 +2018,10 @@ public class Commands extends ListenerAdapter
 	public void ehiModulo()
 	{
 		if (!moduloActive)
+		{
+			message.reply("**IL MODULO DI SICUREZZA È STATO DISATTIVATO.**").queue();
 			return;
+		}
 		
 		var discr = author.getDiscriminator();
 		var hotkey = "ehi modulo".length();
