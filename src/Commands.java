@@ -2019,7 +2019,7 @@ public class Commands extends ListenerAdapter
 	{
 		if (!moduloActive)
 		{
-			message.reply("**IL MODULO DI SICUREZZA È STATO DISATTIVATO.**").queue();
+			message.reply("**IL MODULO DI SICUREZZA È STATO DISATTIVATO DA GION. PER QUALSIASI INFORMAZIONE SU COME STARE LONTANO DAL BOT, CHIEDI A GION.**").queue();
 			return;
 		}
 		
