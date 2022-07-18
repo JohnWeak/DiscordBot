@@ -72,7 +72,7 @@ public class Commands extends ListenerAdapter
 	private static final String tagCompleto = hashtag + clanTag;
 	private static final JSONParser jsonParser = new JSONParser();
 	private static TextChannel canaleBot;
-	private static boolean moduloActive = true;
+	private static final boolean moduloActive = false;
 	
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
 	private String getSaluto()
@@ -122,7 +122,7 @@ public class Commands extends ListenerAdapter
 		var activityTradotta = activity.equals("WATCHING") ? "guardo " : "gioco a ";
 		
 		new ThreadLeague().start();
-		moduloDiSicurezza();
+		// moduloDiSicurezza();
 		
 		canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
 	} // fine onReady()
@@ -2011,7 +2011,7 @@ public class Commands extends ListenerAdapter
 		
 		var x = moduloActive ? active : inactive;
 		
-		// canaleBot.sendMessage(x).queue();
+		canaleBot.sendMessage(x).queue();
 		
 	} // fine moduloDiSicurezza()
 	
