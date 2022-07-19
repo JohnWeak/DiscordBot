@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
+import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import org.jetbrains.annotations.NotNull;
@@ -181,6 +182,21 @@ public class Commands extends ListenerAdapter
 		}
 		
 	} // fine identifyLatestMessage()
+	
+	public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event)
+	{
+		var reaction = event.getReaction();
+		var emote = event.getReactionEmote();
+		channel = event.getChannel();
+		author = event.getUser();
+		
+		try {
+			authorName = author.getName();
+		}catch (NullPointerException exception){channel.sendMessage("NullPointer Exception <:pogey:733659301645910038>").queue();}
+		
+		channel.sendMessage(authorName + "ha aggiunto la reazione " + reaction + "corrispondente a " + emote).queue();
+		
+	} // fine onMessageReactionAdd
 	
 	/**Inserisce come reazioni tutte le emote che trova nel messaggio*/
 	private void aggiungiReazioni()
