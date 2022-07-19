@@ -302,7 +302,7 @@ public class Commands extends ListenerAdapter
 			case "!war" -> clashWar();
 			case "!league" -> clashWarLeague(false);
 			case "!pigeonbazooka", "!pb" -> pigeonBazooka();
-			case "!emotes" -> channel.sendMessage(Arrays.toString(channel.getJDA().getEmotes().toArray())).queue();
+			case "!emotes" -> a();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -525,6 +525,18 @@ public class Commands extends ListenerAdapter
 			message.reply(msgReply).queue();
 		
 	} // fine checkForKeywords()
+	
+	private void a()
+	{
+		var x = Arrays.toString(channel.getJDA().getEmotes().toArray());
+		var split = "";
+		
+		if (x.length() > 2000)
+			 split = x.substring(0, 1999);
+		
+		channel.sendMessage(split).queue();
+	}
+	
 	
 	/** Gestisce i comandi slash (ancora da implementare) */
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
