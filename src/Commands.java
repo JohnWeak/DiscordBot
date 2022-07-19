@@ -25,6 +25,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.*;
 import java.util.function.DoubleBinaryOperator;
+import java.util.regex.Pattern;
 
 public class Commands extends ListenerAdapter
 {
@@ -334,7 +335,14 @@ public class Commands extends ListenerAdapter
 			reazioni.add("vergogna");
 		
 		if (msgLowerCase.contains("no u"))
-			reazioni.add("nou");
+		{
+			var pattern = "\\b"+"no u"+"\\b";
+			var p = Pattern.compile(pattern);
+			var m = p.matcher(msgLowerCase);
+			
+			if (m.find())
+				reazioni.add("nou");
+		}
 		
 		if (msgLowerCase.contains("sabaping"))
 			reazioni.add("sabaping");
