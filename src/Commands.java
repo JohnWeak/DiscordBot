@@ -1182,7 +1182,7 @@ public class Commands extends ListenerAdapter
 					System.out.printf("Errore nell'aggiunta della reazione \"%s\"\n\t", emoteDaUsare);
 				}
 			}
-		}catch (ErrorResponseException e)
+		}catch (ErrorResponseException ignored)
 		{}
 		finally
 		{
