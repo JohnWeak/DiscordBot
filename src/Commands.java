@@ -190,17 +190,13 @@ public class Commands extends ListenerAdapter
 		var reaction = event.getReaction();
 		var emote = event.getReactionEmote();
 		channel = event.getChannel();
-		author = event.getUser();
+		//author = event.getUser();
 		id = event.getMessageIdLong();
+		message = channel.getHistory().getMessageById(id);
 		
-		var emoteString = emote.toString().split(":")[1].split("\\(")[0];
-		react(emoteString);
+		//var emoteString = emote.toString().split(":")[1].split("\\(")[0];
 		
-		try {
-			authorName = author.getName();
-		}catch (NullPointerException exception){channel.sendMessage("NullPointer Exception <:pogey:733659301645910038>").queue();}
-		
-		//canaleBot.sendMessage(authorName + " ha aggiunto la reazione " + reaction + " corrispondente a " + emote + " al messaggio " + id).queue();
+		aggiungiReazioni();
 		
 	} // fine onMessageReactionAdd
 	
