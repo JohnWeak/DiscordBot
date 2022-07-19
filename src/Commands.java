@@ -76,6 +76,7 @@ public class Commands extends ListenerAdapter
 	private static TextChannel canaleBot;
 	private static final boolean moduloActive = false;
 	private static final boolean sendMsgActivity = false;
+	private static List<Emote> emoteList;
 	
 	
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
@@ -127,6 +128,8 @@ public class Commands extends ListenerAdapter
 		
 		new ThreadLeague().start();
 		// moduloDiSicurezza();
+		
+		emoteList = canaleBot.getJDA().getEmotes();
 		
 		if (sendMsgActivity)
 			canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
@@ -528,7 +531,7 @@ public class Commands extends ListenerAdapter
 	
 	private void a()
 	{
-		var x = Arrays.toString(channel.getJDA().getEmotes().toArray());
+		var x = Arrays.toString(canaleBot.getGuild().getEmotes().toArray());
 		var split = "";
 		
 		if (x.length() > 2000)
