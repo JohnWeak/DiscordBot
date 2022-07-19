@@ -75,7 +75,6 @@ public class Commands extends ListenerAdapter
 	private static final JSONParser jsonParser = new JSONParser();
 	private static TextChannel canaleBot;
 	private static final boolean moduloActive = false;
-	private static int reazioniAggiunte = 0;
 	
 	
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
@@ -1089,7 +1088,6 @@ public class Commands extends ListenerAdapter
 	/** Aggiunge una reazione all'ultimo messaggio inviato */
 	public void react(String emote)
 	{
-		
 		final String emoteOwO = "OwO:604351952205381659";
 		final String emoteNou = "nou:671402740186087425";
 		final String emotePigeon = "pigeon:647556750962065418";
@@ -1174,24 +1172,19 @@ public class Commands extends ListenerAdapter
 				for (String str : emoteScarab)
 					channel.addReactionById(id, str).queue();
 			
-			if (!emoteDaUsare.equals("") && reazioniAggiunte < 20)
+			if (!emoteDaUsare.equals(""))
 			{
 				try
 				{
 					channel.addReactionById(id, emoteDaUsare).queue();
-				} catch (Exception e)
+				}
+				catch (Exception e)
 				{
 					System.out.printf("Errore nell'aggiunta della reazione \"%s\"\n\t", emoteDaUsare);
 				}
 			}
-			reazioniAggiunte++;
 		}
-		catch (ErrorResponseException ignored)
-		{}
-		finally
-		{
-			channel.sendMessage("test").queue();
-		}
+		catch (ErrorResponseException ignored) {}
 		
 	} // fine react()
 	
