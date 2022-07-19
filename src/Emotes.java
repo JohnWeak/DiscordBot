@@ -94,7 +94,7 @@ public class Emotes
 			case "nou" -> Emotes.NoU;
 			case "owo" -> Emotes.OwO;
 			case "pogey" -> Emotes.pogey;
-			case "vergogna" -> Emotes.vergognati[random.nextInt(2)];
+			case "vergognati" -> Emotes.vergognati[random.nextInt(2)];
 			case "getrekt" -> Emotes.getRekt;
 			case "smh" -> Emotes.smh;
 			case "giorno" -> Emotes.giorno;
