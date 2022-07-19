@@ -200,7 +200,7 @@ public class Commands extends ListenerAdapter
 			authorName = author.getName();
 		}catch (NullPointerException exception){channel.sendMessage("NullPointer Exception <:pogey:733659301645910038>").queue();}
 		
-		canaleBot.sendMessage(authorName + " ha aggiunto la reazione " + reaction + " corrispondente a " + emote + " al messaggio " + id).queue();
+		//canaleBot.sendMessage(authorName + " ha aggiunto la reazione " + reaction + " corrispondente a " + emote + " al messaggio " + id).queue();
 		
 	} // fine onMessageReactionAdd
 	
