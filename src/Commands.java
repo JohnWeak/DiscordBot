@@ -191,8 +191,10 @@ public class Commands extends ListenerAdapter
 		var emote = event.getReactionEmote();
 		channel = event.getChannel();
 		author = event.getUser();
-		var id = event.getMessageIdLong();
-		react("");
+		id = event.getMessageIdLong();
+		
+		var emoteString = emote.toString().split(":")[1].split("\\(")[0];
+		react(emoteString);
 		
 		try {
 			authorName = author.getName();
