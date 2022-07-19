@@ -1085,54 +1085,7 @@ public class Commands extends ListenerAdapter
 	/** Aggiunge una reazione all'ultimo messaggio inviato */
 	public void react(String emote)
 	{
-		var emoteDaUsare = switch (emote.toLowerCase())
-		{
-			case "pigeon" -> Emotes.pigeon;
-			case "nou" -> Emotes.NoU;
-			case "owo" -> Emotes.OwO;
-			case "pogey" -> Emotes.pogey;
-			case "vergogna" -> Emotes.vergognati[random.nextInt(2)];
-			case "getrekt" -> Emotes.getRekt;
-			case "smh" -> Emotes.smh;
-			case "giorno" -> Emotes.giorno;
-			case "dansgame" -> Emotes.dansGame;
-			case "ingredibile" -> Emotes.ingredibile;
-			case "wtf" -> Emotes.wtf;
-			case "bigbrain" -> Emotes.bigBrain;
-			case "boo2" -> Emotes.boo2;
-			case "borisk" -> Emotes.borisK;
-			case "comedygenius" -> Emotes.comedyGenius;
-			case "dshock" -> Emotes.dshock;
-			case "gaben" -> Emotes.gabeN;
-			case "hampter" -> Emotes.hampter;
-			case "lul" -> Emotes.lul;
-			case "pepesad" -> Emotes.pepeSad;
-			case "pogkarp" -> Emotes.pogKarp;
-			case "ragey" -> Emotes.ragey;
-			case "tonyakaradio105" -> Emotes.tonyakaradio105;
-			case "tpose" -> Emotes.Tpose;
-			case "doubt" -> Emotes.doubt;
-			case "everyone" -> Emotes.everyone;
-			case "grrr" -> Emotes.grrr;
-			case "harry_fotter" -> Emotes.harry_fotter;
-			case "kappa" -> Emotes.kappa;
-			case "kappapride" -> Emotes.kappaPride;
-			case "konodio" -> Emotes.konoDio;
-			case "medic" -> Emotes.medic;
-			case "meta" -> Emotes.meta;
-			case "monkas" -> Emotes.monkaS;
-			case "noidontthinkiwill" -> Emotes.noIdontThinkIwill;
-			case "o7" -> Emotes.o7;
-			case "oksaitama" -> Emotes.okSaitama;
-			case "scouttrap" -> Emotes.scoutTrap;
-			case "tf2spy" -> Emotes.tf2spy;
-			case "tf2spy2" -> Emotes.tf2spy2;
-			case "thinkhang" -> Emotes.thinkHang;
-			case "thonking" -> Emotes.thonking;
-			case "what" -> Emotes.what;
-			
-			default -> "";
-		};
+		var emoteDaUsare = Emotes.emoteDaUsare(emote);
 		
 		try
 		{
