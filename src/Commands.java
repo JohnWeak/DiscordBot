@@ -1114,7 +1114,7 @@ public class Commands extends ListenerAdapter
 			case "doubt" -> Emotes.doubt;
 			case "everyone" -> Emotes.everyone;
 			case "grrr" -> Emotes.grrr;
-			case "harryfotter" -> Emotes.harryFotter;
+			case "harry_fotter" -> Emotes.harry_fotter;
 			case "kappa" -> Emotes.kappa;
 			case "kappapride" -> Emotes.kappaPride;
 			case "konodio" -> Emotes.konoDio;

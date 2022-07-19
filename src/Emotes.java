@@ -32,7 +32,7 @@ public class Emotes
 	public static final String doubt = "doubt:607910262925688832";
 	public static final String everyone = "everyone:713125848047157318";
 	public static final String grrr = "grrr:585960136418394113";
-	public static final String harryFotter = "harry_fotter:585959442793889803";
+	public static final String harry_fotter = "harry_fotter:585959442793889803";
 	public static final String kappa = "kappa:596751965099393054";
 	public static final String kappaPride = "kappaPride:596751965447389252";
 	public static final String konoDio = "konoDio:593421650049892352";
