@@ -1109,7 +1109,7 @@ public class Commands extends ListenerAdapter
 			case "pepesad" -> Emotes.pepeSad;
 			case "pogkarp" -> Emotes.pogKarp;
 			case "ragey" -> Emotes.ragey;
-			case "tony" -> Emotes.tony;
+			case "tonyakaradio105" -> Emotes.tonyakaradio105;
 			case "tpose" -> Emotes.Tpose;
 			case "doubt" -> Emotes.doubt;
 			case "everyone" -> Emotes.everyone;

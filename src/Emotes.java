@@ -27,7 +27,7 @@ public class Emotes
 	public static final String pepeSad = "PepeSad:924409510620196904";
 	public static final String pogKarp = "PogKarp:706130461302194237";
 	public static final String ragey = "Ragey:618591740374417417";
-	public static final String tony = "Tonyakaradio105:624580446952357918";
+	public static final String tonyakaradio105 = "Tonyakaradio105:624580446952357918";
 	public static final String Tpose = "Tpose:609385915395342361";
 	public static final String doubt = "doubt:607910262925688832";
 	public static final String everyone = "everyone:713125848047157318";
