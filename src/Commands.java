@@ -75,6 +75,7 @@ public class Commands extends ListenerAdapter
 	private static final JSONParser jsonParser = new JSONParser();
 	private static TextChannel canaleBot;
 	private static final boolean moduloActive = false;
+	private static final boolean sendMsgActivity = false;
 	
 	
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
@@ -127,7 +128,8 @@ public class Commands extends ListenerAdapter
 		new ThreadLeague().start();
 		// moduloDiSicurezza();
 		
-		canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
+		if (sendMsgActivity)
+			canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
 	} // fine onReady()
 
 	/** Questo metodo decide cosa fare quando un messaggio viene modificato */
@@ -300,7 +302,7 @@ public class Commands extends ListenerAdapter
 			case "!war" -> clashWar();
 			case "!league" -> clashWarLeague(false);
 			case "!pigeonbazooka", "!pb" -> pigeonBazooka();
-			case "!emotes" -> channel.sendMessage((CharSequence) channel.getJDA().getEmotes()).queue();
+			case "!emotes" -> channel.sendMessage(Arrays.toString(channel.getJDA().getEmotes().toArray())).queue();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
