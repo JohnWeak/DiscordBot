@@ -190,13 +190,12 @@ public class Commands extends ListenerAdapter
 		var reaction = event.getReaction();
 		var emote = event.getReactionEmote();
 		channel = event.getChannel();
-		//author = event.getUser();
 		id = event.getMessageIdLong();
 		message = channel.getHistory().getMessageById(id);
 		
-		//var emoteString = emote.toString().split(":")[1].split("\\(")[0];
-		
-		aggiungiReazioni();
+		var emoteString = emote.toString().split(":")[1].split("\\(")[0];
+		react(emoteString);
+	
 		
 	} // fine onMessageReactionAdd
 	
@@ -317,7 +316,7 @@ public class Commands extends ListenerAdapter
 			reazioni.add("owo");
 		
 		if (msgLowerCase.contains("pog"))
-			reazioni.add("pog");
+			reazioni.add("pogey");
 		
 		if (msgLowerCase.contains("òbito") || msgLowerCase.contains("obito"))
 			if (random.nextInt(50) == 42) // 2%
@@ -347,7 +346,7 @@ public class Commands extends ListenerAdapter
 		
 		if (msgLowerCase.contains("uomo colpo") || msgLowerCase.contains("hitman") || msgLowerCase.contains("icscom") || msgLowerCase.contains("xcom"))
 		{
-			reazioni.add("pog");
+			reazioni.add("pogey");
 			
 			if (msgLowerCase.contains("icscom") || msgLowerCase.contains("xcom"))
 				reazioni.add("xcom");
@@ -357,7 +356,7 @@ public class Commands extends ListenerAdapter
 		
 		if (msgLowerCase.contains("poochyena"))
 		{
-			reazioni.add("pog");
+			reazioni.add("pogey");
 			reazioni.add("♥");
 		}
 		
@@ -753,8 +752,8 @@ public class Commands extends ListenerAdapter
 	/** Lancia una moneta */
 	public void coinflip()
 	{
-		final String testaEmote = "<:pogey:733659301645910038>";
-		final String croceEmote = "<:pigeon:647556750962065418>";
+		final String testaEmote = "<:" + Emotes.pogey + ">";
+		final String croceEmote = "<:" + Emotes.pigeon + ">";
 		String lancioMoneta = authorName + " lancia una moneta...";
 
 		var headsOrTails = random.nextBoolean();
@@ -769,7 +768,7 @@ public class Commands extends ListenerAdapter
 		message.reply(lancioMoneta).queue(m ->
 		{
 			pause(500, 500);
-			message.editMessage(finalResponso).queue(m2 -> react(headsOrTails ? "pog" : "pigeon"));
+			message.editMessage(finalResponso).queue(m2 -> react(headsOrTails ? "pogey" : "pigeon"));
 		});
 
 	} // fine coinflip()
@@ -870,7 +869,7 @@ public class Commands extends ListenerAdapter
 				{
 					if (challenge.getTipoSfida().equals(tipoSfida))
 					{
-						channel.sendMessage("Voi due avete già una sfida in corso.").queue();
+						channel.sendMessage("Voi due avete già una sfida in corso.").queue(l->react("smh"));
 						return;
 					}
 					else
@@ -1086,88 +1085,75 @@ public class Commands extends ListenerAdapter
 	/** Aggiunge una reazione all'ultimo messaggio inviato */
 	public void react(String emote)
 	{
-		final String emoteOwO = "OwO:604351952205381659";
-		final String emoteNou = "nou:671402740186087425";
-		final String emotePigeon = "pigeon:647556750962065418";
-		final String emotePog = "pogey:733659301645910038";
-		final String[] emoteObito = {"obi:670007761760681995", "ito:670007761697898527"};
-		final String[] emoteVergognati = {"vergognati:670009511053885450", "vergognati2:880100281315098685"};
-		final String[] emoteSabaPing = {"leftPowerUp:785565275608842250", "sabaPing:785561662605885502", "rightPowerUp:785565774953709578"};
-		final String emoteGetRekt = "getrekt:742330625347944504";
-		final String emoteSmh = "smh:880423534365659176";
-		final String emoteGiorno = "GiOrNo:618591225582321703";
-		final String emoteDansGame = "dansgame:848955120157720576";
-		final String emoteIngredibile = "ingredibile:593532244434485259";
-		final String[] emoteScarab = {"leftPowerUp:785565275608842250", "scarab:847008906994778122", "rightPowerUp:785565774953709578"};
-		final String emoteWTF = "WTF:670033776524656641";
-		final int[] emoteHitman = {7, 8, 19, 12, 0, 13}; // posizioni lettere nell'alfabeto
-		final int[] emoteXCOM = {23, 2, 14, 12}; // posizioni lettere nell'alfabeto
-		final String[] letters =
+		var emoteDaUsare = switch (emote.toLowerCase())
 		{
-			"\uD83C\uDDE6", // A
-			"\uD83C\uDDE7", // B
-			"\uD83C\uDDE8", // C
-			"\uD83C\uDDE9", // D
-			"\uD83C\uDDEA", // E
-			"\uD83C\uDDEB", // F
-			"\uD83C\uDDEC", // G
-			"\uD83C\uDDED", // H
-			"\uD83C\uDDEE", // I
-			"\uD83C\uDDEF", // J
-			"\uD83C\uDDF0", // K
-			"\uD83C\uDDF1", // L
-			"\uD83C\uDDF2", // M
-			"\uD83C\uDDF3", // N
-			"\uD83C\uDDF4", // O
-			"\uD83C\uDDF5", // P
-			"\uD83C\uDDF6", // Q
-			"\uD83C\uDDF7", // R
-			"\uD83C\uDDF8", // S
-			"\uD83C\uDDF9", // T
-			"\uD83C\uDDFA", // U
-			"\uD83C\uDDFB", // V
-			"\uD83C\uDDFC", // W
-			"\uD83C\uDDFD", // X
-			"\uD83C\uDDFE", // Y
-			"\uD83C\uDDFF"  // Z
-		};
-		
-		var emoteDaUsare = switch (emote)
-		{
-			case "pigeon" -> emotePigeon;
-			case "nou" -> emoteNou;
-			case "owo" -> emoteOwO;
-			case "pog" -> emotePog;
-			case "vergogna" -> emoteVergognati[random.nextInt(2)];
-			case "getrekt" -> emoteGetRekt;
-			case "smh" -> emoteSmh;
-			case "giorno" -> emoteGiorno;
-			case "dansgame" -> emoteDansGame;
-			case "ingredibile" -> emoteIngredibile;
-			case "wtf" -> emoteWTF;
+			case "pigeon" -> Emotes.pigeon;
+			case "nou" -> Emotes.NoU;
+			case "owo" -> Emotes.OwO;
+			case "pogey" -> Emotes.pogey;
+			case "vergogna" -> Emotes.vergognati[random.nextInt(2)];
+			case "getrekt" -> Emotes.getRekt;
+			case "smh" -> Emotes.smh;
+			case "giorno" -> Emotes.giorno;
+			case "dansgame" -> Emotes.dansGame;
+			case "ingredibile" -> Emotes.ingredibile;
+			case "wtf" -> Emotes.wtf;
+			case "bigbrain" -> Emotes.bigBrain;
+			case "boo2" -> Emotes.boo2;
+			case "borisk" -> Emotes.borisK;
+			case "comedygenius" -> Emotes.comedyGenius;
+			case "dshock" -> Emotes.dshock;
+			case "gaben" -> Emotes.gabeN;
+			case "hampter" -> Emotes.hampter;
+			case "lul" -> Emotes.lul;
+			case "pepesad" -> Emotes.pepeSad;
+			case "pogkarp" -> Emotes.pogKarp;
+			case "ragey" -> Emotes.ragey;
+			case "tony" -> Emotes.tony;
+			case "tpose" -> Emotes.Tpose;
+			case "doubt" -> Emotes.doubt;
+			case "everyone" -> Emotes.everyone;
+			case "grrr" -> Emotes.grrr;
+			case "harryfotter" -> Emotes.harryFotter;
+			case "kappa" -> Emotes.kappa;
+			case "kappapride" -> Emotes.kappaPride;
+			case "konodio" -> Emotes.konoDio;
+			case "medic" -> Emotes.medic;
+			case "meta" -> Emotes.meta;
+			case "monkas" -> Emotes.monkaS;
+			case "noidontthinkiwill" -> Emotes.noIdontThinkIwill;
+			case "o7" -> Emotes.o7;
+			case "oksaitama" -> Emotes.okSaitama;
+			case "scouttrap" -> Emotes.scoutTrap;
+			case "tf2spy" -> Emotes.tf2spy;
+			case "tf2spy2" -> Emotes.tf2spy2;
+			case "thinkhang" -> Emotes.thinkHang;
+			case "thonking" -> Emotes.thonking;
+			case "what" -> Emotes.what;
+			
 			default -> "";
 		};
 		
 		try
 		{
 			if (emote.equals("obito"))
-				for (String str : emoteObito)
+				for (String str : Emotes.obito)
 					channel.addReactionById(id, str).queue();
 			
 			if (emote.equals("sabaping"))
-				for (String str : emoteSabaPing)
+				for (String str : Emotes.sabaPing)
 					channel.addReactionById(id, str).queue();
 			
 			if (emote.equals("hitman"))
-				for (int i : emoteHitman)
-					channel.addReactionById(id, letters[i]).queue();
+				for (int i : Emotes.hitman)
+					channel.addReactionById(id, Emotes.letters[i]).queue();
 			
 			if (emote.equals("xcom"))
-				for (int i : emoteXCOM)
-					channel.addReactionById(id, letters[i]).queue();
+				for (int i : Emotes.XCOM)
+					channel.addReactionById(id, Emotes.letters[i]).queue();
 			
 			if (emote.equals("scarab"))
-				for (String str : emoteScarab)
+				for (String str : Emotes.scarab)
 					channel.addReactionById(id, str).queue();
 			
 			if (!emoteDaUsare.equals(""))
@@ -1183,7 +1169,6 @@ public class Commands extends ListenerAdapter
 			}
 		}
 		catch (ErrorResponseException ignored) {}
-		
 	} // fine react()
 	
 	/** Lascia che RNGesus decida quanto è colpevole l'utente taggato */
@@ -1228,7 +1213,7 @@ public class Commands extends ListenerAdapter
 				else if (colpa < 80)
 					react("dansgame");
 				else
-					react("pog");
+					react("pogey");
 			});
 		}
 		
@@ -1455,7 +1440,7 @@ public class Commands extends ListenerAdapter
 			{
 				if (pokemonNames[0].equalsIgnoreCase("poochyena") || pokemonNames[1].equalsIgnoreCase("poochyena"))
 				{
-					react("pog");
+					react("pogey");
 					message.addReaction("❤️").queue();
 				}
 				else
