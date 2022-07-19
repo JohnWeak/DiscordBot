@@ -537,6 +537,8 @@ public class Commands extends ListenerAdapter
 		if (x.length() > 2000)
 			 split = x.substring(0, 1999);
 		
+		System.out.println("\n\n"+split+"\n\n");
+		
 		try
 		{
 			channel.sendMessage(split).queue();
