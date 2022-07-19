@@ -1,7 +1,3 @@
-import net.dv8tion.jda.api.entities.Emote;
-
-import java.util.Random;
-
 public class Emotes
 {
 	public static final String OwO = "OwO:604351952205381659";
@@ -87,7 +83,6 @@ public class Emotes
 	
 	public static String emoteDaUsare(String s)
 	{
-		var random = new Random();
 		return switch (s.toLowerCase())
 		{
 			case "pigeon" -> Emotes.pigeon;
