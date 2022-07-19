@@ -537,7 +537,11 @@ public class Commands extends ListenerAdapter
 		if (x.length() > 2000)
 			 split = x.substring(0, 1999);
 		
-		channel.sendMessage(split).queue();
+		try
+		{
+			channel.sendMessage(split).queue();
+		}
+		catch (Exception e) {channel.sendMessage("what").queue();}
 	}
 	
 	
