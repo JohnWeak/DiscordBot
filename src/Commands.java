@@ -342,7 +342,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("monkasteer"))
 			reazioni.add("monkasteer");
 		
-		if (msgLowerCase.contains("get") && msgLowerCase.contains("rekt"))
+		if (msgLowerCase.contains("get rekt"))
 			reazioni.add("getrekt");
 		
 		if (msgLowerCase.contains("smh"))
