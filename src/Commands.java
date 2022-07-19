@@ -187,7 +187,7 @@ public class Commands extends ListenerAdapter
 	
 	public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event)
 	{
-		var reaction = event.getReaction();
+		// var reaction = event.getReaction();
 		var emote = event.getReactionEmote();
 		channel = event.getChannel();
 		id = event.getMessageIdLong();
