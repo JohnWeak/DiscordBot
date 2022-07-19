@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
+import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import org.jetbrains.annotations.NotNull;
@@ -190,7 +191,7 @@ public class Commands extends ListenerAdapter
 		channel = event.getChannel();
 		author = event.getUser();
 		var id = event.getMessageIdLong();
-		//react("");
+		react("");
 		
 		try {
 			authorName = author.getName();
@@ -1085,6 +1086,8 @@ public class Commands extends ListenerAdapter
 	/** Aggiunge una reazione all'ultimo messaggio inviato */
 	public void react(String emote)
 	{
+		var limiteRaggiunto = false;
+		
 		final String emoteOwO = "OwO:604351952205381659";
 		final String emoteNou = "nou:671402740186087425";
 		final String emotePigeon = "pigeon:647556750962065418";
@@ -1146,34 +1149,44 @@ public class Commands extends ListenerAdapter
 			case "wtf" -> emoteWTF;
 			default -> "";
 		};
-
-		if (emote.equals("obito"))
-			for (String str : emoteObito)
-				channel.addReactionById(id, str).queue();
 		
-		if (emote.equals("sabaping"))
-			for (String str : emoteSabaPing)
-				channel.addReactionById(id, str).queue();
-		
-		if (emote.equals("hitman"))
-			for (int i : emoteHitman)
-				channel.addReactionById(id, letters[i]).queue();
-		
-		if (emote.equals("xcom"))
-			for (int i : emoteXCOM)
-				channel.addReactionById(id, letters[i]).queue();
-		
-		if (emote.equals("scarab"))
-			for (String str : emoteScarab)
-				channel.addReactionById(id, str).queue();
-		
-		if (!emoteDaUsare.equals(""))
+		try
 		{
-			try
+			if (emote.equals("obito"))
+				for (String str : emoteObito)
+					channel.addReactionById(id, str).queue();
+			
+			if (emote.equals("sabaping"))
+				for (String str : emoteSabaPing)
+					channel.addReactionById(id, str).queue();
+			
+			if (emote.equals("hitman"))
+				for (int i : emoteHitman)
+					channel.addReactionById(id, letters[i]).queue();
+			
+			if (emote.equals("xcom"))
+				for (int i : emoteXCOM)
+					channel.addReactionById(id, letters[i]).queue();
+			
+			if (emote.equals("scarab"))
+				for (String str : emoteScarab)
+					channel.addReactionById(id, str).queue();
+			
+			if (!emoteDaUsare.equals(""))
 			{
-				channel.addReactionById(id, emoteDaUsare).queue();
+				try
+				{
+					channel.addReactionById(id, emoteDaUsare).queue();
+				} catch (Exception e)
+				{
+					System.out.printf("Errore nell'aggiunta della reazione \"%s\"\n\t", emoteDaUsare);
+				}
 			}
-			catch (Exception e) { System.out.printf("Errore nell'aggiunta della reazione \"%s\"\n\t", emoteDaUsare); }
+		}catch (ErrorResponseException e)
+		{}
+		finally
+		{
+			channel.sendMessage("test").queue();
 		}
 		
 	} // fine react()
