@@ -227,7 +227,6 @@ public class Commands extends ListenerAdapter
 		final String comando = args[0].toLowerCase(Locale.ROOT);
 		boolean reply = false;
 		String msgReply = "";
-		
 		if (author.isBot())
 		{
 			if (discriminator.equals("8456"))
@@ -301,6 +300,7 @@ public class Commands extends ListenerAdapter
 			case "!war" -> clashWar();
 			case "!league" -> clashWarLeague(false);
 			case "!pigeonbazooka", "!pb" -> pigeonBazooka();
+			case "!emotes" -> channel.sendMessage((CharSequence) channel.getJDA().getEmotes()).queue();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
