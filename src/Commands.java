@@ -532,18 +532,12 @@ public class Commands extends ListenerAdapter
 	private void a()
 	{
 		var x = Arrays.toString(canaleBot.getGuild().getEmotes().toArray());
-		var split = "";
 		
 		if (x.length() > 2000)
-			 split = x.substring(0, 1999);
+			 channel.sendMessage(x.substring(0, 1999)).queue();
 		else
 			channel.sendMessage(x).queue();
 		
-		try
-		{
-			channel.sendMessage(split).queue();
-		}
-		catch (Exception e) {channel.sendMessage("what").queue();}
 	}
 	
 	

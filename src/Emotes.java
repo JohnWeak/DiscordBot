@@ -1,3 +1,5 @@
+import net.dv8tion.jda.api.entities.Emote;
+
 import java.util.Random;
 
 public class Emotes
@@ -96,6 +98,10 @@ public class Emotes
 			case "getrekt" -> Emotes.getRekt;
 			case "smh" -> Emotes.smh;
 			case "giorno" -> Emotes.giorno;
+			case "obi" -> Emotes.obito[0];
+			case "ito" -> Emotes.obito[1];
+			case "leftpowerup" -> Emotes.sabaPing[0];
+			case "rightpowerup" -> Emotes.sabaPing[2];
 			case "dansgame" -> Emotes.dansGame;
 			case "ingredibile" -> Emotes.ingredibile;
 			case "wtf" -> Emotes.wtf;
@@ -126,6 +132,7 @@ public class Emotes
 			case "o7" -> Emotes.o7;
 			case "oksaitama" -> Emotes.okSaitama;
 			case "scouttrap" -> Emotes.scoutTrap;
+			case "scarab" -> Emotes.scarab[1];
 			case "tf2spy" -> Emotes.tf2spy;
 			case "tf2spy2" -> Emotes.tf2spy2;
 			case "thinkhang" -> Emotes.thinkHang;
