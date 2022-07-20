@@ -563,7 +563,8 @@ public class Commands extends ListenerAdapter
 	/** Gestisce i comandi slash (ancora da implementare) */
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
 	{
-		// ???
+		if (event.getName().equalsIgnoreCase("pog"))
+			canaleBot.sendMessage("<:"+ Emotes.pogey + ">").queue();
 
 	} // fine onSlashCommand()
 
@@ -2057,10 +2058,6 @@ public class Commands extends ListenerAdapter
 		}
 	}
 	
-	public void onEmojiAdded()
-	{
-	
-	}
 	
 	
 } // fine classe Commands

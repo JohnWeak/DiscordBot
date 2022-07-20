@@ -17,6 +17,8 @@ public class Main
 			.setStatus(OnlineStatus.ONLINE)
 			.addEventListeners(new Commands())
 			.build();
+		
+		jda.upsertCommand("pog", "questo è un comando slash. woah.").queue();
 	} // fine metodo main()
 	
 	
