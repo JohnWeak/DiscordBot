@@ -8,17 +8,15 @@ import java.util.Random;
 
 public class Main
 {
-	private static JDABuilder jda;
-	
 	public static void main(String[] args) throws LoginException
 	{
 		final String token = "ODM2NTg2ODYyMjEzNzI2MjI4.YIgKOg.zFvGCTzAF1ffIUB_M5OnN_U29HI";
 
-		jda = JDABuilder.createDefault(token);
-		jda.setActivity(selectActivity());
-		jda.setStatus(OnlineStatus.ONLINE);
-		jda.addEventListeners(new Commands());
-		jda.build();
+		var jda = JDABuilder.createDefault(token)
+			.setActivity(selectActivity())
+			.setStatus(OnlineStatus.ONLINE)
+			.addEventListeners(new Commands())
+			.build();
 	} // fine metodo main()
 	
 	
