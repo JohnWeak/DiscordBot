@@ -1416,8 +1416,8 @@ public class Commands extends ListenerAdapter
 			sendMessage(nomi, embedBuilder);
 		}
 		
-		System.out.printf("\n\tUno: %s, shiny: %s\n\tDue: %s, shiny: %s\n\t",uno.getNome(), uno.isShiny(), due.getNome(), due.isShiny());
-	} // fine
+		// System.out.printf("\n\tUno: %s, shiny: %s\n\tDue: %s, shiny: %s\n",uno.getNome(), uno.isShiny(), due.getNome(), due.isShiny());
+	} // fine doubleEncounter()
 
 	/** Manda il messaggio con i Pokemon nel canale e aggiunge le reazioni like/dislike al messaggio */
 	private void sendMessage(String[] pokemonNames, EmbedBuilder embedBuilder)

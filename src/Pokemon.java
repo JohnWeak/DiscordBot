@@ -89,7 +89,7 @@ public class Pokemon
 		
 		risultato[1] = img;
 		
-		System.out.println("\t"+Arrays.toString(risultato)+"\n\tShiny: "+shiny);
+		//System.out.println("\t"+Arrays.toString(risultato)+"\n\tShiny: "+shiny);
 		return risultato;
 	}
 	
