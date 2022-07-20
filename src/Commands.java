@@ -238,13 +238,13 @@ public class Commands extends ListenerAdapter
 			if (discriminator.equals("8456"))
 			{
 				react("owo");
-				react("vergogna");
+				react("vergognati");
 			}
 			// return a priori, se però il messaggio lo manda l'altro bot OwO prima gli mette le reazioni e poi return
 			
 			if (author.getDiscriminator().equals("5269")) // self own
 				if (random.nextInt(1000) == 42) // 0,1%
-					message.reply("BOwOt vergognati").queue(lambda -> react("vergogna"));
+					message.reply("BOwOt vergognati").queue(lambda -> react("vergognati"));
 			
 			return;
 		}
@@ -265,7 +265,7 @@ public class Commands extends ListenerAdapter
 					case NUMOBITO ->
 					{
 						react("obito");
-						react("vergogna");
+						react("vergognati");
 						message.reply("Òbito vergognati").queue();
 					}
 					case NUMENIGMO ->
@@ -332,7 +332,7 @@ public class Commands extends ListenerAdapter
 			}
 		
 		if (msgLowerCase.contains("vergogna"))
-			reazioni.add("vergogna");
+			reazioni.add("vergognati");
 		
 		if (msgLowerCase.contains("no u"))
 		{
@@ -740,7 +740,7 @@ public class Commands extends ListenerAdapter
 				else if (valori[0] < valori[1])
 					channel.sendMessage(messaggioVittoria[1]).queue();
 				else
-					channel.sendMessage(messaggioVittoria[2]).queue(lambda -> react("vergogna"));
+					channel.sendMessage(messaggioVittoria[2]).queue(lambda -> react("vergognati"));
 				
 			}
 			
@@ -917,7 +917,7 @@ public class Commands extends ListenerAdapter
 		if (!sfidaAttiva || !authorName.equals(sfidato.getName()))
 		{
 			// se non c'è sfida o la persona che invia il comando non è lo sfidato => ignora
-			channel.sendMessage("Non sei stato sfidato, vergognati").queue( lambda -> react("vergogna"));
+			channel.sendMessage("Non sei stato sfidato, vergognati").queue( lambda -> react("vergognati"));
 			return ;
 		}
 		
