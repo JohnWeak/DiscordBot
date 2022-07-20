@@ -334,14 +334,22 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("vergogna"))
 			reazioni.add("vergognati");
 		
-		if (msgLowerCase.contains("no u"))
+		if (msgLowerCase.contains("no u") || msgLowerCase.contains("coc"))
 		{
-			var pattern = "\\b"+"no u"+"\\b";
-			var p = Pattern.compile(pattern);
-			var m = p.matcher(msgLowerCase);
+			var patternNoU = "\\b"+"no u"+"\\b";
+			var patternCoc = "\\b" + "coc" + "\\b";
 			
-			if (m.find())
+			var p1 = Pattern.compile(patternNoU);
+			var m1 = p1.matcher(msgLowerCase);
+			
+			var p2 = Pattern.compile(patternCoc);
+			var m2 = p2.matcher(msgLowerCase);
+			
+			if (m1.find())
 				reazioni.add("nou");
+			
+			if (m2.find())
+				reazioni.add("kappapride");
 		}
 		
 		if (msgLowerCase.contains("sabaping"))
