@@ -337,7 +337,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("no u") || msgLowerCase.contains("coc"))
 		{
 			var patternNoU = "\\b"+"no u"+"\\b";
-			var patternCoc = "\\b" + "coc+" + "\\b";
+			var patternCoc = "\\b" + "coc+k*" + "\\b";
 			
 			var p1 = Pattern.compile(patternNoU);
 			var m1 = p1.matcher(msgLowerCase);
