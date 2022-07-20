@@ -2057,4 +2057,10 @@ public class Commands extends ListenerAdapter
 		}
 	}
 	
+	public void onEmojiAdded()
+	{
+	
+	}
+	
+	
 } // fine classe Commands
