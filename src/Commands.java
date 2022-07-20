@@ -140,8 +140,6 @@ public class Commands extends ListenerAdapter
 	public void onMessageUpdate(@NotNull MessageUpdateEvent event)
 	{
 		identifyLatestMessage(null, event);
-		//var reactions = message.getReactions();
-		
 		aggiungiReazioni();
 		checkForKeywords(messageRaw.toLowerCase(Locale.ROOT));
 	} // fine onMessageUpdate()
@@ -191,6 +189,7 @@ public class Commands extends ListenerAdapter
 		
 	} // fine identifyLatestMessage()
 	
+	/**Questo metodo aggiunge ad un messaggio la stessa reazione che piazza l'utente*/
 	public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event)
 	{
 		message.addReaction(event.getReactionEmote().getEmote()).queue();
