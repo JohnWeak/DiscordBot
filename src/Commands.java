@@ -2073,7 +2073,8 @@ public class Commands extends ListenerAdapter
 			if (y == 4 || y == 6 || y == 8 || y == 10 || y == 12 || y == 20 || y == 100)
 			{
 				channel.sendMessage(authorName+" lancia un dado...").queue();
-				channel.sendTyping().queue(l->pause(2000,1000));
+				channel.sendTyping().queue();
+				pause(-1,-1);
 				
 				var res = random.nextInt(y) + 1;
 				if (y == 20 && res == 1) // 1 critico
