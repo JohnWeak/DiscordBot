@@ -306,6 +306,7 @@ public class Commands extends ListenerAdapter
 			case "!league" -> clashWarLeague(false);
 			case "!pigeonbazooka", "!pb" -> pigeonBazooka();
 			case "!emotes" -> a();
+			case "!dado" -> dado(msgLowerCase);
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -2054,6 +2055,38 @@ public class Commands extends ListenerAdapter
 			else
 				message.reply("**"+messaggiScortesi[random.nextInt(messaggiScortesi.length)]+"**").queue();
 		}
+	}
+	
+	public void dado(String msg)
+	{
+		if (msg.length() <= "!dado".length())
+			channel.sendMessage("Per favore specifica che tipo di dado devo lanciare.\nEsempio:\n`!dado 6` lancerà un dado con 6 facce.").queue();
+		
+		
+		var x = msg.split(" ")[1];
+		try
+		{
+			var y= Integer.parseInt(x);
+			if (y == 4 || y == 6 || y == 8 || y == 10 || y == 12 || y == 20 || y == 100)
+			{
+				channel.sendMessage(authorName+" lancia un dado...").queue();
+				channel.sendTyping().queue(l->pause(-1,-1));
+				
+				var res = random.nextInt(y) + 1;
+				if (y == 20 && res == 1) // 1 critico
+					channel.sendMessage("Si mette male per " +authorName+", hai crittato in negativo! **1 naturale**!").queue();
+				else if (y == 20 && res == 20)
+					channel.sendMessage("La fortuna ti sorride, "+authorName+", hai crittato in positivo! **20 naturale**!").queue();
+				
+				channel.sendMessage("È uscito **"+ res + "**!").queue();
+			}
+		}catch (Exception e)
+		{
+			channel.sendMessage("Devi specificare un numero tra i seguenti: 4, 6, 8, 10, 12, 20, 100").queue();
+		}
+		
+		
+		
 	}
 	
 	
