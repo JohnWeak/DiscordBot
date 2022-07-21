@@ -2065,7 +2065,7 @@ public class Commands extends ListenerAdapter
 		    return;
 		}
 		
-		
+		final var dadiAmmessi = "I dadi di D&D hanno questi numeri di facce: 4, 6, 8, 10, 12, 20, 100";
 		var x = msg.split(" ")[1];
 		try
 		{
@@ -2083,9 +2083,13 @@ public class Commands extends ListenerAdapter
 				
 				channel.sendMessage("È uscito **"+ res + "**!").queue();
 			}
+			else
+			{
+				channel.sendMessage(dadiAmmessi).queue();
+			}
 		}catch (Exception e)
 		{
-			channel.sendMessage("Devi specificare un numero tra i seguenti: 4, 6, 8, 10, 12, 20, 100").queue();
+			channel.sendMessage(dadiAmmessi).queue();
 		}
 		
 		
