@@ -2074,7 +2074,6 @@ public class Commands extends ListenerAdapter
 			{
 				channel.sendMessage(authorName+" lancia un dado...").queue();
 				channel.sendTyping().queue();
-				pause(-1,-1);
 				
 				var res = random.nextInt(y) + 1;
 				if (y == 20 && res == 1) // 1 critico
