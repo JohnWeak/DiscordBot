@@ -2059,7 +2059,7 @@ public class Commands extends ListenerAdapter
 	
 	public void dado(String msg)
 	{
-		if (msg.length() <= "!dado".length())
+		if (msg.length() <= 5) // 5 = dado.length()
 		{
 			channel.sendMessage("Per favore specifica che tipo di dado devo lanciare.\nEsempio:\n`!dado 6` lancerà un dado con 6 facce.").queue();
 		    return;
