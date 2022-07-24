@@ -2066,19 +2066,19 @@ public class Commands extends ListenerAdapter
 		}
 		
 		final var dadiAmmessi = "I dadi di D&D hanno questi numeri di facce: 4, 6, 8, 10, 12, 20, 100";
-		var x = msg.split(" ")[1];
+		var num = msg.split(" ")[1];
 		try
 		{
-			var y= Integer.parseInt(x);
-			if (y == 4 || y == 6 || y == 8 || y == 10 || y == 12 || y == 20 || y == 100)
+			var facce= Integer.parseInt(num);
+			if (facce == 4 || facce == 6 || facce == 8 || facce == 10 || facce == 12 || facce == 20 || facce == 100)
 			{
 				channel.sendMessage(authorName+" lancia un dado...").queue();
 				channel.sendTyping().queue();
 				
-				var res = random.nextInt(y) + 1;
-				if (y == 20 && res == 1) // 1 critico
-					channel.sendMessage("Si mette male per " +authorName+", hai crittato in negativo! **1 naturale**!").queue();
-				else if (y == 20 && res == 20)
+				var res = random.nextInt(facce) + 1;
+				if (facce == 20 && res == 1) // 1 critico
+					channel.sendMessage("Si mette male per te, " +authorName+", hai crittato in negativo! **1 naturale**!").queue();
+				else if (facce == 20 && res == 20)
 					channel.sendMessage("La fortuna ti sorride, "+authorName+", hai crittato in positivo! **20 naturale**!").queue();
 				
 				channel.sendMessage("È uscito **"+ res + "**!").queue();
