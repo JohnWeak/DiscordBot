@@ -315,7 +315,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("ehi modulo"))
 			ehiModulo();
 		
-		if (msgLowerCase.contains("pigeon") || msgLowerCase.contains("piccione"))
+		if (msgLowerCase.contains("pigeon") || (msgLowerCase.contains("piccion") && msgLowerCase.matches("\\bpiccion[ie]\\b")))
 			new ThreadPigeon().start();
 		
 		if (msgLowerCase.contains("owo"))
