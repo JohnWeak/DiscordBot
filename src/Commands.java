@@ -315,7 +315,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("ehi modulo"))
 			ehiModulo();
 		
-		if (msgLowerCase.contains("pigeon") || (msgLowerCase.contains("piccion") && msgLowerCase.matches("\\bpiccion[ie]\\b")))
+		if (msgLowerCase.matches(".*piccion[ei].*|.*pigeon.*"))
 			new ThreadPigeon().start();
 		
 		if (msgLowerCase.contains("owo"))
@@ -336,8 +336,8 @@ public class Commands extends ListenerAdapter
 		
 		if (msgLowerCase.contains("no u") || msgLowerCase.contains("coc"))
 		{
-			var patternNoU = "\\b"+"no u"+"\\b";
-			var patternCoc = "\\b" + "coc+k*" + "\\b";
+			var patternNoU = "\\bno u\\b";
+			var patternCoc = "\\bcoc+k*\\b";
 			
 			var p1 = Pattern.compile(patternNoU);
 			var m1 = p1.matcher(msgLowerCase);
@@ -367,7 +367,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("giorno"))
 			reazioni.add("giorno");
 		
-		if (msgLowerCase.contains("uomo colpo") || msgLowerCase.contains("hitman") || msgLowerCase.contains("icscom") || msgLowerCase.contains("xcom"))
+		if (msgLowerCase.matches(".*(?:xcom|icscom|hitman|uomo *colpo).*"))
 		{
 			reazioni.add("pogey");
 			
