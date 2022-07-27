@@ -367,11 +367,11 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("giorno"))
 			reazioni.add("giorno");
 		
-		if (msgLowerCase.matches(".*(?:xcom|icscom|hitman|uomo *colpo).*"))
+		if (msgLowerCase.matches(".*(?:(?:x|ics)com|hitman|uomo *colpo).*"))
 		{
 			reazioni.add("pogey");
 			
-			if (msgLowerCase.contains("icscom") || msgLowerCase.contains("xcom"))
+			if (msgLowerCase.matches("(?:x|ics)com"))
 				reazioni.add("xcom");
 			else
 				reazioni.add("hitman");
