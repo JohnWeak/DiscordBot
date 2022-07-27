@@ -516,7 +516,7 @@ public class Commands extends ListenerAdapter
 			msgReply += "Grazie, graziella e grazie al cazzo\n";
 		}
 		
-		if (msgLowerCase.equals("cosa") && random.nextInt(20) == 1)
+		if (msgLowerCase.matches("cosa\\?*") && random.nextInt(20) == 1)
 		{
 			reply = true;
 			msgReply += "Cosa? La pantera rosa\n";
