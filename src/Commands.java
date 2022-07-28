@@ -2076,9 +2076,9 @@ public class Commands extends ListenerAdapter
 				channel.sendTyping().queue();
 				
 				var res = random.nextInt(facce) + 1;
-				if (facce == 20 && res == 1) // 1 critico
+				if (facce == 20 && res == 1) // 1 naturale
 					channel.sendMessage("Si mette male per te, " +authorName+", hai crittato in negativo! **1 naturale**!").queue();
-				else if (facce == 20 && res == 20)
+				else if (facce == 20 && res == 20) // 20 naturale
 					channel.sendMessage("La fortuna ti sorride, "+authorName+", hai crittato in positivo! **20 naturale**!").queue();
 				
 				channel.sendMessage("È uscito **"+ res + "**!").queue();
@@ -2091,11 +2091,7 @@ public class Commands extends ListenerAdapter
 		{
 			channel.sendMessage(dadiAmmessi).queue();
 		}
-		
-		
-		
-	}
-	
+	} // fine dado()
 	
 	
 } // fine classe Commands
