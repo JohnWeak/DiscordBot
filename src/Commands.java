@@ -200,8 +200,7 @@ public class Commands extends ListenerAdapter
 
 		var emoteString = emote.toString().split(":")[1].split("\\(")[0];
 		react(emoteString);
-	
-		
+
 	} // fine onMessageReactionAdd
 	
 	/**Inserisce come reazioni tutte le emote che trova nel messaggio*/
@@ -227,11 +226,12 @@ public class Commands extends ListenerAdapter
 	/** Controlla che il messaggio abbia le parole chiave per attivare i comandi (o le reazioni) del bot*/
 	public void checkForKeywords(String msgLowerCase)
 	{
-		final String discriminator = author.getDiscriminator();
-		final String[] args = messageRaw.split(" ");
-		final String comando = args[0].toLowerCase(Locale.ROOT);
-		boolean reply = false;
-		String msgReply = "";
+		final var discriminator = author.getDiscriminator();
+		final var args = messageRaw.split(" ");
+		final var comando = args[0].toLowerCase(Locale.ROOT);
+		var reply = false;
+		var msgReply = "";
+
 		if (author.isBot())
 		{
 			if (discriminator.equals("8456"))
