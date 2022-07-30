@@ -86,10 +86,10 @@ public class Commands extends ListenerAdapter
 		var c = new GregorianCalendar();
 		var saluto = "";
 		var hour = c.get(Calendar.HOUR_OF_DAY);
-		var x = c.get(Calendar.MONTH);
+		var month = c.get(Calendar.MONTH);
 		short tramonto;
 		
-		switch (c.get(Calendar.MONTH)) // se è estate, il tramonto avviene più tardi
+		switch (month) // se è estate, il tramonto avviene più tardi
 		{
 			case 4, 5, 6, 7 -> tramonto = 20;
 			default -> tramonto = 17;
@@ -153,6 +153,10 @@ public class Commands extends ListenerAdapter
 		var date = new Date();
 		var dFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
 		var dataFormattata = dFormat.format(date);
+
+
+		if (author.isBot())
+			return;
 
 		String messageChannelString = "#"+ channel.toString().split(":")[1].split("\\(")[0];
 		String guild = event.getGuild().toString().split("\\(")[0].split(":")[1];
@@ -307,6 +311,7 @@ public class Commands extends ListenerAdapter
 			case "!pigeonbazooka", "!pb" -> pigeonBazooka();
 			case "!emotes" -> a();
 			case "!dado" -> dado(msgLowerCase);
+			case "!dm" -> sendMessage(author, messageRaw);
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
