@@ -156,8 +156,11 @@ public class Commands extends ListenerAdapter
 		var dataFormattata = dFormat.format(date);
 
 
-		if (!event.isFromGuild() && !author.isBot())
+		if (!event.isFromGuild())
 		{
+			if (author.isBot())
+				return;
+			
 			sendMessage(author, messageRaw + " <:"+Emotes.pigeon+">", "pigeon");
 			return;
 		}
