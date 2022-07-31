@@ -147,6 +147,8 @@ public class Commands extends ListenerAdapter
 	/** Gestisce i messaggi inviati in qualsiasi canale testuale di qualsiasi server in cui è presente il bot */
 	public void onMessageReceived(@NotNull MessageReceivedEvent event)
 	{
+		identifyLatestMessage(event, null);
+		
 		if (event.isFromGuild())
 			guildEvent(event);
 		else
@@ -156,7 +158,6 @@ public class Commands extends ListenerAdapter
 	
 	private void guildEvent(MessageReceivedEvent event)
 	{
-		identifyLatestMessage(event, null);
 		
 		final var mockupCode = "\tvar %s = \"%s\"; // in \"%s\" (%s) - %s";
 		var date = new Date();
