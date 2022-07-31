@@ -158,7 +158,7 @@ public class Commands extends ListenerAdapter
 
 		if (!event.isFromGuild() && !author.isBot())
 		{
-			sendMessage(author, messageRaw + " <:"+Emotes.pigeon+">");
+			sendMessage(author, messageRaw + " <:"+Emotes.pigeon+">", "pigeon");
 			return;
 		}
 
@@ -315,7 +315,7 @@ public class Commands extends ListenerAdapter
 			case "!pigeonbazooka", "!pb" -> pigeonBazooka();
 			case "!emotes" -> a();
 			case "!dado" -> dado(msgLowerCase);
-			case "!dm" -> sendMessage(author, messageRaw);
+			case "!dm" -> sendMessage(author, messageRaw, "");
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -1693,9 +1693,9 @@ public class Commands extends ListenerAdapter
 	}
 	
 	/**Manda un messaggio in chat privata*/
-	private void sendMessage(User user, String content)
+	private void sendMessage(User user, String content, String lambdaEmote)
 	{
-		user.openPrivateChannel().flatMap(channel -> channel.sendMessage(content)).queue();
+		user.openPrivateChannel().flatMap(channel -> channel.sendMessage(content)).queue(l->react(lambdaEmote));
 	} // fine onPrivateMessageReceived()
 	
 	private static String getResponse(URL url) throws IOException
