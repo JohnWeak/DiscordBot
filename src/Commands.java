@@ -173,10 +173,11 @@ public class Commands extends ListenerAdapter
 	
 	private void privateMessage(MessageReceivedEvent event)
 	{
+		System.out.printf("\tvar %s = \"%s\";\n", authorName, messageRaw);
+		
 		if (author.isBot())
 			return;
 		
-		System.out.printf("\tvar %s = \"%s\";\n", authorName, messageRaw);
 		checkForKeywords(event.getMessage().getContentRaw().toLowerCase());
 		
 	} // fine privateMessage()
