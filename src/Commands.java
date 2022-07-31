@@ -147,24 +147,22 @@ public class Commands extends ListenerAdapter
 	/** Gestisce i messaggi inviati in qualsiasi canale testuale di qualsiasi server in cui è presente il bot */
 	public void onMessageReceived(@NotNull MessageReceivedEvent event)
 	{
-
+		if (event.isFromGuild())
+			guildEvent(event);
+		else
+			privateMessage(event);
+		
+	} // fine onMessageReceived()
+	
+	private void guildEvent(MessageReceivedEvent event)
+	{
 		identifyLatestMessage(event, null);
 		
 		final var mockupCode = "\tvar %s = \"%s\"; // in \"%s\" (%s) - %s";
 		var date = new Date();
 		var dFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
 		var dataFormattata = dFormat.format(date);
-
-
-		if (!event.isFromGuild())
-		{
-			if (author.isBot())
-				return;
-			
-			sendMessage(author, messageRaw + " <:"+Emotes.pigeon+">", "pigeon");
-			return;
-		}
-
+		
 		var messageChannelString = "#"+ channel.toString().split(":")[1].split("\\(")[0];
 		var guild = event.getGuild().toString().split("\\(")[0].split(":")[1];
 		
@@ -173,8 +171,17 @@ public class Commands extends ListenerAdapter
 		
 		aggiungiReazioni();
 		checkForKeywords(messageRaw.toLowerCase(Locale.ROOT));
+	} // fine guildEvent()
+	
+	private void privateMessage(MessageReceivedEvent event)
+	{
+		if (author.isBot())
+			return;
 		
-	} // fine onMessageReceived()
+		sendMessage(author, messageRaw + " <:"+Emotes.pigeon+">", "pigeon");
+	} // fine privateMessage()
+	
+	
 	
 	/** Questo metodo tiene conto di quale è l'ultimo messaggio che viene inviato/modificato */
 	private void identifyLatestMessage(MessageReceivedEvent received, MessageUpdateEvent updated)
