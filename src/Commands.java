@@ -158,7 +158,6 @@ public class Commands extends ListenerAdapter
 	
 	private void guildEvent(MessageReceivedEvent event)
 	{
-		
 		final var mockupCode = "\tvar %s = \"%s\"; // in \"%s\" (%s) - %s";
 		var date = new Date();
 		var dFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
@@ -171,7 +170,7 @@ public class Commands extends ListenerAdapter
 		System.out.print("\n}\r");
 		
 		aggiungiReazioni();
-		checkForKeywords(messageRaw.toLowerCase(Locale.ROOT));
+		checkForKeywords(messageRaw.toLowerCase());
 	} // fine guildEvent()
 	
 	private void privateMessage(MessageReceivedEvent event)
