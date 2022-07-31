@@ -157,7 +157,10 @@ public class Commands extends ListenerAdapter
 
 
 		if (!event.isFromGuild())
+		{
+			sendMessage(author, messageRaw + " <:"+Emotes.pigeon+">");
 			return;
+		}
 
 		String messageChannelString = "#"+ channel.toString().split(":")[1].split("\\(")[0];
 		String guild = event.getGuild().toString().split("\\(")[0].split(":")[1];
