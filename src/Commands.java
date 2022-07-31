@@ -584,7 +584,7 @@ public class Commands extends ListenerAdapter
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
 	{
 		if (event.getName().equalsIgnoreCase("pog"))
-			canaleBot.sendMessage("<:"+ Emotes.pogey + ">").queue();
+			channel.sendMessage("<:"+ Emotes.pogey + ">").queue();
 
 	} // fine onSlashCommand()
 
