@@ -178,7 +178,11 @@ public class Commands extends ListenerAdapter
 		if (author.isBot())
 			return;
 		
-		sendMessage(author, messageRaw + " <:"+Emotes.pigeon+">", "pigeon");
+		checkForKeywords(messageRaw);
+		
+		
+		
+		// sendMessage(author, messageRaw + " <:"+Emotes.pigeon+">", "pigeon");
 	} // fine privateMessage()
 	
 	
