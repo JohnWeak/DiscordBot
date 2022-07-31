@@ -325,7 +325,7 @@ public class Commands extends ListenerAdapter
 			case "!war" -> clashWar();
 			case "!league" -> clashWarLeague(false);
 			case "!pigeonbazooka", "!pb" -> pigeonBazooka();
-			case "!emotes" -> a();
+			case "!emotes" -> getEmotes();
 			case "!dado" -> dado(msgLowerCase);
 			case "!dm" -> sendMessage(author, messageRaw, "");
 		}
@@ -568,7 +568,7 @@ public class Commands extends ListenerAdapter
 		
 	} // fine checkForKeywords()
 	
-	private void a()
+	private void getEmotes()
 	{
 		var x = Arrays.toString(canaleBot.getGuild().getEmotes().toArray());
 		
