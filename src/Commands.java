@@ -18,13 +18,11 @@ import org.json.simple.parser.ParseException;
 import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.time.Instant;
 import java.util.List;
 import java.util.*;
-import java.util.function.DoubleBinaryOperator;
 import java.util.regex.Pattern;
 
 public class Commands extends ListenerAdapter
@@ -150,13 +148,13 @@ public class Commands extends ListenerAdapter
 		identifyLatestMessage(event, null);
 		
 		if (event.isFromGuild())
-			guildEvent(event);
+			guildMessage(event);
 		else
 			privateMessage(event);
 		
 	} // fine onMessageReceived()
 	
-	private void guildEvent(MessageReceivedEvent event)
+	private void guildMessage(MessageReceivedEvent event)
 	{
 		final var mockupCode = "\tvar %s = \"%s\"; // in \"%s\" (%s) - %s";
 		var date = new Date();
@@ -178,7 +176,7 @@ public class Commands extends ListenerAdapter
 		if (author.isBot())
 			return;
 		
-		checkForKeywords(messageRaw.toLowerCase());
+		checkForKeywords(event.getMessage().getContentRaw().toLowerCase());
 		
 		
 		
@@ -190,7 +188,7 @@ public class Commands extends ListenerAdapter
 	/** Questo metodo tiene conto di quale è l'ultimo messaggio che viene inviato/modificato */
 	private void identifyLatestMessage(MessageReceivedEvent received, MessageUpdateEvent updated)
 	{
-		if (received != null)
+		if (received != null) // received
 		{
 			id = received.getMessageIdLong();
 			author = received.getAuthor();
@@ -199,7 +197,7 @@ public class Commands extends ListenerAdapter
 			messageRaw = message.getContentRaw();
 			channel = received.getChannel();
 		}
-		else
+		else // updaated
 		{
 			id = updated.getMessageIdLong();
 			author = updated.getAuthor();
