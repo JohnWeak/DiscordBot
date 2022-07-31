@@ -179,7 +179,7 @@ public class Commands extends ListenerAdapter
 		if (author.isBot())
 			return;
 		
-		checkForKeywords(messageRaw);
+		checkForKeywords(messageRaw.toLowerCase());
 		
 		
 		
