@@ -148,15 +148,16 @@ public class Commands extends ListenerAdapter
 		identifyLatestMessage(event, null);
 		
 		if (event.isFromGuild())
-			guildMessage(event);
+			guildMessage(event, author.isBot());
 		else
-			privateMessage(event);
+			privateMessage(event, author.isBot());
 		
 	} // fine onMessageReceived()
 	
-	private void guildMessage(MessageReceivedEvent event)
+	private void guildMessage(MessageReceivedEvent event, boolean isBot)
 	{
-		final var mockupCode = "\tvar %s = \"%s\"; // in \"%s\" (%s) - %s";
+		var botOrHuman = isBot ? "Bot" : "User";
+		final var mockupCode = "\t%s %s = \"%s\"; // in \"%s\" (%s) - %s";
 		var date = new Date();
 		var dFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
 		var dataFormattata = dFormat.format(date);
@@ -164,17 +165,18 @@ public class Commands extends ListenerAdapter
 		var messageChannelString = "#"+ channel.toString().split(":")[1].split("\\(")[0];
 		var guild = event.getGuild().toString().split("\\(")[0].split(":")[1];
 		
-		System.out.printf(mockupCode + "\n}\r", authorName, messageRaw, messageChannelString, guild, dataFormattata);
+		System.out.printf(mockupCode + "\n}\r", botOrHuman, authorName, messageRaw, messageChannelString, guild, dataFormattata);
 		
 		aggiungiReazioni();
 		checkForKeywords(messageRaw.toLowerCase());
 	} // fine guildEvent()
 	
-	private void privateMessage(MessageReceivedEvent event)
+	private void privateMessage(MessageReceivedEvent event, boolean isBot)
 	{
-		System.out.printf("\tvar %s = \"%s\"; // Private Message\n}\r", authorName, messageRaw);
+		var botOrHuman = isBot ? "Bot" : "User";
+		System.out.printf("\t%s %s = \"%s\"; // Private Message\n}\r", botOrHuman, authorName, messageRaw);
 		
-		if (author.isBot())
+		if (isBot)
 			return;
 		
 		checkForKeywords(event.getMessage().getContentRaw().toLowerCase());
