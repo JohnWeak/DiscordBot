@@ -1,3 +1,4 @@
+/** Contiene la lista di tutte le emote del server privato "Server Discord" */
 public class Emotes
 {
 	public static final String OwO = "OwO:604351952205381659";
@@ -140,9 +141,7 @@ public class Emotes
 			
 			default -> "";
 		};
-	}
+		
+	} // fine emoteDaUsare()
 	
-	
-	
-	
-}
+} // fine classe Emotes

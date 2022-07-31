@@ -150,7 +150,7 @@ public class Commands extends ListenerAdapter
 
 		identifyLatestMessage(event, null);
 		
-		final String mockupCode = "\tString %s = \"%s\"; // in \"%s\" (%s) - %s";
+		final var mockupCode = "\tvar %s = \"%s\"; // in \"%s\" (%s) - %s";
 		var date = new Date();
 		var dFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
 		var dataFormattata = dFormat.format(date);
@@ -165,8 +165,8 @@ public class Commands extends ListenerAdapter
 			return;
 		}
 
-		String messageChannelString = "#"+ channel.toString().split(":")[1].split("\\(")[0];
-		String guild = event.getGuild().toString().split("\\(")[0].split(":")[1];
+		var messageChannelString = "#"+ channel.toString().split(":")[1].split("\\(")[0];
+		var guild = event.getGuild().toString().split("\\(")[0].split(":")[1];
 		
 		System.out.printf(mockupCode, authorName, messageRaw, messageChannelString, guild, dataFormattata);
 		System.out.print("\n}\r");
