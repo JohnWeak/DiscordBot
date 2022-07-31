@@ -164,8 +164,7 @@ public class Commands extends ListenerAdapter
 		var messageChannelString = "#"+ channel.toString().split(":")[1].split("\\(")[0];
 		var guild = event.getGuild().toString().split("\\(")[0].split(":")[1];
 		
-		System.out.printf(mockupCode, authorName, messageRaw, messageChannelString, guild, dataFormattata);
-		System.out.print("\n}\r");
+		System.out.printf(mockupCode + "\n}\r", authorName, messageRaw, messageChannelString, guild, dataFormattata);
 		
 		aggiungiReazioni();
 		checkForKeywords(messageRaw.toLowerCase());
@@ -173,7 +172,7 @@ public class Commands extends ListenerAdapter
 	
 	private void privateMessage(MessageReceivedEvent event)
 	{
-		System.out.printf("\tvar %s = \"%s\";\n", authorName, messageRaw);
+		System.out.printf("\tvar %s = \"%s\"; // Private Message\n}\r", authorName, messageRaw);
 		
 		if (author.isBot())
 			return;
