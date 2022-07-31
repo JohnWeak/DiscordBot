@@ -583,8 +583,9 @@ public class Commands extends ListenerAdapter
 	/** Gestisce i comandi slash (ancora da implementare) */
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
 	{
+		
 		if (event.getName().equalsIgnoreCase("pog"))
-			channel.sendMessage("<:"+ Emotes.pogey + ">").queue();
+			event.getChannel().sendMessage("<:"+ Emotes.pogey + ">").queue();
 
 	} // fine onSlashCommand()
 
