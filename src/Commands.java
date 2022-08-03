@@ -1672,10 +1672,11 @@ public class Commands extends ListenerAdapter
 			final var massShootingSite = "https://www.massshootingtracker.site/";
 			var embed = new EmbedBuilder()
 				.setTitle("Sparatorie di massa negli USA")
+				.addField("Sparatoria più recente", ""+finalResp, true)
 				.addField("Giorni dall'ultima sparatoria", "**"+daysSinceLast+"**", true)
-				.addField("Sparatoria più recente", ""+finalResp, false)
 				.setColor(Color.RED)
-				.setAuthor("massshooringtracker.com", ""+massShootingSite);
+//				.setAuthor("massshootingtracker.com", ""+massShootingSite)
+				;
 			
 			channel.sendMessageEmbeds(embed.build()).queue();
 			
