@@ -1680,11 +1680,11 @@ public class Commands extends ListenerAdapter
 			var embed = new EmbedBuilder()
 				.setColor(Color.RED)
 				.addField("Sparatorie", ""+sparatorie, true)
+				.addField("Giorni dall'ultima sparatoria", "**"+days+"**", true)
 				.addField("Cronaca",""+finalResp,false)
-				.setFooter(""+massShootingSite,""+footerURL);
+				.setFooter(""+massShootingSite,""+footerURL)
+			;
 			
-			if (anno == currentYear)
-				embed.addField("Giorni dall'ultima sparatoria", "**"+days+"**", true);
 				
 			
 			channel.sendMessageEmbeds(embed.build()).queue();
