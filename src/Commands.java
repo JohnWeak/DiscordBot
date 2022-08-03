@@ -1645,7 +1645,8 @@ public class Commands extends ListenerAdapter
 			var y = x.split("T")[0].split("-");
 			var data = y[2] + " " + getMese(Integer.parseInt(y[1])) + " "+ y[0];
 
-			final var sparatorie = "Negli USA ci sono state **" + jsonArray.size() + "** sparatorie nel " + anno + ".\n";
+			final var sparatorie = "**" + jsonArray.size() + "** sparatorie nel " + anno;
+			
 			final var recente = "La più recente è avvenuta il " + data + " in **" + citta + ", " + stato + "**.\n";
 			final var caso = "Per esempio, una si è verificata il " + data + " in **" + citta + ", " + stato + "**.\n";
 			final var personeMorte = "Sono morte **" + morti + "** persone.\n";
@@ -1680,15 +1681,13 @@ public class Commands extends ListenerAdapter
 			final var massShootingSite = "https://www.MassShootingTracker.site/";
 			var embed = new EmbedBuilder()
 				.setColor(Color.RED)
-				.addField("Sparatorie", ""+sparatorie, true);
+				.addField("Sparatorie negli USA", ""+sparatorie, true);
 				
 			if (anno == currentYear)
 				embed.addField(daysField);
 				
 			embed.addField("Cronaca",""+finalResp,false)
 				.setFooter(""+massShootingSite,""+footerURL);
-			
-			
 			
 			channel.sendMessageEmbeds(embed.build()).queue();
 			
