@@ -1668,7 +1668,10 @@ public class Commands extends ListenerAdapter
 				default -> personeMorte;
 			};
 			
-			finalResp += personeFerite + totaleMorti;
+			finalResp += personeFerite;
+			
+			if (anno == currentYear)
+				finalResp += totaleMorti;
 			
 			var footerURL = "https://www.massshootingtracker.site/logo-400.png";
 			
@@ -1677,6 +1680,7 @@ public class Commands extends ListenerAdapter
 			var stop = LocalDate.now();
 			var days = ChronoUnit.DAYS.between(start, stop);
 			var daysField = new MessageEmbed.Field("Giorni dall'ultima", "**"+days+"**", true);
+			var vittimeField = new MessageEmbed.Field("Morti", "**"+morti+"**", true);
 			
 			final var massShootingSite = "https://www.MassShootingTracker.site/";
 			var embed = new EmbedBuilder()
@@ -1685,6 +1689,8 @@ public class Commands extends ListenerAdapter
 				
 			if (anno == currentYear)
 				embed.addField(daysField);
+			else
+				embed.addField(vittimeField);
 				
 			embed.addField("Cronaca",""+finalResp,false)
 				.setFooter(""+massShootingSite,""+footerURL);
