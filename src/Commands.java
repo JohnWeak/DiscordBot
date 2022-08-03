@@ -1668,17 +1668,23 @@ public class Commands extends ListenerAdapter
 			
 			//channel.sendMessage(finalResp).queue();
 			
-			var daysSinceLast = new GregorianCalendar().get(Calendar.DAY_OF_YEAR) - Integer.parseInt(y[0]);
+			var giornoDellAnno = new GregorianCalendar().get(Calendar.DAY_OF_YEAR);
+			var giornoSparatoria = Integer.parseInt(y[2]);
+			var footerURL = "https://www.massshootingtracker.site/logo-400.png";
+			var daysSinceLast = 0;
+			
 			var sparatoria = (anno == currentYear ? "Sparatoria più recente": "Una delle sparatorie");
 			
 			
 			final var massShootingSite = "https://www.massshootingtracker.site/";
 			var embed = new EmbedBuilder()
-//				.setTitle("Sparatorie di massa negli USA")
-				.addField(""+sparatoria, ""+finalResp, true)
-				.addField("Giorni dall'ultima sparatoria", "**"+daysSinceLast+"**", true)
 				.setColor(Color.RED)
-				;
+				.addField(""+sparatoria, ""+finalResp, true)
+				.setFooter("www.MassShootingTracker.site",""+footerURL);
+			
+			if (anno == currentYear)
+				embed.addField("Giorni dall'ultima sparatoria", "**"+daysSinceLast+"**", true);
+				
 			
 			channel.sendMessageEmbeds(embed.build()).queue();
 			
