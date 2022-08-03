@@ -1675,17 +1675,20 @@ public class Commands extends ListenerAdapter
 			var start = LocalDate.of(anno, Integer.parseInt(y[1]), Integer.parseInt(y[2]));
 			var stop = LocalDate.now();
 			var days = ChronoUnit.DAYS.between(start, stop);
+			var daysField = new MessageEmbed.Field("Giorni dall'ultima", "**"+days+"**", true);
 			
 			final var massShootingSite = "https://www.MassShootingTracker.site/";
 			var embed = new EmbedBuilder()
 				.setColor(Color.RED)
-				.addField("Sparatorie", ""+sparatorie, true)
-				.addField("Giorni dall'ultima sparatoria", "**"+days+"**", true)
-				.addField("Cronaca",""+finalResp,false)
-				.setFooter(""+massShootingSite,""+footerURL)
-			;
-			
+				.addField("Sparatorie", ""+sparatorie, true);
 				
+			if (anno == currentYear)
+				embed.addField(daysField);
+				
+			embed.addField("Cronaca",""+finalResp,false)
+				.setFooter(""+massShootingSite,""+footerURL);
+			
+			
 			
 			channel.sendMessageEmbeds(embed.build()).queue();
 			
