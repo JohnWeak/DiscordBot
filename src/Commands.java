@@ -21,6 +21,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Year;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -1671,19 +1674,20 @@ public class Commands extends ListenerAdapter
 			var giornoDellAnno = new GregorianCalendar().get(Calendar.DAY_OF_YEAR);
 			var giornoSparatoria = Integer.parseInt(y[2]);
 			var footerURL = "https://www.massshootingtracker.site/logo-400.png";
-			var daysSinceLast = 0;
 			
 			var sparatoria = (anno == currentYear ? "Sparatoria più recente": "Una delle sparatorie");
+			var start = LocalDate.now();
+			var stop = LocalDate.of(anno, Integer.parseInt(y[1]), Integer.parseInt(y[2]));
+			var days = ChronoUnit.DAYS.between(start, stop);
 			
-			
-			final var massShootingSite = "https://www.massshootingtracker.site/";
+			final var massShootingSite = "https://www.MassShootingTracker.site/";
 			var embed = new EmbedBuilder()
 				.setColor(Color.RED)
 				.addField(""+sparatoria, ""+finalResp, true)
-				.setFooter("www.MassShootingTracker.site",""+footerURL);
+				.setFooter(""+massShootingSite,""+footerURL);
 			
 			if (anno == currentYear)
-				embed.addField("Giorni dall'ultima sparatoria", "**"+daysSinceLast+"**", true);
+				embed.addField("Giorni dall'ultima sparatoria", "**"+days+"**", true);
 				
 			
 			channel.sendMessageEmbeds(embed.build()).queue();
