@@ -583,7 +583,6 @@ public class Commands extends ListenerAdapter
 	/** Gestisce i comandi slash (ancora da implementare) */
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
 	{
-		
 		if (event.getName().equalsIgnoreCase("pog"))
 			event.getChannel().sendMessage("<:"+ Emotes.pogey + ">").queue();
 
@@ -1590,7 +1589,10 @@ public class Commands extends ListenerAdapter
 			{
 				anno = Integer.parseInt(msg[1]);
 			}
-			catch (NumberFormatException e) {e.printStackTrace();}
+			catch (NumberFormatException e)
+			{
+				System.out.println("Inserito valore non valido.");
+			}
 		
 		
 		if (anno < 2013 || anno > currentYear)
@@ -1662,11 +1664,22 @@ public class Commands extends ListenerAdapter
 			finalResp += personeFerite + totaleMorti;
 			
 			channel.sendMessage(finalResp).queue();
-
+			
+			var daysSinceLast = new GregorianCalendar().get(Calendar.DAY_OF_MONTH) - Integer.parseInt(y[0]);
+			final var massShootingSite = "https://www.massshootingtracker.site/";
+			var embed = new EmbedBuilder()
+				.setTitle("Sparatorie di massa negli USA")
+				.addField("Giorni dall'ultima sparatoria", "**"+daysSinceLast+"**", true)
+				.addField("Sparatoria più recente", ""+finalResp, false)
+				.setColor(Color.RED)
+				.setAuthor("massshooringtracker.com", ""+massShootingSite);
+			
+			channel.sendMessageEmbeds(embed.build()).queue();
+			
 		}
 		catch (IOException | ParseException e)
 		{
-			channel.sendMessage("S'è svampato.\n" + e).queue();
+			channel.sendMessage("Uuuuh guarda che bello questo *" + e + "*.").queue();
 			e.printStackTrace();
 		}
 	} // fine massShooting()
