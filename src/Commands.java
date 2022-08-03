@@ -1638,7 +1638,7 @@ public class Commands extends ListenerAdapter
 			var stato = (String) objs.get(scelta).get("state");
 			var morti = (String) objs.get(scelta).get("killed");
 			var feriti = (String) objs.get(scelta).get("wounded");
-			var x = (String) (objs).get(scelta).get("date");
+			var x = (String) (objs).get(scelta).get("date"); //2022-01-05
 			var y = x.split("T")[0].split("-");
 			var data = y[2] + " " + getMese(Integer.parseInt(y[1])) + " "+ y[0];
 
@@ -1666,16 +1666,18 @@ public class Commands extends ListenerAdapter
 			
 			finalResp += personeFerite + totaleMorti;
 			
-			channel.sendMessage(finalResp).queue();
+			//channel.sendMessage(finalResp).queue();
 			
-			var daysSinceLast = new GregorianCalendar().get(Calendar.DAY_OF_MONTH) - Integer.parseInt(y[0]);
+			var daysSinceLast = new GregorianCalendar().get(Calendar.DAY_OF_YEAR) - Integer.parseInt(y[0]);
+			var sparatoria = (anno == currentYear ? "Sparatoria più recente": "Una delle sparatorie");
+			
+			
 			final var massShootingSite = "https://www.massshootingtracker.site/";
 			var embed = new EmbedBuilder()
-				.setTitle("Sparatorie di massa negli USA")
-				.addField("Sparatoria più recente", ""+finalResp, true)
+//				.setTitle("Sparatorie di massa negli USA")
+				.addField(""+sparatoria, ""+finalResp, true)
 				.addField("Giorni dall'ultima sparatoria", "**"+daysSinceLast+"**", true)
 				.setColor(Color.RED)
-//				.setAuthor("massshootingtracker.com", ""+massShootingSite)
 				;
 			
 			channel.sendMessageEmbeds(embed.build()).queue();
