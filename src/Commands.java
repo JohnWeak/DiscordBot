@@ -417,7 +417,10 @@ public class Commands extends ListenerAdapter
 			reazioni.add("ingredibile");
 		
 		if (msgLowerCase.contains("wtf") || msgLowerCase.contains("what the fuck"))
-			react("wtf");
+			reazioni.add("wtf");
+
+		if (msgLowerCase.contains("manutenzione"))
+			reazioni.add("pogey");
 		
 		// a questo punto smetto di controllare se ci siano reazioni e le aggiungo effettivamente al messaggio
 		if (!reazioni.isEmpty())
