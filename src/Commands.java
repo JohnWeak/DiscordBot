@@ -1645,7 +1645,7 @@ public class Commands extends ListenerAdapter
 			var y = x.split("T")[0].split("-");
 			var data = y[2] + " " + getMese(Integer.parseInt(y[1])) + " "+ y[0];
 
-			final var sparatorie = "**" + jsonArray.size() + "** sparatorie nel " + anno;
+			final var sparatorie = "Nel "+anno+", ammontano a **" + jsonArray.size() + "**";
 			
 			final var recente = "La più recente è avvenuta il " + data + " in **" + citta + ", " + stato + "**.\n";
 			final var caso = "Per esempio, una si è verificata il " + data + " in **" + citta + ", " + stato + "**.\n";
