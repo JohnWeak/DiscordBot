@@ -1680,7 +1680,7 @@ public class Commands extends ListenerAdapter
 			var stop = LocalDate.now();
 			var days = ChronoUnit.DAYS.between(start, stop);
 			var daysField = new MessageEmbed.Field("Giorni dall'ultima", "**"+days+"**", true);
-			var vittimeField = new MessageEmbed.Field("Morti", "**"+morti+"**", true);
+			var vittimeField = new MessageEmbed.Field("Morti", "**"+totaleMorti+"**", true);
 			
 			final var massShootingSite = "https://www.MassShootingTracker.site/";
 			var embed = new EmbedBuilder()
