@@ -1645,7 +1645,7 @@ public class Commands extends ListenerAdapter
 			var y = x.split("T")[0].split("-");
 			var data = y[2] + " " + getMese(Integer.parseInt(y[1])) + " "+ y[0];
 
-			final var sparatorie = "Negli Stati Uniti ci sono state **" + jsonArray.size() + "** sparatorie di massa nel " + anno + ".\n";
+			final var sparatorie = "Negli USA ci sono state **" + jsonArray.size() + "** sparatorie nel " + anno + ".\n";
 			final var recente = "La più recente è avvenuta il " + data + " in **" + citta + ", " + stato + "**.\n";
 			final var caso = "Per esempio, una si è verificata il " + data + " in **" + citta + ", " + stato + "**.\n";
 			final var personeMorte = "Sono morte **" + morti + "** persone.\n";
@@ -1656,9 +1656,9 @@ public class Commands extends ListenerAdapter
 			var finalResp = "";
 			
 			if (anno == currentYear)
-				finalResp = sparatorie + recente;
+				finalResp += recente;
 			else
-				finalResp = sparatorie + caso;
+				finalResp += caso;
 			
 			finalResp += switch (Integer.parseInt(morti))
 			{
@@ -1669,10 +1669,6 @@ public class Commands extends ListenerAdapter
 			
 			finalResp += personeFerite + totaleMorti;
 			
-			//channel.sendMessage(finalResp).queue();
-			
-			var giornoDellAnno = new GregorianCalendar().get(Calendar.DAY_OF_YEAR);
-			var giornoSparatoria = Integer.parseInt(y[2]);
 			var footerURL = "https://www.massshootingtracker.site/logo-400.png";
 			
 			var sparatoria = (anno == currentYear ? "Sparatoria più recente": "Una delle sparatorie");
@@ -1683,7 +1679,8 @@ public class Commands extends ListenerAdapter
 			final var massShootingSite = "https://www.MassShootingTracker.site/";
 			var embed = new EmbedBuilder()
 				.setColor(Color.RED)
-				.addField(""+sparatoria, ""+finalResp, true)
+				.addField("Sparatorie", ""+sparatorie, true)
+				.addField("Cronaca",""+finalResp,false)
 				.setFooter(""+massShootingSite,""+footerURL);
 			
 			if (anno == currentYear)
