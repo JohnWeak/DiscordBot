@@ -1676,8 +1676,8 @@ public class Commands extends ListenerAdapter
 			var footerURL = "https://www.massshootingtracker.site/logo-400.png";
 			
 			var sparatoria = (anno == currentYear ? "Sparatoria più recente": "Una delle sparatorie");
-			var start = LocalDate.now();
-			var stop = LocalDate.of(anno, Integer.parseInt(y[1]), Integer.parseInt(y[2]));
+			var start = LocalDate.of(anno, Integer.parseInt(y[1]), Integer.parseInt(y[2]));
+			var stop = LocalDate.now();
 			var days = ChronoUnit.DAYS.between(start, stop);
 			
 			final var massShootingSite = "https://www.MassShootingTracker.site/";
