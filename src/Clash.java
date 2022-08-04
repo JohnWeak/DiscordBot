@@ -154,7 +154,7 @@ public class Clash
 					new Commands().sendEmbedToChannel(new EmbedBuilder().addField("Oh noes","Errore catastrofico (non è vero) in clashWarLeague()", false).build(), false);
 				else
 					new Commands().sendEmbedToChannel(embed.build(), false);
-			}catch (IOException | ParseException ignored) {}
+			}catch (IOException | ParseException e) {e.printStackTrace();}
 		}
 		
 	} // fine clashWarLeague()
