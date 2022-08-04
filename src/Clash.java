@@ -35,7 +35,7 @@ public class Clash
 	public void clashWar()
 	{
 		final var currentWar = "https://api.clashofclans.com/v1/clans/%23" + tag + "/currentwar";
-		var embedToSend = new EmbedBuilder();
+		var embedToSend = new EmbedBuilder().setColor(Color.RED);
 		
 		try
 		{
@@ -45,28 +45,40 @@ public class Clash
 			Object obj = jsonParser.parse(response);
 			var jsonObject = (JSONObject) obj;
 			var state = (String) jsonObject.get("state");
-			
-			if (state.equalsIgnoreCase("notinwar"))
-			{
-				embedToSend.addField("Not in war","Non siamo in guerra. Smh.", false);
-				return;
-			}
-			
-			String[] percentage = new String[2];
-			String[] attacks = new String[2];
-			String[] stars = new String[2];
-			
 			var clan = (JSONObject) jsonObject.get("clan");
-			var name = (String) clan.get("name");
-			percentage[0] = String.format("%.2f", (double) clan.get("destructionPercentage"));
-			attacks[0] = (String) clan.get("attacks");
-			stars[0] = (String) clan.get("stars");
-			
 			var clanBadgeUrls = (JSONObject) clan.get("badgeUrls");
 			var clanBadgeS = (String) clanBadgeUrls.get("small");
 			var clanBadgeM = (String) clanBadgeUrls.get("medium");
 			var clanBadgeL = (String) clanBadgeUrls.get("large");
+
+			System.out.println("State: "+state);
+
+			if (state.equalsIgnoreCase("notinwar"))
+			{
+				embedToSend
+					.addField("Not in war", "Non siamo in guerra al momento, smh.", false)
+					.setTimestamp(Instant.now())
+					.setAuthor("War", "https://www.youtube.com/watch?v=dQw4w9WgXcQ", ""+clanBadgeM)
+				;
+
+				new Commands().sendEmbedToChannel(embedToSend.build(), false);
+				return;
+			}
+
+			String[] percentage = new String[2];
+			String[] attacks = new String[2];
+			String[] stars = new String[2];
 			
+
+			var name = (String) clan.get("name");
+			percentage[0] = String.format("%.2f", (double) clan.get("destructionPercentage"));
+			attacks[0] = (String) clan.get("attacks");
+			stars[0] = (String) clan.get("stars");
+
+
+
+
+
 			var opponent = (JSONObject) jsonObject.get("opponent");
 			var oppName = (String) opponent.get("name");
 			
@@ -90,9 +102,6 @@ public class Clash
 			
 			embedToSend
 				.setTitle("**" + name + " contro " + oppName +"**")
-				.setColor(Color.RED)
-				.setTimestamp(Instant.now())
-				.setAuthor("War", "https://www.youtube.com/watch?v=dQw4w9WgXcQ", ""+clanBadgeM)
 				.setThumbnail(oppBadgeL)
 				.addField("Stelle",""+st+"\t", true)
 				.addField("Attacchi", ""+attacchi+"\t", true)
@@ -128,7 +137,7 @@ public class Clash
 	} // fine isClanInLeague()
 	
 	/**Ottiene e mostra le informazioni sulla war della lega tra clan*/
-	public void clashWarLeague()
+	public void clashWarLeague(boolean thread)
 	{
 		if (isClanInLeague())
 		{
@@ -150,10 +159,11 @@ public class Clash
 				var warTags = (JSONArray) warDays.get("warTags");
 				
 				var embed = search(warTags, 0);
+
 				if (embed == null)
-					new Commands().sendEmbedToChannel(new EmbedBuilder().addField("Oh noes","Errore catastrofico (non è vero) in clashWarLeague()", false).build(), false);
+					new Commands().sendEmbedToChannel(new EmbedBuilder().addField("Oh noes","Errore catastrofico (non è vero) in clashWarLeague()", false).build(), thread);
 				else
-					new Commands().sendEmbedToChannel(embed.build(), false);
+					new Commands().sendEmbedToChannel(embed.build(), thread);
 			}catch (IOException | ParseException e) {e.printStackTrace();}
 		}
 		

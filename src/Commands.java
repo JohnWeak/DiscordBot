@@ -325,7 +325,7 @@ public class Commands extends ListenerAdapter
 			case "!rifiuto" -> rifiutaDuello();
 			case "!massshooting", "!ms" -> massShooting();
 			case "!war" -> new Clash().clashWar();
-			case "!league" -> new Clash().clashWarLeague();
+			case "!league" -> new Clash().clashWarLeague(false);
 			case "!pigeonbazooka", "!pb" -> pigeonBazooka();
 			case "!emotes" -> getEmotes();
 			case "!dado" -> dado(msgLowerCase);
@@ -1556,7 +1556,7 @@ public class Commands extends ListenerAdapter
 			limite = valori[0];
 			messaggiInviati = valori[1];
 		}
-		catch (FileNotFoundException e) { System.out.println("File non trovato!"); }
+		catch (Exception ignored) {}
 
 		//valori[0] : limite (max) messaggi
 		//valori[1] : messaggiInviati

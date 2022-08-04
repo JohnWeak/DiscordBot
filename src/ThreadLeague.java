@@ -9,7 +9,7 @@ public class ThreadLeague extends Thread
 		{
 			for (int i = 0; i < max; i++)
 			{
-				new Clash().clashWarLeague();
+				new Clash().clashWarLeague(true);
 				try
 				{
 					Thread.sleep(3600000*2); // 3600000ms = 1h
