@@ -1835,7 +1835,7 @@ public class Commands extends ListenerAdapter
 			channel.sendMessageEmbeds(embed.build()).queue();
 			
 		}
-		catch (IOException | ParseException e){System.out.println("\noh noes\n");}
+		catch (IOException | ParseException e){channel.sendMessage(e.toString()).queue();}
 	} // fine clashWar()
 	
 	/**Controlla se il clan è attualmente in guerra nella lega tra clan*/
