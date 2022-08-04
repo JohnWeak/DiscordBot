@@ -34,7 +34,7 @@ public class Clash
 	/**Controlla se il clan è in war e mostra l'andamento*/
 	public void clashWar()
 	{
-		final var currentWar = "https://api.clashofclans.com/v1/clans/" + tagCompleto + "/currentwar";
+		final var currentWar = "https://api.clashofclans.com/v1/clans/%23" + tag + "/currentwar";
 		var embedToSend = new EmbedBuilder();
 		
 		try
