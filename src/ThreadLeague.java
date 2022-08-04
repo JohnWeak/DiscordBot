@@ -5,11 +5,11 @@ public class ThreadLeague extends Thread
 	public void run()
 	{
 		// se il clan è in lega, allora controlla l'andamento della war ora per ora
-		if (new Commands().isClanInLeague())
+		if (new Clash().isClanInLeague())
 		{
 			for (int i = 0; i < max; i++)
 			{
-				new Commands().clashWarLeague(true);
+				new Clash().clashWarLeague();
 				try
 				{
 					Thread.sleep(3600000*2); // 3600000ms = 1h
