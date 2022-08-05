@@ -11,17 +11,15 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Hashtable;
+import java.util.*;
 
 public class Clash
 {
 	private static final JSONParser jsonParser = new JSONParser();
 	private static final String bearer = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjRmZmY4YzY1LTQzZTctNGM5YS1iZGYyLTI5MjY1ZWQwYzEzOSIsImlhdCI6MTY1OTMzODQ0NSwic3ViIjoiZGV2ZWxvcGVyLzRhNmIzZDczLTMyZjktNDRkMS0xMGMzLWMzOTcxMDA2YzI4YiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjk1LjIzOS4xODYuMTM0Il0sInR5cGUiOiJjbGllbnQifV19.stC6NyLm1o9IKsoyK_2V7DyGld1dhqattv6pvOGIJzD5_757VFwEjA-gG9zeOh2N3Jej3Vi5npQUidYYiqB6mA";
-	final String tag = "PLQP8UJ8";
-	final String tagCompleto = "#" + tag;
+	static final String tag = "PLQP8UJ8";
+	static final String tagCompleto = "#" + tag;
+	private final static String warLeague = "https://api.clashofclans.com/v1/clans/%23"+tag+"/currentwar/leaguegroup";
 	
 	// TODO: recuperare la lista dei membri del clan ogni volta che si invoca il costruttore
 	private static ArrayList<String> listaMembri = new ArrayList<>();
@@ -51,8 +49,6 @@ public class Clash
 			var clanBadgeM = (String) clanBadgeUrls.get("medium");
 			var clanBadgeL = (String) clanBadgeUrls.get("large");
 
-			System.out.println("State: "+state);
-
 			if (state.equalsIgnoreCase("notinwar"))
 			{
 				embedToSend
@@ -75,10 +71,6 @@ public class Clash
 			attacks[0] = (String) clan.get("attacks");
 			stars[0] = (String) clan.get("stars");
 
-
-
-
-
 			var opponent = (JSONObject) jsonObject.get("opponent");
 			var oppName = (String) opponent.get("name");
 			
@@ -86,7 +78,6 @@ public class Clash
 			var oppBadgeS = (String) oppBagdeUrls.get("small");
 			var oppBadgeM = (String) oppBagdeUrls.get("medium");
 			var oppBadgeL = (String) oppBagdeUrls.get("large");
-			
 			
 			percentage[1] = String.format("%.2f", (double) opponent.get("destructionPercentage"));
 			attacks[1] = (String) opponent.get("attacks");
@@ -107,7 +98,7 @@ public class Clash
 				.addField("Attacchi", ""+attacchi+"\t", true)
 				.addField("Distruzione",""+distr+"\t",true)
 			;
-			
+
 			new Commands().sendEmbedToChannel(embedToSend.build(), false);
 			
 		}
@@ -117,8 +108,6 @@ public class Clash
 	/**Controlla se il clan è attualmente in guerra nella lega tra clan*/
 	public boolean isClanInLeague()
 	{
-		final var warLeague = "https://api.clashofclans.com/v1/clans/"+tagCompleto+"/currentwar/leaguegroup";
-		
 		try
 		{
 			final var warLeagueURL = new URL(warLeague);
@@ -131,7 +120,7 @@ public class Clash
 			if (((String) jsonObject.get("state")).equalsIgnoreCase("inwar"))
 				return true;
 			
-		}catch (IOException | ParseException ignored) {}
+		}catch (IOException | ParseException e) { e.printStackTrace(); }
 		
 		return false;
 	} // fine isClanInLeague()
@@ -141,13 +130,14 @@ public class Clash
 	{
 		if (isClanInLeague())
 		{
-			final var warLeague = "https://api.clashofclans.com/v1/clans/"+tagCompleto+"/currentwar/leaguegroup";
-			
+			var c = new GregorianCalendar().get(Calendar.DAY_OF_MONTH);
+			System.out.println("Giorno del mese: "+c);
+			var dayOfWar = c-3-1;
+
 			try
 			{
 				final var warLeagueURL = new URL(warLeague);
 				var response = getResponse(warLeagueURL);
-				
 				
 				var jsonParser = new JSONParser();
 				Object obj = jsonParser.parse(response);
@@ -155,10 +145,10 @@ public class Clash
 				
 				var warTagsArray = (JSONArray) jsonObject.get("rounds");
 				
-				var warDays = (JSONObject) warTagsArray.get(0);
+				var warDays = (JSONObject) warTagsArray.get(dayOfWar);
 				var warTags = (JSONArray) warDays.get("warTags");
 				
-				var embed = search(warTags, 0);
+				var embed = search(warTags, dayOfWar);
 
 				if (embed == null)
 					new Commands().sendEmbedToChannel(new EmbedBuilder().addField("Oh noes","Errore catastrofico (non è vero) in clashWarLeague()", false).build(), thread);
@@ -221,13 +211,13 @@ public class Clash
 					
 					if (destr[2].equals("0"))
 					{
-						destr[0] = destr[0] + "**%**";
+						destr[0] = destr[0] + " **%**";
 						destr[1] = destr[1] + "%";
 					}
 					else
 					{
 						destr[0] = destr[0] + "%";
-						destr[1] = destr[1] + "**%**";
+						destr[1] = destr[1] + " **%**";
 					}
 					
 					var nome = (nameIsUs ? name : oppName);
@@ -237,7 +227,7 @@ public class Clash
 					var distr = (nameIsUs?destr[0]:destr[1]) + " vs "+ (nameIsUs?destr[1]:destr[0]);
 					
 					embed = new EmbedBuilder()
-						.setTitle("**" + nome + " contro " + nomeNemici +"**")
+						.setTitle("**" + nome + "** contro **" + nomeNemici +"**")
 						.setColor(Color.RED)
 						.setTimestamp(Instant.now())
 						.setAuthor("Guerra " + dayOfWar + " di 7", "https://www.youtube.com/watch?v=dQw4w9WgXcQ", ""+clanBadgeM)
@@ -304,7 +294,9 @@ public class Clash
 		
 		if (numeri.length == 3) // se è array di distruzione
 			numeri[2] = (uno >= due ? "0" : "1");
-		
+
+		System.out.println("\tNUMERI: "+Arrays.toString(numeri));
+
 		return numeri;
 	}
 	
