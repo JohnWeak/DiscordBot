@@ -115,7 +115,8 @@ public class Commands extends ListenerAdapter
 	{
 		String nome = event.getJDA().getSelfUser().getName();
 		Activity act = Objects.requireNonNull(event.getJDA().getPresence().getActivity());
-		
+		final var flag = false; // da cambiare all'occorrenza
+
 		bearer = new Clash().getBearer();
 		
 		System.out.printf("%s si è connesso a Discord!\n\npublic class MessageHistory\n{\n", nome);
@@ -127,7 +128,8 @@ public class Commands extends ListenerAdapter
 		var nomeActivity = "**" + act.getName() + "**";
 		var activityTradotta = activity.equals("WATCHING") ? "guardo " : "gioco a ";
 		
-		new ThreadLeague().start();
+		if (flag)
+			new ThreadLeague().start();
 		// moduloDiSicurezza();
 		
 		emoteList = canaleBot.getJDA().getEmotes();
