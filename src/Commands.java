@@ -550,8 +550,10 @@ public class Commands extends ListenerAdapter
 			msgReply += "Cosa? La pantera rosa\n";
 		}
 		
+		final var eggDogGif = "https://thumbs.gfycat.com/GregariousDevotedArachnid-mobile.mp4";
+		
 		if (msgLowerCase.contains("eggdog"))
-			channel.sendMessage("https://c.tenor.com/tdyxNzmHlq0AAAAd/eggdog-dog.gif").queue();
+			channel.sendMessage(eggDogGif).queue();
 		
 		
 		
