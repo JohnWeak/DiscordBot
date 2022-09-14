@@ -541,7 +541,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("grazie") && random.nextInt(50) == 42)
 		{
 			reply = true;
-			msgReply += "Grazie, graziella e grazie al cazzo\n";
+			msgReply += "Prego.\n";
 		}
 		
 		if (msgLowerCase.matches("cosa\\?*") && random.nextInt(20) == 1)
@@ -550,12 +550,14 @@ public class Commands extends ListenerAdapter
 			msgReply += "Cosa? La pantera rosa\n";
 		}
 		
-		final var eggDogGif = "https://thumbs.gfycat.com/GregariousDevotedArachnid-mobile.mp4";
-		
 		if (msgLowerCase.matches("egg *dog"))
-			channel.sendMessage(eggDogGif).queue();
+			channel.sendMessage(GIF.eggdog).queue();
 		
+		if (msgLowerCase.contains("spy"))
+			channel.sendMessage(GIF.spyHang).queue();
 		
+		if (msgLowerCase.matches("you(?:'re| are) ugly"))
+			channel.sendMessage(GIF.engineer).queue();
 		
 		if (msgLowerCase.contains("deez nuts") && discriminator.equals(NUMENIGMO))
 		{
