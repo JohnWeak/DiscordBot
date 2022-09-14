@@ -1,3 +1,4 @@
+/**Questa classe contiene gli indirizzi delle GIF che usa il bot. Non instanziare.*/
 public abstract class GIF
 {
 	public final static String spyHang = "https://c.tenor.com/pLhXMqtRw2gAAAAC/team-fortress-spy.gif";
