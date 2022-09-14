@@ -552,7 +552,7 @@ public class Commands extends ListenerAdapter
 		
 		final var eggDogGif = "https://thumbs.gfycat.com/GregariousDevotedArachnid-mobile.mp4";
 		
-		if (msgLowerCase.contains("eggdog"))
+		if (msgLowerCase.matches("egg *dog"))
 			channel.sendMessage(eggDogGif).queue();
 		
 		
