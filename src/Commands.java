@@ -550,6 +550,11 @@ public class Commands extends ListenerAdapter
 			msgReply += "Cosa? La pantera rosa\n";
 		}
 		
+		if (msgLowerCase.contains("eggdog"))
+			channel.sendMessage("https://c.tenor.com/tdyxNzmHlq0AAAAd/eggdog-dog.gif").queue();
+		
+		
+		
 		if (msgLowerCase.contains("deez nuts") && discriminator.equals(NUMENIGMO))
 		{
 			reply = true;
