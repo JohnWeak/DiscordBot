@@ -346,7 +346,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("owo"))
 			reazioni.add("owo");
 		
-		if (msgLowerCase.contains("pog"))
+		if (msgLowerCase.contains("pog") || msgLowerCase.contains("manutenzione"))
 			reazioni.add("pogey");
 		
 		if (msgLowerCase.contains("òbito") || msgLowerCase.contains("obito"))
@@ -423,8 +423,6 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("wtf") || msgLowerCase.contains("what the fuck"))
 			reazioni.add("wtf");
 
-		if (msgLowerCase.contains("manutenzione"))
-			reazioni.add("pogey");
 		
 		// a questo punto smetto di controllare se ci siano reazioni e le aggiungo effettivamente al messaggio
 		if (!reazioni.isEmpty())
@@ -1835,7 +1833,7 @@ public class Commands extends ListenerAdapter
 	
 	public void dado(String msg)
 	{
-		if (msg.length() <= 5) // 5 = dado.length()
+		if (msg.length() <= 5) // 5 = "!dado".length()
 		{
 			channel.sendMessage("Per favore specifica che tipo di dado devo lanciare.\nEsempio:\n`!dado 6` lancerà un dado con 6 facce.").queue();
 		    return;
@@ -1848,14 +1846,14 @@ public class Commands extends ListenerAdapter
 			var facce= Integer.parseInt(num);
 			if (facce == 4 || facce == 6 || facce == 8 || facce == 10 || facce == 12 || facce == 20 || facce == 100)
 			{
-				channel.sendMessage(authorName+" lancia un dado...").queue();
+				channel.sendMessage(authorName+" lancia un D" + facce + "...").queue();
 				channel.sendTyping().queue();
 				
 				var res = random.nextInt(facce) + 1;
 				if (facce == 20 && res == 1) // 1 naturale
-					channel.sendMessage("Si mette male per te, " +authorName+", hai crittato in negativo! **1 naturale**!").queue();
+					channel.sendMessage("Si mette male per te, " +authorName+"... **1 naturale**!").queue();
 				else if (facce == 20 && res == 20) // 20 naturale
-					channel.sendMessage("La fortuna ti sorride, "+authorName+", hai crittato in positivo! **20 naturale**!").queue();
+					channel.sendMessage("La fortuna ti sorride, "+authorName+", hai crittato! **20 naturale**!").queue();
 				
 				channel.sendMessage("È uscito **"+ res + "**!").queue();
 			}
