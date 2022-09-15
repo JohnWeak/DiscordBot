@@ -76,7 +76,7 @@ public class SchedaPersonaggio
 	public int modifier(int score)
 	{
 		if (score < 0 || score > 30)
-			return -1;
+			return -42;
 		
 		// To determine an ability modifier without consulting the table
 		// subtract 10 from the ability score and then divide the total by 2 (round down).
