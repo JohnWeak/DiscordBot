@@ -221,12 +221,12 @@ public class Commands extends ListenerAdapter
 		id = event.getMessageIdLong();
 		message = channel.getHistory().getMessageById(id);
 
-		System.out.println("Reaction:" + event.getReaction());
+//		System.out.println("Reaction:" + event.getReaction());
 		
 		var emoteString = emote.toString().split(":")[1].split("\\(")[0];
 		try
 		{
-			if (emote.getAsReactionCode().contains("U+"))
+			if (event.getReaction().toString().contains("U+"))
 				channel.addReactionById(id, emoteString).queue();
 			else
 				react(emoteString);
