@@ -222,10 +222,9 @@ public class Commands extends ListenerAdapter
 		message = channel.getHistory().getMessageById(id);
 
 		var emoteString = emote.toString().split(":")[1].split("\\(")[0];
-		
 		try
 		{
-			if (emote.getEmoji() != null)
+			if (emote.getAsReactionCode().contains("U+"))
 				channel.addReactionById(id, emoteString).queue();
 			else
 				react(emoteString);
