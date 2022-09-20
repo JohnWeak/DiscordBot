@@ -216,6 +216,8 @@ public class Commands extends ListenerAdapter
 	/**Questo metodo aggiunge ad un messaggio la stessa reazione che piazza l'utente*/
 	public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event)
 	{
+		System.out.println(event);
+		
 		// var reaction = event.getReaction();
 		var emote = event.getReactionEmote();
 		channel = event.getChannel();
