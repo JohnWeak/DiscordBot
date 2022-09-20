@@ -225,7 +225,7 @@ public class Commands extends ListenerAdapter
 		
 		try
 		{
-			if (emote.getEmoji().contains("U+"))
+			if (emote.getEmoji() != null)
 				channel.addReactionById(id, emoteString).queue();
 			else
 				react(emoteString);
