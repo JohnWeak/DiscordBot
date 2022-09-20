@@ -221,7 +221,10 @@ public class Commands extends ListenerAdapter
 		id = event.getMessageIdLong();
 		message = channel.getHistory().getMessageById(id);
 
-		System.out.println(emote.getAsReactionCode());
+		try
+		{
+			System.out.println("Name: " + emote.getName() + "\nEmoji: " + emote.getEmoji() + "\nEmote: " + emote.getEmote());
+		}catch (Exception ignored){}
 		
 		var emoteString = emote.toString().split(":")[1].split("\\(")[0];
 		try
