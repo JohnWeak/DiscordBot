@@ -264,7 +264,7 @@ public class Commands extends ListenerAdapter
 		final var comando = args[0].toLowerCase(Locale.ROOT);
 		var reply = false;
 		var msgReply = "";
-
+		
 		if (author.isBot())
 		{
 			if (discriminator.equals("8456"))
