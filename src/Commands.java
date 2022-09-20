@@ -216,18 +216,20 @@ public class Commands extends ListenerAdapter
 	/**Questo metodo aggiunge ad un messaggio la stessa reazione che piazza l'utente*/
 	public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event)
 	{
-		System.out.println("Emote aggiunta: "+event.getReactionEmote());
-		
-		// var reaction = event.getReaction();
 		var emote = event.getReactionEmote();
 		channel = event.getChannel();
 		id = event.getMessageIdLong();
 		message = channel.getHistory().getMessageById(id);
 
 		var emoteString = emote.toString().split(":")[1].split("\\(")[0];
-		react(emoteString);
-		channel.addReactionById(id, emoteString).queue();
-
+		try
+		{
+			react(emoteString); // prova ad aggiungere l'emote
+		}
+		catch (ErrorResponseException e) // se però è un'emoji unicode lancia quest'eccezione
+		{
+			channel.addReactionById(id, emoteString).queue(); // e quindi usa quest'altro metodo per reagire con l'emoji
+		}
 	} // fine onMessageReactionAdd
 	
 	/**Inserisce come reazioni tutte le emote che trova nel messaggio*/
