@@ -226,7 +226,8 @@ public class Commands extends ListenerAdapter
 		{
 			react(emoteString); // prova ad aggiungere l'emote
 		}
-		catch (ErrorResponseException e) // se però è un'emoji unicode lancia quest'eccezione
+		catch (ErrorResponseException ignored){} // se però è un'emoji unicode lancia quest'eccezione
+		finally
 		{
 			channel.addReactionById(id, emoteString).queue(); // e quindi usa quest'altro metodo per reagire con l'emoji
 		}
