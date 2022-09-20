@@ -226,7 +226,7 @@ public class Commands extends ListenerAdapter
 
 		var emoteString = emote.toString().split(":")[1].split("\\(")[0];
 		react(emoteString);
-		message.addReaction(emoteString).queue();
+		channel.addReactionById(id, emoteString).queue();
 
 	} // fine onMessageReactionAdd
 	
