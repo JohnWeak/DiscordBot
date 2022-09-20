@@ -230,7 +230,7 @@ public class Commands extends ListenerAdapter
 			else
 				react(emoteString);
 		}
-		catch (Exception ignored) {}
+		catch (Exception e) { e.printStackTrace(); }
 		
 		
 	} // fine onMessageReactionAdd
