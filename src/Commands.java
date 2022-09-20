@@ -217,12 +217,14 @@ public class Commands extends ListenerAdapter
 	public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event)
 	{
 		var emote = event.getReactionEmote();
-		System.out.println("EMOTE: "+emote);
+		System.out.println(emote.getName());
 		channel = event.getChannel();
 		id = event.getMessageIdLong();
 		message = channel.getHistory().getMessageById(id);
 
 		var emoteString = emote.toString().split(":")[1].split("\\(")[0];
+//		if (emote.getName())
+		
 		try
 		{
 			react(emoteString); // prova ad aggiungere l'emote
