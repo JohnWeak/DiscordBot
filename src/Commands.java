@@ -560,7 +560,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.matches("egg *dog"))
 			channel.sendMessage(GIF.eggdog).queue();
 		
-		if (msgLowerCase.contains("spy"))
+		if (msgLowerCase.contains("spy") && random.nextInt(3) == 0)
 			channel.sendMessage(GIF.spyHang).queue();
 		
 		if (msgLowerCase.matches("you(?:'re| are) ugly"))
