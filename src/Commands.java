@@ -411,7 +411,7 @@ public class Commands extends ListenerAdapter
 				reazioni.add("hitman");
 		}
 		
-		if (msgLowerCase.contains("poochyena"))
+		if (msgLowerCase.matches("(?:pooch|might)yena"))
 		{
 			reazioni.add("pogey");
 			reazioni.add("♥");
@@ -442,13 +442,13 @@ public class Commands extends ListenerAdapter
 			reazioni.clear();
 		}
 		
-		if (msgLowerCase.contains("russia"))
+		if (msgLowerCase.contains("russia") && random.nextInt(50) == 42)
 		{
 			reply = true;
 			msgReply += "Ucraina Est*\n";
 		}
 		
-		if (msgLowerCase.contains("winnie the pooh") || msgLowerCase.contains("xi jinping"))
+		if (msgLowerCase.contains("winnie the pooh"))
 		{
 			reply = true;
 			msgReply += "⣿⣿⣿⣿⣿⠟⠋⠄⠄⠄⠄⠄⠄⠄⢁⠈⢻⢿⣿⣿⣿⣿⣿⣿⣿ \n" +
@@ -497,7 +497,6 @@ public class Commands extends ListenerAdapter
 				case 1 -> "È l' ";
 				default -> "Sono le ";
 			};
-
 			
 			if (random.nextInt(2) == 0)
 			{
@@ -519,8 +518,6 @@ public class Commands extends ListenerAdapter
 					case 1 -> " e uno";
 					default -> " e " + orario.getMinuti();
 				};
-
-
 			}
 		}
 		
@@ -584,7 +581,7 @@ public class Commands extends ListenerAdapter
 			msgReply += "<:scouttrap:997501978521374771>\n";
 		}
 		
-		//if (msgLowerCase.contains("") && random.nextInt(42) == 0){}
+//		if (msgLowerCase.contains("") && random.nextInt(42) == 0){}
 		
 		if (reply)
 			message.reply(msgReply).queue();
@@ -1777,9 +1774,8 @@ public class Commands extends ListenerAdapter
 		{
 			final var max = random.nextInt(5) + 5;
 			final var pigeonMessage = "Oh no! " + authorName + " ha attivato il <:pigeon:647556750962065418> bazooka!\n"+max+" pigeon in arrivo!";
-			var i = 0;
 			channel.sendMessage(""+pigeonMessage).queue();
-			for (i = 0; i < max; i++)
+			for (int i = 0; i < max; i++)
 				channel.sendMessage("<:pigeon:647556750962065418>").queue(l->react("pigeon"));
 		}
 		else
