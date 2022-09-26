@@ -1311,7 +1311,7 @@ public class Commands extends ListenerAdapter
 		
 	} // fine eightBall()
 
-	/** Mette in pausa il thread per un totale di secondi pari a millisecondi + un valore casuale fra 0 e 'bound'.
+	/** Mette in pausa il thread per un totale di secondi pari a millis + un valore casuale fra 0 e 'bound'.
 	 * Parametri negativi faranno sì che vengano usati i valori di default (millis=1500 e bound=500) */
 	private void pause(int millis, int bound)
 	{
@@ -1775,6 +1775,8 @@ public class Commands extends ListenerAdapter
 			final var max = random.nextInt(5) + 5;
 			final var pigeonMessage = "Oh no! " + authorName + " ha attivato il <:pigeon:647556750962065418> bazooka!\n"+max+" pigeon in arrivo!";
 			channel.sendMessage(""+pigeonMessage).queue();
+			channel.sendTyping().queue();
+			pause(500,500);
 			for (int i = 0; i < max; i++)
 				channel.sendMessage("<:pigeon:647556750962065418>").queue(l->react("pigeon"));
 		}
