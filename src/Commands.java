@@ -389,9 +389,6 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("sabaping"))
 			reazioni.add("sabaping");
 		
-		if (msgLowerCase.contains("monkasteer"))
-			reazioni.add("monkasteer");
-		
 		if (msgLowerCase.matches("get.*rekt"))
 			reazioni.add("getrekt");
 		
@@ -431,6 +428,9 @@ public class Commands extends ListenerAdapter
 		
 		if (msgLowerCase.contains("wtf") || msgLowerCase.contains("what the fuck"))
 			reazioni.add("wtf");
+		
+		if (msgLowerCase.matches("guido|guidi|guidando|monkasteer"))
+			reazioni.add("monkasteer");
 
 		
 		// a questo punto smetto di controllare se ci siano reazioni e le aggiungo effettivamente al messaggio
