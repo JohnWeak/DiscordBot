@@ -1821,19 +1821,22 @@ public class Commands extends ListenerAdapter
 			"AVVICINATI AL BOT E PRENDERAI LE BOT", "VAI A PASCOLARE CAZZI LONTANO DAL BOT"
 		};
 		
+		var len = messaggiScortesi.length;
+		var scelta = random.nextInt(len);
+		
 		if (messageRaw.length() <= hotkey)
 		{
 			if (authorized)
 				channel.sendMessage("**SONO AI SUOI ORDINI, SIGNORE.**").queue();
 			else
-				message.reply("**"+messaggiScortesi[random.nextInt(messaggiScortesi.length)]+"**").queue();
+				message.reply("**"+messaggiScortesi[scelta]+"**").queue();
 		}
 		else
 		{
 			if (authorized)
 				channel.sendMessage("**SISSIGNORE.**").queue();
 			else
-				message.reply("**"+messaggiScortesi[random.nextInt(messaggiScortesi.length)]+"**").queue();
+				message.reply("**"+messaggiScortesi[scelta]+"**").queue();
 		}
 	}
 	
