@@ -106,7 +106,7 @@ public class Emotes
 			case "wtf" -> wtf;
 			case "bigbrain" -> bigBrain;
 			case "boo2" -> boo2;
-			case "borisk" -> borisK;
+			case "boris", "borisk" -> borisK;
 			case "comedygenius" -> comedyGenius;
 			case "dshock" -> dshock;
 			case "gaben" -> gabeN;
@@ -139,7 +139,7 @@ public class Emotes
 			case "what" -> what;
 			case "monkasteer" -> monkaSTEER;
 			
-			default -> "";
+			default -> s;
 		};
 		
 	} // fine emoteDaUsare()

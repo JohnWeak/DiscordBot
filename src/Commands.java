@@ -353,10 +353,10 @@ public class Commands extends ListenerAdapter
 			new ThreadPigeon().start();
 		
 		if (msgLowerCase.contains("owo"))
-			reazioni.add("owo");
+			reazioni.add(Emotes.OwO);
 		
 		if (msgLowerCase.contains("pog") || msgLowerCase.contains("manutenzione"))
-			reazioni.add("pogey");
+			reazioni.add(Emotes.pogey);
 		
 		if (msgLowerCase.contains("òbito") || msgLowerCase.contains("obito"))
 			if (random.nextInt(50) == 42) // 2%
@@ -380,17 +380,17 @@ public class Commands extends ListenerAdapter
 			var m2 = p2.matcher(msgLowerCase);
 			
 			if (m1.find())
-				reazioni.add("nou");
+				reazioni.add(Emotes.NoU);
 			
 			if (m2.find())
-				reazioni.add("kappapride");
+				reazioni.add(Emotes.kappaPride);
 		}
 		
 		if (msgLowerCase.contains("sabaping"))
 			reazioni.add("sabaping");
 		
-		if (msgLowerCase.matches("get.*rekt"))
-			reazioni.add("getrekt");
+		if (msgLowerCase.matches("get *rekt"))
+			reazioni.add(Emotes.getRekt);
 		
 		if (msgLowerCase.contains("smh"))
 			reazioni.add("smh");
@@ -400,7 +400,7 @@ public class Commands extends ListenerAdapter
 		
 		if (msgLowerCase.matches(".*(?:(?:x|ics)com|hitman|uomo *colpo).*"))
 		{
-			reazioni.add("pogey");
+			reazioni.add(Emotes.pogey);
 			
 			if (msgLowerCase.matches("(?:x|ics)com"))
 				reazioni.add("xcom");
@@ -410,7 +410,7 @@ public class Commands extends ListenerAdapter
 		
 		if (msgLowerCase.matches("(?:pooch|might)yena"))
 		{
-			reazioni.add("pogey");
+			reazioni.add(Emotes.pogey);
 			reazioni.add("♥");
 		}
 		
@@ -424,13 +424,16 @@ public class Commands extends ListenerAdapter
 			reazioni.add("scarab");
 		
 		if (msgLowerCase.contains("ingredibile"))
-			reazioni.add("ingredibile");
+			reazioni.add(Emotes.ingredibile);
 		
 		if (msgLowerCase.contains("wtf") || msgLowerCase.contains("what the fuck"))
-			reazioni.add("wtf");
+			reazioni.add(Emotes.wtf);
 		
 		if (msgLowerCase.matches("guido|guidi|guidando|monkasteer"))
-			reazioni.add("monkasteer");
+			reazioni.add(Emotes.monkaSTEER);
+		
+		if (msgLowerCase.contains("boris"))
+			reazioni.add(Emotes.borisK);
 
 		
 		// a questo punto smetto di controllare se ci siano reazioni e le aggiungo effettivamente al messaggio
