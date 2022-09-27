@@ -323,6 +323,7 @@ public class Commands extends ListenerAdapter
 		
 		switch (comando)
 		{
+			
 			case "!coinflip", "!cf" -> coinflip();
 			case "!scf" -> sassoCartaForbici();
 			case "!poll" -> poll();
