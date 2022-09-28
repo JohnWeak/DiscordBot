@@ -412,7 +412,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.matches("(?:pooch|might)yena"))
 		{
 			reazioni.add(Emotes.pogey);
-			reazioni.add("♥");
+			reazioni.add("❤️");
 		}
 		
 		if (msgLowerCase.contains("cl__z"))
@@ -436,6 +436,9 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("boris"))
 			reazioni.add(Emotes.borisK);
 
+		if (msgLowerCase.contains("òbito") && msgLowerCase.contains("india"))
+			reazioni.add("🇮🇳");
+		
 		
 		// a questo punto smetto di controllare se ci siano reazioni e le aggiungo effettivamente al messaggio
 		if (!reazioni.isEmpty())
