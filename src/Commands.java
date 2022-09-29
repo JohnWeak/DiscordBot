@@ -430,7 +430,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("wtf") || msgLowerCase.contains("what the fuck"))
 			reazioni.add(Emotes.wtf);
 		
-		if (msgLowerCase.matches("guido|guidi|guidando|monkasteer"))
+		if (msgLowerCase.matches(".*(?:guido|guidi|sto.*guidando|monkasteer)"))
 			reazioni.add(Emotes.monkaSTEER);
 		
 		if (msgLowerCase.contains("boris"))
