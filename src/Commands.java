@@ -20,9 +20,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.Year;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.*;
@@ -341,7 +339,7 @@ public class Commands extends ListenerAdapter
 			case "!pigeonbazooka", "!pb" -> pigeonBazooka();
 			case "!emotes" -> getEmotes();
 			case "!dado" -> dado(msgLowerCase);
-			case "!dm" -> sendMessage(author, messageRaw, "");
+			case "!dm" -> sendPrivateMessage(author, messageRaw, "");
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -390,7 +388,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("sabaping"))
 			reazioni.add("sabaping");
 		
-		if (msgLowerCase.matches("get *rekt"))
+		if (msgLowerCase.matches(".*get *rekt"))
 			reazioni.add(Emotes.getRekt);
 		
 		if (msgLowerCase.contains("smh"))
@@ -399,7 +397,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("giorno"))
 			reazioni.add("giorno");
 		
-		if (msgLowerCase.matches(".*(?:(?:x|ics)com|hitman|uomo *colpo).*"))
+		if (msgLowerCase.matches(".*(?:(?:x|ics)com|hitman|uomo *colpo)"))
 		{
 			reazioni.add(Emotes.pogey);
 			
@@ -1761,9 +1759,10 @@ public class Commands extends ListenerAdapter
 	}
 	
 	/**Manda un messaggio in chat privata*/
-	private void sendMessage(User user, String content, String lambdaEmote)
+	private void sendPrivateMessage(User user, String content, String lambdaEmote)
 	{
-		user.openPrivateChannel().flatMap(channel -> channel.sendMessage(content)).queue(l->react(lambdaEmote));
+		var string = content.split("!dm")[1];
+		user.openPrivateChannel().flatMap(channel -> channel.sendMessage(string)).queue(l->react(lambdaEmote));
 	} // fine onPrivateMessageReceived()
 	
 	/**Questo metodo invia un embed al canale da cui ha ricevuto l'ultimo messaggio.*/
