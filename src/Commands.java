@@ -339,7 +339,7 @@ public class Commands extends ListenerAdapter
 			case "!pigeonbazooka", "!pb" -> pigeonBazooka();
 			case "!emotes" -> getEmotes();
 			case "!dado" -> dado(msgLowerCase);
-			case "!dm" -> sendPrivateMessage(author, messageRaw, "");
+			case "!dm" -> sendPrivateMessage(author, message);
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -1759,10 +1759,16 @@ public class Commands extends ListenerAdapter
 	}
 	
 	/**Manda un messaggio in chat privata*/
-	private void sendPrivateMessage(User user, String content, String lambdaEmote)
+	private void sendPrivateMessage(User user, Message content)
 	{
-		var string = content.split("!dm")[1];
-		user.openPrivateChannel().flatMap(channel -> channel.sendMessage(string)).queue(l->react(lambdaEmote));
+		var emotes = content.getEmotes();
+		var string = content.getContentRaw().split("!dm")[1];
+		
+		user.openPrivateChannel().flatMap(channel -> channel.sendMessage(string)).queue(l->
+		{
+			for (Emote e : emotes)
+				react(String.valueOf(e));
+		});
 	} // fine onPrivateMessageReceived()
 	
 	/**Questo metodo invia un embed al canale da cui ha ricevuto l'ultimo messaggio.*/
