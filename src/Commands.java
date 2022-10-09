@@ -274,7 +274,7 @@ public class Commands extends ListenerAdapter
 				react("owo");
 				react("vergognati");
 				
-				if (msgLowerCase.contains("daily streak"))
+				if (msgLowerCase.contains("daily streak") || true) // da rimuovere true
 				{
 					var x = msgLowerCase.split(" ");
 					var l = Logger.getLogger("Fook");
