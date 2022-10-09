@@ -279,9 +279,21 @@ public class Commands extends ListenerAdapter
 					var x = msgLowerCase.split(" ");
 					var l = Logger.getLogger("Fook");
 					l.log(Level.INFO, Arrays.toString(x));
+					
+					try
+					{
+						var y = x[18]; // dovrebbe essere il numero di giorni
+						var numGiorni = Integer.parseInt(y);
+						
+						if (numGiorni % 365 == 0)
+							channel.sendMessage("Complimenti! Un altro anno di OwO daily!").queue();
+						
+						
+					}
+					catch (Exception ignored) { }
 				}
 				
-			}
+			} // fine if equals 8456
 			
 			
 			if (author.getDiscriminator().equals("5269")) // self own
