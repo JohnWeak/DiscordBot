@@ -24,6 +24,8 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 public class Commands extends ListenerAdapter
@@ -263,14 +265,24 @@ public class Commands extends ListenerAdapter
 		var reply = false;
 		var msgReply = "";
 		
+		// se è un bot a mandare il messaggio, ignoralo per evitare loop di messaggi
 		if (author.isBot())
 		{
+			// se però è il bot owo a mandare il messaggio, prima fai un paio di robe e poi return
 			if (discriminator.equals("8456"))
 			{
 				react("owo");
 				react("vergognati");
+				
+				if (msgLowerCase.contains("daily streak"))
+				{
+					var x = msgLowerCase.split(" ");
+					var l = Logger.getLogger("Fook");
+					l.log(Level.INFO, Arrays.toString(x));
+				}
+				
 			}
-			// return a priori, se però il messaggio lo manda l'altro bot OwO prima gli mette le reazioni e poi return
+			
 			
 			if (author.getDiscriminator().equals("5269")) // self own
 				if (random.nextInt(1000) == 42) // 0,1%
