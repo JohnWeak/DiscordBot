@@ -277,8 +277,11 @@ public class Commands extends ListenerAdapter
 				if (msgLowerCase.contains("daily streak") || true) // da rimuovere true
 				{
 					var x = msgLowerCase.split(" ");
-					var l = Logger.getLogger("Fook");
-					l.log(Level.INFO, Arrays.toString(x));
+					
+					var len = x.length;
+					for (var i = 0; i < len; i++)
+						System.out.printf("msg[%d]: %s\n", i, x[i]);
+					
 					
 					try
 					{
