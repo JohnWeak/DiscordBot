@@ -274,7 +274,7 @@ public class Commands extends ListenerAdapter
 				react("owo");
 				react("vergognati");
 				
-				if (msgLowerCase.contains("daily streak") || true) // da rimuovere true
+				if (msgLowerCase.contains("daily streak")) // da rimuovere true
 				{
 					var x = msgLowerCase.split(" ");
 					
@@ -283,17 +283,20 @@ public class Commands extends ListenerAdapter
 						System.out.printf("msg[%d]: %s\n", i, x[i]);
 					
 					
-					try
-					{
-						var y = x[18]; // dovrebbe essere il numero di giorni
-						var numGiorni = Integer.parseInt(y);
-						
-						if (numGiorni % 365 == 0)
-							channel.sendMessage("Complimenti! Un altro anno di OwO daily!").queue();
-						
-						
-					}
-					catch (Exception ignored) { }
+//					try
+//					{
+//						var y = x[18]; // dovrebbe essere il numero di giorni
+//						var numGiorni = Integer.parseInt(y);
+//
+//						if (numGiorni % 365 == 0)
+//						{
+//							var years = (numGiorni / 365);
+//							var mess = "Complimenti! Un altro anno di OwO daily! Siamo a quota " + years + "!";
+//							channel.sendMessage(mess).queue();
+//						}
+//
+//					}
+//					catch (Exception ignored) { }
 				}
 				
 			} // fine if equals 8456
