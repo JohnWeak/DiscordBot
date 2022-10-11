@@ -278,10 +278,9 @@ public class Commands extends ListenerAdapter
 				{
 					var msgSplittato = msgLowerCase.split(" ");
 					
-					var len = msgSplittato.length;
-					for (var i = 0; i < len; i++)
-						System.out.printf("msg[%d]: %s\n", i, msgSplittato[i]);
-					
+//					var len = msgSplittato.length;
+//					for (var i = 0; i < len; i++)
+//						System.out.printf("msg[%d]: %s\n", i, msgSplittato[i]);
 					
 					try
 					{
@@ -290,7 +289,7 @@ public class Commands extends ListenerAdapter
 						if (numGiorni % 365 == 0)
 						{
 							var years = (numGiorni / 365);
-							var mess = "Complimenti! Un altro anno di OwO daily! Siamo a quota " + years + "!";
+							var mess = "Complimenti, " + authorName + "! Un altro anno di OwO daily! Siamo a quota " + years + "!";
 							channel.sendMessage(mess).queue();
 						}
 
