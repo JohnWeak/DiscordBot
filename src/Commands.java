@@ -276,27 +276,26 @@ public class Commands extends ListenerAdapter
 				
 				if (msgLowerCase.contains("daily streak"))
 				{
-					var x = msgLowerCase.split(" ");
+					var msgSplittato = msgLowerCase.split(" ");
 					
-					var len = x.length;
+					var len = msgSplittato.length;
 					for (var i = 0; i < len; i++)
-						System.out.printf("msg[%d]: %s\n", i, x[i]);
+						System.out.printf("msg[%d]: %s\n", i, msgSplittato[i]);
 					
 					
-//					try
-//					{
-//						var y = x[18]; // dovrebbe essere il numero di giorni
-//						var numGiorni = Integer.parseInt(y);
-//
-//						if (numGiorni % 365 == 0)
-//						{
-//							var years = (numGiorni / 365);
-//							var mess = "Complimenti! Un altro anno di OwO daily! Siamo a quota " + years + "!";
-//							channel.sendMessage(mess).queue();
-//						}
-//
-//					}
-//					catch (Exception ignored) { }
+					try
+					{
+						var numGiorni = Integer.parseInt(msgSplittato[14].substring(2));
+
+						if (numGiorni % 365 == 0)
+						{
+							var years = (numGiorni / 365);
+							var mess = "Complimenti! Un altro anno di OwO daily! Siamo a quota " + years + "!";
+							channel.sendMessage(mess).queue();
+						}
+
+					}
+					catch (Exception ignored) { }
 				}
 				
 			} // fine if equals 8456
