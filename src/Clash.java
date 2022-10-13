@@ -17,8 +17,12 @@ public class Clash
 {
 	private static final JSONParser jsonParser = new JSONParser();
 	private static final String bearer = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjcxMjAyZjdmLWFlNDYtNDk4MS05ZDNiLThmYTVlMjg4YzlhMSIsImlhdCI6MTY2MDc2NzI0MSwic3ViIjoiZGV2ZWxvcGVyLzRhNmIzZDczLTMyZjktNDRkMS0xMGMzLWMzOTcxMDA2YzI4YiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjg3LjE4LjE5LjE2MCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.b503oh_yhF-WDhthL0yD0DmhP79wMHnSUv9S7RqxuAcOxI3aid04FT1Dm2rz9mnOhDPXHIfYgUNRdVyL92VVlQ";
-	static final String tag = "PLQP8UJ8";
-	static final String tagCompleto = "#" + tag;
+	
+	public static final String tag = "PLQP8UJ8";
+	public static final String hashtag = "%23";
+	public static final String clanTag = "PLQP8UJ8";
+	public static final String tagCompleto = hashtag + clanTag;
+	
 	private final static String warLeague = "https://api.clashofclans.com/v1/clans/%23"+tag+"/currentwar/leaguegroup";
 	
 	// TODO: recuperare la lista dei membri del clan ogni volta che si invoca il costruttore

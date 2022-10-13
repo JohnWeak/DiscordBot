@@ -34,7 +34,7 @@ public class Commands extends ListenerAdapter
 	private static final File nomiPkmn = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
 	private static MessageChannel channel;
-	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon", "!carta", "!duello", "!colpevole", "!massshooting", "!pigeonbazooka"};
+	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon", "!carta", "!duello", "!colpevole", "!massshooting"};
 	private static final String[] listaDescrizioni =
 	{
 		"Il bot lancerà una moneta.",
@@ -46,7 +46,6 @@ public class Commands extends ListenerAdapter
 		"Sfida un giocatore ad un duello di carte.",
 		"Lascia che RNGesus decida la percentuale di colpevolezza di un altro utente.",
 		"Ottieni il resoconto delle sparatorie di massa negli USA. Sono dati reali.",
-		"Perché a volte un solo pigeon non basta."
 	};
 	private static int messaggiInviati = 0;
 	private static int limite;
@@ -66,14 +65,6 @@ public class Commands extends ListenerAdapter
 	private static String sceltaBot;
 	private static TextChannel canaleBotPokemon;
 	private static final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
-	private static final String NUMENIGMO = "7166";
-	private static final String NUMOBITO = "2804";
-	private static final String NUMGION = "0935";
-	private static final String NUMLEX = "2241";
-	private static String bearer;
-	private static final String hashtag = "%23";
-	private static final String clanTag = "PLQP8UJ8";
-	private static final String tagCompleto = hashtag + clanTag;
 	private static TextChannel canaleBot;
 	private static final boolean moduloActive = false;
 	private static final boolean sendMsgActivity = false;
@@ -116,8 +107,6 @@ public class Commands extends ListenerAdapter
 		String nome = event.getJDA().getSelfUser().getName();
 		Activity act = Objects.requireNonNull(event.getJDA().getPresence().getActivity());
 		final var flag = false; // da cambiare all'occorrenza
-
-		bearer = new Clash().getBearer();
 		
 		System.out.printf("%s si è connesso a Discord!\n\npublic class MessageHistory\n{\n", nome);
 		
@@ -128,8 +117,6 @@ public class Commands extends ListenerAdapter
 		var nomeActivity = "**" + act.getName() + "**";
 		var activityTradotta = activity.equals("WATCHING") ? "guardo " : "gioco a ";
 		
-		if (flag)
-			new ThreadLeague().start();
 		// moduloDiSicurezza();
 		
 		emoteList = canaleBot.getJDA().getEmotes();
@@ -269,7 +256,7 @@ public class Commands extends ListenerAdapter
 		if (author.isBot())
 		{
 			// se però è il bot owo a mandare il messaggio, prima fai un paio di robe e poi return
-			if (discriminator.equals("8456"))
+			if (discriminator.equals(NumeriUtente.OWOBOT))
 			{
 				react("owo");
 				react("vergognati");
@@ -300,7 +287,7 @@ public class Commands extends ListenerAdapter
 			} // fine if equals 8456
 			
 			
-			if (author.getDiscriminator().equals("5269")) // self own
+			if (author.getDiscriminator().equals(NumeriUtente.BOWOT)) // self own
 				if (random.nextInt(1000) == 42) // 0,1%
 					message.reply("BOwOt vergognati").queue(lambda -> react("vergognati"));
 			
@@ -320,19 +307,19 @@ public class Commands extends ListenerAdapter
 			{
 				switch (discriminator)
 				{
-					case NUMOBITO ->
+					case NumeriUtente.OBITO ->
 					{
 						react("obito");
 						react("vergognati");
 						message.reply("Òbito vergognati").queue();
 					}
-					case NUMENIGMO ->
+					case NumeriUtente.ENIGMO ->
 						react("pigeon");
 					
-					case NUMLEX ->
+					case NumeriUtente.LEX ->
 						channel.addReactionById(id, "🇷🇴").queue();
 					
-					case NUMGION ->
+					case NumeriUtente.GION ->
 						react("smh");
 					
 				} // fine switch
@@ -595,7 +582,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.matches("you(?:'re| are) ugly"))
 			channel.sendMessage(GIF.engineer).queue();
 		
-		if (msgLowerCase.contains("deez nuts") && discriminator.equals(NUMENIGMO))
+		if (msgLowerCase.contains("deez nuts") && discriminator.equals(NumeriUtente.ENIGMO))
 		{
 			reply = true;
 			msgReply += "DEEZ NUTS, Enigmo!\n";
@@ -1865,7 +1852,7 @@ public class Commands extends ListenerAdapter
 		
 		var discr = author.getDiscriminator();
 		var hotkey = "ehi modulo".length();
-		var authorized = discr.equals(NUMGION);
+		var authorized = discr.equals(NumeriUtente.GION);
 		
 		String[] messaggiScortesi =
 		{
