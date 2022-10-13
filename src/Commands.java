@@ -647,7 +647,7 @@ public class Commands extends ListenerAdapter
 			{
 				var auth = x.get(i).getAuthor().getName();
 				var s = x.get(i).getContentRaw();
-				var msgPOG = "[" + auth + "]: *" + s + "*";
+				var msgPOG = auth + " >\t" + s;
 				
 				channel.sendMessage(msgPOG).queue();
 			}
