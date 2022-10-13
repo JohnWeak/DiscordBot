@@ -639,13 +639,13 @@ public class Commands extends ListenerAdapter
 	/**DA ELIMINARE*/
 	private void msgHistory()
 	{
-		final var MAX_SIZE = 3;
+		final var MAX_SIZE = 3; // tenere a mente
 		var x = channel.getHistory().retrievePast(MAX_SIZE).complete();
 		try
 		{
 			for (int i = 1; i < MAX_SIZE; i++) // parto da 1 perché ignoro il messaggio trigger del comando
 			{
-				var auth = x.get(i).getAuthor().toString();
+				var auth = x.get(i).getAuthor().getName();
 				var s = x.get(i).toString();
 				var msgPOG = auth + ": " + s;
 				
