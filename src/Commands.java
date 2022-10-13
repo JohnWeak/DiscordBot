@@ -639,7 +639,7 @@ public class Commands extends ListenerAdapter
 	/**DA ELIMINARE*/
 	private void msgHistory()
 	{
-		final var MAX_SIZE = 3; // tenere a mente
+		final var MAX_SIZE = 3;
 		var x = channel.getHistory().retrievePast(MAX_SIZE).complete();
 		try
 		{
@@ -647,7 +647,7 @@ public class Commands extends ListenerAdapter
 			{
 				var auth = x.get(i).getAuthor().getName();
 				var s = x.get(i).getContentRaw();
-				var msgPOG = auth + ": " + s;
+				var msgPOG = "[" + auth + "]: *" + s + "*";
 				
 				channel.sendMessage(msgPOG).queue();
 			}
