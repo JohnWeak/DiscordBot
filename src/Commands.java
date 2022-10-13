@@ -640,7 +640,7 @@ public class Commands extends ListenerAdapter
 	private void msgHistory()
 	{
 		try {
-			channel.sendMessage((CharSequence) channel.getHistory().retrievePast(3)).queue();
+			System.out.println(channel.getHistory().retrievePast(3));
 		}catch (Exception e) { e.printStackTrace(); }
 	}
 	
