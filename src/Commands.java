@@ -639,11 +639,18 @@ public class Commands extends ListenerAdapter
 	/**DA ELIMINARE*/
 	private void msgHistory()
 	{
-		var x = channel.getHistory().retrievePast(3).complete();
+		final var MAX_SIZE = 3;
+		var x = channel.getHistory().retrievePast(MAX_SIZE).complete();
 		try
 		{
-			for (Message value : x)
-				channel.sendMessage(value).queue();
+			for (int i = 1; i < MAX_SIZE; i++) // parto da 1 perché ignoro il messaggio trigger del comando
+			{
+				var auth = x.get(i).getAuthor().toString();
+				var s = x.get(i).toString();
+				var msgPOG = auth + ": " + s;
+				
+				channel.sendMessage(msgPOG).queue();
+			}
 		
 //			System.out.println(channel.getHistory().retrievePast(3));
 		}catch (Exception e) { e.printStackTrace(); }
