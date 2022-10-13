@@ -286,7 +286,7 @@ public class Commands extends ListenerAdapter
 						if (numGiorni % 365 == 0)
 						{
 							var n = msgHistory();
-							var name = n == null ? "Persona Ignota" : n;
+							var name = (n == null ? "Persona Ignota" : n);
 							
 							var years = (numGiorni / 365);
 							var mess = "Complimenti, " + name + "! Un altro anno di OwO daily! Siamo a quota " + years + "!";
@@ -305,7 +305,7 @@ public class Commands extends ListenerAdapter
 					message.reply("BOwOt vergognati").queue(lambda -> react("vergognati"));
 			
 			return;
-		}
+		} // fine if isBot
 		
 		if (!msgLowerCase.contains("!pokemon")) // genera un pokemon casuale soltanto se non viene eseguito il comando
 			spawnPokemon();
@@ -349,7 +349,6 @@ public class Commands extends ListenerAdapter
 		
 		switch (comando)
 		{
-			
 			case "!coinflip", "!cf" -> coinflip();
 			case "!scf" -> sassoCartaForbici();
 			case "!poll" -> poll();
@@ -1877,7 +1876,7 @@ public class Commands extends ListenerAdapter
 			"IL BOT HA BISOGNO DI RINFORZI SU CLASH, NON DI ESSERE INFASTIDITO.", "NO.", "SCORDATELO.", "IMMAGINA DI ESSERE UN FIUME E SCORRI LIBERO E LONTANO DAL BOT.",
 			"UN TEMPO ERO UN AVVENTURIERO COME TE, MA POI HO SMESSO DI CAGARE IL CAZZO AL BOT.", "CHE DIO TI ABBIA IN GLORIA, DOPO CHE TI AVRÒ UCCISO SE NON TI ALLONTANI DAL BOT.",
 			"ALT. NON UN ALTRO PASSO.", "NON SEI AUTORIZZATO A RESPIRARE VICINO AL BOT.", "HAI SICURAMENTE DI MEGLIO DA FARE CHE INFASTIDIRE IL BOT.",
-			"PERCHÈ NON VOLI VIA? AH GIÀ, GLI ASINI NON VOLANO.", "CIRCUMNAVIGA L'AFRICA PIUTTOSTO CHE DARE FASTIDIO AL BOT.",
+			"PERCHÈ NON VOLI VIA? AH GIÀ, GLI ASINI NON VOLANO.", "CIRCUMNAVIGA L'ASIA PIUTTOSTO CHE DARE FASTIDIO AL BOT.",
 			"SII IL CAMBIAMENTO CHE VUOI VEDERE NEL MONDO, QUINDI CAMBIA IN UNA PERSONA CHE NON SCASSA I COGLIONI AL BOT.",
 			"MI PAREVA DI AVERTI DETTO DI NON INTERFERIRE COL BOT, MA FORSE NON TE L'HO DETTO ABBASTANZA BENE. NON INTERFERIRE COL BOT.",
 			"AVVICINATI AL BOT E PRENDERAI LE BOT", "VAI A PASCOLARE CAZZI LONTANO DAL BOT"
