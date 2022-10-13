@@ -646,7 +646,7 @@ public class Commands extends ListenerAdapter
 			for (int i = 1; i < MAX_SIZE; i++) // parto da 1 perché ignoro il messaggio trigger del comando
 			{
 				var auth = x.get(i).getAuthor().getName();
-				var s = x.get(i).toString();
+				var s = x.get(i).getContentRaw();
 				var msgPOG = auth + ": " + s;
 				
 				channel.sendMessage(msgPOG).queue();
