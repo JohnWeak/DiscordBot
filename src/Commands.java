@@ -643,7 +643,7 @@ public class Commands extends ListenerAdapter
 		var x = channel.getHistory().retrievePast(MAX_SIZE).complete();
 		try
 		{
-			for (int i = 0; i < MAX_SIZE; i++) // parto da 1 perché ignoro il messaggio trigger del comando
+			for (int i = 1; i < MAX_SIZE; i++) // parto da 1 perché ignoro il messaggio trigger del comando
 			{
 				var auth = x.get(i).getAuthor().toString();
 				var s = x.get(i).toString();
