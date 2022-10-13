@@ -278,9 +278,6 @@ public class Commands extends ListenerAdapter
 				{
 					var msgSplittato = msgLowerCase.split(" ");
 					
-//					var len = msgSplittato.length;
-//					for (var i = 0; i < len; i++)
-//						System.out.printf("msg[%d]: %s\n", i, msgSplittato[i]);
 					
 					try
 					{
@@ -288,8 +285,11 @@ public class Commands extends ListenerAdapter
 
 						if (numGiorni % 365 == 0)
 						{
+							var n = msgHistory();
+							var name = n == null ? "Persona Ignota" : n;
+							
 							var years = (numGiorni / 365);
-							var mess = "Complimenti, " + authorName + "! Un altro anno di OwO daily! Siamo a quota " + years + "!";
+							var mess = "Complimenti, " + name + "! Un altro anno di OwO daily! Siamo a quota " + years + "!";
 							channel.sendMessage(mess).queue();
 						}
 
@@ -449,11 +449,6 @@ public class Commands extends ListenerAdapter
 		
 		if (msgLowerCase.contains("scarab"))
 			reazioni.add("scarab");
-		
-		if (msgLowerCase.contains("historypog"))
-			msgHistory();
-		
-		
 		
 		if (msgLowerCase.contains("ingredibile"))
 			reazioni.add(Emotes.ingredibile);
@@ -636,24 +631,25 @@ public class Commands extends ListenerAdapter
 			channel.sendMessage(x).queue();
 		
 	}
-	/**DA ELIMINARE*/
-	private void msgHistory()
+	/**Trova l'autore del messaggio per l'anniversario dell'owo daily*/
+	private String msgHistory()
 	{
 		final var MAX_SIZE = 3;
+		String auth = null;
 		var x = channel.getHistory().retrievePast(MAX_SIZE).complete();
 		try
 		{
-			for (int i = 1; i < MAX_SIZE; i++) // parto da 1 perché ignoro il messaggio trigger del comando
-			{
-				var auth = x.get(i).getAuthor().getName();
-				var s = x.get(i).getContentRaw();
-				var msgPOG = auth + " >\t" + s;
+			auth = x.get(2).getAuthor().getName();
+//				var s = x.get(i).getContentRaw();
+//				var msgPOG = auth + " >\t" + s;
 				
-				channel.sendMessage(msgPOG).queue();
-			}
+//				channel.sendMessage(msgPOG).queue();
+
 		
 //			System.out.println(channel.getHistory().retrievePast(3));
 		}catch (Exception e) { e.printStackTrace(); }
+		
+		return auth;
 	}
 	
 	
