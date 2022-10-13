@@ -642,8 +642,8 @@ public class Commands extends ListenerAdapter
 		var x = channel.getHistory().retrievePast(3).complete();
 		try
 		{
-			for (int i=0; i < x.size(); i++)
-				channel.sendMessage(x.get(0)).queue();
+			for (Message value : x)
+				channel.sendMessage(value).queue();
 		
 //			System.out.println(channel.getHistory().retrievePast(3));
 		}catch (Exception e) { e.printStackTrace(); }
