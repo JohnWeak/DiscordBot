@@ -450,6 +450,11 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("scarab"))
 			reazioni.add("scarab");
 		
+		if (msgLowerCase.contains("historypog"))
+			msgHistory();
+		
+		
+		
 		if (msgLowerCase.contains("ingredibile"))
 			reazioni.add(Emotes.ingredibile);
 		
@@ -630,6 +635,13 @@ public class Commands extends ListenerAdapter
 		else
 			channel.sendMessage(x).queue();
 		
+	}
+	/**DA ELIMINARE*/
+	private void msgHistory()
+	{
+		try {
+			System.out.println(channel.getHistory());
+		}catch (Exception e) { e.printStackTrace(); }
 	}
 	
 	
