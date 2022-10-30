@@ -1,3 +1,5 @@
+package Bot;
+
 import java.util.ArrayList;
 
 public class DeckOfCards
@@ -13,4 +15,4 @@ public class DeckOfCards
 	
 	
 	
-} // fine classe DeckOfCards
+} // fine classe Bot.DeckOfCards

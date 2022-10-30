@@ -1,3 +1,5 @@
+package Bot;
+
 public class Ore
 {
 	private final String[] numeriParole =
@@ -20,7 +22,7 @@ public class Ore
 			this.ore = ore;
 			this.minuti = minuti;
 		}
-		else System.out.println("Errore! Ore o minuti sbagliati.");
+		else System.out.println("Errore! Bot.Ore o minuti sbagliati.");
 	}
 	
 	

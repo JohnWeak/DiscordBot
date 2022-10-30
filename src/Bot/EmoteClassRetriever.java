@@ -1,3 +1,5 @@
+package Bot;
+
 import net.dv8tion.jda.api.entities.Emote;
 
 import java.util.ArrayList;

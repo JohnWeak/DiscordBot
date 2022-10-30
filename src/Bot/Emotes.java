@@ -1,3 +1,5 @@
+package Bot;
+
 /** Contiene la lista di tutte le emote del server privato "Server Discord" */
 public class Emotes
 {
@@ -144,4 +146,4 @@ public class Emotes
 		
 	} // fine emoteDaUsare()
 	
-} // fine classe Emotes
+} // fine classe Bot.Emotes

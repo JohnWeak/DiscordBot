@@ -1,3 +1,5 @@
+package Bot;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -99,4 +101,4 @@ public class Card
 	{
 		this.link = link;
 	}
-} // fine classe Card
+} // fine classe Bot.Card

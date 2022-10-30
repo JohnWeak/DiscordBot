@@ -1,3 +1,5 @@
+package Bot;
+
 import java.util.Random;
 
 public class SchedaPersonaggio
@@ -97,4 +99,4 @@ public class SchedaPersonaggio
 	
 	// Rolla 3 D6 un totale di 6 volte per i punteggi abilità
 	
-} // fine classe SchedaPersonaggio
+} // fine classe Bot.SchedaPersonaggio

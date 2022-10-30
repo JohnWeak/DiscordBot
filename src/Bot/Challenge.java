@@ -1,3 +1,5 @@
+package Bot;
+
 import net.dv8tion.jda.api.entities.User;
 
 public class Challenge
@@ -46,4 +48,4 @@ public class Challenge
 		this.tipoSfida = tipoSfida;
 	}
 	
-} // fine classe Challenge
+} // fine classe Bot.Challenge
