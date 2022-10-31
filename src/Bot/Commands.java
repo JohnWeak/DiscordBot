@@ -1205,26 +1205,31 @@ public class Commands extends ListenerAdapter
 		
 		try
 		{
-			if (emote.equals("obito"))
+			if (emoteDaUsare.equals("obito"))
+			{
 				for (String str : Emotes.obito)
 					channel.addReactionById(id, str).queue();
-			
-			else if (emote.equals("sabaping"))
+			}
+			else if (emoteDaUsare.equals("sabaping"))
+			{
 				for (String str : Emotes.sabaPing)
 					channel.addReactionById(id, str).queue();
-			
+			}
 			else if (emoteDaUsare.equals("hitman") || emoteDaUsare.equals("uomo colpo"))
+			{
 				for (int i : Emotes.hitman)
 					channel.addReactionById(id, Emotes.letters[i]).queue();
-			
-			else if (emote.equals("xcom") || emote.equals("icscom"))
+			}
+			else if (emoteDaUsare.equals("xcom") || emoteDaUsare.equals("icscom"))
+			{
 				for (int i : Emotes.XCOM)
 					channel.addReactionById(id, Emotes.letters[i]).queue();
-			
-			else if (emote.equals("scarab"))
+			}
+			else if (emoteDaUsare.equals("scarab"))
+			{
 				for (String str : Emotes.scarab)
 					channel.addReactionById(id, str).queue();
-			
+			}
 			else if (!emoteDaUsare.equals(""))
 				channel.addReactionById(id, emoteDaUsare).queue();
 			
