@@ -1816,6 +1816,7 @@ public class Commands extends ListenerAdapter
 	
 	public void pigeonBazooka()
 	{
+		System.out.println(Thread.currentThread().getName() + ": sono in pigeonBazooka()");
 		if (random.nextInt(1000) == 42)
 		{
 			final var max = random.nextInt(5) + 5;
