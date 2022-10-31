@@ -1209,35 +1209,31 @@ public class Commands extends ListenerAdapter
 				for (String str : Emotes.obito)
 					channel.addReactionById(id, str).queue();
 			
-			if (emote.equals("sabaping"))
+			else if (emote.equals("sabaping"))
 				for (String str : Emotes.sabaPing)
 					channel.addReactionById(id, str).queue();
 			
-			if (emoteDaUsare.equals("hitman") || emoteDaUsare.equals("uomo colpo"))
+			else if (emoteDaUsare.equals("hitman") || emoteDaUsare.equals("uomo colpo"))
 				for (int i : Emotes.hitman)
 					channel.addReactionById(id, Emotes.letters[i]).queue();
 			
-			if (emote.equals("xcom") || emote.equals("icscom"))
+			else if (emote.equals("xcom") || emote.equals("icscom"))
 				for (int i : Emotes.XCOM)
 					channel.addReactionById(id, Emotes.letters[i]).queue();
 			
-			if (emote.equals("scarab"))
+			else if (emote.equals("scarab"))
 				for (String str : Emotes.scarab)
 					channel.addReactionById(id, str).queue();
 			
-			if (!emoteDaUsare.equals(""))
-			{
-				try
-				{
-					channel.addReactionById(id, emoteDaUsare).queue();
-				}
-				catch (Exception e)
-				{
-					System.out.printf("Errore nell'aggiunta della reazione \"%s\"\n\t", emoteDaUsare);
-				}
-			}
+			else if (!emoteDaUsare.equals(""))
+				channel.addReactionById(id, emoteDaUsare).queue();
+			
+			
 		}
-		catch (ErrorResponseException ignored) {}
+		catch (ErrorResponseException e)
+		{
+			System.out.printf("Errore nell'aggiunta della reazione \"%s\"\n\t", emoteDaUsare);
+		}
 	} // fine react()
 	
 	/** Lascia che RNGesus decida quanto è colpevole l'utente taggato */
