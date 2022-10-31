@@ -1213,11 +1213,11 @@ public class Commands extends ListenerAdapter
 				for (String str : Emotes.sabaPing)
 					channel.addReactionById(id, str).queue();
 			
-			if (emote.equals("hitman"))
+			if (emote.equals("hitman") || emote.equals("uomo colpo"))
 				for (int i : Emotes.hitman)
 					channel.addReactionById(id, Emotes.letters[i]).queue();
 			
-			if (emote.equals("xcom"))
+			if (emote.equals("xcom") || emote.equals("icscom"))
 				for (int i : Emotes.XCOM)
 					channel.addReactionById(id, Emotes.letters[i]).queue();
 			
