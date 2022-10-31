@@ -1816,9 +1816,9 @@ public class Commands extends ListenerAdapter
 	
 	public void pigeonBazooka()
 	{
-		System.out.println(Thread.currentThread().getName() + ": sono in pigeonBazooka()");
 		if (random.nextInt(1000) == 42)
 		{
+			System.out.println("\t<"+Thread.currentThread().getName() + "> PIGEON BAZOOKAAAAAAAA");
 			final var max = random.nextInt(5) + 5;
 			final var pigeonMessage = "Oh no! " + authorName + " ha attivato il <:pigeon:647556750962065418> bazooka!\n"+max+" pigeon in arrivo!";
 			channel.sendMessage(""+pigeonMessage).queue();
