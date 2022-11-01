@@ -609,16 +609,19 @@ public class Commands extends ListenerAdapter
 		
 	} // fine checkForKeywords()
 	
+	/**Ottiene le emote custom del canale*/
 	private void getEmotes()
 	{
 		var x = Arrays.toString(canaleBot.getGuild().getEmotes().toArray());
 		
+		// discord limita i messaggi a 2000 caratteri per messaggio
 		if (x.length() > 2000)
 			 channel.sendMessage(x.substring(0, 1999)).queue();
 		else
 			channel.sendMessage(x).queue();
 		
-	}
+	} // fine getEmotes()
+	
 	/**Trova l'autore del messaggio per l'anniversario dell'owo daily*/
 	private String msgHistory()
 	{
