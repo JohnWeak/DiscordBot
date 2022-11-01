@@ -604,7 +604,7 @@ public class Commands extends ListenerAdapter
 		
 		if (reply)
 			message.reply(msgReply).queue();
-		else if (random.nextInt(1000000) == 42 || msgLowerCase.equals("ultimoavviso"))
+		else if (random.nextInt(1000000) == 42)
 			message.reply("**ULTIMO AVVISO: NON FARLO MAI PIÙ.**").queue();
 		
 	} // fine checkForKeywords()
