@@ -1208,38 +1208,39 @@ public class Commands extends ListenerAdapter
 	{
 		var emoteDaUsare = Emotes.emoteDaUsare(emote);
 		
+		if (emoteDaUsare.equals(""))
+			return;
+		
 		try
 		{
-			if (emoteDaUsare.equals("obito"))
+			switch (emoteDaUsare)
 			{
-				for (String str : Emotes.obito)
-					channel.addReactionById(id, str).queue();
-			}
-			else if (emoteDaUsare.equals("sabaping"))
-			{
-				for (String str : Emotes.sabaPing)
-					channel.addReactionById(id, str).queue();
-			}
-			else if (emoteDaUsare.equals("hitman") || emoteDaUsare.equals("uomo colpo"))
-			{
-				for (int i : Emotes.hitman)
-					channel.addReactionById(id, Emotes.letters[i]).queue();
-			}
-			else if (emoteDaUsare.equals("xcom") || emoteDaUsare.equals("icscom"))
-			{
-				for (int i : Emotes.XCOM)
-					channel.addReactionById(id, Emotes.letters[i]).queue();
-			}
-			else if (emoteDaUsare.equals("scarab"))
-			{
-				for (String str : Emotes.scarab)
-					channel.addReactionById(id, str).queue();
-			}
-			else if (!emoteDaUsare.equals(""))
-				channel.addReactionById(id, emoteDaUsare).queue();
-			
-			
-		}
+				case "obito":
+					for (String str : Emotes.obito)
+						channel.addReactionById(id, str).queue();
+					break;
+				case "sabaping":
+					for (String str : Emotes.sabaPing)
+						channel.addReactionById(id, str).queue();
+					break;
+				case "hitman":
+				case "uomo colpo":
+					for (int i : Emotes.hitman)
+						channel.addReactionById(id, Emotes.letters[i]).queue();
+					break;
+				case "xcom":
+				case "icscom":
+					for (int i : Emotes.XCOM)
+						channel.addReactionById(id, Emotes.letters[i]).queue();
+					break;
+				case "scarab":
+					for (String str : Emotes.scarab)
+						channel.addReactionById(id, str).queue();
+					break;
+				default:
+					channel.addReactionById(id, emoteDaUsare).queue();
+			} // fine switch
+		} // fine try
 		catch (ErrorResponseException e)
 		{
 			System.out.printf("Errore nell'aggiunta della reazione \"%s\"\n\t", emoteDaUsare);
