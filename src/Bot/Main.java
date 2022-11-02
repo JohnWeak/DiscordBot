@@ -12,7 +12,6 @@ public class Main
 	public static void main(String[] args) throws LoginException
 	{
 		final String token = "ODM2NTg2ODYyMjEzNzI2MjI4.YIgKOg.zFvGCTzAF1ffIUB_M5OnN_U29HI";
-
 		var jda = JDABuilder.createDefault(token)
 			.setActivity(selectActivity())
 			.setStatus(OnlineStatus.ONLINE)
