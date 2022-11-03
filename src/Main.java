@@ -9,7 +9,7 @@ public class Main
 {
 	public static void main(String[] args) throws LoginException
 	{
-		final String token = "ODM2NTg2ODYyMjEzNzI2MjI4.YIgKOg.zFvGCTzAF1ffIUB_M5OnN_U29HI";
+		final var token = "ODM2NTg2ODYyMjEzNzI2MjI4.YIgKOg.zFvGCTzAF1ffIUB_M5OnN_U29HI";
 		var jda = JDABuilder.createDefault(token)
 			.setActivity(selectActivity())
 			.setStatus(OnlineStatus.ONLINE)
@@ -23,7 +23,7 @@ public class Main
 	private static Activity selectActivity()
 	{
 		var random = new Random();
-		String giocoScelto, showScelto = null, easterEggScelto;
+		String giocoScelto, showScelto, easterEggScelto;
 		Activity activity;
 		
 		final String[] games =
@@ -33,7 +33,7 @@ public class Main
 			"Subnautica", "OneShot", "Child of Light", "Ghost Trick: Phantom Detective", "XCOM 2",
 			"Papers, Please", "Celeste", "The Stanley Parable", "To The Moon", "GTA: San Andreas",
 			"Fallout: New Vegas", "Half-Life 2", "Divinity: Original Sin 2", "Dark Souls", "Hollow Knight",
-			"Celeste", "Total War: Shogun 2", "Lawn Moving Simulator"
+			"Celeste", "Total War: Shogun 2", "Lawn Moving Simulator", "Tetris"
 		};
 		
 		final String[] anime =
@@ -49,7 +49,7 @@ public class Main
 			"WALL•E", "Addio Fottuti Musi Verdi", "Big Hero 6", "Deadpool", "Dragon Trainer", "Freaks Out",
 			"Caccia a Ottobre Rosso", "Ghost in the Shell", "Into the Spiderverse", "La Teoria del Tutto",
 			"Kingsman: Secret Service", "Lupin III: The First", "Kubo e la spada magica", "Megamind",
-			"Shawn of the dead", "Star Trek", "Soul", "your name."
+			"Shawn of the dead", "Star Trek", "Soul", "your name.", "Bullet Train"
 		};
 		
 		final String[] series =
@@ -65,16 +65,17 @@ public class Main
 			"il mondo bruciare", "una partita di calcio", "gli americani che si sparano fra loro"
 		};
 		
-		int percent = random.nextInt(100);
+		var percent = random.nextInt(100);
 		
 		if (percent <= 45) // watch: 0-45
 		{
-			switch (random.nextInt(3))
+			showScelto = switch (random.nextInt(3))
 			{
-				case 0 -> showScelto = anime[random.nextInt(anime.length)];
-				case 1 -> showScelto = movies[random.nextInt(movies.length)];
-				case 2 -> showScelto = series[random.nextInt(series.length)];
-			}
+				case 0 -> anime[random.nextInt(anime.length)];
+				case 1 -> movies[random.nextInt(movies.length)];
+				case 2 -> series[random.nextInt(series.length)];
+				default -> "ops";
+			};
 			activity = Activity.watching(showScelto);
 		}
 		else if (percent <= 95)// play: 46-95
@@ -87,7 +88,6 @@ public class Main
 			easterEggScelto = easterEgg[random.nextInt(easterEgg.length)];
 			activity = Activity.watching(easterEggScelto);
 		}
-		
 		return activity;
 	} // fine selectActivity()
 	
