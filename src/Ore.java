@@ -15,7 +15,8 @@ public class Ore
 	
 	public Ore(int ore, int minuti)
 	{
-		if (ore > -1 && minuti > -1 && ore < 60 && minuti < 60)
+		// se l'orario è compreso fra 0:00 e 23:59 tutto ok
+		if (ore > -1 && minuti > -1 && ore < 24 && minuti < 60)
 		{
 			this.ore = ore;
 			this.minuti = minuti;
