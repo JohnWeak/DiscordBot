@@ -1,0 +1,2 @@
+Main-Class: Main
+Class-Path: JDA-5.0.0-alpha.3_97fcd62-withDependencies.jar json-simple-1.1.1.jar

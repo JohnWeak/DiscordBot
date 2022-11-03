@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="JDA-5.0.0-alpha.3_97fcd62-withDependencies">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../ExternalLibraries/JDA-5.0.0-alpha.3_97fcd62-withDependencies.jar!/" />
+      <root url="jar://$USER_HOME$/IDEA Projects/ExternalLibraries/JDA-5.0.0-alpha.3_97fcd62-withDependencies.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
