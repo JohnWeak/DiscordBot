@@ -125,7 +125,7 @@ public class Commands extends ListenerAdapter
 
 	/** Questo metodo decide cosa fare quando un messaggio viene modificato */
 	public void onMessageUpdate(@NotNull MessageUpdateEvent event)
-	{
+	{ //
 		identifyLatestMessage(null, event);
 		aggiungiReazioni();
 		checkForKeywords(messageRaw.toLowerCase(Locale.ROOT));
