@@ -1,5 +1,3 @@
-package Bot;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
@@ -193,4 +191,4 @@ public class Pokemon
 	{
 		this.catturato = catturato;
 	}
-} // fine classe Bot.Pokemon
+} // fine classe Pokemon

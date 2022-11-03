@@ -1,5 +1,3 @@
-package Bot;
-
 /** Contiene la lista di tutte le emote del server privato "Server Discord" */
 public class Emotes
 {

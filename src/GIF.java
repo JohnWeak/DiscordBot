@@ -1,5 +1,3 @@
-package Bot;
-
 /**Questa classe contiene gli indirizzi delle Bot.GIF che usa il bot.*/
 public abstract class GIF
 {

@@ -1,5 +1,3 @@
-package Bot;
-
 public class ThreadPigeon extends Thread
 {
 	public void run()
@@ -7,4 +5,4 @@ public class ThreadPigeon extends Thread
 		new Commands().pigeonBazooka();
 	}
 	
-} // fine Bot.ThreadPigeon
+} // fine ThreadPigeon

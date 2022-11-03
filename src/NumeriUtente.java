@@ -1,5 +1,3 @@
-package Bot;
-
 public abstract class NumeriUtente
 {
 	public static final String GION = "0935";

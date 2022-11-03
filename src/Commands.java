@@ -1,5 +1,3 @@
-package Bot;
-
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.ReadyEvent;
@@ -1371,7 +1369,7 @@ public class Commands extends ListenerAdapter
 		catch (InterruptedException e) { e.printStackTrace(); }
 	} // fine pause()
 	
-	/** Cerca un Bot.Pokemon nell'API. Se non lo trova mostra un messaggio di errore. */
+	/** Cerca un Pokemon nell'API. Se non lo trova mostra un messaggio di errore. */
 	public void pokemon()
 	{
 		String msgLowercase = messageRaw.toLowerCase(Locale.ROOT);
@@ -1427,7 +1425,7 @@ public class Commands extends ListenerAdapter
 				}
 			}
 			else
-				channel.sendMessage("Usa `!pokemon <nome> [shiny / s]` per cercare un Bot.Pokemon").queue();
+				channel.sendMessage("Usa `!pokemon <nome> [shiny / s]` per cercare un Pokemon").queue();
 			
 		}
 		else
@@ -1486,11 +1484,11 @@ public class Commands extends ListenerAdapter
 		return jsonArray;
 	} // fine search()
 	
-	/** Genera un doppio incontro con Bot.Pokemon selvatici */
+	/** Genera un doppio incontro con Pokemon selvatici */
 	private void doubleEncounter(Pokemon uno, Pokemon due)
 	{
 		EmbedBuilder embedBuilder;
-		String[] titolo = {"Primo Bot.Pokemon!", "Secondo Bot.Pokemon!"};
+		String[] titolo = {"Primo Pokemon!", "Secondo Pokemon!"};
 		Pokemon[] pokemons = {uno, due};
 		var nomi = new String[] { uno.getNome(), due.getNome() };
 		canaleBotPokemon.sendMessage("Doppio Incontro!").queue();
@@ -1507,7 +1505,7 @@ public class Commands extends ListenerAdapter
 		// System.out.printf("\n\tUno: %s, shiny: %s\n\tDue: %s, shiny: %s\n",uno.getNome(), uno.isShiny(), due.getNome(), due.isShiny());
 	} // fine doubleEncounter()
 
-	/** Manda il messaggio con i Bot.Pokemon nel canale e aggiunge le reazioni like/dislike al messaggio */
+	/** Manda il messaggio con i Pokemon nel canale e aggiunge le reazioni like/dislike al messaggio */
 	private void sendMessage(String[] pokemonNames, EmbedBuilder embedBuilder)
 	{
 		canaleBotPokemon.sendMessageEmbeds(embedBuilder.build()).queue((message ->
@@ -1531,7 +1529,7 @@ public class Commands extends ListenerAdapter
 
 	} // fine sendMessage()
 
-	/** Genera un embed con il Bot.Pokemon */
+	/** Genera un embed con il Pokemon */
 	private EmbedBuilder buildEmbed(Pokemon pokemon, boolean pokedex)
 	{
 		var embedBuilder = new EmbedBuilder();
@@ -1599,7 +1597,7 @@ public class Commands extends ListenerAdapter
 		return embedBuilder;
 	} // fine buildEmbed()
 	
-	/** Fa spawnare un Bot.Pokemon */
+	/** Fa spawnare un Pokemon */
 	public void spawnPokemon()
 	{
 		int[] valori = new int[2];

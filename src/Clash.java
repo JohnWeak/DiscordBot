@@ -1,5 +1,3 @@
-package Bot;
-
 import net.dv8tion.jda.api.EmbedBuilder;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

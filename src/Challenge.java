@@ -1,5 +1,3 @@
-package Bot;
-
 import net.dv8tion.jda.api.entities.User;
 
 public class Challenge

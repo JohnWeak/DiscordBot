@@ -1,5 +1,3 @@
-package Bot;
-
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
@@ -93,4 +91,4 @@ public class Main
 		return activity;
 	} // fine selectActivity()
 	
-} // fine classe Bot.Main
+} // fine classe Main

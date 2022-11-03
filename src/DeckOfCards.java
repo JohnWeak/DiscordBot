@@ -1,5 +1,3 @@
-package Bot;
-
 import java.util.ArrayList;
 
 public class DeckOfCards
