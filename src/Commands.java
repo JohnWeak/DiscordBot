@@ -1567,7 +1567,12 @@ public class Commands extends ListenerAdapter
 			embedBuilder.setFooter(""+lineaEvolutiva, ""+iconURL);
 
 		}
-		embedBuilder.setTitle(pokemon.getNome().toUpperCase());
+		
+		try
+		{
+			embedBuilder.setTitle(pokemon.getNome().toUpperCase());
+		}catch (Exception ignored) { }
+		
 		if ((descrizione = pokemon.getDescrizione()) != null)
 		{
 			String type;
