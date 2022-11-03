@@ -74,7 +74,7 @@ public class Main
 				case 0 -> anime[random.nextInt(anime.length)];
 				case 1 -> movies[random.nextInt(movies.length)];
 				case 2 -> series[random.nextInt(series.length)];
-				default -> "ops";
+				default -> "il nulla cosmico";
 			};
 			activity = Activity.watching(showScelto);
 		}
