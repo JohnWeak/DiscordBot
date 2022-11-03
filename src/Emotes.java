@@ -1,5 +1,5 @@
 /** Contiene la lista di tutte le emote del server privato "Server Discord" */
-public class Emotes
+public abstract class Emotes
 {
 	public static final String OwO = "OwO:604351952205381659";
 	public static final String NoU = "nou:671402740186087425";
