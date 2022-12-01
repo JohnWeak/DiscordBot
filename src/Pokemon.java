@@ -23,6 +23,7 @@ public class Pokemon
 	private String[] lineaEvolutiva;
 	private int[] individualValues = new int[6];
 	private boolean catturato = false;
+	private boolean active;
 	
 	public Pokemon()
 	{
@@ -103,7 +104,7 @@ public class Pokemon
 	{
 		// [HP, ATK, DEF, SPA, SPD, SPE]
 		for (int index : individualValues)
-			individualValues[index] = random.nextInt(100) + 1;
+			individualValues[index] = random.nextInt(32); // IVs: 0-31
 	}
 	
 	
@@ -149,6 +150,10 @@ public class Pokemon
 	{
 		return catturato;
 	}
+	public boolean isActive()
+	{
+		return active;
+	}
 	
 	//SETTER
 	public void setNome(String nome)
@@ -190,5 +195,9 @@ public class Pokemon
 	public void setCatturato(boolean catturato)
 	{
 		this.catturato = catturato;
+	}
+	public void setActive(boolean active)
+	{
+		this.active = active;
 	}
 } // fine classe Pokemon

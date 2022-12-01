@@ -1,3 +1,4 @@
+import com.google.gson.Gson;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.ReadyEvent;
@@ -43,8 +44,8 @@ public class Commands extends ListenerAdapter
 		"Genera una carta da gioco.",
 		"Sfida un giocatore ad un duello di carte.",
 		"Lascia che RNGesus decida la percentuale di colpevolezza di un altro utente.",
-		"Ottieni il resoconto delle sparatorie di massa negli USA. Sono dati reali.",
-	};
+		"Ottieni il resoconto delle sparatorie di massa negli USA. Avviso: sono dati reali.",
+	}; //TODO: trasformare listaComandi e listaDescrizioni in una singola hashmap
 	private static int messaggiInviati = 0;
 	private static int limite;
 	private static String authorName;
@@ -67,6 +68,7 @@ public class Commands extends ListenerAdapter
 	private static final boolean moduloActive = false;
 	private static final boolean sendMsgActivity = false;
 	private static List<Emote> emoteList;
+	private static Pokemon[] activePokemons;
 	
 	
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
@@ -102,9 +104,8 @@ public class Commands extends ListenerAdapter
 	/** onReady() viene eseguita soltanto all'avvio del bot */
 	public void onReady(@NotNull ReadyEvent event)
 	{
-		String nome = event.getJDA().getSelfUser().getName();
-		Activity act = Objects.requireNonNull(event.getJDA().getPresence().getActivity());
-		final var flag = false; // da cambiare all'occorrenza
+		var nome = event.getJDA().getSelfUser().getName();
+		var act = Objects.requireNonNull(event.getJDA().getPresence().getActivity());
 		
 		System.out.printf("%s si è connesso a Discord!\n\npublic class MessageHistory\n{\n", nome);
 		
@@ -262,8 +263,6 @@ public class Commands extends ListenerAdapter
 				if (msgLowerCase.contains("daily streak"))
 				{
 					var msgSplittato = msgLowerCase.split(" ");
-					
-					
 					try
 					{
 						var numGiorni = Integer.parseInt(msgSplittato[14].substring(2));
@@ -279,7 +278,12 @@ public class Commands extends ListenerAdapter
 						}
 
 					}
-					catch (Exception ignored) { }
+					catch (Exception exception)
+					{
+						// siccome bot on server, adesso mi deve taggare per le eccezioni
+						var spamErrore = "<@592821644892962848-1041710913511768064>\n" + exception;
+						canaleBotPokemon.sendMessage(spamErrore).queue();
+					}
 				}
 				
 			} // fine if equals 8456
@@ -352,6 +356,7 @@ public class Commands extends ListenerAdapter
 			case "!emotes" -> getEmotes();
 			case "!dado" -> dado(msgLowerCase);
 			case "!dm" -> sendPrivateMessage(author, message);
+			case "!cattura", "!catch" -> catturaPokemon();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -409,15 +414,18 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("giorno"))
 			reazioni.add("giorno");
 		
-		if (msgLowerCase.matches(".*(?:(?:x|ics)com|hitman|uomo *colpo)"))
+		if (msgLowerCase.matches(".*(?:hitman|uomo *colpo)"))
 		{
 			reazioni.add(Emotes.pogey);
-			
-			if (msgLowerCase.matches("(?:x|ics)com"))
-				reazioni.add("xcom");
-			else
-				reazioni.add("hitman");
+			reazioni.add("hitman");
 		}
+		
+		if (msgLowerCase.matches(".*(?:x|ics)com"))
+		{
+			reazioni.add(Emotes.pogey);
+			reazioni.add("xcom");
+		}
+		
 		
 		if (msgLowerCase.matches("(?:pooch|might)yena"))
 		{
@@ -1041,8 +1049,8 @@ public class Commands extends ListenerAdapter
 		}
 		
 		String[] domandaERisposte = messageRaw.split("\\?");
-		String domanda = domandaERisposte[0].substring("!poll".length());
-		String[] risposte = messageRaw.substring("!poll".length()+domanda.length()+1).split("/");
+		String domanda = domandaERisposte[0].substring(5); // !poll.length() = 5
+		String[] risposte = messageRaw.substring(5+domanda.length()+1).split("/");
 		
 		//System.out.printf("DomandaERisposte length: %d\nDomandaERisposte: %s\nDomanda length: %d\nDomanda: %s\nRisposte.length: %d\nRisposte: %s\n", domandaERisposte.length, Arrays.toString(domandaERisposte), domanda.length(), domanda, risposte.length, Arrays.toString(risposte));
 		
@@ -1298,9 +1306,8 @@ public class Commands extends ListenerAdapter
 	{
 		var embedBuilder = new EmbedBuilder();
 		var size = listaComandi.length;
-
-		String urlOwO = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--amf4Rvt7--%2Ft_Preview%2Fb_rgb%3A191919%2Cc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1518097892%2Fproduction%2Fdesigns%2F2348593_0.jpg&f=1&nofb=1";
-		String urlTitle = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+		var urlOwO = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--amf4Rvt7--%2Ft_Preview%2Fb_rgb%3A191919%2Cc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1518097892%2Fproduction%2Fdesigns%2F2348593_0.jpg&f=1&nofb=1";
+		var urlTitle = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 		
 		embedBuilder.setTitle("Informazioni", urlTitle);
 		embedBuilder.setDescription("Questo bot permette di lanciare monete, creare sondaggi e, soprattutto, essere un rompiballe.");
@@ -1308,12 +1315,12 @@ public class Commands extends ListenerAdapter
 		for (int i = 0; i < size; i++)
 			embedBuilder.addField("`"+listaComandi[i]+"`", "*"+listaDescrizioni[i]+"*", false);
 		
-		embedBuilder.setThumbnail(urlOwO);
-		embedBuilder.setColor(0xFF0000);
-		embedBuilder.addBlankField(false);
-		embedBuilder.setFooter("Creato con ❤️ da JohnWeak", urlOwO);
+		embedBuilder.setThumbnail(urlOwO)
+			.setColor(0xFF0000)
+			.addBlankField(false)
+			.setFooter("Creato con ❤️ da JohnWeak", urlOwO);
 		
-		MessageEmbed embed = embedBuilder.build();
+		var embed = embedBuilder.build();
 		channel.sendMessageEmbeds(embed).queue();
 		
 	} // fine info()
@@ -1431,7 +1438,8 @@ public class Commands extends ListenerAdapter
 		else
 		{
 			var pokemon = new Pokemon();
-
+			activePokemons = new Pokemon[2];
+			
 			if (random.nextInt(20) == 9)
 				doubleEncounter(pokemon, new Pokemon());
 			else
@@ -1446,12 +1454,23 @@ public class Commands extends ListenerAdapter
 		EmbedBuilder embedBuilder;
 		String[] nomi = {pokemon.getNome(), ""};
 		final var titolo = "A wild " + pokemon.getNome() + " appears!";
+		
 		embedBuilder = buildEmbed(pokemon, false).setTitle(titolo);
 		canaleBotPokemon.sendTyping().queue();
 		pause(500, 500);
 
 		sendMessage(nomi, embedBuilder);
-
+		
+		// a questo punto il pokemon è attivo nel canale
+		pokemon.setActive(true);
+		activePokemons[0] = pokemon;
+		
+		var t = new ThreadPokemon(pokemon);
+		t.setEmbedBuilder(embedBuilder);
+		t.setTc(canaleBotPokemon);
+		t.timeoutTime(t.HOURS, 1);
+		t.start();
+  
 	} // fine singleEncounter
 
 	/** Effettua la ricerca del pokemon nell'API */
@@ -1497,8 +1516,9 @@ public class Commands extends ListenerAdapter
 		{
 			embedBuilder = buildEmbed(pokemons[i], false);
 			embedBuilder.setDescription(titolo[i]);
-			//embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
-
+			embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
+			
+			activePokemons[i] = pokemons[i];
 			sendMessage(nomi, embedBuilder);
 		}
 		
@@ -1533,12 +1553,12 @@ public class Commands extends ListenerAdapter
 	private EmbedBuilder buildEmbed(Pokemon pokemon, boolean pokedex)
 	{
 		var embedBuilder = new EmbedBuilder();
-		String descrizione;
-		String[] tipi = pokemon.getTipo();
+		var descrizione = "";
+		var tipi = pokemon.getTipo();
 		var stringBuilder = new StringBuilder();
 		var types = "";
-		String[] lineaEvo = pokemon.getLineaEvolutiva();
-		String lineaEvolutiva;
+		var lineaEvo = pokemon.getLineaEvolutiva();
+		var lineaEvolutiva = "";
 
 		if (pokedex)
 		{
@@ -1648,6 +1668,65 @@ public class Commands extends ListenerAdapter
 		
 	} // fine spawnPokemon()
 	
+	/***/
+	private void catturaPokemon()
+	{
+		// Se il pokemon è fuggito oppure è stato già catturato, return
+		if ((!activePokemons[0].isActive() || activePokemons[0].isCatturato()) && (!activePokemons[1].isActive()) || activePokemons[1].isCatturato())
+			return;
+		
+		final var trainersFile = "trainers.txt";
+		var gson = new Gson();
+		var map = new HashMap<String, String>();
+		
+		var pkmnName = messageRaw.split(" ")[1].toLowerCase();
+		
+		if (pkmnName.equals(activePokemons[0].getNome()))
+		{
+			var trainer = new Trainer(""+authorName, ""+author.getId());
+			
+			final var msg = "Congratulazioni, " + authorName + "! Hai catturato **" + activePokemons[0].getNome() + "**!";
+			trainer.catturaPokemon(activePokemons[0]);
+			channel.sendMessage(msg).queue(m -> react("pogey"));
+			activePokemons[0].setCatturato(true);
+		}
+		else if (pkmnName.equals(activePokemons[1].getNome()))
+		{
+			var trainer = new Trainer(""+authorName, ""+author.getId());
+			
+			final var msg = "Congratulazioni, " + authorName + "! Hai catturato **" + activePokemons[1].getNome() + "**!";
+			trainer.catturaPokemon(activePokemons[1]);
+			activePokemons[1].setCatturato(true);
+			channel.sendMessage(msg).queue(m -> react("pogey"));
+		}
+		/* *************************************************
+		try
+		{
+			var file = new File(trainersFile);
+			if (file.createNewFile())
+				System.out.println("Il file è stato creato!");
+			else
+				System.out.println("Il file esisteva già.");
+			
+			var fileReader = new FileReader(trainersFile);
+			var buffReader = new BufferedReader(fileReader);
+			
+			//TODO: leggere dal file
+			
+			buffReader.close();
+		}catch (IOException ignored) {}
+		
+		map.put("Enigmo", "1");
+		var json = gson.toJson(map);
+		
+		
+		// TODO: ottenere una lista di trainer e controllare gli ID, se non è presente creare un nuovo trainer
+		//  e fargli catturare il pokemon; altrimenti prendere il trainer esistente e assegnare a lui il pokemon
+		*******************************************/
+		
+	} // fine catturaPokemon()
+	
+	
 	/**Ottieni un resoconto della sparatoria più recente in USA oppure ottieni un resoconto di una sparatoria scelta casualmente nell'anno da te specificato.*/
 	private void massShooting()
 	{
@@ -1672,6 +1751,7 @@ public class Commands extends ListenerAdapter
 		
 		JSONArray jsonArray;
 		JSONParser jsonParser = new JSONParser();
+		var mortiAnno = 0;
 		
 		try
 		{
@@ -1688,7 +1768,7 @@ public class Commands extends ListenerAdapter
 			
 			jsonArray = (JSONArray) jsonParser.parse(String.valueOf(response));
 			var objs = new ArrayList<JSONObject>();
-			var mortiAnno = 0;
+			
 			for (Object o : jsonArray)
 			{
 				objs.add((JSONObject) o);
@@ -1704,7 +1784,7 @@ public class Commands extends ListenerAdapter
 			var stato = (String) objs.get(scelta).get("state");
 			var morti = (String) objs.get(scelta).get("killed");
 			var feriti = (String) objs.get(scelta).get("wounded");
-			var x = (String) (objs).get(scelta).get("date"); //2022-01-05
+			var x = (String) (objs).get(scelta).get("date"); // es.: 2022-01-05
 			var y = x.split("T")[0].split("-");
 			var data = y[2] + " " + getMese(Integer.parseInt(y[1])) + " "+ y[0];
 
@@ -1738,7 +1818,6 @@ public class Commands extends ListenerAdapter
 			
 			var footerURL = "https://www.massshootingtracker.site/logo-400.png";
 			
-			var sparatoria = (anno == currentYear ? "Sparatoria più recente": "Una delle sparatorie");
 			var start = LocalDate.of(anno, Integer.parseInt(y[1]), Integer.parseInt(y[2]));
 			var stop = LocalDate.now();
 			var days = ChronoUnit.DAYS.between(start, stop);
