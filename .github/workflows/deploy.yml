@@ -19,12 +19,16 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
+      - name: shortHash
+        run: git rev-parse --short HEAD | sed "s/^./CURRENT_VERSION=/g"  >> $GITHUB_ENV
+
+
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
           context: .
           push: true
-          tags: gionweak/bot_discord:$(git rev-parse --short HEAD),gionweak/bot_discord:latest
+          tags: gionweak/bot_discord:${{ env.CURRENT_VERSION }},gionweak/bot_discord:latest
 
       - name: Deploy on Remote Server  # Si connette in SSH ed esegue uno script
         uses: appleboy/ssh-action@master
