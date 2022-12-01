@@ -1671,9 +1671,11 @@ public class Commands extends ListenerAdapter
 	/***/
 	private void catturaPokemon()
 	{
+		/*
 		final var trainersFile = "trainers.txt";
 		var gson = new Gson();
 		var map = new HashMap<String, String>();
+		*/
 		
 		var pkmnName = messageRaw.split(" ")[1].toLowerCase();
 		
