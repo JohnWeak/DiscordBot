@@ -1458,12 +1458,12 @@ public class Commands extends ListenerAdapter
 		embedBuilder = buildEmbed(pokemon, false).setTitle(titolo);
 		canaleBotPokemon.sendTyping().queue();
 		pause(500, 500);
-
-		sendMessage(nomi, embedBuilder);
 		
 		// a questo punto il pokemon è attivo nel canale
 		pokemon.setActive(true);
 		activePokemons[0] = pokemon;
+		
+		sendMessage(nomi, embedBuilder);
 		
 		var t = new ThreadPokemon(pokemon);
 		t.setEmbedBuilder(embedBuilder);
@@ -1681,7 +1681,7 @@ public class Commands extends ListenerAdapter
 		
 		for (Pokemon p : activePokemons)
 		{
-			if (p.isActive() && pkmnName.equals(p.getNome()))
+			if (p != null && p.isActive() && pkmnName.equals(p.getNome()))
 			{
 				var trainer = new Trainer(""+authorName, ""+author.getId());
 			

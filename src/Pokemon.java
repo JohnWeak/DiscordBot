@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Pokemon
 {
-	private final static int max = 898; // fino a gen 8
+	private final static int max = 898; // fino a gen 9
 	private static final File nomiPokemon = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
 
