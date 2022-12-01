@@ -1,0 +1,42 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  if_merged:
+    name: Create Docker File & Deploy on server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout  # prima azione
+        uses: actions/checkout@v3
+        
+      - name: Login to Docker Hub  # Effettua login su DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          tags: gionweak/bot_discord:$(git rev-parse --short HEAD),gionweak/bot_discord:latest
+
+      - name: Deploy on Remote Server  # Si connette in SSH ed esegue uno script
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |  # : | -> Una serie di comandi bash
+            docker rm -f -v bot_discord
+            docker image prune -a -f
+            docker run -d --name bot_discord gionweak/bot_discord:latest
+        #  1) ferma il docker
+        #  2) rimuove l'immagine del docker precedente
+        #  3) builda il nuovo docker
