@@ -46,6 +46,7 @@ public class ThreadPokemon extends Thread
 			case "ore" -> timeout * 60 * 60 * time;
 			case "minuti" -> timeout * 60 * time;
 			case "secondi" -> timeout * time;
+			default -> timeout;
 		};
 		
 	} // fine timeoutTime()
