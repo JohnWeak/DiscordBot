@@ -1671,34 +1671,25 @@ public class Commands extends ListenerAdapter
 	/***/
 	private void catturaPokemon()
 	{
-		// Se il pokemon è fuggito oppure è stato già catturato, return
-		if ((!activePokemons[0].isActive() || activePokemons[0].isCatturato()) && (!activePokemons[1].isActive()) || activePokemons[1].isCatturato())
-			return;
-		
 		final var trainersFile = "trainers.txt";
 		var gson = new Gson();
 		var map = new HashMap<String, String>();
 		
 		var pkmnName = messageRaw.split(" ")[1].toLowerCase();
 		
-		if (pkmnName.equals(activePokemons[0].getNome()))
+		for (Pokemon p : activePokemons)
 		{
-			var trainer = new Trainer(""+authorName, ""+author.getId());
+			if (p.isActive() && pkmnName.equals(p.getNome()))
+			{
+				var trainer = new Trainer(""+authorName, ""+author.getId());
 			
-			final var msg = "Congratulazioni, " + authorName + "! Hai catturato **" + activePokemons[0].getNome() + "**!";
-			trainer.catturaPokemon(activePokemons[0]);
-			channel.sendMessage(msg).queue(m -> react("pogey"));
-			activePokemons[0].setCatturato(true);
+				final var msg = "Congratulazioni, " + authorName + "! Hai catturato **" + p.getNome() + "**!";
+				trainer.catturaPokemon(p);
+				channel.sendMessage(msg).queue(m -> react("pogey"));
+				p.setCatturato(true);
+			}
 		}
-		else if (pkmnName.equals(activePokemons[1].getNome()))
-		{
-			var trainer = new Trainer(""+authorName, ""+author.getId());
-			
-			final var msg = "Congratulazioni, " + authorName + "! Hai catturato **" + activePokemons[1].getNome() + "**!";
-			trainer.catturaPokemon(activePokemons[1]);
-			activePokemons[1].setCatturato(true);
-			channel.sendMessage(msg).queue(m -> react("pogey"));
-		}
+		
 		/* *************************************************
 		try
 		{
