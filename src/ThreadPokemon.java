@@ -39,13 +39,11 @@ public class ThreadPokemon extends Thread
 	 * È possibile stabilire quanti secondi, minuti oppure ore dovranno passare prima che scappi.*/
 	public void timeoutTime(String type, long timeout)
 	{
-		final long time = 1000;
-		
 		this.timeout = switch (type)
 		{
-			case "ore" -> timeout * 60 * 60 * time;
-			case "minuti" -> timeout * 60 * time;
-			case "secondi" -> timeout * time;
+			case "ore" -> timeout * 60 * 60 * 1000;
+			case "minuti" -> timeout * 60 * 1000;
+			case "secondi" -> timeout * 1000;
 			default -> timeout;
 		};
 		
@@ -57,14 +55,30 @@ public class ThreadPokemon extends Thread
 	{
 		tc.sendMessageEmbeds(eb.build()).queue(l ->
 		{
+			var pkn = pokemon.getNome();
+			if (pkn.equalsIgnoreCase("poochyena") || pkn.equalsIgnoreCase("mightyena"))
+			{
+				Commands.react("pogey");
+				l.addReaction("❤️").queue();
+			}
+			else
+			{
+				l.addReaction("👍🏻").queue();
+				l.addReaction("❤️").queue();
+				l.addReaction("👎🏻").queue();
+			}
 			try
 			{
 				Thread.sleep(timeout);
 			} catch (InterruptedException ignored) { }
 			
 			pokemon.setActive(false);
+			eb.setTitle("The wild " + pokemon.getNome() + " fled.");
 			eb.setFooter(pokemon.getNome() + " ran away.");
 			eb.setColor(Color.GRAY);
+			
+			l.clearReactions().queue();
+			
 			l.editMessageEmbeds(eb.build()).queue();
 		});
 		

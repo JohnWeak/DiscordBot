@@ -29,10 +29,9 @@ import java.util.regex.Pattern;
 
 public class Commands extends ListenerAdapter
 {
-	private static final File valori = new File("valori.txt");
-	private static final File nomiPkmn = new File("nomiPokemon.txt");
+	public static final File nomiPkmn = new File("src/nomiPokemon.txt");
 	private static final Random random = new Random();
-	private static MessageChannel channel;
+	public static MessageChannel channel;
 	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon", "!carta", "!duello", "!colpevole", "!massshooting"};
 	private static final String[] listaDescrizioni =
 	{
@@ -45,16 +44,16 @@ public class Commands extends ListenerAdapter
 		"Sfida un giocatore ad un duello di carte.",
 		"Lascia che RNGesus decida la percentuale di colpevolezza di un altro utente.",
 		"Ottieni il resoconto delle sparatorie di massa negli USA. Avviso: sono dati reali.",
-	}; //TODO: trasformare listaComandi e listaDescrizioni in una singola hashmap
+	}; // TODO: trasformare listaComandi e listaDescrizioni in una singola hashmap
 	private static int messaggiInviati = 0;
 	private static int limite;
-	private static String authorName;
+	public static String authorName;
 	private static long id;
 	private static final Locale locale = Locale.ITALIAN;
-	private static Message message;
-	private static String messageRaw;
-	private static User author;
-	private static ArrayList<Challenge> listaSfide = new ArrayList<>();
+	public static Message message;
+	public static String messageRaw;
+	public static User author;
+	private static final ArrayList<Challenge> listaSfide = new ArrayList<>();
 	private static final String[] challenge = {"Duello Carte", "Sasso Carta Forbici"};
 	private static boolean duelloAttivo = false;
 	private static boolean sfidaAttiva = false;
@@ -62,13 +61,13 @@ public class Commands extends ListenerAdapter
 	private static User sfidato = null;
 	private static final String[] simboli = {"♥️", "♦️", "♣️", "♠️"};
 	private static String sceltaBot;
-	private static TextChannel canaleBotPokemon;
+	public static TextChannel canaleBotPokemon;
 	private static final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
-	private static TextChannel canaleBot;
+	public static TextChannel canaleBot;
 	private static final boolean moduloActive = false;
 	private static final boolean sendMsgActivity = false;
 	private static List<Emote> emoteList;
-	private static Pokemon[] activePokemons;
+	public static Pokemon[] activePokemons;
 	
 	
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
@@ -161,7 +160,7 @@ public class Commands extends ListenerAdapter
 		checkForKeywords(messageRaw.toLowerCase());
 	} // fine guildEvent()
 	
-	private void privateMessage(MessageReceivedEvent event, boolean isBot)
+	public void privateMessage(MessageReceivedEvent event, boolean isBot)
 	{
 		var botOrHuman = isBot ? "Bot" : "User";
 		System.out.printf("\t%s %s = \"%s\"; // Private Message\n}\r", botOrHuman, authorName, messageRaw);
@@ -187,7 +186,7 @@ public class Commands extends ListenerAdapter
 			messageRaw = message.getContentRaw();
 			channel = received.getChannel();
 		}
-		else // updaated
+		else // updated
 		{
 			id = updated.getMessageIdLong();
 			author = updated.getAuthor();
@@ -297,7 +296,7 @@ public class Commands extends ListenerAdapter
 		} // fine if isBot
 		
 		if (!msgLowerCase.contains("!pokemon")) // genera un pokemon casuale soltanto se non viene eseguito il comando
-			spawnPokemon();
+			Pokemon.spawnPokemon();
 		
 		if (random.nextInt(500) == 42) // chance di reagire con emote personali
 		{
@@ -343,7 +342,7 @@ public class Commands extends ListenerAdapter
 			case "!poll" -> poll();
 			case "!info" -> info();
 			case "!8ball" -> eightBall();
-			case "!pokemon" -> pokemon();
+			case "!pokemon" -> Pokemon.pokemon();
 			case "!colpevolezza", "!colpevole" -> colpevolezza();
 			case "!carta" -> sendCarta(new Card());
 			case "!duello", "!duellocarte" -> duelloDiCarte();
@@ -356,7 +355,7 @@ public class Commands extends ListenerAdapter
 			case "!emotes" -> getEmotes();
 			case "!dado" -> dado(msgLowerCase);
 			case "!dm" -> sendPrivateMessage(author, message);
-			case "!cattura", "!catch" -> catturaPokemon();
+			case "!cattura", "!catch" -> Pokemon.catturaPokemon();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -448,7 +447,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("wtf") || msgLowerCase.contains("what the fuck"))
 			reazioni.add(Emotes.wtf);
 		
-		if (msgLowerCase.matches(".*(?:guido|guidi|sto.*guidando|monkasteer)"))
+		if (msgLowerCase.matches(".*(?:guid|sto.*guidando|monkasteer)"))
 			reazioni.add(Emotes.monkaSTEER);
 		
 		if (msgLowerCase.contains("boris"))
@@ -456,7 +455,6 @@ public class Commands extends ListenerAdapter
 
 		if (msgLowerCase.contains("òbito") && msgLowerCase.contains("india"))
 			reazioni.add("🇮🇳");
-		
 		
 		// a questo punto smetto di controllare se ci siano reazioni e le aggiungo effettivamente al messaggio
 		if (!reazioni.isEmpty())
@@ -642,7 +640,6 @@ public class Commands extends ListenerAdapter
 				
 //				channel.sendMessage(msgPOG).queue();
 
-		
 //			System.out.println(channel.getHistory().retrievePast(3));
 		}catch (Exception e) { e.printStackTrace(); }
 		
@@ -1210,7 +1207,7 @@ public class Commands extends ListenerAdapter
 	
 	
 	/** Aggiunge una reazione all'ultimo messaggio inviato */
-	public void react(String emote)
+	public static void react(String emote)
 	{
 		var emoteDaUsare = Emotes.emoteDaUsare(emote);
 		
@@ -1221,30 +1218,32 @@ public class Commands extends ListenerAdapter
 		{
 			switch (emoteDaUsare)
 			{
-				case "obito":
+				case "obito" ->
+				{
 					for (String str : Emotes.obito)
 						channel.addReactionById(id, str).queue();
-					break;
-				case "sabaping":
+				}
+				case "sabaping" ->
+				{
 					for (String str : Emotes.sabaPing)
 						channel.addReactionById(id, str).queue();
-					break;
-				case "hitman":
-				case "uomo colpo":
+				}
+				case "hitman", "uomo colpo" ->
+				{
 					for (int i : Emotes.hitman)
 						channel.addReactionById(id, Emotes.letters[i]).queue();
-					break;
-				case "xcom":
-				case "icscom":
+				}
+				case "xcom", "icscom" ->
+				{
 					for (int i : Emotes.XCOM)
 						channel.addReactionById(id, Emotes.letters[i]).queue();
-					break;
-				case "scarab":
+				}
+				case "scarab" ->
+				{
 					for (String str : Emotes.scarab)
 						channel.addReactionById(id, str).queue();
-					break;
-				default:
-					channel.addReactionById(id, emoteDaUsare).queue();
+				}
+				default -> channel.addReactionById(id, emoteDaUsare).queue();
 			} // fine switch
 		} // fine try
 		catch (ErrorResponseException e)
@@ -1363,8 +1362,8 @@ public class Commands extends ListenerAdapter
 	} // fine eightBall()
 
 	/** Mette in pausa il thread per un totale di secondi pari a millis + un valore casuale fra 0 e 'bound'.
-	 * Parametri negativi faranno sì che vengano usati i valori di default (millis=1500 e bound=500) */
-	private void pause(int millis, int bound)
+	 * Parametri negativi faranno sì che vengano usati i valori di default (millis=<b>1500</b> e bound=<b>500</b>) */
+	public static void pause(int millis, int bound)
 	{
 		if (millis < 0)
 			millis = 1500;
@@ -1376,348 +1375,6 @@ public class Commands extends ListenerAdapter
 		catch (InterruptedException e) { e.printStackTrace(); }
 	} // fine pause()
 	
-	/** Cerca un Pokemon nell'API. Se non lo trova mostra un messaggio di errore. */
-	public void pokemon()
-	{
-		String msgLowercase = messageRaw.toLowerCase(Locale.ROOT);
-		String[] msg = msgLowercase.split(" ");
-
-		if (msgLowercase.contains("!pokemon"))
-		{
-			String[] tipo = {" ", " "};
-			String generazione;
-			String numeroPokedex;
-			String[] lineaEvolutiva = {"1", "2", "3"};
-
-			if (msg.length > 1 && !msg[1].isEmpty())
-			{
-				String nome = msg[1];
-				canaleBotPokemon.sendTyping().queue();
-				JSONArray jsonArray = search(nome);
-
-				try
-				{
-					JSONObject jsonObject = (JSONObject) jsonArray.get(0);
-					String description = (String) jsonObject.get("description");
-					JSONArray types = (JSONArray) jsonObject.get("types");
-					JSONObject family = (JSONObject) jsonObject.get("family");
-					JSONArray evoLine = (JSONArray) family.get("evolutionLine");
-
-					for (int i = 0; i < types.size(); i++)
-						tipo[i] = types.get(i).toString();
-
-					generazione = String.valueOf(jsonObject.get("gen"));
-					numeroPokedex = (String) jsonObject.get("number");
-
-					for (int i = 0; i < evoLine.size(); i++)
-						lineaEvolutiva[i] = evoLine.get(i).toString();
-					
-					boolean flag = (msg.length > 2) && (msg[2].equals("shiny") || msg[2].equals("s"));
-					var pokemon = new Pokemon(nome, description, flag);
-					
-					pokemon.setTipo(tipo);
-					pokemon.setGenerazione(generazione);
-					pokemon.setDexNumber(numeroPokedex);
-					pokemon.setLineaEvolutiva(lineaEvolutiva);
-
-					channel.sendTyping().queue();
-					pause(1000, 500);
-					channel.sendMessageEmbeds(buildEmbed(pokemon, true).build()).queue();
-				}
-				catch (IndexOutOfBoundsException e)
-				{
-					final String testo = "Il Pokedex non ha informazioni riguardo `" + nome + "`.";
-					channel.sendMessage(testo + "\n" + e).queue();
-					e.printStackTrace();
-				}
-			}
-			else
-				channel.sendMessage("Usa `!pokemon <nome> [shiny / s]` per cercare un Pokemon").queue();
-			
-		}
-		else
-		{
-			var pokemon = new Pokemon();
-			activePokemons = new Pokemon[2];
-			
-			if (random.nextInt(20) == 9)
-				doubleEncounter(pokemon, new Pokemon());
-			else
-				singleEncounter(pokemon);
-		}
-
-	} // fine pokemon()
-
-	/** Genera un incontro con un pokemon selvatico */
-	private void singleEncounter(Pokemon pokemon)
-	{
-		EmbedBuilder embedBuilder;
-		String[] nomi = {pokemon.getNome(), ""};
-		final var titolo = "A wild " + pokemon.getNome() + " appears!";
-		
-		embedBuilder = buildEmbed(pokemon, false).setTitle(titolo);
-		canaleBotPokemon.sendTyping().queue();
-		pause(500, 500);
-		
-		// a questo punto il pokemon è attivo nel canale
-		pokemon.setActive(true);
-		activePokemons[0] = pokemon;
-		
-		sendMessage(nomi, embedBuilder);
-		
-		var t = new ThreadPokemon(pokemon);
-		t.setEmbedBuilder(embedBuilder);
-		t.setTc(canaleBotPokemon);
-		t.timeoutTime(t.HOURS, 1);
-		t.start();
-  
-	} // fine singleEncounter
-
-	/** Effettua la ricerca del pokemon nell'API */
-	private JSONArray search(String pokemon)
-	{
-		URL url;
-		JSONArray jsonArray = new JSONArray();
-		JSONParser jsonParser = new JSONParser();
-
-		try
-		{
-			url = new URL("https://pokeapi.glitch.me/v1/pokemon/" + pokemon);
-			Scanner scanner = new Scanner(nomiPkmn);
-			while (scanner.hasNext())
-				if (pokemon.equalsIgnoreCase(scanner.nextLine()))
-				{
-					var connection = (HttpURLConnection) url.openConnection();
-					connection.setRequestProperty("Accept", "application/json");
-					
-					var in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-					var response = new StringBuilder();
-					String inputLine;
-					while ((inputLine = in.readLine()) != null)
-							response.append(inputLine);
-
-					jsonArray = (JSONArray) jsonParser.parse(String.valueOf(response));
-				}
-		} catch (IOException | ParseException e) { System.out.println("Errore nell'apertura del file: " + nomiPkmn); }
-
-		return jsonArray;
-	} // fine search()
-	
-	/** Genera un doppio incontro con Pokemon selvatici */
-	private void doubleEncounter(Pokemon uno, Pokemon due)
-	{
-		EmbedBuilder embedBuilder;
-		String[] titolo = {"Primo Pokemon!", "Secondo Pokemon!"};
-		Pokemon[] pokemons = {uno, due};
-		var nomi = new String[] { uno.getNome(), due.getNome() };
-		canaleBotPokemon.sendMessage("Doppio Incontro!").queue();
-		
-		for (int i = 0; i < 2; i++)
-		{
-			embedBuilder = buildEmbed(pokemons[i], false);
-			embedBuilder.setDescription(titolo[i]);
-			embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
-			
-			activePokemons[i] = pokemons[i];
-			sendMessage(nomi, embedBuilder);
-		}
-		
-		// System.out.printf("\n\tUno: %s, shiny: %s\n\tDue: %s, shiny: %s\n",uno.getNome(), uno.isShiny(), due.getNome(), due.isShiny());
-	} // fine doubleEncounter()
-
-	/** Manda il messaggio con i Pokemon nel canale e aggiunge le reazioni like/dislike al messaggio */
-	private void sendMessage(String[] pokemonNames, EmbedBuilder embedBuilder)
-	{
-		canaleBotPokemon.sendMessageEmbeds(embedBuilder.build()).queue((message ->
-		{
-			try
-			{
-				if (pokemonNames[0].equalsIgnoreCase("poochyena") || pokemonNames[1].equalsIgnoreCase("poochyena"))
-				{
-					react("pogey");
-					message.addReaction("❤️").queue();
-				}
-				else
-				{
-					message.addReaction("👍🏻").queue();
-					message.addReaction("❤️").queue();
-					message.addReaction("👎🏻").queue();
-				}
-			}
-			catch (ArrayIndexOutOfBoundsException ignored) {}
-		}));
-
-	} // fine sendMessage()
-
-	/** Genera un embed con il Pokemon */
-	private EmbedBuilder buildEmbed(Pokemon pokemon, boolean pokedex)
-	{
-		var embedBuilder = new EmbedBuilder();
-		var descrizione = "";
-		var tipi = pokemon.getTipo();
-		var stringBuilder = new StringBuilder();
-		var types = "";
-		var lineaEvo = pokemon.getLineaEvolutiva();
-		var lineaEvolutiva = "";
-
-		if (pokedex)
-		{
-			stringBuilder.append(tipi[0]);
-			if (!(tipi[1].equals(" ")))
-			{
-				stringBuilder.append(" / ").append(tipi[1]);
-			}
-			types = String.valueOf(stringBuilder);
-			stringBuilder.delete(0, stringBuilder.length()); // pulizia per riciclarlo per la linea evolutiva
-			stringBuilder.append(lineaEvo[0]); //esiste per forza
-			if (!(lineaEvo[1].equals("2")))
-			{
-				stringBuilder.append(" > ").append(lineaEvo[1]);
-				if (!(lineaEvo[2]).equals("3"))
-				{
-					stringBuilder.append(" > ").append(lineaEvo[2]);
-				}
-			}
-			else
-			{
-				stringBuilder.append(" doesn't evolve.");
-			}
-			lineaEvolutiva = String.valueOf(stringBuilder);
-			final String iconURL = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F5%2F53%2FPok%25C3%25A9_Ball_icon.svg%2F1026px-Pok%25C3%25A9_Ball_icon.svg.png&f=1&nofb=1";
-			embedBuilder.setFooter(""+lineaEvolutiva, ""+iconURL);
-
-		}
-		
-		try
-		{
-			embedBuilder.setTitle(pokemon.getNome().toUpperCase());
-		}catch (Exception ignored) { }
-		
-		if ((descrizione = pokemon.getDescrizione()) != null)
-		{
-			String type;
-			if (tipi[1].equals(" "))
-				type = "Type";
-			else
-				type = "Types";
-
-			embedBuilder.addField("**"+type+"**", ""+types, true);
-			embedBuilder.addField("Generation", ""+pokemon.getGenerazione(), true);
-			embedBuilder.addField("National Dex", ""+pokemon.getDexNumber(), true);
-
-			embedBuilder.addField("Pokedex Entry", "*"+descrizione+"*", false);
-			embedBuilder.setThumbnail(pokemon.getImg());
-		}
-		else
-		{
-			embedBuilder.setImage(pokemon.getImg());
-		}
-		
-		var color = pokemon.isShiny() ? 0xFFD020 : 0xFF0000;
-		embedBuilder.setColor(color);
-		
-		if (pokemon.isShiny())
-			embedBuilder.setFooter("✨ Shiny! ✨");
-
-		return embedBuilder;
-	} // fine buildEmbed()
-	
-	/** Fa spawnare un Pokemon */
-	public void spawnPokemon()
-	{
-		int[] valori = new int[2];
-		Scanner scanner;
-		FileWriter fileWriter;
-
-		try
-		{
-			scanner = new Scanner(Commands.valori);
-			for (int i = 0; i < 2; i++)
-				valori[i] = scanner.nextInt();
-
-			scanner.close();
-
-			limite = valori[0];
-			messaggiInviati = valori[1];
-		}
-		catch (Exception ignored) {}
-
-		//valori[0] : limite (max) messaggi
-		//valori[1] : messaggiInviati
-		
-		if (messaggiInviati == valori[0])
-		{
-			pokemon(); // genera un incontro
-			messaggiInviati = 0; // resetta il contatore
-			limite = random.nextInt(40) + 10; // genera un nuovo max per i messaggi
-		}
-		else
-		{
-			messaggiInviati++;
-		}
-		valori[0] = limite;
-		valori[1] = messaggiInviati;
-		
-		try
-		{
-			fileWriter = new FileWriter(Commands.valori);
-			fileWriter.write(valori[0]+"\n"+valori[1]);
-			fileWriter.close();
-
-		} catch (IOException e) { System.out.println("Errore nella scrittura del file!"); }
-		
-	} // fine spawnPokemon()
-	
-	/***/
-	private void catturaPokemon()
-	{
-		/*
-		final var trainersFile = "trainers.txt";
-		var gson = new Gson();
-		var map = new HashMap<String, String>();
-		*/
-		
-		var pkmnName = messageRaw.split(" ")[1].toLowerCase();
-		
-		for (Pokemon p : activePokemons)
-		{
-			if (p != null && p.isActive() && pkmnName.equals(p.getNome()))
-			{
-				var trainer = new Trainer(""+authorName, ""+author.getId());
-			
-				final var msg = "Congratulazioni, " + authorName + "! Hai catturato **" + p.getNome() + "**!";
-				trainer.catturaPokemon(p);
-				channel.sendMessage(msg).queue(m -> react("pogey"));
-				p.setCatturato(true);
-			}
-		}
-		
-		/* *************************************************
-		try
-		{
-			var file = new File(trainersFile);
-			if (file.createNewFile())
-				System.out.println("Il file è stato creato!");
-			else
-				System.out.println("Il file esisteva già.");
-			
-			var fileReader = new FileReader(trainersFile);
-			var buffReader = new BufferedReader(fileReader);
-			
-			//TODO: leggere dal file
-			
-			buffReader.close();
-		}catch (IOException ignored) {}
-		
-		map.put("Enigmo", "1");
-		var json = gson.toJson(map);
-		
-		
-		// TODO: ottenere una lista di trainer e controllare gli ID, se non è presente creare un nuovo trainer
-		//  e fargli catturare il pokemon; altrimenti prendere il trainer esistente e assegnare a lui il pokemon
-		*******************************************/
-		
-	} // fine catturaPokemon()
 	
 	
 	/**Ottieni un resoconto della sparatoria più recente in USA oppure ottieni un resoconto di una sparatoria scelta casualmente nell'anno da te specificato.*/
@@ -1875,7 +1532,7 @@ public class Commands extends ListenerAdapter
 	}
 	
 	/**Manda un messaggio in chat privata*/
-	private void sendPrivateMessage(User user, Message content)
+	public static void sendPrivateMessage(User user, Message content)
 	{
 		var emotes = content.getEmotes();
 		var string = content.getContentRaw().split("!dm")[1];

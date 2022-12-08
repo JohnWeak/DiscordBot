@@ -62,7 +62,7 @@ public class Main
 		{
 			"Òbito che perde soldi in borsa", "Enigmo che simpa per Yano",
 			"Gion che mangia una pizza con ananas", "Lex che guida un'auto elettrica",
-			"il mondo bruciare", "una partita di calcio", "gli americani che si sparano fra loro"
+			"il mondo bruciare", "una partita di calcio", "gli americani spararsi a vicenda"
 		};
 		
 		var percent = random.nextInt(100);

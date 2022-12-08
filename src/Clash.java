@@ -26,7 +26,7 @@ public class Clash
 	private final static String warLeague = "https://api.clashofclans.com/v1/clans/%23"+tag+"/currentwar/leaguegroup";
 	
 	// TODO: recuperare la lista dei membri del clan ogni volta che si invoca il costruttore
-	private static ArrayList<String> listaMembri = new ArrayList<>();
+	private static final ArrayList<String> listaMembri = new ArrayList<>();
 	
 	
 	public Clash()
