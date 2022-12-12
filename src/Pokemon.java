@@ -10,17 +10,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Pokemon
 {
 	private final int max = 898; // fino a gen 8
 	private final File nomiPokemon = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
-
+	private ArrayList<Pokemon> activePokemons;
 	// private static int pokemon_id = 261; -> Poochyena
 	// https://pokeapi.co/api/v2/pokemon/261/
 	
@@ -464,6 +461,10 @@ public class Pokemon
 	{
 		return active;
 	}
+	public ArrayList<Pokemon> getActivePokemons()
+	{
+		return activePokemons;
+	}
 	
 	//SETTER
 	public void setNome(String nome)
@@ -510,5 +511,10 @@ public class Pokemon
 	{
 		this.active = active;
 	}
+	public void setActivePokemons(ArrayList<Pokemon> activePokemons)
+	{
+		this.activePokemons = activePokemons;
+	}
+
 
 } // fine classe Pokemon

@@ -33,6 +33,8 @@ public class ThreadPokemon extends Thread
 	public ThreadPokemon(Pokemon pokemon)
 	{
 		this.pokemon = pokemon;
+		if (!pokemon.getActivePokemons().contains(pokemon))
+			pokemon.getActivePokemons().add(pokemon);
 	}
 	
 	/**Imposta il tempo in cui il pokemon resta attivo nel canale prima di scappare.<br>
@@ -53,11 +55,6 @@ public class ThreadPokemon extends Thread
 	@Override
 	public void run()
 	{
-		if (Commands.activePokemons[0] == null)
-			Commands.activePokemons[0] = pokemon;
-		else if (Commands.activePokemons[1] == null)
-			Commands.activePokemons[1] = pokemon;
-		
 		tc.sendMessageEmbeds(eb.build()).queue(l ->
 		{
 			var pkn = pokemon.getNome();
@@ -79,11 +76,7 @@ public class ThreadPokemon extends Thread
 			
 			pokemon.setActive(false);
 			
-			if (!Commands.activePokemons[0].isActive())
-				Commands.activePokemons[0] = null;
-			else if (!Commands.activePokemons[1].isActive())
-				Commands.activePokemons[1] = null;
-			
+			pokemon.getActivePokemons().remove(pokemon);
 			
 			eb.setTitle("The wild " + pokemon.getNome() + " fled.");
 			eb.setFooter(pokemon.getNome() + " ran away.");
