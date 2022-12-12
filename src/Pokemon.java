@@ -309,6 +309,7 @@ public class Pokemon
 		final var titolo = "A wild " + pokemon.getNome() + " appears!";
 		
 		embedBuilder = Pokemon.buildEmbed(pokemon, false).setTitle(titolo);
+		embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
 		Commands.canaleBotPokemon.sendTyping().queue();
 		Commands.pause(500, 500);
 		
@@ -339,7 +340,7 @@ public class Pokemon
 		{
 			embedBuilder = Pokemon.buildEmbed(pokemons[i], false);
 			embedBuilder.setDescription(titolo[i]);
-			embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
+			embedBuilder.setFooter("Catturalo con !cattura","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
 			
 			Commands.activePokemons[i] = pokemons[i];
 			//sendMessage(nomi, embedBuilder);
