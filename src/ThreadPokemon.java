@@ -53,6 +53,11 @@ public class ThreadPokemon extends Thread
 	@Override
 	public void run()
 	{
+		if (Commands.activePokemons[0] == null)
+			Commands.activePokemons[0] = pokemon;
+		else if (Commands.activePokemons[1] == null)
+			Commands.activePokemons[1] = pokemon;
+		
 		tc.sendMessageEmbeds(eb.build()).queue(l ->
 		{
 			var pkn = pokemon.getNome();
@@ -73,6 +78,13 @@ public class ThreadPokemon extends Thread
 			} catch (InterruptedException ignored) { }
 			
 			pokemon.setActive(false);
+			
+			if (!Commands.activePokemons[0].isActive())
+				Commands.activePokemons[0] = null;
+			else if (!Commands.activePokemons[1].isActive())
+				Commands.activePokemons[1] = null;
+			
+			
 			eb.setTitle("The wild " + pokemon.getNome() + " fled.");
 			eb.setFooter(pokemon.getNome() + " ran away.");
 			eb.setColor(Color.GRAY);
