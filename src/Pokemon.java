@@ -322,7 +322,7 @@ public class Pokemon
 		t.timeoutTime(t.MINUTES, random.nextInt(50) + 10);
 		t.start();
 		
-		Commands.canaleBotPokemon.sendMessage("test" + Thread.currentThread()).queue();
+		Commands.canaleBotPokemon.sendMessage("test: " + Thread.currentThread()).queue();
 		
 	} // fine singleEncounter
 	
