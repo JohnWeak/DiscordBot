@@ -56,6 +56,7 @@ public class ThreadPokemon extends Thread
 		if (!pokemon.getActivePokemons().contains(pokemon))
 			pokemon.getActivePokemons().add(pokemon);
 		
+		
 		tc.sendMessageEmbeds(eb.build()).queue(l ->
 		{
 			var pkn = pokemon.getNome();
