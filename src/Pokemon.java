@@ -411,112 +411,33 @@ public class Pokemon
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
 	//GETTER
-	public String getNome()
-	{
-		return nome;
-	}
-	public String getImg()
-	{
-		return img;
-	}
-	public boolean isShiny()
-	{
-		return shiny;
-	}
-	public String getDescrizione()
-	{
-		return descrizione;
-	}
-	public String[] getTipo()
-	{
-		return tipo;
-	}
-	public String getGenerazione()
-	{
-		return generazione;
-	}
-	public String getDexNumber()
-	{
-		return dexNumber;
-	}
-	public String[] getLineaEvolutiva()
-	{
-		return lineaEvolutiva;
-	}
-	public int[] getIndividualValues()
-	{
-		return individualValues;
-	}
-	public boolean isCatturato()
-	{
-		return catturato;
-	}
-	public boolean isActive()
-	{
-		return active;
-	}
-	public ArrayList<Pokemon> getActivePokemons()
-	{
-		return activePokemons;
-	}
+	public String getNome() { return nome; }
+	public String getImg() { return img; }
+	public boolean isShiny() { return shiny; }
+	public String getDescrizione() { return descrizione; }
+	public String[] getTipo() { return tipo; }
+	public String getGenerazione() { return generazione; }
+	public String getDexNumber() { return dexNumber; }
+	public String[] getLineaEvolutiva() { return lineaEvolutiva; }
+	public int[] getIndividualValues() { return individualValues; }
+	public boolean isCatturato() { return catturato; }
+	public boolean isActive() { return active; }
+	public ArrayList<Pokemon> getActivePokemons() { return activePokemons;}
 	
 	//SETTER
-	public void setNome(String nome)
-	{
-		this.nome = nome;
-	}
-	public void setPokemonId(String img)
-	{
-		this.img = img;
-	}
-	public void setShiny(boolean shiny)
-	{
-		this.shiny = shiny;
-	}
-	public void setDescrizione(String descrizione)
-	{
-		this.descrizione = descrizione;
-	}
-	public void setTipo(String[] tipi)
-	{
-		this.tipo = tipi;
-	}
-	public void setGenerazione(String generazione)
-	{
-		this.generazione = generazione;
-	}
-	public void setDexNumber(String dexNumber)
-	{
-		this.dexNumber = dexNumber;
-	}
-	public void setLineaEvolutiva(String[] lineaEvolutiva)
-	{
-		this.lineaEvolutiva = lineaEvolutiva;
-	}
-	public void setIndividualValues(int[] individualValues)
-	{
-		this.individualValues = individualValues;
-	}
-	public void setCatturato(boolean catturato)
-	{
-		this.catturato = catturato;
-	}
-	public void setActive(boolean active)
-	{
-		this.active = active;
-	}
-	public void setActivePokemons(ArrayList<Pokemon> activePokemons)
-	{
-		this.activePokemons = activePokemons;
-	}
+	public void setNome(String nome) { this.nome = nome;}
+	public void setPokemonId(String img) { this.img = img; }
+	public void setShiny(boolean shiny) { this.shiny = shiny; }
+	public void setDescrizione(String descrizione) { this.descrizione = descrizione; }
+	public void setTipo(String[] tipi) { this.tipo = tipi; }
+	public void setGenerazione(String generazione) { this.generazione = generazione; }
+	public void setDexNumber(String dexNumber) { this.dexNumber = dexNumber; }
+	public void setLineaEvolutiva(String[] lineaEvolutiva) { this.lineaEvolutiva = lineaEvolutiva; }
+	public void setIndividualValues(int[] individualValues) { this.individualValues = individualValues; }
+	public void setCatturato(boolean catturato) { this.catturato = catturato; }
+	public void setActive(boolean active) { this.active = active; }
+	public void setActivePokemons(ArrayList<Pokemon> activePokemons) { this.activePokemons = activePokemons; }
 
 
 } // fine classe Pokemon
