@@ -67,7 +67,6 @@ public class Commands extends ListenerAdapter
 	private static final boolean moduloActive = false;
 	private static final boolean sendMsgActivity = false;
 	private static List<Emote> emoteList;
-	public static Pokemon[] activePokemons;
 	
 	
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/

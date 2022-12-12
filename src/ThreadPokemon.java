@@ -53,8 +53,9 @@ public class ThreadPokemon extends Thread
 	@Override
 	public void run()
 	{
-		if (!pokemon.getActivePokemons().contains(pokemon))
-			pokemon.getActivePokemons().add(pokemon);
+		var activePokemons = pokemon.getActivePokemons();
+		if (!activePokemons.contains(pokemon))
+			activePokemons.add(pokemon);
 		
 		
 		tc.sendMessageEmbeds(eb.build()).queue(l ->
@@ -71,14 +72,14 @@ public class ThreadPokemon extends Thread
 				l.addReaction("❤️").queue();
 				l.addReaction("👎🏻").queue();
 			}
+			
 			try
 			{
 				Thread.sleep(timeout);
 			} catch (InterruptedException ignored) { }
 			
 			pokemon.setActive(false);
-			
-			pokemon.getActivePokemons().remove(pokemon);
+			activePokemons.remove(pokemon);
 			
 			eb.setTitle("The wild " + pokemon.getNome() + " fled.");
 			eb.setFooter(pokemon.getNome() + " ran away.");

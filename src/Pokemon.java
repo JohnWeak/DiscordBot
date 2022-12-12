@@ -17,7 +17,8 @@ public class Pokemon
 	private final int max = 898; // fino a gen 8
 	private final File nomiPokemon = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
-	private ArrayList<Pokemon> activePokemons;
+	private static ArrayList<Pokemon> activePokemons;
+	
 	// private static int pokemon_id = 261; -> Poochyena
 	// https://pokeapi.co/api/v2/pokemon/261/
 	
@@ -304,7 +305,6 @@ public class Pokemon
 	/** Genera un incontro con un pokemon selvatico */
 	public static void singleEncounter(Pokemon pokemon)
 	{
-		Commands.activePokemons = new Pokemon[2];
 		EmbedBuilder embedBuilder;
 		final var titolo = "A wild " + pokemon.getNome() + " appears!";
 		
@@ -340,8 +340,8 @@ public class Pokemon
 			embedBuilder.setDescription(titolo[i]);
 			embedBuilder.setFooter("Catturalo con !cattura","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
 			
-			Commands.activePokemons[i] = pokemons[i];
-			//sendMessage(nomi, embedBuilder);
+		
+		
 		}
 	} // fine doubleEncounter()
 	
@@ -358,23 +358,26 @@ public class Pokemon
 			return;
 		
 		var	pkmnName = Commands.messageRaw.split(" ")[1].toLowerCase();
-		
-		for (Pokemon p : Commands.activePokemons)
+		var activePokemons = Pokemon.activePokemons;
 		{
-			if (p == null)
+			if (activePokemons.size() == 0)
 			{
-				Commands.canaleBotPokemon.sendMessage("p è `NULL` <:" + Emotes.dshock + ">").queue();
+				Commands.canaleBotPokemon.sendMessage("lista vuota <:" + Emotes.dshock + ">").queue();
 				return;
 			}
 			
-			if (p.isActive() && pkmnName.equals(p.getNome()))
+			for (Pokemon p : activePokemons)
 			{
-				var trainer = new Trainer(""+Commands.authorName, ""+Commands.author.getId());
-				
-				final var msg = "Congratulazioni, " + Commands.authorName + "! Hai catturato **" + p.getNome() + "**!";
-				trainer.catturaPokemon(p);
-				Commands.channel.sendMessage(msg).queue(m -> Commands.react("pogey"));
-				p.setCatturato(true);
+				if (p.isActive() && pkmnName.equals(p.getNome()))
+				{
+					var trainer = new Trainer("" + Commands.authorName, "" + Commands.author.getId());
+					
+					final var msg =
+							"Congratulazioni, " + Commands.authorName + "! Hai catturato **" + p.getNome() + "**!";
+					trainer.catturaPokemon(p);
+					Commands.channel.sendMessage(msg).queue(m -> Commands.react("pogey"));
+					p.setCatturato(true);
+				}
 			}
 		}
 		
