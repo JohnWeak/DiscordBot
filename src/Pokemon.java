@@ -18,7 +18,7 @@ import java.util.Scanner;
 public class Pokemon
 {
 	private final int max = 898; // fino a gen 8
-	private final File nomiPokemon = new File("src/nomiPokemon.txt");
+	private final File nomiPokemon = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
 
 	// private static int pokemon_id = 261; -> Poochyena
