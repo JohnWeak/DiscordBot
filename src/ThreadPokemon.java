@@ -33,8 +33,6 @@ public class ThreadPokemon extends Thread
 	public ThreadPokemon(Pokemon pokemon)
 	{
 		this.pokemon = pokemon;
-		if (!pokemon.getActivePokemons().contains(pokemon))
-			pokemon.getActivePokemons().add(pokemon);
 	}
 	
 	/**Imposta il tempo in cui il pokemon resta attivo nel canale prima di scappare.<br>
@@ -55,6 +53,9 @@ public class ThreadPokemon extends Thread
 	@Override
 	public void run()
 	{
+		if (!pokemon.getActivePokemons().contains(pokemon))
+			pokemon.getActivePokemons().add(pokemon);
+		
 		tc.sendMessageEmbeds(eb.build()).queue(l ->
 		{
 			var pkn = pokemon.getNome();

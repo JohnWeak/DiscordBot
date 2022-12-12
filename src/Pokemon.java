@@ -316,8 +316,6 @@ public class Pokemon
 		// a questo punto il pokemon è attivo nel canale
 		pokemon.setActive(true);
 		
-		// sendMessage(nomi, embedBuilder);
-		
 		var t = new ThreadPokemon(pokemon);
 		t.setEmbedBuilder(embedBuilder);
 		t.setTc(Commands.canaleBotPokemon);
