@@ -369,7 +369,7 @@ public class Pokemon
 		{
 			if (p == null)
 			{
-				Commands.canaleBotPokemon.sendMessage("p è NULL <:" + Emotes.dshock + ">").queue();
+				Commands.canaleBotPokemon.sendMessage("p è `NULL` <:" + Emotes.dshock + ">").queue();
 				return;
 			}
 			
