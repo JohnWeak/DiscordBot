@@ -355,6 +355,7 @@ public class Commands extends ListenerAdapter
 			case "!dado" -> dado(msgLowerCase);
 			case "!dm" -> sendPrivateMessage(author, message);
 			case "!cattura", "!catch" -> Pokemon.catturaPokemon();
+			case "!f", "+f" -> payRespect();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -1029,6 +1030,31 @@ public class Commands extends ListenerAdapter
 					}
 		
 	} // fine accettaSfida()
+	
+	public void payRespect()
+	{
+		if (messageRaw.split(" ")[1] == null)
+		{
+			channel.sendMessage("`Usa !f per omaggiare qualcuno.`").queue();
+			return;
+		}
+		
+		
+		var ded = messageRaw.split(" ")[1];
+		String[] cuori = {"❤️","💛","💙","🖤", "🧡", "💚", "💜"};
+		var cuoreDaUsare = cuori[random.nextInt(cuori.length)];
+		
+		var embed = new EmbedBuilder()
+			.setTitle("In loving memory of " + ded + " " + cuoreDaUsare)
+			.setColor(Color.black)
+			.setDescription("F")
+			.setFooter(authorName + " pays his respects.")
+			.build();
+		
+		channel.sendMessageEmbeds(embed).queue();
+		
+	}
+	
 	
 	/** Verifica ci siano le condizioni giuste per creare un sondaggio */
 	public void poll()
