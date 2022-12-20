@@ -1046,7 +1046,7 @@ public class Commands extends ListenerAdapter
 		if (!mentionedUsers.isEmpty())
 			ded = mentionedUsers.get(0).getName();
 		
-		if (ded.equals(authorName))
+		if (ded.equalsIgnoreCase(authorName))
 		{
 			message.reply("<:"+Emotes.harry_fotter+">").queue();
 			return;
