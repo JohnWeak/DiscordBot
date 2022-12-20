@@ -1040,7 +1040,6 @@ public class Commands extends ListenerAdapter
 			return;
 		}
 		
-		
 		var ded = messageRaw.split(" ")[1];
 		var mentionedUsers = message.getMentionedUsers();
 		if (!mentionedUsers.isEmpty())
