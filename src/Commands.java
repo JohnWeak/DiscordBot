@@ -1041,6 +1041,10 @@ public class Commands extends ListenerAdapter
 		
 		
 		var ded = messageRaw.split(" ")[1];
+		var mentionedUsers = message.getMentionedUsers();
+		if (!mentionedUsers.isEmpty())
+			ded = mentionedUsers.get(0).getName();
+		
 		String[] cuori = {"❤️","💛","💙","🖤", "🧡", "💚", "💜"};
 		var cuoreDaUsare = cuori[random.nextInt(cuori.length)];
 		
