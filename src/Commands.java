@@ -1031,6 +1031,7 @@ public class Commands extends ListenerAdapter
 		
 	} // fine accettaSfida()
 	
+	/**Metodo che rende omaggio al defunto specificato dall'utente.<br>Uso: <b>!f < stringa ></b>*/
 	public void payRespect()
 	{
 		if (messageRaw.split(" ")[1] == null)
@@ -1045,19 +1046,30 @@ public class Commands extends ListenerAdapter
 		if (!mentionedUsers.isEmpty())
 			ded = mentionedUsers.get(0).getName();
 		
-		String[] cuori = {"❤️","💛","💙","🖤", "🧡", "💚", "💜"};
+		String[] cuori = {"❤️", "💛", "💙", "🧡", "💚", "💜"};
+		String[] imgs =
+		{
+			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.imgflip.com%2F4rf5nr.jpg&f=1&nofb=1&ipt=0a6b54aa3965c4ec92081a03fdb37f8d1d490426003b6cbeb6ec2420619515dd&ipo=images",
+			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.kym-cdn.com%2Fentries%2Ficons%2Ffacebook%2F000%2F017%2F039%2Fpressf.jpg&f=1&nofb=1&ipt=0a56a685ea4605c86c4d6caea860a6c1480a6e88a982538acc34623ac5204bdc&ipo=images",
+			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--1H4GzubW--%2Fb_rgb%3A908d91%2Ct_Heather%2520Preview%2Fc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1496153439%2Fproduction%2Fdesigns%2F1634415_1.jpg&f=1&nofb=1&ipt=bb9133ef4feef513b2605c621fed68f5232116b5d0fdf22a1def833954f7121a&ipo=images",
+			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flarepublica.pe%2Fresizer%2FtCNDKWPuGG-0WEGZssIsQEfLQME%3D%2F1200x660%2Ftop%2Farc-anglerfish-arc2-prod-gruporepublica.s3.amazonaws.com%2Fpublic%2F2V3AHQ3PKJGRHJKYX3H2STL7YA.png&f=1&nofb=1&ipt=278b01944e9ca2ea01cddd6f132edbb2bd89a0dc280ea67a9ba3dd9fd3f212f7&ipo=images",
+			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.imgflip.com%2F3ni7oz.jpg&f=1&nofb=1&ipt=2cf84114527ff5e7b02fb19ae74fe596b1d66baba35daa7eb7c8862adcdfe9af&ipo=images",
+			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.F17KjnL0a6N4Eat2f_ZOmwHaFH%26pid%3DApi&f=1&ipt=ff5e29783603bb76136acf9dc5ae713b54335765885fcd62b93be760cac71b9a&ipo=images"
+		};
 		var cuoreDaUsare = cuori[random.nextInt(cuori.length)];
+		var imgDaUsare = imgs[random.nextInt(imgs.length)];
 		
 		var embed = new EmbedBuilder()
 			.setTitle("In loving memory of " + ded + " " + cuoreDaUsare)
 			.setColor(Color.black)
 			.setDescription("F")
+			.setImage(imgDaUsare)
 			.setFooter(authorName + " pays his respects.")
 			.build();
 		
 		channel.sendMessageEmbeds(embed).queue();
 		
-	}
+	} // fine payRespect()
 	
 	
 	/** Verifica ci siano le condizioni giuste per creare un sondaggio */
