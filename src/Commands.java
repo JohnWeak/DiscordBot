@@ -1072,7 +1072,7 @@ public class Commands extends ListenerAdapter
 			.setFooter(authorName + " pays his respects.")
 			.build();
 		
-		channel.sendMessageEmbeds(embed).queue();
+		channel.sendMessageEmbeds(embed).queue(l->react(Emotes.o7));
 		
 	} // fine payRespect()
 	
