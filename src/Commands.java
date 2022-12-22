@@ -279,7 +279,7 @@ public class Commands extends ListenerAdapter
 					catch (Exception exception)
 					{
 						// siccome bot on server, adesso mi deve taggare per le eccezioni
-						var spamErrore = "<@180759114291478528>\n" + exception;
+						var spamErrore = "<@180759114291478528>\n" + exception.getMessage();
 						canaleBotPokemon.sendMessage(spamErrore).queue();
 					}
 				}
