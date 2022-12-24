@@ -454,7 +454,14 @@ public class Commands extends ListenerAdapter
 			reazioni.add(Emotes.borisK);
 
 		if (msgLowerCase.contains("òbito") && msgLowerCase.contains("india"))
+		{
+			reazioni.add("òbito");
 			reazioni.add("🇮🇳");
+		}
+		
+		if (msgLowerCase.contains("live") && author.getDiscriminator().equals(NumeriUtente.OBITO))
+			reazioni.add(Emotes.harry_fotter);
+		
 		
 		// a questo punto smetto di controllare se ci siano reazioni e le aggiungo effettivamente al messaggio
 		if (!reazioni.isEmpty())
