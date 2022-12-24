@@ -496,7 +496,7 @@ public class Commands extends ListenerAdapter
 					    "⠄⠄⠄⠄⠄⠄⠄⣿⡟⣷⠄⠹⣿⣿⣿⡿⠁⠄⠄⠄⠄⠄⠄⠄⠄ \n";
 		}
 		
-		if (msgLowerCase.equals("cancella questo messaggio"))
+		if (msgLowerCase.equalsIgnoreCase("cancella questo messaggio"))
 		{
 			if (random.nextInt(50) == 42)
 				message.reply("No.").queue(l -> react("getrekt"));
