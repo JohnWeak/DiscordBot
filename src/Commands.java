@@ -260,6 +260,7 @@ public class Commands extends ListenerAdapter
 				
 				if (msgLowerCase.contains("daily streak"))
 				{
+					canaleBot.sendMessage(msgLowerCase).queue();
 					var msgSplittato = msgLowerCase.split(" ");
 					try
 					{
@@ -280,7 +281,7 @@ public class Commands extends ListenerAdapter
 					{
 						// siccome bot on server, adesso mi deve taggare per le eccezioni
 						var spamErrore = "<@180759114291478528>\n" + exception.getMessage();
-						canaleBotPokemon.sendMessage(spamErrore).queue();
+						canaleBot.sendMessage(spamErrore).queue();
 					}
 				}
 				
