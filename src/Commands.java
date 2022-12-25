@@ -375,6 +375,10 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("owo"))
 			reazioni.add(Emotes.OwO);
 		
+		
+		if (msgLowerCase.contains("splitta questo"))
+			splitMsgAndReply();
+		
 		if (msgLowerCase.contains("pog") || msgLowerCase.contains("manutenzione"))
 			reazioni.add(Emotes.pogey);
 		
@@ -656,6 +660,13 @@ public class Commands extends ListenerAdapter
 		}catch (Exception e) { canaleBot.sendMessage(e.toString()).queue(); }
 		
 		return auth;
+	} // fine msgHistory()
+	
+	public void splitMsgAndReply()
+	{
+		var split = messageRaw.split(" ");
+		for (String s : split)
+			message.reply(s).queue();
 	}
 	
 	
