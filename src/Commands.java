@@ -648,7 +648,7 @@ public class Commands extends ListenerAdapter
 //				channel.sendMessage(msgPOG).queue();
 
 //			System.out.println(channel.getHistory().retrievePast(3));
-		}catch (Exception e) { e.printStackTrace(); }
+		}catch (Exception e) { canaleBot.sendMessage(e.toString()).queue(); }
 		
 		return auth;
 	}
