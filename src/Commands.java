@@ -376,8 +376,8 @@ public class Commands extends ListenerAdapter
 			reazioni.add(Emotes.OwO);
 		
 		
-		if (msgLowerCase.contains("splitta questo"))
-			splitMsgAndReply();
+		//if (msgLowerCase.contains("splitta questo"))
+		//	splitMsgAndReply();
 		
 		if (msgLowerCase.contains("pog") || msgLowerCase.contains("manutenzione"))
 			reazioni.add(Emotes.pogey);
@@ -662,6 +662,7 @@ public class Commands extends ListenerAdapter
 		return auth;
 	} // fine msgHistory()
 	
+	/**Da rimuovere*/
 	public void splitMsgAndReply()
 	{
 		var split = messageRaw.split(" ");
