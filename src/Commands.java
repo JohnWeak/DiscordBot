@@ -240,7 +240,10 @@ public class Commands extends ListenerAdapter
 	} // fine aggiungiReazioni()
 	
 	
-	/** Controlla che il messaggio abbia le parole chiave per attivare i comandi (o le reazioni) del bot*/
+	/** Controlla che il messaggio abbia le parole chiave per attivare i comandi (o le reazioni) del bot
+	 * @param msgLowerCase
+	 * @return void
+	 * */
 	public void checkForKeywords(String msgLowerCase)
 	{
 		final var discriminator = author.getDiscriminator();
