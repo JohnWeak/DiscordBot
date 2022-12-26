@@ -682,7 +682,10 @@ public class Commands extends ListenerAdapter
 
 	} // fine onSlashCommand()
 
-	/** Trasforma il testo da normale a CaMeL cAsE */
+	/** Trasforma il testo da normale a CaMeL cAsE
+	 * @param msg
+	 * @return the original string now camel cased
+	 * */
 	private String camelCase(String msg)
 	{
 		var chars = msg.toCharArray();
