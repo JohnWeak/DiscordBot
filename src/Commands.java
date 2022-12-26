@@ -264,7 +264,7 @@ public class Commands extends ListenerAdapter
 					var msgSplittato = msgLowerCase.split(" ");
 					try
 					{
-						var numGiorni = Integer.parseInt(msgSplittato[14].substring(2));
+						var numGiorni = Integer.parseInt(msgSplittato[15].substring(2));
 
 						if (numGiorni % 365 == 0)
 						{
@@ -282,10 +282,10 @@ public class Commands extends ListenerAdapter
 						// siccome bot on server, adesso mi deve taggare per le eccezioni
 						var spamErrore = "<@180759114291478528>\n" + exception.getMessage();
 						canaleBot.sendMessage(spamErrore).queue();
-						canaleBot.sendMessage("msgSplittato: ").queue();
-						for (String s : msgSplittato)
-							canaleBot.sendMessage(s).queue();
-						
+//						canaleBot.sendMessage("msgSplittato: ").queue();
+//						for (String s : msgSplittato)
+//							canaleBot.sendMessage(s).queue();
+
 					}
 				}
 				
@@ -374,7 +374,6 @@ public class Commands extends ListenerAdapter
 		
 		if (msgLowerCase.contains("owo"))
 			reazioni.add(Emotes.OwO);
-		
 		
 		//if (msgLowerCase.contains("splitta questo"))
 		//	splitMsgAndReply();
