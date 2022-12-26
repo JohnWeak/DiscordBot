@@ -267,7 +267,7 @@ public class Commands extends ListenerAdapter
 					var msgSplittato = msgLowerCase.split(" ");
 					try
 					{
-						var numGiorni = Integer.parseInt(msgSplittato[15].substring(2));
+						var numGiorni = Integer.parseInt(msgSplittato[14].substring(2));
 
 						if (numGiorni % 365 == 0)
 						{
