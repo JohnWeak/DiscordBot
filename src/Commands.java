@@ -278,7 +278,6 @@ public class Commands extends ListenerAdapter
 							var mess = "Complimenti, " + name + "! Un altro anno di OwO daily! Siamo a quota " + years + "!";
 							channel.sendMessage(mess).queue();
 						}
-
 					}
 					catch (Exception exception)
 					{
