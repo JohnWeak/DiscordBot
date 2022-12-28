@@ -284,11 +284,6 @@ public class Commands extends ListenerAdapter
 						// siccome bot on server, adesso mi deve taggare per le eccezioni
 						var spamErrore = "<@180759114291478528>\n" + exception.getMessage();
 						canaleBot.sendMessage(spamErrore).queue();
-						canaleBot.sendMessage("msgSplittato: ").queue();
-						var x = msgSplittato.length;
-						for (int i = 0; i < x; i++)
-							canaleBot.sendMessage("["+i+"]: "+ msgSplittato[i]).queue();
-
 					}
 				}
 				
