@@ -265,10 +265,22 @@ public class Commands extends ListenerAdapter
 				{
 					canaleBot.sendMessage(msgLowerCase).queue();
 					var msgSplittato = msgLowerCase.split(" ");
+					var size = msgSplittato.length;
+					var numGiorni = 0;
 					try
 					{
-						var numGiorni = Integer.parseInt(msgSplittato[14].substring(2));
-
+						for (short i = 0; i < size; i++)
+						{
+							if (msgSplittato[i].equals("daily") && msgSplittato[i+1].equals("streak!"))
+							{
+								numGiorni = Integer.parseInt(msgSplittato[i-1].substring(2));
+								break;
+							}
+						}
+						
+						if (numGiorni == 0)
+							return;
+						
 						if (numGiorni % 365 == 0)
 						{
 							var n = msgHistory();
