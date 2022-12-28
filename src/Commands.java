@@ -292,7 +292,7 @@ public class Commands extends ListenerAdapter
 					}
 					else
 					{
-						var n = msgHistory();
+						var n = findAuthorDaily();
 						var name = (n == null ? "Persona Ignota" : n);
 						
 						var years = (numGiorni / 365);
@@ -654,7 +654,7 @@ public class Commands extends ListenerAdapter
 	} // fine getEmotes()
 	
 	/**Trova l'autore del messaggio per l'anniversario dell'owo daily*/
-	private String msgHistory()
+	private String findAuthorDaily()
 	{
 		final var MAX_SIZE = 3;
 		String auth = null;
