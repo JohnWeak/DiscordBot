@@ -296,7 +296,7 @@ public class Commands extends ListenerAdapter
 						var name = (n == null ? "Persona Ignota" : n);
 						
 						var years = (numGiorni / 365);
-						var mess = "Complimenti, " + name + "! Un altro anno di OwO daily! Siamo a quota " + years + "!";
+						var mess = "Complimenti, " + name + "! Sono " + years + " anni di OwO daily!";
 						channel.sendMessage(mess).queue();
 					}
 					
