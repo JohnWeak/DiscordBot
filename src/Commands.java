@@ -271,31 +271,33 @@ public class Commands extends ListenerAdapter
 					{
 						for (short i = 0; i < size; i++)
 						{
-							if (msgSplittato[i].equals("daily") && msgSplittato[i+1].equals("streak!"))
+							if (msgSplittato[i].equals("daily") && msgSplittato[i + 1].equals("streak!"))
 							{
-								numGiorni = Integer.parseInt(msgSplittato[i-1].substring(2));
+								numGiorni = Integer.parseInt(msgSplittato[i - 1].substring(2));
 								break;
 							}
 						}
-						
-						if (numGiorni == 0)
-							return;
-						
-						if (numGiorni % 365 == 0)
-						{
-							var n = msgHistory();
-							var name = (n == null ? "Persona Ignota" : n);
-							
-							var years = (numGiorni / 365);
-							var mess = "Complimenti, " + name + "! Un altro anno di OwO daily! Siamo a quota " + years + "!";
-							channel.sendMessage(mess).queue();
-						}
-					}
+					} // fine try
 					catch (Exception exception)
 					{
 						// siccome bot on server, adesso mi deve taggare per le eccezioni
 						var spamErrore = "<@180759114291478528>\n" + exception.getMessage();
 						canaleBot.sendMessage(spamErrore).queue();
+					} // fine catch
+					
+					
+					if (numGiorni == 0 || !(numGiorni % 365 == 0))
+					{
+						return;
+					}
+					else
+					{
+						var n = msgHistory();
+						var name = (n == null ? "Persona Ignota" : n);
+						
+						var years = (numGiorni / 365);
+						var mess = "Complimenti, " + name + "! Un altro anno di OwO daily! Siamo a quota " + years + "!";
+						channel.sendMessage(mess).queue();
 					}
 				}
 				
