@@ -1,4 +1,3 @@
-import com.google.gson.Gson;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.ReadyEvent;
@@ -256,17 +255,19 @@ public class Commands extends ListenerAdapter
 		if (author.isBot())
 		{
 			// se però è il bot owo a mandare il messaggio, prima fai un paio di robe e poi return
-			if (discriminator.equals(NumeriUtente.OWOBOT))
+			if (discriminator.equals(Utente.OWOBOT))
 			{
 				react("owo");
 				react("vergognati");
 				
 				if (msgLowerCase.contains("daily streak"))
 				{
-					canaleBot.sendMessage(msgLowerCase).queue();
 					var msgSplittato = msgLowerCase.split(" ");
 					var size = msgSplittato.length;
 					var numGiorni = 0;
+					var gion = message.getJDA().getUserById(Utente.ID_GION);
+					var pvtMsg = new PrivateMessage<String>(gion);
+					
 					try
 					{
 						for (short i = 0; i < size; i++)
@@ -285,6 +286,7 @@ public class Commands extends ListenerAdapter
 						canaleBot.sendMessage(spamErrore).queue();
 					} // fine catch
 					
+					pvtMsg.send(String.valueOf(numGiorni)); // mandami un messaggio privato con il numero
 					
 					if (numGiorni == 0 || !(numGiorni % 365 == 0))
 					{
@@ -304,7 +306,7 @@ public class Commands extends ListenerAdapter
 			} // fine if equals 8456
 			
 			
-			if (author.getDiscriminator().equals(NumeriUtente.BOWOT)) // self own
+			if (author.getDiscriminator().equals(Utente.BOWOT)) // self own
 				if (random.nextInt(1000) == 42) // 0,1%
 					message.reply("BOwOt vergognati").queue(lambda -> react("vergognati"));
 			
@@ -324,19 +326,19 @@ public class Commands extends ListenerAdapter
 			{
 				switch (discriminator)
 				{
-					case NumeriUtente.OBITO ->
+					case Utente.OBITO ->
 					{
 						react("obito");
 						react("vergognati");
 						message.reply("Òbito vergognati").queue();
 					}
-					case NumeriUtente.ENIGMO ->
+					case Utente.ENIGMO ->
 						react("pigeon");
 					
-					case NumeriUtente.LEX ->
+					case Utente.LEX ->
 						channel.addReactionById(id, "🇷🇴").queue();
 					
-					case NumeriUtente.GION ->
+					case Utente.GION ->
 						react("smh");
 					
 				} // fine switch
@@ -370,7 +372,6 @@ public class Commands extends ListenerAdapter
 			case "!pigeonbazooka", "!pb" -> pigeonBazooka();
 			case "!emotes" -> getEmotes();
 			case "!dado" -> dado(msgLowerCase);
-			case "!dm" -> sendPrivateMessage(author, message);
 			case "!cattura", "!catch" -> Pokemon.catturaPokemon();
 			case "!f", "+f" -> payRespect();
 		}
@@ -479,7 +480,7 @@ public class Commands extends ListenerAdapter
 			reazioni.add("🇮🇳");
 		}
 		
-		if (msgLowerCase.contains("live") && author.getDiscriminator().equals(NumeriUtente.OBITO))
+		if (msgLowerCase.contains("live") && author.getDiscriminator().equals(Utente.OBITO))
 			reazioni.add(Emotes.harry_fotter);
 		
 		
@@ -613,7 +614,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.matches("you(?:'re| are) ugly"))
 			channel.sendMessage(GIF.engineer).queue();
 		
-		if (msgLowerCase.contains("deez nuts") && discriminator.equals(NumeriUtente.ENIGMO))
+		if (msgLowerCase.contains("deez nuts") && discriminator.equals(Utente.ENIGMO))
 		{
 			reply = true;
 			msgReply += "DEEZ NUTS, Enigmo!\n";
@@ -1618,15 +1619,17 @@ public class Commands extends ListenerAdapter
 	/**Manda un messaggio in chat privata*/
 	public static void sendPrivateMessage(User user, Message content)
 	{
-		var emotes = content.getEmotes();
-		var string = content.getContentRaw().split("!dm")[1];
-		
-		user.openPrivateChannel().flatMap(channel -> channel.sendMessage(string)).queue(l->
+		user.openPrivateChannel().flatMap(channel -> channel.sendMessage(content)).queue(l->
 		{
-			for (Emote e : emotes)
-				react(String.valueOf(e));
+		
 		});
-	} // fine onPrivateMessageReceived()
+	} // fine sendPrivateMessage()
+	
+	
+	public static void sendPrivateMessage(User user, String content)
+	{
+		user.openPrivateChannel().flatMap(channel -> channel.sendMessage(content)).queue();
+	}
 	
 	/**Questo metodo invia un embed al canale da cui ha ricevuto l'ultimo messaggio.*/
 	public void sendEmbedToChannel(MessageEmbed messageEmbed, boolean thread)
@@ -1676,7 +1679,7 @@ public class Commands extends ListenerAdapter
 		
 		var discr = author.getDiscriminator();
 		var hotkey = "ehi modulo".length();
-		var authorized = discr.equals(NumeriUtente.GION);
+		var authorized = discr.equals(Utente.GION);
 		
 		String[] messaggiScortesi =
 		{
