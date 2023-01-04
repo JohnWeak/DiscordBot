@@ -278,6 +278,12 @@ public class Commands extends ListenerAdapter
 								break;
 							}
 						}
+						
+						pvtMsg.send(String.valueOf(numGiorni)); // mandami un messaggio privato con il numero
+						var conferma = "<@"+Utente.ID_GION+">Ti ho mandato un messaggio privato. Se non lo hai ricevuto: AARGH.";
+						canaleBot.sendMessage(conferma).queue();
+						
+						
 					} // fine try
 					catch (Exception exception)
 					{
@@ -285,11 +291,6 @@ public class Commands extends ListenerAdapter
 						var spamErrore = "<@180759114291478528>\n" + exception.getMessage();
 						canaleBot.sendMessage(spamErrore).queue();
 					} // fine catch
-					
-					pvtMsg.send(String.valueOf(numGiorni)); // mandami un messaggio privato con il numero
-					var conferma = "<@"+Utente.ID_GION+">Ti ho mandato un messaggio privato. Se non lo hai ricevuto: AARGH.";
-					canaleBot.sendMessage(conferma).queue();
-					
 					
 					if (numGiorni == 0 || !(numGiorni % 365 == 0))
 					{
