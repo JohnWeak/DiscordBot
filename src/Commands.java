@@ -24,6 +24,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.*;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Commands extends ListenerAdapter
@@ -415,24 +416,30 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("vergogna"))
 			reazioni.add("vergognati");
 		
-		if (msgLowerCase.contains("no u") || msgLowerCase.contains("coc"))
-		{
-			var patternNoU = "\\bno u\\b";
-			var patternCoc = "\\bcoc+k*\\b";
-			
-			var p1 = Pattern.compile(patternNoU);
-			var m1 = p1.matcher(msgLowerCase);
-			
-			var p2 = Pattern.compile(patternCoc);
-			var m2 = p2.matcher(msgLowerCase);
-			
-			if (m1.find())
-				reazioni.add(Emotes.NoU);
-			
-			if (m2.find())
-				reazioni.add(Emotes.kappaPride);
-		}
+		if (contains(msgLowerCase, "no u"))
+			reazioni.add(Emotes.NoU);
 		
+		if (contains(msgLowerCase, "coc"))
+			reazioni.add(Emotes.kappaPride);
+			
+//		if (msgLowerCase.contains("no u") || msgLowerCase.contains("coc"))
+//		{
+//			var patternNoU = "\\bno u\\b";
+//			var patternCoc = "\\bcoc+k*\\b";
+//
+//			var p1 = Pattern.compile(patternNoU);
+//			var m1 = p1.matcher(msgLowerCase);
+//
+//			var p2 = Pattern.compile(patternCoc);
+//			var m2 = p2.matcher(msgLowerCase);
+//
+//			if (m1.find())
+//				reazioni.add(Emotes.NoU);
+//
+//			if (m2.find())
+//				reazioni.add(Emotes.kappaPride);
+//		}
+//
 		if (msgLowerCase.contains("sabaping"))
 			reazioni.add("sabaping");
 		
@@ -463,7 +470,7 @@ public class Commands extends ListenerAdapter
 			reazioni.add("❤️");
 		}
 		
-		if (msgLowerCase.contains(" ape ") || msgLowerCase.contains(" api "))
+		if (contains(msgLowerCase, "ape") || contains(msgLowerCase, "api"))
 			reazioni.add("🐝");
 		
 		if (msgLowerCase.contains("cl__z"))
@@ -666,6 +673,15 @@ public class Commands extends ListenerAdapter
 			channel.sendMessage(x).queue();
 		
 	} // fine getEmotes()
+	
+	
+	private static boolean contains(String source, String subItem)
+	{
+		String pattern = "\\b" + subItem + "\\b";
+		Pattern p = Pattern.compile(pattern);
+		Matcher m = p.matcher(source);
+		return m.find();
+	}
 	
 	/**Trova l'autore del messaggio per l'anniversario dell'owo daily*/
 	private String findAuthorDaily()
