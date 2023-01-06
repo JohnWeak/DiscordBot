@@ -45,6 +45,7 @@ public abstract class Utente
 				default -> "dioporco";
 			};
 			
+			var y = User.fromId(ID_GION);
 			
 		    jda.retrieveUserById(utente).queue(); // prende l'utente e lo salva in cache
 			user = jda.getUserById(utente);

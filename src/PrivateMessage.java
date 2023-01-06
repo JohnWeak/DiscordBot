@@ -11,9 +11,16 @@ public class PrivateMessage <T>
 	
 	public void send(T content)
 	{
-		user.openPrivateChannel().flatMap(channel -> channel.sendMessage((CharSequence) content)).queue(l->
+		try
+		{
+			user.openPrivateChannel().flatMap(channel -> channel.sendMessage((CharSequence) content)).queue(l->
+			{
+			
+			});
+		}
+		catch (Exception e)
 		{
 		
-		});
+		}
 	}
 }

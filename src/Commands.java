@@ -384,6 +384,13 @@ public class Commands extends ListenerAdapter
 		// arraylist per contenere le reazioni da aggiungere al messaggio
 		var reazioni = new ArrayList<String>();
 		
+		if (msgLowerCase.contains("reply"))
+		{
+			var x = User.fromId(author.getId());
+			var usr = new PrivateMessage<>(x);
+			usr.send(random.nextInt(42)+1);
+		}
+		
 		if (msgLowerCase.contains("ehi modulo"))
 			ehiModulo();
 		
