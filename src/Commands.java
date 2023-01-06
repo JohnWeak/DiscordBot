@@ -419,7 +419,7 @@ public class Commands extends ListenerAdapter
 		if (contains(msgLowerCase, new String[]{"no u"}))
 			reazioni.add(Emotes.NoU);
 		
-		if (contains(msgLowerCase, new String[]{"coc"}))
+		if (contains(msgLowerCase, new String[]{"coc", "cock", "cocktail", "clash of clans", "cocco"}))
 			reazioni.add(Emotes.kappaPride);
 			
 //		if (msgLowerCase.contains("no u") || msgLowerCase.contains("coc"))
