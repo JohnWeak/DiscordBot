@@ -403,10 +403,10 @@ public class Commands extends ListenerAdapter
 		//if (msgLowerCase.contains("splitta questo"))
 		//	splitMsgAndReply();
 		
-		if (msgLowerCase.contains("pog") || msgLowerCase.contains("manutenzione"))
+		if (contains(msgLowerCase, new String[]{"pog", "manutenzione"}))
 			reazioni.add(Emotes.pogey);
 		
-		if (msgLowerCase.contains("òbito") || msgLowerCase.contains("obito"))
+		if (contains(msgLowerCase, new String[]{"òbito", "obito", "óbito"}))
 			if (random.nextInt(50) == 42) // 2%
 			{
 				reazioni.add("obito");
@@ -416,10 +416,10 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("vergogna"))
 			reazioni.add("vergognati");
 		
-		if (contains(msgLowerCase, "no u"))
+		if (contains(msgLowerCase, new String[]{"no u"}))
 			reazioni.add(Emotes.NoU);
 		
-		if (contains(msgLowerCase, "coc"))
+		if (contains(msgLowerCase, new String[]{"coc"}))
 			reazioni.add(Emotes.kappaPride);
 			
 //		if (msgLowerCase.contains("no u") || msgLowerCase.contains("coc"))
@@ -470,7 +470,7 @@ public class Commands extends ListenerAdapter
 			reazioni.add("❤️");
 		}
 		
-		if (contains(msgLowerCase, "ape") || contains(msgLowerCase, "api"))
+		if (contains(msgLowerCase, new String[]{"ape", "api", "apecar", "apicoltore"}))
 			reazioni.add("🐝");
 		
 		if (msgLowerCase.contains("cl__z"))
@@ -482,10 +482,10 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("scarab"))
 			reazioni.add("scarab");
 		
-		if (msgLowerCase.contains("ingredibile") || msgLowerCase.contains("andonio gonde"))
+		if (contains(msgLowerCase, new String[]{"ingredibile", "andonio gonde"}))
 			reazioni.add(Emotes.ingredibile);
 		
-		if (msgLowerCase.contains("wtf") || msgLowerCase.contains("what the fuck"))
+		if (contains(msgLowerCase, new String[]{"wtf", "what the fuck"}))
 			reazioni.add(Emotes.wtf);
 		
 		if (msgLowerCase.matches(".*(?:guid|sto.*guidando|monkasteer)"))
@@ -675,12 +675,26 @@ public class Commands extends ListenerAdapter
 	} // fine getEmotes()
 	
 	
-	private static boolean contains(String source, String subItem)
+	private static boolean contains(String source, String[] subItem)
 	{
-		String pattern = "\\b" + subItem + "\\b";
-		Pattern p = Pattern.compile(pattern);
-		Matcher m = p.matcher(source);
-		return m.find();
+		String pattern;
+		Pattern p;
+		Matcher m;
+		
+		for (String s : subItem)
+		{
+			pattern = "\\b" + s + "\\b";
+			p = Pattern.compile(pattern);
+			m = p.matcher(source);
+			if (m.find())
+				return true;
+		}
+		return false;
+		
+//		String pattern = "\\b" + subItem + "\\b";
+//		Pattern p = Pattern.compile(pattern);
+//		Matcher m = p.matcher(source);
+//		return m.find();
 	}
 	
 	/**Trova l'autore del messaggio per l'anniversario dell'owo daily*/
