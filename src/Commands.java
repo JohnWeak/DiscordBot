@@ -475,7 +475,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("scarab"))
 			reazioni.add("scarab");
 		
-		if (msgLowerCase.contains("ingredibile"))
+		if (msgLowerCase.contains("ingredibile") || msgLowerCase.contains("andonio gonde"))
 			reazioni.add(Emotes.ingredibile);
 		
 		if (msgLowerCase.contains("wtf") || msgLowerCase.contains("what the fuck"))
