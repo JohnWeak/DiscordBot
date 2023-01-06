@@ -646,7 +646,7 @@ public class Commands extends ListenerAdapter
 			msgReply += "Nemico assente!\n";
 		}
 		
-		if (msgLowerCase.contains("serve visione") || msgLowerCase.contains("we need vision"))
+		if (contains(msgLowerCase, new String[]{"serve visione","we need vision"}))
 		{
 			reply = true;
 			msgReply += "<:"+Emotes.scoutTrap+">\n";
