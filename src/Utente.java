@@ -41,6 +41,8 @@ public abstract class Utente
 				case "obito", "òbito", "óbito", "indiano bastardo" -> ID_OBITO;
 				case "owobot" -> ID_OWOBOT;
 				case "bowot" -> ID_BOWOT;
+				
+				default -> "dioporco";
 			};
 			
 			
