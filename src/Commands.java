@@ -687,14 +687,6 @@ public class Commands extends ListenerAdapter
 		return auth;
 	} // fine msgHistory()
 	
-	/**Da rimuovere*/
-	public void splitMsgAndReply()
-	{
-		var split = messageRaw.split(" ");
-		for (String s : split)
-			message.reply(s).queue();
-	}
-	
 	
 	/** Gestisce i comandi slash (ancora da implementare) */
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
