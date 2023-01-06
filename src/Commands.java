@@ -463,7 +463,7 @@ public class Commands extends ListenerAdapter
 			reazioni.add("❤️");
 		}
 		
-		if (msgLowerCase.matches("\\bap[ei]\\b"))
+		if (msgLowerCase.contains(" ape ") || msgLowerCase.contains(" api "))
 			reazioni.add("🐝");
 		
 		if (msgLowerCase.contains("cl__z"))
