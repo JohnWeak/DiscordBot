@@ -642,7 +642,7 @@ public class Commands extends ListenerAdapter
 		if (msgLowerCase.contains("serve visione") || msgLowerCase.contains("we need vision"))
 		{
 			reply = true;
-			msgReply += "<:scouttrap:997501978521374771>\n";
+			msgReply += "<:"+Emotes.scoutTrap+">\n";
 		}
 		
 //		if (msgLowerCase.contains("") && random.nextInt(42) == 0){}
