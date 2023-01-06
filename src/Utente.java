@@ -1,5 +1,6 @@
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.requests.RestAction;
 
 public abstract class Utente
 {
@@ -30,7 +31,6 @@ public abstract class Utente
 		var channel = message.getChannel();
 		var utente = "";
 		User user;
-		
 		try
 		{
 			utente = switch (nome.toLowerCase())
@@ -43,7 +43,10 @@ public abstract class Utente
 				case "bowot" -> ID_BOWOT;
 			};
 			
+			
+		    jda.retrieveUserById(utente).queue(); // prende l'utente e lo salva in cache
 			user = jda.getUserById(utente);
+			
 		}
 		catch (Exception e)
 		{
