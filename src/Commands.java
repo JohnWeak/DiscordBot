@@ -386,8 +386,7 @@ public class Commands extends ListenerAdapter
 		
 		if (msgLowerCase.contains("reply"))
 		{
-			var x = User.fromId(author.getId());
-			var usr = new PrivateMessage<>(x);
+			var usr = new PrivateMessage<>(User.fromId(Utente.ID_GION));
 			usr.send(random.nextInt(42)+1);
 		}
 		
