@@ -451,7 +451,6 @@ public class Commands extends ListenerAdapter
 			reazioni.add("xcom");
 		}
 		
-		
 		if (msgLowerCase.matches("(?:pooch|might)yena"))
 		{
 			reazioni.add(Emotes.pogey);
