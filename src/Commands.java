@@ -675,7 +675,7 @@ public class Commands extends ListenerAdapter
 	} // fine getEmotes()
 	
 	
-	private static boolean contains(String source, String[] subItem)
+	private boolean contains(String source, String[] subItem)
 	{
 		String pattern;
 		Pattern p;
