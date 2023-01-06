@@ -1,3 +1,6 @@
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.User;
+
 public abstract class Utente
 {
 	// Numeri (discriminator)
@@ -15,5 +18,39 @@ public abstract class Utente
 	public static final String ID_LEX = "379675691534516224";
 	public static final String ID_OWOBOT = "408785106942164992";
 	public static final String ID_BOWOT = "836586862213726228";
+	
+	/**<h3>Questo metodo restituisce l'oggetto utente (User) a partire dal nome passato come parametro.</h3>
+	 * @param message Oggetto di tipo <code>message</code> necessario per ottenere i dati dal JDA.<br>
+	 * @param nome Nome dell'utente da cercare.
+	 * @return Oggetto <code>User</code> contentente l'utente richiesto.<br><code>NULL</code> in caso di errore.
+	 * */
+	public static User getUtente(Message message, String nome)
+	{
+		var jda = message.getJDA();
+		var channel = message.getChannel();
+		var utente = "";
+		User user;
+		
+		try
+		{
+			utente = switch (nome.toLowerCase())
+			{
+				case "gion", "giovanni", "john" -> ID_GION;
+				case "enigmo", "enigma" -> ID_ENIGMO;
+				case "lex", "alex", "rumeno" -> ID_LEX;
+				case "obito", "òbito", "óbito", "indiano bastardo" -> ID_OBITO;
+				case "owobot" -> ID_OWOBOT;
+				case "bowot" -> ID_BOWOT;
+			};
+			
+			user = jda.getUserById(utente);
+		}
+		catch (Exception e)
+		{
+			channel.sendMessage(""+e).queue();
+			return null;
+		}
+		return user;
+	} // fine getUtente()
 	
 }
