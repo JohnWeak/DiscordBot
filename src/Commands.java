@@ -386,12 +386,11 @@ public class Commands extends ListenerAdapter
 		
 		if (msgLowerCase.contains("reply"))
 		{
-			var test = new PrivateMessage(Utente.getUtenteFromName(message, Utente.NOME_GION), canaleBot);
-			test.send("Author: "+ author+"\nAuthorName: "+authorName+"\nDiscriminator: "+author.getDiscriminator());
+			//var test = new PrivateMessage(Utente.getUtenteFromName(message, Utente.NOME_GION), canaleBot);
+			//test.send("Author: "+ author+"\nAuthorName: "+authorName+"\nDiscriminator: "+author.getDiscriminator());
 			
 			var usr = new PrivateMessage(author, canaleBot);
 			usr.send("Numero casuale: "+(random.nextInt(42)+1));
-			
 			
 		}
 		
