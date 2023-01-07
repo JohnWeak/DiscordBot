@@ -172,7 +172,7 @@ public class Pokemon
 				catch (IndexOutOfBoundsException e)
 				{
 					final String testo = "Il Pokedex non ha informazioni riguardo `" + nome + "`.";
-					Commands.channel.sendMessage(testo + "\n" + e.getLocalizedMessage()).queue();
+					Commands.channel.sendMessage(testo + "\n" + e.getMessage()).queue();
 				}
 			}
 			else
