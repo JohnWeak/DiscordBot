@@ -374,7 +374,6 @@ public class Commands extends ListenerAdapter
 			case "!massshooting", "!ms" -> massShooting();
 			case "!war" -> new Clash().clashWar();
 			case "!league" -> new Clash().clashWarLeague(false);
-			case "!pigeonbazooka", "!pb" -> pigeonBazooka();
 			case "!emotes" -> getEmotes();
 			case "!dado" -> dado(msgLowerCase);
 			case "!cattura", "!catch" -> Pokemon.catturaPokemon();
@@ -398,7 +397,7 @@ public class Commands extends ListenerAdapter
 			ehiModulo();
 		
 		if (msgLowerCase.matches(".*piccion[ei].*|.*pigeon.*"))
-			new ThreadPigeon().start();
+			new ThreadPigeon(authorName, channel).start();
 		
 		if (msgLowerCase.contains("owo"))
 			reazioni.add(Emotes.OwO);
@@ -1677,24 +1676,6 @@ public class Commands extends ListenerAdapter
 		else
 			canaleBot.sendMessageEmbeds(messageEmbed).queue();
 	} // fine sendEmbedToChannel()
-	
-	public void pigeonBazooka()
-	{
-		if (random.nextInt(1000) == 42)
-		{
-			System.out.println("\t<"+Thread.currentThread().getName() + "> PIGEON BAZOOKAAAAAAAA");
-			final var max = random.nextInt(5) + 5;
-			final var pigeonMessage = "Oh no! " + authorName + " ha attivato il <:pigeon:647556750962065418> bazooka!\n"+max+" pigeon in arrivo!";
-			channel.sendMessage(""+pigeonMessage).queue();
-			channel.sendTyping().queue();
-			pause(500,500);
-			for (int i = 0; i < max; i++)
-				channel.sendMessage("<:pigeon:647556750962065418>").queue(l->react("pigeon"));
-		}
-		else
-			react("pigeon");
-		
-	} // fine pigeonBazooka()
 	
 	public void moduloDiSicurezza()
 	{
