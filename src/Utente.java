@@ -44,7 +44,7 @@ public abstract class Utente
 		
 		try
 		{
-			utente = switch (nome.toUpperCase())
+			utente = switch (nome)
 			{
 				case NOME_GION -> ID_GION;
 				case NOME_ENIGMO -> ID_ENIGMO;
