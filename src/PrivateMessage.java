@@ -6,11 +6,6 @@ public class PrivateMessage <T>
 	private User user;
 	private MessageChannel messageChannel;
 	
-	public PrivateMessage(User user)
-	{
-		this.user = user;
-	}
-	
 	public PrivateMessage(User user, MessageChannel messageChannel)
 	{
 		this.user = user;
