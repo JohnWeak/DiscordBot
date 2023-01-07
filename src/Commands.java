@@ -378,6 +378,7 @@ public class Commands extends ListenerAdapter
 			case "!dado" -> dado(msgLowerCase);
 			case "!cattura", "!catch" -> Pokemon.catturaPokemon();
 			case "!f", "+f" -> payRespect();
+			case "!pappagallo" -> new ThreadTest(messageRaw, message.getTextChannel()).start();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
