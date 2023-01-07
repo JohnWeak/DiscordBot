@@ -66,4 +66,22 @@ public abstract class Utente
 		return user;
 	} // fine getUtente()
 	
+	public static String getNomeUtente(String discriminator)
+	{
+		return switch (discriminator)
+		{
+			case Utente.GION -> Utente.NOME_GION;
+			case Utente.ENIGMO -> Utente.NOME_ENIGMO;
+			case Utente.LEX -> Utente.NOME_LEX;
+			case Utente.OBITO -> Utente.NOME_OBITO;
+			case Utente.OWOBOT -> Utente.NOME_OWOBOT;
+			case Utente.BOWOT -> Utente.NOME_BOWOT;
+			
+			default -> "E io che cazzo ne so, scusi";
+		};
+	}
+	
+	
+	
+	
 }
