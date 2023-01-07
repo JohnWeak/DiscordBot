@@ -23,7 +23,7 @@ public class PrivateMessage <T>
 		}
 		catch (Exception e)
 		{
-			messageChannel.sendMessage(""+this.getClass()+"\n"+e).queue();
+			messageChannel.sendMessage("`"+this.getClass()+"`\n"+e).queue();
 		}
 	}
 }
