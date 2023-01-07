@@ -33,7 +33,7 @@ public abstract class Utente
 	/**<h3>Questo metodo restituisce l'oggetto utente (User) a partire dal nome passato come parametro.</h3>
 	 * @param message Oggetto di tipo <code>message</code> necessario per ottenere i dati dal JDA.<br>
 	 * @param nome Nome dell'utente da cercare.
-	 * @return Oggetto <code>User</code> contentente l'utente richiesto.<br><code>NULL</code> in caso di errore.
+	 * @return Oggetto <code>User</code> contentente l'utente richiesto.<br><code>null</code> in caso di errore.
 	 * */
 	public static User getUtenteFromName(Message message, String nome)
 	{
