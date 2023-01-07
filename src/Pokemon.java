@@ -263,7 +263,7 @@ public class Pokemon
 	public static void spawnPokemon()
 	{
 		var rand = random.nextInt(100);
-		if (rand == 42 || Commands.messageRaw.equals("faiuscireunpokemonporcaputtana"))
+		if (rand == 42 || Commands.messageRaw.equals("pkmnpls"))
 			singleEncounter(new Pokemon());
 		
 		// Commands.author.openPrivateChannel().flatMap(channel -> channel.sendMessage(""+rand)).queue();
