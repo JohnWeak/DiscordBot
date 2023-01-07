@@ -81,8 +81,21 @@ public class ThreadPokemon extends Thread
 			pokemon.setActive(false);
 			activePokemons.remove(pokemon);
 			
+			var msgFooter = pokemon.getNome() + "ran away";
+			var types = pokemon.getTipo();
+			
+			for (String s : types)
+			{
+				if (s.equalsIgnoreCase("flying"))
+				{
+					msgFooter = pokemon.getNome() + " flew away.";
+					break;
+				}
+			}
+			
+			
 			eb.setTitle("The wild " + pokemon.getNome() + " fled.");
-			eb.setFooter(pokemon.getNome() + " ran away.");
+			eb.setFooter(msgFooter);
 			eb.setColor(Color.GRAY);
 			
 			l.clearReactions().queue();
