@@ -1,8 +1,6 @@
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
-
 import java.awt.Color;
-
 
 public class ThreadPokemon extends Thread
 {
@@ -36,14 +34,17 @@ public class ThreadPokemon extends Thread
 	}
 	
 	/**Imposta il tempo in cui il pokemon resta attivo nel canale prima di scappare.<br>
-	 * È possibile stabilire quanti secondi, minuti oppure ore dovranno passare prima che scappi.*/
+	 * È possibile stabilire quanti secondi, minuti oppure ore dovranno passare prima che scappi.
+	 * @param type String quanto tempo devo impostare: ore, minuti oppure secondi?
+	 * @param timeout quanto tempo dovrà passare prima che il pokemon non sia più disponibile.
+	 * */
 	public void timeoutTime(String type, long timeout)
 	{
 		this.timeout = switch (type)
 		{
-			case "ore" -> timeout * 60 * 60 * 1000;
-			case "minuti" -> timeout * 60 * 1000;
-			case "secondi" -> timeout * 1000;
+			case HOURS -> timeout * 60 * 60 * 1000;
+			case MINUTES -> timeout * 60 * 1000;
+			case SECONDS -> timeout * 1000;
 			default -> timeout;
 		};
 		
@@ -60,8 +61,8 @@ public class ThreadPokemon extends Thread
 		tc.sendMessage("test: "+Thread.currentThread()).queue();
 		tc.sendMessageEmbeds(eb.build()).queue(l ->
 		{
-			var pkn = pokemon.getNome();
-			if (pkn.equalsIgnoreCase("poochyena") || pkn.equalsIgnoreCase("mightyena"))
+			var pokemonNome = pokemon.getNome();
+			if (pokemonNome.equalsIgnoreCase("poochyena") || pokemonNome.equalsIgnoreCase("mightyena"))
 			{
 				Commands.react("pogey");
 				l.addReaction("❤️").queue();
@@ -81,20 +82,20 @@ public class ThreadPokemon extends Thread
 			pokemon.setActive(false);
 			activePokemons.remove(pokemon);
 			
-			var msgFooter = pokemon.getNome() + "ran away";
+			var msgFooter = pokemonNome + "ran away";
 			var types = pokemon.getTipo();
 			
 			for (String s : types)
 			{
 				if (s.equalsIgnoreCase("flying"))
 				{
-					msgFooter = pokemon.getNome() + " flew away.";
+					msgFooter = pokemonNome + " flew away.";
 					break;
 				}
 			}
 			
 			
-			eb.setTitle("The wild " + pokemon.getNome() + " fled.");
+			eb.setTitle("The wild " + pokemonNome + " fled.");
 			eb.setFooter(msgFooter);
 			eb.setColor(Color.GRAY);
 			
