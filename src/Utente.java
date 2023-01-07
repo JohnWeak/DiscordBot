@@ -66,6 +66,10 @@ public abstract class Utente
 		return user;
 	} // fine getUtente()
 	
+	/**Prende in input il discriminatore (#0935) e restituisce il nome utente (JohnWeak)
+	 * @param discriminator il discriminatore (es: <code>#1234</code>) dell'utente da cercare
+	 * @return Il nome dell'utente <code>(Utente.NOME)</code>
+	 * */
 	public static String getNomeUtente(String discriminator)
 	{
 		return switch (discriminator)
