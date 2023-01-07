@@ -3,8 +3,8 @@ import net.dv8tion.jda.api.entities.User;
 
 public class PrivateMessage <T>
 {
-	private User user;
-	private MessageChannel messageChannel;
+	private final User user;
+	private final MessageChannel messageChannel;
 	
 	public PrivateMessage(User user, MessageChannel messageChannel)
 	{
