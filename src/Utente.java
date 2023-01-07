@@ -1,6 +1,5 @@
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.requests.RestAction;
 
 public abstract class Utente
 {
@@ -20,6 +19,15 @@ public abstract class Utente
 	public static final String ID_OWOBOT = "408785106942164992";
 	public static final String ID_BOWOT = "836586862213726228";
 	
+	// NOMI
+	public static final String NOME_GION = "JOHNWEAK";
+	public static final String NOME_ENIGMO = "ENIGMO";
+	public static final String NOME_OBITO = "OBITO";
+	public static final String NOME_LEX = "DIODELAG";
+	public static final String NOME_OWOBOT = "OWOBOT";
+	public static final String NOME_BOWOT = "BOWOT";
+	
+	
 	/**<h3>Questo metodo restituisce l'oggetto utente (User) a partire dal nome passato come parametro.</h3>
 	 * @param message Oggetto di tipo <code>message</code> necessario per ottenere i dati dal JDA.<br>
 	 * @param nome Nome dell'utente da cercare.
@@ -31,22 +39,23 @@ public abstract class Utente
 		var channel = message.getChannel();
 		var utente = "";
 		User user;
+		
 		try
 		{
-			utente = switch (nome.toLowerCase())
+			utente = switch (nome)
 			{
-				case "gion", "giovanni", "john" -> ID_GION;
-				case "enigmo", "enigma" -> ID_ENIGMO;
-				case "lex", "alex", "rumeno" -> ID_LEX;
-				case "obito", "òbito", "óbito", "indiano bastardo" -> ID_OBITO;
-				case "owobot" -> ID_OWOBOT;
-				case "bowot" -> ID_BOWOT;
+				case NOME_GION -> ID_GION;
+				case NOME_ENIGMO -> ID_ENIGMO;
+				case NOME_LEX -> ID_LEX;
+				case NOME_OBITO -> ID_OBITO;
+				case NOME_OWOBOT -> ID_OWOBOT;
+				case NOME_BOWOT -> ID_BOWOT;
 				
 				default -> "dioporco";
 			};
 			
 		    jda.retrieveUserById(utente).queue(); // prende l'utente e lo salva in cache
-			user = jda.getUserById(utente);
+			user = jda.getUserById(utente); // ottiene un riferimento all'utente
 			
 		}
 		catch (Exception e)

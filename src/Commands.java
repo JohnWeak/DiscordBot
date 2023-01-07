@@ -266,8 +266,7 @@ public class Commands extends ListenerAdapter
 					var msgSplittato = msgLowerCase.split(" ");
 					var size = msgSplittato.length;
 					var numGiorni = 0;
-					//var gion = message.getJDA().getUserById(Utente.ID_GION);
-					var gion = Utente.getUtente(message, "gion");
+					var gion = Utente.getUtente(message, Utente.NOME_GION);
 					var pvtMsg = new PrivateMessage<String>(gion, canaleBot);
 					
 					try
@@ -281,7 +280,7 @@ public class Commands extends ListenerAdapter
 							}
 						}
 						
-						pvtMsg.send(String.valueOf(numGiorni)); // mandami un messaggio privato con il numero
+						pvtMsg.send("Daily: "+numGiorni); // mandami un messaggio privato con il numero
 						var conferma = "<@"+Utente.ID_GION+">Ti ho mandato un messaggio privato. Se non lo hai ricevuto: AARGH.";
 						canaleBot.sendMessage(conferma).queue();
 						
@@ -387,8 +386,8 @@ public class Commands extends ListenerAdapter
 		
 		if (msgLowerCase.contains("reply"))
 		{
-			var usr = new PrivateMessage<String>(Utente.getUtente(message, "gion"), canaleBot);
-			usr.send(""+random.nextInt(42)+1);
+			var usr = new PrivateMessage<String>(Utente.getUtente(message, Utente.NOME_GION), canaleBot);
+			usr.send("Numero casuale: "+(random.nextInt(42)+1));
 		}
 		
 		if (msgLowerCase.contains("ehi modulo"))
