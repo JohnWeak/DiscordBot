@@ -35,7 +35,7 @@ public class ThreadPokemon extends Thread
 	
 	/**Imposta il tempo in cui il pokemon resta attivo nel canale prima di scappare.<br>
 	 * È possibile stabilire quanti secondi, minuti oppure ore dovranno passare prima che scappi.
-	 * @param type String quanto tempo devo impostare: ore, minuti oppure secondi?
+	 * @param type il tempo da impostare: ore, minuti oppure secondi.
 	 * @param timeout quanto tempo dovrà passare prima che il pokemon non sia più disponibile.
 	 * */
 	public void timeoutTime(String type, long timeout)
