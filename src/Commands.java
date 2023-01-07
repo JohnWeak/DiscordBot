@@ -378,7 +378,7 @@ public class Commands extends ListenerAdapter
 			case "!dado" -> dado(msgLowerCase);
 			case "!cattura", "!catch" -> Pokemon.catturaPokemon();
 			case "!f", "+f" -> payRespect();
-			case "!pappagallo" -> new ThreadTest(messageRaw, message.getTextChannel()).start();
+			case "!timer" -> timer();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -391,11 +391,6 @@ public class Commands extends ListenerAdapter
 			
 			var usr = new PrivateMessage(author, canaleBot);
 			usr.send("Numero casuale: **"+(random.nextInt(42)+1)+"**");
-		}
-		
-		if (msgLowerCase.contains("countdown") || msgLowerCase.contains("cdw"))
-		{
-			new ThreadAutodistruzione(message).start();
 		}
 		
 		if (msgLowerCase.contains("ehi modulo"))
@@ -703,6 +698,39 @@ public class Commands extends ListenerAdapter
 //		Matcher m = p.matcher(source);
 //		return m.find();
 	}
+	
+	private void timer()
+	{
+		final var max = 604800; // 604800 secondi = 1 settimana
+		
+		var timeInSeconds = messageRaw.split(" ")[1]; // time to sleep in seconds
+		var timeInMills = 0;
+	
+		if (messageRaw.split(" ").length < 2) // !timer senza argomenti
+		{
+			var m = "Usa `!timer <tempo> per impostare un timer.`\nEsempio: `!timer 5` imposterà un timer per 5 secondi.";
+			channel.sendMessage(m).queue();
+			return;
+		}
+		
+		try
+		{
+			if (Integer.parseInt(timeInSeconds) < 0 || Integer.parseInt(timeInSeconds) > max)
+			{
+				channel.sendMessage("Hai inserito un numero non valido. Timer non impostato.").queue();
+				return;
+			}
+			timeInMills = Integer.parseInt(timeInSeconds) * 1000;
+		}
+		catch (Exception e)
+		{
+			channel.sendMessage("Hai inserito un numero non valido.").queue();
+		}
+		
+		new ThreadTimer(message, timeInMills, author).start();
+	} // fine countdown()
+	
+	
 	
 	/**Trova l'autore del messaggio per l'anniversario dell'owo daily*/
 	private String findAuthorDaily()
