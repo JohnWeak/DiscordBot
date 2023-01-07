@@ -267,7 +267,7 @@ public class Commands extends ListenerAdapter
 					var size = msgSplittato.length;
 					var numGiorni = 0;
 					var gion = Utente.getUtenteFromName(message, Utente.NOME_GION);
-					var pvtMsg = new PrivateMessage<String>(gion, canaleBot);
+					var pvtMsg = new PrivateMessage(gion, canaleBot);
 					
 					try
 					{
@@ -386,10 +386,10 @@ public class Commands extends ListenerAdapter
 		
 		if (msgLowerCase.contains("reply"))
 		{
-			var test = new PrivateMessage<String>(Utente.getUtenteFromName(message, Utente.NOME_GION), canaleBot);
+			var test = new PrivateMessage(Utente.getUtenteFromName(message, Utente.NOME_GION), canaleBot);
 			test.send("Author: "+ author+"\nAuthorName: "+authorName+"\nDiscriminator: "+author.getDiscriminator());
 			
-			var usr = new PrivateMessage<String>(author, canaleBot);
+			var usr = new PrivateMessage(author, canaleBot);
 			usr.send("Numero casuale: "+(random.nextInt(42)+1));
 			
 			

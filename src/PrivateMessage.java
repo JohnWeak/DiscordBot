@@ -1,7 +1,7 @@
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 
-public class PrivateMessage <T>
+public class PrivateMessage
 {
 	private final User user;
 	private final MessageChannel messageChannel;
@@ -12,11 +12,11 @@ public class PrivateMessage <T>
 		this.messageChannel = messageChannel;
 	}
 	
-	public void send(T content)
+	public void send(String content)
 	{
 		try
 		{
-			user.openPrivateChannel().flatMap(channel -> channel.sendMessage((CharSequence) content)).queue(l->
+			user.openPrivateChannel().flatMap(channel -> channel.sendMessage(content)).queue(l->
 			{
 			
 			});
