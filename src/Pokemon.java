@@ -276,7 +276,10 @@ public class Pokemon
 	} // fine spawnPokemon()
 	
 	
-	/** Effettua la ricerca del pokemon nell'API */
+	/** Effettua la ricerca del pokemon nell'API.
+	 * @param pokemon il nome del pokemon da cercare.
+	 * @return un array JSON, con tutte le informazioni del pokemon trovate nell'API.
+	 * */
 	public static JSONArray search(String pokemon)
 	{
 		URL url;
