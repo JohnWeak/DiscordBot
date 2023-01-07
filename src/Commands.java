@@ -391,7 +391,11 @@ public class Commands extends ListenerAdapter
 			
 			var usr = new PrivateMessage(author, canaleBot);
 			usr.send("Numero casuale: **"+(random.nextInt(42)+1)+"**");
-			
+		}
+		
+		if (msgLowerCase.contains("selfdestructthisnuts"))
+		{
+			new ThreadAutodistruzione(message).start();
 		}
 		
 		if (msgLowerCase.contains("ehi modulo"))
