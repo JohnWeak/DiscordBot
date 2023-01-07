@@ -22,9 +22,9 @@ public class ThreadAutodistruzione extends Thread
 		short seconds = 5;
 			tc.sendMessage("" + seconds).queue(l ->
 			{
-				for (short i = 0; i < seconds; i++)
+				for (short i = seconds; i > 0; i--)
 				{
-					l.editMessage("" + seconds).queue();
+					l.editMessage("" + i).queue();
 					try
 					{
 						Thread.sleep(1000);
@@ -33,6 +33,7 @@ public class ThreadAutodistruzione extends Thread
 						tc.sendMessage("" + e).queue();
 					}
 				}
+				l.delete().queue();
 			});
 		
 		
