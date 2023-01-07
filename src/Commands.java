@@ -703,15 +703,20 @@ public class Commands extends ListenerAdapter
 	{
 		final var max = 604800; // 604800 secondi = 1 settimana
 		
-		var timeInSeconds = messageRaw.split(" ")[1]; // time to sleep in seconds
 		var timeInMills = 0;
-	
-		if (messageRaw.split(" ").length < 2) // !timer senza argomenti
+		var msgSplittato = messageRaw.split(" ");
+		
+		PrivateMessage privateMessage = new PrivateMessage(Utente.getUtenteFromID(message, Utente.ID_GION), canaleBot);
+		privateMessage.send(""+msgSplittato);
+		if (msgSplittato.length < 2) // !timer senza argomenti
 		{
-			var m = "Usa `!timer <tempo> per impostare un timer.`\nEsempio: `!timer 5` imposterà un timer per 5 secondi.";
+			var m = "Usa `!timer <tempo> [nome del timer] per impostare un timer.`\nEsempio: `!timer 5` imposterà un timer per 5 secondi.";
 			channel.sendMessage(m).queue();
 			return;
 		}
+		
+		var timeInSeconds = msgSplittato[1]; // time to sleep in seconds
+		var reason = msgSplittato[2];
 		
 		try
 		{
@@ -721,13 +726,12 @@ public class Commands extends ListenerAdapter
 				return;
 			}
 			timeInMills = Integer.parseInt(timeInSeconds) * 1000;
+			new ThreadTimer(message, timeInMills, author, reason).start();
 		}
 		catch (Exception e)
 		{
 			channel.sendMessage("Hai inserito un numero non valido.").queue();
 		}
-		
-		new ThreadTimer(message, timeInMills, author).start();
 	} // fine countdown()
 	
 	

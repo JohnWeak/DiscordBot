@@ -10,21 +10,26 @@ public class ThreadTimer extends Thread
 	private TextChannel tc;
 	private final int seconds;
 	private final User user;
+	private final String reason;
 	
-	public ThreadTimer(Message message, int seconds, User user)
+	public ThreadTimer(Message message, int seconds, User user, String reason)
 	{
 		this.message = message;
 		jda = message.getJDA();
 		tc = message.getTextChannel();
 		this.seconds = seconds;
 		this.user = user;
+		this.reason = reason;
 	} // fine costruttore
 	
 	
 	@Override
 	public void run()
 	{
-		tc.sendMessage("Ok, " + user.getName()+" . Timer impostato.").queue(l ->
+		var msg = "Ok, " + user.getName()+". Timer impostato per " + seconds + " secondi.";
+		msg += seconds == 69 ? "Nice." : "";
+		
+		tc.sendMessage(msg).queue(l ->
 		{
 			try
 			{
@@ -33,8 +38,7 @@ public class ThreadTimer extends Thread
 			{
 				tc.sendMessage("" + e).queue();
 			}
-			
-			l.editMessage("<@"+user.getIdLong()+">").queue();
+			tc.sendMessage("<@"+user.getIdLong()+">\nTimer, timer, timer! È scaduto il tuo timer!").queue();
 		});
 		
 		
