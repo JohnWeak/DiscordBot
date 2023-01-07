@@ -1,6 +1,8 @@
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 
+import java.util.Locale;
+
 public abstract class Utente
 {
 	// Numeri (discriminator)
@@ -33,7 +35,7 @@ public abstract class Utente
 	 * @param nome Nome dell'utente da cercare.
 	 * @return Oggetto <code>User</code> contentente l'utente richiesto.<br><code>NULL</code> in caso di errore.
 	 * */
-	public static User getUtente(Message message, String nome)
+	public static User getUtenteFromName(Message message, String nome)
 	{
 		var jda = message.getJDA();
 		var channel = message.getChannel();
@@ -42,7 +44,7 @@ public abstract class Utente
 		
 		try
 		{
-			utente = switch (nome)
+			utente = switch (nome.toUpperCase())
 			{
 				case NOME_GION -> ID_GION;
 				case NOME_ENIGMO -> ID_ENIGMO;
@@ -85,7 +87,12 @@ public abstract class Utente
 		};
 	}
 	
-	
+	public static User getUtenteFromID(Message message, String id)
+	{
+		var jda = message.getJDA();
+		jda.retrieveUserById(id).queue();
+		return jda.getUserById(id);
+	}
 	
 	
 }
