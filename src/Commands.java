@@ -390,7 +390,7 @@ public class Commands extends ListenerAdapter
 			//test.send("Author: "+ author+"\nAuthorName: "+authorName+"\nDiscriminator: "+author.getDiscriminator());
 			
 			var usr = new PrivateMessage(author, canaleBot);
-			usr.send("Numero casuale: "+(random.nextInt(42)+1));
+			usr.send("Numero casuale: **"+(random.nextInt(42)+1)+"**");
 			
 		}
 		
