@@ -58,6 +58,7 @@ public abstract class Utente
 			
 		    jda.retrieveUserById(utente).queue(); // prende l'utente e lo salva in cache
 			user = jda.getUserById(utente); // ottiene un riferimento all'utente
+			channel.sendMessage("User: `"+user+"`").queue();
 			
 		}
 		catch (Exception e)
