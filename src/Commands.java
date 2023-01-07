@@ -241,7 +241,7 @@ public class Commands extends ListenerAdapter
 	
 	
 	/** Controlla che il messaggio abbia le parole chiave per attivare i comandi (o le reazioni) del bot
-	 * @param msgLowerCase
+	 * @param msgLowerCase la stringa del messaggio convertita in minuscolo
 	 * @return void
 	 * */
 	public void checkForKeywords(String msgLowerCase)
