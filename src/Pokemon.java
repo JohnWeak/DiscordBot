@@ -140,6 +140,12 @@ public class Pokemon
 				Commands.canaleBotPokemon.sendTyping().queue();
 				JSONArray jsonArray = Pokemon.search(nome);
 				
+				if (jsonArray.isEmpty())
+				{
+					Commands.canaleBotPokemon.sendMessage("jsonArray è vuoto").queue();
+					return;
+				}
+				
 				try
 				{
 					JSONObject jsonObject = (JSONObject) jsonArray.get(0);
