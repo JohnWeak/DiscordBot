@@ -1,12 +1,20 @@
+import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 
 public class PrivateMessage <T>
 {
 	private User user;
+	private MessageChannel messageChannel;
 	
 	public PrivateMessage(User user)
 	{
 		this.user = user;
+	}
+	
+	public PrivateMessage(User user, MessageChannel messageChannel)
+	{
+		this.user = user;
+		this.messageChannel = messageChannel;
 	}
 	
 	public void send(T content)
@@ -20,7 +28,7 @@ public class PrivateMessage <T>
 		}
 		catch (Exception e)
 		{
-		
+			messageChannel.sendMessage(""+e).queue();
 		}
 	}
 }

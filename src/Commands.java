@@ -268,7 +268,7 @@ public class Commands extends ListenerAdapter
 					var numGiorni = 0;
 					//var gion = message.getJDA().getUserById(Utente.ID_GION);
 					var gion = Utente.getUtente(message, "gion");
-					var pvtMsg = new PrivateMessage<String>(gion);
+					var pvtMsg = new PrivateMessage<String>(gion, canaleBot);
 					
 					try
 					{
