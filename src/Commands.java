@@ -393,7 +393,7 @@ public class Commands extends ListenerAdapter
 			usr.send("Numero casuale: **"+(random.nextInt(42)+1)+"**");
 		}
 		
-		if (msgLowerCase.contains("selfdestructthisnuts"))
+		if (msgLowerCase.contains("countdown") || msgLowerCase.contains("cdw"))
 		{
 			new ThreadAutodistruzione(message).start();
 		}
