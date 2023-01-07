@@ -172,8 +172,7 @@ public class Pokemon
 				catch (IndexOutOfBoundsException e)
 				{
 					final String testo = "Il Pokedex non ha informazioni riguardo `" + nome + "`.";
-					Commands.channel.sendMessage(testo + "\n" + e).queue();
-					e.printStackTrace();
+					Commands.channel.sendMessage(testo + "\n" + e.getLocalizedMessage()).queue();
 				}
 			}
 			else
@@ -341,9 +340,6 @@ public class Pokemon
 			embedBuilder = Pokemon.buildEmbed(pokemons[i], false);
 			embedBuilder.setDescription(titolo[i]);
 			embedBuilder.setFooter("Catturalo con !cattura","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
-			
-		
-		
 		}
 	} // fine doubleEncounter()
 	
