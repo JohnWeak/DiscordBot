@@ -33,7 +33,7 @@ public class ThreadTimer extends Thread
 		{
 			try
 			{
-				Thread.sleep(seconds);
+				Thread.sleep(seconds * 1000);
 			} catch (InterruptedException e)
 			{
 				tc.sendMessage("" + e).queue();

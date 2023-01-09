@@ -722,20 +722,19 @@ public class Commands extends ListenerAdapter
 			return;
 		}
 		
-		var timeInSeconds = msgSplittato[1]; // time to sleep in seconds
+		var timeInSeconds = Integer.parseInt(msgSplittato[1]); // time to sleep in seconds
 		var reason = msgSplittato[2];
 		channel.sendMessage("Sto dopo `msgSplittato[1]` e `msgSplittato[2]`, sto na favola").queue();
 		
 		try
 		{
 			channel.sendMessage("Sto nel try, sto na favola").queue();
-			if (Integer.parseInt(timeInSeconds) < 0 || Integer.parseInt(timeInSeconds) > max)
+			if (timeInSeconds < 0 || timeInSeconds > max)
 			{
 				channel.sendMessage("Hai inserito un numero non valido. Timer non impostato.").queue();
 				return;
 			}
-			timeInMills = Integer.parseInt(timeInSeconds) * 1000;
-			new ThreadTimer(message, timeInMills, author, reason).start();
+			new ThreadTimer(message, timeInSeconds, author, reason).start();
 			channel.sendMessage("Sto dopo il `thread.start()`, sto na favola").queue();
 		}
 		catch (Exception e)
