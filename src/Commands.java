@@ -716,9 +716,11 @@ public class Commands extends ListenerAdapter
 		
 		var timeInSeconds = msgSplittato[1]; // time to sleep in seconds
 		var reason = msgSplittato[2];
+		channel.sendMessage("Sto dopo `msgSplittato[1]` e `msgSplittato[2]`, sto na favola").queue();
 		
 		try
 		{
+			channel.sendMessage("Sto nel try, sto na favola").queue();
 			if (Integer.parseInt(timeInSeconds) < 0 || Integer.parseInt(timeInSeconds) > max)
 			{
 				channel.sendMessage("Hai inserito un numero non valido. Timer non impostato.").queue();
@@ -726,11 +728,14 @@ public class Commands extends ListenerAdapter
 			}
 			timeInMills = Integer.parseInt(timeInSeconds) * 1000;
 			new ThreadTimer(message, timeInMills, author, reason).start();
+			channel.sendMessage("Sto dopo il `thread.start()`, sto na favola").queue();
 		}
 		catch (Exception e)
 		{
 			channel.sendMessage("Hai inserito un numero non valido.").queue();
 		}
+		
+		channel.sendMessage("sto prima di chiudere la funzione `timer()`, sto na favola.").queue();
 		
 	} // fine timer()
 	
