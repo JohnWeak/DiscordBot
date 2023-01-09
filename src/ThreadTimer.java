@@ -27,7 +27,7 @@ public class ThreadTimer extends Thread
 	public void run()
 	{
 		var msg = "Ok, " + user.getName()+". Timer impostato per " + seconds + " secondi.";
-		msg += seconds == 69 ? "Nice." : "";
+		msg += seconds == 69 ? " Nice." : "";
 		
 		tc.sendMessage(msg).queue(l ->
 		{
@@ -44,4 +44,4 @@ public class ThreadTimer extends Thread
 		
 	} // fine run()
 	
-} // fine ThreadAutodistruzione
+} // fine ThreadTimer

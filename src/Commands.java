@@ -703,11 +703,13 @@ public class Commands extends ListenerAdapter
 	{
 		final var max = 604800; // 604800 secondi = 1 settimana
 		
+		// debug
+		channel.sendMessage(messageRaw).queue();
+		
 		var timeInMills = 0;
 		var msgSplittato = messageRaw.split(" ");
 		
-		//PrivateMessage privateMessage = new PrivateMessage(Utente.getUtenteFromID(message, Utente.ID_GION), canaleBot);
-		//privateMessage.send(""+ Arrays.toString(msgSplittato));
+		
 		if (msgSplittato.length < 2) // !timer senza argomenti
 		{
 			var m = "Usa `!timer <tempo> [nome del timer] per impostare un timer.`\nEsempio: `!timer 5` imposterà un timer per 5 secondi.";
