@@ -706,7 +706,7 @@ public class Commands extends ListenerAdapter
 		var timeInMills = 0;
 		try
 		{
-			channel.sendMessage("sto nel try, prima di `messageRaw.split()`, sto na favola").queue();
+			channel.sendMessage("sto nel try, prima di `messageRaw.split(\" \")`, sto na favola").queue();
 			msgSplittato = messageRaw.split(" ");
 		}catch (Exception e)
 		{
