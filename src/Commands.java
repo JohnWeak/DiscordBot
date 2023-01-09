@@ -703,9 +703,6 @@ public class Commands extends ListenerAdapter
 	{
 		final var max = 604800; // 604800 secondi = 1 settimana
 		
-		// debug
-		channel.sendMessage(messageRaw).queue();
-		
 		var timeInMills = 0;
 		var msgSplittato = messageRaw.split(" ");
 		
@@ -734,7 +731,8 @@ public class Commands extends ListenerAdapter
 		{
 			channel.sendMessage("Hai inserito un numero non valido.").queue();
 		}
-	} // fine countdown()
+		
+	} // fine timer()
 	
 	
 	
