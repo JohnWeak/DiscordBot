@@ -702,10 +702,17 @@ public class Commands extends ListenerAdapter
 	private void timer()
 	{
 		final var max = 604800; // 604800 secondi = 1 settimana
-		
+		String[] msgSplittato;
 		var timeInMills = 0;
-		var msgSplittato = messageRaw.split(" ");
-		
+		try
+		{
+			channel.sendMessage("sto nel try, prima di `messageRaw.split()`, sto na favola").queue();
+			msgSplittato = messageRaw.split(" ");
+		}catch (Exception e)
+		{
+			channel.sendMessage(""+e).queue();
+			return;
+		}
 		
 		if (msgSplittato.length < 2) // !timer senza argomenti
 		{
