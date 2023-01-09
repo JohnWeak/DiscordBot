@@ -708,6 +708,7 @@ public class Commands extends ListenerAdapter
 		{
 			channel.sendMessage("sto nel try, prima di `messageRaw.split(\" \")`, sto na favola").queue();
 			msgSplittato = messageRaw.split(" ");
+			channel.sendMessage("msgSplittato.length: "+msgSplittato.length).queue();
 		}catch (Exception e)
 		{
 			channel.sendMessage(""+e).queue();
