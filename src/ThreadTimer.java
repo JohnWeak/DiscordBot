@@ -33,12 +33,12 @@ public class ThreadTimer extends Thread
 		{
 			try
 			{
-				Thread.sleep(seconds * 1000);
+				Thread.sleep(seconds * 1000L);
 			} catch (InterruptedException e)
 			{
 				tc.sendMessage("" + e).queue();
 			}
-			tc.sendMessage("<@"+user.getIdLong()+">\nTimer, timer, timer! È scaduto il tuo timer!").queue();
+			tc.sendMessage("<@"+user.getIdLong()+">\nTimer, timer, timer! È suonato il tuo timer \"" + reason + "\"!").queue();
 		});
 		
 		

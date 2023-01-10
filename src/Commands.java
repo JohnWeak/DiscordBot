@@ -707,7 +707,7 @@ public class Commands extends ListenerAdapter
 		{
 			//channel.sendMessage("sto nel try, prima di `messageRaw.split(\" \")`, sto na favola").queue();
 			msgSplittato = messageRaw.split(" ");
-			channel.sendMessage("msgSplittato.length: "+msgSplittato.length+"\nmsgSplittato: "+ Arrays.toString(msgSplittato)).queue();
+			//channel.sendMessage("msgSplittato.length: "+msgSplittato.length+"\nmsgSplittato: "+ Arrays.toString(msgSplittato)).queue();
 		}catch (Exception e)
 		{
 			channel.sendMessage(""+e).queue();
@@ -719,12 +719,16 @@ public class Commands extends ListenerAdapter
 			var m = "Usa `!timer <tempo> [nome del timer] per impostare un timer.`\nEsempio: `!timer 5` imposterà un timer per 5 secondi.";
 			channel.sendMessage(m).queue();
 		}
-		else if (msgSplittato.length == 2 || msgSplittato.length == 3)
+		else
 		{
 			var timeInSeconds = Integer.parseInt(msgSplittato[1]); // time to sleep in seconds
-			var reason = msgSplittato[2];
-			channel.sendMessage("Sto dopo `msgSplittato[1]` e `msgSplittato[2]`, sto na favola").queue();
-			channel.sendMessage("msgSplittato[1]: "+msgSplittato[1]+"\nmsgSplittato[2]: "+msgSplittato[2]).queue();
+			String reason = "";
+			
+			if (msgSplittato.length >= 3)
+				reason = msgSplittato[2];
+			
+			//channel.sendMessage("Sto dopo `msgSplittato[1]` e `msgSplittato[2]`, sto na favola").queue();
+			//channel.sendMessage("msgSplittato[1]: "+msgSplittato[1]+"\nmsgSplittato[2]: "+msgSplittato[2]).queue();
 			
 			try
 			{
