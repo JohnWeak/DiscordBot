@@ -707,7 +707,7 @@ public class Commands extends ListenerAdapter
 		{
 			//channel.sendMessage("sto nel try, prima di `messageRaw.split(\" \")`, sto na favola").queue();
 			msgSplittato = messageRaw.split(" ");
-			channel.sendMessage("msgSplittato.length: "+msgSplittato.length).queue();
+			//channel.sendMessage("msgSplittato.length: "+msgSplittato.length).queue();
 		}catch (Exception e)
 		{
 			channel.sendMessage(""+e).queue();
@@ -723,29 +723,28 @@ public class Commands extends ListenerAdapter
 		{
 			var timeInSeconds = Integer.parseInt(msgSplittato[1]); // time to sleep in seconds
 			var reason = msgSplittato[2];
-			//channel.sendMessage("Sto dopo `msgSplittato[1]` e `msgSplittato[2]`, sto na favola").queue();
+			channel.sendMessage("Sto dopo `msgSplittato[1]` e `msgSplittato[2]`, sto na favola").queue();
+			channel.sendMessage("msgSplittato[1]: "+msgSplittato[1]+"\nmsgSplittato[2]: "+msgSplittato[2]).queue();
 			
 			try
 			{
-				//channel.sendMessage("Sto nel secondo try, sto na favola").queue();
+				channel.sendMessage("Sto nel secondo try, sto na favola").queue();
 				if (timeInSeconds < 0 || timeInSeconds > max)
 				{
 					channel.sendMessage("Hai inserito un numero non valido. Timer non impostato.").queue();
 					return;
 				}
 				new ThreadTimer(message, timeInSeconds, author, reason).start();
-				//channel.sendMessage("Sto dopo il `thread.start()`, sto na favola").queue();
+				channel.sendMessage("Sto dopo il `thread.start()`, sto na favola").queue();
 			}
 			catch (Exception e)
 			{
 				channel.sendMessage("Hai inserito un numero non valido.").queue();
 			}
 			
-			//channel.sendMessage("sto prima di chiudere la funzione `timer()`, sto na favola.").queue();
+			channel.sendMessage("sto prima di chiudere la funzione `timer()`, sto na favola.").queue();
 		}
-		
 	} // fine timer()
-	
 	
 	
 	/**Trova l'autore del messaggio per l'anniversario dell'owo daily*/
