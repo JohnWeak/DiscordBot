@@ -732,21 +732,20 @@ public class Commands extends ListenerAdapter
 			
 			try
 			{
-				channel.sendMessage("Sto nel secondo try, sto na favola").queue();
+				//channel.sendMessage("Sto nel secondo try, sto na favola").queue();
 				if (timeInSeconds < 0 || timeInSeconds > max)
 				{
 					channel.sendMessage("Hai inserito un numero non valido. Timer non impostato.").queue();
 					return;
 				}
 				new ThreadTimer(message, timeInSeconds, author, reason).start();
-				channel.sendMessage("Sto dopo il `thread.start()`, sto na favola").queue();
+			//	channel.sendMessage("Sto dopo il `thread.start()`, sto na favola").queue();
 			}
 			catch (Exception e)
 			{
 				channel.sendMessage("Hai inserito un numero non valido.").queue();
 			}
-			
-			channel.sendMessage("sto prima di chiudere la funzione `timer()`, sto na favola.").queue();
+			//channel.sendMessage("sto prima di chiudere la funzione `timer()`, sto na favola.").queue();
 		}
 	} // fine timer()
 	
