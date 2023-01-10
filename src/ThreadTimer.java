@@ -38,7 +38,10 @@ public class ThreadTimer extends Thread
 			{
 				tc.sendMessage("" + e).queue();
 			}
-			tc.sendMessage("<@"+user.getIdLong()+">\nTimer, timer, timer! È suonato il tuo timer \"" + reason + "\"!").queue();
+			var msgParziale = "<@"+user.getIdLong()+">\nTimer, timer, timer! È suonato il tuo timer!";
+			var msgTotale = msgParziale + (reason.isEmpty() ? "\n\""+reason+"\"" : "");
+			
+			tc.sendMessage(msgTotale).queue();
 		});
 		
 		
