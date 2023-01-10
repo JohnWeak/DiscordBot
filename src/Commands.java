@@ -703,10 +703,9 @@ public class Commands extends ListenerAdapter
 	{
 		final var max = 604800; // 604800 secondi = 1 settimana
 		String[] msgSplittato;
-		var timeInMills = 0;
 		try
 		{
-			channel.sendMessage("sto nel try, prima di `messageRaw.split(\" \")`, sto na favola").queue();
+			//channel.sendMessage("sto nel try, prima di `messageRaw.split(\" \")`, sto na favola").queue();
 			msgSplittato = messageRaw.split(" ");
 			channel.sendMessage("msgSplittato.length: "+msgSplittato.length).queue();
 		}catch (Exception e)
@@ -719,30 +718,31 @@ public class Commands extends ListenerAdapter
 		{
 			var m = "Usa `!timer <tempo> [nome del timer] per impostare un timer.`\nEsempio: `!timer 5` imposterà un timer per 5 secondi.";
 			channel.sendMessage(m).queue();
-			return;
 		}
-		
-		var timeInSeconds = Integer.parseInt(msgSplittato[1]); // time to sleep in seconds
-		var reason = msgSplittato[2];
-		channel.sendMessage("Sto dopo `msgSplittato[1]` e `msgSplittato[2]`, sto na favola").queue();
-		
-		try
+		else
 		{
-			channel.sendMessage("Sto nel try, sto na favola").queue();
-			if (timeInSeconds < 0 || timeInSeconds > max)
+			var timeInSeconds = Integer.parseInt(msgSplittato[1]); // time to sleep in seconds
+			var reason = msgSplittato[2];
+			//channel.sendMessage("Sto dopo `msgSplittato[1]` e `msgSplittato[2]`, sto na favola").queue();
+			
+			try
 			{
-				channel.sendMessage("Hai inserito un numero non valido. Timer non impostato.").queue();
-				return;
+				//channel.sendMessage("Sto nel secondo try, sto na favola").queue();
+				if (timeInSeconds < 0 || timeInSeconds > max)
+				{
+					channel.sendMessage("Hai inserito un numero non valido. Timer non impostato.").queue();
+					return;
+				}
+				new ThreadTimer(message, timeInSeconds, author, reason).start();
+				//channel.sendMessage("Sto dopo il `thread.start()`, sto na favola").queue();
 			}
-			new ThreadTimer(message, timeInSeconds, author, reason).start();
-			channel.sendMessage("Sto dopo il `thread.start()`, sto na favola").queue();
+			catch (Exception e)
+			{
+				channel.sendMessage("Hai inserito un numero non valido.").queue();
+			}
+			
+			//channel.sendMessage("sto prima di chiudere la funzione `timer()`, sto na favola.").queue();
 		}
-		catch (Exception e)
-		{
-			channel.sendMessage("Hai inserito un numero non valido.").queue();
-		}
-		
-		channel.sendMessage("sto prima di chiudere la funzione `timer()`, sto na favola.").queue();
 		
 	} // fine timer()
 	
