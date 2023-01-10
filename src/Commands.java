@@ -707,14 +707,14 @@ public class Commands extends ListenerAdapter
 		{
 			//channel.sendMessage("sto nel try, prima di `messageRaw.split(\" \")`, sto na favola").queue();
 			msgSplittato = messageRaw.split(" ");
-			//channel.sendMessage("msgSplittato.length: "+msgSplittato.length).queue();
+			channel.sendMessage("msgSplittato.length: "+msgSplittato.length+"\nmsgSplittato: "+ Arrays.toString(msgSplittato)).queue();
 		}catch (Exception e)
 		{
 			channel.sendMessage(""+e).queue();
 			return;
 		}
 		
-		if (msgSplittato.length < 2) // !timer senza argomenti
+		if (msgSplittato.length == 1) // !timer senza argomenti
 		{
 			var m = "Usa `!timer <tempo> [nome del timer] per impostare un timer.`\nEsempio: `!timer 5` imposterà un timer per 5 secondi.";
 			channel.sendMessage(m).queue();
