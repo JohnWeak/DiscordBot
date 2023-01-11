@@ -102,19 +102,26 @@ public class Commands extends ListenerAdapter
 	/** onReady() viene eseguita soltanto all'avvio del bot */
 	public void onReady(@NotNull ReadyEvent event)
 	{
-		var nome = event.getJDA().getSelfUser().getName();
-		var act = Objects.requireNonNull(event.getJDA().getPresence().getActivity());
+		var jda = event.getJDA();
+		var nome = jda.getSelfUser().getName();
+		var act = Objects.requireNonNull(jda.getPresence().getActivity());
+		
+//		var textChannels = jda.getTextChannels();
 		
 		System.out.printf("%s si è connesso a Discord!\n\npublic class MessageHistory\n{\n", nome);
 		
-		canaleBot = event.getJDA().getTextChannelsByName("\uD83E\uDD16bot-owo", true).get(0);
-		canaleBotPokemon = event.getJDA().getTextChannelsByName("pokémowon", true).get(0);
+		canaleBot = jda.getTextChannelsByName("\uD83E\uDD16bot-owo", true).get(0);
+		canaleBotPokemon = jda.getTextChannelsByName("pokémowon", true).get(0);
 		
 		var activity = act.getType().toString();
 		var nomeActivity = "**" + act.getName() + "**";
 		var activityTradotta = activity.equals("WATCHING") ? "guardo " : "gioco a ";
 		
 		// moduloDiSicurezza();
+		
+		var userList = canaleBot.getJDA().getUsers();
+		for (User user : userList)
+			jda.retrieveUserById(user.getId()).queue();
 		
 		emoteList = canaleBot.getJDA().getEmotes();
 		
