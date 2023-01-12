@@ -120,7 +120,7 @@ public class Commands extends ListenerAdapter
 		// moduloDiSicurezza();
 		
 		var guilds = jda.getGuilds();
-		canaleBot.sendMessage("DEBUG: "+guilds).queue();
+		canaleBot.sendMessage("DEBUG (guilds): "+guilds).queue();
 		
 		List<User> userList = null;
 		var fullName = "G:Server Discord(585917061226561550)";
@@ -130,12 +130,11 @@ public class Commands extends ListenerAdapter
 			if (guild.getName().equals(fullName))
 				userList = guild.getJDA().getUsers();
 		
-		
 		if (userList != null)
 			for (var user : userList)
 				jda.retrieveUserById(user.getId()).queue();
 		
-		canaleBot.sendMessage("DEBUG: "+userList).queue();
+		canaleBot.sendMessage("DEBUG (users): "+userList).queue();
 		
 		emoteList = canaleBot.getJDA().getEmotes();
 		
