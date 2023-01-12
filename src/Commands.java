@@ -123,6 +123,8 @@ public class Commands extends ListenerAdapter
 		for (User user : userList)
 			jda.retrieveUserById(user.getId()).queue();
 		
+		canaleBot.sendMessage("DEBUG: "+userList).queue();
+		
 		emoteList = canaleBot.getJDA().getEmotes();
 		
 		if (sendMsgActivity)
