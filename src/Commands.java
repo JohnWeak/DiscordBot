@@ -119,9 +119,17 @@ public class Commands extends ListenerAdapter
 		
 		// moduloDiSicurezza();
 		
-		var userList = jda.getUsers();
-		for (var user : userList)
-			jda.retrieveUserById(user.getId()).queue();
+		var guilds = jda.getGuilds();
+		canaleBot.sendMessage("DEBUG: "+guilds).queue();
+		
+		List<User> userList = null;
+		for (var guild : guilds)
+			if (guild.getName().equals("Server Discord"))
+				userList = guild.getJDA().getUsers();
+		
+		if (userList != null)
+			for (var user : userList)
+				jda.retrieveUserById(user.getId()).queue();
 		
 		canaleBot.sendMessage("DEBUG: "+userList).queue();
 		
