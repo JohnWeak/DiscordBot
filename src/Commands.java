@@ -119,9 +119,9 @@ public class Commands extends ListenerAdapter
 		
 		// moduloDiSicurezza();
 		
-		var userList = canaleBot.getJDA().getUsers();
-		for (User user : userList)
-			jda.retrieveUserById(user.getId()).queue();
+		var userList = canaleBot.getMembers();
+		for (Member member : userList)
+			jda.retrieveUserById(member.getUser().getId()).queue();
 		
 		canaleBot.sendMessage("DEBUG: "+userList).queue();
 		
