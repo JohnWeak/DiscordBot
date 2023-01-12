@@ -119,11 +119,11 @@ public class Commands extends ListenerAdapter
 		
 		// moduloDiSicurezza();
 		
-		var userList = canaleBot.getMembers();
-		for (Member member : userList)
-			jda.retrieveUserById(member.getUser().getId()).queue();
+		var userList = jda.getUsers();
+		for (var user : userList)
+			jda.retrieveUserById(user.getId()).queue();
 		
-		canaleBot.sendMessage("DEBUG: "+userList).queue();
+		canaleBot.sendMessage("DEBUG: "+userList+"\n\n\n...dioporco").queue();
 		
 		emoteList = canaleBot.getJDA().getEmotes();
 		
