@@ -123,9 +123,13 @@ public class Commands extends ListenerAdapter
 		canaleBot.sendMessage("DEBUG: "+guilds).queue();
 		
 		List<User> userList = null;
+		var fullName = "G:Server Discord(585917061226561550)";
+		var n = "Server Discord";
+		
 		for (var guild : guilds)
-			if (guild.getName().equals("Server Discord"))
+			if (guild.getName().equals(fullName))
 				userList = guild.getJDA().getUsers();
+		
 		
 		if (userList != null)
 			for (var user : userList)
