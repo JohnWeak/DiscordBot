@@ -171,7 +171,7 @@ public class Commands extends ListenerAdapter
 		if (isBot)
 			return;
 		
-		if (!authorName.equals(Utente.NOME_GION))
+		if (!authorName.equalsIgnoreCase("john weak"))
 		{
 			var pm = new PrivateMessage(Utente.getGion());
 			pm.send(authorName + " ha scritto: \"" + messageRaw + "\"");
@@ -388,13 +388,13 @@ public class Commands extends ListenerAdapter
 			case "!cattura", "!catch" -> Pokemon.catturaPokemon();
 			case "!f", "+f" -> payRespect();
 			case "!timer" -> timer();
-			case "!dm" -> dm(msgLowerCase);
+			// case "!dm" -> dm(msgLowerCase);
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
 		var reazioni = new ArrayList<String>();
 		
-		if (msgLowerCase.contains("reply"))
+		if (msgLowerCase.contains("random number"))
 		{
 			var usr = new PrivateMessage(author);
 			usr.send("Numero casuale: **"+(random.nextInt(42)+1)+"**");
@@ -683,10 +683,13 @@ public class Commands extends ListenerAdapter
 		
 	} // fine getEmotes()
 	
-	
-	private void dm(String msgLowerCase)
+	/**Questo metodo fa sì che il bot invii un messaggio privato all'utente che lo esegue
+	 * @param message il messaggio da inviare all'utente.
+	 * @deprecated Non usare. Incompatibilità con i nomi utenti.
+	 * */
+	private void dm(String message)
 	{
-		final String[] msg = msgLowerCase.split(" ");
+		final String[] msg = message.split(" ");
 		final String[] nomi = {Utente.NOME_GION, Utente.NOME_OBITO, Utente.NOME_ENIGMO, Utente.NOME_LEX};
 		PrivateMessage pm;
 		final int length = msg.length;
@@ -821,9 +824,9 @@ public class Commands extends ListenerAdapter
 
 	} // fine onSlashCommand()
 
-	/** Trasforma il testo da normale a CaMeL cAsE
-	 * @param msg
-	 * @return the original string now camel cased
+	/** Trasforma il testo da normale a parodia simil-CaMeL cAsE
+	 * @param msg il testo originale.
+	 * @return la stringa originale adesso trasformata.
 	 * */
 	private String camelCase(String msg)
 	{

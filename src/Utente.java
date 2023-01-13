@@ -20,7 +20,7 @@ public abstract class Utente
 	public static final String ID_BOWOT = "836586862213726228";
 	
 	// NOMI
-	public static final String NOME_GION = "JOHNWEAK";
+	public static final String NOME_GION = "JOHN WEAK";
 	public static final String NOME_ENIGMO = "ENIGMO";
 	public static final String NOME_OBITO = "ÒBITO";
 	public static final String NOME_LEX = "DIODELAG";
