@@ -119,23 +119,6 @@ public class Commands extends ListenerAdapter
 		
 		// moduloDiSicurezza();
 		
-		var users = new String[]{Utente.ID_GION, Utente.ID_ENIGMO, Utente.ID_OBITO, Utente.ID_LEX};
-		
-		var x = jda.retrieveUserById(users[0]).complete();
-		
-		for (var user : users)
-			jda.retrieveUserById(user).queue();
-		
-		try
-		{
-			var pm = new PrivateMessage(x, canaleBot);
-			pm.send("ooga booga");
-		}catch (Exception e)
-		{
-			canaleBot.sendMessage(""+e).queue();
-		}
-		// channel.sendMessage("DEBUG: sto dopo il `retrieveUserById()`").queue();
-		
 		emoteList = canaleBot.getJDA().getEmotes();
 		
 		if (sendMsgActivity)
@@ -1722,21 +1705,6 @@ public class Commands extends ListenerAdapter
 			case 3 -> "le";
 			default -> "";
 		};
-	}
-	
-	/**Manda un messaggio in chat privata*/
-	public static void sendPrivateMessage(User user, Message content)
-	{
-		user.openPrivateChannel().flatMap(channel -> channel.sendMessage(content)).queue(l->
-		{
-		
-		});
-	} // fine sendPrivateMessage()
-	
-	
-	public static void sendPrivateMessage(User user, String content)
-	{
-		user.openPrivateChannel().flatMap(channel -> channel.sendMessage(content)).queue();
 	}
 	
 	/**Questo metodo invia un embed al canale da cui ha ricevuto l'ultimo messaggio.*/

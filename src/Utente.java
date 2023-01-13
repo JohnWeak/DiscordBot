@@ -56,9 +56,7 @@ public abstract class Utente
 				default -> "dioporco";
 			};
 			
-		    jda.retrieveUserById(utente).queue(); // prende l'utente e lo salva in cache
-			user = jda.getUserById(utente); // ottiene un riferimento all'utente
-			channel.sendMessage("User: `"+user+"`").queue();
+		    user = jda.retrieveUserById(utente).complete();
 			
 		}
 		catch (Exception e)

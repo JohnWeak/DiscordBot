@@ -20,7 +20,9 @@ public class PrivateMessage
 	{
 		try
 		{
-			user.openPrivateChannel().flatMap(channel -> channel.sendMessage(content)).queue(l->
+			var utente = messageChannel.getJDA().retrieveUserById(user.getId()).complete();
+			
+			utente.openPrivateChannel().flatMap(channel -> channel.sendMessage(content)).queue(l->
 			{
 			
 			});
