@@ -88,5 +88,10 @@ public abstract class Utente
 		return Commands.message.getJDA().retrieveUserById(id).complete();
 	}
 	
+	public static User getGion()
+	{
+		return Commands.message.getJDA().retrieveUserById(Utente.ID_GION).complete();
+	}
+	
 	
 }

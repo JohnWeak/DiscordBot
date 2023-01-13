@@ -4,16 +4,15 @@ import net.dv8tion.jda.api.entities.User;
 public class PrivateMessage
 {
 	private final User user;
-	private final MessageChannel messageChannel;
+	private MessageChannel messageChannel;
 	
 	/**Questa classe permette di inviare messaggi privati agli utenti passati tramite parametro
 	 * @param user Utente a cui inviare il messaggio privato.
-	 * @param messageChannel Canale su cui inviare il testo dell'eccezione in caso di errore.
 	 */
-	public PrivateMessage(User user, MessageChannel messageChannel)
+	public PrivateMessage(User user)
 	{
 		this.user = user;
-		this.messageChannel = messageChannel;
+		setBotChannel();
 	}
 	
 	public void send(String content)
@@ -31,5 +30,10 @@ public class PrivateMessage
 		{
 			messageChannel.sendMessage("`"+this.getClass()+"`\n"+e).queue();
 		}
+	}
+	
+	private void setBotChannel()
+	{
+		messageChannel = Commands.message.getJDA().getTextChannelsByName(Commands.botChannel,true).get(0);
 	}
 }

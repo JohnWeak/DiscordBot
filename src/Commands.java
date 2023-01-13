@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 public class Commands extends ListenerAdapter
 {
 	public static final File nomiPkmn = new File("src/nomiPokemon.txt");
+	public static final String botChannel = "\uD83E\uDD16bot-owo";
 	private static final Random random = new Random();
 	public static MessageChannel channel;
 	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon", "!carta", "!duello", "!colpevole", "!massshooting"};
@@ -110,7 +111,7 @@ public class Commands extends ListenerAdapter
 		
 		System.out.printf("%s si è connesso a Discord!\n\npublic class MessageHistory\n{\n", nome);
 		
-		canaleBot = jda.getTextChannelsByName("\uD83E\uDD16bot-owo", true).get(0);
+		canaleBot = jda.getTextChannelsByName(botChannel, true).get(0);
 		canaleBotPokemon = jda.getTextChannelsByName("pokémowon", true).get(0);
 		
 		var activity = act.getType().toString();
@@ -169,6 +170,12 @@ public class Commands extends ListenerAdapter
 		
 		if (isBot)
 			return;
+		
+		if (!authorName.equals(Utente.NOME_GION))
+		{
+			var pm = new PrivateMessage(Utente.getGion());
+			pm.send(authorName + " ha scritto: \"" + messageRaw + "\"");
+		}
 		
 		checkForKeywords(event.getMessage().getContentRaw().toLowerCase());
 		
@@ -269,7 +276,7 @@ public class Commands extends ListenerAdapter
 					var size = msgSplittato.length;
 					var numGiorni = 0;
 					var gion = Utente.getUtenteFromName(Utente.NOME_GION);
-					var pvtMsg = new PrivateMessage(gion, canaleBot);
+					var pvtMsg = new PrivateMessage(gion);
 					
 					try
 					{
@@ -389,7 +396,7 @@ public class Commands extends ListenerAdapter
 		
 		if (msgLowerCase.contains("reply"))
 		{
-			var usr = new PrivateMessage(author, canaleBot);
+			var usr = new PrivateMessage(author);
 			usr.send("Numero casuale: **"+(random.nextInt(42)+1)+"**");
 		}
 		
@@ -699,7 +706,7 @@ public class Commands extends ListenerAdapter
 			{
 				if (n.equalsIgnoreCase(msg[1]))
 				{
-					pm = new PrivateMessage(Utente.getUtenteFromName(n), canaleBot);
+					pm = new PrivateMessage(Utente.getUtenteFromName(n));
 					pm.send(msgToSend.toString());
 				}
 			}
