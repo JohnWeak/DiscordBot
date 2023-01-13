@@ -124,9 +124,14 @@ public class Commands extends ListenerAdapter
 		for (var user : users)
 			jda.retrieveUserById(user).queue();
 		
-		var pm = new PrivateMessage(jda.getUserById(Utente.ID_GION), canaleBot);
-		pm.send("ooga booga");
-		
+		try
+		{
+			var pm = new PrivateMessage(jda.getUserById(Utente.ID_GION), canaleBot);
+			pm.send("ooga booga");
+		}catch (Exception e)
+		{
+			canaleBot.sendMessage(""+e).queue();
+		}
 		// channel.sendMessage("DEBUG: sto dopo il `retrieveUserById()`").queue();
 		
 		emoteList = canaleBot.getJDA().getEmotes();
