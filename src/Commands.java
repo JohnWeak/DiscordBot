@@ -244,7 +244,7 @@ public class Commands extends ListenerAdapter
 	
 	
 	/** Controlla che il messaggio abbia le parole chiave per attivare i comandi (o le reazioni) del bot
-	 * @param msgLowerCase la stringa del messaggio convertita in minuscolo
+	 * @param msgLowerCase la stringa del messaggio inviato convertita in minuscolo.
 	 * */
 	public void checkForKeywords(String msgLowerCase)
 	{
@@ -381,6 +381,7 @@ public class Commands extends ListenerAdapter
 			case "!cattura", "!catch" -> Pokemon.catturaPokemon();
 			case "!f", "+f" -> payRespect();
 			case "!timer" -> timer();
+			case "!dm" -> dm(msgLowerCase);
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -675,6 +676,37 @@ public class Commands extends ListenerAdapter
 		
 	} // fine getEmotes()
 	
+	
+	private void dm(String msgLowerCase)
+	{
+		final String[] msg = msgLowerCase.split(" ");
+		final String[] nomi = {Utente.NOME_GION, Utente.NOME_OBITO, Utente.NOME_ENIGMO, Utente.NOME_LEX};
+		User user;
+		PrivateMessage pm;
+		final int length = msg.length;
+		String msgToSend = "Prova test 123";
+		
+		if (length > 2)
+			msgToSend = msg[2];
+		
+		if (length > 1)
+		{
+			for (var n : nomi)
+			{
+				if (n.equalsIgnoreCase(msg[1]))
+				{
+					pm = new PrivateMessage(Utente.getUtenteFromName(n), canaleBot);
+					pm.send(msgToSend);
+				}
+			}
+		}
+		else
+		{
+			var msgUso = "Usa `!dm <utente> [messaggio]` per fare sì che io importuni in privato l'utente da te specificato.";
+			Commands.channel.sendMessage(msgUso).queue();
+		}
+		
+	}
 	
 	private boolean contains(String source, String[] subItem)
 	{

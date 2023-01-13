@@ -1,8 +1,6 @@
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 
-import java.util.Locale;
-
 public abstract class Utente
 {
 	// Numeri (discriminator)
@@ -24,21 +22,20 @@ public abstract class Utente
 	// NOMI
 	public static final String NOME_GION = "JOHNWEAK";
 	public static final String NOME_ENIGMO = "ENIGMO";
-	public static final String NOME_OBITO = "OBITO";
+	public static final String NOME_OBITO = "ÒBITO";
 	public static final String NOME_LEX = "DIODELAG";
 	public static final String NOME_OWOBOT = "OWOBOT";
 	public static final String NOME_BOWOT = "BOWOT";
 	
 	
 	/**<h3>Questo metodo restituisce l'oggetto utente (User) a partire dal nome passato come parametro.</h3>
-	 * @param message Oggetto di tipo <code>message</code> necessario per ottenere i dati dal JDA.<br>
 	 * @param nome Nome dell'utente da cercare.
 	 * @return Oggetto <code>User</code> contentente l'utente richiesto.<br><code>null</code> in caso di errore.
 	 * */
-	public static User getUtenteFromName(Message message, String nome)
+	public static User getUtenteFromName(String nome)
 	{
-		var jda = message.getJDA();
-		var channel = message.getChannel();
+		var jda = Commands.message.getJDA();
+		var channel = Commands.message.getChannel();
 		var utente = "";
 		User user;
 		
@@ -86,11 +83,9 @@ public abstract class Utente
 		};
 	}
 	
-	public static User getUtenteFromID(Message message, String id)
+	public static User getUtenteFromID(String id)
 	{
-		var jda = message.getJDA();
-		jda.retrieveUserById(id).queue();
-		return jda.getUserById(id);
+		return Commands.message.getJDA().retrieveUserById(id).complete();
 	}
 	
 	
