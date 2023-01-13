@@ -683,11 +683,11 @@ public class Commands extends ListenerAdapter
 		final String[] nomi = {Utente.NOME_GION, Utente.NOME_OBITO, Utente.NOME_ENIGMO, Utente.NOME_LEX};
 		PrivateMessage pm;
 		final int length = msg.length;
-		StringBuilder msgToSend = new StringBuilder("Prova test 123");
+		String msgToSend = "Prova test 123";
 		
 		if (length > 2)
 			for (int i = 2; i < length; i++)
-				msgToSend.append(msg[i]).append(" ");
+				msgToSend = "".concat(msg[i]).concat(" ");
 		
 		if (length > 1)
 		{
@@ -696,7 +696,7 @@ public class Commands extends ListenerAdapter
 				if (n.equalsIgnoreCase(msg[1]))
 				{
 					pm = new PrivateMessage(Utente.getUtenteFromName(n), canaleBot);
-					pm.send(msgToSend.toString());
+					pm.send(msgToSend);
 				}
 			}
 		}
