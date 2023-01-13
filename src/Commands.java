@@ -268,7 +268,7 @@ public class Commands extends ListenerAdapter
 					var msgSplittato = msgLowerCase.split(" ");
 					var size = msgSplittato.length;
 					var numGiorni = 0;
-					var gion = Utente.getUtenteFromName(message, Utente.NOME_GION);
+					var gion = Utente.getUtenteFromName(Utente.NOME_GION);
 					var pvtMsg = new PrivateMessage(gion, canaleBot);
 					
 					try
