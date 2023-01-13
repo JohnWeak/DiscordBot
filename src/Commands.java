@@ -121,12 +121,14 @@ public class Commands extends ListenerAdapter
 		
 		var users = new String[]{Utente.ID_GION, Utente.ID_ENIGMO, Utente.ID_OBITO, Utente.ID_LEX};
 		
+		var x = jda.retrieveUserById(users[0]).complete();
+		
 		for (var user : users)
 			jda.retrieveUserById(user).queue();
 		
 		try
 		{
-			var pm = new PrivateMessage(jda.getUserById(Utente.ID_GION), canaleBot);
+			var pm = new PrivateMessage(x, canaleBot);
 			pm.send("ooga booga");
 		}catch (Exception e)
 		{
