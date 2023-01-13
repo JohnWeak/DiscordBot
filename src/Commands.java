@@ -689,7 +689,9 @@ public class Commands extends ListenerAdapter
 		{
 			msgToSend = new StringBuilder();
 			for (int i = 2; i < length; i++)
+			{
 				msgToSend.append(msg[i].concat(" "));
+			}
 		}
 		if (length > 1)
 		{
