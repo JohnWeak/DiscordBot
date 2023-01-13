@@ -324,13 +324,20 @@ public class Pokemon
 		// a questo punto il pokemon è attivo nel canale
 		pokemon.setActive(true);
 		
-		var t = new ThreadPokemon(pokemon);
-		t.setEmbedBuilder(embedBuilder);
-		t.setTc(Commands.canaleBotPokemon);
-		t.timeoutTime(t.MINUTES, random.nextInt(0, 60));
-		t.start();
+		try
+		{
+			var t = new ThreadPokemon(pokemon);
+			t.setEmbedBuilder(embedBuilder);
+			t.setTc(Commands.canaleBotPokemon);
+			t.timeoutTime(t.MINUTES, random.nextInt(0, 60));
+			t.start();
+		}
+		catch (Exception e)
+		{
+			Commands.canaleBotPokemon.sendMessage(""+e).queue();
+			//Commands.canaleBotPokemon.sendMessage("test: " + Thread.currentThread()).queue();
+		}
 		
-		Commands.canaleBotPokemon.sendMessage("test: " + Thread.currentThread()).queue();
 		
 	} // fine singleEncounter
 	
