@@ -395,10 +395,9 @@ public class Commands extends ListenerAdapter
 		var reazioni = new ArrayList<String>();
 		
 		if (msgLowerCase.contains("random number"))
-		{
-			var usr = new PrivateMessage(author);
-			usr.send("Numero casuale: **"+(random.nextInt(42)+1)+"**");
-		}
+			new PrivateMessage(author)
+				.send("Numero casuale: **"+(random.nextInt(42)+1)+"**");
+		
 		
 		if (msgLowerCase.contains("ehi modulo"))
 			ehiModulo();
