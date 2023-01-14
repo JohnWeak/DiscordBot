@@ -282,16 +282,16 @@ public class Commands extends ListenerAdapter
 					{
 						for (short i = 0; i < size; i++)
 						{
-							if (msgSplittato[i].equals("daily") && msgSplittato[i + 1].equals("streak!"))
+							if (msgSplittato[i].equals("daily") && msgSplittato[i + 1].equals("streak**!"))
 							{
 								numGiorni = Integer.parseInt(msgSplittato[i - 1].substring(2));
 								break;
 							}
 						}
 						
-						pvtMsg.send("Daily: "+numGiorni); // mandami un messaggio privato con il numero
-						var conferma = "<@"+Utente.ID_GION+">Ti ho mandato un messaggio privato. Se non lo hai ricevuto: AARGH.";
-						canaleBot.sendMessage(conferma).queue();
+						pvtMsg.send("Daily di " + authorName+":"+numGiorni); // mandami un messaggio privato con il numero
+						//var conferma = "<@"+Utente.ID_GION+">Ti ho mandato un messaggio privato. Se non lo hai ricevuto: AARGH.";
+						//canaleBot.sendMessage(conferma).queue();
 						
 						
 					} // fine try
