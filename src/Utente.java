@@ -1,4 +1,3 @@
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 
 public abstract class Utente
@@ -20,7 +19,8 @@ public abstract class Utente
 	public static final String ID_BOWOT = "836586862213726228";
 	
 	// NOMI
-	public static final String NOME_GION = "JOHN WEAK";
+	public static final String NOME_JOHN = "JOHNWEAK";
+	public static final String NOME_JOHN2 = "JOHN WEAK";
 	public static final String NOME_ENIGMO = "ENIGMO";
 	public static final String NOME_OBITO = "ÒBITO";
 	public static final String NOME_LEX = "DIODELAG";
@@ -43,7 +43,7 @@ public abstract class Utente
 		{
 			utente = switch (nome)
 			{
-				case NOME_GION -> ID_GION;
+				case NOME_JOHN -> ID_GION;
 				case NOME_ENIGMO -> ID_ENIGMO;
 				case NOME_LEX -> ID_LEX;
 				case NOME_OBITO -> ID_OBITO;
@@ -72,7 +72,7 @@ public abstract class Utente
 	{
 		return switch (discriminator)
 		{
-			case Utente.GION -> Utente.NOME_GION;
+			case Utente.GION -> Utente.NOME_JOHN;
 			case Utente.ENIGMO -> Utente.NOME_ENIGMO;
 			case Utente.LEX -> Utente.NOME_LEX;
 			case Utente.OBITO -> Utente.NOME_OBITO;
