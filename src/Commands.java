@@ -34,23 +34,11 @@ public class Commands extends ListenerAdapter
 	public static final String botChannel = "\uD83E\uDD16bot-owo";
 	private static final Random random = new Random();
 	public static MessageChannel channel;
-	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon", "!carta", "!duello", "!colpevole", "!massshooting"};
-	private static final String[] listaDescrizioni =
-	{
-		"Il bot lancerà una moneta.",
-		"Permette di creare sondaggi.",
-		"Visualizza le informazioni. Proprio quelle che stai leggendo!",
-		"Chiedi un responso all'Entità Superiore: la magica palla 8.",
-		"Acchiappali tutti!",
-		"Genera una carta da gioco.",
-		"Sfida un giocatore ad un duello di carte.",
-		"Lascia che RNGesus decida la percentuale di colpevolezza di un altro utente.",
-		"Ottieni il resoconto delle sparatorie di massa negli USA. Avviso: sono dati reali.",
-	}; // TODO: trasformare listaComandi e listaDescrizioni in una singola hashmap
 	private static int messaggiInviati = 0;
 	private static int limite;
 	public static String authorName;
 	private static long id;
+	private static HashMap<String,String> commandsHashMap;
 	private static final Locale locale = Locale.ITALIAN;
 	public static Message message;
 	public static String messageRaw;
@@ -74,7 +62,7 @@ public class Commands extends ListenerAdapter
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
 	private String getSaluto()
 	{
-		var c = new GregorianCalendar();
+		var c = new GregorianCalendar(Locale.ITALY);
 		var saluto = "";
 		var hour = c.get(Calendar.HOUR_OF_DAY);
 		var month = c.get(Calendar.MONTH);
@@ -104,11 +92,11 @@ public class Commands extends ListenerAdapter
 	/** onReady() viene eseguita soltanto all'avvio del bot */
 	public void onReady(@NotNull ReadyEvent event)
 	{
+		commandsHashMap = Cmd.init();
+		
 		var jda = event.getJDA();
 		var nome = jda.getSelfUser().getName();
 		var act = Objects.requireNonNull(jda.getPresence().getActivity());
-		
-//		var textChannels = jda.getTextChannels();
 		
 		System.out.printf("%s si è connesso a Discord!\n\npublic class MessageHistory\n{\n", nome);
 		
@@ -1472,15 +1460,15 @@ public class Commands extends ListenerAdapter
 	public void info()
 	{
 		var embedBuilder = new EmbedBuilder();
-		var size = listaComandi.length;
+		var size = commandsHashMap.size();
 		var urlOwO = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--amf4Rvt7--%2Ft_Preview%2Fb_rgb%3A191919%2Cc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1518097892%2Fproduction%2Fdesigns%2F2348593_0.jpg&f=1&nofb=1";
 		var urlTitle = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 		
 		embedBuilder.setTitle("Informazioni", urlTitle);
 		embedBuilder.setDescription("Questo bot permette di lanciare monete, creare sondaggi e, soprattutto, essere un rompiballe.");
 
-		for (int i = 0; i < size; i++)
-			embedBuilder.addField("`"+listaComandi[i]+"`", "*"+listaDescrizioni[i]+"*", false);
+		for (String s : commandsHashMap.keySet())
+			embedBuilder.addField("`"+s+"`", "*"+commandsHashMap.get(s)+"*", false);
 		
 		embedBuilder.setThumbnail(urlOwO)
 			.setColor(0xFF0000)
@@ -1529,8 +1517,11 @@ public class Commands extends ListenerAdapter
 		
 	} // fine eightBall()
 
-	/** Mette in pausa il thread per un totale di secondi pari a millis + un valore casuale fra 0 e 'bound'.
-	 * Parametri negativi faranno sì che vengano usati i valori di default (millis=<b>1500</b> e bound=<b>500</b>) */
+	/** Mette in pausa il thread per un totale di secondi pari a <code>millis</code> + un valore casuale fra <code>0</code> e <code>bound</code>.
+	 * <br>Parametri negativi faranno sì che vengano usati i valori di default:<br><code>millis=1500</code><br><code>bound=500</code>.
+	 * @param millis tempo minimo per il quale deve dormire il thread.
+	 * @param bound valore casuale da sommare a <code>millis</code>. 0 = nessun tempo di sleep aggiuntivo.
+	 * */
 	public static void pause(int millis, int bound)
 	{
 		if (millis < 0)
