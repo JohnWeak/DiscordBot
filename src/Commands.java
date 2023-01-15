@@ -717,7 +717,7 @@ public class Commands extends ListenerAdapter
 			Commands.channel.sendMessage(msgUso).queue();
 		}
 		
-	}
+	} // fine metodo dm()
 	
 	private boolean contains(String source, String[] subItem)
 	{
@@ -734,12 +734,7 @@ public class Commands extends ListenerAdapter
 				return true;
 		}
 		return false;
-		
-//		String pattern = "\\b" + subItem + "\\b";
-//		Pattern p = Pattern.compile(pattern);
-//		Matcher m = p.matcher(source);
-//		return m.find();
-	}
+	} // fine metodo contains()
 	
 	private void timer()
 	{
