@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
+import org.apache.commons.collections4.iterators.UnmodifiableIterator;
 import org.jetbrains.annotations.NotNull;
 
 import org.json.simple.JSONArray;
@@ -142,7 +143,7 @@ public class Commands extends ListenerAdapter
 		if (event.isFromGuild())
 			guildMessage(event, author.isBot());
 		else
-			privateMessage(event, author.isBot());
+			privateMessage(author.isBot());
 		
 	} // fine onMessageReceived()
 	
@@ -163,7 +164,7 @@ public class Commands extends ListenerAdapter
 		checkForKeywords(messageRaw.toLowerCase());
 	} // fine guildEvent()
 	
-	public void privateMessage(MessageReceivedEvent event, boolean isBot)
+	public void privateMessage(boolean isBot)
 	{
 		var botOrHuman = isBot ? "Bot" : "User";
 		System.out.printf("\t%s %s = \"%s\"; // Private Message\n}\r", botOrHuman, authorName, messageRaw);
@@ -177,7 +178,7 @@ public class Commands extends ListenerAdapter
 			pm.send(authorName + " ha scritto: \"" + messageRaw + "\"");
 		}
 		
-		checkForKeywords(event.getMessage().getContentRaw().toLowerCase());
+		checkForKeywords(messageRaw.toLowerCase());
 		
 	} // fine privateMessage()
 	
@@ -261,6 +262,11 @@ public class Commands extends ListenerAdapter
 		var reply = false;
 		var msgReply = "";
 		
+		//TODO: da rimuovere
+		new PrivateMessage(Utente.getGion()).send("STRIPPED: "+message.getContentStripped());
+		new PrivateMessage(Utente.getGion()).send("DISPLAY: "+message.getContentDisplay());
+		new PrivateMessage(Utente.getGion()).send("RAW: "+message.getContentRaw());
+		
 		// se è un bot a mandare il messaggio, ignoralo per evitare loop di messaggi
 		if (author.isBot())
 		{
@@ -273,6 +279,7 @@ public class Commands extends ListenerAdapter
 				if (msgLowerCase.contains("daily streak"))
 				{
 					var msgSplittato = msgLowerCase.split(" ");
+					var auth = findAuthorDaily().getName();
 					var size = msgSplittato.length;
 					var numGiorni = 0;
 					var gion = Utente.getUtenteFromName(Utente.NOME_JOHN);
@@ -289,7 +296,7 @@ public class Commands extends ListenerAdapter
 							}
 						}
 						
-						pvtMsg.send("Daily di " + authorName+":"+numGiorni); // mandami un messaggio privato con il numero
+						pvtMsg.send("Daily di " + auth +":"+numGiorni); // mandami un messaggio privato con il numero
 						//var conferma = "<@"+Utente.ID_GION+">Ti ho mandato un messaggio privato. Se non lo hai ricevuto: AARGH.";
 						//canaleBot.sendMessage(conferma).queue();
 						
@@ -308,8 +315,7 @@ public class Commands extends ListenerAdapter
 					}
 					else
 					{
-						var n = findAuthorDaily();
-						var name = (n == null ? "Persona Ignota" : n);
+						var name = (auth == null ? "Persona Ignota" : auth);
 						
 						var years = (numGiorni / 365);
 						var mess = "Complimenti, " + name + "! Sono " + years + " anni di OwO daily!";
@@ -788,14 +794,14 @@ public class Commands extends ListenerAdapter
 	
 	
 	/**Trova l'autore del messaggio per l'anniversario dell'owo daily*/
-	private String findAuthorDaily()
+	private User findAuthorDaily()
 	{
 		final var MAX_SIZE = 3;
-		String auth = null;
+		User auth = null;
 		var x = channel.getHistory().retrievePast(MAX_SIZE).complete();
 		try
 		{
-			auth = x.get(2).getAuthor().getName();
+			auth = x.get(2).getAuthor();
 //				var s = x.get(i).getContentRaw();
 //				var msgPOG = auth + " >\t" + s;
 				
