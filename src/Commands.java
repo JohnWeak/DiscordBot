@@ -336,7 +336,9 @@ public class Commands extends ListenerAdapter
 			var trigger = random.nextBoolean();
 			
 			if (trigger)
+			{
 				triggera(discriminator);
+			}
 			else
 			{
 				switch (discriminator)
@@ -347,14 +349,9 @@ public class Commands extends ListenerAdapter
 						react("vergognati");
 						message.reply("Òbito vergognati").queue();
 					}
-					case Utente.ENIGMO ->
-						react("pigeon");
-					
-					case Utente.LEX ->
-						channel.addReactionById(id, "🇷🇴").queue();
-					
-					case Utente.GION ->
-						react("smh");
+					case Utente.ENIGMO -> react("pigeon");
+					case Utente.LEX -> channel.addReactionById(id, "🇷🇴").queue();
+					case Utente.GION -> react("smh");
 					
 				} // fine switch
 				
