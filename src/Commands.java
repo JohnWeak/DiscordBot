@@ -284,7 +284,7 @@ public class Commands extends ListenerAdapter
 					{
 						for (short i = 0; i < size; i++)
 						{
-							if (msgSplittato[i].equals("daily") && msgSplittato[i + 1].equals("streak**!"))
+							if (msgSplittato[i].equals("daily") && msgSplittato[i + 1].equals("streak!"))
 							{
 								numGiorni = Integer.parseInt(msgSplittato[i - 1].substring(2));
 								break;
