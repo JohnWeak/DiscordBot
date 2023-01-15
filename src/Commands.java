@@ -63,7 +63,7 @@ public class Commands extends ListenerAdapter
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
 	private String getSaluto()
 	{
-		var c = new GregorianCalendar(TimeZone.getDefault(), Locale.ITALY);
+		var c = new GregorianCalendar(TimeZone.getTimeZone("Europe/Rome"), Locale.ITALY);
 		var saluto = "";
 		var hour = c.get(Calendar.HOUR_OF_DAY);
 		var month = c.get(Calendar.MONTH);
