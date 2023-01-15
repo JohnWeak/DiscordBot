@@ -22,6 +22,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.*;
@@ -62,7 +63,7 @@ public class Commands extends ListenerAdapter
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
 	private String getSaluto()
 	{
-		var c = new GregorianCalendar(Locale.ITALY);
+		var c = new GregorianCalendar(TimeZone.getDefault(), Locale.ITALY);
 		var saluto = "";
 		var hour = c.get(Calendar.HOUR_OF_DAY);
 		var month = c.get(Calendar.MONTH);
