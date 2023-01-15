@@ -262,11 +262,6 @@ public class Commands extends ListenerAdapter
 		var reply = false;
 		var msgReply = "";
 		
-		//TODO: da rimuovere
-		new PrivateMessage(Utente.getGion()).send("STRIPPED: "+message.getContentStripped());
-		new PrivateMessage(Utente.getGion()).send("DISPLAY: "+message.getContentDisplay());
-		new PrivateMessage(Utente.getGion()).send("RAW: "+message.getContentRaw());
-		
 		// se è un bot a mandare il messaggio, ignoralo per evitare loop di messaggi
 		if (author.isBot())
 		{
