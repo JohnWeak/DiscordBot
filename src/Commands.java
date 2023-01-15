@@ -310,6 +310,7 @@ public class Commands extends ListenerAdapter
 						if (auth.equals(""))
 						{
 							canaleBot.sendMessage("<@"+Utente.ID_GION+">\n`auth è una stringa vuota`.").queue();
+							return;
 						}
 						
 						var years = (numGiorni / 365);
