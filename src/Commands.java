@@ -290,12 +290,7 @@ public class Commands extends ListenerAdapter
 								break;
 							}
 						}
-						
 						pvtMsg.send("Daily di " + auth +":"+numGiorni); // mandami un messaggio privato con il numero
-						//var conferma = "<@"+Utente.ID_GION+">Ti ho mandato un messaggio privato. Se non lo hai ricevuto: AARGH.";
-						//canaleBot.sendMessage(conferma).queue();
-						
-						
 					} // fine try
 					catch (Exception exception)
 					{
