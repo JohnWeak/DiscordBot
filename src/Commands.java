@@ -132,7 +132,7 @@ public class Commands extends ListenerAdapter
 	{ //
 		identifyLatestMessage(null, event);
 		aggiungiReazioni();
-		checkForKeywords(messageRaw.toLowerCase(Locale.ROOT));
+		checkForKeywords(message.getContentStripped().toLowerCase());
 	} // fine onMessageUpdate()
 	
 	/** Gestisce i messaggi inviati in qualsiasi canale testuale di qualsiasi server in cui è presente il bot */
@@ -161,7 +161,7 @@ public class Commands extends ListenerAdapter
 		System.out.printf(mockupCode + "\n}\r", botOrHuman, authorName, messageRaw, messageChannelString, guild, dataFormattata);
 		
 		aggiungiReazioni();
-		checkForKeywords(messageRaw.toLowerCase());
+		checkForKeywords(message.getContentStripped().toLowerCase());
 	} // fine guildEvent()
 	
 	public void privateMessage(boolean isBot)
@@ -178,7 +178,7 @@ public class Commands extends ListenerAdapter
 			pm.send(authorName + " ha scritto: \"" + messageRaw + "\"");
 		}
 		
-		checkForKeywords(messageRaw.toLowerCase());
+		checkForKeywords(message.getContentStripped().toLowerCase());
 		
 	} // fine privateMessage()
 	
