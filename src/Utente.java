@@ -88,6 +88,8 @@ public abstract class Utente
 		return Commands.message.getJDA().retrieveUserById(id).complete();
 	}
 	
+	/** Metodo per ottenere più velocemente un utente.
+	 * @return <code>User</code> JohnWeak.*/
 	public static User getGion()
 	{
 		return Commands.message.getJDA().retrieveUserById(Utente.ID_GION).complete();

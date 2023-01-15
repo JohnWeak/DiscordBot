@@ -274,14 +274,17 @@ public class Commands extends ListenerAdapter
 				if (msgLowerCase.contains("daily streak"))
 				{
 					var msgSplittato = msgLowerCase.split(" ");
-					var auth = findAuthorDaily().getName();
+					var auth = "";
 					var size = msgSplittato.length;
+					final var MAX_SIZE = 3;
 					var numGiorni = 0;
-					var gion = Utente.getUtenteFromName(Utente.NOME_JOHN);
-					var pvtMsg = new PrivateMessage(gion);
+					var pvtMsg = new PrivateMessage(Utente.getGion());
+					var channelHistory = channel.getHistory().retrievePast(MAX_SIZE).complete();
 					
 					try
 					{
+						auth = channelHistory.get(2).getAuthor().getName();
+						
 						for (short i = 0; i < size; i++)
 						{
 							if (msgSplittato[i].contains("daily") && msgSplittato[i + 1].startsWith("streak"))
@@ -292,10 +295,9 @@ public class Commands extends ListenerAdapter
 						}
 						pvtMsg.send("Daily di " + auth +":"+numGiorni); // mandami un messaggio privato con il numero
 					} // fine try
-					catch (Exception exception)
+					catch (Exception e)
 					{
-						// siccome bot on server, adesso mi deve taggare per le eccezioni
-						var spamErrore = "<@180759114291478528>\n" + exception.getMessage();
+						var spamErrore = "<@"+Utente.ID_GION+">\n" + e.getMessage();
 						canaleBot.sendMessage(spamErrore).queue();
 					} // fine catch
 					
@@ -305,13 +307,15 @@ public class Commands extends ListenerAdapter
 					}
 					else
 					{
-						var name = (auth == null ? "Persona Ignota" : auth);
+						if (auth == null || auth.equals(""))
+						{
+							return;
+						}
 						
 						var years = (numGiorni / 365);
-						var mess = "Complimenti, " + name + "! Sono " + years + " anni di OwO daily!";
+						var mess = "Complimenti, " + auth + "! Sono " + years + " anni di OwO daily!";
 						channel.sendMessage(mess).queue();
 					}
-					
 				} // fine if daily streak
 			} // fine if equals 8456
 			
@@ -763,28 +767,6 @@ public class Commands extends ListenerAdapter
 			//channel.sendMessage("sto prima di chiudere la funzione `timer()`, sto na favola.").queue();
 		}
 	} // fine timer()
-	
-	
-	/**Trova l'autore del messaggio per l'anniversario dell'owo daily*/
-	private User findAuthorDaily()
-	{
-		final var MAX_SIZE = 3;
-		User auth = null;
-		var x = channel.getHistory().retrievePast(MAX_SIZE).complete();
-		try
-		{
-			auth = x.get(2).getAuthor();
-//				var s = x.get(i).getContentRaw();
-//				var msgPOG = auth + " >\t" + s;
-				
-//				channel.sendMessage(msgPOG).queue();
-
-//			System.out.println(channel.getHistory().retrievePast(3));
-		}catch (Exception e) { canaleBot.sendMessage(e.toString()).queue(); }
-		
-		return auth;
-	} // fine msgHistory()
-	
 	
 	/** Gestisce i comandi slash (ancora da implementare) */
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
