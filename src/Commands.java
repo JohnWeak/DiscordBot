@@ -634,13 +634,13 @@ public class Commands extends ListenerAdapter
 		}
 		
 		if (msgLowerCase.matches("egg *dog"))
-			channel.sendMessage(GIF.eggdog).queue();
+			message.reply(GIF.eggdog).queue();
 		
 		if (msgLowerCase.contains("spy") && random.nextInt(3) == 0)
-			channel.sendMessage(GIF.spyHang).queue();
+			message.reply(GIF.spyHang).queue();
 		
 		if (msgLowerCase.matches("you(?:'re| are) ugly"))
-			channel.sendMessage(GIF.engineer).queue();
+			message.reply(GIF.engineer).queue();
 		
 		if (msgLowerCase.contains("deez nuts") && discriminator.equals(Utente.ENIGMO))
 		{
