@@ -683,9 +683,7 @@ public class Commands extends ListenerAdapter
 	} // fine getEmotes()
 	
 	/**Questo metodo fa sì che il bot invii un messaggio privato all'utente che lo esegue
-	 * @param message il messaggio da inviare all'utente.
-	 * @deprecated Non usare. Incompatibilità con i nomi utenti.
-	 * */
+	 * @param message il messaggio da inviare all'utente. */
 	private void dm(String message)
 	{
 		final String[] msg = message.split(" ");
