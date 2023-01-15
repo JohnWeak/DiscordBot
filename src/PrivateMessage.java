@@ -12,8 +12,8 @@ public class PrivateMessage
 	public PrivateMessage(User user)
 	{
 		this.user = user;
-		setBotChannel();
-	}
+		messageChannel = Commands.message.getJDA().getTextChannelsByName(Commands.botChannel,true).get(0);
+	} // fine costruttore
 	
 	public void send(String content)
 	{
@@ -30,10 +30,6 @@ public class PrivateMessage
 		{
 			messageChannel.sendMessage("`"+this.getClass()+"`\n"+e).queue();
 		}
-	}
+	} // fine metodo send()
 	
-	private void setBotChannel()
-	{
-		messageChannel = Commands.message.getJDA().getTextChannelsByName(Commands.botChannel,true).get(0);
-	}
-}
+} // fine classe
