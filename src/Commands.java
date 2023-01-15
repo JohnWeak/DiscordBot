@@ -284,7 +284,7 @@ public class Commands extends ListenerAdapter
 					{
 						for (short i = 0; i < size; i++)
 						{
-							if (msgSplittato[i].equals("daily") && msgSplittato[i + 1].equals("streak!"))
+							if (msgSplittato[i].contains("daily") && msgSplittato[i + 1].startsWith("streak"))
 							{
 								numGiorni = Integer.parseInt(msgSplittato[i - 1].substring(2));
 								break;
@@ -425,25 +425,7 @@ public class Commands extends ListenerAdapter
 		
 		if (contains(msgLowerCase, new String[]{"coc", "cock", "cocktail", "clash of clans", "cocco"}))
 			reazioni.add(Emotes.kappaPride);
-			
-//		if (msgLowerCase.contains("no u") || msgLowerCase.contains("coc"))
-//		{
-//			var patternNoU = "\\bno u\\b";
-//			var patternCoc = "\\bcoc+k*\\b";
-//
-//			var p1 = Pattern.compile(patternNoU);
-//			var m1 = p1.matcher(msgLowerCase);
-//
-//			var p2 = Pattern.compile(patternCoc);
-//			var m2 = p2.matcher(msgLowerCase);
-//
-//			if (m1.find())
-//				reazioni.add(Emotes.NoU);
-//
-//			if (m2.find())
-//				reazioni.add(Emotes.kappaPride);
-//		}
-//
+		
 		if (msgLowerCase.contains("sabaping"))
 			reazioni.add("sabaping");
 		
