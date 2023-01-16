@@ -378,6 +378,7 @@ public class Commands extends ListenerAdapter
 			case "!f", "+f" -> payRespect();
 			case "!timer" -> timer();
 			case "!dm" -> dm(msgStrippedLowerCase);
+			case "!ch" -> channelHistory();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -652,6 +653,22 @@ public class Commands extends ListenerAdapter
 			channel.sendMessage(x).queue();
 		
 	} // fine getEmotes()
+	
+	private void channelHistory()
+	{
+		var history = channel.getHistory().retrievePast(3).complete();
+		var pm = new PrivateMessage(Utente.getGion());
+		for (var ms : history)
+		{
+			var auth = ms.getAuthor();
+			var name = auth.getName();
+			var disc = auth.getDiscriminator();
+			var m = ms.getContentStripped();
+			
+			pm.send(auth+" --- "+name+" ("+disc+"): " + m);
+		}
+		
+	} // fine metodo channelHistory()
 	
 	/**Questo metodo fa sì che il bot invii un messaggio privato all'utente che lo esegue
 	 * @param message il messaggio da inviare all'utente. */
