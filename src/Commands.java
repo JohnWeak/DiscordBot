@@ -266,10 +266,9 @@ public class Commands extends ListenerAdapter
 					var msgSplittato = msgStrippedLowerCase.split(" ");
 					var auth = "";
 					var size = msgSplittato.length;
-					final var MAX_SIZE = 2;
 					var numGiorni = 0;
 					var pvtMsg = new PrivateMessage(Utente.getGion());
-					var channelHistory = channel.getHistory().retrievePast(MAX_SIZE).complete();
+					var channelHistory = channel.getHistory().retrievePast(3).complete();
 					
 					try
 					{
