@@ -242,13 +242,13 @@ public class Commands extends ListenerAdapter
 	
 	
 	/** Controlla che il messaggio abbia le parole chiave per attivare i comandi (o le reazioni) del bot
-	 * @param msgLowerCase la stringa del messaggio inviato convertita in minuscolo.
+	 * @param msgStrippedLowerCase la stringa del messaggio inviato convertita in minuscolo.
 	 * */
-	public void checkForKeywords(String msgLowerCase)
+	public void checkForKeywords(String msgStrippedLowerCase)
 	{
 		final var discriminator = author.getDiscriminator();
 		final var args = messageRaw.split(" ");
-		final var comando = args[0].toLowerCase(Locale.ROOT);
+		final var comando = args[0].toLowerCase(locale);
 		var reply = false;
 		var msgReply = "";
 		
@@ -261,9 +261,9 @@ public class Commands extends ListenerAdapter
 				react("owo");
 				react("vergognati");
 				
-				if (msgLowerCase.contains("daily streak"))
+				if (msgStrippedLowerCase.contains("daily streak"))
 				{
-					var msgSplittato = msgLowerCase.split(" ");
+					var msgSplittato = msgStrippedLowerCase.split(" ");
 					var auth = "";
 					var size = msgSplittato.length;
 					final var MAX_SIZE = 3;
@@ -279,7 +279,7 @@ public class Commands extends ListenerAdapter
 						{
 							if (msgSplittato[i].contains("daily") && msgSplittato[i + 1].startsWith("streak"))
 							{
-								numGiorni = Integer.parseInt(msgSplittato[i - 1].substring(2));
+								numGiorni = Integer.parseInt(msgSplittato[i - 1]);
 								break;
 							}
 						}
@@ -318,7 +318,7 @@ public class Commands extends ListenerAdapter
 			return;
 		} // fine if isBot
 		
-		if (!msgLowerCase.contains("!pokemon")) // genera un pokemon casuale soltanto se non viene eseguito il comando
+		if (!msgStrippedLowerCase.contains("!pokemon")) // genera un pokemon casuale soltanto se non viene eseguito il comando
 			Pokemon.spawnPokemon();
 		
 		if (random.nextInt(500) == 42) // chance di reagire con emote personali
@@ -372,113 +372,113 @@ public class Commands extends ListenerAdapter
 			case "!war" -> new Clash().clashWar();
 			case "!league" -> new Clash().clashWarLeague(false);
 			case "!emotes" -> getEmotes();
-			case "!dado" -> dado(msgLowerCase);
+			case "!dado" -> dado(msgStrippedLowerCase);
 			case "!cattura", "!catch" -> Pokemon.catturaPokemon();
 			case "!f", "+f" -> payRespect();
 			case "!timer" -> timer();
-			case "!dm" -> dm(msgLowerCase);
+			case "!dm" -> dm(msgStrippedLowerCase);
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
 		var reazioni = new ArrayList<String>();
 		
-		if (msgLowerCase.contains("random number"))
+		if (msgStrippedLowerCase.contains("random number"))
 			new PrivateMessage(author)
 				.send("Numero casuale: **"+(random.nextInt(42)+1)+"**");
 		
 		
-		if (msgLowerCase.contains("ehi modulo"))
+		if (msgStrippedLowerCase.contains("ehi modulo"))
 			ehiModulo();
 		
-		if (msgLowerCase.matches(".*piccion[ei].*|.*pigeon.*"))
+		if (msgStrippedLowerCase.matches(".*piccion[ei].*|.*pigeon.*"))
 			new ThreadPigeon(authorName, channel).start();
 		
-		if (msgLowerCase.contains("owo"))
+		if (msgStrippedLowerCase.contains("owo"))
 			reazioni.add(Emotes.OwO);
 		
-		//if (msgLowerCase.contains("splitta questo"))
+		//if (msgStrippedLowerCase.contains("splitta questo"))
 		//	splitMsgAndReply();
 		
-		if (contains(msgLowerCase, new String[]{"pog", "manutenzione"}))
+		if (contains(msgStrippedLowerCase, new String[]{"pog", "manutenzione"}))
 			reazioni.add(Emotes.pogey);
 		
-		if (contains(msgLowerCase, new String[]{"òbito", "obito", "óbito"}))
+		if (contains(msgStrippedLowerCase, new String[]{"òbito", "obito", "óbito"}))
 			if (random.nextInt(50) == 42) // 2%
 			{
 				reazioni.add("obito");
 				reazioni.add("vergogna");
 			}
 		
-		if (msgLowerCase.contains("vergogna"))
+		if (msgStrippedLowerCase.contains("vergogna"))
 			reazioni.add("vergognati");
 		
-		if (contains(msgLowerCase, new String[]{"no u"}))
+		if (contains(msgStrippedLowerCase, new String[]{"no u"}))
 			reazioni.add(Emotes.NoU);
 		
-		if (contains(msgLowerCase, new String[]{"coc", "cock", "cocktail", "clash of clans", "cocco"}))
+		if (contains(msgStrippedLowerCase, new String[]{"coc", "cock", "cocktail", "clash of clans", "cocco"}))
 			reazioni.add(Emotes.kappaPride);
 		
-		if (msgLowerCase.contains("sabaping"))
+		if (msgStrippedLowerCase.contains("sabaping"))
 			reazioni.add("sabaping");
 		
-		if (msgLowerCase.matches(".*get *rekt"))
+		if (msgStrippedLowerCase.matches(".*get *rekt"))
 			reazioni.add(Emotes.getRekt);
 		
-		if (msgLowerCase.contains("smh"))
+		if (msgStrippedLowerCase.contains("smh"))
 			reazioni.add("smh");
 		
-		if (msgLowerCase.contains("giorno"))
+		if (msgStrippedLowerCase.contains("giorno"))
 			reazioni.add("giorno");
 		
-		if (msgLowerCase.matches(".*(?:hitman|uomo *colpo)"))
+		if (msgStrippedLowerCase.matches(".*(?:hitman|uomo *colpo)"))
 		{
 			reazioni.add(Emotes.pogey);
 			reazioni.add("hitman");
 		}
 		
-		if (msgLowerCase.matches(".*(?:x|ics)com"))
+		if (msgStrippedLowerCase.matches(".*(?:x|ics)com"))
 		{
 			reazioni.add(Emotes.pogey);
 			reazioni.add("xcom");
 		}
 		
-		if (msgLowerCase.matches("(?:pooch|might)yena"))
+		if (msgStrippedLowerCase.matches("(?:pooch|might)yena"))
 		{
 			reazioni.add(Emotes.pogey);
 			reazioni.add("❤️");
 		}
 		
-		if (contains(msgLowerCase, new String[]{"ape", "api", "apecar", "apicoltore"}))
+		if (contains(msgStrippedLowerCase, new String[]{"ape", "api", "apecar", "apicoltore"}))
 			reazioni.add("🐝");
 		
-		if (msgLowerCase.contains("cl__z"))
+		if (msgStrippedLowerCase.contains("cl__z"))
 		{
 			reply = true;
 			msgReply += "Sempre sia lodato\n";
 		}
 		
-		if (msgLowerCase.contains("scarab"))
+		if (msgStrippedLowerCase.contains("scarab"))
 			reazioni.add("scarab");
 		
-		if (contains(msgLowerCase, new String[]{"ingredibile", "andonio gonde"}))
+		if (contains(msgStrippedLowerCase, new String[]{"ingredibile", "andonio gonde"}))
 			reazioni.add(Emotes.ingredibile);
 		
-		if (contains(msgLowerCase, new String[]{"wtf", "what the fuck"}))
+		if (contains(msgStrippedLowerCase, new String[]{"wtf", "what the fuck"}))
 			reazioni.add(Emotes.wtf);
 		
-		if (msgLowerCase.matches(".*(?:guid|sto.*guidando|monkasteer)"))
+		if (msgStrippedLowerCase.matches(".*(?:guid|sto.*guidando|monkasteer)"))
 			reazioni.add(Emotes.monkaSTEER);
 		
-		if (msgLowerCase.contains("boris"))
+		if (msgStrippedLowerCase.contains("boris"))
 			reazioni.add(Emotes.borisK);
 
-		if (msgLowerCase.contains("òbito") && msgLowerCase.contains("india"))
+		if (msgStrippedLowerCase.contains("òbito") && msgStrippedLowerCase.contains("india"))
 		{
 			reazioni.add("òbito");
 			reazioni.add("🇮🇳");
 		}
 		
-		if (msgLowerCase.contains("live") && author.getDiscriminator().equals(Utente.OBITO))
+		if (msgStrippedLowerCase.contains("live") && author.getDiscriminator().equals(Utente.OBITO))
 			reazioni.add(Emotes.harry_fotter);
 		
 		
@@ -491,13 +491,13 @@ public class Commands extends ListenerAdapter
 			reazioni.clear();
 		}
 		
-		if (msgLowerCase.contains("russia") && random.nextInt(50) == 42)
+		if (msgStrippedLowerCase.contains("russia") && random.nextInt(50) == 42)
 		{
 			reply = true;
 			msgReply += "Ucraina Est*\n";
 		}
 		
-		if (msgLowerCase.contains("winnie the pooh"))
+		if (msgStrippedLowerCase.contains("winnie the pooh"))
 		{
 			reply = true;
 			msgReply += "⣿⣿⣿⣿⣿⠟⠋⠄⠄⠄⠄⠄⠄⠄⢁⠈⢻⢿⣿⣿⣿⣿⣿⣿⣿ \n" +
@@ -515,7 +515,7 @@ public class Commands extends ListenerAdapter
 					    "⠄⠄⠄⠄⠄⠄⠄⣿⡟⣷⠄⠹⣿⣿⣿⡿⠁⠄⠄⠄⠄⠄⠄⠄⠄ \n";
 		}
 		
-		if (msgLowerCase.equalsIgnoreCase("cancella questo messaggio"))
+		if (msgStrippedLowerCase.equalsIgnoreCase("cancella questo messaggio"))
 		{
 			if (random.nextInt(50) == 42)
 				message.reply("No.").queue(l -> react("getrekt"));
@@ -527,13 +527,13 @@ public class Commands extends ListenerAdapter
 			}
 		}
 		
-		if ((msgLowerCase.contains("ehil")) && author.getDiscriminator().equals("4781"))
+		if ((msgStrippedLowerCase.contains("ehil")) && author.getDiscriminator().equals("4781"))
 		{
 			reply = true;
 			msgReply += "Salve!";
 		}
 			
-		if (msgLowerCase.contains("non vedo l'ora") || msgLowerCase.contains("che ore sono") || msgLowerCase.contains("che ora è"))
+		if (msgStrippedLowerCase.contains("non vedo l'ora") || msgStrippedLowerCase.contains("che ore sono") || msgStrippedLowerCase.contains("che ora è"))
 		{
 			reply = true;
 			var date = new GregorianCalendar();
@@ -574,7 +574,7 @@ public class Commands extends ListenerAdapter
 		boolean flag = true;
 		for (String s : saluti)
 		{
-			if (flag && msgLowerCase.contains(s))
+			if (flag && msgStrippedLowerCase.contains(s))
 			{
 				flag = false;
 				final int bound = 1000;
@@ -585,52 +585,52 @@ public class Commands extends ListenerAdapter
 			}
 		}
 		
-		if (msgLowerCase.contains("dammi il 5") || msgLowerCase.contains("high five") || msgLowerCase.contains("dammi il cinque"))
+		if (msgStrippedLowerCase.contains("dammi il 5") || msgStrippedLowerCase.contains("high five") || msgStrippedLowerCase.contains("dammi il cinque"))
 		{
 			reply = true;
 			msgReply += "🤚🏻\n";
 		}
 		
-		if (msgLowerCase.contains("grazie") && random.nextInt(50) == 42)
+		if (msgStrippedLowerCase.contains("grazie") && random.nextInt(50) == 42)
 		{
 			reply = true;
 			msgReply += "Prego.\n";
 		}
 		
-		if (msgLowerCase.matches("cosa\\?*") && random.nextInt(20) == 1)
+		if (msgStrippedLowerCase.matches("cosa\\?*") && random.nextInt(20) == 1)
 		{
 			reply = true;
 			msgReply += "Cosa? La pantera rosa\n";
 		}
 		
-		if (msgLowerCase.matches("egg *dog"))
+		if (msgStrippedLowerCase.matches("egg *dog"))
 			message.reply(GIF.eggdog).queue();
 		
-		if (msgLowerCase.contains("spy") && random.nextInt(3) == 0)
+		if (msgStrippedLowerCase.contains("spy") && random.nextInt(3) == 0)
 			message.reply(GIF.spyHang).queue();
 		
-		if (msgLowerCase.matches("you(?:'re| are) ugly"))
+		if (msgStrippedLowerCase.matches("you(?:'re| are) ugly"))
 			message.reply(GIF.engineer).queue();
 		
-		if (msgLowerCase.contains("deez nuts") && discriminator.equals(Utente.ENIGMO))
+		if (msgStrippedLowerCase.contains("deez nuts") && discriminator.equals(Utente.ENIGMO))
 		{
 			reply = true;
 			msgReply += "DEEZ NUTS, Enigmo!\n";
 		}
 		
-		if (msgLowerCase.contains("serve aiuto"))
+		if (msgStrippedLowerCase.contains("serve aiuto"))
 		{
 			reply = true;
 			msgReply += "Nemico assente!\n";
 		}
 		
-		if (contains(msgLowerCase, new String[]{"serve visione","we need vision"}))
+		if (contains(msgStrippedLowerCase, new String[]{"serve visione","we need vision"}))
 		{
 			reply = true;
 			msgReply += "<:"+Emotes.scoutTrap+">\n";
 		}
 		
-//		if (msgLowerCase.contains("") && random.nextInt(42) == 0){}
+//		if (msgStrippedLowerCase.contains("") && random.nextInt(42) == 0){}
 		
 		if (reply)
 			message.reply(msgReply).queue();
