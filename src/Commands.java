@@ -273,7 +273,7 @@ public class Commands extends ListenerAdapter
 					
 					try
 					{
-						auth = channelHistory.get(2).getAuthor().getName();
+						auth = channelHistory.get(3).getAuthor().getName();
 						
 						for (short i = 0; i < size; i++)
 						{
@@ -283,7 +283,7 @@ public class Commands extends ListenerAdapter
 								break;
 							}
 						}
-						pvtMsg.send("Daily di " + auth +":"+numGiorni); // mandami un messaggio privato con il numero
+						pvtMsg.send("Daily di " + auth +": "+numGiorni); // mandami un messaggio privato con il numero
 					} // fine try
 					catch (Exception e)
 					{
