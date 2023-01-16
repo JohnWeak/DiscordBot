@@ -266,14 +266,14 @@ public class Commands extends ListenerAdapter
 					var msgSplittato = msgStrippedLowerCase.split(" ");
 					var auth = "";
 					var size = msgSplittato.length;
-					final var MAX_SIZE = 3;
+					final var MAX_SIZE = 2;
 					var numGiorni = 0;
 					var pvtMsg = new PrivateMessage(Utente.getGion());
 					var channelHistory = channel.getHistory().retrievePast(MAX_SIZE).complete();
 					
 					try
 					{
-						auth = channelHistory.get(2).getAuthor().getName();
+						auth = channelHistory.get(1).getAuthor().getName();
 						
 						for (short i = 0; i < size; i++)
 						{
@@ -284,7 +284,7 @@ public class Commands extends ListenerAdapter
 								break;
 							}
 						}
-						pvtMsg.send("Daily di " + auth +": "+numGiorni); // mandami un messaggio privato con il numero
+						pvtMsg.send("Daily di " + auth +": "+numGiorni);
 					} // fine try
 					catch (Exception e)
 					{
