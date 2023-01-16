@@ -273,10 +273,11 @@ public class Commands extends ListenerAdapter
 					
 					try
 					{
-						auth = channelHistory.get(3).getAuthor().getName();
+						auth = channelHistory.get(2).getAuthor().getName();
 						
 						for (short i = 0; i < size; i++)
 						{
+							pvtMsg.send("channelHistory.get("+i+"): "+channelHistory.get(i));
 							if (msgSplittato[i].contains("daily") && msgSplittato[i + 1].startsWith("streak"))
 							{
 								numGiorni = Integer.parseInt(msgSplittato[i - 1]);
