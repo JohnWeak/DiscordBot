@@ -656,16 +656,17 @@ public class Commands extends ListenerAdapter
 	
 	private void channelHistory()
 	{
-		var history = channel.getHistory().retrievePast(3).complete();
+		final var amount = 3;
+		var history = channel.getHistory().retrievePast(amount).complete();
 		var pm = new PrivateMessage(Utente.getGion());
-		for (var ms : history)
+		for (int i = 0; i < 3; i++)
 		{
-			var auth = ms.getAuthor();
+			var auth = history.get(i).getAuthor();
 			var name = auth.getName();
 			var disc = auth.getDiscriminator();
-			var m = ms.getContentStripped();
+			var m = history.get(i).getContentStripped();
 			
-			pm.send(auth+" --- "+name+" ("+disc+"): " + m);
+			pm.send("Messaggio numero "+i+":\t"+auth+" --- "+name+" ("+disc+"): " + m);
 		}
 		
 	} // fine metodo channelHistory()
