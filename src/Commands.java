@@ -286,7 +286,7 @@ public class Commands extends ListenerAdapter
 					} // fine try
 					catch (Exception e)
 					{
-						var msgErrore = "<@"+Utente.ID_GION+">\n" + e.getMessage();
+						var msgErrore = "<@"+Utente.ID_GION+">\n" + e;
 						canaleBot.sendMessage(msgErrore).queue();
 					} // fine catch
 					
