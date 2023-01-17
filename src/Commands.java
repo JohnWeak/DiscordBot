@@ -264,8 +264,8 @@ public class Commands extends ListenerAdapter
 				if (msgStrippedLowerCase.contains("daily streak"))
 				{
 					var msgSplittato = msgStrippedLowerCase.split(" ");
-					var auth = "";
 					var size = msgSplittato.length;
+					var auth = "";
 					var numGiorni = 0;
 					var pvtMsg = new PrivateMessage(Utente.getGion());
 					var channelHistory = channel.getHistory().retrievePast(3).complete();
@@ -276,10 +276,9 @@ public class Commands extends ListenerAdapter
 						
 						for (short i = 0; i < size; i++)
 						{
-							pvtMsg.send("channelHistory.get("+i+"): "+channelHistory.get(i));
-							if (msgSplittato[i].contains("daily") && msgSplittato[i + 1].startsWith("streak"))
+							if (msgSplittato[i].contains("daily") && msgSplittato[i+1].startsWith("streak"))
 							{
-								numGiorni = Integer.parseInt(msgSplittato[i - 1]);
+								numGiorni = Integer.parseInt(msgSplittato[i-1]);
 								break;
 							}
 						}
