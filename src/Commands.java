@@ -286,8 +286,8 @@ public class Commands extends ListenerAdapter
 					} // fine try
 					catch (Exception e)
 					{
-						var spamErrore = "<@"+Utente.ID_GION+">\n" + e.getMessage();
-						canaleBot.sendMessage(spamErrore).queue();
+						var msgErrore = "<@"+Utente.ID_GION+">\n" + e.getMessage();
+						canaleBot.sendMessage(msgErrore).queue();
 					} // fine catch
 					
 					if (numGiorni == 0 || !(numGiorni % 365 == 0))
