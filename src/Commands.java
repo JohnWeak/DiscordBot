@@ -670,12 +670,12 @@ public class Commands extends ListenerAdapter
 	} // fine metodo channelHistory()
 	
 	/**Questo metodo fa sì che il bot invii un messaggio privato all'utente che lo esegue
-	 * @param message il messaggio da inviare all'utente. */
-	private void dm(String message)
+	 * @param content il messaggio da inviare all'utente. */
+	private void dm(String content)
 	{
-		final String[] msg = message.split(" ");
+		final String[] msg = content.split(" ");
 		final String[] nomi = {Utente.NOME_JOHN, Utente.NOME_JOHN2, Utente.NOME_OBITO, Utente.NOME_OBITO2, Utente.NOME_ENIGMO, Utente.NOME_LEX};
-		PrivateMessage pm;
+		PrivateMessage privateMessage;
 		final int length = msg.length;
 		StringBuilder msgToSend = new StringBuilder("Prova test 123");
 		
@@ -693,8 +693,12 @@ public class Commands extends ListenerAdapter
 			{
 				if (n.equalsIgnoreCase(msg[1]))
 				{
-					pm = new PrivateMessage(Utente.getUtenteFromName(n));
-					pm.send(msgToSend.toString());
+					privateMessage = new PrivateMessage(Utente.getUtenteFromName(n));
+					privateMessage.send(msgToSend.toString());
+				}
+				else
+				{
+					Commands.message.reply("Utente non trovato!").queue();
 				}
 			}
 		}
