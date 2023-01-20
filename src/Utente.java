@@ -23,6 +23,7 @@ public abstract class Utente
 	public static final String NOME_JOHN2 = "JOHN_WEAK";
 	public static final String NOME_ENIGMO = "ENIGMO";
 	public static final String NOME_OBITO = "ÒBITO";
+	public static final String NOME_OBITO2 = "OBITO";
 	public static final String NOME_LEX = "DIODELAG";
 	public static final String NOME_OWOBOT = "OWOBOT";
 	public static final String NOME_BOWOT = "BOWOT";
