@@ -674,7 +674,7 @@ public class Commands extends ListenerAdapter
 	private void dm(String message)
 	{
 		final String[] msg = message.split(" ");
-		final String[] nomi = {Utente.NOME_JOHN, Utente.NOME_JOHN2, Utente.NOME_OBITO, Utente.NOME_ENIGMO, Utente.NOME_LEX};
+		final String[] nomi = {Utente.NOME_JOHN, Utente.NOME_JOHN2, Utente.NOME_OBITO, Utente.NOME_OBITO2, Utente.NOME_ENIGMO, Utente.NOME_LEX};
 		PrivateMessage pm;
 		final int length = msg.length;
 		StringBuilder msgToSend = new StringBuilder("Prova test 123");
