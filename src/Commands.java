@@ -35,8 +35,6 @@ public class Commands extends ListenerAdapter
 	public static final String botChannel = "\uD83E\uDD16bot-owo";
 	private static final Random random = new Random();
 	public static MessageChannel channel;
-	private static int messaggiInviati = 0;
-	private static int limite;
 	public static String authorName;
 	private static long id;
 	private static HashMap<String,String> commandsHashMap;

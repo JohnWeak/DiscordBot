@@ -18,7 +18,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-
+	
       - name: shortHash
         run: git rev-parse --short HEAD | sed "s/^./CURRENT_VERSION=/g"  >> $GITHUB_ENV
 
@@ -32,7 +32,7 @@ jobs:
 
       - name: Deploy on Remote Server  # Si connette in SSH ed esegue uno script
         uses: appleboy/ssh-action@master
-        with:
+       with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
@@ -40,7 +40,8 @@ jobs:
           script: |  # : | -> Una serie di comandi bash
             docker rm -f -v bot_discord
             docker image prune -a -f
-            docker run -d --name bot_discord gionweak/bot_discord:latest
+            docker run -d --name bot_discord gionweak/bot_discord:latest -e TOKEN=${{ secrets.DISCORD_TOKEN }}
+
         #  1) ferma il docker
         #  2) rimuove l'immagine del docker precedente
-        #  3) builda il nuovo docker
+	#  3) builda il nuovo docker

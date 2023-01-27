@@ -1,5 +1,4 @@
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Emote;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -8,8 +7,6 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 
 public class Pokemon
@@ -124,20 +121,18 @@ public class Pokemon
 	/** Cerca un Pokemon nell'API. Se non lo trova mostra un messaggio di errore. */
 	public static void pokemon()
 	{
-		String msgLowercase = Commands.messageRaw.toLowerCase(Locale.ROOT);
+		String msgLowercase = Commands.messageRaw.toLowerCase(Locale.ITALIAN);
 		String[] msg = msgLowercase.split(" ");
 		
 		if (msgLowercase.contains("!pokemon"))
 		{
 			String[] tipo = {" ", " "};
-			String generazione;
-			String numeroPokedex;
+			String generazione, numeroPokedex;
 			String[] lineaEvolutiva = {"1", "2", "3"};
 			
 			if (msg.length > 1 && !msg[1].isEmpty())
 			{
 				String nome = msg[1];
-				Commands.canaleBotPokemon.sendTyping().queue();
 				JSONArray jsonArray = Pokemon.search(nome);
 				
 				if (jsonArray.isEmpty())
