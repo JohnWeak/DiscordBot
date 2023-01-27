@@ -1,2 +1,2 @@
 # DiscordBot
-Un bot privato per un paio di server Discord personali
+Un bot in Java per un paio di server Discord personali
