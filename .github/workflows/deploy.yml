@@ -31,7 +31,7 @@ jobs:
 
       - name: Deploy on Remote Server  # Si connette in SSH ed esegue uno script
         uses: appleboy/ssh-action@master
-       with:
+        with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
