@@ -18,10 +18,9 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-	
+
       - name: shortHash
         run: git rev-parse --short HEAD | sed "s/^./CURRENT_VERSION=/g"  >> $GITHUB_ENV
-
 
       - name: Build and push
         uses: docker/build-push-action@v3
