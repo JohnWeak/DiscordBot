@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Checkout  # prima azione
         uses: actions/checkout@v3
-        
+
       - name: Login to Docker Hub  # Effettua login su DockerHub
         uses: docker/login-action@v2
         with:
