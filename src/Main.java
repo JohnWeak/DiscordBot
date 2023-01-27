@@ -27,7 +27,6 @@ public class Main
 		jda.upsertCommand("pog", "questo è un comando slash. woah.").queue();
 	} // fine metodo main()
 	
-	
 	private static Activity selectActivity()
 	{
 		var random = new Random();
