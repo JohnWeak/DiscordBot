@@ -41,6 +41,6 @@ jobs:
             docker image prune -a -f
             docker run -d --name -e bot_discord gionweak/bot_discord:latest TOKEN=${{ secrets.DISCORD_TOKEN }}
 
-        #  1) ferma il docker
-        #  2) rimuove l'immagine del docker precedente
-        #  3) builda il nuovo docker
+            #  1) ferma il docker
+            #  2) rimuove l'immagine del docker precedente
+            #  3) builda il nuovo docker
