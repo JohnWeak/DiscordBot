@@ -10,7 +10,7 @@ public class ThreadActivity extends Thread
 		final int ora = 3600000;
 		final int maxLoops = 10;
 		
-		var timeToSleep = (new Random().nextInt(ora))*3;
+		var timeToSleep = (new Random().nextInt(ora))+3;
 		
 		for (int i = 0; i < maxLoops; i++)
 		{
