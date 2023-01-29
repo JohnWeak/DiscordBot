@@ -1,3 +1,4 @@
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
@@ -15,19 +16,36 @@ import java.util.Scanner;
 
 public class Main
 {
-	public static void main(String[] args) throws LoginException
+	static final String token = System.getenv("TOKEN");
+	
+	public static void main(String[] args)
 	{
-		final var token = System.getenv("TOKEN");
-		var jda = JDABuilder.createDefault(token)
-			.setActivity(selectActivity())
-			.setStatus(OnlineStatus.ONLINE)
-			.addEventListeners(new Commands())
-			.build();
+		var jda = generateJDA();
 		
-		jda.upsertCommand("pog", "questo è un comando slash. woah.").queue();
+		if (jda != null)
+			jda.upsertCommand("pog", "questo è un comando slash. woah.").queue();
 	} // fine metodo main()
 	
-	private static Activity selectActivity()
+	public static JDA generateJDA()
+	{
+		JDA jda = null;
+		
+		try
+		{
+			jda = JDABuilder.createDefault(token)
+					        .setActivity(selectActivity())
+					        .setStatus(OnlineStatus.ONLINE)
+					        .addEventListeners(new Commands())
+					        .build();
+		}catch (LoginException e)
+		{
+			Commands.canaleBot.sendMessage("Qualcosa è esploso: " + e).queue();
+			e.printStackTrace();
+		}
+		return jda;
+	} // fine generateJDA()
+	
+	public static Activity selectActivity()
 	{
 		var random = new Random();
 		String giocoScelto, showScelto, easterEggScelto;
@@ -35,28 +53,29 @@ public class Main
 		
 		final String[] games =
 		{
-			"Minecraft", "Dead Space", "Hitman 2", "Rimworld", "Darkest Dungeon", "FTL: Faster Than Light",
-			"Terraria", "Team Fortress 2", "Farming Simulator", "Portal", "A Plague Tale",
-			"Subnautica", "OneShot", "Child of Light", "Ghost Trick: Phantom Detective", "XCOM 2",
-			"Papers, Please", "Celeste", "The Stanley Parable", "To The Moon", "GTA: San Andreas",
+			"Minecraft", "Dead Space", "Hitman", "Hitman 2", "Hitman 3", "Rimworld", "Darkest Dungeon",
+			"FTL: Faster Than Light", "Terraria", "Team Fortress 2", "Farming Simulator", "Portal",
+			"A Plague Tale", "Subnautica", "OneShot", "Child of Light", "Ghost Trick: Phantom Detective",
+			"XCOM 2", "Papers, Please", "Celeste", "The Stanley Parable", "To The Moon", "GTA: San Andreas",
 			"Fallout: New Vegas", "Half-Life 2", "Divinity: Original Sin 2", "Dark Souls", "Hollow Knight",
 			"Celeste", "Total War: Shogun 2", "Lawn Moving Simulator", "Tetris"
 		};
 		
 		final String[] anime =
 		{
-			"Steins;Gate", "FullMetal Alchemist", "Gurren Lagann", "One Piece", "Naruto", "Demon Slayer",
+			"Steins;Gate", "FullMetal Alchemist", "Gurren Lagann", "Demon Slayer",
 			"Attack on Titan", "The Promised Neverland", "Kill La Kill", "Death Parade", "Death Note",
 			"Cowboy Bebop", "Goblin Slayer", "ID: Invaded", "Jujutsu Kaisen", "ODDTAXI", "Noragami",
-			"My Hero Academia", "One-Punch Man", "HunterxHunter"
+			"My Hero Academia", "One-Punch Man", "HunterxHunter", "Chainsaw Man", "Gintama", "Made in Abyss"
 		};
 		
 		final String[] movies =
 		{
-			"WALL•E", "Addio Fottuti Musi Verdi", "Big Hero 6", "Deadpool", "Dragon Trainer", "Freaks Out",
+			"WALL•E", "Avatar", "Big Hero 6", "Deadpool", "Dragon Trainer", "Freaks Out",
 			"Caccia a Ottobre Rosso", "Ghost in the Shell", "Into the Spiderverse", "La Teoria del Tutto",
 			"Kingsman: Secret Service", "Lupin III: The First", "Kubo e la spada magica", "Megamind",
-			"Shawn of the dead", "Star Trek", "Soul", "your name.", "Bullet Train"
+			"Shawn of the dead", "Star Trek", "Soul", "your name.", "Bullet Train", "Il diritto di contare",
+			"Up", "X-MEN", "Omicidio all'italiana"
 		};
 		
 		final String[] series =

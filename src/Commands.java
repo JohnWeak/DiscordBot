@@ -687,18 +687,21 @@ public class Commands extends ListenerAdapter
 		}
 		if (length > 1)
 		{
-			for (var n : nomi)
+			boolean matchFound = false;
+			
+			for (String n : nomi)
 			{
 				if (n.equalsIgnoreCase(msg[1]))
 				{
 					privateMessage = new PrivateMessage(Utente.getUtenteFromName(n));
 					privateMessage.send(msgToSend.toString());
+					matchFound = true;
 				}
-				else
-				{
-					
-					Commands.message.reply("Utente non trovato!").queue();
-				}
+			}
+			
+			if (!matchFound)
+			{
+				Commands.message.reply("Utente non trovato!").queue();
 			}
 		}
 		else
