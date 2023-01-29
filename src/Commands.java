@@ -386,7 +386,10 @@ public class Commands extends ListenerAdapter
 		
 		
 		if (msgStrippedLowerCase.equalsIgnoreCase("cambia activity"))
-			Main.selectActivity();
+		{
+			message.getJDA().getPresence().setActivity(Main.selectActivity());
+			message.reply("fatto").queue();
+		}
 		
 		if (msgStrippedLowerCase.contains("ehi modulo"))
 			ehiModulo();
