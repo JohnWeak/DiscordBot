@@ -39,7 +39,7 @@ jobs:
           script: |  # : | -> Una serie di comandi bash
             docker rm -f -v bot_discord
             docker image prune -a -f
-            docker run -d --name -e bot_discord gionweak/bot_discord:latest TOKEN=${{ secrets.DISCORD_TOKEN }}
+            docker run -d -e --name bot_discord TOKEN=${{ secrets.DISCORD_TOKEN }} gionweak/bot_discord:latest
 
             #  1) ferma il docker
             #  2) rimuove l'immagine del docker precedente
