@@ -111,6 +111,8 @@ public class Commands extends ListenerAdapter
 		
 		emoteList = canaleBot.getJDA().getEmotes();
 		
+		new ThreadActivity().start();
+		
 		if (sendMsgActivity)
 			canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
 	} // fine onReady()
@@ -384,12 +386,6 @@ public class Commands extends ListenerAdapter
 			new PrivateMessage(author)
 				.send("Numero casuale: **"+(random.nextInt(42)+1)+"**");
 		
-		
-		if (msgStrippedLowerCase.equalsIgnoreCase("cambia activity"))
-		{
-			message.getJDA().getPresence().setActivity(Main.selectActivity());
-			message.reply("fatto").queue();
-		}
 		
 		if (msgStrippedLowerCase.contains("ehi modulo"))
 			ehiModulo();

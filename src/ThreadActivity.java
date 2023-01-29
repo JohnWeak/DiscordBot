@@ -26,6 +26,7 @@ public class ThreadActivity extends Thread
 			}
 			
 			Commands.message.getJDA().getPresence().setActivity(Main.selectActivity());
+			
 		}
 	} // fine run()
 	

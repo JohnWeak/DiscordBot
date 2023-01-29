@@ -1,6 +1,6 @@
 import java.util.HashMap;
 
-/**Questa classe contiene una hashmap di tutti i comandi del bot.
+/**Questa classe contiene una hashmap dei comandi del bot.
  * Per istanziarla, usa <code>Cmd.init()</code>*/
 public abstract class Cmd
 {
