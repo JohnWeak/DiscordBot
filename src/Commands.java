@@ -385,6 +385,9 @@ public class Commands extends ListenerAdapter
 				.send("Numero casuale: **"+(random.nextInt(42)+1)+"**");
 		
 		
+		if (msgStrippedLowerCase.equalsIgnoreCase("cambia activity"))
+			Main.selectActivity();
+		
 		if (msgStrippedLowerCase.contains("ehi modulo"))
 			ehiModulo();
 		
