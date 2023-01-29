@@ -380,7 +380,7 @@ public class Commands extends ListenerAdapter
 		// arraylist per contenere le reazioni da aggiungere al messaggio
 		var reazioni = new ArrayList<String>();
 		
-		if (msgStrippedLowerCase.contains("random number"))
+		if (msgStrippedLowerCase.contains("random number") || msgStrippedLowerCase.contains("numero casuale"))
 			new PrivateMessage(author)
 				.send("Numero casuale: **"+(random.nextInt(42)+1)+"**");
 		
