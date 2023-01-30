@@ -10,7 +10,7 @@ public class ThreadActivity extends Thread
 		final int ora = 3600000;
 		final int maxLoops = 10;
 		
-		var timeToSleep = (new Random().nextInt(ora*1, ora*2));
+		var timeToSleep = (new Random().nextInt(ora, ora*2));
 		var colpevole = (Commands.author == null || Commands.authorName.isEmpty() ? "il governo" : Commands.authorName);
 		
 		for (int i = 0; i < maxLoops; i++)
