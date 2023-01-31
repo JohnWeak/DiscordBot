@@ -14,6 +14,8 @@ public class PrivateMessage
 		messageChannel = Commands.message.getJDA().getTextChannelsByName(Commands.botChannel,true).get(0);
 	} // fine costruttore
 	
+	/** Invocare questa funzione per inviare un messaggio all'utente designato.
+	 * @param content Il messaggio da inviare all'utente. */
 	public void send(String content)
 	{
 		try
