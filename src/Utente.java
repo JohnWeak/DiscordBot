@@ -1,3 +1,4 @@
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.User;
 
 public abstract class Utente
