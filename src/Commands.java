@@ -638,6 +638,15 @@ public class Commands extends ListenerAdapter
 			msgReply += "<:"+Emotes.scoutTrap+">\n";
 		}
 		
+		// test
+		if (msgStrippedLowerCase.contains("activity"))
+		{
+			var a = Main.selectActivity();
+			Commands.message.getJDA().getPresence().setActivity(a);
+			PrivateMessage pm = new PrivateMessage(Utente.getGion());
+			pm.send(a.getName());
+		}
+		
 //		if (msgStrippedLowerCase.contains("") && random.nextInt(42) == 0){}
 		
 		if (reply)
