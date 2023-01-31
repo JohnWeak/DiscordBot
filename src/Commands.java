@@ -56,6 +56,7 @@ public class Commands extends ListenerAdapter
 	private static final boolean moduloActive = false;
 	private static final boolean sendMsgActivity = false;
 	private static List<Emote> emoteList;
+	private static ThreadActivity threadActivity;
 	
 	
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
@@ -111,7 +112,8 @@ public class Commands extends ListenerAdapter
 		
 		emoteList = canaleBot.getJDA().getEmotes();
 		
-		new ThreadActivity().start();
+		threadActivity = new ThreadActivity(true);
+		threadActivity.start();
 		
 		if (sendMsgActivity)
 			canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
@@ -174,7 +176,9 @@ public class Commands extends ListenerAdapter
 	
 	
 	
-	/** Questo metodo tiene conto di quale è l'ultimo messaggio che viene inviato/modificato */
+	/** Questo metodo tiene conto di quale è l'ultimo messaggio che viene inviato/modificato.
+	 * @param received l'ultimo messaggio ricevuto. Sarà <code>null</code> se si tratta di un messaggio modificato.<br>
+	 * @param updated l'ultimo messaggio modificato. Sarà <code>null</code> se si tratta di un nuovo messaggio ricevuto.*/
 	private void identifyLatestMessage(MessageReceivedEvent received, MessageUpdateEvent updated)
 	{
 		if (received != null) // received
@@ -206,7 +210,7 @@ public class Commands extends ListenerAdapter
 		id = event.getMessageIdLong();
 		message = channel.getHistory().getMessageById(id);
 
-//		System.out.println("Reaction:" + event.getReaction());
+		// System.out.println("Reaction: " + event.getReaction());
 		
 		var emoteString = emote.toString().split(":")[1].split("\\(")[0];
 		try
@@ -216,7 +220,10 @@ public class Commands extends ListenerAdapter
 			else
 				react(emoteString);
 		}
-		catch (Exception e) { e.printStackTrace(); }
+		catch (Exception e)
+		{
+			canaleBot.sendMessage("È esploso qualcosa in `onMessageReactionAdd`: " + e).queue();
+		}
 		
 		
 	} // fine onMessageReactionAdd
@@ -377,6 +384,7 @@ public class Commands extends ListenerAdapter
 			case "!timer" -> timer();
 			case "!dm" -> dm(msgStrippedLowerCase);
 			case "!ch" -> channelHistory();
+			case "!toggleactivity" -> toggleActivity(msgStrippedLowerCase, threadActivity);
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -713,6 +721,26 @@ public class Commands extends ListenerAdapter
 		}
 		
 	} // fine metodo dm()
+	
+	public static void toggleActivity(String messaggio, ThreadActivity threadActivity)
+	{
+		String option = "";
+		if (messaggio.split(" ").length == 1)
+		{
+			threadActivity.setKeepGoing(!threadActivity.isKeepGoing()); // false -> true / true -> false
+			return;
+		}
+		else
+			option = messaggio.split(" ")[1];
+		
+		switch (option.toLowerCase(Locale.ITALIAN))
+		{
+			case "true" -> threadActivity.setKeepGoing(true);
+			case "false" -> threadActivity.setKeepGoing(false);
+			default -> message.reply("<:"+Emotes.harry_fotter+">").queue();
+		}
+		
+	}
 	
 	private boolean contains(String source, String[] subItem)
 	{
