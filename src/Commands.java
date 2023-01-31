@@ -638,12 +638,12 @@ public class Commands extends ListenerAdapter
 			msgReply += "<:"+Emotes.scoutTrap+">\n";
 		}
 		
-		// test
+		
 		if (msgStrippedLowerCase.contains("activity"))
 		{
 			var a = Main.selectActivity();
 			Commands.message.getJDA().getPresence().setActivity(a);
-			PrivateMessage pm = new PrivateMessage(Utente.getGion());
+			PrivateMessage pm = new PrivateMessage(Utente.getUtenteFromName(Utente.NOME_ENIGMO));
 			pm.send(a.getName());
 		}
 		
@@ -733,10 +733,17 @@ public class Commands extends ListenerAdapter
 	
 	public static void toggleActivity(String messaggio, ThreadActivity threadActivity)
 	{
-		String option = "";
+		String option = "", msg = "";
+		boolean active;
+		
 		if (messaggio.split(" ").length == 1)
 		{
-			threadActivity.setKeepGoing(!threadActivity.isKeepGoing()); // false -> true / true -> false
+			// nessun messaggio dopo il comando, quindi funzione toggle
+			active = !(threadActivity.isKeepGoing());
+			threadActivity.setKeepGoing(active); // false -> true / true -> false
+			msg = "Ok, il cambio casuale delle activity è stato " + (active ? "attivato" : "disattivato") + ".";
+			
+			message.reply(msg).queue();
 			return;
 		}
 		else
@@ -744,8 +751,8 @@ public class Commands extends ListenerAdapter
 		
 		switch (option.toLowerCase(Locale.ITALIAN))
 		{
-			case "true" -> threadActivity.setKeepGoing(true);
-			case "false" -> threadActivity.setKeepGoing(false);
+			case "true", "t" -> threadActivity.setKeepGoing(true);
+			case "false", "f" -> threadActivity.setKeepGoing(false);
 			default -> message.reply("<:"+Emotes.harry_fotter+">").queue();
 		}
 		

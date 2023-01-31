@@ -17,7 +17,7 @@ public class ThreadActivity extends Thread
 	@Override
 	public void run()
 	{
-		// 1000*60*60 : 3600000, cioè 1 ora
+		// 1000*60*60 = 3600000 ms = 1 ora
 		final int ora = 3600000;
 		
 		var timeToSleep = (new Random().nextInt(ora, ora*2));
@@ -27,7 +27,6 @@ public class ThreadActivity extends Thread
 		{
 			if (!keepGoing)
 				return;
-			
 			
 			try
 			{
