@@ -1,5 +1,6 @@
-import java.util.Random;
+import net.dv8tion.jda.api.entities.Activity;
 
+import java.util.Random;
 
 public class ThreadActivity extends Thread
 {
@@ -22,6 +23,8 @@ public class ThreadActivity extends Thread
 		
 		var timeToSleep = (new Random().nextInt(ora, ora*2));
 		var colpevole = (Commands.author == null || Commands.authorName.isEmpty() ? "il governo" : Commands.authorName);
+		var pm = new PrivateMessage(Utente.getGion());
+		Activity activity;
 		
 		while (true)
 		{
@@ -38,7 +41,9 @@ public class ThreadActivity extends Thread
 				e.printStackTrace();
 			}
 			
-			Commands.message.getJDA().getPresence().setActivity(Main.selectActivity());
+			activity = Main.selectActivity();
+			Commands.message.getJDA().getPresence().setActivity(activity);
+			pm.send("Cambio activity in: " + activity.getName());
 			
 		}
 	} // fine run()
