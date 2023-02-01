@@ -121,8 +121,9 @@ public class Commands extends ListenerAdapter
 			pm.send("" + threadActivity + " appena avviato. isAlive:" + threadActivity.isAlive());
 		}catch (Exception e)
 		{
-			canaleBot.sendMessage("dioporco diocane dio bastardo mannaggia la madonna").queue();
+			canaleBot.sendMessage("dioporco diocane dio bastardo mannaggia la madonna\n"+e).queue();
 		}
+		
 		if (sendMsgActivity)
 			canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
 	} // fine onReady()
