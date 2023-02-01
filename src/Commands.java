@@ -733,27 +733,34 @@ public class Commands extends ListenerAdapter
 	
 	public static void toggleActivity(String messaggio, ThreadActivity thrActivity)
 	{
-		String option = "", msg = "";
+		String option, msg;
 		boolean active;
 		
-		if (messaggio.split(" ").length == 1)
+		try
 		{
-			// nessun messaggio dopo il comando, quindi funzione toggle
-			active = !(thrActivity.isKeepGoing());
-			thrActivity.setKeepGoing(active); // false -> true / true -> false
-			msg = "Ok, il cambio casuale delle activity è stato " + (active ? "attivato" : "disattivato") + ".";
+			if (messaggio.split(" ").length == 1)
+			{
+				// nessun messaggio dopo il comando, quindi funzione toggle
+				active = !(thrActivity.isKeepGoing());
+				thrActivity.setKeepGoing(active); // false -> true / true -> false
+				msg = "Ok, il cambio casuale delle activity è stato " + (active ? "attivato" : "disattivato") + ".";
+				
+				message.reply(msg).queue();
+				return;
+			}
+			else
+				option = messaggio.split(" ")[1];
 			
-			message.reply(msg).queue();
-			return;
-		}
-		else
-			option = messaggio.split(" ")[1];
-		
-		switch (option.toLowerCase(Locale.ITALIAN))
+			switch (option.toLowerCase(Locale.ITALIAN))
+			{
+				case "true", "t" -> {thrActivity.setKeepGoing(false); threadActivity = new ThreadActivity(true);}
+				case "false", "f" -> thrActivity.setKeepGoing(false);
+				default -> message.reply("<:"+Emotes.harry_fotter+">").queue();
+			}
+			
+		}catch (Exception e)
 		{
-			case "true", "t" -> {thrActivity.setKeepGoing(false); threadActivity = new ThreadActivity(true);}
-			case "false", "f" -> thrActivity.setKeepGoing(false);
-			default -> message.reply("<:"+Emotes.harry_fotter+">").queue();
+			canaleBot.sendMessage("diocane\n"+e).queue();
 		}
 		
 	}
