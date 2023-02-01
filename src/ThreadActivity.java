@@ -28,11 +28,15 @@ public class ThreadActivity extends Thread
 		String colpevole = (Commands.author == null || Commands.authorName.isEmpty() ? "il governo" : Commands.authorName);
 		PrivateMessage pm = new PrivateMessage(Utente.getGion());
 		Activity activity;
+		String kp = "`keepGoing="+keepGoing+"`";
+		
+		
+		pm.send("Sono prima del while."+kp);
 		
 		while (keepGoing)
 		{
 			String s = this.getClass()+"\n"+Thread.currentThread()+"\n";
-			pm.send(s+"\nSono nel while, prima del try/catch");
+			pm.send(s+"\nSono nel while, prima del try/catch."+kp);
 			
 			try
 			{

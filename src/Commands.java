@@ -736,6 +736,12 @@ public class Commands extends ListenerAdapter
 		String option, msg;
 		boolean active;
 		
+		if (!thrActivity.isAlive())
+		{
+			message.reply("Il thread non è più attivo.").queue();
+			return;
+		}
+		
 		try
 		{
 			if (messaggio.split(" ").length == 1)
@@ -751,13 +757,34 @@ public class Commands extends ListenerAdapter
 			else
 			{
 				option = messaggio.split(" ")[1];
-				canaleBot.sendMessage(Arrays.toString(messaggio.split(" "))).queue();
 			}
 			
 			switch (option.toLowerCase(Locale.ITALIAN))
 			{
-				case "true", "t" -> {thrActivity.setKeepGoing(false); threadActivity = new ThreadActivity(true);}
-				case "false", "f" -> thrActivity.setKeepGoing(false);
+				case "true", "t" ->
+				{
+					if (thrActivity.isKeepGoing())
+					{
+						message.reply("Il cambio delle activity era già attivo.").queue();
+						return;
+					}
+					thrActivity.setKeepGoing(false); // disattiva il vecchio thread
+					message.reply("Ok, ho attivato il cambio delle activity.").queue();
+					
+					
+					threadActivity = new ThreadActivity(true);
+					threadActivity.start();
+				}
+				case "false", "f" ->
+				{
+					if (thrActivity.isAlive() && !thrActivity.isKeepGoing())
+					{
+						message.reply("Il cambio delle activity era già disattivato.").queue();
+						return;
+					}
+					message.reply("Ok, ho disattivato il cambio delle activity.").queue();
+					thrActivity.setKeepGoing(false);
+				}
 				default -> message.reply("<:"+Emotes.harry_fotter+">").queue();
 			}
 			
