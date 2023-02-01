@@ -35,7 +35,6 @@ public class ThreadActivity extends Thread
 				return;
 			
 			String s = this.getClass()+"\n"+Thread.currentThread()+"\n";
-			
 			pm.send(s+"\nSono nel while, prima del try/catch");
 			
 			try
