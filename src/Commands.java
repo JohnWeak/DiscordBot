@@ -1601,8 +1601,11 @@ public class Commands extends ListenerAdapter
 		if (bound < 0)
 			bound = 500;
 
-		try { Thread.sleep(millis+random.nextInt(bound)); }
-		catch (InterruptedException e) { e.printStackTrace(); }
+		try { Thread.sleep(millis + random.nextInt(bound)); }
+		catch (InterruptedException e)
+		{
+			canaleBot.sendMessage(Commands.class+"InterruptedException\n"+ e + "`\n").queue();
+		}
 	} // fine pause()
 	
 	
