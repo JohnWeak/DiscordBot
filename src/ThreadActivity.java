@@ -30,7 +30,6 @@ public class ThreadActivity extends Thread
 		Activity activity;
 		String kp = "`keepGoing="+keepGoing+"`";
 		
-		
 		pm.send("Sono prima del while."+kp);
 		
 		while (keepGoing)
