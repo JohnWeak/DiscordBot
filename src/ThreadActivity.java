@@ -21,29 +21,29 @@ public class ThreadActivity extends Thread
 		// 1000*60*60 = 3600000 ms = 1 ora
 		final int ora = 3600000;
 		
-		final int minuti = 1000*60*2; // 2 minuti
-		int minutesToSleep = (new Random().nextInt(minuti, minuti*2));
+		//final int minuti = 1000*60*2; // 2 minuti
+		//int minutesToSleep = (new Random().nextInt(minuti, minuti*2));
 		
-		int timeToSleep = (new Random().nextInt(ora, ora*2));
+		int timeToSleep;
 		String colpevole = (Commands.author == null || Commands.authorName.isEmpty() ? "il governo" : Commands.authorName);
-		PrivateMessage pm = new PrivateMessage(Utente.getGion());
+		//PrivateMessage pm = new PrivateMessage(Utente.getGion());
 		Activity activity;
-		String kp = "`keepGoing="+keepGoing+"`";
-		
-		pm.send("Sono prima del while."+kp);
+		Random random = new Random();
+		//String kp = "`keepGoing="+keepGoing+"`";
+		//pm.send("Sono prima del while."+kp);
 		
 		while (keepGoing)
 		{
-			String s = this.getClass()+"\n"+Thread.currentThread()+"\n";
-			pm.send(s+"\nSono nel while, prima del try/catch."+kp);
-			
+			//String s = this.getClass()+"\n"+Thread.currentThread()+"\n";
+			//pm.send(s+"\nSono nel while, prima del try/catch."+kp);
+			timeToSleep = (random.nextInt(ora, ora*2));
 			try
 			{
-				Thread.sleep(minutesToSleep);
+				Thread.sleep(timeToSleep);
 				
 				activity = Main.selectActivity();
 				Main.getJda().getPresence().setActivity(activity);
-				pm.send("Cambio activity in: " + activity.getName());
+				//pm.send("Cambio activity in: " + activity.getName());
 				
 			}
 			catch (Exception e)

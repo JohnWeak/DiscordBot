@@ -112,14 +112,16 @@ public class Commands extends ListenerAdapter
 		
 		emoteList = canaleBot.getJDA().getEmotes();
 		
+		//var pm = new PrivateMessage(Utente.getGion());
+		threadActivity = new ThreadActivity(true);
+		//pm.send("" + threadActivity + " istanziato");
+		threadActivity.start();
+		//pm.send("" + threadActivity + " appena avviato. isAlive:" + threadActivity.isAlive());
+		
+		/*
 		try
 		{
-			var pm = new PrivateMessage(Utente.getGion());
-			threadActivity = new ThreadActivity(true);
-			pm.send("" + threadActivity + " istanziato");
-			threadActivity.start();
-			pm.send("" + threadActivity + " appena avviato. isAlive:" + threadActivity.isAlive());
-			
+		
 		}catch (Exception e)
 		{
 			StackTraceElement x = null;
@@ -129,6 +131,7 @@ public class Commands extends ListenerAdapter
 			
 			canaleBot.sendMessage("dioporco diocane dio bastardo mannaggia la madonna\n"+e+"\n"+x).queue();
 		}
+		*/
 		
 		if (sendMsgActivity)
 			canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
