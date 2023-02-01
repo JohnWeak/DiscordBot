@@ -42,7 +42,7 @@ public class ThreadActivity extends Thread
 				Thread.sleep(minutesToSleep);
 				
 				activity = Main.selectActivity();
-				Main.generateJDA().getPresence().setActivity(activity);
+				Main.getJda().getPresence().setActivity(activity);
 				pm.send("Cambio activity in: " + activity.getName());
 				
 			}
