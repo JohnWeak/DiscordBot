@@ -384,7 +384,7 @@ public class Commands extends ListenerAdapter
 			case "!timer" -> timer();
 			case "!dm" -> dm(msgStrippedLowerCase);
 			case "!ch" -> channelHistory();
-			case "!toggleactivity" -> toggleActivity(msgStrippedLowerCase, threadActivity);
+			case "!toggleactivity", "!ta" -> toggleActivity(msgStrippedLowerCase, threadActivity);
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
