@@ -49,7 +49,6 @@ public class ThreadActivity extends Thread
 			catch (Exception e)
 			{
 				Commands.canaleBot.sendMessage("Oh no, "+colpevole+ " ha rotto il thread activity: "+e).queue();
-				e.printStackTrace();
 			}
 		}
 	} // fine run()

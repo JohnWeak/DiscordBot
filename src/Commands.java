@@ -122,7 +122,12 @@ public class Commands extends ListenerAdapter
 			
 		}catch (Exception e)
 		{
-			canaleBot.sendMessage("dioporco diocane dio bastardo mannaggia la madonna\n"+e).queue();
+			StackTraceElement x = null;
+			
+			if (e.getStackTrace().length > 0)
+				x = e.getStackTrace()[0];
+			
+			canaleBot.sendMessage("dioporco diocane dio bastardo mannaggia la madonna\n"+e+"\n"+x).queue();
 		}
 		
 		if (sendMsgActivity)
