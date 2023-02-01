@@ -112,8 +112,12 @@ public class Commands extends ListenerAdapter
 		
 		emoteList = canaleBot.getJDA().getEmotes();
 		
+		var pm = new PrivateMessage(Utente.getGion());
+		
 		threadActivity = new ThreadActivity(true);
+		pm.send(""+threadActivity+" istanziato");
 		threadActivity.start();
+		pm.send(""+threadActivity+" appena avviato. isAlive:"+threadActivity.isAlive());
 		
 		if (sendMsgActivity)
 			canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
