@@ -639,13 +639,13 @@ public class Commands extends ListenerAdapter
 		}
 		
 		
-		if (msgStrippedLowerCase.contains("activity"))
+		/*if (msgStrippedLowerCase.contains("activity"))
 		{
 			var a = Main.selectActivity();
 			Commands.message.getJDA().getPresence().setActivity(a);
 			PrivateMessage pm = new PrivateMessage(Utente.getUtenteFromID(author.getId()));
 			pm.send(a.getName());
-		}
+		}*/
 		
 //		if (msgStrippedLowerCase.contains("") && random.nextInt(42) == 0){}
 		
