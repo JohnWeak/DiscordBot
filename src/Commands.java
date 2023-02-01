@@ -751,7 +751,7 @@ public class Commands extends ListenerAdapter
 		
 		switch (option.toLowerCase(Locale.ITALIAN))
 		{
-			case "true", "t" -> {thrActivity.interrupt(); threadActivity = new ThreadActivity(true);}
+			case "true", "t" -> {thrActivity.setKeepGoing(false); threadActivity = new ThreadActivity(true);}
 			case "false", "f" -> thrActivity.setKeepGoing(false);
 			default -> message.reply("<:"+Emotes.harry_fotter+">").queue();
 		}
