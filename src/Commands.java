@@ -119,6 +119,7 @@ public class Commands extends ListenerAdapter
 			pm.send("" + threadActivity + " istanziato");
 			threadActivity.start();
 			pm.send("" + threadActivity + " appena avviato. isAlive:" + threadActivity.isAlive());
+			
 		}catch (Exception e)
 		{
 			canaleBot.sendMessage("dioporco diocane dio bastardo mannaggia la madonna\n"+e).queue();
