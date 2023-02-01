@@ -21,9 +21,12 @@ public class ThreadActivity extends Thread
 		// 1000*60*60 = 3600000 ms = 1 ora
 		final int ora = 3600000;
 		
-		var timeToSleep = (new Random().nextInt(ora, ora*2));
-		var colpevole = (Commands.author == null || Commands.authorName.isEmpty() ? "il governo" : Commands.authorName);
-		var pm = new PrivateMessage(Utente.getGion());
+		final int minuti = 1000*60*2; // 2 minuti
+		int minutesToSleep = (new Random().nextInt(minuti, minuti*2));
+		
+		int timeToSleep = (new Random().nextInt(ora, ora*2));
+		String colpevole = (Commands.author == null || Commands.authorName.isEmpty() ? "il governo" : Commands.authorName);
+		PrivateMessage pm = new PrivateMessage(Utente.getGion());
 		Activity activity;
 		
 		while (true)
@@ -31,9 +34,13 @@ public class ThreadActivity extends Thread
 			if (!keepGoing)
 				return;
 			
+			String s = this.getClass()+"\n"+Thread.currentThread()+"\n";
+			
+			pm.send(s+"\nSono nel while, prima del try/catch");
+			
 			try
 			{
-				Thread.sleep(timeToSleep);
+				Thread.sleep(minutesToSleep);
 				
 				activity = Main.selectActivity();
 				Commands.message.getJDA().getPresence().setActivity(activity);
