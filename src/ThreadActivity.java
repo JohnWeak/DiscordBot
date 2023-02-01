@@ -29,11 +29,8 @@ public class ThreadActivity extends Thread
 		PrivateMessage pm = new PrivateMessage(Utente.getGion());
 		Activity activity;
 		
-		while (true)
+		while (keepGoing)
 		{
-			if (!keepGoing)
-				return;
-			
 			String s = this.getClass()+"\n"+Thread.currentThread()+"\n";
 			pm.send(s+"\nSono nel while, prima del try/catch");
 			
