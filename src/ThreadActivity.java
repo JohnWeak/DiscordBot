@@ -34,17 +34,17 @@ public class ThreadActivity extends Thread
 			try
 			{
 				Thread.sleep(timeToSleep);
+				
+				activity = Main.selectActivity();
+				Commands.message.getJDA().getPresence().setActivity(activity);
+				pm.send("Cambio activity in: " + activity.getName());
+				
 			}
-			catch (InterruptedException e)
+			catch (Exception e)
 			{
 				Commands.canaleBot.sendMessage("Oh no, "+colpevole+ " ha rotto il thread activity: "+e).queue();
 				e.printStackTrace();
 			}
-			
-			activity = Main.selectActivity();
-			Commands.message.getJDA().getPresence().setActivity(activity);
-			pm.send("Cambio activity in: " + activity.getName());
-			
 		}
 	} // fine run()
 	
