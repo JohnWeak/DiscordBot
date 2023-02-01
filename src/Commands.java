@@ -1496,16 +1496,17 @@ public class Commands extends ListenerAdapter
 			message.reply("Congratulazioni, sei colpevole al 100%.").queue(lambda -> react("pigeon"));
 		else
 		{
-			final int colpa = random.nextInt(100) + 1;
+			final int colpa = random.nextInt(100);
 			final String utente = utenteTaggato.get(0).getName();
-			String[] particella = {"al ", "all'"};
+			String[] particella = {"allo ", "all'", "al "};
 			int index = switch (colpa)
 			{
+				case 0 -> 0;
 				case 1, 8, 11, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89 -> 1;
-				default -> 0;
+				default -> 2;
 			};
 			
-			final String risposta = String.format("%s sostiene che %s sia colpevole %s%d%%", authorName, utente, particella[index], colpa);
+			final String risposta = String.format("%s è colpevole %s%d%%", utente, particella[index], colpa);
 			
 			var embed = new EmbedBuilder()
 				.setTitle(risposta)
@@ -1514,14 +1515,8 @@ public class Commands extends ListenerAdapter
 			
 			channel.sendMessageEmbeds(embed.build()).queue(lambda ->
 			{
-				if (colpa < 20)
-					react("pigeon");
-				else if (colpa < 50)
-					react("smh");
-				else if (colpa < 80)
-					react("dansgame");
-				else
-					react("pogey");
+				String[] emotes = {"pigeon", "smh", "dansgame", "pogey"};
+				react(emotes[random.nextInt(emotes.length)]);
 			});
 		}
 		
