@@ -112,13 +112,17 @@ public class Commands extends ListenerAdapter
 		
 		emoteList = canaleBot.getJDA().getEmotes();
 		
-		var pm = new PrivateMessage(Utente.getGion());
-		
-		threadActivity = new ThreadActivity(true);
-		pm.send(""+threadActivity+" istanziato");
-		threadActivity.start();
-		pm.send(""+threadActivity+" appena avviato. isAlive:"+threadActivity.isAlive());
-		
+		try
+		{
+			var pm = new PrivateMessage(Utente.getGion());
+			threadActivity = new ThreadActivity(true);
+			pm.send("" + threadActivity + " istanziato");
+			threadActivity.start();
+			pm.send("" + threadActivity + " appena avviato. isAlive:" + threadActivity.isAlive());
+		}catch (Exception e)
+		{
+			canaleBot.sendMessage("dioporco diocane dio bastardo mannaggia la madonna").queue();
+		}
 		if (sendMsgActivity)
 			canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
 	} // fine onReady()
