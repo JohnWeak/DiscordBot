@@ -17,6 +17,7 @@ import java.util.Scanner;
 public class Main
 {
 	static final String token = System.getenv("TOKEN");
+	private static JDA jda;
 	
 	public static void main(String[] args)
 	{
@@ -26,10 +27,8 @@ public class Main
 			jda.upsertCommand("pog", "questo è un comando slash. woah.").queue();
 	} // fine metodo main()
 	
-	public static JDA generateJDA()
+	private static JDA generateJDA()
 	{
-		JDA jda = null;
-		
 		try
 		{
 			jda = JDABuilder.createDefault(token)
@@ -44,6 +43,11 @@ public class Main
 		}
 		return jda;
 	} // fine generateJDA()
+	
+	public static JDA getJda()
+	{
+		return jda;
+	}
 	
 	public static Activity selectActivity()
 	{

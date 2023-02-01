@@ -94,7 +94,7 @@ public abstract class Utente
 	 * @return <code>User</code> JohnWeak.*/
 	public static User getGion()
 	{
-		return Commands.message.getJDA().retrieveUserById(Utente.ID_GION).complete();
+		return Main.getJda().retrieveUserById(Utente.ID_GION).complete();
 	}
 	
 	
