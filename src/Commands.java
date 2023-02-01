@@ -749,7 +749,10 @@ public class Commands extends ListenerAdapter
 				return;
 			}
 			else
+			{
 				option = messaggio.split(" ")[1];
+				canaleBot.sendMessage(Arrays.toString(messaggio.split(" "))).queue();
+			}
 			
 			switch (option.toLowerCase(Locale.ITALIAN))
 			{
