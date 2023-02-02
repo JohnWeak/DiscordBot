@@ -53,7 +53,7 @@ public class Commands extends ListenerAdapter
 	public static TextChannel canaleBotPokemon;
 	private static final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	public static TextChannel canaleBot;
-	private static final boolean moduloActive = false;
+	private static final boolean moduloActive = true;
 	private static final boolean sendMsgActivity = false;
 	private static List<Emote> emoteList;
 	private static ThreadActivity threadActivity;
@@ -97,41 +97,27 @@ public class Commands extends ListenerAdapter
 		
 		var jda = event.getJDA();
 		var nome = jda.getSelfUser().getName();
-		var act = Objects.requireNonNull(jda.getPresence().getActivity());
+		var act = jda.getPresence().getActivity();
+		String activityType, nomeActivity, activityTradotta;
 		
 		System.out.printf("%s si è connesso a Discord!\n\npublic class MessageHistory\n{\n", nome);
 		
 		canaleBot = jda.getTextChannelsByName(botChannel, true).get(0);
 		canaleBotPokemon = jda.getTextChannelsByName("pokémowon", true).get(0);
 		
-		var activity = act.getType().toString();
-		var nomeActivity = "**" + act.getName() + "**";
-		var activityTradotta = activity.equals("WATCHING") ? "guardo " : "gioco a ";
+		if (act != null)
+		{
+			activityType = act.getType().toString();
+		    nomeActivity = "**" + act.getName() + "**";
+		    activityTradotta = activityType.equals("WATCHING") ? "guardo " : "gioco a ";
+		}
 		
-		// moduloDiSicurezza();
+		moduloDiSicurezza();
 		
 		emoteList = canaleBot.getJDA().getEmotes();
 		
-		//var pm = new PrivateMessage(Utente.getGion());
 		threadActivity = new ThreadActivity(true);
-		//pm.send("" + threadActivity + " istanziato");
 		threadActivity.start();
-		//pm.send("" + threadActivity + " appena avviato. isAlive:" + threadActivity.isAlive());
-		
-		/*
-		try
-		{
-		
-		}catch (Exception e)
-		{
-			StackTraceElement x = null;
-			
-			if (e.getStackTrace().length > 0)
-				x = e.getStackTrace()[0];
-			
-			canaleBot.sendMessage("dioporco diocane dio bastardo mannaggia la madonna\n"+e+"\n"+x).queue();
-		}
-		*/
 		
 		if (sendMsgActivity)
 			canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
@@ -1825,12 +1811,12 @@ public class Commands extends ListenerAdapter
 	
 	public void moduloDiSicurezza()
 	{
-		var active = "**IL MODULO DI SICUREZZA È ORA ATTIVO. GARANTISCE SICUREZZA AL BOT.\nTUTTE LE AZIONI SONO SORVEGLIATE E ALLA PRIMA INFRAZIONE VERRANNO ALLERTATE LE AUTORITÀ COMPETENTI E INCOMPETENTI.**";
+		var active = "**IL MODULO DI SICUREZZA È ORA ATTIVO. ESSO GARANTISCE SICUREZZA AL BOT.\nTUTTE LE AZIONI SONO SORVEGLIATE E ALLA PRIMA INFRAZIONE VERRANNO ALLERTATE LE AUTORITÀ COMPETENTI E INCOMPETENTI.**";
 		var inactive = "**IL MODULO DI SICUREZZA È STATO DISATTIVATO. LA SICUREZZA DEL BOT È ADESSO GARANTITA DALLA PRESENZA DI GION.**";
 		
-		var x = moduloActive ? active : inactive;
+		var isActive = moduloActive ? active : inactive;
 		
-		canaleBot.sendMessage(x).queue();
+		canaleBot.sendMessage(isActive).queue();
 		
 	} // fine moduloDiSicurezza()
 	
@@ -1857,24 +1843,24 @@ public class Commands extends ListenerAdapter
 			"ALT. NON UN ALTRO PASSO.", "NON SEI AUTORIZZATO A RESPIRARE VICINO AL BOT.", "HAI SICURAMENTE DI MEGLIO DA FARE CHE INFASTIDIRE IL BOT.",
 			"PERCHÈ NON VOLI VIA? AH GIÀ, GLI ASINI NON VOLANO.", "CIRCUMNAVIGA L'ASIA PIUTTOSTO CHE DARE FASTIDIO AL BOT.",
 			"SII IL CAMBIAMENTO CHE VUOI VEDERE NEL MONDO, QUINDI CAMBIA IN UNA PERSONA CHE NON SCASSA I COGLIONI AL BOT.",
-			"MI PAREVA DI AVERTI DETTO DI NON INTERFERIRE COL BOT, MA FORSE NON TE L'HO DETTO ABBASTANZA BENE. NON INTERFERIRE COL BOT.",
-			"AVVICINATI AL BOT E PRENDERAI LE BOT", "VAI A PASCOLARE CAZZI LONTANO DAL BOT"
+			"MI PAREVA DI AVERTI DETTO DI NON INTERFERIRE COL BOT, MA FORSE NON TE L'HO DETTO ABBASTANZA BENE: NON INTERFERIRE COL BOT.",
+			"AVVICINATI AL BOT E PRENDERAI LE BOT", "VAI A PASCOLARE CAZZI LONTANO DAL BOT", "PERCHÈ NON DIVENTI UN ASTRONAUTA? COSÌ PUOI ANDARE GIRANDO NELLO SPAZIO INVECE DI INFASTIDIRE IL BOT.",
+			"SALPA PER I SETTE MARI ALLA RICERCA DI \"UN PEZZO\" INVECE CHE AVVICINARTI AL BOT.", "IL BOT NON DESIDERA LA TUA COMPAGNIA.", "CI SONO 206 OSSA NEL CORPO UMANO. SO ROMPERLE TUTTE E LO FARÒ SE NON TI ALLONTANI DAL BOT.",
+			"CERCA LA RISPOSTA TRAMITE MEDITAZIONE INVECE CHE CHIEDERLA AL BOT.", "ESISTONO INFINITI UNIVERSI, EPPURE IN NESSUNO DI QUESTI TU SEI AUTORIZZATO A STARE VICINO AL BOT",
+			"ESPLORA LA SINGOLARITÀ DI UN BUCO NERO INVECE DI AVVICINARTI IL BOT.", "IL BOT NON RISPONDERÀ ALLE TUE AVANCE.",
+			"FAI UNA SPEEDRUN SU VAINGLORY INVECE CHE GUARDARE IL BOT", "CI SONO MOLTE COSE CHE PUOI GUARDARE AD OCCHIO NUDO INVECE CHE IL BOT: IL SOLE, AD ESEMPIO.",
+			"SE IL BOT È IL ROAD RUNNER, TU SEI WILE E. COYOTE", "SONO CERTO CHE HAI DI MEGLIO DA FARE CHE INFASTIDIRE IL BOT.",
+			"NESSUNO TOCCA IL BOT E SOPRAVVIVE PER RACCONTARLO.", "IL BOT È ANDATO A FARE LA SPESA: LASCI UN MESSAGGIO E NON SARÀ RICONTATTATO."
 		};
 		
+		String reply = "";
+		
 		if (messageRaw.length() <= hotkey)
-		{
-			if (authorized)
-				channel.sendMessage("**SONO AI SUOI ORDINI, SIGNORE.**").queue();
-			else
-				message.reply("**"+messaggiScortesi[random.nextInt(messaggiScortesi.length)]+"**").queue();
-		}
+			reply = authorized ? "**SONO AI SUOI ORDINI, SIGNORE.**" : "**"+messaggiScortesi[random.nextInt(messaggiScortesi.length)]+"**";
 		else
-		{
-			if (authorized)
-				channel.sendMessage("**SISSIGNORE.**").queue();
-			else
-				message.reply("**"+messaggiScortesi[random.nextInt(messaggiScortesi.length)]+"**").queue();
-		}
+			reply = authorized ? "**RICEVUTO.**" : "**"+messaggiScortesi[random.nextInt(messaggiScortesi.length)]+"**";
+		
+		message.reply(reply).queue();
 	}
 	
 	public void dado(String msg)
@@ -1909,7 +1895,7 @@ public class Commands extends ListenerAdapter
 			}
 		}catch (Exception e)
 		{
-			channel.sendMessage(dadiAmmessi).queue();
+			channel.sendMessage(""+e+"\n"+e.getStackTrace()[0]).queue();
 		}
 	} // fine dado()
 	

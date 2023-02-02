@@ -26,16 +26,11 @@ public class ThreadActivity extends Thread
 		
 		int timeToSleep;
 		String colpevole = (Commands.author == null || Commands.authorName.isEmpty() ? "il governo" : Commands.authorName);
-		//PrivateMessage pm = new PrivateMessage(Utente.getGion());
 		Activity activity;
 		Random random = new Random();
-		//String kp = "`keepGoing="+keepGoing+"`";
-		//pm.send("Sono prima del while."+kp);
 		
 		while (keepGoing)
 		{
-			//String s = this.getClass()+"\n"+Thread.currentThread()+"\n";
-			//pm.send(s+"\nSono nel while, prima del try/catch."+kp);
 			timeToSleep = (random.nextInt(ora, ora*2));
 			try
 			{
