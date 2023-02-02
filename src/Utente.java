@@ -21,6 +21,7 @@ public abstract class Utente
 	// NOMI
 	public static final String NOME_JOHN = "JOHNWEAK";
 	public static final String NOME_JOHN2 = "JOHN_WEAK";
+	public static final String NOME_JOHN3 = "JOHN WEAK";
 	public static final String NOME_ENIGMO = "ENIGMO";
 	public static final String NOME_OBITO = "ÒBITO";
 	public static final String NOME_OBITO2 = "OBITO";

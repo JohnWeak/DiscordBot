@@ -145,20 +145,7 @@ public class Commands extends ListenerAdapter
 		if (event.isFromGuild())
 			guildMessage(event, author.isBot());
 		else
-		{
-			if (moduloSicurezza)
-			{
-				if (author.getDiscriminator().equals(Utente.ENIGMO))
-				{
-					PrivateMessage pm = new PrivateMessage(Utente.getEnigmo());
-					pm.send("<:"+Emotes.ragey+">");
-				}
-			}
-			else
-			{
-				privateMessage(author.isBot());
-			}
-		}
+			privateMessage(author.isBot());
 		
 	} // fine onMessageReceived()
 	
@@ -186,13 +173,20 @@ public class Commands extends ListenerAdapter
 		var botOrHuman = isBot ? "Bot" : "User";
 		System.out.printf("\t%s %s = \"%s\"; // Private Message\n}\r", botOrHuman, authorName, messageRaw);
 		
-		if (isBot)
+		if (isBot || authorName.equalsIgnoreCase(Utente.NOME_JOHN3))
 			return;
 		
-		if (!authorName.equalsIgnoreCase("john weak"))
+		
+		var gion = new PrivateMessage(Utente.getGion());
+		gion.send(authorName + " ha scritto: \"" + messageRaw + "\"");
+		
+		if (moduloSicurezza)
 		{
-			var pm = new PrivateMessage(Utente.getGion());
-			pm.send(authorName + " ha scritto: \"" + messageRaw + "\"");
+			if (author.getDiscriminator().equals(Utente.ENIGMO))
+			{
+				PrivateMessage enigmo = new PrivateMessage(Utente.getEnigmo());
+				enigmo.send("<:"+Emotes.ragey+">");
+			}
 		}
 		
 		checkForKeywords(message.getContentStripped().toLowerCase());
@@ -1837,7 +1831,7 @@ public class Commands extends ListenerAdapter
 		
 		var isActive = moduloSicurezza ? active : inactive;
 		
-		canaleBot.sendMessage(isActive).queue();
+		// canaleBot.sendMessage(isActive).queue();
 		
 	} // fine moduloDiSicurezza()
 	
