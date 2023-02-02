@@ -140,9 +140,6 @@ public class Commands extends ListenerAdapter
 			guildMessage(event, author.isBot());
 		else
 		{
-			if (author.isBot())
-				return;
-			
 			if (moduloActive)
 			{
 				if (author.getDiscriminator().equals(Utente.ENIGMO))
@@ -176,6 +173,8 @@ public class Commands extends ListenerAdapter
 		checkForKeywords(message.getContentStripped().toLowerCase());
 	} // fine guildEvent()
 	
+	/**Gestisce i messaggi privati che il bot riceve. Se è un altro bot a inviarli, li ignora.
+	 * @param isBot <code>true</code> se l'autore del messaggio è un bot a sua volta, <code>false</code> altrimenti. */
 	public void privateMessage(boolean isBot)
 	{
 		var botOrHuman = isBot ? "Bot" : "User";
