@@ -8,7 +8,6 @@ import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-import org.apache.commons.collections4.iterators.UnmodifiableIterator;
 import org.jetbrains.annotations.NotNull;
 
 import org.json.simple.JSONArray;
@@ -22,7 +21,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.*;
@@ -53,7 +51,7 @@ public class Commands extends ListenerAdapter
 	public static TextChannel canaleBotPokemon;
 	private static final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	public static TextChannel canaleBot;
-	private static final boolean moduloActive = true;
+	private static final boolean moduloSicurezza = true;
 	private static final boolean sendMsgActivity = false;
 	private static List<Emote> emoteList;
 	private static ThreadActivity threadActivity;
@@ -140,11 +138,11 @@ public class Commands extends ListenerAdapter
 			guildMessage(event, author.isBot());
 		else
 		{
-			if (moduloActive)
+			if (moduloSicurezza)
 			{
 				if (author.getDiscriminator().equals(Utente.ENIGMO))
 				{
-					PrivateMessage pm = new PrivateMessage(Utente.getUtenteFromID(author.getId()));
+					PrivateMessage pm = new PrivateMessage(Utente.getEnigmo());
 					pm.send("<:"+Emotes.ragey+">");
 				}
 			}
@@ -1829,7 +1827,7 @@ public class Commands extends ListenerAdapter
 		var active = "**IL MODULO DI SICUREZZA È ORA ATTIVO. ESSO GARANTISCE SICUREZZA AL BOT.\nTUTTE LE AZIONI SONO SORVEGLIATE E ALLA PRIMA INFRAZIONE VERRANNO ALLERTATE LE AUTORITÀ COMPETENTI E INCOMPETENTI.**";
 		var inactive = "**IL MODULO DI SICUREZZA È STATO DISATTIVATO. LA SICUREZZA DEL BOT È ADESSO GARANTITA DALLA PRESENZA DI GION.**";
 		
-		var isActive = moduloActive ? active : inactive;
+		var isActive = moduloSicurezza ? active : inactive;
 		
 		canaleBot.sendMessage(isActive).queue();
 		
@@ -1837,7 +1835,7 @@ public class Commands extends ListenerAdapter
 	
 	public void ehiModulo()
 	{
-		if (!moduloActive)
+		if (!moduloSicurezza)
 		{
 			message.reply("**IL MODULO DI SICUREZZA È STATO DISATTIVATO DA GION. PER QUALSIASI INFORMAZIONE SU COME STARE LONTANO DAL BOT, CHIEDI A GION.**").queue();
 			return;

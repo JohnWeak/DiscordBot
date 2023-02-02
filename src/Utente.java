@@ -1,4 +1,3 @@
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.User;
 
 public abstract class Utente
@@ -36,7 +35,7 @@ public abstract class Utente
 	 * */
 	public static User getUtenteFromName(String nome)
 	{
-		var jda = Commands.message.getJDA();
+		var jda = Main.getJda();
 		var channel = Commands.message.getChannel();
 		var utente = "";
 		User user;
@@ -90,12 +89,14 @@ public abstract class Utente
 		return Commands.message.getJDA().retrieveUserById(id).complete();
 	}
 	
-	/** Metodo per ottenere più velocemente un utente.
-	 * @return <code>User</code> JohnWeak.*/
 	public static User getGion()
 	{
 		return Main.getJda().retrieveUserById(Utente.ID_GION).complete();
 	}
 	
+	public static User getEnigmo()
+	{
+		return Main.getJda().retrieveUserById(Utente.ID_ENIGMO).complete();
+	}
 	
 }
