@@ -108,7 +108,7 @@ public class Commands extends ListenerAdapter
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			new PrivateMessage(Utente.getGion()).send("shit happened: " + e);
+			new PrivateMessage(Utente.getGion()).send("shit happened: " + e + "\n" + e.getStackTrace()[0]);
 		}
 		
 		if (act != null)
