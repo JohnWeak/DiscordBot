@@ -63,7 +63,7 @@ public abstract class Utente
 			return null;
 		}
 		return user;
-	} // fine getUtente()
+	} // fine getUtenteFromName()
 	
 	/**Prende in input il discriminatore (#0935) e restituisce il nome utente (JohnWeak)
 	 * @param discriminator il discriminatore (es: <code>#1234</code>) dell'utente da cercare
@@ -82,7 +82,7 @@ public abstract class Utente
 			
 			default -> "E io che cazzo ne so, scusi";
 		};
-	}
+	} // fine getNomeUtente()
 	
 	public static User getUtenteFromID(String id)
 	{
@@ -92,11 +92,11 @@ public abstract class Utente
 	public static User getGion()
 	{
 		return Main.getJda().retrieveUserById(Utente.ID_GION).complete();
-	}
+	} // fine getGion()
 	
 	public static User getEnigmo()
 	{
 		return Main.getJda().retrieveUserById(Utente.ID_ENIGMO).complete();
-	}
+	} // fine getEnigmo()
 	
-}
+} // fine classe Utente
