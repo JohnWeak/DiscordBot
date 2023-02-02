@@ -29,7 +29,7 @@ public class PrivateMessage
 		}
 		catch (Exception e)
 		{
-			messageChannel.sendMessage("`"+this.getClass()+"`\n"+e).queue();
+			messageChannel.sendMessage("`"+this.getClass()+"`\n"+e+"\n"+e.getStackTrace()[0]).queue();
 		}
 	} // fine metodo send()
 	
