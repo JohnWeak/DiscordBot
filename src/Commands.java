@@ -100,8 +100,16 @@ public class Commands extends ListenerAdapter
 		
 		System.out.printf("%s si è connesso a Discord!\n\npublic class MessageHistory\n{\n", nome);
 		
-		canaleBot = jda.getTextChannelsByName(botChannel, true).get(0);
-		canaleBotPokemon = jda.getTextChannelsByName("pokémowon", true).get(0);
+		try
+		{
+			canaleBot = jda.getTextChannelsByName(botChannel, true).get(0);
+			canaleBotPokemon = jda.getTextChannelsByName("pokémowon", true).get(0);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			new PrivateMessage(Utente.getGion()).send("shit happened: " + e);
+		}
 		
 		if (act != null)
 		{
