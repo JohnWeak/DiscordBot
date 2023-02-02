@@ -1831,7 +1831,7 @@ public class Commands extends ListenerAdapter
 		
 		var isActive = moduloSicurezza ? active : inactive;
 		
-		// canaleBot.sendMessage(isActive).queue();
+		canaleBot.sendMessage(isActive).queue();
 		
 	} // fine moduloDiSicurezza()
 	
