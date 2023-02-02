@@ -139,7 +139,23 @@ public class Commands extends ListenerAdapter
 		if (event.isFromGuild())
 			guildMessage(event, author.isBot());
 		else
-			privateMessage(author.isBot());
+		{
+			if (author.isBot())
+				return;
+			
+			if (moduloActive)
+			{
+				if (author.getDiscriminator().equals(Utente.ENIGMO))
+				{
+					PrivateMessage pm = new PrivateMessage(Utente.getUtenteFromID(author.getId()));
+					pm.send("<:"+Emotes.ragey+">");
+				}
+			}
+			else
+			{
+				privateMessage(author.isBot());
+			}
+		}
 		
 	} // fine onMessageReceived()
 	
