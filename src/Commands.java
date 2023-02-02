@@ -98,7 +98,7 @@ public class Commands extends ListenerAdapter
 		var jda = event.getJDA();
 		var nome = jda.getSelfUser().getName();
 		var act = jda.getPresence().getActivity();
-		String activityType, nomeActivity, activityTradotta;
+		String activityType="act_type", nomeActivity="act_name", activityTradotta="act_trad";
 		
 		System.out.printf("%s si è connesso a Discord!\n\npublic class MessageHistory\n{\n", nome);
 		

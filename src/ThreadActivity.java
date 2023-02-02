@@ -7,8 +7,12 @@ public class ThreadActivity extends Thread
 	private boolean keepGoing;
 	
 	/**Questo Thread continuerà a cambiare l'attività del bot ogni 1-2 ore.
-	 * Per interrompere il thread bisogna impostare <code>keepGoing</code> a <code>false</code>.<br>
+	 * Per interrompere il thread bisogna impostare <code>keepGoing</code> a <code>false</code>.<br><br>
+	 * <code>
+	 *     ta.setKeepGoing(false);
+	 * </code><br><br>
 	 * Così facendo il thread eseguirà un'ultima volta prima di terminare, senza lanciare eccezioni.
+	 * @param keepGoing <code>true</code> se si vuole far ciclare le activity, <code>false</code> altrimenti.
 	 */
 	public ThreadActivity(boolean keepGoing)
 	{
@@ -18,6 +22,10 @@ public class ThreadActivity extends Thread
 	@Override
 	public void run()
 	{
+		// se keepGoing viene istanziato direttamente a false, è inutile definire le varibili seguenti; dunque, termina.
+		if (!keepGoing)
+			return;
+		
 		// 1000*60*60 = 3600000 ms = 1 ora
 		final int ora = 3600000;
 		
@@ -45,7 +53,8 @@ public class ThreadActivity extends Thread
 			{
 				Commands.canaleBot.sendMessage("Oh no, "+colpevole+ " ha rotto il thread activity: "+e).queue();
 			}
-		}
+			
+		} // fine while(keepGoing)
 	} // fine run()
 	
 	// GETTER
