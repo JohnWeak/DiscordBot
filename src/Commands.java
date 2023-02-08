@@ -244,8 +244,6 @@ public class Commands extends ListenerAdapter
 		{
 			canaleBot.sendMessage("È esploso qualcosa in `onMessageReactionAdd`: " + e).queue();
 		}
-		
-		
 	} // fine onMessageReactionAdd
 	
 	/**Inserisce come reazioni tutte le emote che trova nel messaggio*/
@@ -264,7 +262,6 @@ public class Commands extends ListenerAdapter
 			}
 			catch (Exception ignored) {}
 		}
-		
 	} // fine aggiungiReazioni()
 	
 	
