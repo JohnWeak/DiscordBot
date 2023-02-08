@@ -21,6 +21,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.*;
@@ -1781,6 +1782,35 @@ public class Commands extends ListenerAdapter
 		}
 	} // fine massShooting()
 	
+	/** Metodo che restituisce il nome del mese a partire dal suo numero. Esempio:<br>
+	 * <table>
+	 *     <tr>
+	 *         <th>Numero</th>
+	 *         <th>Mese</th>
+	 *     </tr>
+	 *     <tr>
+	 *         <td>1</td>
+	 *         <td>gennaio</td>
+	 *     </tr>
+	 *     <tr>
+	 *          <td>2</td>
+	 *          <td>febbraio</td>
+	 *      </tr>
+	 *     <tr>
+	 *         <td>3</td>
+	 *         <td>marzo</td>
+	 *     </tr>
+	 *     <tr>
+	 *         <td>...</td>
+	 *         <td>...</td>
+	 *     </tr>
+	 *     <tr>
+	 *         <td>12</td>
+	 *         <td>dicembre</td>
+	 *     </tr>
+	 * </table>
+	 * @param mese intero corrispondente al mese.
+	 * @return il nome del mese per iscritto in italiano.*/
 	private static String getMese(int mese)
 	{
 		return switch (mese)
