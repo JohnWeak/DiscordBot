@@ -1933,4 +1933,4 @@ public class Commands extends ListenerAdapter
 	} // fine dado()
 	
 	
-} // fine classe Bot.Commands
+} // fine classe Commands
