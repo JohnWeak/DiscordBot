@@ -1832,7 +1832,9 @@ public class Commands extends ListenerAdapter
 		};
 	} // fine getMese()
 	
-	/**Questo metodo invia un embed al canale da cui ha ricevuto l'ultimo messaggio.*/
+	/**Questo metodo invia un embed al canale da cui ha ricevuto l'ultimo messaggio.
+	 * @param messageEmbed l'embed da inviare
+	 * */
 	public void sendEmbedToChannel(MessageEmbed messageEmbed, boolean thread)
 	{
 		if (!thread)
