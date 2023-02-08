@@ -126,6 +126,8 @@ public class Commands extends ListenerAdapter
 		threadActivity = new ThreadActivity(true);
 		threadActivity.start();
 		
+		new PrivateMessage(Utente.getGion()).send("Riavvio completato.");
+		
 		if (sendMsgActivity)
 			canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
 	} // fine onReady()
