@@ -30,7 +30,7 @@ public class Clash
 	
 	
 	/**Controlla se il clan è in war e mostra l'andamento*/
-	public void clashWar() throws GenericException
+	public void clashWar()
 	{
 		final var currentWar = "https://api.clashofclans.com/v1/clans/%23" + tag + "/currentwar";
 		var embedToSend = new EmbedBuilder().setColor(Color.RED);
@@ -104,9 +104,8 @@ public class Clash
 		}
 		catch (IOException | ParseException e)
 		{
-			throw new GenericException(this.getClass(), e);
 			//Commands.canaleBot.sendMessage(""+e).queue();
-			//Commands.canaleBot.sendMessage("`"+this.getClass()+"`\n"+e.getStackTrace()[0]).queue();
+			Commands.canaleBot.sendMessage("`"+this.getClass()+"`\n"+e.getStackTrace()[0]).queue();
 		}
 	} // fine clashWar()
 	
