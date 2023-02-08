@@ -98,6 +98,7 @@ public class Commands extends ListenerAdapter
 		var nome = jda.getSelfUser().getName();
 		var act = jda.getPresence().getActivity();
 		String activityType="act_type", nomeActivity="act_name", activityTradotta="act_trad";
+		PrivateMessage gion = new PrivateMessage(Utente.getGion());
 		
 		System.out.printf("%s si è connesso a Discord!\n\npublic class MessageHistory\n{\n", nome);
 		
@@ -109,7 +110,7 @@ public class Commands extends ListenerAdapter
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			new PrivateMessage(Utente.getGion()).send("shit happened: " + e + "\n" + e.getStackTrace()[0]);
+			gion.send("shit happened: " + e + "\n" + e.getStackTrace()[0]);
 		}
 		
 		if (act != null)
@@ -126,7 +127,7 @@ public class Commands extends ListenerAdapter
 		threadActivity = new ThreadActivity(true);
 		threadActivity.start();
 		
-		new PrivateMessage(Utente.getGion()).send("Riavvio completato.");
+		gion.send("Riavvio completato.");
 		
 		if (sendMsgActivity)
 			canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
