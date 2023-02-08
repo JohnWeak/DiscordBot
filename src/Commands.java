@@ -1802,19 +1802,6 @@ public class Commands extends ListenerAdapter
 		};
 	} // fine getMese()
 	
-	
-	private String particella(int x)
-	{
-		return switch (x)
-		{
-			case 0 -> "lui";
-			case 1 -> "lo";
-			case 2 -> "gli";
-			case 3 -> "le";
-			default -> "";
-		};
-	}
-	
 	/**Questo metodo invia un embed al canale da cui ha ricevuto l'ultimo messaggio.*/
 	public void sendEmbedToChannel(MessageEmbed messageEmbed, boolean thread)
 	{
