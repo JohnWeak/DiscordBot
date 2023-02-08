@@ -104,8 +104,7 @@ public class Clash
 		}
 		catch (IOException | ParseException e)
 		{
-			//Commands.canaleBot.sendMessage(""+e).queue();
-			Commands.canaleBot.sendMessage("`"+this.getClass()+"`\n"+e.getStackTrace()[0]).queue();
+			Commands.canaleBot.sendMessage("`"+this.getClass()+"`\n"+e).queue();
 		}
 	} // fine clashWar()
 	
