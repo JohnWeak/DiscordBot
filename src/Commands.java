@@ -52,7 +52,7 @@ public class Commands extends ListenerAdapter
 	public static TextChannel canaleBotPokemon;
 	private static final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	public static TextChannel canaleBot;
-	private static final boolean moduloSicurezza = true;
+	private static final boolean moduloSicurezza = false;
 	private static final boolean sendMsgActivity = false;
 	private static List<Emote> emoteList;
 	private static ThreadActivity threadActivity;
@@ -120,7 +120,7 @@ public class Commands extends ListenerAdapter
 		    activityTradotta = activityType.equals("WATCHING") ? "guardo " : "gioco a ";
 		}
 		
-		moduloDiSicurezza();
+		// moduloDiSicurezza();
 		
 		emoteList = canaleBot.getJDA().getEmotes();
 		
