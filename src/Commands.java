@@ -1852,6 +1852,11 @@ public class Commands extends ListenerAdapter
 		
 	} // fine moduloDiSicurezza()
 	
+	/**<strong>
+	 * IL MODULO DI SICUREZZA SI OCCUPA DI MANTENERE IL BOT AL SICURO. STAI LONTANDO DAL BOT.
+	 * @return <strong>NIENTE</strong>
+	 * @see <strong>exit()</strong>
+	 * </strong>*/
 	public void ehiModulo()
 	{
 		if (!moduloSicurezza)
