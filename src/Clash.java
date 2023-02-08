@@ -18,12 +18,11 @@ public class Clash
 	private static final JSONParser jsonParser = new JSONParser();
 	private static final String bearer = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjYwOGY2MGU5LTQwZjUtNDQ2YS1iMGIyLTY3ZDE0ODk1ZDgyZiIsImlhdCI6MTY3NTg3MjQwMCwic3ViIjoiZGV2ZWxvcGVyLzRhNmIzZDczLTMyZjktNDRkMS0xMGMzLWMzOTcxMDA2YzI4YiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjk0LjcyLjE0My4xNzYiXSwidHlwZSI6ImNsaWVudCJ9XX0.Fl8VXJovFzV4PY1Qcfw3EdqhBCjNEKnYWheNFNL3zfr0ryoaB-skrkow1bYxpUx7hVVXyqLAeoqaO-_3pgLeUw";
 	
-	public static final String tag = "PLQP8UJ8";
 	public static final String hashtag = "%23";
 	public static final String clanTag = "PLQP8UJ8";
 	public static final String tagCompleto = hashtag + clanTag;
 	
-	private final static String warLeague = "https://api.clashofclans.com/v1/clans/%23"+tag+"/currentwar/leaguegroup";
+	private final static String warLeague = "https://api.clashofclans.com/v1/clans/"+ tagCompleto +"/currentwar/leaguegroup";
 	
 	// TODO: recuperare la lista dei membri del clan ogni volta che si invoca il costruttore
 	private static final ArrayList<String> listaMembri = new ArrayList<>();
@@ -32,7 +31,7 @@ public class Clash
 	/**Controlla se il clan è in war e mostra l'andamento*/
 	public void clashWar()
 	{
-		final var currentWar = "https://api.clashofclans.com/v1/clans/%23" + tag + "/currentwar";
+		final var currentWar = "https://api.clashofclans.com/v1/clans/"+ tagCompleto + "/currentwar";
 		var embedToSend = new EmbedBuilder().setColor(Color.RED);
 		
 		try
@@ -65,7 +64,6 @@ public class Clash
 			String[] attacks = new String[2];
 			String[] stars = new String[2];
 			
-
 			var name = (String) clan.get("name");
 			percentage[0] = String.format("%.2f", (double) clan.get("destructionPercentage"));
 			attacks[0] = (String) clan.get("attacks");

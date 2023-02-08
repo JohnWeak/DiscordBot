@@ -48,13 +48,11 @@ public class Commands extends ListenerAdapter
 	private static User sfidante = null;
 	private static User sfidato = null;
 	private static final String[] simboli = {"♥️", "♦️", "♣️", "♠️"};
-	private static String sceltaBot;
 	public static TextChannel canaleBotPokemon;
 	private static final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	public static TextChannel canaleBot;
 	private static final boolean moduloSicurezza = false;
 	private static final boolean sendMsgActivity = false;
-	private static List<Emote> emoteList;
 	private static ThreadActivity threadActivity;
 	
 	
@@ -121,8 +119,6 @@ public class Commands extends ListenerAdapter
 		}
 		
 		// moduloDiSicurezza();
-		
-		emoteList = canaleBot.getJDA().getEmotes();
 		
 		threadActivity = new ThreadActivity(true);
 		threadActivity.start();
@@ -1158,7 +1154,7 @@ public class Commands extends ListenerAdapter
 		
 		if (listaUtenti.isEmpty()) // gioca contro il bot
 		{
-			sceltaBot = opzioni[random.nextInt(3)];
+			String sceltaBot = opzioni[random.nextInt(3)];
 			var sceltaUtente = msgSpezzato[1].toLowerCase(Locale.ROOT);
 			
 			if (!(sceltaUtente.equals("sasso") || sceltaUtente.equals("forbici") || sceltaUtente.equals("forbice") || sceltaUtente.equals("carta")))
