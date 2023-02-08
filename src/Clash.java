@@ -106,7 +106,10 @@ public class Clash
 			new Commands().sendEmbedToChannel(embedToSend.build(), false);
 			
 		}
-		catch (IOException | ParseException e){e.printStackTrace();}
+		catch (IOException | ParseException e)
+		{
+			Commands.canaleBot.sendMessage("`"+this.getClass()+"`\n"+e.getStackTrace()[0]).queue();
+		}
 	} // fine clashWar()
 	
 	/**Controlla se il clan è attualmente in guerra nella lega tra clan*/
