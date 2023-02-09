@@ -151,8 +151,9 @@ public class Commands extends ListenerAdapter
 	
 	private void guildMessage(MessageReceivedEvent event, boolean isBot)
 	{
+		/*
 		var botOrHuman = isBot ? "Bot" : "User";
-		final var mockupCode = "\t%s %s = \"%s\"; // in \"%s\" (%s) - %s";
+		final var mockupCode = "\t%s %s = \"%s\"; // in \"%s\" (%s) - %s \n}\r";
 		var date = new Date();
 		var dFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
 		var dataFormattata = dFormat.format(date);
@@ -160,7 +161,8 @@ public class Commands extends ListenerAdapter
 		var messageChannelString = "#"+ channel.toString().split(":")[1].split("\\(")[0];
 		var guild = event.getGuild().toString().split("\\(")[0].split(":")[1];
 		
-		System.out.printf(mockupCode + "\n}\r", botOrHuman, authorName, messageRaw, messageChannelString, guild, dataFormattata);
+		System.out.printf(mockupCode, botOrHuman, authorName, messageRaw, messageChannelString, guild, dataFormattata);
+		*/
 		
 		aggiungiReazioni();
 		checkForKeywords(message.getContentStripped().toLowerCase());
