@@ -75,11 +75,11 @@ public class Main
 		
 		final String[] movies =
 		{
-			"WALL•E", "Avatar", "Big Hero 6", "Deadpool", "Dragon Trainer", "Freaks Out",
+			"WALL•E", "Avatar", "Avatar 2", "Big Hero 6", "Deadpool", "Dragon Trainer", "Freaks Out",
 			"Caccia a Ottobre Rosso", "Ghost in the Shell", "Into the Spiderverse", "La Teoria del Tutto",
 			"Kingsman: Secret Service", "Lupin III: The First", "Kubo e la spada magica", "Megamind",
 			"Shawn of the dead", "Star Trek", "Soul", "your name.", "Bullet Train", "Il diritto di contare",
-			"Up", "X-MEN", "Omicidio all'italiana"
+			"Up", "X-MEN", "Omicidio all'italiana", "Morbius", "L'era Glaciale"
 		};
 		
 		final String[] series =

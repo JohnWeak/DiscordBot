@@ -819,18 +819,24 @@ public class Commands extends ListenerAdapter
 	
 	private void smh()
 	{
-		var smh = "<:" + Emotes.smh + "> ";
-		message.reply(smh).queue(l->
+		try
 		{
-			var max = random.nextInt(2, 10);
-			var newSmh = smh;
-			for (int i = 0; i < max; i++)
+			var smh = "<:" + Emotes.smh + "> ";
+			message.reply(smh).queue(l ->
 			{
-				pause(1000, 0);
-				newSmh += smh;
-				l.editMessage(newSmh).queue();
-			}
-		});
+				var max = random.nextInt(2, 10);
+				var newSmh = smh;
+				for (int i = 0; i < max; i++)
+				{
+					pause(1000, 0);
+					newSmh += smh;
+					l.editMessage(newSmh).queue();
+				}
+			});
+		}catch (Exception e)
+		{
+			Error.print(object, e);
+		}
 	} // fine smh()
 	
 	private void timer()
