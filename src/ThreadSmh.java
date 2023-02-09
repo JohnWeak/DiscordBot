@@ -32,7 +32,7 @@ public class ThreadSmh extends Thread
 					newSmh += smh;
 				}
 			}
-			catch (InterruptedException e)
+			catch (Exception e)
 			{
 				Error.print(object, e);
 			}
