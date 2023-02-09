@@ -824,14 +824,15 @@ public class Commands extends ListenerAdapter
 			var smh = "<:" + Emotes.smh + "> ";
 			message.reply(smh).queue(l ->
 			{
-				var max = random.nextInt(2, 10);
+				var max = random.nextInt(2, 5);
 				var newSmh = smh;
-				
+				var m = new PrivateMessage(Utente.getGion());
 				for (int i = 0; i < max; i++)
 				{
 					pause(1000, 0);
 					l.editMessage(newSmh).queue();
 					newSmh += smh;
+					m.send(newSmh);
 				}
 			});
 		}catch (Exception e)
