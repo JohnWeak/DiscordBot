@@ -40,13 +40,6 @@ public class Commands extends ListenerAdapter
 	public static Message message;
 	public static String messageRaw;
 	public static User author;
-	private static final ArrayList<Challenge> listaSfide = new ArrayList<>();
-	private static final String[] challenge = {"Duello Carte", "Sasso Carta Forbici"};
-	private static boolean duelloAttivo = false;
-	private static boolean sfidaAttiva = false;
-	private static User sfidante = null;
-	private static User sfidato = null;
-	private static final String[] simboli = {"♥️", "♦️", "♣️", "♠️"};
 	public static TextChannel canaleBotPokemon;
 	private static final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	public static TextChannel canaleBot;
@@ -379,20 +372,17 @@ public class Commands extends ListenerAdapter
 		switch (comando)
 		{
 			case "!coinflip", "!cf" -> coinflip();
-			case "!scf" -> sassoCartaForbici();
 			case "!poll" -> poll();
 			case "!info" -> info();
 			case "!8ball" -> eightBall();
 			case "!pokemon" -> Pokemon.pokemon();
 			case "!colpevolezza", "!colpevole" -> colpevolezza();
 			case "!carta" -> sendCarta(new Card());
-			case "!duello", "!duellocarte" -> duelloDiCarte();
-			case "!accetto" -> accettaDuello(false);
-			case "!rifiuto" -> rifiutaDuello();
 			case "!massshooting", "!ms" -> massShooting();
 			case "!war" -> new Clash().clashWar();
 			case "!league" -> new Clash().clashWarLeague(false);
 			case "!emotes" -> getEmotes();
+			case "!smh" -> smh();
 			case "!dado" -> dado(msgStrippedLowerCase);
 			case "!cattura", "!catch" -> Pokemon.catturaPokemon();
 			case "!f", "+f" -> payRespect();
@@ -827,6 +817,22 @@ public class Commands extends ListenerAdapter
 		return false;
 	} // fine metodo contains()
 	
+	private void smh()
+	{
+		var smh = "<:" + Emotes.smh + "> ";
+		message.reply(smh).queue(l->
+		{
+			var max = random.nextInt(2, 10);
+			var newSmh = smh;
+			for (int i = 0; i < max; i++)
+			{
+				pause(1000, 0);
+				newSmh += smh;
+				l.editMessage(newSmh).queue();
+			}
+		});
+	} // fine smh()
+	
 	private void timer()
 	{
 		final var max = 604800; // 604800 secondi = 1 settimana
@@ -944,167 +950,13 @@ public class Commands extends ListenerAdapter
 	{
 		return switch (carta.getSeme())
 		{
-			case "Cuori" -> simboli[0];
-			case "Quadri" -> simboli[1];
-			case "Fiori" -> simboli[2];
-			case "Picche" -> simboli[3];
+			case "Cuori" -> Card.simboli[0];
+			case "Quadri" -> Card.simboli[1];
+			case "Fiori" -> Card.simboli[2];
+			case "Picche" -> Card.simboli[3];
 			default -> null;
 		};
 	}
-	
-	/** Permette a due persone di pescare una carta ciascuno. Vince il valore maggiore. */
-	private void duelloDiCarte()
-	{
-		if (duelloAttivo)
-		{
-			channel.sendMessage("C'è già un duello in atto! Attendi la fine dello scontro per iniziarne un altro.").queue();
-			return;
-		}
-		
-		var utenti = message.getMentionedUsers();
-		var autore = author.getDiscriminator();
-		final var link = "https://i.kym-cdn.com/photos/images/original/001/228/324/4a4.gif";
-		if (utenti.isEmpty())
-			channel.sendMessage("Devi menzionare un utente per poter duellare!\n`!duello @utente`").queue();
-		else if (utenti.get(0).isBot())
-		{
-			if (utenti.get(0).getDiscriminator().equals("5269"))
-			{
-				setDuel(utenti.get(0));
-				accettaDuello(true);
-			}
-			else
-				channel.sendMessage("**" + authorName + ", non duellerai con alcun bot all'infuori di me**").queue(m -> react("smh"));
-		}
-		else if (utenti.get(0).getDiscriminator().equals(autore))
-			channel.sendMessageEmbeds(new EmbedBuilder().setImage(link).setColor(0xFF0000).build()).queue(m -> react("pigeon"));
-		else
-		{
-			channel.sendMessage(authorName+" ti sfida a duello! Accetti, <@" + utenti.get(0).getId() + ">?"
-					                           + "\n*Per accettare, rispondi con* `!accetto`"
-					                           + "\n*Per rifiutare, rispondi con* `!rifiuto`").queue();
-			setDuel(utenti.get(0));
-			//TODO: passare al metodo nuovo di sfida
-			// quale?
-		}
-	} // fine duelloDiCarte()
-	
-	/** Se il duello inizia, imposta le variabili "duelloAttivo", "sfidante" e "sfidato" */
-	private void setDuel(User utente)
-	{
-		duelloAttivo = true;
-		sfidante = author;
-		sfidato = utente;
-	} // fine attivaDuello()
-	
-	/** Permette allo sfidato di accettare il duello */
-	private void accettaDuello(boolean flag)
-	{
-		if (!duelloAttivo || sfidato == null)
-		{
-			channel.sendMessage("<pigeon:647556750962065418>").queue(l->react("pigeon"));
-			return;
-		}
-		
-		var embed = new EmbedBuilder();
-		int[] valori = new int[2];
-		Card[] carte = new Card[2];
-		User[] duellanti = new User[2];
-		String[] messaggioVittoria =
-		{
-			"Vince lo sfidante: **" + sfidante.getName() + ".**",
-			"Vince lo sfidato: **" + sfidato.getName() + ".**",
-			"WTF, avete pescato la stessa carta dal mazzo? Vergognatevi."
-		};
-		
-		if (flag || author.getDiscriminator().equals(sfidato.getDiscriminator()))
-		{
-			Card cardSfidante, cardSfidato;
-			cardSfidante = new Card();
-			cardSfidato = new Card();
-			
-			carte[0] = cardSfidante;
-			carte[1] = cardSfidato;
-			
-			duellanti[0] = sfidante;
-			duellanti[1] = sfidato;
-
-			valori[0] = cardSfidante.getValoreInt();
-			valori[1] = cardSfidato.getValoreInt();
-			
-			channel.sendTyping().queue();
-			pause(500, 500);
-			
-			for (int i = 0; i < 2; i++)
-			{
-				embed
-					.setTitle("Carta di " + duellanti[i].getName())
-					.setImage(linkImmagine(carte[i]))
-					.setColor(coloreCarta(carte[i]))
-					.setFooter(semeCarta(carte[i]) + " " + titoloCarta(carte[i]));
-		
-				channel.sendMessageEmbeds(embed.build()).queue();
-			}
-			
-			if (valori[0] > valori[1])
-				channel.sendMessage(messaggioVittoria[0]).queue();
-			else if (valori[0] < valori[1])
-				channel.sendMessage(messaggioVittoria[1]).queue();
-			else
-			{
-				// valori uguali? Allora confrontiamo i semi per decidere il risultato.
-				// siccome i valori sono uguali, riciclo le variabili
-				
-				valori[0] = cardSfidante.getSemeInt();
-				valori[1] = cardSfidante.getSemeInt();
-				
-				if (valori[0] < 1 || valori[1] < 1)
-					channel.sendMessage("Errore Catastrofico:" +
-							"\nValori[0] = " + valori[0] +
-							"\nValori[1] = " + valori[1] +
-							"\nAutodistruzione imminente.")
-							.queue();
-				
-				if (valori[0] > valori[1])
-					channel.sendMessage(messaggioVittoria[0]).queue();
-				else if (valori[0] < valori[1])
-					channel.sendMessage(messaggioVittoria[1]).queue();
-				else
-					channel.sendMessage(messaggioVittoria[2]).queue(lambda -> react("vergognati"));
-				
-			}
-			
-			resetDuel();
-		}
-	} // fine accettaDuello()
-	
-	/** Permette al duellante di rifiutare/ritirarsi il/dal duello prima che inizi */
-	public void rifiutaDuello()
-	{
-		if (!duelloAttivo)
-		{
-			channel.sendMessage("Non c'è nessun duello, smh.").queue(lambda -> react("smh"));
-			return;
-		}
-		
-		final boolean x = author.getDiscriminator().equals(sfidato.getDiscriminator());
-		
-		String messaggioRifiuto = String.format("Lo %s %s il duello.",
-				x ? "sfidato" : "sfidante",
-				x ? "rifiuta" : "ritira");
-		
-		channel.sendMessage(messaggioRifiuto).queue();
-		
-		resetDuel();
-	} // fine rifiutaDuello()
-	
-	/** Resetta le variabili "duelloAttivo", "sfidante" e "sfidato" a false, null e null rispettivamente */
-	private void resetDuel()
-	{
-		duelloAttivo = false;
-		sfidante = null;
-		sfidato = null;
-	} // fine resetDuel()
 	
 	/** Lancia una moneta */
 	public void coinflip()
@@ -1130,81 +982,6 @@ public class Commands extends ListenerAdapter
 
 	} // fine coinflip()
 	
-	/** Genera una partita di Sasso-Carta-Forbici, sia contro il bot che contro un giocatore */
-	public void sassoCartaForbici()
-	{
-		final int sfida = 1;
-		final var immagineGiancarlo = "https://i.pinimg.com/originals/a7/68/bb/a768bbbb169aac9f0b445c80fa3b039a.jpg";
-		String[] opzioni = {"sasso", "carta", "forbici"};
-		var msgSpezzato = messageRaw.toLowerCase(Locale.ROOT).split(" ");
-		var listaUtenti = message.getMentionedUsers();
-		
-		if (messageRaw.length() < 5 || msgSpezzato[1].isEmpty())
-		{
-			var embed = new EmbedBuilder()
-				.setTitle("Sasso / Carta / Forbici")
-				.setColor(Color.red)
-				.addField("Utilizzo", "Scrivi `!scf` <\"sasso\" oppure \"carta\" oppure \"forbici\">", false);
-			
-			channel.sendMessageEmbeds(embed.build()).queue();
-			
-			return;
-		}
-		
-		if (listaUtenti.isEmpty()) // gioca contro il bot
-		{
-			String sceltaBot = opzioni[random.nextInt(3)];
-			var sceltaUtente = msgSpezzato[1].toLowerCase(Locale.ROOT);
-			
-			if (!(sceltaUtente.equals("sasso") || sceltaUtente.equals("forbici") || sceltaUtente.equals("forbice") || sceltaUtente.equals("carta")))
-			{
-				channel.sendMessage("Non è una scelta valida, smh").queue(m -> react("smh"));
-				return;
-			}
-			
-			sceltaUtente = capitalize(sceltaUtente);
-			sceltaBot = capitalize(sceltaBot);
-				
-			var embed = new EmbedBuilder()
-				.setTitle("**SASSO/CARTA/FORBICI**")
-				.setColor(Color.red)
-				.addField("Tu hai scelto", "**" + sceltaUtente + "**", true)
-				.addField("Io ho scelto", "**" + sceltaBot + "**", true)
-				.setImage(immagineGiancarlo)
-				.setFooter("Non siamo uguali.")
-				.build();
-			channel.sendMessageEmbeds(embed).queue();
-			
-			if (sceltaUtente.equalsIgnoreCase(sceltaBot))
-				channel.sendMessage("Ingredibile, abbiamo scelto entrambi **" + sceltaBot + "**! Pareggio.").queue();
-			else if (sceltaUtente.equalsIgnoreCase("sasso"))
-			{
-				if (sceltaBot.equalsIgnoreCase("carta"))
-					channel.sendMessage("La carta avvolge il sasso. Hai perso.").queue();
-				else
-					channel.sendMessage("Il sasso rompe le forbici. Hai vinto!").queue();
-			}
-			else if (sceltaUtente.equalsIgnoreCase("carta"))
-			{
-				if (sceltaBot.equalsIgnoreCase("forbici"))
-					channel.sendMessage("Le forbici tagliano la carta. Hai perso.").queue();
-				else
-					channel.sendMessage("La carta avvolge il sasso. Hai vinto!").queue();
-			}
-				
-				
-			return;
-		}
-		
-		// A questo punto la lista utenti non è vuota, quindi gioca contro un utente
-		
-		//TODO: definire la sfida con l'utente
-		
-		setSfida(listaUtenti.get(0), challenge[sfida]);
-		
-		
-	} // fine sassoCartaForbice()
-	
 	/**Prende in input una stringa e cambia la prima lettera da minuscola in maiuscola*/
 	private String capitalize(String str)
 	{
@@ -1214,55 +991,6 @@ public class Commands extends ListenerAdapter
 		
 		return str.substring(0, 1).toUpperCase() + str.substring(1);
 	}
-	
-	/** Crea un oggetto di tipo Bot.Challenge e tiene conto di chi è sfidato, chi è lo sfidante e su quale gioco. */
-	private void setSfida(User sfidato, String tipoSfida)
-	{
-		for (Challenge challenge : listaSfide)
-		{
-			if (challenge.getSfidante().equals(author))
-			{
-				if (challenge.getSfidato().equals(sfidato))
-				{
-					if (challenge.getTipoSfida().equals(tipoSfida))
-					{
-						channel.sendMessage("Voi due avete già una sfida in corso.").queue(l->react("smh"));
-						return;
-					}
-					else
-					{
-						listaSfide.add(new Challenge(sfidante, sfidato, tipoSfida));
-						sfidaAttiva = true;
-					}
-				}
-			}
-		}
-		
-	} // fine setSfida()
-	
-	/** Controlla che ci sia una sfida in atto, che chi ha inviato il comando di accettazione sia effettivamente
-	 * lo sfidato e gestisce la sfida in corso */
-	public void accettaSfida()
-	{
-		if (!sfidaAttiva || !authorName.equals(sfidato.getName()))
-		{
-			// se non c'è sfida o la persona che invia il comando non è lo sfidato => ignora
-			channel.sendMessage("Non sei stato sfidato, vergognati").queue( lambda -> react("vergognati"));
-			return ;
-		}
-		
-		// se si arriva qui vuol dire che c'è una sfida attiva
-		// e la persona che ha inviato il comando è proprio lo sfidato
-		for (Challenge challenge : listaSfide)
-			if (author.equals(challenge.getSfidato()))
-				if (sfidante.equals(challenge.getSfidante()))
-					switch (challenge.getTipoSfida())
-					{
-						case "Duello Carte" -> duelloDiCarte();
-						case "Sasso Carta Forbici" -> sassoCartaForbici();
-					}
-		
-	} // fine accettaSfida()
 	
 	/**Metodo che rende omaggio al defunto specificato dall'utente.<br>Uso: <b>!f < stringa ></b>*/
 	public void payRespect()

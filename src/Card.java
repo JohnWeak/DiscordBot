@@ -11,6 +11,8 @@ public class Card
 	private static final String[] semi = {"Cuori", "Quadri", "Fiori", "Picche"}; // Hearts, Diamonds, Clubs, Spades
 	private static final String[] valori = {"Asso", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Regina", "Re"};
 	
+	public static final String[] simboli = {"♥️", "♦️", "♣️", "♠️"};
+	
 	public Card()
 	{
 		String[] linkTemp = {"https://www.deckofcardsapi.com/static/img/", "valore", "seme", ".png"};
@@ -65,6 +67,8 @@ public class Card
 			default -> -1;
 		};
 	}
+	
+	// GETTER
 	public String getValoreString()
 	{
 		return valore;
@@ -99,4 +103,4 @@ public class Card
 	{
 		this.link = link;
 	}
-} // fine classe Bot.Card
+} // fine classe Card
