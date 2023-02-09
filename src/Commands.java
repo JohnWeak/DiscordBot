@@ -382,7 +382,7 @@ public class Commands extends ListenerAdapter
 			case "!war" -> new Clash().clashWar();
 			case "!league" -> new Clash().clashWarLeague(false);
 			case "!emotes" -> getEmotes();
-			case "!smh" -> smh();
+			case "!smh" -> new ThreadSmh(channel).start();
 			case "!dado" -> dado(msgStrippedLowerCase);
 			case "!cattura", "!catch" -> Pokemon.catturaPokemon();
 			case "!f", "+f" -> payRespect();
@@ -816,11 +816,6 @@ public class Commands extends ListenerAdapter
 		}
 		return false;
 	} // fine metodo contains()
-	
-	private void smh()
-	{
-		new ThreadSmh(channel).start();
-	} // fine smh()
 	
 	private void timer()
 	{
