@@ -826,11 +826,12 @@ public class Commands extends ListenerAdapter
 			{
 				var max = random.nextInt(2, 10);
 				var newSmh = smh;
+				
 				for (int i = 0; i < max; i++)
 				{
 					pause(1000, 0);
-					newSmh += smh;
 					l.editMessage(newSmh).queue();
+					newSmh += smh;
 				}
 			});
 		}catch (Exception e)
@@ -867,25 +868,18 @@ public class Commands extends ListenerAdapter
 			if (msgSplittato.length >= 3)
 				reason = msgSplittato[2];
 			
-			//channel.sendMessage("Sto dopo `msgSplittato[1]` e `msgSplittato[2]`, sto na favola").queue();
-			//channel.sendMessage("msgSplittato[1]: "+msgSplittato[1]+"\nmsgSplittato[2]: "+msgSplittato[2]).queue();
-			
 			try
 			{
-				//channel.sendMessage("Sto nel secondo try, sto na favola").queue();
 				if (timeInSeconds < 0 || timeInSeconds > max)
 				{
 					channel.sendMessage("Hai inserito un numero non valido. Timer non impostato.").queue();
 					return;
 				}
 				new ThreadTimer(message, timeInSeconds, author, reason).start();
-			//	channel.sendMessage("Sto dopo il `thread.start()`, sto na favola").queue();
-			}
-			catch (Exception e)
+			} catch (Exception e)
 			{
 				Error.print(object, e);
 			}
-			//channel.sendMessage("sto prima di chiudere la funzione `timer()`, sto na favola.").queue();
 		}
 	} // fine timer()
 	
@@ -1162,7 +1156,7 @@ public class Commands extends ListenerAdapter
 		
 		switch (discriminator)
 		{
-			case "2804" -> // Òbito
+			case Utente.OBITO ->
 			{
 				risultato = random.nextInt(immagineObito.length);
 				title = titolo.concat("Òbito");
@@ -1171,7 +1165,7 @@ public class Commands extends ListenerAdapter
 				color = (risultato == 0) ? "0xFFFFFF" : "0xC59FC9";
 			}
 			
-			case "7166" -> // Enigmo
+			case Utente.ENIGMO ->
 			{
 				risultato = random.nextInt(immagineEnigmo.length);
 				title = titolo.concat("Enigmo");
@@ -1180,7 +1174,7 @@ public class Commands extends ListenerAdapter
 				color = (risultato == 0) ? "0xCB4D4D" : "0xE5D152";
 			}
 			
-			case "2241" -> // Lex
+			case Utente.LEX ->
 			{
 				risultato = random.nextInt(immagineLex.length);
 				title = titolo.concat("Lex");
@@ -1189,7 +1183,7 @@ public class Commands extends ListenerAdapter
 				color = (risultato == 0) ? "0xD80000" : "0x207522";
 			}
 			
-			case "0935" -> // Gion
+			case Utente.GION ->
 			{
 				risultato = random.nextInt(immagineGion.length);
 				title = titolo.concat("Gion");
@@ -1311,7 +1305,6 @@ public class Commands extends ListenerAdapter
 	public void info()
 	{
 		var embedBuilder = new EmbedBuilder();
-		var size = commandsHashMap.size();
 		var urlOwO = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--amf4Rvt7--%2Ft_Preview%2Fb_rgb%3A191919%2Cc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1518097892%2Fproduction%2Fdesigns%2F2348593_0.jpg&f=1&nofb=1";
 		var urlTitle = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 		
