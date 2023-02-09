@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class ThreadActivity extends Thread
 {
+	private static final Object object = ThreadActivity.class;
 	private boolean keepGoing;
 	
 	/**Questo Thread continuerà a cambiare l'attività del bot ogni 1-2 ore.
@@ -51,7 +52,7 @@ public class ThreadActivity extends Thread
 			}
 			catch (Exception e)
 			{
-				Commands.canaleBot.sendMessage("Oh no, "+colpevole+ " ha rotto il thread activity: "+e).queue();
+				Error.print(object, e);
 			}
 			
 		} // fine while(keepGoing)

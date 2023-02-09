@@ -2,6 +2,8 @@ import net.dv8tion.jda.api.entities.User;
 
 public abstract class Utente
 {
+	private static final Object object = Utente.class;
+	
 	// Numeri (discriminator)
 	public static final String GION = "0935";
 	public static final String ENIGMO = "7166";
@@ -60,7 +62,7 @@ public abstract class Utente
 		}
 		catch (Exception e)
 		{
-			channel.sendMessage(""+e).queue();
+			Error.print(object, e);
 			return null;
 		}
 		return user;

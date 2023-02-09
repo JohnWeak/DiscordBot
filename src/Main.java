@@ -38,8 +38,8 @@ public class Main
 					        .build();
 		}catch (LoginException e)
 		{
-			Commands.canaleBot.sendMessage("Qualcosa è esploso: " + e).queue();
-			e.printStackTrace();
+			Error.print(Main.class, e);
+			
 		}
 		return jda;
 	} // fine generateJDA()

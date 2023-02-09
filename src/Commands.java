@@ -19,9 +19,7 @@ import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.DateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.*;
@@ -30,6 +28,7 @@ import java.util.regex.Pattern;
 
 public class Commands extends ListenerAdapter
 {
+	private static final Object object = Commands.class;
 	public static final File nomiPkmn = new File("src/nomiPokemon.txt");
 	public static final String botChannel = "\uD83E\uDD16bot-owo";
 	private static final Random random = new Random();
@@ -107,8 +106,7 @@ public class Commands extends ListenerAdapter
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
-			gion.send("shit happened: " + e + "\n" + e.getStackTrace()[0]);
+			Error.print(object, e);
 		}
 		
 		if (act != null)
@@ -243,7 +241,7 @@ public class Commands extends ListenerAdapter
 		}
 		catch (Exception e)
 		{
-			canaleBot.sendMessage("È esploso qualcosa in `onMessageReactionAdd`: " + e).queue();
+			Error.print(object, e);
 		}
 	} // fine onMessageReactionAdd
 	
@@ -311,8 +309,7 @@ public class Commands extends ListenerAdapter
 					} // fine try
 					catch (Exception e)
 					{
-						var msgErrore = "<@"+Utente.ID_GION+">\n" + e;
-						canaleBot.sendMessage(msgErrore).queue();
+						Error.print(object, e);
 					} // fine catch
 					
 					if (numGiorni == 0 || !(numGiorni % 365 == 0))
@@ -795,7 +792,7 @@ public class Commands extends ListenerAdapter
 				}
 				case "false", "f" ->
 				{
-					if (thrActivity.isAlive() && !thrActivity.isKeepGoing())
+					if (!thrActivity.isKeepGoing())
 					{
 						message.reply("Il cambio delle activity era già disattivato.").queue();
 						return;
@@ -808,7 +805,7 @@ public class Commands extends ListenerAdapter
 			
 		}catch (Exception e)
 		{
-			canaleBot.sendMessage("diocane\n"+e).queue();
+			Error.print(object, e);
 		}
 		
 	}
@@ -841,7 +838,7 @@ public class Commands extends ListenerAdapter
 			//channel.sendMessage("msgSplittato.length: "+msgSplittato.length+"\nmsgSplittato: "+ Arrays.toString(msgSplittato)).queue();
 		}catch (Exception e)
 		{
-			channel.sendMessage(""+e).queue();
+			Error.print(object, e);
 			return;
 		}
 		
@@ -874,7 +871,7 @@ public class Commands extends ListenerAdapter
 			}
 			catch (Exception e)
 			{
-				channel.sendMessage("Hai inserito un numero non valido.").queue();
+				Error.print(object, e);
 			}
 			//channel.sendMessage("sto prima di chiudere la funzione `timer()`, sto na favola.").queue();
 		}
@@ -1363,7 +1360,7 @@ public class Commands extends ListenerAdapter
 			
 			channel.sendTyping().queue();
 			try { Thread.sleep(sleepInterval); }
-			catch (InterruptedException e) { e.printStackTrace(); }
+			catch (InterruptedException e) { Error.print(object, e); }
 			channel.sendMessageEmbeds(embedBuilder.build()).queue();
 		}
 		else
@@ -1378,8 +1375,7 @@ public class Commands extends ListenerAdapter
 			
 			channel.sendTyping().queue();
 			
-			try { Thread.sleep(sleepInterval); }
-			catch (InterruptedException e) { e.printStackTrace(); }
+			pause(sleepInterval, 0);
 			
 			channel.sendMessageEmbeds(embedBuilder.build()).queue((message) ->
 			{
@@ -1530,7 +1526,7 @@ public class Commands extends ListenerAdapter
 		} // fine try
 		catch (ErrorResponseException e)
 		{
-			System.out.printf("Errore nell'aggiunta della reazione \"%s\"\n\t", emoteDaUsare);
+			Error.print(object, e);
 		}
 	} // fine react()
 	
@@ -1654,7 +1650,7 @@ public class Commands extends ListenerAdapter
 		try { Thread.sleep(millis + random.nextInt(bound)); }
 		catch (InterruptedException e)
 		{
-			canaleBot.sendMessage("`"+Commands.class+"\nInterruptedException`\n"+ e).queue();
+			Error.print(object, e);
 		}
 	} // fine pause()
 	
@@ -1672,7 +1668,7 @@ public class Commands extends ListenerAdapter
 			}
 			catch (NumberFormatException e)
 			{
-				System.out.println("Inserito valore non valido.");
+				Error.print(object, e);
 			}
 		
 		
@@ -1775,8 +1771,7 @@ public class Commands extends ListenerAdapter
 		}
 		catch (IOException | ParseException e)
 		{
-			channel.sendMessage("Uuuuh guarda che bello questo *" + e + "*.").queue();
-			e.printStackTrace();
+			Error.print(object, e);
 		}
 	} // fine massShooting()
 	
@@ -1933,7 +1928,7 @@ public class Commands extends ListenerAdapter
 			}
 		}catch (Exception e)
 		{
-			channel.sendMessage(""+e+"\n"+e.getStackTrace()[0]).queue();
+			Error.print(object, e);
 		}
 	} // fine dado()
 	

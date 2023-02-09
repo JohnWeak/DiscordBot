@@ -36,7 +36,7 @@ public class ThreadTimer extends Thread
 				Thread.sleep(seconds * 1000L);
 			} catch (InterruptedException e)
 			{
-				tc.sendMessage("" + e).queue();
+				Error.print(ThreadTimer.class, e);
 			}
 			var msgParziale = "<@"+user.getIdLong()+">\nTimer, timer, timer! È suonato il tuo timer!";
 			var msgTotale = msgParziale + (reason.isEmpty() ? "" : "\n\""+reason+"\"");

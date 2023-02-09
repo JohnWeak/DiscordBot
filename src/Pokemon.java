@@ -11,6 +11,8 @@ import java.util.*;
 
 public class Pokemon
 {
+	private static final Object object = Pokemon.class;
+	
 	private final int max = 898; // fino a gen 8
 	private final File nomiPokemon = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
@@ -41,7 +43,7 @@ public class Pokemon
 			nome = result[0];
 			img = result[1];
 		}
-		catch (Exception e) { Commands.canaleBotPokemon.sendMessage(""+e).queue(); }
+		catch (Exception e) { Error.print(object, e); }
 		
 	}
 
@@ -62,7 +64,7 @@ public class Pokemon
 
 
 			img = generatePokemon(id)[1];
-		}catch (Exception e) { e.printStackTrace(); }
+		}catch (Exception e) { Error.print(object,e); }
 
 		this.descrizione = descrizione;
 	}
@@ -84,10 +86,7 @@ public class Pokemon
 			for (int i = 0; i < id; i++)
 				nome = scanner.nextLine();
 			
-		} catch (FileNotFoundException e)
-		{
-			Commands.canaleBotPokemon.sendMessage(""+e).queue();
-		}
+		} catch (FileNotFoundException e) { Error.print(object,e); }
 		
 		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+id+".png";
 		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/"+id+".png";
@@ -172,8 +171,7 @@ public class Pokemon
 				}
 				catch (IndexOutOfBoundsException e)
 				{
-					final String testo = "Il Pokedex non ha informazioni riguardo `" + nome + "`.";
-					Commands.channel.sendMessage(testo + "\n" + e.getMessage()).queue();
+					Error.print(object, e);
 				}
 			}
 			else
@@ -299,7 +297,7 @@ public class Pokemon
 					
 					jsonArray = (JSONArray) jsonParser.parse(String.valueOf(response));
 				}
-		} catch (IOException | ParseException e) { System.out.println("Errore nell'apertura del file: " + Commands.nomiPkmn); }
+		} catch (IOException | ParseException e) { Error.print(object,e); }
 		
 		return jsonArray;
 	} // fine search()
@@ -329,8 +327,7 @@ public class Pokemon
 		}
 		catch (Exception e)
 		{
-			Commands.canaleBotPokemon.sendMessage(""+e).queue();
-			//Commands.canaleBotPokemon.sendMessage("test: " + Thread.currentThread()).queue();
+			Error.print(object, e);
 		}
 		
 		

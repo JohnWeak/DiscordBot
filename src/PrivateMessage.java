@@ -5,6 +5,7 @@ public class PrivateMessage
 {
 	private final User user;
 	private final MessageChannel messageChannel;
+	private static final Object object = PrivateMessage.class;
 	
 	/**Questa classe permette di inviare messaggi privati agli utenti passati tramite parametro
 	 * @param user Utente a cui inviare il messaggio privato. */
@@ -29,7 +30,7 @@ public class PrivateMessage
 		}
 		catch (Exception e)
 		{
-			messageChannel.sendMessage("`"+this.getClass()+"`\n"+e+"\n"+e.getStackTrace()[0]).queue();
+			Error.print(object, e);
 		}
 	} // fine metodo send()
 	
