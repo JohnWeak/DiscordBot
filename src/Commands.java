@@ -390,7 +390,7 @@ public class Commands extends ListenerAdapter
 			case "!timer" -> timer();
 			case "!dm" -> dm(msgStrippedLowerCase);
 			// case "!ch" -> channelHistory();
-			case "!encounter" -> {p = new Pokemon(); Pokemon.singleEncounter(p);}
+			case "!encounter" -> encounter();
 			case "!toggleactivity", "!ta" -> toggleActivity(msgStrippedLowerCase, threadActivity);
 		}
 		
@@ -675,6 +675,16 @@ public class Commands extends ListenerAdapter
 			channel.sendMessage(x).queue();
 		
 	} // fine getEmotes()
+	
+	private void encounter()
+	{
+		var p = new Pokemon();
+		Pokemon.singleEncounter(p);
+		var x = p.getActivePokemons();
+		if (x.size() <= 2)
+			x.add(p);
+		p.setActivePokemons(x);
+	}
 	
 	private void channelHistory()
 	{

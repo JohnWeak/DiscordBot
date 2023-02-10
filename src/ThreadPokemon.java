@@ -64,7 +64,8 @@ public class ThreadPokemon extends Thread
 	{
 		new PrivateMessage(Utente.getGion()).send("*"+pokemon.getNome()+"*");
 		
-		try{
+		try
+		{
 			var activePokemons = pokemon.getActivePokemons();
 			if (!activePokemons.contains(pokemon))
 				activePokemons.add(pokemon);
