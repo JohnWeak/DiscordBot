@@ -68,7 +68,6 @@ public class ThreadPokemon extends Thread
 			var activePokemons = pokemon.getActivePokemons();
 			if (!activePokemons.contains(pokemon))
 				activePokemons.add(pokemon);
-		}catch (Exception e) {Error.print(object, e);}
 		
 		tc.sendMessage("test: "+Thread.currentThread()).queue();
 		tc.sendMessageEmbeds(eb.build()).queue(l ->
@@ -115,7 +114,7 @@ public class ThreadPokemon extends Thread
 			
 			l.editMessageEmbeds(eb.build()).queue();
 		});
-		
+		}catch (Exception e) {Error.print(object, e);}
 		
 		
 	} // fine run()
