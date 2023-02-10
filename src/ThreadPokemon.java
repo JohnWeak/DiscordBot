@@ -33,6 +33,12 @@ public class ThreadPokemon extends Thread
 		this.pokemon = pokemon;
 	}
 	
+	public ThreadPokemon(Pokemon pokemon, TextChannel tc)
+	{
+		this.pokemon = pokemon;
+		this.tc = tc;
+	}
+	
 	/**Imposta il tempo in cui il pokemon resta attivo nel canale prima di scappare.<br>
 	 * È possibile stabilire quanti secondi, minuti oppure ore dovranno passare prima che scappi.
 	 * @param type il tempo da impostare: ore, minuti oppure secondi.

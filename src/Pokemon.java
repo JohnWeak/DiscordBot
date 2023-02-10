@@ -316,9 +316,8 @@ public class Pokemon
 		
 		try
 		{
-			var t = new ThreadPokemon(pokemon);
+			var t = new ThreadPokemon(pokemon, Commands.canaleBot);
 			t.setEmbedBuilder(embedBuilder);
-			t.setTc(Commands.canaleBotPokemon);
 			t.timeoutTime(t.MINUTES, random.nextInt(5, 60));
 			t.start();
 		}
