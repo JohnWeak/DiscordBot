@@ -16,7 +16,6 @@ public class Pokemon
 	private final int max = 898; // fino a gen 8
 	private static final File nomiPokemon = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
-	private static ArrayList<Pokemon> activePokemons;
 	
 	// private static int pokemon_id = 261; -> Poochyena
 	// https://pokeapi.co/api/v2/pokemon/261/
@@ -312,7 +311,6 @@ public class Pokemon
 		embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
 		
 		// a questo punto il pokemon è attivo nel canale
-		//pokemon.setActive(true);
 		
 		try
 		{
@@ -355,33 +353,7 @@ public class Pokemon
 		var gson = new Gson();
 		var map = new HashMap<String, String>();
 		*/
-		
-		if (Commands.messageRaw.length() <= "!cattura".length())
-			return;
-		
-		var	pkmnName = Commands.messageRaw.split(" ")[1].toLowerCase();
-		var activePokemons = Pokemon.activePokemons;
-		{
-			if (activePokemons.size() == 0)
-			{
-				Commands.canaleBotPokemon.sendMessage("lista vuota <:" + Emotes.dshock + ">").queue();
-				return;
-			}
-			
-			for (Pokemon p : activePokemons)
-			{
-				if (p.isActive() && pkmnName.equals(p.getNome()))
-				{
-					var trainer = new Trainer("" + Commands.authorName, "" + Commands.author.getId());
-					
-					final var msg =
-							"Congratulazioni, " + Commands.authorName + "! Hai catturato **" + p.getNome() + "**!";
-					trainer.catturaPokemon(p);
-					Commands.channel.sendMessage(msg).queue(m -> Commands.react("pogey"));
-					p.setCatturato(true);
-				}
-			}
-		}
+	
 		
 		/* *************************************************
 		try
@@ -425,7 +397,6 @@ public class Pokemon
 	public int[] getIndividualValues() { return individualValues; }
 	public boolean isCatturato() { return catturato; }
 	public boolean isActive() { return active; }
-	public ArrayList<Pokemon> getActivePokemons() { return activePokemons;}
 	
 	//SETTER
 	public void setNome(String nome) { this.nome = nome;}
@@ -439,7 +410,5 @@ public class Pokemon
 	public void setIndividualValues(int[] individualValues) { this.individualValues = individualValues; }
 	public void setCatturato(boolean catturato) { this.catturato = catturato; }
 	public void setActive(boolean active) { this.active = active; }
-	public void setActivePokemons(ArrayList<Pokemon> activePokemons) { this.activePokemons = activePokemons; }
-
-
+	
 } // fine classe Pokemon
