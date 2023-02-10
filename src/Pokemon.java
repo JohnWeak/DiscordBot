@@ -30,7 +30,6 @@ public class Pokemon
 	private String[] lineaEvolutiva;
 	private int[] individualValues = new int[6];
 	private boolean catturato = false;
-	private boolean active;
 	
 	public Pokemon()
 	{
@@ -259,7 +258,7 @@ public class Pokemon
 	public static void spawnPokemon()
 	{
 		var rand = random.nextInt(100);
-		if (rand == 42 || Commands.messageRaw.equals("pkmnpls"))
+		if (rand == 42)
 			singleEncounter(new Pokemon());
 		
 		// Commands.author.openPrivateChannel().flatMap(channel -> channel.sendMessage(""+rand)).queue();
@@ -314,9 +313,11 @@ public class Pokemon
 		
 		try
 		{
-			var t = new ThreadPokemon(pokemon, Commands.canaleBot);
+			var t = new ThreadPokemon(pokemon, Commands.canaleBotPokemon);
 			t.setEmbedBuilder(embedBuilder);
-			t.timeoutTime(t.MINUTES, random.nextInt(5, 60));
+			var tout = random.nextInt(1, 3);
+			t.timeoutTime(t.MINUTES, tout);
+			Commands.canaleBotPokemon.sendMessage("`"+tout+"`").queue();
 			t.start();
 		}
 		catch (Exception e)
@@ -396,7 +397,6 @@ public class Pokemon
 	public String[] getLineaEvolutiva() { return lineaEvolutiva; }
 	public int[] getIndividualValues() { return individualValues; }
 	public boolean isCatturato() { return catturato; }
-	public boolean isActive() { return active; }
 	
 	//SETTER
 	public void setNome(String nome) { this.nome = nome;}
@@ -409,6 +409,5 @@ public class Pokemon
 	public void setLineaEvolutiva(String[] lineaEvolutiva) { this.lineaEvolutiva = lineaEvolutiva; }
 	public void setIndividualValues(int[] individualValues) { this.individualValues = individualValues; }
 	public void setCatturato(boolean catturato) { this.catturato = catturato; }
-	public void setActive(boolean active) { this.active = active; }
 	
 } // fine classe Pokemon

@@ -85,8 +85,6 @@ public class ThreadPokemon extends Thread
 					Thread.sleep(timeout);
 				} catch (InterruptedException ignored) { }
 				
-				pokemon.setActive(false);
-				//activePokemons.remove(pokemon);
 				
 				var msgFooter = pokemonNome + "ran away.";
 				var types = pokemon.getTipo();
