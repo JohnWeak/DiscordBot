@@ -369,6 +369,7 @@ public class Commands extends ListenerAdapter
 		} // fine if reazioni
 		
 		Card c;
+		Pokemon p;
 		switch (comando)
 		{
 			case "!coinflip", "!cf" -> coinflip();
@@ -389,6 +390,7 @@ public class Commands extends ListenerAdapter
 			case "!timer" -> timer();
 			case "!dm" -> dm(msgStrippedLowerCase);
 			// case "!ch" -> channelHistory();
+			case "!encounter" -> {p = new Pokemon(); Pokemon.singleEncounter(p);}
 			case "!toggleactivity", "!ta" -> toggleActivity(msgStrippedLowerCase, threadActivity);
 		}
 		

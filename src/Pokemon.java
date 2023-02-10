@@ -321,7 +321,7 @@ public class Pokemon
 			var t = new ThreadPokemon(pokemon);
 			t.setEmbedBuilder(embedBuilder);
 			t.setTc(Commands.canaleBotPokemon);
-			t.timeoutTime(t.MINUTES, random.nextInt(0, 60));
+			t.timeoutTime(t.MINUTES, random.nextInt(5, 60));
 			t.start();
 		}
 		catch (Exception e)
