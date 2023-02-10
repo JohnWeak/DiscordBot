@@ -310,8 +310,6 @@ public class Pokemon
 		
 		embedBuilder = Pokemon.buildEmbed(pokemon, false).setTitle(titolo);
 		embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
-		Commands.canaleBotPokemon.sendTyping().queue();
-		Commands.pause(500, 500);
 		
 		// a questo punto il pokemon è attivo nel canale
 		pokemon.setActive(true);
