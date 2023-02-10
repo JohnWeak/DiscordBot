@@ -10,5 +10,4 @@ public abstract class Error
 		new PrivateMessage(Utente.getGion()).send(Arrays.toString(exception.getStackTrace()));
 		
 	} // fine printError()
-	
 } // fine classe Error
