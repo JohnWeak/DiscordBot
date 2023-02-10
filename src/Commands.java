@@ -679,6 +679,7 @@ public class Commands extends ListenerAdapter
 	private void encounter()
 	{
 		var p = new Pokemon();
+		
 		Pokemon.singleEncounter(p);
 	}
 	

@@ -95,6 +95,45 @@ public class Pokemon
 		
 		risultato[1] = img;
 		
+		JSONArray jsonArray = Pokemon.search(nome);
+		String numeroPokedex;
+		boolean sh = random.nextInt(8142) == 42;
+		
+		if (jsonArray.isEmpty())
+		{
+			Commands.canaleBotPokemon.sendMessage("jsonArray è vuoto").queue();
+			return null;
+		}
+		
+		try
+		{
+			JSONObject jsonObject = (JSONObject) jsonArray.get(0);
+			String description = (String) jsonObject.get("description");
+			JSONArray types = (JSONArray) jsonObject.get("types");
+			JSONObject family = (JSONObject) jsonObject.get("family");
+			JSONArray evoLine = (JSONArray) family.get("evolutionLine");
+			
+			for (int i = 0; i < types.size(); i++)
+				tipo[i] = types.get(i).toString();
+			
+			generazione = String.valueOf(jsonObject.get("gen"));
+			numeroPokedex = (String) jsonObject.get("number");
+			
+			for (int i = 0; i < evoLine.size(); i++)
+				lineaEvolutiva[i] = evoLine.get(i).toString();
+			
+			var pokemon = new Pokemon(nome, description, sh);
+			
+			pokemon.setTipo(tipo);
+			pokemon.setGenerazione(generazione);
+			pokemon.setDexNumber(numeroPokedex);
+			pokemon.setLineaEvolutiva(lineaEvolutiva);
+		}
+		catch (Exception e)
+		{
+			Error.print(object, e);
+		}
+		
 		return risultato;
 		
 	} // fine generatePokemon()
@@ -166,7 +205,7 @@ public class Pokemon
 					Commands.pause(1000, 500);
 					Commands.channel.sendMessageEmbeds(Pokemon.buildEmbed(pokemon, true).build()).queue();
 				}
-				catch (IndexOutOfBoundsException e)
+				catch (Exception e)
 				{
 					Error.print(object, e);
 				}
@@ -225,7 +264,7 @@ public class Pokemon
 		try
 		{
 			embedBuilder.setTitle(pokemon.getNome().toUpperCase());
-		}catch (Exception ignored) { }
+		}catch (Exception e) { Error.print(object, e); }
 		
 		if ((descrizione = pokemon.getDescrizione()) != null)
 		{
