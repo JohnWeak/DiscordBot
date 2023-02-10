@@ -64,7 +64,6 @@ public class ThreadPokemon extends Thread
 	{
 		try
 		{
-			tc.sendMessage("test: "+Thread.currentThread()).queue();
 			tc.sendMessageEmbeds(eb.build()).queue(l ->
 			{
 				var pokemonNome = pokemon.getNome();
@@ -83,29 +82,29 @@ public class ThreadPokemon extends Thread
 				try
 				{
 					Thread.sleep(timeout);
-				} catch (InterruptedException ignored) { }
-				
-				
-				var msgFooter = pokemonNome + "ran away.";
-				var types = pokemon.getTipo();
-				
-				for (String s : types)
-				{
-					if (s.equalsIgnoreCase("flying"))
+					
+					
+					var msgFooter = pokemonNome + "ran away.";
+					var types = pokemon.getTipo();
+					
+					for (String s : types)
 					{
-						msgFooter = pokemonNome + " flew away.";
-						break;
+						if (s.equalsIgnoreCase("flying"))
+						{
+							msgFooter = pokemonNome + " flew away.";
+							break;
+						}
 					}
-				}
-				
-				
-				eb.setTitle("The wild " + pokemonNome + " fled.");
-				eb.setFooter(msgFooter);
-				eb.setColor(Color.GRAY);
-				
-				l.clearReactions().queue();
-				
-				l.editMessageEmbeds(eb.build()).queue();
+					
+					
+					eb.setTitle("The wild " + pokemonNome + " fled.");
+					eb.setFooter(msgFooter);
+					eb.setColor(Color.GRAY);
+					
+					l.clearReactions().queue();
+					
+					l.editMessageEmbeds(eb.build()).queue();
+				}catch (Exception e) { Error.print(object,e); }
 			});
 		}
 		catch (Exception e)
