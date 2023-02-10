@@ -54,6 +54,8 @@ public class ThreadPokemon extends Thread
 	@Override
 	public void run()
 	{
+		new PrivateMessage(Utente.getGion()).send("*"+pokemon.getNome()+"*");
+		
 		var activePokemons = pokemon.getActivePokemons();
 		if (!activePokemons.contains(pokemon))
 			activePokemons.add(pokemon);
@@ -82,7 +84,7 @@ public class ThreadPokemon extends Thread
 			pokemon.setActive(false);
 			activePokemons.remove(pokemon);
 			
-			var msgFooter = pokemonNome + "ran away";
+			var msgFooter = pokemonNome + "ran away.";
 			var types = pokemon.getTipo();
 			
 			for (String s : types)
