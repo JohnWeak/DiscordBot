@@ -62,14 +62,8 @@ public class ThreadPokemon extends Thread
 	@Override
 	public void run()
 	{
-		new PrivateMessage(Utente.getGion()).send("*"+pokemon.getNome()+"*");
-		
 		try
 		{
-			//var activePokemons = pokemon.getActivePokemons();
-			//if (!activePokemons.contains(pokemon))
-			//	activePokemons.add(pokemon);
-		
 			tc.sendMessage("test: "+Thread.currentThread()).queue();
 			tc.sendMessageEmbeds(eb.build()).queue(l ->
 			{
