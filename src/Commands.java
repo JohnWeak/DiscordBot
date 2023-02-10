@@ -29,6 +29,7 @@ import java.util.regex.Pattern;
 public class Commands extends ListenerAdapter
 {
 	private static final Object object = Commands.class;
+	
 	public static final String botChannel = "\uD83E\uDD16bot-owo";
 	private static final Random random = new Random();
 	public static MessageChannel channel;
