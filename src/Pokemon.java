@@ -14,7 +14,7 @@ public class Pokemon
 	private static final Object object = Pokemon.class;
 	
 	private final int max = 898; // fino a gen 8
-	private final File nomiPokemon = new File("src/nomiPokemon.txt");
+	private static final File nomiPokemon = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
 	private static ArrayList<Pokemon> activePokemons;
 	
@@ -281,7 +281,7 @@ public class Pokemon
 		try
 		{
 			url = new URL("https://pokeapi.glitch.me/v1/pokemon/" + pokemon);
-			Scanner scanner = new Scanner(Commands.nomiPkmn);
+			Scanner scanner = new Scanner(nomiPokemon);
 			while (scanner.hasNext())
 				if (pokemon.equalsIgnoreCase(scanner.nextLine()))
 				{
