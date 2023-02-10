@@ -368,7 +368,7 @@ public class Commands extends ListenerAdapter
 			
 		} // fine if reazioni
 		
-		
+		Card c;
 		switch (comando)
 		{
 			case "!coinflip", "!cf" -> coinflip();
@@ -377,7 +377,7 @@ public class Commands extends ListenerAdapter
 			case "!8ball" -> eightBall();
 			case "!pokemon" -> Pokemon.pokemon();
 			case "!colpevolezza", "!colpevole" -> colpevolezza();
-			case "!carta" -> sendCarta(new Card());
+			case "!carta" -> {c = new Card(); c.sendCarta(c);}
 			case "!massshooting", "!ms" -> massShooting();
 			case "!war" -> new Clash().clashWar();
 			case "!league" -> new Clash().clashWarLeague(false);
@@ -388,7 +388,7 @@ public class Commands extends ListenerAdapter
 			case "!f", "+f" -> payRespect();
 			case "!timer" -> timer();
 			case "!dm" -> dm(msgStrippedLowerCase);
-			case "!ch" -> channelHistory();
+			// case "!ch" -> channelHistory();
 			case "!toggleactivity", "!ta" -> toggleActivity(msgStrippedLowerCase, threadActivity);
 		}
 		
@@ -823,9 +823,7 @@ public class Commands extends ListenerAdapter
 		String[] msgSplittato;
 		try
 		{
-			//channel.sendMessage("sto nel try, prima di `messageRaw.split(\" \")`, sto na favola").queue();
 			msgSplittato = messageRaw.split(" ");
-			//channel.sendMessage("msgSplittato.length: "+msgSplittato.length+"\nmsgSplittato: "+ Arrays.toString(msgSplittato)).queue();
 		}catch (Exception e)
 		{
 			Error.print(object, e);
@@ -887,53 +885,6 @@ public class Commands extends ListenerAdapter
 		return new String(chars);
 	} // fine camelCase()
 	
-	/** Invia una carta in chat come se fosse stata pescata dal mazzo */
-	private void sendCarta(Card carta)
-	{
-		final var titolo = titoloCarta(carta);
-		final var immagineCartaAPI = linkImmagine(carta);
-		final var color= coloreCarta(carta);
-		final var seme = semeCarta(carta);
-		var embed = new EmbedBuilder()
-			.setTitle(titolo)
-			.setImage(immagineCartaAPI)
-			.setColor(color)
-			.setFooter(seme);
-		
-		channel.sendMessageEmbeds(embed.build()).queue();
-		
-	} // fine sendCarta
-	
-	/** Restituisce il titolo della carta sotto forma di stringa */
-	public String titoloCarta(Card carta)
-	{
-		return carta.getValoreString() + " di " + carta.getSeme();
-	}
-	
-	/** Restituisce il link dell'immagine della carta sotto forma di stringa */
-	public String linkImmagine(Card carta)
-	{
-		return carta.getLink();
-	}
-	
-	/** Restituisce il colore della carta sotto forma di Color */
-	public Color coloreCarta(Card carta)
-	{
-		return carta.getSeme().equals("Cuori") || carta.getSeme().equals("Quadri") ? Color.red : Color.black;
-	}
-	
-	/** Restituisce il valore del seme della carta sotto forma di stringa */
-	public String semeCarta(Card carta)
-	{
-		return switch (carta.getSeme())
-		{
-			case "Cuori" -> Card.simboli[0];
-			case "Quadri" -> Card.simboli[1];
-			case "Fiori" -> Card.simboli[2];
-			case "Picche" -> Card.simboli[3];
-			default -> null;
-		};
-	}
 	
 	/** Lancia una moneta */
 	public void coinflip()
@@ -958,16 +909,6 @@ public class Commands extends ListenerAdapter
 		});
 
 	} // fine coinflip()
-	
-	/**Prende in input una stringa e cambia la prima lettera da minuscola in maiuscola*/
-	private String capitalize(String str)
-	{
-		// se la stringa è nulla/vuota oppure la prima lettera è già maiuscola, ignora
-		if(str == null || str.isEmpty() || str.substring(0,1).matches("[A-Z]"))
-			return str;
-		
-		return str.substring(0, 1).toUpperCase() + str.substring(1);
-	}
 	
 	/**Metodo che rende omaggio al defunto specificato dall'utente.<br>Uso: <b>!f < stringa ></b>*/
 	public void payRespect()
