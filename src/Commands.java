@@ -840,7 +840,7 @@ public class Commands extends ListenerAdapter
 		
 		if (msgSplittato.length == 1) // !timer senza argomenti
 		{
-			var m = "Usa `!timer <tempo> [nome del timer] per impostare un timer.`\nEsempio: `!timer 5` imposterà un timer per 5 secondi.";
+			var m = "Usa `!timer <tempo in secondi> [nome del timer] per impostare un timer.`\nEsempio: `!timer 5` imposterà un timer di 5 secondi.";
 			channel.sendMessage(m).queue();
 		}
 		else
