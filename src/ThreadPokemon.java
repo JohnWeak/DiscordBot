@@ -4,6 +4,8 @@ import java.awt.Color;
 
 public class ThreadPokemon extends Thread
 {
+	private final Object object = ThreadPokemon.class;
+	
 	public final String HOURS = "ore";
 	public final String MINUTES = "minuti";
 	public final String SECONDS = "secondi";
@@ -62,9 +64,11 @@ public class ThreadPokemon extends Thread
 	{
 		new PrivateMessage(Utente.getGion()).send("*"+pokemon.getNome()+"*");
 		
-		var activePokemons = pokemon.getActivePokemons();
-		if (!activePokemons.contains(pokemon))
-			activePokemons.add(pokemon);
+		try{
+			var activePokemons = pokemon.getActivePokemons();
+			if (!activePokemons.contains(pokemon))
+				activePokemons.add(pokemon);
+		}catch (Exception e) {Error.print(object, e);}
 		
 		tc.sendMessage("test: "+Thread.currentThread()).queue();
 		tc.sendMessageEmbeds(eb.build()).queue(l ->
