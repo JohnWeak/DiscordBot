@@ -679,11 +679,13 @@ public class Commands extends ListenerAdapter
 	private void encounter()
 	{
 		var p = new Pokemon();
-		Pokemon.singleEncounter(p);
 		var x = p.getActivePokemons();
+		
 		if (x.size() <= 2)
 			x.add(p);
+		
 		p.setActivePokemons(x);
+		Pokemon.singleEncounter(p);
 	}
 	
 	private void channelHistory()
