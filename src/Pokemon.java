@@ -14,7 +14,7 @@ public class Pokemon
 	private static final Object object = Pokemon.class;
 	
 	private final int max = 898; // fino a gen 8
-	private final File nomiPokemon = new File("nomiPokemon.txt");
+	private final File nomiPokemon = new File("src/nomiPokemon.txt");
 	private static final Random random = new Random();
 	private static ArrayList<Pokemon> activePokemons;
 	
@@ -70,7 +70,7 @@ public class Pokemon
 	}
 	
 	
-	private String[] generatePokemon(int id) throws IOException
+	private String[] generatePokemon(int id)
 	{
 		if (id <= 0)
 			id = random.nextInt(max)+1;
@@ -97,7 +97,6 @@ public class Pokemon
 		
 		risultato[1] = img;
 		
-		//System.out.println("\t"+Arrays.toString(risultato)+"\n\tShiny: "+shiny);
 		return risultato;
 		
 	} // fine generatePokemon()
