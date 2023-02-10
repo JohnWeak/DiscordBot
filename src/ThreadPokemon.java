@@ -11,16 +11,12 @@ public class ThreadPokemon extends Thread
 	public final String SECONDS = "secondi";
 	
 	private long timeout;
-	private Pokemon pokemon;
+	private final Pokemon pokemon;
 	private TextChannel tc;
 	private EmbedBuilder eb;
 	
 	
 	// metodi
-	public void setPokemon(Pokemon pokemon)
-	{
-		this.pokemon = pokemon;
-	}
 	public void setTc(TextChannel tc)
 	{
 		this.tc = tc;
@@ -50,8 +46,8 @@ public class ThreadPokemon extends Thread
 	{
 		this.timeout = switch (type)
 		{
-			case HOURS -> timeout * 60 * 60 * 1000;
-			case MINUTES -> timeout * 60 * 1000;
+			case HOURS -> timeout * 1000 * 60 * 60;
+			case MINUTES -> timeout * 1000 * 60;
 			case SECONDS -> timeout * 1000;
 			default -> timeout;
 		};
@@ -62,56 +58,49 @@ public class ThreadPokemon extends Thread
 	@Override
 	public void run()
 	{
-		try
+		tc.sendMessageEmbeds(eb.build()).queue(l ->
 		{
-			tc.sendMessageEmbeds(eb.build()).queue(l ->
+			var pokemonNome = pokemon.getNome();
+			if (pokemonNome.equalsIgnoreCase("poochyena") || pokemonNome.equalsIgnoreCase("mightyena"))
 			{
-				var pokemonNome = pokemon.getNome();
-				if (pokemonNome.equalsIgnoreCase("poochyena") || pokemonNome.equalsIgnoreCase("mightyena"))
+				Commands.react("pogey");
+				l.addReaction("❤️").queue();
+			}
+			else
+			{
+				l.addReaction("👍🏻").queue();
+				l.addReaction("❤️").queue();
+				l.addReaction("👎🏻").queue();
+			}
+			
+			try
+			{
+				Thread.sleep(timeout);
+				
+				
+				var msgFooter = pokemonNome + "ran away.";
+				var types = pokemon.getTipo();
+				
+				for (String s : types)
 				{
-					Commands.react("pogey");
-					l.addReaction("❤️").queue();
-				}
-				else
-				{
-					l.addReaction("👍🏻").queue();
-					l.addReaction("❤️").queue();
-					l.addReaction("👎🏻").queue();
+					if (s.equalsIgnoreCase("flying"))
+					{
+						msgFooter = pokemonNome + " flew away.";
+						break;
+					}
 				}
 				
-				try
-				{
-					Thread.sleep(timeout);
-					
-					
-					var msgFooter = pokemonNome + "ran away.";
-					var types = pokemon.getTipo();
-					
-					for (String s : types)
-					{
-						if (s.equalsIgnoreCase("flying"))
-						{
-							msgFooter = pokemonNome + " flew away.";
-							break;
-						}
-					}
-					
-					
-					eb.setTitle("The wild " + pokemonNome + " fled.");
-					eb.setFooter(msgFooter);
-					eb.setColor(Color.GRAY);
-					
-					l.clearReactions().queue();
-					
-					l.editMessageEmbeds(eb.build()).queue();
-				}catch (Exception e) { Error.print(object,e); }
-			});
-		}
-		catch (Exception e)
-		{
-			Error.print(object, e);
-		}
-		
+				
+				eb.setTitle("The wild " + pokemonNome + " fled.");
+				eb.setFooter(msgFooter);
+				eb.setColor(Color.GRAY);
+				
+				l.clearReactions().queue();
+				
+				l.editMessageEmbeds(eb.build()).queue();
+			}
+			catch (Exception e) { Error.print(object,e); }
+		});
 		
 	} // fine run()
 	
