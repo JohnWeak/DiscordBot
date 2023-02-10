@@ -312,7 +312,7 @@ public class Pokemon
 		embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
 		
 		// a questo punto il pokemon è attivo nel canale
-		pokemon.setActive(true);
+		//pokemon.setActive(true);
 		
 		try
 		{

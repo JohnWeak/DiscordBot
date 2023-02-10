@@ -66,56 +66,60 @@ public class ThreadPokemon extends Thread
 		
 		try
 		{
-			var activePokemons = pokemon.getActivePokemons();
-			if (!activePokemons.contains(pokemon))
-				activePokemons.add(pokemon);
+			//var activePokemons = pokemon.getActivePokemons();
+			//if (!activePokemons.contains(pokemon))
+			//	activePokemons.add(pokemon);
 		
-		tc.sendMessage("test: "+Thread.currentThread()).queue();
-		tc.sendMessageEmbeds(eb.build()).queue(l ->
-		{
-			var pokemonNome = pokemon.getNome();
-			if (pokemonNome.equalsIgnoreCase("poochyena") || pokemonNome.equalsIgnoreCase("mightyena"))
+			tc.sendMessage("test: "+Thread.currentThread()).queue();
+			tc.sendMessageEmbeds(eb.build()).queue(l ->
 			{
-				Commands.react("pogey");
-				l.addReaction("❤️").queue();
-			}
-			else
-			{
-				l.addReaction("👍🏻").queue();
-				l.addReaction("❤️").queue();
-				l.addReaction("👎🏻").queue();
-			}
-			
-			try
-			{
-				Thread.sleep(timeout);
-			} catch (InterruptedException ignored) { }
-			
-			pokemon.setActive(false);
-			activePokemons.remove(pokemon);
-			
-			var msgFooter = pokemonNome + "ran away.";
-			var types = pokemon.getTipo();
-			
-			for (String s : types)
-			{
-				if (s.equalsIgnoreCase("flying"))
+				var pokemonNome = pokemon.getNome();
+				if (pokemonNome.equalsIgnoreCase("poochyena") || pokemonNome.equalsIgnoreCase("mightyena"))
 				{
-					msgFooter = pokemonNome + " flew away.";
-					break;
+					Commands.react("pogey");
+					l.addReaction("❤️").queue();
 				}
-			}
-			
-			
-			eb.setTitle("The wild " + pokemonNome + " fled.");
-			eb.setFooter(msgFooter);
-			eb.setColor(Color.GRAY);
-			
-			l.clearReactions().queue();
-			
-			l.editMessageEmbeds(eb.build()).queue();
-		});
-		}catch (Exception e) {Error.print(object, e);}
+				else
+				{
+					l.addReaction("👍🏻").queue();
+					l.addReaction("❤️").queue();
+					l.addReaction("👎🏻").queue();
+				}
+				
+				try
+				{
+					Thread.sleep(timeout);
+				} catch (InterruptedException ignored) { }
+				
+				pokemon.setActive(false);
+				//activePokemons.remove(pokemon);
+				
+				var msgFooter = pokemonNome + "ran away.";
+				var types = pokemon.getTipo();
+				
+				for (String s : types)
+				{
+					if (s.equalsIgnoreCase("flying"))
+					{
+						msgFooter = pokemonNome + " flew away.";
+						break;
+					}
+				}
+				
+				
+				eb.setTitle("The wild " + pokemonNome + " fled.");
+				eb.setFooter(msgFooter);
+				eb.setColor(Color.GRAY);
+				
+				l.clearReactions().queue();
+				
+				l.editMessageEmbeds(eb.build()).queue();
+			});
+		}
+		catch (Exception e)
+		{
+			Error.print(object, e);
+		}
 		
 		
 	} // fine run()
