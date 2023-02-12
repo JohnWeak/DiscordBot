@@ -18,6 +18,7 @@ public class Pokemon
 	private static final File nomiPokemon = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
 	private final boolean pokedex;
+	private static Scanner scanner;
 	
 	private String nome;
 	private String img;
@@ -56,7 +57,7 @@ public class Pokemon
 		// genera un id nazionale casuale
 		int id = random.nextInt(1, max);
 		
-		Scanner scanner;
+		
 		
 		try
 		{
@@ -71,7 +72,6 @@ public class Pokemon
 			img = (shiny ? urlShinyImg : urlImg);
 		
 			url = new URL("https://pokeapi.glitch.me/v1/pokemon/" + nome);
-			scanner = new Scanner(nomiPokemon);
 			while (scanner.hasNext())
 			{
 				if (nome.equalsIgnoreCase(scanner.nextLine()))
@@ -119,7 +119,7 @@ public class Pokemon
 		else
 		{
 			var t = new ThreadPokemon(pokemon, Commands.canaleBotPokemon, embedBuilder);
-			var tout = random.nextInt(2, 5);
+			var tout = random.nextInt(2, 30);
 			t.setTimeoutTime(t.MINUTES, tout);
 			t.start();
 			new PrivateMessage(Utente.getGion()).send("\nThread alive:" + t.isAlive() + "\ntout: " + tout + "\n");
@@ -204,7 +204,20 @@ public class Pokemon
 		return embedBuilder;
 	} // fine buildEmbed()
 	
-	
+	public static int getId(String nome)
+	{
+		int x = 0;
+		try
+		{
+			while (scanner.hasNext())
+			{
+				x++;
+				if (scanner.nextLine().equalsIgnoreCase(nome))
+					break;
+			}
+		}catch (Exception e) { new Error<Exception>().print(object, e); }
+		return x;
+	}
 	
 	//GETTER
 	public String getNome() { return nome; }
