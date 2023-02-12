@@ -14,7 +14,6 @@ public class ThreadPokemon extends Thread
 	private final Pokemon pokemon;
 	private TextChannel tc;
 	private EmbedBuilder eb;
-	private boolean pokedex;
 	
 	
 	public ThreadPokemon(Pokemon pokemon, TextChannel tc, EmbedBuilder eb)
@@ -45,24 +44,27 @@ public class ThreadPokemon extends Thread
 	@Override
 	public void run()
 	{
-		tc.sendMessageEmbeds(eb.build()).queue(l ->
+		try
 		{
-			var pokemonNome = pokemon.getNome();
-			if (pokemonNome.equalsIgnoreCase("poochyena") || pokemonNome.equalsIgnoreCase("mightyena"))
+			tc.sendMessageEmbeds(eb.build()).queue(l ->
 			{
-				Commands.react("pogey");
-				l.addReaction("❤️").queue();
-			}
-			else
-			{
-				l.addReaction("👍🏻").queue();
-				l.addReaction("❤️").queue();
-				l.addReaction("👎🏻").queue();
-			}
-			
-			try
-			{
-				Thread.sleep(timeout);
+				var pokemonNome = pokemon.getNome();
+				if (pokemonNome.equalsIgnoreCase("poochyena") || pokemonNome.equalsIgnoreCase("mightyena"))
+				{
+					Commands.react("pogey");
+					l.addReaction("❤️").queue();
+				}
+				else
+				{
+					l.addReaction("👍🏻").queue();
+					l.addReaction("❤️").queue();
+					l.addReaction("👎🏻").queue();
+				}
+				
+				try
+				{
+					Thread.sleep(timeout);
+				}catch (Exception e) { new Error<Exception>().print(object,e); }
 				
 				
 				var msgFooter = pokemonNome + "ran away.";
@@ -87,10 +89,9 @@ public class ThreadPokemon extends Thread
 				l.editMessageEmbeds(eb.build()).queue();
 				
 				new PrivateMessage(Utente.getGion()).send("Il thread ha finito.");
-			}
-			catch (Exception e) { new Error<Exception>().print(object,e); }
-		});
-		
+			});
+		}
+		catch (Exception e) { new Error<Exception>().print(object,e); }
 	} // fine run()
 	
 } // fine ThreadPokemon
