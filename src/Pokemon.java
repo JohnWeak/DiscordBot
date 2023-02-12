@@ -99,6 +99,7 @@ public class Pokemon
 				g.send("json array vuoto\n"+nome+"\n"+img+"\n"+"response:"+response+"\n"+"in:"+in);
 				return;
 			}
+			
 			jsonObject = (JSONObject) jsonArray.get(0);
 			descrizione = (String) jsonObject.get("description");
 			types = (JSONArray) jsonObject.get("types");
