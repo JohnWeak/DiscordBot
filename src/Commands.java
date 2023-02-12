@@ -678,14 +678,15 @@ public class Commands extends ListenerAdapter
 	
 	private void encounter()
 	{
+		String[] msgSplittato = messageRaw.split(" ");
+		String nomePokemon;
+		int idPokemon = 0;
+		Pokemon p;
+		boolean pokedex;
+		
 		try
 		{
-			String[] msgSplittato = messageRaw.split(" ");
-			String nomePokemon;
-			int idPokemon = 0;
-			Pokemon p;
-			//
-			if (msgSplittato.length > 1 && msgSplittato[1] != null)
+			if (msgSplittato.length > 1)
 			{
 				nomePokemon = msgSplittato[1];
 				idPokemon = Pokemon.getId(nomePokemon);
@@ -694,15 +695,16 @@ public class Commands extends ListenerAdapter
 					message.reply("Il pokedex non ha informazioni su `" + nomePokemon + "`.").queue();
 					return;
 				}
-				
-				p = new Pokemon(idPokemon, true);
-				p.spawn(p);
+				pokedex = true;
 			}
 			else
 			{
-				p = new Pokemon(idPokemon, false);
-				p.spawn(p);
+				pokedex = false;
 			}
+			
+			p = new Pokemon(idPokemon, pokedex);
+			p.spawn(p);
+			
 		}catch (Exception e)
 		{
 			new Error<Exception>().print(object, e);

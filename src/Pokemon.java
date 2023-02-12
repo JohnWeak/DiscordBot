@@ -35,7 +35,7 @@ public class Pokemon
 	private URL url;
 	private JSONArray jsonArray = new JSONArray();
 	private JSONParser jsonParser = new JSONParser();
-	private EmbedBuilder embedBuilder;
+	private EmbedBuilder embedBuilder = null;
 	
 	// private static int pokemon_id = 261; -> Poochyena
 	// https://pokeapi.co/api/v2/pokemon/261/
@@ -114,6 +114,12 @@ public class Pokemon
 	
 	public void spawn(Pokemon pokemon)
 	{
+		if (embedBuilder == null)
+		{
+			new Error<String>().print(object, "`Can't execute because embedBuilder is null`");
+			return;
+		}
+		
 		if (pokedex)
 		{
 			Commands.canaleBotPokemon.sendMessageEmbeds(embedBuilder.build()).queue();

@@ -8,21 +8,21 @@ public class Error <T>
 		var gion = new PrivateMessage(Utente.getGion());
 		if (type.contains("Exception"))
 		{
-			String lessThan2Thousand;
-			var e = (Exception) t;
-			var exMsg = e.getMessage();
+			String lessThan2k;
+			Exception e = (Exception) t;
+			var eMsg = e.getMessage();
 			var stackTrace = e.getStackTrace();
 			var stackTraceString = Arrays.toString(stackTrace);
 			
-			lessThan2Thousand = (stackTraceString.length() > 2000 ? stackTraceString.substring(0, 1999) : stackTraceString);
+			lessThan2k = (stackTraceString.length() > 2000 ? stackTraceString.substring(0, 1999) : stackTraceString);
 			
-			String msg = "<@" + Utente.ID_GION + ">\n" + "`" + object + "`\n" + exMsg;
+			String msg = "<@" + Utente.ID_GION + ">\n" + "`" + object + "`\n" + eMsg;
 			//Commands.canaleBot.sendMessage(msg).queue();
-			gion.send("`" + exMsg + "`\n"+lessThan2Thousand);
+			gion.send("`" + eMsg + "`\n"+lessThan2k);
 		}
 		else if (type.equalsIgnoreCase("String"))
 		{
-			var s = (String) t;
+			String s = (String) t;
 			
 			String msg = "<@" + Utente.ID_GION + ">\n" + "`" + object + "`\n" + s;
 			//Commands.canaleBot.sendMessage(msg).queue();
