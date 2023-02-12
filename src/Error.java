@@ -16,7 +16,7 @@ public class Error <T>
 			lessThan2Thousand = (stackTraceString.length() > 2000 ? stackTraceString.substring(0, 1999) : stackTraceString);
 			
 			String msg = "<@" + Utente.ID_GION + ">\n" + "`" + object + "`\n" + e.getMessage();
-			Commands.canaleBot.sendMessage(msg).queue();
+			//Commands.canaleBot.sendMessage(msg).queue();
 			gion.send(lessThan2Thousand);
 		}
 		else if (type.equalsIgnoreCase("String"))
@@ -24,7 +24,7 @@ public class Error <T>
 			var s = (String) t;
 			
 			String msg = "<@" + Utente.ID_GION + ">\n" + "`" + object + "`\n" + s;
-			Commands.canaleBot.sendMessage(msg).queue();
+			//Commands.canaleBot.sendMessage(msg).queue();
 		}
 	} // fine print
 	
