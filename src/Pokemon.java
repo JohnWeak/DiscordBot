@@ -18,7 +18,6 @@ public class Pokemon
 	private static final File nomiPokemon = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
 	private final boolean pokedex;
-	private static Scanner scanner;
 	
 	private String nome;
 	private String img;
@@ -62,7 +61,7 @@ public class Pokemon
 		try
 		{
 			// cerca il pokemon nel dex
-			scanner = new Scanner(nomiPokemon);
+			Scanner scanner = new Scanner(nomiPokemon);
 			for (int i = 0; i < id; i++)
 				nome = scanner.nextLine();
 		
@@ -209,6 +208,7 @@ public class Pokemon
 		int x = 0;
 		try
 		{
+			Scanner scanner = new Scanner(nomiPokemon);
 			while (scanner.hasNext())
 			{
 				x++;
