@@ -67,7 +67,9 @@ public class Pokemon
 			final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/"+id+".png";
 		
 			img = (shiny ? urlShinyImg : urlImg);
-		
+			
+			String newAPI = "https://pokeapi.co/api/v2/pokemon/" + nome;
+			
 			url = new URL("https://pokeapi.glitch.me/v1/pokemon/" + nome);
 			
 			StringBuilder response = null;
