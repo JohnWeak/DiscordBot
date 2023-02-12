@@ -680,8 +680,9 @@ public class Commands extends ListenerAdapter
 	{
 		String[] msgSplittato = messageRaw.split(" ");
 		String nomePokemon;
-		int idPokemon;
-		Pokemon pokemon;
+		int idPokemon = 0;
+		Pokemon p;
+		
 		if (msgSplittato[1] != null)
 		{
 			nomePokemon = msgSplittato[1];
@@ -691,13 +692,14 @@ public class Commands extends ListenerAdapter
 				message.reply("Il pokedex non ha informazioni su `"+nomePokemon+"`.").queue();
 				return;
 			}
-			
-			
+			p = new Pokemon(idPokemon,true);
+			p.spawn(p);
 		}
-		
-		// se è da mostrare una entry del pokedex, passare `true` al costruttore
-		var p = new Pokemon(false);
-		p.spawn(p);
+		else
+		{
+			p = new Pokemon(idPokemon, false);
+			p.spawn(p);
+		}
 	}
 	
 	private void channelHistory()

@@ -40,7 +40,7 @@ public class Pokemon
 	// private static int pokemon_id = 261; -> Poochyena
 	// https://pokeapi.co/api/v2/pokemon/261/
 	
-	public Pokemon(boolean pokedex)
+	public Pokemon(int id, boolean pokedex)
 	{
 		this.pokedex = pokedex;
 		
@@ -53,10 +53,8 @@ public class Pokemon
 		for (int index : individualValues)
 			individualValues[index] = random.nextInt(32); // IVs: 0-31
 		
-		// genera un id nazionale casuale
-		int id = random.nextInt(1, max);
-		
-		
+		if (id <= 0 || id > max)
+			id = random.nextInt(1, max);
 		
 		try
 		{
