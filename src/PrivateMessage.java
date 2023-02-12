@@ -19,11 +19,13 @@ public class PrivateMessage
 	 * @param content Il messaggio da inviare all'utente. */
 	public void send(String content)
 	{
+		var contentToSend = (content.length() > 2000 ? content.substring(0,1999) : content);
+		
 		try
 		{
 			var utente = Main.getJda().retrieveUserById(user.getId()).complete();
 			
-			utente.openPrivateChannel().flatMap(channel -> channel.sendMessage(content)).queue(l->
+			utente.openPrivateChannel().flatMap(channel -> channel.sendMessage(contentToSend)).queue(l->
 			{
 			
 			});
