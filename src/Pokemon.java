@@ -95,7 +95,8 @@ public class Pokemon
 			
 			if (jsonArray.isEmpty())
 			{
-				new PrivateMessage(Utente.getGion()).send("json array vuoto\n"+nome+"\n"+img+"\n"+response+"\n"+in);
+				var g = new PrivateMessage(Utente.getGion());
+				g.send("json array vuoto\n"+nome+"\n"+img+"\n"+"response:"+response+"\n"+"in:"+in);
 				return;
 			}
 			jsonObject = (JSONObject) jsonArray.get(0);
