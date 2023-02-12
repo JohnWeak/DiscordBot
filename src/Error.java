@@ -8,16 +8,19 @@ public class Error <T>
 		var gion = new PrivateMessage(Utente.getGion());
 		if (type.contains("Exception"))
 		{
+			String lessThan2Thousand;
 			var e = (Exception) t;
 			String msg =
 					"<@" + Utente.ID_GION + ">\n" + "`" + object + "`\n" + e.getMessage() + "\n" + e.getStackTrace()[0];
 			Commands.canaleBot.sendMessage(msg).queue();
 			
-			if (e.getStackTrace().length > 2000)
+			if (e.getMessage().length() > 2000)
 			{
-				gion.send("StackTrace: `" + Arrays.toString(e.getStackTrace()) + "`");
+				lessThan2Thousand = e.getMessage().substring(0,1999);
+				gion.send("StackTrace: `" + lessThan2Thousand + "`");
 			}
-			gion.send("StackTrace: `" + Arrays.toString(e.getStackTrace()) + "`");
+			else
+				gion.send("StackTrace: `" + e.getMessage() + "`");
 		}
 		else if (type.equalsIgnoreCase("String"))
 		{
