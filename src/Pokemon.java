@@ -193,7 +193,7 @@ public class Pokemon
 		else // se non è una entry del pokedex mostra solo nome e immagine
 		{
 			embedBuilder
-				.setTitle("A wild " + nome + "appears!")
+				.setTitle("A wild " + nome + " appears!")
 				.setImage(img)
 				.setFooter("Type !catch to capture it.")
 			;
