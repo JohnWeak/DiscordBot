@@ -3,6 +3,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -195,6 +196,7 @@ public class Pokemon
 			embedBuilder
 				.setTitle("A wild " + nome + " appears!")
 				.setImage(img)
+				.setColor(Color.red)
 				.setFooter("Type !catch to capture it.")
 			;
 		}
