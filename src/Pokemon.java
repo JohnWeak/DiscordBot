@@ -87,6 +87,7 @@ public class Pokemon
 						response.append(inputLine);
 					
 					jsonArray = (JSONArray) jsonParser.parse(String.valueOf(response));
+					in.close();
 				}
 			}
 			
