@@ -21,7 +21,7 @@ public class Pokemon
 	private String img;
 	private boolean shiny = false;
 	private String descrizione;
-	private String[] tipo;
+	private String[] tipo = new String[2];
 	private String generazione;
 	private String dexNumber;
 	private String[] lineaEvolutiva;
