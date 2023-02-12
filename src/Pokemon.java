@@ -119,7 +119,7 @@ public class Pokemon
 			var tout = random.nextInt(2, 30);
 			t.setTimeoutTime(t.MINUTES, tout);
 			t.start();
-			new PrivateMessage(Utente.getGion()).send("\nThread alive:" + t.isAlive() + "\ntout: " + tout + "\n");
+			//new PrivateMessage(Utente.getGion()).send("\nThread alive:" + t.isAlive() + "\ntout: " + tout + "\n");
 		}
 	} // fine startEncounter
 	
