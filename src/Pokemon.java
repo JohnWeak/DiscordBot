@@ -22,7 +22,7 @@ public class Pokemon
 	private boolean shiny = false;
 	private String descrizione;
 	private String[] tipo = new String[]{" "," "};
-	private String[] lineaEvolutiva = new String[]{" "," "," "};
+	private String[] lineaEvolutiva = new String[]{"1","2","3"};
 	private String generazione;
 	private String dexNumber;
 	private int[] individualValues = new int[6];
