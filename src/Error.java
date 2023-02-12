@@ -17,7 +17,7 @@ public class Error <T>
 			
 			String msg = "<@" + Utente.ID_GION + ">\n" + "`" + object + "`\n" + e.getMessage();
 			//Commands.canaleBot.sendMessage(msg).queue();
-			gion.send(lessThan2Thousand);
+			gion.send("`"+e.getMessage()+"`\n"+lessThan2Thousand);
 		}
 		else if (type.equalsIgnoreCase("String"))
 		{
