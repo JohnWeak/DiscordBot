@@ -9,6 +9,14 @@ public abstract class Error
 		Commands.canaleBot.sendMessage(msg).queue();
 		new PrivateMessage(Utente.getGion()).send("StackTrace: `"+Arrays.toString(exception.getStackTrace())+"`");
 		
-	} // fine printError()
+	} // fine printError(Object, Exception)
+	
+	public static void print(Object object, String message)
+	{
+		String msg = "<@"+Utente.ID_GION+">\n"+"`"+object+"`\n"+message;
+		Commands.canaleBot.sendMessage(msg).queue();
+		
+	} // fine printError(Object, String)
+	
 	
 } // fine classe Error

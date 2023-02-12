@@ -16,25 +16,11 @@ public class ThreadPokemon extends Thread
 	private EmbedBuilder eb;
 	
 	
-	// metodi
-	public void setTc(TextChannel tc)
+	public ThreadPokemon(Pokemon pokemon, TextChannel tc, EmbedBuilder eb)
 	{
+		this.pokemon = pokemon;
 		this.tc = tc;
-	}
-	public void setEmbedBuilder(EmbedBuilder eb)
-	{
 		this.eb = eb;
-	}
-	
-	public ThreadPokemon(Pokemon pokemon)
-	{
-		this.pokemon = pokemon;
-	}
-	
-	public ThreadPokemon(Pokemon pokemon, TextChannel tc)
-	{
-		this.pokemon = pokemon;
-		this.tc = tc;
 	}
 	
 	/**Imposta il tempo in cui il pokemon resta attivo nel canale prima di scappare.<br>
@@ -42,7 +28,7 @@ public class ThreadPokemon extends Thread
 	 * @param type il tempo da impostare: ore, minuti oppure secondi.
 	 * @param timeout quanto tempo dovrà passare prima che il pokemon non sia più disponibile.
 	 * */
-	public void timeoutTime(String type, long timeout)
+	public void setTimeoutTime(String type, long timeout)
 	{
 		this.timeout = switch (type)
 		{

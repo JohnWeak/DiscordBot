@@ -332,8 +332,8 @@ public class Commands extends ListenerAdapter
 			return;
 		} // fine if isBot
 		
-		if (!msgStrippedLowerCase.contains("!pokemon")) // genera un pokemon casuale soltanto se non viene eseguito il comando
-			Pokemon.spawnPokemon();
+		//if (!msgStrippedLowerCase.contains("!pokemon")) // genera un pokemon casuale soltanto se non viene eseguito il comando
+		//	encounter();
 		
 		if (random.nextInt(500) == 42) // chance di reagire con emote personali
 		{
@@ -376,7 +376,7 @@ public class Commands extends ListenerAdapter
 			case "!poll" -> poll();
 			case "!info" -> info();
 			case "!8ball" -> eightBall();
-			case "!pokemon" -> Pokemon.pokemon();
+			case "!pokemon" -> encounter();
 			case "!colpevolezza", "!colpevole" -> colpevolezza();
 			case "!carta" -> {c = new Card(); c.sendCarta(c);}
 			case "!massshooting", "!ms" -> massShooting();
@@ -385,12 +385,11 @@ public class Commands extends ListenerAdapter
 			case "!emotes" -> getEmotes();
 			case "!smh" -> new ThreadSmh(channel).start();
 			case "!dado" -> dado(msgStrippedLowerCase);
-			case "!cattura", "!catch" -> Pokemon.catturaPokemon();
+			// case "!cattura", "!catch" -> Pokemon.catturaPokemon();
 			case "!f", "+f" -> payRespect();
 			case "!timer" -> timer();
 			case "!dm" -> dm(msgStrippedLowerCase);
 			// case "!ch" -> channelHistory();
-			case "!encounter" -> encounter();
 			case "!toggleactivity", "!ta" -> toggleActivity(msgStrippedLowerCase, threadActivity);
 		}
 		
@@ -679,8 +678,7 @@ public class Commands extends ListenerAdapter
 	private void encounter()
 	{
 		var p = new Pokemon();
-		
-		Pokemon.singleEncounter(p);
+		p.startEncounter(p);
 	}
 	
 	private void channelHistory()
