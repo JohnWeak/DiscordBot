@@ -69,7 +69,10 @@ public class Pokemon
 			img = (shiny ? urlShinyImg : urlImg);
 		
 			url = new URL("https://pokeapi.glitch.me/v1/pokemon/" + nome);
+			
 			StringBuilder response = null;
+			BufferedReader in = null;
+			
 			while (scanner.hasNext())
 			{
 				if (nome.equalsIgnoreCase(scanner.nextLine()))
@@ -77,7 +80,7 @@ public class Pokemon
 					var connection = (HttpURLConnection) url.openConnection();
 					connection.setRequestProperty("Accept", "application/json");
 					
-					var in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+					in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 					response = new StringBuilder();
 					String inputLine;
 					while ((inputLine = in.readLine()) != null)
@@ -89,7 +92,7 @@ public class Pokemon
 			
 			if (jsonArray.isEmpty())
 			{
-				new PrivateMessage(Utente.getGion()).send("json array vuoto\n"+nome+"\n"+img+"\n"+response);
+				new PrivateMessage(Utente.getGion()).send("json array vuoto\n"+nome+"\n"+img+"\n"+response+"\n"+in);
 				return;
 			}
 			jsonObject = (JSONObject) jsonArray.get(0);
