@@ -12,8 +12,8 @@ public class ThreadPokemon extends Thread
 	
 	private long timeout;
 	private final Pokemon pokemon;
-	private TextChannel tc;
-	private EmbedBuilder eb;
+	private final TextChannel tc;
+	private final EmbedBuilder eb;
 	
 	
 	public ThreadPokemon(Pokemon pokemon, TextChannel tc, EmbedBuilder eb)
@@ -78,8 +78,6 @@ public class ThreadPokemon extends Thread
 						break;
 					}
 				}
-				
-				
 				
 				eb.setTitle("The wild " + pokemonNome + " fled.");
 				eb.setFooter(msgFooter);
