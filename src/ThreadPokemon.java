@@ -44,10 +44,12 @@ public class ThreadPokemon extends Thread
 	@Override
 	public void run()
 	{
+		var gion = new PrivateMessage(Utente.getGion());
 		try
 		{
 			tc.sendMessageEmbeds(eb.build()).queue(l ->
 			{
+				gion.send("1");
 				var pokemonNome = pokemon.getNome();
 				if (pokemonNome.equalsIgnoreCase("poochyena") || pokemonNome.equalsIgnoreCase("mightyena"))
 				{
@@ -60,13 +62,14 @@ public class ThreadPokemon extends Thread
 					l.addReaction("❤️").queue();
 					l.addReaction("👎🏻").queue();
 				}
-				
+				gion.send("2");
 				try
 				{
+					gion.send("3");
 					Thread.sleep(timeout);
 				}catch (Exception e) { new Error<Exception>().print(object,e); }
 				
-				
+				gion.send("4");
 				var msgFooter = pokemonNome + "ran away.";
 				var types = pokemon.getTipo();
 				
@@ -78,6 +81,7 @@ public class ThreadPokemon extends Thread
 						break;
 					}
 				}
+				gion.send("5");
 				
 				
 				eb.setTitle("The wild " + pokemonNome + " fled.");
@@ -87,8 +91,8 @@ public class ThreadPokemon extends Thread
 				l.clearReactions().queue();
 				
 				l.editMessageEmbeds(eb.build()).queue();
-				
-				new PrivateMessage(Utente.getGion()).send("Il thread ha finito.");
+				gion.send("6");
+				gion.send("Il thread ha finito.");
 			});
 		}
 		catch (Exception e) { new Error<Exception>().print(object,e); }
