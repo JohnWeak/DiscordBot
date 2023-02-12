@@ -52,7 +52,7 @@ public class ThreadActivity extends Thread
 			}
 			catch (Exception e)
 			{
-				Error.print(object, e);
+				new Error<Exception>().print(object, e);
 			}
 			
 		} // fine while(keepGoing)

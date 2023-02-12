@@ -102,7 +102,7 @@ public class Clash
 		}
 		catch (IOException | ParseException e)
 		{
-			Error.print(Clash.class, e);
+			new Error<Exception>().print(Clash.class, e);
 		}
 	} // fine clashWar()
 	
@@ -121,7 +121,7 @@ public class Clash
 			if (((String) jsonObject.get("state")).equalsIgnoreCase("inwar"))
 				return true;
 			
-		}catch (IOException | ParseException e) { Error.print(Clash.class, e); }
+		}catch (IOException | ParseException e) { new Error<Exception>().print(Clash.class, e); }
 		
 		return false;
 	} // fine isClanInLeague()
@@ -155,7 +155,7 @@ public class Clash
 					new Commands().sendEmbedToChannel(new EmbedBuilder().addField("Oh noes","Errore catastrofico (non è vero) in clashWarLeague()", false).build(), thread);
 				else
 					new Commands().sendEmbedToChannel(embed.build(), thread);
-			}catch (IOException | ParseException e) { Error.print(Clash.class, e); }
+			}catch (Exception e) { new Error<Exception>().print(Clash.class, e); }
 		}
 		
 	} // fine clashWarLeague()

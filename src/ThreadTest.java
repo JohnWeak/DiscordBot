@@ -22,7 +22,7 @@ public class ThreadTest extends Thread
 		}
 		catch (InterruptedException e)
 		{
-			Error.print(ThreadTest.class, e);
+			new Error<Exception>().print(ThreadTest.class, e);
 		}
 		
 	}

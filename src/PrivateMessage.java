@@ -30,7 +30,7 @@ public class PrivateMessage
 		}
 		catch (Exception e)
 		{
-			Error.print(object, e);
+			new Error<Exception>().print(object, e);
 		}
 	} // fine metodo send()
 	

@@ -38,7 +38,7 @@ public class Pokemon
 	// private static int pokemon_id = 261; -> Poochyena
 	// https://pokeapi.co/api/v2/pokemon/261/
 	
-	public Pokemon()
+	public Pokemon(boolean pokedex)
 	{
 		// determina se il pokemon sarà shiny
 		if (random.nextInt(8142) == 42)
@@ -100,80 +100,95 @@ public class Pokemon
 			for (int i = 0; i < evoLine.size(); i++)
 				lineaEvolutiva[i] = evoLine.get(i).toString();
 			
-			embedBuilder = buildEmbed();
-		} catch (Exception e) { Error.print(object, e); }
+			embedBuilder = buildEmbed(pokedex);
+		} catch (Exception e) { var ex = new Error<Exception>(); ex.print(object, e); }
 		
 	} // fine costruttore
 	
 	
-	public void startEncounter(Pokemon pokemon)
+	public void spawn(Pokemon pokemon)
 	{
 		var t = new ThreadPokemon(pokemon, Commands.canaleBotPokemon, embedBuilder);
 		var tout = random.nextInt(2, 5);
 		t.setTimeoutTime(t.MINUTES, tout);
 		t.start();
+		new PrivateMessage(Utente.getGion()).send("\nThread alive:"+t.isAlive()+"\ntout: "+tout+"\n");
+		
 	} // fine startEncounter
 	
 	
 	/** Genera un embed con il Pokemon */
-	private EmbedBuilder buildEmbed()
+	private EmbedBuilder buildEmbed(boolean pokedex)
 	{
 		var embedBuilder = new EmbedBuilder();
 		var stringBuilder = new StringBuilder();
 		var types = "";
 		
-		stringBuilder.append(tipo[0]);
-		if (!(tipo[1].equals(" ")))
+		if (pokedex) // se è una entry del pokedex, mostra le informazioni varie
 		{
-			stringBuilder.append(" / ").append(tipo[1]);
-		}
-		types = String.valueOf(stringBuilder);
-		stringBuilder.delete(0, stringBuilder.length()); // pulizia per riciclarlo per la linea evolutiva
-		stringBuilder.append(lineaEvolutiva[0]); //esiste per forza
-		if (!(lineaEvolutiva[1].equals("2")))
-		{
-			stringBuilder.append(" > ").append(lineaEvolutiva[1]);
-			if (!(lineaEvolutiva[2]).equals("3"))
+			stringBuilder.append(tipo[0]);
+			if (!(tipo[1].equals(" ")))
 			{
-				stringBuilder.append(" > ").append(lineaEvolutiva[2]);
+				stringBuilder.append(" / ").append(tipo[1]);
 			}
-		}
-		else
-		{
-			stringBuilder.append(" doesn't evolve.");
-		}
-		var evoline = String.valueOf(stringBuilder);
-		final String iconURL = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F5%2F53%2FPok%25C3%25A9_Ball_icon.svg%2F1026px-Pok%25C3%25A9_Ball_icon.svg.png&f=1&nofb=1";
-		embedBuilder.setFooter(""+evoline, ""+iconURL);
-		
-		try
-		{
-			embedBuilder.setTitle(nome.toUpperCase());
-		}catch (Exception e) { Error.print(object, e); }
-		
-		if (descrizione != null)
-		{
-			String type = "Type";
-			if (!tipo[1].equals(" "))
-				type += "s";
+			types = String.valueOf(stringBuilder);
+			stringBuilder.delete(0, stringBuilder.length()); // pulizia per riciclarlo per la linea evolutiva
+			stringBuilder.append(lineaEvolutiva[0]); //esiste per forza
+			if (!(lineaEvolutiva[1].equals("2")))
+			{
+				stringBuilder.append(" > ").append(lineaEvolutiva[1]);
+				if (!(lineaEvolutiva[2]).equals("3"))
+				{
+					stringBuilder.append(" > ").append(lineaEvolutiva[2]);
+				}
+			}
+			else
+			{
+				stringBuilder.append(" doesn't evolve.");
+			}
+			var evoline = String.valueOf(stringBuilder);
+			final String iconURL = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F5%2F53%2FPok%25C3%25A9_Ball_icon.svg%2F1026px-Pok%25C3%25A9_Ball_icon.svg.png&f=1&nofb=1";
+			embedBuilder.setFooter(""+evoline, ""+iconURL);
 			
-			embedBuilder.addField("**"+type+"**", ""+types, true);
-			embedBuilder.addField("Generation", ""+generazione, true);
-			embedBuilder.addField("National Dex", ""+numeroPokedex, true);
+			try
+			{
+				embedBuilder.setTitle(nome.toUpperCase());
+			}
+			catch (Exception e) { new Error<Exception>().print(object, e); }
 			
-			embedBuilder.addField("Pokedex Entry", "*"+descrizione+"*", false);
-			embedBuilder.setThumbnail(img);
+			if (descrizione != null)
+			{
+				String type = "Type";
+				if (!tipo[1].equals(" "))
+					type += "s";
+				
+				embedBuilder.addField("**"+type+"**", ""+types, true);
+				embedBuilder.addField("Generation", ""+generazione, true);
+				embedBuilder.addField("National Dex", ""+numeroPokedex, true);
+				
+				embedBuilder.addField("Pokedex Entry", "*"+descrizione+"*", false);
+				embedBuilder.setThumbnail(img);
+			}
+			else
+			{
+				embedBuilder.setImage(img);
+			}
+			
+			var color = shiny ? 0xFFD020 : 0xFF0000;
+			embedBuilder.setColor(color);
+			
+			if (shiny)
+				embedBuilder.setFooter("✨ Shiny! ✨");
+			
 		}
-		else
+		else // se non è una entry del pokedex mostra solo nome e immagine
 		{
-			embedBuilder.setImage(img);
+			embedBuilder
+				.setTitle("A wild " + nome + "appears!")
+				.setImage(img)
+				.setFooter("Type !catch to capture it.")
+			;
 		}
-		
-		var color = shiny ? 0xFFD020 : 0xFF0000;
-		embedBuilder.setColor(color);
-		
-		if (shiny)
-			embedBuilder.setFooter("✨ Shiny! ✨");
 		
 		return embedBuilder;
 	} // fine buildEmbed()

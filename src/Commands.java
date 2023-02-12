@@ -99,7 +99,7 @@ public class Commands extends ListenerAdapter
 		}
 		catch (Exception e)
 		{
-			Error.print(object, e);
+			new Error<Exception>().print(object, e);
 		}
 		
 		if (act != null)
@@ -234,7 +234,7 @@ public class Commands extends ListenerAdapter
 		}
 		catch (Exception e)
 		{
-			Error.print(object, e);
+			new Error<Exception>().print(object, e);
 		}
 	} // fine onMessageReactionAdd
 	
@@ -283,7 +283,7 @@ public class Commands extends ListenerAdapter
 					var size = msgSplittato.length;
 					var auth = "";
 					var numGiorni = 0;
-					var pvtMsg = new PrivateMessage(Utente.getGion());
+					var gion = new PrivateMessage(Utente.getGion());
 					var channelHistory = channel.getHistory().retrievePast(3).complete();
 					
 					try
@@ -298,11 +298,11 @@ public class Commands extends ListenerAdapter
 								break;
 							}
 						}
-						pvtMsg.send("Daily di " + auth +": "+numGiorni);
+						gion.send("Daily di " + auth +": "+numGiorni);
 					} // fine try
 					catch (Exception e)
 					{
-						Error.print(object, e);
+						new Error<Exception>().print(object, e);
 					} // fine catch
 					
 					if (numGiorni == 0 || !(numGiorni % 365 == 0))
@@ -313,7 +313,8 @@ public class Commands extends ListenerAdapter
 					{
 						if (auth.equals(""))
 						{
-							canaleBot.sendMessage("<@"+Utente.ID_GION+">\n`auth è una stringa vuota`.").queue();
+							var e = new Error<String>();
+							e.print(object,"<@"+Utente.ID_GION+">\n`auth è una stringa vuota`.");
 							return;
 						}
 						
@@ -677,8 +678,9 @@ public class Commands extends ListenerAdapter
 	
 	private void encounter()
 	{
-		var p = new Pokemon();
-		p.startEncounter(p);
+		// se è da mostrare una entry del pokedex, passare `true` al costruttore
+		var p = new Pokemon(false);
+		p.spawn(p);
 	}
 	
 	private void channelHistory()
@@ -802,7 +804,7 @@ public class Commands extends ListenerAdapter
 			
 		}catch (Exception e)
 		{
-			Error.print(object, e);
+			new Error<Exception>().print(object, e);
 		}
 		
 	}
@@ -833,7 +835,7 @@ public class Commands extends ListenerAdapter
 			msgSplittato = messageRaw.split(" ");
 		}catch (Exception e)
 		{
-			Error.print(object, e);
+			new Error<Exception>().print(object, e);
 			return;
 		}
 		
@@ -860,7 +862,7 @@ public class Commands extends ListenerAdapter
 				new ThreadTimer(message, timeInSeconds, author, reason).start();
 			} catch (Exception e)
 			{
-				Error.print(object, e);
+				new Error<Exception>().print(object, e);
 			}
 		}
 	} // fine timer()
@@ -1013,7 +1015,7 @@ public class Commands extends ListenerAdapter
 			
 			channel.sendTyping().queue();
 			try { Thread.sleep(sleepInterval); }
-			catch (InterruptedException e) { Error.print(object, e); }
+			catch (InterruptedException e) { new Error<Exception>().print(object, e); }
 			channel.sendMessageEmbeds(embedBuilder.build()).queue();
 		}
 		else
@@ -1179,7 +1181,7 @@ public class Commands extends ListenerAdapter
 		} // fine try
 		catch (ErrorResponseException e)
 		{
-			Error.print(object, e);
+			new Error<Exception>().print(object, e);
 		}
 	} // fine react()
 	
@@ -1302,7 +1304,7 @@ public class Commands extends ListenerAdapter
 		try { Thread.sleep(millis + random.nextInt(bound)); }
 		catch (InterruptedException e)
 		{
-			Error.print(object, e);
+			new Error<Exception>().print(object, e);
 		}
 	} // fine pause()
 	
@@ -1320,7 +1322,7 @@ public class Commands extends ListenerAdapter
 			}
 			catch (NumberFormatException e)
 			{
-				Error.print(object, e);
+				new Error<Exception>().print(object, e);
 			}
 		
 		
@@ -1423,7 +1425,7 @@ public class Commands extends ListenerAdapter
 		}
 		catch (IOException | ParseException e)
 		{
-			Error.print(object, e);
+			new Error<Exception>().print(object, e);
 		}
 	} // fine massShooting()
 	
@@ -1579,7 +1581,7 @@ public class Commands extends ListenerAdapter
 			}
 		}catch (Exception e)
 		{
-			Error.print(object, e);
+			new Error<Exception>().print(object, e);
 		}
 	} // fine dado()
 	

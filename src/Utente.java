@@ -62,7 +62,7 @@ public abstract class Utente
 		}
 		catch (Exception e)
 		{
-			Error.print(object, e);
+			new Error<Exception>().print(object, e);
 			return null;
 		}
 		return user;

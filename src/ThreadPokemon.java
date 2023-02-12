@@ -84,8 +84,10 @@ public class ThreadPokemon extends Thread
 				l.clearReactions().queue();
 				
 				l.editMessageEmbeds(eb.build()).queue();
+				
+				new PrivateMessage(Utente.getGion()).send("Il thread ha finito.");
 			}
-			catch (Exception e) { Error.print(object,e); }
+			catch (Exception e) { new Error<Exception>().print(object,e); }
 		});
 		
 	} // fine run()

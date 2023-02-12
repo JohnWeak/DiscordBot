@@ -28,7 +28,7 @@ public class NameList
 			file = JSONValue.parse(String.valueOf(response));
 			
 		}
-		catch (IOException e) { Error.print(NameList.class, e); }
+		catch (Exception e) { new Error<Exception>().print(NameList.class, e); }
 		return (JSONObject) file;
 	}
 	

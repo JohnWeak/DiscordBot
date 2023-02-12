@@ -32,14 +32,13 @@ public class Main
 		try
 		{
 			jda = JDABuilder.createDefault(token)
-					        .setActivity(selectActivity())
-					        .setStatus(OnlineStatus.ONLINE)
-					        .addEventListeners(new Commands())
-					        .build();
+				.setActivity(selectActivity())
+				.setStatus(OnlineStatus.ONLINE)
+				.addEventListeners(new Commands())
+				.build();
 		}catch (LoginException e)
 		{
-			Error.print(Main.class, e);
-			
+			e.printStackTrace();
 		}
 		return jda;
 	} // fine generateJDA()
