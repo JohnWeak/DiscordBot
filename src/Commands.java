@@ -392,7 +392,6 @@ public class Commands extends ListenerAdapter
 			case "!dm" -> dm(msgStrippedLowerCase);
 			// case "!ch" -> channelHistory();
 			case "!toggleactivity", "!ta" -> toggleActivity(msgStrippedLowerCase, threadActivity);
-			case "!id" -> id();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -683,7 +682,7 @@ public class Commands extends ListenerAdapter
 		String nomePokemon;
 		int idPokemon;
 		Pokemon pokemon;
-		if (msgSplittato[1]!=null)
+		if (msgSplittato[1] != null)
 		{
 			nomePokemon = msgSplittato[1];
 			idPokemon = Pokemon.getId(nomePokemon);
@@ -700,18 +699,6 @@ public class Commands extends ListenerAdapter
 		var p = new Pokemon(false);
 		p.spawn(p);
 	}
-	
-	private void id()
-	{
-		PrivateMessage gion = new PrivateMessage(Utente.getGion());
-		var x = messageRaw.split(" ");
-		var msg = ""+Pokemon.getId("Poochyena");
-		if (x[1] == null)
-			gion.send(""+Pokemon.getId("poochyena"));
-		else
-			gion.send(""+Pokemon.getId(x[1]));
-		
-	} // nota bene: da cancellare
 	
 	private void channelHistory()
 	{
