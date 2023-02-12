@@ -86,6 +86,11 @@ public class Pokemon
 				}
 			}
 			
+			if (jsonArray.isEmpty())
+			{
+				new PrivateMessage(Utente.getGion()).send("json array vuoto");
+				return;
+			}
 			jsonObject = (JSONObject) jsonArray.get(0);
 			descrizione = (String) jsonObject.get("description");
 			types = (JSONArray) jsonObject.get("types");
@@ -102,7 +107,7 @@ public class Pokemon
 				lineaEvolutiva[i] = evoLine.get(i).toString();
 			
 			embedBuilder = buildEmbed(pokedex);
-		} catch (Exception e) { var ex = new Error<Exception>(); ex.print(object, e); }
+		} catch (Exception e) { new Error<Exception>().print(object, e); }
 		
 	} // fine costruttore
 	
