@@ -21,10 +21,9 @@ public class Pokemon
 	private String img;
 	private boolean shiny = false;
 	private String descrizione;
-	private String[] tipo = new String[2];
+	private String[] tipo, lineaEvolutiva;
 	private String generazione;
 	private String dexNumber;
-	private String[] lineaEvolutiva;
 	private int[] individualValues = new int[6];
 	private boolean catturato = false;
 	private String numeroPokedex;
@@ -84,6 +83,9 @@ public class Pokemon
 					jsonArray = (JSONArray) jsonParser.parse(String.valueOf(response));
 				}
 			}
+			
+			tipo = new String[2];
+			lineaEvolutiva = new String[3];
 			
 			jsonObject = (JSONObject) jsonArray.get(0);
 			descrizione = (String) jsonObject.get("description");
