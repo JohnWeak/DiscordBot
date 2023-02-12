@@ -705,15 +705,13 @@ public class Commands extends ListenerAdapter
 	{
 		PrivateMessage gion = new PrivateMessage(Utente.getGion());
 		var x = messageRaw.split(" ");
+		var msg = ""+Pokemon.getId("Poochyena");
 		if (x[1] == null)
-		{
 			gion.send(""+Pokemon.getId("poochyena"));
-		}
 		else
-		{
 			gion.send(""+Pokemon.getId(x[1]));
-		}
-	}
+		
+	} // nota bene: da cancellare
 	
 	private void channelHistory()
 	{
