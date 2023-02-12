@@ -16,6 +16,7 @@ public class Pokemon
 	private final int max = 898; // fino a gen 8
 	private static final File nomiPokemon = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
+	private final boolean pokedex;
 	
 	private String nome;
 	private String img;
@@ -40,6 +41,8 @@ public class Pokemon
 	
 	public Pokemon(boolean pokedex)
 	{
+		this.pokedex = pokedex;
+		
 		// determina se il pokemon sarà shiny
 		if (random.nextInt(8142) == 42)
 			shiny = true;
@@ -108,12 +111,18 @@ public class Pokemon
 	
 	public void spawn(Pokemon pokemon)
 	{
-		var t = new ThreadPokemon(pokemon, Commands.canaleBotPokemon, embedBuilder);
-		var tout = random.nextInt(2, 5);
-		t.setTimeoutTime(t.MINUTES, tout);
-		t.start();
-		new PrivateMessage(Utente.getGion()).send("\nThread alive:"+t.isAlive()+"\ntout: "+tout+"\n");
-		
+		if (pokedex)
+		{
+			Commands.canaleBotPokemon.sendMessageEmbeds(embedBuilder.build()).queue();
+		}
+		else
+		{
+			var t = new ThreadPokemon(pokemon, Commands.canaleBotPokemon, embedBuilder);
+			var tout = random.nextInt(2, 5);
+			t.setTimeoutTime(t.MINUTES, tout);
+			t.start();
+			new PrivateMessage(Utente.getGion()).send("\nThread alive:" + t.isAlive() + "\ntout: " + tout + "\n");
+		}
 	} // fine startEncounter
 	
 	

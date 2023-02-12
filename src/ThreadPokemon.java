@@ -14,6 +14,7 @@ public class ThreadPokemon extends Thread
 	private final Pokemon pokemon;
 	private TextChannel tc;
 	private EmbedBuilder eb;
+	private boolean pokedex;
 	
 	
 	public ThreadPokemon(Pokemon pokemon, TextChannel tc, EmbedBuilder eb)
