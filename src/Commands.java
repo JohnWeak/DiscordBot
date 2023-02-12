@@ -685,7 +685,7 @@ public class Commands extends ListenerAdapter
 			int idPokemon = 0;
 			Pokemon p;
 			
-			if (msgSplittato[1] != null)
+			if (msgSplittato.length > 1 && msgSplittato[1] != null)
 			{
 				nomePokemon = msgSplittato[1];
 				idPokemon = Pokemon.getId(nomePokemon);
