@@ -678,29 +678,35 @@ public class Commands extends ListenerAdapter
 	
 	private void encounter()
 	{
-		String[] msgSplittato = messageRaw.split(" ");
-		String nomePokemon;
-		int idPokemon = 0;
-		Pokemon p;
-		
-		if (msgSplittato[1] != null)
+		try
 		{
-			nomePokemon = msgSplittato[1];
-			idPokemon = Pokemon.getId(nomePokemon);
-			if (idPokemon <= 0)
+			String[] msgSplittato = messageRaw.split(" ");
+			String nomePokemon;
+			int idPokemon = 0;
+			Pokemon p;
+			
+			if (msgSplittato[1] != null)
 			{
-				message.reply("Il pokedex non ha informazioni su `"+nomePokemon+"`.").queue();
-				return;
+				nomePokemon = msgSplittato[1];
+				idPokemon = Pokemon.getId(nomePokemon);
+				if (idPokemon <= 0)
+				{
+					message.reply("Il pokedex non ha informazioni su `" + nomePokemon + "`.").queue();
+					return;
+				}
+				p = new Pokemon(idPokemon, true);
+				p.spawn(p);
 			}
-			p = new Pokemon(idPokemon,true);
-			p.spawn(p);
-		}
-		else
+			else
+			{
+				p = new Pokemon(idPokemon, false);
+				p.spawn(p);
+			}
+		}catch (Exception e)
 		{
-			p = new Pokemon(idPokemon, false);
-			p.spawn(p);
+			new Error<Exception>().print(object, e);
 		}
-	}
+	} // fine encounter()
 	
 	private void channelHistory()
 	{
