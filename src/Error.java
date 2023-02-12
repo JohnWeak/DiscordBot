@@ -10,17 +10,14 @@ public class Error <T>
 		{
 			String lessThan2Thousand;
 			var e = (Exception) t;
-			String msg =
-					"<@" + Utente.ID_GION + ">\n" + "`" + object + "`\n" + e.getMessage() + "\n" + e.getStackTrace()[0];
-			Commands.canaleBot.sendMessage(msg).queue();
+			var stackTrace = e.getStackTrace();
+			var stackTraceString = Arrays.toString(stackTrace);
 			
-			if (e.getMessage().length() > 2000)
-			{
-				lessThan2Thousand = e.getMessage().substring(0,1999);
-				gion.send("StackTrace: `" + lessThan2Thousand + "`");
-			}
-			else
-				gion.send("StackTrace: `" + e.getMessage() + "`");
+			lessThan2Thousand = (stackTraceString.length() > 2000 ? stackTraceString.substring(0, 1999) : stackTraceString);
+			
+			String msg = "<@" + Utente.ID_GION + ">\n" + "`" + object + "`\n" + e.getMessage();
+			Commands.canaleBot.sendMessage(msg).queue();
+			gion.send(lessThan2Thousand);
 		}
 		else if (type.equalsIgnoreCase("String"))
 		{
