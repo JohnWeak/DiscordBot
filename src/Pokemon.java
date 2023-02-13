@@ -30,7 +30,7 @@ public class Pokemon
 	private int[] individualValues = new int[6];
 	private boolean catturato = false;
 	private String numeroPokedex;
-	private JSONObject jsonObject, family;
+	private JSONObject jsonObject;
 	private JSONArray types, evoLine;
 	private URL url;
 	private JSONArray jsonArray = new JSONArray();
@@ -68,9 +68,11 @@ public class Pokemon
 		
 			img = (shiny ? urlShinyImg : urlImg);
 			
-			String newAPI = "https://pokeapi.co/api/v2/pokemon/" + nome;
+			// nota bene: deprecated
+			String oldAPI = "https://pokeapi.glitch.me/v1/pokemon/" + nome;
+			String newAPI = "https://pokeapi.co/api/v2/pokemon-species/261/" + nome;
 			
-			url = new URL("https://pokeapi.glitch.me/v1/pokemon/" + nome);
+			url = new URL(newAPI);
 			
 			StringBuilder response = null;
 			BufferedReader in = null;
@@ -88,29 +90,27 @@ public class Pokemon
 					while ((inputLine = in.readLine()) != null)
 						response.append(inputLine);
 					
-					jsonArray = (JSONArray) jsonParser.parse(String.valueOf(response));
 					in.close();
+					jsonObject = (JSONObject) jsonParser.parse(String.valueOf(response));
 				}
 			}
 			
-			if (jsonArray.isEmpty())
+			if (jsonObject.isEmpty())
 			{
 				var g = new PrivateMessage(Utente.getGion());
-				g.send("json array vuoto\n"+nome+"\n"+img+"\nresponse:"+response+"\nin:"+in);
+				g.send("`jsonObject` è vuoto.\n"+nome+"\n"+img+"\nresponse:"+response);
 				return;
 			}
-			
-			jsonObject = (JSONObject) jsonArray.get(0);
-			descrizione = (String) jsonObject.get("description");
+			JSONArray descr;
+			// jsonObject = (JSONObject) jsonArray.get(0);
+			descr = (JSONArray) jsonObject.get("flavor_text_entries");
 			types = (JSONArray) jsonObject.get("types");
-			family = (JSONObject) jsonObject.get("family");
-			evoLine = (JSONArray) family.get("evolutionLine");
 			
 			for (int i = 0; i < types.size(); i++)
 				tipo[i] = types.get(i).toString();
 			
 			generazione = String.valueOf(jsonObject.get("gen"));
-			numeroPokedex = (String) jsonObject.get("number");
+			numeroPokedex = (String) jsonObject.get("id");
 			
 			for (int i = 0; i < evoLine.size(); i++)
 				lineaEvolutiva[i] = evoLine.get(i).toString();
