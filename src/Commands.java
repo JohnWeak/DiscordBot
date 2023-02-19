@@ -383,11 +383,11 @@ public class Commands extends ListenerAdapter
 			case "!massshooting", "!ms" -> massShooting();
 			case "!war" -> new Clash().clashWar();
 			case "!league" -> new Clash().clashWarLeague(false);
-			case "!emotes" -> getEmotes();
+			// case "!emotes" -> getEmotes();
 			case "!smh" -> new ThreadSmh(channel).start();
 			case "!dado" -> dado(msgStrippedLowerCase);
 			// case "!cattura", "!catch" -> Pokemon.catturaPokemon();
-			case "!f", "+f" -> payRespect();
+			case "!f" -> payRespect();
 			case "!timer" -> timer();
 			case "!dm" -> dm(msgStrippedLowerCase);
 			// case "!ch" -> channelHistory();
@@ -877,8 +877,12 @@ public class Commands extends ListenerAdapter
 			var timeInSeconds = Integer.parseInt(msgSplittato[1]); // time to sleep in seconds
 			String reason = "";
 			
-			if (msgSplittato.length >= 3)
-				reason = msgSplittato[2];
+			for (String s : msgSplittato)
+				reason += s + " ";
+			
+			// Todo: migliorare il timer per permettere di impostare i minuti o le ore
+			//  [!timer][2][m][piatto nel microonde] -> 0=!timer, 1=2; 2=m; 3="piatto nel microonde"
+			
 			
 			try
 			{
