@@ -881,6 +881,7 @@ public class Commands extends ListenerAdapter
 				reason += s + " ";
 			
 			// Todo: migliorare il timer per permettere di impostare i minuti o le ore
+			//  e potergli dare un nome
 			//  [!timer][2][m][piatto nel microonde] -> 0=!timer, 1=2; 2=m; 3="piatto nel microonde"
 			
 			
