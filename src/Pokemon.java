@@ -7,6 +7,7 @@ import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -14,7 +15,8 @@ public class Pokemon
 {
 	private static final Object object = Pokemon.class;
 	
-	private final int max = 898; // fino a gen 8
+	private final File[] pokemons = new File("../json_pokemon").listFiles();
+	private final int max = pokemons.length;
 	private static final File nomiPokemon = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
 	private final boolean pokedex;
@@ -29,12 +31,9 @@ public class Pokemon
 	private String dexNumber;
 	private int[] individualValues = new int[6];
 	private boolean catturato = false;
-	private String numeroPokedex;
-	private JSONObject jsonObject;
-	private JSONArray types, evoLine;
-	private URL url;
+	private JSONArray types;
 	private JSONArray jsonArray = new JSONArray();
-	private JSONParser jsonParser = new JSONParser();
+	private static JSONParser jsonParser = new JSONParser();
 	private EmbedBuilder embedBuilder = null;
 	
 	// private static int pokemon_id = 261; -> Poochyena
@@ -50,16 +49,40 @@ public class Pokemon
 		
 		// Genera i valori individuali
 		// [HP, ATK, DEF, SPA, SPD, SPE]
+		
 		for (int index : individualValues)
 			individualValues[index] = random.nextInt(32); // IVs: 0-31
 		
 		if (id <= 0 || id > max)
-			id = random.nextInt(1, max);
+			id = random.nextInt(1, max+1);
+		
+		
+		// prendere i dati dal .json
+		JSONObject data = getJsonObject(pokemons[id]);
+		
+		dexNumber = (String) data.get("id");
+		nome = (String) data.get("name");
+		types = (JSONArray) data.get("types");
+		descrizione = (String) data.get("flavor_text");
+		generazione = (String) data.get("generation");
+		
+		tipo[0] = (String) types.get(0);
+		if (types.size() > 1)
+			tipo[1] = (String) types.get(1);
+		
 		
 		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png";
 		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/" + id + ".png";
 		
 		img = (shiny ? urlShinyImg : urlImg);
+		
+		var pm = new PrivateMessage(Utente.getGion());
+		pm.send("nome: " + nome);
+		pm.send("dexNumber: " + dexNumber);
+		pm.send("descrizione: " + descrizione);
+		pm.send("generazione: " + generazione);
+		pm.send("tipo/i: " + Arrays.toString(tipo));
+		
 	} // fine costruttore
 	
 	
@@ -86,6 +109,39 @@ public class Pokemon
 	} // fine startEncounter
 	
 	
+	private static JSONObject getJsonObject(File f)
+	{
+		String line;
+		StringBuilder sb = new StringBuilder();
+		Scanner scanner;
+		
+		try
+		{
+			scanner = new Scanner(f);
+			
+			while (scanner.hasNext())
+			{
+				if ((line = scanner.nextLine()) != null)
+					sb.append(line);
+			}
+		
+		}
+		catch (FileNotFoundException e)
+		{
+			new Error<Exception>().print(object, e);
+		}
+		
+		JSONObject rtrn = null;
+		try
+		{
+			rtrn = (JSONObject) jsonParser.parse(String.valueOf(sb));
+		}catch (Exception e)
+		{
+			System.out.println("Errore con "+f.getName());
+		}
+		return rtrn;
+	}
+	
 	/** Genera un embed con il Pokemon */
 	private EmbedBuilder buildEmbed(boolean pokedex)
 	{
@@ -101,23 +157,8 @@ public class Pokemon
 				stringBuilder.append(" / ").append(tipo[1]);
 			}
 			types = String.valueOf(stringBuilder);
-			stringBuilder.delete(0, stringBuilder.length()); // pulizia per riciclarlo per la linea evolutiva
-			stringBuilder.append(lineaEvolutiva[0]); //esiste per forza
-			if (!(lineaEvolutiva[1].equals("2")))
-			{
-				stringBuilder.append(" > ").append(lineaEvolutiva[1]);
-				if (!(lineaEvolutiva[2]).equals("3"))
-				{
-					stringBuilder.append(" > ").append(lineaEvolutiva[2]);
-				}
-			}
-			else
-			{
-				stringBuilder.append(" doesn't evolve.");
-			}
-			var evoline = String.valueOf(stringBuilder);
-			final String iconURL = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F5%2F53%2FPok%25C3%25A9_Ball_icon.svg%2F1026px-Pok%25C3%25A9_Ball_icon.svg.png&f=1&nofb=1";
-			embedBuilder.setFooter(""+evoline, ""+iconURL);
+			
+			// final String iconURL = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F5%2F53%2FPok%25C3%25A9_Ball_icon.svg%2F1026px-Pok%25C3%25A9_Ball_icon.svg.png&f=1&nofb=1";
 			
 			try
 			{
@@ -133,7 +174,7 @@ public class Pokemon
 				
 				embedBuilder.addField("**"+type+"**", ""+types, true);
 				embedBuilder.addField("Generation", ""+generazione, true);
-				embedBuilder.addField("National Dex", ""+numeroPokedex, true);
+				embedBuilder.addField("National Dex", ""+dexNumber, true);
 				
 				embedBuilder.addField("Pokedex Entry", "*"+descrizione+"*", false);
 				embedBuilder.setThumbnail(img);

@@ -392,6 +392,7 @@ public class Commands extends ListenerAdapter
 			case "!dm" -> dm(msgStrippedLowerCase);
 			// case "!ch" -> channelHistory();
 			case "!toggleactivity", "!ta" -> toggleActivity(msgStrippedLowerCase, threadActivity);
+			case "!testpokemon" -> testPokemon();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -727,6 +728,12 @@ public class Commands extends ListenerAdapter
 		}
 		
 	} // fine metodo channelHistory()
+	
+	private static void testPokemon()
+	{
+		new Pokemon(261,true);
+	}
+	
 	
 	/**Questo metodo fa sì che il bot invii un messaggio privato all'utente che lo esegue
 	 * @param content il messaggio da inviare all'utente. */
