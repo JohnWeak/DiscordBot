@@ -1,0 +1,10 @@
+{
+	"id" : "552",
+	"name" : "krokorok",
+	"types" :
+	[
+		"ground", "dark"
+	],
+	"flavor_text": "They live in groups of a few individuals. Protective membranes shield their eyes from sandstorms.",
+	"generation" : "5"
+}

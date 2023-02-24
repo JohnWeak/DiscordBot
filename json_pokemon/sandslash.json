@@ -1,0 +1,10 @@
+{
+	"id" : "28",
+	"name" : "sandslash",
+	"types" :
+	[
+		"ground", ""
+	],
+	"flavor_text": "Curls up into a spiny ball when threatened. It can roll while curled up to attack or escape.",
+	"generation" : "1"
+}

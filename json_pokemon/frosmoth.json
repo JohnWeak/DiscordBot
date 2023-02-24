@@ -1,0 +1,10 @@
+{
+	"id" : "873",
+	"name" : "frosmoth",
+	"types" :
+	[
+		"ice", "bug"
+	],
+	"flavor_text": "Icy scales fall from its wings like snow as it flies over fields and mountains. The temperature of its wings is less than −290 degrees Fahrenheit.",
+	"generation" : "8"
+}

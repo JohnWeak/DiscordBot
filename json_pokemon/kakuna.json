@@ -1,0 +1,10 @@
+{
+	"id" : "14",
+	"name" : "kakuna",
+	"types" :
+	[
+		"bug", "poison"
+	],
+	"flavor_text": "Almost incapable of moving, this POKéMON can only harden its shell to protect itself from predators.",
+	"generation" : "1"
+}

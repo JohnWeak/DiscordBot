@@ -1,0 +1,10 @@
+{
+	"id" : "432",
+	"name" : "purugly",
+	"types" :
+	[
+		"normal", ""
+	],
+	"flavor_text": "It is a brazen brute that barges its way into another Pokémon’s nest and claims it as its own.",
+	"generation" : "4"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "195",
+	"name" : "quagsire",
+	"types" :
+	[
+		"water", "ground"
+	],
+	"flavor_text": "This carefree POKéMON has an easy-going nature. While swimming, it always bumps into boat hulls.",
+	"generation" : "2"
+}

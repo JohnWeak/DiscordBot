@@ -1,0 +1,10 @@
+{
+	"id" : "153",
+	"name" : "bayleef",
+	"types" :
+	[
+		"grass", ""
+	],
+	"flavor_text": "The scent of spices comes from around its neck. Somehow, sniffing it makes you want to fight.",
+	"generation" : "2"
+}

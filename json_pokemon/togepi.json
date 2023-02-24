@@ -1,0 +1,10 @@
+{
+	"id" : "175",
+	"name" : "togepi",
+	"types" :
+	[
+		"fairy", ""
+	],
+	"flavor_text": "The shell seems to be filled with joy. It is said that it will share good luck when treated kindly.",
+	"generation" : "2"
+}

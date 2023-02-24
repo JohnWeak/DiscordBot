@@ -1,0 +1,10 @@
+{
+	"id" : "35",
+	"name" : "clefairy",
+	"types" :
+	[
+		"fairy", ""
+	],
+	"flavor_text": "Its magical and cute appeal has many admirers. It is rare and found only in certain areas.",
+	"generation" : "1"
+}

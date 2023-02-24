@@ -1,0 +1,10 @@
+{
+	"id" : "352",
+	"name" : "kecleon",
+	"types" :
+	[
+		"normal", ""
+	],
+	"flavor_text": "It changes body color to blend in with its surroundings. It also changes color if it is happy or sad.",
+	"generation" : "3"
+}

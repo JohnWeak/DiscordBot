@@ -1,0 +1,10 @@
+{
+	"id" : "524",
+	"name" : "roggenrola",
+	"types" :
+	[
+		"rock", ""
+	],
+	"flavor_text": "Its ear is hexagonal in shape. Compressed underground, its body is as hard as steel.",
+	"generation" : "5"
+}

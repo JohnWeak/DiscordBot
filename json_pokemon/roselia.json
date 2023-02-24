@@ -1,0 +1,10 @@
+{
+	"id" : "315",
+	"name" : "roselia",
+	"types" :
+	[
+		"grass", "poison"
+	],
+	"flavor_text": "ROSELIA shoots sharp thorns as projectiles at any opponent that tries to steal the flowers on its arms. The aroma of this POKéMON brings serenity to living things.",
+	"generation" : "3"
+}

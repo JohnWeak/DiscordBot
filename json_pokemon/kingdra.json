@@ -1,0 +1,10 @@
+{
+	"id" : "230",
+	"name" : "kingdra",
+	"types" :
+	[
+		"water", "dragon"
+	],
+	"flavor_text": "It is said that it usually hides in underwater caves. It can create whirlpools by yawning.",
+	"generation" : "2"
+}

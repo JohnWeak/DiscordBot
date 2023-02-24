@@ -1,0 +1,10 @@
+{
+	"id" : "131",
+	"name" : "lapras",
+	"types" :
+	[
+		"water", "ice"
+	],
+	"flavor_text": "A POKéMON that has been over­ hunted almost to extinction. It can ferry people across the water.",
+	"generation" : "1"
+}

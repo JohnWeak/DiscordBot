@@ -1,0 +1,10 @@
+{
+	"id" : "893",
+	"name" : "zarude",
+	"types" :
+	[
+		"dark", "grass"
+	],
+	"flavor_text": "Within dense forests, this Pokémon lives in a pack with others of its kind. It’s incredibly aggressive, and the other Pokémon of the forest fear it.",
+	"generation" : "8"
+}

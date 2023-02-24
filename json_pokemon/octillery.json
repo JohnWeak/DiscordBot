@@ -1,0 +1,10 @@
+{
+	"id" : "224",
+	"name" : "octillery",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "It traps enemies with its suction- cupped tentacles then smashes them with its rock-hard head.",
+	"generation" : "2"
+}

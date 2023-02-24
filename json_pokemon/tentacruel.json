@@ -1,0 +1,10 @@
+{
+	"id" : "73",
+	"name" : "tentacruel",
+	"types" :
+	[
+		"water", "poison"
+	],
+	"flavor_text": "The tentacles are normally kept short. On hunts, they are extended to ensnare and immobilize prey.",
+	"generation" : "1"
+}

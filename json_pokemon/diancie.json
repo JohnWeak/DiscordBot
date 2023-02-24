@@ -1,0 +1,10 @@
+{
+	"id" : "719",
+	"name" : "diancie",
+	"types" :
+	[
+		"rock", "fairy"
+	],
+	"flavor_text": "A sudden transformation of Carbink, its pink, glimmering body is said to be the loveliest sight in the whole world.",
+	"generation" : "6"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "601",
+	"name" : "klinklang",
+	"types" :
+	[
+		"steel", ""
+	],
+	"flavor_text": "The gear with the red core is rotated at high speed for a rapid energy charge.",
+	"generation" : "5"
+}

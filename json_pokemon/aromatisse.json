@@ -1,0 +1,10 @@
+{
+	"id" : "683",
+	"name" : "aromatisse",
+	"types" :
+	[
+		"fairy", ""
+	],
+	"flavor_text": "It devises various scents, pleasant and unpleasant, and emits scents that its enemies dislike in order to gain an edge in battle.",
+	"generation" : "6"
+}

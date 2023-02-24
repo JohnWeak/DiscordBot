@@ -1,0 +1,10 @@
+{
+	"id" : "622",
+	"name" : "golett",
+	"types" :
+	[
+		"ground", "ghost"
+	],
+	"flavor_text": "The energy that burns inside it enables it to move, but no one has yet been able to identify this energy.",
+	"generation" : "5"
+}

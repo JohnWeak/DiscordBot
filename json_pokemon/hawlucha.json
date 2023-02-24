@@ -1,0 +1,10 @@
+{
+	"id" : "701",
+	"name" : "hawlucha",
+	"types" :
+	[
+		"fighting", "flying"
+	],
+	"flavor_text": "Although its body is small, its proficient fighting skills enable it to keep up with big bruisers like Machamp and Hariyama.",
+	"generation" : "6"
+}

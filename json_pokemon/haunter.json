@@ -1,0 +1,10 @@
+{
+	"id" : "93",
+	"name" : "haunter",
+	"types" :
+	[
+		"ghost", "poison"
+	],
+	"flavor_text": "Because of its ability to slip through block walls, it is said to be from an­ other dimension.",
+	"generation" : "1"
+}

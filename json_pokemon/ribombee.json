@@ -1,0 +1,10 @@
+{
+	"id" : "743",
+	"name" : "ribombee",
+	"types" :
+	[
+		"bug", "fairy"
+	],
+	"flavor_text": "It rolls up pollen into puffs. It makes many different varieties, some used as food and others used in battle.",
+	"generation" : "7"
+}

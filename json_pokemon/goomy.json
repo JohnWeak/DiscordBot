@@ -1,0 +1,10 @@
+{
+	"id" : "704",
+	"name" : "goomy",
+	"types" :
+	[
+		"dragon", ""
+	],
+	"flavor_text": "The weakest Dragon-type Pokémon, it lives in damp, shady places, so its body doesn’t dry out.",
+	"generation" : "6"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "693",
+	"name" : "clawitzer",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "Their enormous claws launch cannonballs of water powerful enough to pierce tanker hulls.",
+	"generation" : "6"
+}

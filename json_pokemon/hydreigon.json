@@ -1,0 +1,10 @@
+{
+	"id" : "635",
+	"name" : "hydreigon",
+	"types" :
+	[
+		"dark", "dragon"
+	],
+	"flavor_text": "This brutal Pokémon travels the skies on its six wings. Anything that moves seems like a foe to it, triggering its attack.",
+	"generation" : "5"
+}

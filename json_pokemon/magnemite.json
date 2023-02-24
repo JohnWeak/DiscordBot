@@ -1,0 +1,10 @@
+{
+	"id" : "81",
+	"name" : "magnemite",
+	"types" :
+	[
+		"electric", "steel"
+	],
+	"flavor_text": "Uses anti-gravity to stay suspended. Appears without warning and uses THUNDER WAVE and similar moves.",
+	"generation" : "1"
+}

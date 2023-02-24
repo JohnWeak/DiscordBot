@@ -1,0 +1,10 @@
+{
+	"id" : "605",
+	"name" : "elgyem",
+	"types" :
+	[
+		"psychic", ""
+	],
+	"flavor_text": "It uses its strong psychic power to squeeze its opponent’s brain, causing unendurable headaches.",
+	"generation" : "5"
+}

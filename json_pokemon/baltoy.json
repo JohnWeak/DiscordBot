@@ -1,0 +1,10 @@
+{
+	"id" : "343",
+	"name" : "baltoy",
+	"types" :
+	[
+		"ground", "psychic"
+	],
+	"flavor_text": "BALTOY moves while spinning around on its one foot. Primitive wall paintings depicting this POKéMON living among people were discovered in some ancient ruins.",
+	"generation" : "3"
+}

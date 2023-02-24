@@ -1,0 +1,10 @@
+{
+	"id" : "63",
+	"name" : "abra",
+	"types" :
+	[
+		"psychic", ""
+	],
+	"flavor_text": "Using its ability to read minds, it will identify impending danger and TELEPORT to safety.",
+	"generation" : "1"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "55",
+	"name" : "golduck",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "Often seen swim­ ming elegantly by lake shores. It is often mistaken for the Japanese monster, Kappa.",
+	"generation" : "1"
+}

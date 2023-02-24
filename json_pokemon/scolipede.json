@@ -1,0 +1,10 @@
+{
+	"id" : "545",
+	"name" : "scolipede",
+	"types" :
+	[
+		"bug", "poison"
+	],
+	"flavor_text": "With quick movements, it chases down its foes, attacking relentlessly with its horns until it prevails.",
+	"generation" : "5"
+}

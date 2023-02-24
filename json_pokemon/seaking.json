@@ -1,0 +1,10 @@
+{
+	"id" : "119",
+	"name" : "seaking",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "In the autumn spawning season, they can be seen swimming powerfully up rivers and creeks.",
+	"generation" : "1"
+}

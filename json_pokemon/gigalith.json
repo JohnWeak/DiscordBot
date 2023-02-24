@@ -1,0 +1,10 @@
+{
+	"id" : "526",
+	"name" : "gigalith",
+	"types" :
+	[
+		"rock", ""
+	],
+	"flavor_text": "Compressing the energy from its internal core lets it fire off an attack capable of blowing away a mountain.",
+	"generation" : "5"
+}

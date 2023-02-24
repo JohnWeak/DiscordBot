@@ -1,0 +1,10 @@
+{
+	"id" : "76",
+	"name" : "golem",
+	"types" :
+	[
+		"rock", "ground"
+	],
+	"flavor_text": "Its boulder-like body is extremely hard. It can easily withstand dynamite blasts without damage.",
+	"generation" : "1"
+}

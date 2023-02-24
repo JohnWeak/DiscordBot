@@ -1,0 +1,10 @@
+{
+	"id" : "425",
+	"name" : "drifloon",
+	"types" :
+	[
+		"ghost", "flying"
+	],
+	"flavor_text": "A Pokémon formed by the spirits of people and Pokémon. It loves damp, humid seasons.",
+	"generation" : "4"
+}

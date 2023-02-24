@@ -1,0 +1,10 @@
+{
+	"id" : "189",
+	"name" : "jumpluff",
+	"types" :
+	[
+		"grass", "flying"
+	],
+	"flavor_text": "Once it catches the wind, it deft­ ly controls its cotton-puff spores to float, even around the world.",
+	"generation" : "2"
+}

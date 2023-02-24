@@ -1,0 +1,10 @@
+{
+	"id" : "616",
+	"name" : "shelmet",
+	"types" :
+	[
+		"bug", ""
+	],
+	"flavor_text": "When attacked, it defends itself by closing the lid of its shell. It can spit a sticky, poisonous liquid.",
+	"generation" : "5"
+}

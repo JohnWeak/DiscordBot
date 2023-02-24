@@ -1,0 +1,10 @@
+{
+	"id" : "29",
+	"name" : "nidoran-f",
+	"types" :
+	[
+		"poison", ""
+	],
+	"flavor_text": "Although small, its venomous barbs render this POKéMON dangerous. The female has smaller horns.",
+	"generation" : "1"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "822",
+	"name" : "corvisquire",
+	"types" :
+	[
+		"flying", ""
+	],
+	"flavor_text": "Smart enough to use tools in battle, these Pokémon have been seen picking up rocks and flinging them or using ropes to wrap up enemies.",
+	"generation" : "8"
+}

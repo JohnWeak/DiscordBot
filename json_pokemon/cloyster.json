@@ -1,0 +1,10 @@
+{
+	"id" : "91",
+	"name" : "cloyster",
+	"types" :
+	[
+		"water", "ice"
+	],
+	"flavor_text": "When attacked, it launches its horns in quick volleys. Its innards have never been seen.",
+	"generation" : "1"
+}

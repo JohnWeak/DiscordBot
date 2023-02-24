@@ -1,0 +1,10 @@
+{
+	"id" : "507",
+	"name" : "herdier",
+	"types" :
+	[
+		"normal", ""
+	],
+	"flavor_text": "It has black, cape-like fur that is very hard and decreases the amount of damage it receives.",
+	"generation" : "5"
+}

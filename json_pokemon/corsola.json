@@ -1,0 +1,10 @@
+{
+	"id" : "222",
+	"name" : "corsola",
+	"types" :
+	[
+		"water", "rock"
+	],
+	"flavor_text": "It continuously sheds and grows. The tip of its head is prized as a treasure for its beauty.",
+	"generation" : "2"
+}

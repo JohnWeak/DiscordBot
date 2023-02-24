@@ -1,0 +1,10 @@
+{
+	"id" : "564",
+	"name" : "tirtouga",
+	"types" :
+	[
+		"water", "rock"
+	],
+	"flavor_text": "Restored from a fossil, this Pokémon can dive to depths beyond half a mile.",
+	"generation" : "5"
+}

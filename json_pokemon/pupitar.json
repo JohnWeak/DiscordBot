@@ -1,0 +1,10 @@
+{
+	"id" : "247",
+	"name" : "pupitar",
+	"types" :
+	[
+		"rock", "ground"
+	],
+	"flavor_text": "Its shell is as hard as sheet rock, and it is also very strong. Its THRASHING can topple a mountain.",
+	"generation" : "2"
+}

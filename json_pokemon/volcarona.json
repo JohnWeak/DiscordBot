@@ -1,0 +1,10 @@
+{
+	"id" : "637",
+	"name" : "volcarona",
+	"types" :
+	[
+		"bug", "fire"
+	],
+	"flavor_text": "When volcanic ash darkened the atmosphere, it is said that Volcarona’s fire provided a replacement for the sun.",
+	"generation" : "5"
+}

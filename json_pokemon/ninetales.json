@@ -1,0 +1,10 @@
+{
+	"id" : "38",
+	"name" : "ninetales",
+	"types" :
+	[
+		"fire", ""
+	],
+	"flavor_text": "Very smart and very vengeful. Grabbing one of its many tails could result in a 1000-year curse.",
+	"generation" : "1"
+}

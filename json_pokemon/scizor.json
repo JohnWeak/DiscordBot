@@ -1,0 +1,10 @@
+{
+	"id" : "212",
+	"name" : "scizor",
+	"types" :
+	[
+		"bug", "steel"
+	],
+	"flavor_text": "It has a steel-hard body. It intimidates foes by upraising its eye-patterned pincers.",
+	"generation" : "2"
+}

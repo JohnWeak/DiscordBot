@@ -1,0 +1,10 @@
+{
+	"id" : "322",
+	"name" : "numel",
+	"types" :
+	[
+		"fire", "ground"
+	],
+	"flavor_text": "NUMEL is extremely dull witted - it doesn’t notice being hit. However, it can’t stand hunger for even a second. This POKéMON’s body is a seething cauldron of boiling magma.",
+	"generation" : "3"
+}

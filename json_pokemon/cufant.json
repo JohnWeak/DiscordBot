@@ -1,0 +1,10 @@
+{
+	"id" : "878",
+	"name" : "cufant",
+	"types" :
+	[
+		"steel", ""
+	],
+	"flavor_text": "It digs up the ground with its trunk. It’s also very strong, being able to carry loads of over five tons without any problem at all.",
+	"generation" : "8"
+}

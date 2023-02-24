@@ -1,0 +1,10 @@
+{
+	"id" : "470",
+	"name" : "leafeon",
+	"types" :
+	[
+		"grass", ""
+	],
+	"flavor_text": "Just like a plant, it uses photosynthesis. As a result, it is always enveloped in clear air.",
+	"generation" : "4"
+}

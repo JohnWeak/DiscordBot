@@ -1,0 +1,10 @@
+{
+	"id" : "411",
+	"name" : "bastiodon",
+	"types" :
+	[
+		"rock", "steel"
+	],
+	"flavor_text": "Any frontal attack is repulsed. It is a docile Pokémon that feeds on grass and berries.",
+	"generation" : "4"
+}

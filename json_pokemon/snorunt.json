@@ -1,0 +1,10 @@
+{
+	"id" : "361",
+	"name" : "snorunt",
+	"types" :
+	[
+		"ice", ""
+	],
+	"flavor_text": "SNORUNT live in regions with heavy snowfall. In seasons without snow, such as spring and summer, this POKéMON steals away to live quietly among stalactites and stalagmites deep in caverns.",
+	"generation" : "3"
+}

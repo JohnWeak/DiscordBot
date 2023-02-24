@@ -1,0 +1,10 @@
+{
+	"id" : "597",
+	"name" : "ferroseed",
+	"types" :
+	[
+		"grass", "steel"
+	],
+	"flavor_text": "When threatened, it attacks by shooting a barrage of spikes, which gives it a chance to escape by rolling away.",
+	"generation" : "5"
+}

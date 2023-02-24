@@ -1,0 +1,10 @@
+{
+	"id" : "660",
+	"name" : "diggersby",
+	"types" :
+	[
+		"normal", "ground"
+	],
+	"flavor_text": "With their powerful ears, they can heft boulders of a ton or more with ease. They can be a big help at construction sites.",
+	"generation" : "6"
+}

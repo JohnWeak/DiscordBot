@@ -1,0 +1,10 @@
+{
+	"id" : "373",
+	"name" : "salamence",
+	"types" :
+	[
+		"dragon", "flying"
+	],
+	"flavor_text": "SALAMENCE came about as a result of a strong, long-held dream of growing wings. It is said that this powerful desire triggered a sudden mutation in this POKéMON’s cells, causing it to sprout its magnificent wings.",
+	"generation" : "3"
+}

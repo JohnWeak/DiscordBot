@@ -1,0 +1,10 @@
+{
+	"id" : "495",
+	"name" : "snivy",
+	"types" :
+	[
+		"grass", ""
+	],
+	"flavor_text": "It is very intelligent and calm. Being exposed to lots of sunlight makes its movements swifter.",
+	"generation" : "5"
+}

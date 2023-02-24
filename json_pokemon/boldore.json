@@ -1,0 +1,10 @@
+{
+	"id" : "525",
+	"name" : "boldore",
+	"types" :
+	[
+		"rock", ""
+	],
+	"flavor_text": "When it overflows with power, the orange crystal on its body glows. It looks for underground water in caves.",
+	"generation" : "5"
+}

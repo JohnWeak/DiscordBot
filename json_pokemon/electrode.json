@@ -1,0 +1,10 @@
+{
+	"id" : "101",
+	"name" : "electrode",
+	"types" :
+	[
+		"electric", ""
+	],
+	"flavor_text": "It stores electric energy under very high pressure. It often explodes with little or no provocation.",
+	"generation" : "1"
+}

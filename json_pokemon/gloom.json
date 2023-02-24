@@ -1,0 +1,10 @@
+{
+	"id" : "44",
+	"name" : "gloom",
+	"types" :
+	[
+		"grass", "poison"
+	],
+	"flavor_text": "The fluid that oozes from its mouth isn't drool. It is a nectar that is used to attract prey.",
+	"generation" : "1"
+}

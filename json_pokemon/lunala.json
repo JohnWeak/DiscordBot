@@ -1,0 +1,10 @@
+{
+	"id" : "792",
+	"name" : "lunala",
+	"types" :
+	[
+		"psychic", "ghost"
+	],
+	"flavor_text": "It is said to be a female evolution of Cosmog. When its third eye activates, away it flies to another world.",
+	"generation" : "7"
+}

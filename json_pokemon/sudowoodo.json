@@ -1,0 +1,10 @@
+{
+	"id" : "185",
+	"name" : "sudowoodo",
+	"types" :
+	[
+		"rock", ""
+	],
+	"flavor_text": "Although it always pretends to be a tree, its composi­ tion appears to be closer to a rock than a plant.",
+	"generation" : "2"
+}

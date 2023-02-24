@@ -1,0 +1,10 @@
+{
+	"id" : "877",
+	"name" : "morpeko",
+	"types" :
+	[
+		"electric", "dark"
+	],
+	"flavor_text": "As it eats the seeds stored up in its pocket-like pouches, this Pokémon is not just satisfying its constant hunger. It’s also generating electricity.",
+	"generation" : "8"
+}

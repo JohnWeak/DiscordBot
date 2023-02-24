@@ -1,0 +1,10 @@
+{
+	"id" : "739",
+	"name" : "crabrawler",
+	"types" :
+	[
+		"fighting", ""
+	],
+	"flavor_text": "While guarding its weak points with its pincers, it looks for an opening and unleashes punches. When it loses, it foams at the mouth and faints.",
+	"generation" : "7"
+}

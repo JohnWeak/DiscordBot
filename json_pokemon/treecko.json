@@ -1,0 +1,10 @@
+{
+	"id" : "252",
+	"name" : "treecko",
+	"types" :
+	[
+		"grass", ""
+	],
+	"flavor_text": "TREECKO has small hooks on the bottom of its feet that enable it to scale vertical walls. This POKéMON attacks by slamming foes with its thick tail.",
+	"generation" : "3"
+}

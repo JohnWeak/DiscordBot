@@ -1,0 +1,10 @@
+{
+	"id" : "270",
+	"name" : "lotad",
+	"types" :
+	[
+		"water", "grass"
+	],
+	"flavor_text": "It searches about for clean water. If it does not drink water for too long, the leaf on its head wilts.",
+	"generation" : "3"
+}

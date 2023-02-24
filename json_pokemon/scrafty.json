@@ -1,0 +1,10 @@
+{
+	"id" : "560",
+	"name" : "scrafty",
+	"types" :
+	[
+		"dark", "fighting"
+	],
+	"flavor_text": "Groups of them beat up anything that enters their territory. Each can spit acidic liquid from its mouth.",
+	"generation" : "5"
+}

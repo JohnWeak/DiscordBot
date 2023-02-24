@@ -1,0 +1,10 @@
+{
+	"id" : "537",
+	"name" : "seismitoad",
+	"types" :
+	[
+		"water", "ground"
+	],
+	"flavor_text": "They shoot paralyzing liquid from their head bumps. They use vibration to hurt their opponents.",
+	"generation" : "5"
+}

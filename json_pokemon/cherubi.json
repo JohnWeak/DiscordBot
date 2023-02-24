@@ -1,0 +1,10 @@
+{
+	"id" : "420",
+	"name" : "cherubi",
+	"types" :
+	[
+		"grass", ""
+	],
+	"flavor_text": "The small ball holds the nutrients needed for evolution. Apparently, it is very sweet and tasty.",
+	"generation" : "4"
+}

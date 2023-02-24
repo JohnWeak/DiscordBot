@@ -1,0 +1,10 @@
+{
+	"id" : "259",
+	"name" : "marshtomp",
+	"types" :
+	[
+		"water", "ground"
+	],
+	"flavor_text": "The surface of MARSHTOMP’s body is enveloped by a thin, sticky film that enables it to live on land. This POKéMON plays in mud on beaches when the ocean tide is low.",
+	"generation" : "3"
+}

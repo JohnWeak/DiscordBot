@@ -1,0 +1,10 @@
+{
+	"id" : "436",
+	"name" : "bronzor",
+	"types" :
+	[
+		"steel", "psychic"
+	],
+	"flavor_text": "Implements shaped like it were discovered in ancient tombs. It is unknown if they are related.",
+	"generation" : "4"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "546",
+	"name" : "cottonee",
+	"types" :
+	[
+		"grass", "fairy"
+	],
+	"flavor_text": "When attacked, it escapes by shooting cotton from its body. The cotton serves as a decoy to distract the attacker.",
+	"generation" : "5"
+}

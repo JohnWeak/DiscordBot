@@ -1,0 +1,10 @@
+{
+	"id" : "199",
+	"name" : "slowking",
+	"types" :
+	[
+		"water", "psychic"
+	],
+	"flavor_text": "It has incredible intellect and in­ tuition. Whatever the situation, it remains calm and collected.",
+	"generation" : "2"
+}

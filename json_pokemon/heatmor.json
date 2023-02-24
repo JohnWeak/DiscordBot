@@ -1,0 +1,10 @@
+{
+	"id" : "631",
+	"name" : "heatmor",
+	"types" :
+	[
+		"fire", ""
+	],
+	"flavor_text": "It breathes through a hole in its tail while it burns with an internal fire. Durant is its prey.",
+	"generation" : "5"
+}
