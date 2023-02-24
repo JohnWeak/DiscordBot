@@ -44,7 +44,7 @@ public class Pokemon
 		final File[] pokemons = new File("/Bot/src/json_pokemon").listFiles();
 		if (pokemons == null)
 		{
-			pm.send("pokemons è null");
+			pm.send("`pokemons: null`");
 			return;
 		}
 		
