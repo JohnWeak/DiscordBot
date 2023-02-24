@@ -37,10 +37,13 @@ public class Pokemon
 	
 	public Pokemon(int id, boolean pokedex)
 	{
-		final File[] pokemons = new File("/json_pokemon").listFiles();
+		var pm = new PrivateMessage(Utente.getGion());
+		pm.send(System.getProperty("user.dir"));
+		this.pokedex = pokedex;
+		
+		/*final File[] pokemons = new File("/json_pokemon").listFiles();
 		final int max = pokemons.length;
 		
-		this.pokedex = pokedex;
 		
 		// determina se il pokemon sarà shiny
 		if (random.nextInt(8142) == 42)
@@ -75,13 +78,13 @@ public class Pokemon
 		
 		img = (shiny ? urlShinyImg : urlImg);
 		
-		var pm = new PrivateMessage(Utente.getGion());
+		
 		pm.send("nome: " + nome);
 		pm.send("dexNumber: " + dexNumber);
 		pm.send("descrizione: " + descrizione);
 		pm.send("generazione: " + generazione);
 		pm.send("tipo/i: " + Arrays.toString(tipo));
-		
+		*/
 	} // fine costruttore
 	
 	
