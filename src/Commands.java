@@ -731,7 +731,14 @@ public class Commands extends ListenerAdapter
 	
 	private static void testPokemon()
 	{
-		new Pokemon(261,true);
+		try
+		{
+			new Pokemon(261,true);
+		}
+		catch (Exception e)
+		{
+			new Error<Exception>().print(object, e);
+		}
 	}
 	
 	
