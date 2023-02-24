@@ -5,8 +5,6 @@ import org.json.simple.parser.JSONParser;
 
 import java.awt.*;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -15,8 +13,6 @@ public class Pokemon
 {
 	private static final Object object = Pokemon.class;
 	
-	private final File[] pokemons = new File("json_pokemon").listFiles();
-	private final int max = pokemons.length;
 	private static final File nomiPokemon = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
 	private final boolean pokedex;
@@ -41,6 +37,9 @@ public class Pokemon
 	
 	public Pokemon(int id, boolean pokedex)
 	{
+		final File[] pokemons = new File("/json_pokemon").listFiles();
+		final int max = pokemons.length;
+		
 		this.pokedex = pokedex;
 		
 		// determina se il pokemon sarà shiny
