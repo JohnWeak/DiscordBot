@@ -5,7 +5,6 @@ import org.json.simple.parser.JSONParser;
 
 import java.awt.*;
 import java.io.*;
-import java.nio.file.*;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -41,11 +40,7 @@ public class Pokemon
 		var pm = new PrivateMessage(Utente.getGion());
 		this.pokedex = pokedex;
 		
-		Path currentRelativePath = Paths.get("");
-		String s = currentRelativePath.toAbsolutePath().toString();
-		pm.send(s);
-		
-		final File[] pokemons = new File("/Bot/DiscordBot/src/json_pokemon").listFiles();
+		final File[] pokemons = new File("/Bot/src/json_pokemon").listFiles();
 		if (pokemons == null)
 		{
 			pm.send("`pokemons: null`");
