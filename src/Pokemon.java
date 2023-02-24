@@ -39,8 +39,10 @@ public class Pokemon
 	{
 		var pm = new PrivateMessage(Utente.getGion());
 		this.pokedex = pokedex;
+		final var dir = new File("/Bot/src/json_pokemon");
+		final var pokemons = dir.listFiles();
 		
-		final File[] pokemons = new File("/Bot/src/json_pokemon").listFiles();
+		//final File[] pokemons = new File("/Bot/src/json_pokemon").listFiles();
 		if (pokemons == null)
 		{
 			pm.send("`pokemons: null`");
