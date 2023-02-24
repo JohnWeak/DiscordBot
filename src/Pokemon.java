@@ -56,68 +56,10 @@ public class Pokemon
 		if (id <= 0 || id > max)
 			id = random.nextInt(1, max);
 		
-		try
-		{
-			// cerca il pokemon nel dex
-			Scanner scanner = new Scanner(nomiPokemon);
-			for (int i = 0; i < id; i++)
-				nome = scanner.nextLine();
+		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png";
+		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/" + id + ".png";
 		
-			final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+id+".png";
-			final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/"+id+".png";
-		
-			img = (shiny ? urlShinyImg : urlImg);
-			
-			// nota bene: deprecated
-			String oldAPI = "https://pokeapi.glitch.me/v1/pokemon/" + nome;
-			String newAPI = "https://pokeapi.co/api/v2/pokemon-species/261/" + nome;
-			
-			url = new URL(newAPI);
-			
-			StringBuilder response = null;
-			BufferedReader in = null;
-			
-			while (scanner.hasNext())
-			{
-				if (nome.equalsIgnoreCase(scanner.nextLine()))
-				{
-					var connection = (HttpURLConnection) url.openConnection();
-					connection.setRequestProperty("Accept", "application/json");
-					
-					in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-					response = new StringBuilder();
-					String inputLine;
-					while ((inputLine = in.readLine()) != null)
-						response.append(inputLine);
-					
-					in.close();
-					jsonObject = (JSONObject) jsonParser.parse(String.valueOf(response));
-				}
-			}
-			
-			if (jsonObject.isEmpty())
-			{
-				var g = new PrivateMessage(Utente.getGion());
-				g.send("`jsonObject` è vuoto.\n"+nome+"\n"+img+"\nresponse:"+response);
-				return;
-			}
-			JSONArray descr;
-			// jsonObject = (JSONObject) jsonArray.get(0);
-			descr = (JSONArray) jsonObject.get("flavor_text_entries");
-			types = (JSONArray) jsonObject.get("types");
-			
-			for (int i = 0; i < types.size(); i++)
-				tipo[i] = types.get(i).toString();
-			
-			generazione = String.valueOf(jsonObject.get("gen"));
-			numeroPokedex = (String) jsonObject.get("id");
-			
-			for (int i = 0; i < evoLine.size(); i++)
-				lineaEvolutiva[i] = evoLine.get(i).toString();
-			
-			embedBuilder = buildEmbed(pokedex);
-		} catch (Exception e) { new Error<Exception>().print(object, e); }
-		
+		img = (shiny ? urlShinyImg : urlImg);
 	} // fine costruttore
 	
 	
