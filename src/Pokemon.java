@@ -15,7 +15,7 @@ public class Pokemon
 {
 	private static final Object object = Pokemon.class;
 	
-	private final File[] pokemons = new File("../json_pokemon").listFiles();
+	private final File[] pokemons = new File("json_pokemon").listFiles();
 	private final int max = pokemons.length;
 	private static final File nomiPokemon = new File("nomiPokemon.txt");
 	private static final Random random = new Random();
