@@ -41,7 +41,7 @@ public class Pokemon
 		pm.send(System.getProperty("user.dir"));
 		this.pokedex = pokedex;
 		
-		final File[] pokemons = new File("/Bot/src/json_pokemon").listFiles();
+		final File[] pokemons = new File("/Bot/DiscordBot/src/json_pokemon").listFiles();
 		if (pokemons == null)
 		{
 			pm.send("`pokemons: null`");
