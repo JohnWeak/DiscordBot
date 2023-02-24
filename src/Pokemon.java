@@ -41,7 +41,13 @@ public class Pokemon
 		pm.send(System.getProperty("user.dir"));
 		this.pokedex = pokedex;
 		
-		/*final File[] pokemons = new File("/json_pokemon").listFiles();
+		final File[] pokemons = new File("/Bot/src/json_pokemon").listFiles();
+		if (pokemons == null)
+		{
+			pm.send("pokemons è null");
+			return;
+		}
+		
 		final int max = pokemons.length;
 		
 		
@@ -84,7 +90,6 @@ public class Pokemon
 		pm.send("descrizione: " + descrizione);
 		pm.send("generazione: " + generazione);
 		pm.send("tipo/i: " + Arrays.toString(tipo));
-		*/
 	} // fine costruttore
 	
 	
