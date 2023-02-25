@@ -44,7 +44,10 @@ public class Pokemon
 		final var files = cwd.listFiles();
 		for (File f : files)
 		{
-			pm.send(f.getName());
+			if (f.isDirectory())
+				pm.send("Directory: " + f.getName());
+			else
+				pm.send("File: "+ f.getName());
 		}
 		
 		
