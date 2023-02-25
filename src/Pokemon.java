@@ -72,7 +72,8 @@ public class Pokemon
 				parts[1] = pog.substring(2000);
 		}
 		
-		pm.send(Arrays.toString(parts));
+		for (String s : parts)
+			pm.send(s);
 		
 		
 		/*final var pokemons = dir.listFiles();
