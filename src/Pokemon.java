@@ -39,12 +39,8 @@ public class Pokemon
 	{
 		var pm = new PrivateMessage(Utente.getGion());
 		this.pokedex = pokedex;
-		final var dir = new File("/Bot/DiscordBot/src/json_pokemon");
+		final var dir = new File("DiscordBot/json_pokemon");
 		final var pokemons = dir.listFiles();
-		
-		ProcessHandle.current().info().command().ifPresent(
-				cmd -> pm.send(cmd));
-		
 		
 		if (pokemons == null)
 		{
