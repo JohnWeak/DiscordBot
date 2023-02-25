@@ -42,6 +42,10 @@ public class Pokemon
 		final var dir = new File("/Bot/DiscordBot/src/json_pokemon");
 		final var pokemons = dir.listFiles();
 		
+		ProcessHandle.current().info().command().ifPresent(
+				cmd -> pm.send(cmd));
+		
+		
 		if (pokemons == null)
 		{
 			pm.send("`pokemons: null`");
