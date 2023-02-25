@@ -42,23 +42,26 @@ public class Pokemon
 		final var dir = new File("/json_pokemon");
 		final var cwd = new File("./..");
 		final var files = cwd.listFiles();
+		var path = "";
+		
 		for (File f : files)
 		{
 			if (f.isDirectory())
-				pm.send("Directory: " + f.getName());
+				path += "Directory: " + f.getName()+"\n";
 			else
-				pm.send("File: "+ f.getName());
+				path += "File: " + f.getName()+"\n";
 			
 			try
 			{
-				pm.send("Canonical Path: " + f.getCanonicalPath());
+				path += "Canonical Path: "+f.getCanonicalPath() + "\n\n";
+				
 			}catch (IOException e)
 			{
 				new Error<Exception>().print(object, e);
 			}
 			
 		}
-		
+		pm.send(path);
 		
 		
 		/*final var pokemons = dir.listFiles();
