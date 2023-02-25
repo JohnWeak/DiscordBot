@@ -40,7 +40,7 @@ public class Pokemon
 		var pm = new PrivateMessage(Utente.getGion());
 		this.pokedex = pokedex;
 		final var dir = new File("/json_pokemon");
-		final var cwd = new File("./..");
+		final var cwd = new File(".");
 		final var files = cwd.listFiles();
 		var path = "";
 		
