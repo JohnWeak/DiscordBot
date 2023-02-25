@@ -42,18 +42,18 @@ public class Pokemon
 		final var dir = new File("/json_pokemon");
 		final var cwd = new File(".");
 		final var files = cwd.listFiles();
-		var path = "";
+		var path = new StringBuilder();
 		
 		for (File f : files)
 		{
 			if (f.isDirectory())
-				path += "Directory: " + f.getName()+"\n";
+				path.append("Directory: ").append(f.getName()).append("\n");
 			else
-				path += "File: " + f.getName()+"\n";
+				path.append("File: ").append(f.getName()).append("\n");
 			
 			try
 			{
-				path += "Canonical Path: "+f.getCanonicalPath() + "\n\n";
+				path.append("Canonical Path: ").append(f.getCanonicalPath()).append("\n\n");
 				
 			}catch (IOException e)
 			{
@@ -61,7 +61,18 @@ public class Pokemon
 			}
 			
 		}
-		pm.send(path);
+		var pog = String.valueOf(path);
+		String[] parts = new String[10];
+		if (pog.length() > 2000)
+		{
+			parts[0] = pog.substring(0,1999);
+			if (pog.length() > 4000)
+				parts[1] = pog.substring(2000, 3999);
+			else
+				parts[1] = pog.substring(2000);
+		}
+		
+		pm.send(Arrays.toString(parts));
 		
 		
 		/*final var pokemons = dir.listFiles();
