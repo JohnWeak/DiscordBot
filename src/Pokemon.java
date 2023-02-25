@@ -39,18 +39,15 @@ public class Pokemon
 	{
 		var pm = new PrivateMessage(Utente.getGion());
 		this.pokedex = pokedex;
-		final var dir = new File("../json_pokemon");
-		pm.send("dir exists: " + dir.exists());
+		final var dir = new File("/json_pokemon");
 		final var pokemons = dir.listFiles();
-		
-		if (pokemons == null)
+		if (!dir.exists() || pokemons == null)
 		{
-			pm.send("`pokemons: null`");
+			pm.send("`dir doesn't exist`");
 			return;
 		}
 		
 		final int max = pokemons.length;
-		
 		
 		// determina se il pokemon sarà shiny
 		if (random.nextInt(8142) == 42)
