@@ -62,7 +62,7 @@ public class Pokemon
 			
 		}
 		var pog = String.valueOf(path);
-		String[] parts = new String[10];
+		String[] parts = new String[]{" "," "};
 		if (pog.length() > 2000)
 		{
 			parts[0] = pog.substring(0,1999);
