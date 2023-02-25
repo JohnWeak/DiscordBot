@@ -40,7 +40,16 @@ public class Pokemon
 		var pm = new PrivateMessage(Utente.getGion());
 		this.pokedex = pokedex;
 		final var dir = new File("/json_pokemon");
-		final var pokemons = dir.listFiles();
+		final var cwd = new File(".");
+		final var files = cwd.listFiles();
+		for (File f : files)
+		{
+			pm.send(f.getName());
+		}
+		
+		
+		
+		/*final var pokemons = dir.listFiles();
 		if (!dir.exists() || pokemons == null)
 		{
 			pm.send("`dir doesn't exist`");
@@ -88,6 +97,8 @@ public class Pokemon
 		pm.send("descrizione: " + descrizione);
 		pm.send("generazione: " + generazione);
 		pm.send("tipo/i: " + Arrays.toString(tipo));
+		
+		*/
 	} // fine costruttore
 	
 	
