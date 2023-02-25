@@ -65,9 +65,9 @@ public class Pokemon
 		String[] parts = new String[]{" "," "};
 		if (pog.length() > 2000)
 		{
-			parts[0] = pog.substring(0,1999);
+			parts[0] = pog.substring(0, 2000);
 			if (pog.length() > 4000)
-				parts[1] = pog.substring(2000, 3999);
+				parts[1] = pog.substring(2000, 4000);
 			else
 				parts[1] = pog.substring(2000);
 		}
