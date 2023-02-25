@@ -48,6 +48,15 @@ public class Pokemon
 				pm.send("Directory: " + f.getName());
 			else
 				pm.send("File: "+ f.getName());
+			
+			try
+			{
+				pm.send("Canonical Path: " + f.getCanonicalPath());
+			}catch (IOException e)
+			{
+				new Error<Exception>().print(object, e);
+			}
+			
 		}
 		
 		
