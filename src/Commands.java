@@ -370,7 +370,7 @@ public class Commands extends ListenerAdapter
 		} // fine if reazioni
 		
 		Card c;
-		Pokemon p;
+		
 		switch (comando)
 		{
 			case "!coinflip", "!cf" -> coinflip();
@@ -397,11 +397,6 @@ public class Commands extends ListenerAdapter
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
 		var reazioni = new ArrayList<String>();
-		
-		if (msgStrippedLowerCase.contains("random number") || msgStrippedLowerCase.contains("numero casuale"))
-			new PrivateMessage(author)
-				.send("Numero casuale: **"+(random.nextInt(42)+1)+"**");
-		
 		
 		if (msgStrippedLowerCase.contains("ehi modulo"))
 			ehiModulo();
@@ -505,6 +500,13 @@ public class Commands extends ListenerAdapter
 				react(emote);
 			
 			reazioni.clear();
+		}
+		
+		if (msgStrippedLowerCase.contains("random") || msgStrippedLowerCase.contains("numero casuale"))
+		{
+			reply = true;
+			int n = random.nextInt(0, 100);
+			msgReply += "Numero casuale: **"+n+"**";
 		}
 		
 		if (msgStrippedLowerCase.contains("russia") && random.nextInt(50) == 42)
