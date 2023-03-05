@@ -26,7 +26,6 @@ public abstract class Emotes
 	public static final String hampter = "Hampter:798667312705568779";
 	public static final String lul = "LUL:586333997160726538";
 	public static final String pepeSad = "PepeSad:924409510620196904";
-	public static final String pogKarp = "PogKarp:706130461302194237";
 	public static final String ragey = "Ragey:618591740374417417";
 	public static final String tonyakaradio105 = "Tonyakaradio105:624580446952357918";
 	public static final String Tpose = "Tpose:609385915395342361";
@@ -37,13 +36,10 @@ public abstract class Emotes
 	public static final String kappa = "kappa:596751965099393054";
 	public static final String kappaPride = "kappaPride:596751965447389252";
 	public static final String konoDio = "konoDio:593421650049892352";
-	public static final String medic = "medic:803002224107192391";
-	public static final String meta = "meta:836668010319839272";
 	public static final String monkaS = "monkaS:601409193374646301";
 	public static final String noIdontThinkIwill = "noidontthinkiwill:619058401242120192";
 	public static final String o7 = "o7:928753025777037354";
 	public static final String okSaitama = "oksaitama:606068895886999558";
-	public static final String scoutTrap = "scouttrap:997501978521374771";
 	public static final String tf2spy = "tf2spy:610393246220288001";
 	public static final String tf2spy2 = "tf2spy2:620707027638812673";
 	public static final String thinkHang = "thinkHang:788174095354298428";
@@ -113,7 +109,6 @@ public abstract class Emotes
 			case "hampter" -> hampter;
 			case "lul" -> lul;
 			case "pepesad" -> pepeSad;
-			case "pogkarp" -> pogKarp;
 			case "ragey" -> ragey;
 			case "tonyakaradio105" -> tonyakaradio105;
 			case "tpose" -> Tpose;
@@ -124,13 +119,10 @@ public abstract class Emotes
 			case "kappa" -> kappa;
 			case "kappapride" -> kappaPride;
 			case "konodio" -> konoDio;
-			case "medic" -> medic;
-			case "meta" -> meta;
 			case "monkas" -> monkaS;
 			case "noidontthinkiwill" -> noIdontThinkIwill;
 			case "o7" -> o7;
 			case "oksaitama" -> okSaitama;
-			case "scouttrap" -> scoutTrap;
 			case "scarab" -> scarab[1];
 			case "tf2spy" -> tf2spy;
 			case "tf2spy2" -> tf2spy2;
