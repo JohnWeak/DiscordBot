@@ -1,0 +1,10 @@
+{
+	"id" : "569",
+	"name" : "garbodor",
+	"types" :
+	[
+		"poison", ""
+	],
+	"flavor_text": "It clenches opponents with its left arm and finishes them off with foul-smelling poison gas belched from its mouth.",
+	"generation" : "5"
+}

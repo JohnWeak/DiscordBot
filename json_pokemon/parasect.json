@@ -1,0 +1,10 @@
+{
+	"id" : "47",
+	"name" : "parasect",
+	"types" :
+	[
+		"bug", "grass"
+	],
+	"flavor_text": "A host-parasite pair in which the parasite mushroom has taken over the host bug. Prefers damp places.",
+	"generation" : "1"
+}

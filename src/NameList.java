@@ -9,11 +9,6 @@ public class NameList
 {
 	private static final File nomiPkmn = new File("nomiPokemon.txt");
 	
-	public NameList()
-	{
-	
-	}
-	
 	private JSONObject requestApi(URL url, String numeroPkmn)
 	{
 		Object file = null;
@@ -33,7 +28,7 @@ public class NameList
 			file = JSONValue.parse(String.valueOf(response));
 			
 		}
-		catch (IOException e) { System.out.println("Errore nel mandare la richiesta di nomi con API"); }
+		catch (Exception e) { new Error<Exception>().print(NameList.class, e); }
 		return (JSONObject) file;
 	}
 	

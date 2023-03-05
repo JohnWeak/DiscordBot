@@ -1,0 +1,10 @@
+{
+	"id" : "337",
+	"name" : "lunatone",
+	"types" :
+	[
+		"rock", "psychic"
+	],
+	"flavor_text": "LUNATONE was discovered at a location where a meteorite fell. As a result, some people theorize that this POKéMON came from space. However, no one has been able to prove this theory so far.",
+	"generation" : "3"
+}

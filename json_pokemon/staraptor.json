@@ -1,0 +1,10 @@
+{
+	"id" : "398",
+	"name" : "staraptor",
+	"types" :
+	[
+		"normal", "flying"
+	],
+	"flavor_text": "It has a savage nature. It will courageously challenge foes that are much larger.",
+	"generation" : "4"
+}

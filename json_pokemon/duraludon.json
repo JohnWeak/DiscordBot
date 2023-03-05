@@ -1,0 +1,10 @@
+{
+	"id" : "884",
+	"name" : "duraludon",
+	"types" :
+	[
+		"steel", "dragon"
+	],
+	"flavor_text": "Its body resembles polished metal, and it’s both lightweight and strong. The only drawback is that it rusts easily.",
+	"generation" : "8"
+}

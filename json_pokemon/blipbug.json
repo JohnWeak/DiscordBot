@@ -1,0 +1,10 @@
+{
+	"id" : "824",
+	"name" : "blipbug",
+	"types" :
+	[
+		"bug", ""
+	],
+	"flavor_text": "A constant collector of information, this Pokémon is very smart. Very strong is what it isn’t.",
+	"generation" : "8"
+}

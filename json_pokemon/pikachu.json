@@ -1,0 +1,10 @@
+{
+	"id" : "25",
+	"name" : "pikachu",
+	"types" :
+	[
+		"electric", ""
+	],
+	"flavor_text": "When several of these POKéMON gather, their electricity could build and cause lightning storms.",
+	"generation" : "1"
+}

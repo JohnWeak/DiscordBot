@@ -1,0 +1,10 @@
+{
+	"id" : "845",
+	"name" : "cramorant",
+	"types" :
+	[
+		"flying", "water"
+	],
+	"flavor_text": "It’s so strong that it can knock out some opponents in a single hit, but it also may forget what it’s battling midfight.",
+	"generation" : "8"
+}

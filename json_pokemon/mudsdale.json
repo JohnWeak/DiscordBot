@@ -1,0 +1,10 @@
+{
+	"id" : "750",
+	"name" : "mudsdale",
+	"types" :
+	[
+		"ground", ""
+	],
+	"flavor_text": "It spits a mud that provides resistance to both wind and rain, so the walls of old houses were often coated with it.",
+	"generation" : "7"
+}

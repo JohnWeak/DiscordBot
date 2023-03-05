@@ -1,0 +1,10 @@
+{
+	"id" : "694",
+	"name" : "helioptile",
+	"types" :
+	[
+		"electric", "normal"
+	],
+	"flavor_text": "They make their home in deserts. They can generate their energy from basking in the sun, so eating food is not a requirement.",
+	"generation" : "6"
+}

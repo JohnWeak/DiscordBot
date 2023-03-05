@@ -2,423 +2,266 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
+import java.awt.*;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Pokemon
 {
-	private final int max = 898; // fino a gen 8
-	private final File nomiPokemon = new File("nomiPokemon.txt");
-	private static final Random random = new Random();
-	private static ArrayList<Pokemon> activePokemons;
+	private static final Object object = Pokemon.class;
 	
-	// private static int pokemon_id = 261; -> Poochyena
-	// https://pokeapi.co/api/v2/pokemon/261/
+	private static final File nomiPokemon = new File("nomiPokemon.txt");
+	private static final Random random = new Random();
+	private final boolean pokedex;
 	
 	private String nome;
 	private String img;
 	private boolean shiny = false;
 	private String descrizione;
-	private String[] tipo;
+	private String[] tipo = new String[]{" "," "};
+	private String[] lineaEvolutiva = new String[]{"1","2","3"};
 	private String generazione;
 	private String dexNumber;
-	private String[] lineaEvolutiva;
 	private int[] individualValues = new int[6];
 	private boolean catturato = false;
-	private boolean active;
+	private JSONArray types;
+	private JSONArray jsonArray = new JSONArray();
+	private static JSONParser jsonParser = new JSONParser();
+	private EmbedBuilder embedBuilder = null;
 	
-	public Pokemon()
-	{
-		shiny();
-		
-		try
-		{
-			String[] result = generatePokemon(random.nextInt(max)+1);
-			nome = result[0];
-			img = result[1];
-		}
-		catch (Exception e) { Commands.canaleBotPokemon.sendMessage(""+e).queue(); }
-		
-	}
-
-	public Pokemon(String nome, String descrizione, boolean shiny)
-	{
-		int id = 1;
-		this.shiny = shiny;
-		this.nome = nome;
-		
-		try
-		{
-			Scanner scanner = new Scanner(nomiPokemon);
-			while (scanner.hasNextLine())
-				if (nome.equalsIgnoreCase(scanner.nextLine()))
-					break;
-				else
-					id++;
-
-
-			img = generatePokemon(id)[1];
-		}catch (Exception e) { e.printStackTrace(); }
-
-		this.descrizione = descrizione;
-	}
+	// private static int pokemon_id = 261; -> Poochyena
+	// https://pokeapi.co/api/v2/pokemon/261/
 	
-	
-	private String[] generatePokemon(int id) throws IOException
+	public Pokemon(int id, boolean pokedex)
 	{
-		if (id <= 0)
-			id = random.nextInt(max)+1;
+		var pm = new PrivateMessage(Utente.getGion());
+		this.pokedex = pokedex;
+		final var dir = new File("/json_pokemon");
+		final var cwd = new File(".");
+		final var files = cwd.listFiles();
+		var path = new StringBuilder();
 		
-		Scanner scanner;
-		String[] risultato = new String[2];
-		
-		generateIVs();
-		
-		try
+		for (File f : files)
 		{
-			scanner = new Scanner(nomiPokemon);
-			for (int i = 0; i < id; i++)
-				nome = scanner.nextLine();
+			if (f.isDirectory())
+				path.append("Directory: ").append(f.getName()).append("\n");
+			else
+				path.append("File: ").append(f.getName()).append("\n");
 			
-		} catch (FileNotFoundException e)
+			try
+			{
+				path.append("Canonical Path: ").append(f.getCanonicalPath()).append("\n\n");
+				
+			}catch (IOException e)
+			{
+				new Error<Exception>().print(object, e);
+			}
+			
+		}
+		var pog = String.valueOf(path);
+		String[] parts = new String[]{" "," "};
+		if (pog.length() > 2000)
 		{
-			Commands.canaleBotPokemon.sendMessage(""+e).queue();
+			parts[0] = pog.substring(0, 2000);
+			if (pog.length() > 4000)
+				parts[1] = pog.substring(2000, 4000);
+			else
+				parts[1] = pog.substring(2000);
 		}
 		
-		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+id+".png";
-		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/"+id+".png";
+		for (String s : parts)
+			pm.send(s);
 		
-		risultato[0] = nome;
-
-		img = (shiny ? urlShinyImg : urlImg);
 		
-		risultato[1] = img;
+		/*final var pokemons = dir.listFiles();
+		if (!dir.exists() || pokemons == null)
+		{
+			pm.send("`dir doesn't exist`");
+			return;
+		}
 		
-		//System.out.println("\t"+Arrays.toString(risultato)+"\n\tShiny: "+shiny);
-		return risultato;
+		final int max = pokemons.length;
 		
-	} // fine generatePokemon()
-	
-	private void shiny()
-	{
-		if (random.nextInt(8192) == 42)
+		// determina se il pokemon sarà shiny
+		if (random.nextInt(8142) == 42)
 			shiny = true;
-	}
-	
-	private void generateIVs()
-	{
+		
+		// Genera i valori individuali
 		// [HP, ATK, DEF, SPA, SPD, SPE]
+		
 		for (int index : individualValues)
 			individualValues[index] = random.nextInt(32); // IVs: 0-31
-	}
-	
-	
-	
-	/** Cerca un Pokemon nell'API. Se non lo trova mostra un messaggio di errore. */
-	public static void pokemon()
-	{
-		String msgLowercase = Commands.messageRaw.toLowerCase(Locale.ITALIAN);
-		String[] msg = msgLowercase.split(" ");
 		
-		if (msgLowercase.contains("!pokemon"))
-		{
-			String[] tipo = {" ", " "};
-			String generazione, numeroPokedex;
-			String[] lineaEvolutiva = {"1", "2", "3"};
-			
-			if (msg.length > 1 && !msg[1].isEmpty())
-			{
-				String nome = msg[1];
-				JSONArray jsonArray = Pokemon.search(nome);
-				
-				if (jsonArray.isEmpty())
-				{
-					Commands.canaleBotPokemon.sendMessage("jsonArray è vuoto").queue();
-					return;
-				}
-				
-				try
-				{
-					JSONObject jsonObject = (JSONObject) jsonArray.get(0);
-					String description = (String) jsonObject.get("description");
-					JSONArray types = (JSONArray) jsonObject.get("types");
-					JSONObject family = (JSONObject) jsonObject.get("family");
-					JSONArray evoLine = (JSONArray) family.get("evolutionLine");
-					
-					for (int i = 0; i < types.size(); i++)
-						tipo[i] = types.get(i).toString();
-					
-					generazione = String.valueOf(jsonObject.get("gen"));
-					numeroPokedex = (String) jsonObject.get("number");
-					
-					for (int i = 0; i < evoLine.size(); i++)
-						lineaEvolutiva[i] = evoLine.get(i).toString();
-					
-					boolean flag = (msg.length > 2) && (msg[2].equals("shiny") || msg[2].equals("s"));
-					var pokemon = new Pokemon(nome, description, flag);
-					
-					pokemon.setTipo(tipo);
-					pokemon.setGenerazione(generazione);
-					pokemon.setDexNumber(numeroPokedex);
-					pokemon.setLineaEvolutiva(lineaEvolutiva);
-					
-					Commands.channel.sendTyping().queue();
-					Commands.pause(1000, 500);
-					Commands.channel.sendMessageEmbeds(Pokemon.buildEmbed(pokemon, true).build()).queue();
-				}
-				catch (IndexOutOfBoundsException e)
-				{
-					final String testo = "Il Pokedex non ha informazioni riguardo `" + nome + "`.";
-					Commands.channel.sendMessage(testo + "\n" + e.getMessage()).queue();
-				}
-			}
-			else
-				Commands.channel.sendMessage("Usa `!pokemon <nome> [shiny / s]` per cercare un Pokemon").queue();
-			
-		}
-		else
-		{
-			var pokemon = new Pokemon();
-			Pokemon.singleEncounter(pokemon);
-		}
+		if (id <= 0 || id > max)
+			id = random.nextInt(1, max+1);
 		
-	} // fine pokemon()
+		
+		// prendere i dati dal .json
+		JSONObject data = getJsonObject(pokemons[id]);
+		
+		dexNumber = (String) data.get("id");
+		nome = (String) data.get("name");
+		types = (JSONArray) data.get("types");
+		descrizione = (String) data.get("flavor_text");
+		generazione = (String) data.get("generation");
+		
+		tipo[0] = (String) types.get(0);
+		if (types.size() > 1)
+			tipo[1] = (String) types.get(1);
+		
+		
+		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png";
+		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/" + id + ".png";
+		
+		img = (shiny ? urlShinyImg : urlImg);
+		
+		
+		pm.send("nome: " + nome);
+		pm.send("dexNumber: " + dexNumber);
+		pm.send("descrizione: " + descrizione);
+		pm.send("generazione: " + generazione);
+		pm.send("tipo/i: " + Arrays.toString(tipo));
+		
+		*/
+	} // fine costruttore
 	
-	/** Genera un embed con il Pokemon */
-	public static EmbedBuilder buildEmbed(Pokemon pokemon, boolean pokedex)
+	
+	public void spawn(Pokemon pokemon)
 	{
-		var embedBuilder = new EmbedBuilder();
-		var descrizione = "";
-		var tipi = pokemon.getTipo();
-		var stringBuilder = new StringBuilder();
-		var types = "";
-		var lineaEvo = pokemon.getLineaEvolutiva();
-		var lineaEvolutiva = "";
+		if (embedBuilder == null)
+		{
+			new Error<String>().print(object, "`Can't execute because embedBuilder is null`");
+			return;
+		}
 		
 		if (pokedex)
 		{
-			stringBuilder.append(tipi[0]);
-			if (!(tipi[1].equals(" ")))
-			{
-				stringBuilder.append(" / ").append(tipi[1]);
-			}
-			types = String.valueOf(stringBuilder);
-			stringBuilder.delete(0, stringBuilder.length()); // pulizia per riciclarlo per la linea evolutiva
-			stringBuilder.append(lineaEvo[0]); //esiste per forza
-			if (!(lineaEvo[1].equals("2")))
-			{
-				stringBuilder.append(" > ").append(lineaEvo[1]);
-				if (!(lineaEvo[2]).equals("3"))
-				{
-					stringBuilder.append(" > ").append(lineaEvo[2]);
-				}
-			}
-			else
-			{
-				stringBuilder.append(" doesn't evolve.");
-			}
-			lineaEvolutiva = String.valueOf(stringBuilder);
-			final String iconURL = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F5%2F53%2FPok%25C3%25A9_Ball_icon.svg%2F1026px-Pok%25C3%25A9_Ball_icon.svg.png&f=1&nofb=1";
-			embedBuilder.setFooter(""+lineaEvolutiva, ""+iconURL);
-			
-		}
-		
-		try
-		{
-			embedBuilder.setTitle(pokemon.getNome().toUpperCase());
-		}catch (Exception ignored) { }
-		
-		if ((descrizione = pokemon.getDescrizione()) != null)
-		{
-			String type = "Type";
-			if (!tipi[1].equals(" "))
-				type += "s";
-			
-			embedBuilder.addField("**"+type+"**", ""+types, true);
-			embedBuilder.addField("Generation", ""+pokemon.getGenerazione(), true);
-			embedBuilder.addField("National Dex", ""+pokemon.getDexNumber(), true);
-			
-			embedBuilder.addField("Pokedex Entry", "*"+descrizione+"*", false);
-			embedBuilder.setThumbnail(pokemon.getImg());
+			Commands.canaleBotPokemon.sendMessageEmbeds(embedBuilder.build()).queue();
 		}
 		else
 		{
-			embedBuilder.setImage(pokemon.getImg());
+			var t = new ThreadPokemon(pokemon, Commands.canaleBotPokemon, embedBuilder);
+			var tout = random.nextInt(2, 30);
+			t.setTimeoutTime(t.MINUTES, tout);
+			t.start();
+			//new PrivateMessage(Utente.getGion()).send("\nThread alive:" + t.isAlive() + "\ntout: " + tout + "\n");
+		}
+	} // fine startEncounter
+	
+	
+	private static JSONObject getJsonObject(File f)
+	{
+		String line;
+		StringBuilder sb = new StringBuilder();
+		Scanner scanner;
+		
+		try
+		{
+			scanner = new Scanner(f);
+			
+			while (scanner.hasNext())
+			{
+				if ((line = scanner.nextLine()) != null)
+					sb.append(line);
+			}
+		
+		}
+		catch (FileNotFoundException e)
+		{
+			new Error<Exception>().print(object, e);
 		}
 		
-		var color = pokemon.isShiny() ? 0xFFD020 : 0xFF0000;
-		embedBuilder.setColor(color);
+		JSONObject rtrn = null;
+		try
+		{
+			rtrn = (JSONObject) jsonParser.parse(String.valueOf(sb));
+		}catch (Exception e)
+		{
+			System.out.println("Errore con "+f.getName());
+		}
+		return rtrn;
+	}
+	
+	/** Genera un embed con il Pokemon */
+	private EmbedBuilder buildEmbed(boolean pokedex)
+	{
+		var embedBuilder = new EmbedBuilder();
+		var stringBuilder = new StringBuilder();
+		var types = "";
 		
-		if (pokemon.isShiny())
-			embedBuilder.setFooter("✨ Shiny! ✨");
+		if (pokedex) // se è una entry del pokedex, mostra le informazioni varie
+		{
+			stringBuilder.append(tipo[0]);
+			if (!(tipo[1].equals(" ")))
+			{
+				stringBuilder.append(" / ").append(tipo[1]);
+			}
+			types = String.valueOf(stringBuilder);
+			
+			// final String iconURL = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F5%2F53%2FPok%25C3%25A9_Ball_icon.svg%2F1026px-Pok%25C3%25A9_Ball_icon.svg.png&f=1&nofb=1";
+			
+			try
+			{
+				embedBuilder.setTitle(nome.toUpperCase());
+			}
+			catch (Exception e) { new Error<Exception>().print(object, e); }
+			
+			if (descrizione != null)
+			{
+				String type = "Type";
+				if (!tipo[1].equals(" "))
+					type += "s";
+				
+				embedBuilder.addField("**"+type+"**", ""+types, true);
+				embedBuilder.addField("Generation", ""+generazione, true);
+				embedBuilder.addField("National Dex", ""+dexNumber, true);
+				
+				embedBuilder.addField("Pokedex Entry", "*"+descrizione+"*", false);
+				embedBuilder.setThumbnail(img);
+			}
+			else
+			{
+				embedBuilder.setImage(img);
+			}
+			
+			var color = shiny ? 0xFFD020 : 0xFF0000;
+			embedBuilder.setColor(color);
+			
+			if (shiny)
+				embedBuilder.setFooter("✨ Shiny! ✨");
+			
+		}
+		else // se non è una entry del pokedex mostra solo nome e immagine
+		{
+			embedBuilder
+				.setTitle("A wild " + nome + " appears!")
+				.setImage(img)
+				.setColor(Color.red)
+				.setFooter("Type !catch to capture it.")
+			;
+		}
 		
 		return embedBuilder;
 	} // fine buildEmbed()
 	
-	
-	public static void spawnPokemon()
+	public static int getId(String nome)
 	{
-		var rand = random.nextInt(100);
-		if (rand == 42 || Commands.messageRaw.equals("pkmnpls"))
-			singleEncounter(new Pokemon());
-		
-		// Commands.author.openPrivateChannel().flatMap(channel -> channel.sendMessage(""+rand)).queue();
-		
-	} // fine spawnPokemon()
-	
-	
-	/** Effettua la ricerca del pokemon nell'API.
-	 * @param pokemon il nome del pokemon da cercare.
-	 * @return un array JSON, con tutte le informazioni del pokemon trovate nell'API.
-	 * */
-	public static JSONArray search(String pokemon)
-	{
-		URL url;
-		JSONArray jsonArray = new JSONArray();
-		JSONParser jsonParser = new JSONParser();
-		
+		int x = 0;
 		try
 		{
-			url = new URL("https://pokeapi.glitch.me/v1/pokemon/" + pokemon);
-			Scanner scanner = new Scanner(Commands.nomiPkmn);
+			Scanner scanner = new Scanner(nomiPokemon);
 			while (scanner.hasNext())
-				if (pokemon.equalsIgnoreCase(scanner.nextLine()))
-				{
-					var connection = (HttpURLConnection) url.openConnection();
-					connection.setRequestProperty("Accept", "application/json");
-					
-					var in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-					var response = new StringBuilder();
-					String inputLine;
-					while ((inputLine = in.readLine()) != null)
-						response.append(inputLine);
-					
-					jsonArray = (JSONArray) jsonParser.parse(String.valueOf(response));
-				}
-		} catch (IOException | ParseException e) { System.out.println("Errore nell'apertura del file: " + Commands.nomiPkmn); }
-		
-		return jsonArray;
-	} // fine search()
-	
-	
-	/** Genera un incontro con un pokemon selvatico */
-	public static void singleEncounter(Pokemon pokemon)
-	{
-		EmbedBuilder embedBuilder;
-		final var titolo = "A wild " + pokemon.getNome() + " appears!";
-		
-		embedBuilder = Pokemon.buildEmbed(pokemon, false).setTitle(titolo);
-		embedBuilder.setFooter("Catturalo con !catch","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
-		Commands.canaleBotPokemon.sendTyping().queue();
-		Commands.pause(500, 500);
-		
-		// a questo punto il pokemon è attivo nel canale
-		pokemon.setActive(true);
-		
-		try
-		{
-			var t = new ThreadPokemon(pokemon);
-			t.setEmbedBuilder(embedBuilder);
-			t.setTc(Commands.canaleBotPokemon);
-			t.timeoutTime(t.MINUTES, random.nextInt(0, 60));
-			t.start();
-		}
-		catch (Exception e)
-		{
-			Commands.canaleBotPokemon.sendMessage(""+e).queue();
-			//Commands.canaleBotPokemon.sendMessage("test: " + Thread.currentThread()).queue();
-		}
-		
-		
-	} // fine singleEncounter
-	
-	
-	/** Genera un doppio incontro con Pokemon selvatici */
-	private void doubleEncounter(Pokemon uno, Pokemon due)
-	{
-		EmbedBuilder embedBuilder;
-		String[] titolo = {"Primo Pokemon!", "Secondo Pokemon!"};
-		Pokemon[] pokemons = {uno, due};
-		var nomi = new String[] { uno.getNome(), due.getNome() };
-		Commands.canaleBotPokemon.sendMessage("Doppio Incontro!").queue();
-		
-		for (int i = 0; i < 2; i++)
-		{
-			embedBuilder = Pokemon.buildEmbed(pokemons[i], false);
-			embedBuilder.setDescription(titolo[i]);
-			embedBuilder.setFooter("Catturalo con !cattura","https://www.pngall.com/wp-content/uploads/4/Pokeball-PNG-Images.png");
-		}
-	} // fine doubleEncounter()
-	
-	/***/
-	public static void catturaPokemon()
-	{
-		/*
-		final var trainersFile = "trainers.txt";
-		var gson = new Gson();
-		var map = new HashMap<String, String>();
-		*/
-		
-		if (Commands.messageRaw.length() <= "!cattura".length())
-			return;
-		
-		var	pkmnName = Commands.messageRaw.split(" ")[1].toLowerCase();
-		var activePokemons = Pokemon.activePokemons;
-		{
-			if (activePokemons.size() == 0)
 			{
-				Commands.canaleBotPokemon.sendMessage("lista vuota <:" + Emotes.dshock + ">").queue();
-				return;
+				x++;
+				if (scanner.nextLine().equalsIgnoreCase(nome))
+					break;
 			}
-			
-			for (Pokemon p : activePokemons)
-			{
-				if (p.isActive() && pkmnName.equals(p.getNome()))
-				{
-					var trainer = new Trainer("" + Commands.authorName, "" + Commands.author.getId());
-					
-					final var msg =
-							"Congratulazioni, " + Commands.authorName + "! Hai catturato **" + p.getNome() + "**!";
-					trainer.catturaPokemon(p);
-					Commands.channel.sendMessage(msg).queue(m -> Commands.react("pogey"));
-					p.setCatturato(true);
-				}
-			}
-		}
-		
-		/* *************************************************
-		try
-		{
-			var file = new File(trainersFile);
-			if (file.createNewFile())
-				System.out.println("Il file è stato creato!");
-			else
-				System.out.println("Il file esisteva già.");
-			
-			var fileReader = new FileReader(trainersFile);
-			var buffReader = new BufferedReader(fileReader);
-			
-			//TODO: leggere dal file
-			
-			buffReader.close();
-		}catch (IOException ignored) {}
-		
-		map.put("Enigmo", "1");
-		var json = gson.toJson(map);
-		
-		
-		// TODO: ottenere una lista di trainer e controllare gli ID, se non è presente creare un nuovo trainer
-		//  e fargli catturare il pokemon; altrimenti prendere il trainer esistente e assegnare a lui il pokemon
-		*******************************************/
-		
-	} // fine catturaPokemon()
-	
-	
-	
+		}catch (Exception e) { new Error<Exception>().print(object, e); }
+		return x;
+	}
 	
 	//GETTER
 	public String getNome() { return nome; }
@@ -431,8 +274,6 @@ public class Pokemon
 	public String[] getLineaEvolutiva() { return lineaEvolutiva; }
 	public int[] getIndividualValues() { return individualValues; }
 	public boolean isCatturato() { return catturato; }
-	public boolean isActive() { return active; }
-	public ArrayList<Pokemon> getActivePokemons() { return activePokemons;}
 	
 	//SETTER
 	public void setNome(String nome) { this.nome = nome;}
@@ -445,8 +286,6 @@ public class Pokemon
 	public void setLineaEvolutiva(String[] lineaEvolutiva) { this.lineaEvolutiva = lineaEvolutiva; }
 	public void setIndividualValues(int[] individualValues) { this.individualValues = individualValues; }
 	public void setCatturato(boolean catturato) { this.catturato = catturato; }
-	public void setActive(boolean active) { this.active = active; }
-	public void setActivePokemons(ArrayList<Pokemon> activePokemons) { this.activePokemons = activePokemons; }
-
-
-} // fine classe Pokemon
+	
+	
+} // fine classe

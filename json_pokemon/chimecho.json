@@ -1,0 +1,10 @@
+{
+	"id" : "358",
+	"name" : "chimecho",
+	"types" :
+	[
+		"psychic", ""
+	],
+	"flavor_text": "CHIMECHO makes its cries echo inside its hollow body. When this POKéMON becomes enraged, its cries result in ultrasonic waves that have the power to knock foes flying.",
+	"generation" : "3"
+}

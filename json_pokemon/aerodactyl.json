@@ -1,0 +1,10 @@
+{
+	"id" : "142",
+	"name" : "aerodactyl",
+	"types" :
+	[
+		"rock", "flying"
+	],
+	"flavor_text": "A Pokémon that roamed the skies in the dinosaur era. Its teeth are like saw blades.",
+	"generation" : "1"
+}

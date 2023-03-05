@@ -1,0 +1,10 @@
+{
+	"id" : "421",
+	"name" : "cherrim",
+	"types" :
+	[
+		"grass", ""
+	],
+	"flavor_text": "It blooms during times of strong sunlight. It tries to make up for everything it endured as a bud.",
+	"generation" : "4"
+}

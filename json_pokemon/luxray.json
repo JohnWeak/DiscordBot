@@ -1,0 +1,10 @@
+{
+	"id" : "405",
+	"name" : "luxray",
+	"types" :
+	[
+		"electric", ""
+	],
+	"flavor_text": "It has eyes that can see through anything. It spots and captures prey hiding behind objects.",
+	"generation" : "4"
+}

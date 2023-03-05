@@ -1,0 +1,10 @@
+{
+	"id" : "626",
+	"name" : "bouffalant",
+	"types" :
+	[
+		"normal", ""
+	],
+	"flavor_text": "Their fluffy fur absorbs damage, even if they strike foes with a fierce headbutt.",
+	"generation" : "5"
+}

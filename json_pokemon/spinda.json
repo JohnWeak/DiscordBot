@@ -1,0 +1,10 @@
+{
+	"id" : "327",
+	"name" : "spinda",
+	"types" :
+	[
+		"normal", ""
+	],
+	"flavor_text": "No two Spinda have the same pattern of spots. Its tottering step fouls the aim of foes.",
+	"generation" : "3"
+}

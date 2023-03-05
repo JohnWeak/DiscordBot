@@ -1,0 +1,10 @@
+{
+	"id" : "497",
+	"name" : "serperior",
+	"types" :
+	[
+		"grass", ""
+	],
+	"flavor_text": "It can stop its opponents’ movements with just a glare. It takes in solar energy and boosts it internally.",
+	"generation" : "5"
+}

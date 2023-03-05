@@ -1,0 +1,10 @@
+{
+	"id" : "34",
+	"name" : "nidoking",
+	"types" :
+	[
+		"poison", "ground"
+	],
+	"flavor_text": "It uses its powerful tail in battle to smash, constrict, then break the prey's bones.",
+	"generation" : "1"
+}

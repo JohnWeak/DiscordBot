@@ -1,0 +1,10 @@
+{
+	"id" : "589",
+	"name" : "escavalier",
+	"types" :
+	[
+		"bug", "steel"
+	],
+	"flavor_text": "They fly around at high speed, striking with their pointed spears. Even when in trouble, they face opponents bravely.",
+	"generation" : "5"
+}

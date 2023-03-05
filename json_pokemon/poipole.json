@@ -1,0 +1,10 @@
+{
+	"id" : "803",
+	"name" : "poipole",
+	"types" :
+	[
+		"poison", ""
+	],
+	"flavor_text": "This Ultra Beast is well enough liked to be chosen as a first partner in its own world.",
+	"generation" : "7"
+}

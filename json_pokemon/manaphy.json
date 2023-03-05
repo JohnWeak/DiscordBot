@@ -1,0 +1,10 @@
+{
+	"id" : "490",
+	"name" : "manaphy",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "Born on a cold seafloor, it will swim great distances to return to its birthplace.",
+	"generation" : "4"
+}

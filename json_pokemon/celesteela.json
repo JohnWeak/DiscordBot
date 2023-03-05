@@ -1,0 +1,10 @@
+{
+	"id" : "797",
+	"name" : "celesteela",
+	"types" :
+	[
+		"steel", "flying"
+	],
+	"flavor_text": "It appeared from the Ultra Wormhole. Witnesses observed it flying across the sky at high speed.",
+	"generation" : "7"
+}

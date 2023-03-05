@@ -5,6 +5,7 @@ public class PrivateMessage
 {
 	private final User user;
 	private final MessageChannel messageChannel;
+	private static final Object object = PrivateMessage.class;
 	
 	/**Questa classe permette di inviare messaggi privati agli utenti passati tramite parametro
 	 * @param user Utente a cui inviare il messaggio privato. */
@@ -18,18 +19,20 @@ public class PrivateMessage
 	 * @param content Il messaggio da inviare all'utente. */
 	public void send(String content)
 	{
+		var contentToSend = (content.length() > 2000 ? content.substring(0,1999) : content);
+		
 		try
 		{
-			var utente = messageChannel.getJDA().retrieveUserById(user.getId()).complete();
+			var utente = Main.getJda().retrieveUserById(user.getId()).complete();
 			
-			utente.openPrivateChannel().flatMap(channel -> channel.sendMessage(content)).queue(l->
+			utente.openPrivateChannel().flatMap(channel -> channel.sendMessage(contentToSend)).queue(l->
 			{
 			
 			});
 		}
 		catch (Exception e)
 		{
-			messageChannel.sendMessage("`"+this.getClass()+"`\n"+e).queue();
+			new Error<Exception>().print(object, e);
 		}
 	} // fine metodo send()
 	

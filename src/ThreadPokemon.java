@@ -4,33 +4,23 @@ import java.awt.Color;
 
 public class ThreadPokemon extends Thread
 {
+	private final Object object = ThreadPokemon.class;
+	
 	public final String HOURS = "ore";
 	public final String MINUTES = "minuti";
 	public final String SECONDS = "secondi";
 	
 	private long timeout;
-	private Pokemon pokemon;
-	private TextChannel tc;
-	private EmbedBuilder eb;
+	private final Pokemon pokemon;
+	private final TextChannel tc;
+	private final EmbedBuilder eb;
 	
 	
-	// metodi
-	public void setPokemon(Pokemon pokemon)
+	public ThreadPokemon(Pokemon pokemon, TextChannel tc, EmbedBuilder eb)
 	{
 		this.pokemon = pokemon;
-	}
-	public void setTc(TextChannel tc)
-	{
 		this.tc = tc;
-	}
-	public void setEmbedBuilder(EmbedBuilder eb)
-	{
 		this.eb = eb;
-	}
-	
-	public ThreadPokemon(Pokemon pokemon)
-	{
-		this.pokemon = pokemon;
 	}
 	
 	/**Imposta il tempo in cui il pokemon resta attivo nel canale prima di scappare.<br>
@@ -38,12 +28,12 @@ public class ThreadPokemon extends Thread
 	 * @param type il tempo da impostare: ore, minuti oppure secondi.
 	 * @param timeout quanto tempo dovrà passare prima che il pokemon non sia più disponibile.
 	 * */
-	public void timeoutTime(String type, long timeout)
+	public void setTimeoutTime(String type, long timeout)
 	{
 		this.timeout = switch (type)
 		{
-			case HOURS -> timeout * 60 * 60 * 1000;
-			case MINUTES -> timeout * 60 * 1000;
+			case HOURS -> timeout * 1000 * 60 * 60;
+			case MINUTES -> timeout * 1000 * 60;
 			case SECONDS -> timeout * 1000;
 			default -> timeout;
 		};
@@ -54,58 +44,54 @@ public class ThreadPokemon extends Thread
 	@Override
 	public void run()
 	{
-		var activePokemons = pokemon.getActivePokemons();
-		if (!activePokemons.contains(pokemon))
-			activePokemons.add(pokemon);
-		
-		tc.sendMessage("test: "+Thread.currentThread()).queue();
-		tc.sendMessageEmbeds(eb.build()).queue(l ->
+		var gion = new PrivateMessage(Utente.getGion());
+		try
 		{
-			var pokemonNome = pokemon.getNome();
-			if (pokemonNome.equalsIgnoreCase("poochyena") || pokemonNome.equalsIgnoreCase("mightyena"))
+			tc.sendMessageEmbeds(eb.build()).queue(l ->
 			{
-				Commands.react("pogey");
-				l.addReaction("❤️").queue();
-			}
-			else
-			{
-				l.addReaction("👍🏻").queue();
-				l.addReaction("❤️").queue();
-				l.addReaction("👎🏻").queue();
-			}
-			
-			try
-			{
-				Thread.sleep(timeout);
-			} catch (InterruptedException ignored) { }
-			
-			pokemon.setActive(false);
-			activePokemons.remove(pokemon);
-			
-			var msgFooter = pokemonNome + "ran away";
-			var types = pokemon.getTipo();
-			
-			for (String s : types)
-			{
-				if (s.equalsIgnoreCase("flying"))
+				var pokemonNome = pokemon.getNome();
+				if (pokemonNome.equalsIgnoreCase("poochyena") || pokemonNome.equalsIgnoreCase("mightyena"))
 				{
-					msgFooter = pokemonNome + " flew away.";
-					break;
+					Commands.react("pogey");
+					l.addReaction("❤️").queue();
 				}
-			}
-			
-			
-			eb.setTitle("The wild " + pokemonNome + " fled.");
-			eb.setFooter(msgFooter);
-			eb.setColor(Color.GRAY);
-			
-			l.clearReactions().queue();
-			
-			l.editMessageEmbeds(eb.build()).queue();
-		});
+				else
+				{
+					l.addReaction("👍🏻").queue();
+					l.addReaction("❤️").queue();
+					l.addReaction("👎🏻").queue();
+				}
+				
+				try
+				{
+					Thread.sleep(timeout);
+				}catch (Exception e) { new Error<Exception>().print(object,e); }
+				
+				var msgFooter = pokemonNome + "ran away.";
+				var types = pokemon.getTipo();
+				
+				for (String s : types)
+				{
+					if (s.equalsIgnoreCase("flying"))
+					{
+						msgFooter = pokemonNome + " flew away.";
+						break;
+					}
+				}
+				
+				eb.setTitle("The wild " + pokemonNome + " fled.");
+				eb.setFooter(msgFooter);
+				eb.setColor(Color.GRAY);
+				
+				l.clearReactions().queue();
+				
+				l.editMessageEmbeds(eb.build()).queue();
+				
+			});
+		}
+		catch (Exception e) { new Error<Exception>().print(object,e); }
 		
-		
-		
+		gion.send("Il thread ha finito.");
 	} // fine run()
 	
 } // fine ThreadPokemon

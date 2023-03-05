@@ -1,0 +1,10 @@
+{
+	"id" : "263",
+	"name" : "zigzagoon",
+	"types" :
+	[
+		"normal", ""
+	],
+	"flavor_text": "ZIGZAGOON restlessly wanders everywhere at all times. This POKéMON does so because it is very curious. It becomes interested in anything that it happens to see.",
+	"generation" : "3"
+}

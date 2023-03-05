@@ -1,0 +1,10 @@
+{
+	"id" : "74",
+	"name" : "geodude",
+	"types" :
+	[
+		"rock", "ground"
+	],
+	"flavor_text": "Found in fields and mountains. Mistaking them for boulders, people often step or trip on them.",
+	"generation" : "1"
+}

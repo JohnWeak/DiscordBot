@@ -1,0 +1,10 @@
+{
+	"id" : "317",
+	"name" : "swalot",
+	"types" :
+	[
+		"poison", ""
+	],
+	"flavor_text": "When SWALOT spots prey, it spurts out a hideously toxic fluid from its pores and sprays the target. Once the prey has weakened, this POKéMON gulps it down whole with its cavernous mouth.",
+	"generation" : "3"
+}

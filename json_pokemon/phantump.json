@@ -1,0 +1,10 @@
+{
+	"id" : "708",
+	"name" : "phantump",
+	"types" :
+	[
+		"ghost", "grass"
+	],
+	"flavor_text": "These Pokémon are created when spirits possess rotten tree stumps. They prefer to live in abandoned forests.",
+	"generation" : "6"
+}

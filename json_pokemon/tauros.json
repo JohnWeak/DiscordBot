@@ -1,0 +1,10 @@
+{
+	"id" : "128",
+	"name" : "tauros",
+	"types" :
+	[
+		"normal", ""
+	],
+	"flavor_text": "When it targets an enemy, it charges furiously while whipping its body with its long tails.",
+	"generation" : "1"
+}

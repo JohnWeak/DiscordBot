@@ -4,7 +4,11 @@ import java.util.HashMap;
  * Per istanziarla, usa <code>Cmd.init()</code>*/
 public abstract class Cmd
 {
-	private static final String[] listaComandi = {"!coinflip", "!poll", "!info", "!8ball", "!pokemon", "!carta", "!duello", "!colpevole", "!massshooting"};
+	private static final String[] listaComandi =
+	{
+		"!coinflip", "!poll", "!info", "!8ball", "!pokemon", "!carta", "!colpevole", "!massshooting", "!dado",
+		"!f", "!timer"
+	};
 	private static final String[] listaDescrizioni =
 	{
 		"Il bot lancerà una moneta.",
@@ -13,13 +17,16 @@ public abstract class Cmd
 		"Chiedi un responso all'Entità Superiore: la magica palla 8.",
 		"Acchiappali tutti!",
 		"Genera una carta da gioco.",
-		"Sfida un giocatore ad un duello di carte.",
 		"Lascia che RNGesus decida la percentuale di colpevolezza di un altro utente.",
 		"Ottieni il resoconto delle sparatorie di massa negli USA. Avviso: sono dati reali.",
+		"Lancia un dado. Puoi specificare il numero di facce del dado.",
+		"Paga i tuoi omaggi al defunto in questione.",
+		"Imposta un timer, al suo scadere sarai taggato dal bot."
 	};
 	
 	
-	/**Istanzia la hashmap contenente i comandi del bot.*/
+	/**Istanzia la hashmap.
+	 * @return HashMap contenente i comandi del bot*/
 	public static HashMap<String,String> init()
 	{
 		var commands = new HashMap<String,String>();

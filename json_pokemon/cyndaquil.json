@@ -1,0 +1,10 @@
+{
+	"id" : "155",
+	"name" : "cyndaquil",
+	"types" :
+	[
+		"fire", ""
+	],
+	"flavor_text": "It has a timid nature. If it is startled, the flames on its back burn more vigorously.",
+	"generation" : "2"
+}

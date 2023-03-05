@@ -1,0 +1,10 @@
+{
+	"id" : "541",
+	"name" : "swadloon",
+	"types" :
+	[
+		"bug", "grass"
+	],
+	"flavor_text": "Forests where Swadloon live have superb foliage because the nutrients they make from fallen leaves nourish the plant life.",
+	"generation" : "5"
+}

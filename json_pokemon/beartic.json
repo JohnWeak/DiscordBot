@@ -1,0 +1,10 @@
+{
+	"id" : "614",
+	"name" : "beartic",
+	"types" :
+	[
+		"ice", ""
+	],
+	"flavor_text": "It can make its breath freeze at will. Very able in the water, it swims around in northern seas and catches prey.",
+	"generation" : "5"
+}

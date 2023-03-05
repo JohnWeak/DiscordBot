@@ -1,0 +1,10 @@
+{
+	"id" : "848",
+	"name" : "toxel",
+	"types" :
+	[
+		"electric", "poison"
+	],
+	"flavor_text": "It stores poison in an internal poison sac and secretes that poison through its skin. If you touch this Pokémon, a tingling sensation follows.",
+	"generation" : "8"
+}

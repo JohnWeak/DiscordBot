@@ -1,0 +1,10 @@
+{
+	"id" : "363",
+	"name" : "spheal",
+	"types" :
+	[
+		"ice", "water"
+	],
+	"flavor_text": "SPHEAL is much faster rolling than  walking to get around. When groups of this POKéMON eat, they all clap at once to show their pleasure. Because of this, their mealtimes are noisy.",
+	"generation" : "3"
+}

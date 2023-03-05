@@ -1,0 +1,10 @@
+{
+	"id" : "627",
+	"name" : "rufflet",
+	"types" :
+	[
+		"normal", "flying"
+	],
+	"flavor_text": "They crush berries with their talons. They bravely stand up to any opponent, no matter how strong it is.",
+	"generation" : "5"
+}

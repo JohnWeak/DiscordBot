@@ -1,0 +1,10 @@
+{
+	"id" : "586",
+	"name" : "sawsbuck",
+	"types" :
+	[
+		"normal", "grass"
+	],
+	"flavor_text": "They migrate according to the seasons. People can tell the season by looking at Sawsbuck’s horns.",
+	"generation" : "5"
+}

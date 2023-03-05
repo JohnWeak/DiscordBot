@@ -1,0 +1,10 @@
+{
+	"id" : "856",
+	"name" : "hatenna",
+	"types" :
+	[
+		"psychic", ""
+	],
+	"flavor_text": "Via the protrusion on its head, it senses other creatures’ emotions. If you don’t have a calm disposition, it will never warm up to you.",
+	"generation" : "8"
+}

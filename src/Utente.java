@@ -1,8 +1,9 @@
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.User;
 
 public abstract class Utente
 {
+	private static final Object object = Utente.class;
+	
 	// Numeri (discriminator)
 	public static final String GION = "0935";
 	public static final String ENIGMO = "7166";
@@ -22,6 +23,7 @@ public abstract class Utente
 	// NOMI
 	public static final String NOME_JOHN = "JOHNWEAK";
 	public static final String NOME_JOHN2 = "JOHN_WEAK";
+	public static final String NOME_JOHN3 = "JOHN WEAK";
 	public static final String NOME_ENIGMO = "ENIGMO";
 	public static final String NOME_OBITO = "ÒBITO";
 	public static final String NOME_OBITO2 = "OBITO";
@@ -36,7 +38,7 @@ public abstract class Utente
 	 * */
 	public static User getUtenteFromName(String nome)
 	{
-		var jda = Commands.message.getJDA();
+		var jda = Main.getJda();
 		var channel = Commands.message.getChannel();
 		var utente = "";
 		User user;
@@ -60,11 +62,11 @@ public abstract class Utente
 		}
 		catch (Exception e)
 		{
-			channel.sendMessage(""+e).queue();
+			new Error<Exception>().print(object, e);
 			return null;
 		}
 		return user;
-	} // fine getUtente()
+	} // fine getUtenteFromName()
 	
 	/**Prende in input il discriminatore (#0935) e restituisce il nome utente (JohnWeak)
 	 * @param discriminator il discriminatore (es: <code>#1234</code>) dell'utente da cercare
@@ -83,19 +85,21 @@ public abstract class Utente
 			
 			default -> "E io che cazzo ne so, scusi";
 		};
-	}
+	} // fine getNomeUtente()
 	
 	public static User getUtenteFromID(String id)
 	{
 		return Commands.message.getJDA().retrieveUserById(id).complete();
 	}
 	
-	/** Metodo per ottenere più velocemente un utente.
-	 * @return <code>User</code> JohnWeak.*/
 	public static User getGion()
 	{
 		return Main.getJda().retrieveUserById(Utente.ID_GION).complete();
-	}
+	} // fine getGion()
 	
+	public static User getEnigmo()
+	{
+		return Main.getJda().retrieveUserById(Utente.ID_ENIGMO).complete();
+	} // fine getEnigmo()
 	
-}
+} // fine classe Utente

@@ -1,0 +1,10 @@
+{
+	"id" : "338",
+	"name" : "solrock",
+	"types" :
+	[
+		"rock", "psychic"
+	],
+	"flavor_text": "Solar energy is the source of its power, so it is strong during the daytime. When it spins, its body shines.",
+	"generation" : "3"
+}

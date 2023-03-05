@@ -1,0 +1,10 @@
+{
+	"id" : "320",
+	"name" : "wailmer",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "WAILMER’s nostrils are located above its eyes. This playful POKéMON loves to startle people by forcefully snorting out seawater it stores inside its body out of its nostrils.",
+	"generation" : "3"
+}

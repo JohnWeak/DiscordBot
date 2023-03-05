@@ -1,0 +1,10 @@
+{
+	"id" : "776",
+	"name" : "turtonator",
+	"types" :
+	[
+		"fire", "dragon"
+	],
+	"flavor_text": "The shell on its back is chemically unstable and explodes violently if struck. The hole in its stomach is its weak point.",
+	"generation" : "7"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "243",
+	"name" : "raikou",
+	"types" :
+	[
+		"electric", ""
+	],
+	"flavor_text": "The rain clouds it carries let it fire thunderbolts at will. They say that it descended with lightning.",
+	"generation" : "2"
+}

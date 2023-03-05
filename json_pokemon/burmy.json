@@ -1,0 +1,10 @@
+{
+	"id" : "412",
+	"name" : "burmy",
+	"types" :
+	[
+		"bug", ""
+	],
+	"flavor_text": "To shelter itself from cold, wintry winds, it covers itself with a cloak made of twigs and leaves.",
+	"generation" : "4"
+}

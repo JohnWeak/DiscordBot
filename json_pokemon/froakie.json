@@ -1,0 +1,10 @@
+{
+	"id" : "656",
+	"name" : "froakie",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "It secretes flexible bubbles from its chest and back. The bubbles reduce the damage it would otherwise take when attacked.",
+	"generation" : "6"
+}

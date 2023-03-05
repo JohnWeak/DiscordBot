@@ -1,0 +1,10 @@
+{
+	"id" : "690",
+	"name" : "skrelp",
+	"types" :
+	[
+		"poison", "water"
+	],
+	"flavor_text": "Camouflaged as rotten kelp, they spray liquid poison on prey that approaches unawares and then finish it off.",
+	"generation" : "6"
+}

@@ -6,6 +6,7 @@ public class ThreadPigeon extends Thread
 	private final String authorName;
 	private final MessageChannel channel;
 	private final Random random;
+	private static final Object object = ThreadPigeon.class;
 	
 	/** Il pigeon avrà la sua vendetta
 	 * @param authorName colui che ha osato (o è stato sfortunato abbastanza da) evocare il <b>pigeon bazooka</b><br>

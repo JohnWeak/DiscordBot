@@ -1,0 +1,10 @@
+{
+	"id" : "633",
+	"name" : "deino",
+	"types" :
+	[
+		"dark", "dragon"
+	],
+	"flavor_text": "It tends to bite everything, and it is not a picky eater. Approaching it carelessly is dangerous.",
+	"generation" : "5"
+}

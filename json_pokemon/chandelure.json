@@ -1,0 +1,10 @@
+{
+	"id" : "609",
+	"name" : "chandelure",
+	"types" :
+	[
+		"ghost", "fire"
+	],
+	"flavor_text": "It absorbs a spirit, which it then burns. By waving the flames on its arms, it puts its foes into a hypnotic trance.",
+	"generation" : "5"
+}

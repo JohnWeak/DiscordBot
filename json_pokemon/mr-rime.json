@@ -1,0 +1,10 @@
+{
+	"id" : "866",
+	"name" : "mr-rime",
+	"types" :
+	[
+		"ice", "psychic"
+	],
+	"flavor_text": "It’s highly skilled at tap-dancing. It waves its cane of ice in time with its graceful movements.",
+	"generation" : "8"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "670",
+	"name" : "floette",
+	"types" :
+	[
+		"fairy", ""
+	],
+	"flavor_text": "It flutters around fields of flowers and cares for flowers that are starting to wilt. It draws out the hidden power of flowers to battle.",
+	"generation" : "6"
+}

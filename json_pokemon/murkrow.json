@@ -1,0 +1,10 @@
+{
+	"id" : "198",
+	"name" : "murkrow",
+	"types" :
+	[
+		"dark", "flying"
+	],
+	"flavor_text": "Feared and loathed by many, it is believed to bring misfortune to all those who see it at night.",
+	"generation" : "2"
+}

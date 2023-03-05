@@ -1,0 +1,10 @@
+{
+	"id" : "274",
+	"name" : "nuzleaf",
+	"types" :
+	[
+		"grass", "dark"
+	],
+	"flavor_text": "NUZLEAF live in densely overgrown forests. They occasionally venture out of the forest to startle people. This POKéMON dislikes having its long nose pinched.",
+	"generation" : "3"
+}

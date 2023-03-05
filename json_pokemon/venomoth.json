@@ -1,0 +1,10 @@
+{
+	"id" : "49",
+	"name" : "venomoth",
+	"types" :
+	[
+		"bug", "poison"
+	],
+	"flavor_text": "The dustlike scales covering its wings are color-coded to indicate the kinds of poison it has.",
+	"generation" : "1"
+}

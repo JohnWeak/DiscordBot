@@ -1,0 +1,10 @@
+{
+	"id" : "789",
+	"name" : "cosmog",
+	"types" :
+	[
+		"psychic", ""
+	],
+	"flavor_text": "Its body is gaseous and frail. It slowly grows as it collects dust from the atmosphere.",
+	"generation" : "7"
+}

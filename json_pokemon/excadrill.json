@@ -1,0 +1,10 @@
+{
+	"id" : "530",
+	"name" : "excadrill",
+	"types" :
+	[
+		"ground", "steel"
+	],
+	"flavor_text": "It can help in tunnel construction. Its drill has evolved into steel strong enough to bore through iron plates.",
+	"generation" : "5"
+}

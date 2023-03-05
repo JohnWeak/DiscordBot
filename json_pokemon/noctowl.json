@@ -1,0 +1,10 @@
+{
+	"id" : "164",
+	"name" : "noctowl",
+	"types" :
+	[
+		"normal", "flying"
+	],
+	"flavor_text": "Its eyes are specially adapted. They concentrate even faint light and enable it to see in the dark.",
+	"generation" : "2"
+}

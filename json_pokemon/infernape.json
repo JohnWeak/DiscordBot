@@ -1,0 +1,10 @@
+{
+	"id" : "392",
+	"name" : "infernape",
+	"types" :
+	[
+		"fire", "fighting"
+	],
+	"flavor_text": "It uses a special kind of martial arts involving all its limbs. Its fire never goes out.",
+	"generation" : "4"
+}

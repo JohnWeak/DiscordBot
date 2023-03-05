@@ -1,0 +1,10 @@
+{
+	"id" : "475",
+	"name" : "gallade",
+	"types" :
+	[
+		"psychic", "fighting"
+	],
+	"flavor_text": "A master of courtesy and swordsmanship, it fights using extending swords on its elbows.",
+	"generation" : "4"
+}

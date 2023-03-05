@@ -1,0 +1,10 @@
+{
+	"id" : "465",
+	"name" : "tangrowth",
+	"types" :
+	[
+		"grass", ""
+	],
+	"flavor_text": "It ensnares prey by extending arms made of vines. Losing arms to predators does not trouble it.",
+	"generation" : "4"
+}

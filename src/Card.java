@@ -1,3 +1,6 @@
+import net.dv8tion.jda.api.EmbedBuilder;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -10,6 +13,8 @@ public class Card
 	private static final Random random = new Random();
 	private static final String[] semi = {"Cuori", "Quadri", "Fiori", "Picche"}; // Hearts, Diamonds, Clubs, Spades
 	private static final String[] valori = {"Asso", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Regina", "Re"};
+	
+	public static final String[] simboli = {"♥️", "♦️", "♣️", "♠️"};
 	
 	public Card()
 	{
@@ -38,15 +43,57 @@ public class Card
 		
 	} // fine costruttore
 	
-	public Card(String valore, String seme)
+	
+	
+	
+	public void sendCarta(Card carta)
 	{
-		this.valore = valore;
-		this.seme = seme;
+		final var titolo = titoloCarta(carta);
+		final var immagineCartaAPI = linkImmagine(carta);
+		final var color= coloreCarta(carta);
+		final var seme = semeCarta(carta);
+		var embed = new EmbedBuilder()
+			.setTitle(titolo)
+			.setImage(immagineCartaAPI)
+			.setColor(color)
+			.setFooter(seme);
 		
-		//TODO: crea un metodo per definire il link delle immagini delle carte,
-		// poiché questo costruttore sarà chiamato dal mazzo di carte.
-		// Evitare di usare più volte il codice ai righi 16 e 37: (link = temp[0] + temp[1]...)
+		Commands.channel.sendMessageEmbeds(embed.build()).queue();
+		
+	} // fine sendCarta
+	
+	
+	/** Restituisce il titolo della carta sotto forma di stringa */
+	private String titoloCarta(Card carta)
+	{
+		return carta.getValoreString() + " di " + carta.getSeme();
 	}
+	
+	/** Restituisce il link dell'immagine della carta sotto forma di stringa */
+	private String linkImmagine(Card carta)
+	{
+		return carta.getLink();
+	}
+	
+	/** Restituisce il colore della carta sotto forma di Color */
+	private Color coloreCarta(Card carta)
+	{
+		return carta.getSeme().equals("Cuori") || carta.getSeme().equals("Quadri") ? Color.red : Color.black;
+	}
+	
+	/** Restituisce il valore del seme della carta sotto forma di stringa */
+	private String semeCarta(Card carta)
+	{
+		return switch (carta.getSeme())
+		{
+			case "Cuori" -> Card.simboli[0];
+			case "Quadri" -> Card.simboli[1];
+			case "Fiori" -> Card.simboli[2];
+			case "Picche" -> Card.simboli[3];
+			default -> null;
+		};
+	}
+	
 	
 	// GETTER
 	public String getSeme()
@@ -56,14 +103,14 @@ public class Card
 	public int getSemeInt()
 	{
 		return switch (seme)
-		{
-			case "Cuori" -> 45;
-			case "Quadri" -> 44;
-			case "Fiori" -> 43;
-			case "Picche" -> 42;
-			
-			default -> -1;
-		};
+				       {
+					       case "Cuori" -> 45;
+					       case "Quadri" -> 44;
+					       case "Fiori" -> 43;
+					       case "Picche" -> 42;
+					
+					       default -> -1;
+				       };
 	}
 	public String getValoreString()
 	{
@@ -99,4 +146,7 @@ public class Card
 	{
 		this.link = link;
 	}
-} // fine classe Bot.Card
+	
+	
+	
+} // fine classe Card

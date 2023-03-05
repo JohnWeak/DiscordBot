@@ -1,0 +1,10 @@
+{
+	"id" : "532",
+	"name" : "timburr",
+	"types" :
+	[
+		"fighting", ""
+	],
+	"flavor_text": "It fights by swinging a piece of lumber around. It is close to evolving when it can handle the lumber without difficulty.",
+	"generation" : "5"
+}

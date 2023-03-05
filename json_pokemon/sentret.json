@@ -1,0 +1,10 @@
+{
+	"id" : "161",
+	"name" : "sentret",
+	"types" :
+	[
+		"normal", ""
+	],
+	"flavor_text": "A very cautious POKéMON, it raises itself up using its tail to get a better view of its surroundings.",
+	"generation" : "2"
+}

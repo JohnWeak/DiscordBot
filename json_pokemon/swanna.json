@@ -1,0 +1,10 @@
+{
+	"id" : "581",
+	"name" : "swanna",
+	"types" :
+	[
+		"water", "flying"
+	],
+	"flavor_text": "Swanna start to dance at dusk. The one dancing in the middle is the leader of the flock.",
+	"generation" : "5"
+}

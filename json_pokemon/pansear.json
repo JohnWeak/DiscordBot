@@ -1,0 +1,10 @@
+{
+	"id" : "513",
+	"name" : "pansear",
+	"types" :
+	[
+		"fire", ""
+	],
+	"flavor_text": "When it is angered, the temperature of its head tuft reaches 600° F. It uses its tuft to roast berries.",
+	"generation" : "5"
+}

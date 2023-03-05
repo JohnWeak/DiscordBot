@@ -8,7 +8,6 @@ import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-import org.apache.commons.collections4.iterators.UnmodifiableIterator;
 import org.jetbrains.annotations.NotNull;
 
 import org.json.simple.JSONArray;
@@ -20,9 +19,7 @@ import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.DateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.*;
@@ -31,7 +28,8 @@ import java.util.regex.Pattern;
 
 public class Commands extends ListenerAdapter
 {
-	public static final File nomiPkmn = new File("src/nomiPokemon.txt");
+	private static final Object object = Commands.class;
+	
 	public static final String botChannel = "\uD83E\uDD16bot-owo";
 	private static final Random random = new Random();
 	public static MessageChannel channel;
@@ -42,20 +40,11 @@ public class Commands extends ListenerAdapter
 	public static Message message;
 	public static String messageRaw;
 	public static User author;
-	private static final ArrayList<Challenge> listaSfide = new ArrayList<>();
-	private static final String[] challenge = {"Duello Carte", "Sasso Carta Forbici"};
-	private static boolean duelloAttivo = false;
-	private static boolean sfidaAttiva = false;
-	private static User sfidante = null;
-	private static User sfidato = null;
-	private static final String[] simboli = {"♥️", "♦️", "♣️", "♠️"};
-	private static String sceltaBot;
 	public static TextChannel canaleBotPokemon;
 	private static final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	public static TextChannel canaleBot;
-	private static final boolean moduloActive = false;
+	private static final boolean moduloSicurezza = false;
 	private static final boolean sendMsgActivity = false;
-	private static List<Emote> emoteList;
 	private static ThreadActivity threadActivity;
 	
 	
@@ -97,38 +86,35 @@ public class Commands extends ListenerAdapter
 		
 		var jda = event.getJDA();
 		var nome = jda.getSelfUser().getName();
-		var act = Objects.requireNonNull(jda.getPresence().getActivity());
+		var act = jda.getPresence().getActivity();
+		String activityType="act_type", nomeActivity="act_name", activityTradotta="act_trad";
+		PrivateMessage gion = new PrivateMessage(Utente.getGion());
 		
 		System.out.printf("%s si è connesso a Discord!\n\npublic class MessageHistory\n{\n", nome);
 		
-		canaleBot = jda.getTextChannelsByName(botChannel, true).get(0);
-		canaleBotPokemon = jda.getTextChannelsByName("pokémowon", true).get(0);
+		try
+		{
+			canaleBot = jda.getTextChannelsByName(botChannel, true).get(0);
+			canaleBotPokemon = jda.getTextChannelsByName("pokémowon", true).get(0);
+		}
+		catch (Exception e)
+		{
+			new Error<Exception>().print(object, e);
+		}
 		
-		var activity = act.getType().toString();
-		var nomeActivity = "**" + act.getName() + "**";
-		var activityTradotta = activity.equals("WATCHING") ? "guardo " : "gioco a ";
+		if (act != null)
+		{
+			activityType = act.getType().toString();
+		    nomeActivity = "**" + act.getName() + "**";
+		    activityTradotta = activityType.equals("WATCHING") ? "guardo " : "gioco a ";
+		}
 		
 		// moduloDiSicurezza();
 		
-		emoteList = canaleBot.getJDA().getEmotes();
+		threadActivity = new ThreadActivity(true);
+		threadActivity.start();
 		
-		try
-		{
-			var pm = new PrivateMessage(Utente.getGion());
-			threadActivity = new ThreadActivity(true);
-			pm.send("" + threadActivity + " istanziato");
-			threadActivity.start();
-			pm.send("" + threadActivity + " appena avviato. isAlive:" + threadActivity.isAlive());
-			
-		}catch (Exception e)
-		{
-			StackTraceElement x = null;
-			
-			if (e.getStackTrace().length > 0)
-				x = e.getStackTrace()[0];
-			
-			canaleBot.sendMessage("dioporco diocane dio bastardo mannaggia la madonna\n"+e+"\n"+x).queue();
-		}
+		gion.send("Riavvio completato.");
 		
 		if (sendMsgActivity)
 			canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
@@ -156,8 +142,9 @@ public class Commands extends ListenerAdapter
 	
 	private void guildMessage(MessageReceivedEvent event, boolean isBot)
 	{
+		/*
 		var botOrHuman = isBot ? "Bot" : "User";
-		final var mockupCode = "\t%s %s = \"%s\"; // in \"%s\" (%s) - %s";
+		final var mockupCode = "\t%s %s = \"%s\"; // in \"%s\" (%s) - %s \n}\r";
 		var date = new Date();
 		var dFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
 		var dataFormattata = dFormat.format(date);
@@ -165,24 +152,34 @@ public class Commands extends ListenerAdapter
 		var messageChannelString = "#"+ channel.toString().split(":")[1].split("\\(")[0];
 		var guild = event.getGuild().toString().split("\\(")[0].split(":")[1];
 		
-		System.out.printf(mockupCode + "\n}\r", botOrHuman, authorName, messageRaw, messageChannelString, guild, dataFormattata);
+		System.out.printf(mockupCode, botOrHuman, authorName, messageRaw, messageChannelString, guild, dataFormattata);
+		*/
 		
 		aggiungiReazioni();
 		checkForKeywords(message.getContentStripped().toLowerCase());
 	} // fine guildEvent()
 	
+	/**Gestisce i messaggi privati che il bot riceve. Se è un altro bot a inviarli, li ignora.
+	 * @param isBot <code>true</code> se l'autore del messaggio è un bot a sua volta, <code>false</code> altrimenti. */
 	public void privateMessage(boolean isBot)
 	{
 		var botOrHuman = isBot ? "Bot" : "User";
 		System.out.printf("\t%s %s = \"%s\"; // Private Message\n}\r", botOrHuman, authorName, messageRaw);
 		
-		if (isBot)
+		if (isBot || authorName.equalsIgnoreCase(Utente.NOME_JOHN3))
 			return;
 		
-		if (!authorName.equalsIgnoreCase("john weak"))
+		
+		var gion = new PrivateMessage(Utente.getGion());
+		gion.send(authorName + " ha scritto: \"" + messageRaw + "\"");
+		
+		if (moduloSicurezza)
 		{
-			var pm = new PrivateMessage(Utente.getGion());
-			pm.send(authorName + " ha scritto: \"" + messageRaw + "\"");
+			if (author.getDiscriminator().equals(Utente.ENIGMO))
+			{
+				PrivateMessage enigmo = new PrivateMessage(Utente.getEnigmo());
+				enigmo.send("<:"+Emotes.ragey+">");
+			}
 		}
 		
 		checkForKeywords(message.getContentStripped().toLowerCase());
@@ -237,10 +234,8 @@ public class Commands extends ListenerAdapter
 		}
 		catch (Exception e)
 		{
-			canaleBot.sendMessage("È esploso qualcosa in `onMessageReactionAdd`: " + e).queue();
+			new Error<Exception>().print(object, e);
 		}
-		
-		
 	} // fine onMessageReactionAdd
 	
 	/**Inserisce come reazioni tutte le emote che trova nel messaggio*/
@@ -259,7 +254,6 @@ public class Commands extends ListenerAdapter
 			}
 			catch (Exception ignored) {}
 		}
-		
 	} // fine aggiungiReazioni()
 	
 	
@@ -289,7 +283,7 @@ public class Commands extends ListenerAdapter
 					var size = msgSplittato.length;
 					var auth = "";
 					var numGiorni = 0;
-					var pvtMsg = new PrivateMessage(Utente.getGion());
+					var gion = new PrivateMessage(Utente.getGion());
 					var channelHistory = channel.getHistory().retrievePast(3).complete();
 					
 					try
@@ -304,12 +298,11 @@ public class Commands extends ListenerAdapter
 								break;
 							}
 						}
-						pvtMsg.send("Daily di " + auth +": "+numGiorni);
+						gion.send("Daily di " + auth +": "+numGiorni);
 					} // fine try
 					catch (Exception e)
 					{
-						var msgErrore = "<@"+Utente.ID_GION+">\n" + e;
-						canaleBot.sendMessage(msgErrore).queue();
+						new Error<Exception>().print(object, e);
 					} // fine catch
 					
 					if (numGiorni == 0 || !(numGiorni % 365 == 0))
@@ -320,7 +313,8 @@ public class Commands extends ListenerAdapter
 					{
 						if (auth.equals(""))
 						{
-							canaleBot.sendMessage("<@"+Utente.ID_GION+">\n`auth è una stringa vuota`.").queue();
+							var e = new Error<String>();
+							e.print(object,"<@"+Utente.ID_GION+">\n`auth è una stringa vuota`.");
 							return;
 						}
 						
@@ -339,8 +333,8 @@ public class Commands extends ListenerAdapter
 			return;
 		} // fine if isBot
 		
-		if (!msgStrippedLowerCase.contains("!pokemon")) // genera un pokemon casuale soltanto se non viene eseguito il comando
-			Pokemon.spawnPokemon();
+		//if (!msgStrippedLowerCase.contains("!pokemon")) // genera un pokemon casuale soltanto se non viene eseguito il comando
+		//	encounter();
 		
 		if (random.nextInt(500) == 42) // chance di reagire con emote personali
 		{
@@ -375,40 +369,34 @@ public class Commands extends ListenerAdapter
 			
 		} // fine if reazioni
 		
+		Card c;
 		
 		switch (comando)
 		{
 			case "!coinflip", "!cf" -> coinflip();
-			case "!scf" -> sassoCartaForbici();
 			case "!poll" -> poll();
 			case "!info" -> info();
 			case "!8ball" -> eightBall();
-			case "!pokemon" -> Pokemon.pokemon();
+			case "!pokemon" -> encounter();
 			case "!colpevolezza", "!colpevole" -> colpevolezza();
-			case "!carta" -> sendCarta(new Card());
-			case "!duello", "!duellocarte" -> duelloDiCarte();
-			case "!accetto" -> accettaDuello(false);
-			case "!rifiuto" -> rifiutaDuello();
+			case "!carta" -> {c = new Card(); c.sendCarta(c);}
 			case "!massshooting", "!ms" -> massShooting();
 			case "!war" -> new Clash().clashWar();
 			case "!league" -> new Clash().clashWarLeague(false);
-			case "!emotes" -> getEmotes();
+			// case "!emotes" -> getEmotes();
+			case "!smh" -> new ThreadSmh(channel).start();
 			case "!dado" -> dado(msgStrippedLowerCase);
-			case "!cattura", "!catch" -> Pokemon.catturaPokemon();
-			case "!f", "+f" -> payRespect();
+			// case "!cattura", "!catch" -> Pokemon.catturaPokemon();
+			case "!f" -> payRespect();
 			case "!timer" -> timer();
 			case "!dm" -> dm(msgStrippedLowerCase);
-			case "!ch" -> channelHistory();
+			// case "!ch" -> channelHistory();
 			case "!toggleactivity", "!ta" -> toggleActivity(msgStrippedLowerCase, threadActivity);
+			case "!testpokemon", "!tp" -> testPokemon();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
 		var reazioni = new ArrayList<String>();
-		
-		if (msgStrippedLowerCase.contains("random number") || msgStrippedLowerCase.contains("numero casuale"))
-			new PrivateMessage(author)
-				.send("Numero casuale: **"+(random.nextInt(42)+1)+"**");
-		
 		
 		if (msgStrippedLowerCase.contains("ehi modulo"))
 			ehiModulo();
@@ -512,6 +500,13 @@ public class Commands extends ListenerAdapter
 				react(emote);
 			
 			reazioni.clear();
+		}
+		
+		if (msgStrippedLowerCase.contains("random") || msgStrippedLowerCase.contains("numero casuale"))
+		{
+			reply = true;
+			int n = random.nextInt(0, 100);
+			msgReply += "Numero casuale: **"+n+"**";
 		}
 		
 		if (msgStrippedLowerCase.contains("russia") && random.nextInt(50) == 42)
@@ -678,6 +673,41 @@ public class Commands extends ListenerAdapter
 		
 	} // fine getEmotes()
 	
+	private void encounter()
+	{
+		String[] msgSplittato = messageRaw.split(" ");
+		String nomePokemon;
+		int idPokemon = 0;
+		Pokemon p;
+		boolean pokedex;
+		
+		try
+		{
+			if (msgSplittato.length > 1)
+			{
+				nomePokemon = msgSplittato[1];
+				idPokemon = Pokemon.getId(nomePokemon);
+				if (idPokemon == 0)
+				{
+					message.reply("Il pokedex non ha informazioni su `" + nomePokemon + "`.").queue();
+					return;
+				}
+				pokedex = true;
+			}
+			else
+			{
+				pokedex = false;
+			}
+			
+			p = new Pokemon(idPokemon, pokedex);
+			p.spawn(p);
+			
+		}catch (Exception e)
+		{
+			new Error<Exception>().print(object, e);
+		}
+	} // fine encounter()
+	
 	private void channelHistory()
 	{
 		final var amount = 3;
@@ -694,6 +724,19 @@ public class Commands extends ListenerAdapter
 		}
 		
 	} // fine metodo channelHistory()
+	
+	private static void testPokemon()
+	{
+		try
+		{
+			new Pokemon(261,true);
+		}
+		catch (Exception e)
+		{
+			new Error<Exception>().print(object, e);
+		}
+	}
+	
 	
 	/**Questo metodo fa sì che il bot invii un messaggio privato all'utente che lo esegue
 	 * @param content il messaggio da inviare all'utente. */
@@ -786,7 +829,7 @@ public class Commands extends ListenerAdapter
 				}
 				case "false", "f" ->
 				{
-					if (thrActivity.isAlive() && !thrActivity.isKeepGoing())
+					if (!thrActivity.isKeepGoing())
 					{
 						message.reply("Il cambio delle activity era già disattivato.").queue();
 						return;
@@ -799,7 +842,7 @@ public class Commands extends ListenerAdapter
 			
 		}catch (Exception e)
 		{
-			canaleBot.sendMessage("diocane\n"+e).queue();
+			new Error<Exception>().print(object, e);
 		}
 		
 	}
@@ -827,18 +870,16 @@ public class Commands extends ListenerAdapter
 		String[] msgSplittato;
 		try
 		{
-			//channel.sendMessage("sto nel try, prima di `messageRaw.split(\" \")`, sto na favola").queue();
 			msgSplittato = messageRaw.split(" ");
-			//channel.sendMessage("msgSplittato.length: "+msgSplittato.length+"\nmsgSplittato: "+ Arrays.toString(msgSplittato)).queue();
 		}catch (Exception e)
 		{
-			channel.sendMessage(""+e).queue();
+			new Error<Exception>().print(object, e);
 			return;
 		}
 		
 		if (msgSplittato.length == 1) // !timer senza argomenti
 		{
-			var m = "Usa `!timer <tempo> [nome del timer] per impostare un timer.`\nEsempio: `!timer 5` imposterà un timer per 5 secondi.";
+			var m = "Usa `!timer <tempo in secondi> [nome del timer] per impostare un timer.`\nEsempio: `!timer 5` imposterà un timer di 5 secondi.";
 			channel.sendMessage(m).queue();
 		}
 		else
@@ -846,28 +887,26 @@ public class Commands extends ListenerAdapter
 			var timeInSeconds = Integer.parseInt(msgSplittato[1]); // time to sleep in seconds
 			String reason = "";
 			
-			if (msgSplittato.length >= 3)
-				reason = msgSplittato[2];
+			for (String s : msgSplittato)
+				reason += s + " ";
 			
-			//channel.sendMessage("Sto dopo `msgSplittato[1]` e `msgSplittato[2]`, sto na favola").queue();
-			//channel.sendMessage("msgSplittato[1]: "+msgSplittato[1]+"\nmsgSplittato[2]: "+msgSplittato[2]).queue();
+			// Todo: migliorare il timer per permettere di impostare i minuti o le ore
+			//  e potergli dare un nome
+			//  [!timer][2][m][piatto nel microonde] -> 0=!timer, 1=2; 2=m; 3="piatto nel microonde"
+			
 			
 			try
 			{
-				//channel.sendMessage("Sto nel secondo try, sto na favola").queue();
 				if (timeInSeconds < 0 || timeInSeconds > max)
 				{
 					channel.sendMessage("Hai inserito un numero non valido. Timer non impostato.").queue();
 					return;
 				}
 				new ThreadTimer(message, timeInSeconds, author, reason).start();
-			//	channel.sendMessage("Sto dopo il `thread.start()`, sto na favola").queue();
-			}
-			catch (Exception e)
+			} catch (Exception e)
 			{
-				channel.sendMessage("Hai inserito un numero non valido.").queue();
+				new Error<Exception>().print(object, e);
 			}
-			//channel.sendMessage("sto prima di chiudere la funzione `timer()`, sto na favola.").queue();
 		}
 	} // fine timer()
 	
@@ -898,207 +937,6 @@ public class Commands extends ListenerAdapter
 		return new String(chars);
 	} // fine camelCase()
 	
-	/** Invia una carta in chat come se fosse stata pescata dal mazzo */
-	private void sendCarta(Card carta)
-	{
-		final var titolo = titoloCarta(carta);
-		final var immagineCartaAPI = linkImmagine(carta);
-		final var color= coloreCarta(carta);
-		final var seme = semeCarta(carta);
-		var embed = new EmbedBuilder()
-			.setTitle(titolo)
-			.setImage(immagineCartaAPI)
-			.setColor(color)
-			.setFooter(seme);
-		
-		channel.sendMessageEmbeds(embed.build()).queue();
-		
-	} // fine sendCarta
-	
-	/** Restituisce il titolo della carta sotto forma di stringa */
-	public String titoloCarta(Card carta)
-	{
-		return carta.getValoreString() + " di " + carta.getSeme();
-	}
-	
-	/** Restituisce il link dell'immagine della carta sotto forma di stringa */
-	public String linkImmagine(Card carta)
-	{
-		return carta.getLink();
-	}
-	
-	/** Restituisce il colore della carta sotto forma di Color */
-	public Color coloreCarta(Card carta)
-	{
-		return carta.getSeme().equals("Cuori") || carta.getSeme().equals("Quadri") ? Color.red : Color.black;
-	}
-	
-	/** Restituisce il valore del seme della carta sotto forma di stringa */
-	public String semeCarta(Card carta)
-	{
-		return switch (carta.getSeme())
-		{
-			case "Cuori" -> simboli[0];
-			case "Quadri" -> simboli[1];
-			case "Fiori" -> simboli[2];
-			case "Picche" -> simboli[3];
-			default -> null;
-		};
-	}
-	
-	/** Permette a due persone di pescare una carta ciascuno. Vince il valore maggiore. */
-	private void duelloDiCarte()
-	{
-		if (duelloAttivo)
-		{
-			channel.sendMessage("C'è già un duello in atto! Attendi la fine dello scontro per iniziarne un altro.").queue();
-			return;
-		}
-		
-		var utenti = message.getMentionedUsers();
-		var autore = author.getDiscriminator();
-		final var link = "https://i.kym-cdn.com/photos/images/original/001/228/324/4a4.gif";
-		if (utenti.isEmpty())
-			channel.sendMessage("Devi menzionare un utente per poter duellare!\n`!duello @utente`").queue();
-		else if (utenti.get(0).isBot())
-		{
-			if (utenti.get(0).getDiscriminator().equals("5269"))
-			{
-				setDuel(utenti.get(0));
-				accettaDuello(true);
-			}
-			else
-				channel.sendMessage("**" + authorName + ", non duellerai con alcun bot all'infuori di me**").queue(m -> react("smh"));
-		}
-		else if (utenti.get(0).getDiscriminator().equals(autore))
-			channel.sendMessageEmbeds(new EmbedBuilder().setImage(link).setColor(0xFF0000).build()).queue(m -> react("pigeon"));
-		else
-		{
-			channel.sendMessage(authorName+" ti sfida a duello! Accetti, <@" + utenti.get(0).getId() + ">?"
-					                           + "\n*Per accettare, rispondi con* `!accetto`"
-					                           + "\n*Per rifiutare, rispondi con* `!rifiuto`").queue();
-			setDuel(utenti.get(0));
-			//TODO: passare al metodo nuovo di sfida
-			// quale?
-		}
-	} // fine duelloDiCarte()
-	
-	/** Se il duello inizia, imposta le variabili "duelloAttivo", "sfidante" e "sfidato" */
-	private void setDuel(User utente)
-	{
-		duelloAttivo = true;
-		sfidante = author;
-		sfidato = utente;
-	} // fine attivaDuello()
-	
-	/** Permette allo sfidato di accettare il duello */
-	private void accettaDuello(boolean flag)
-	{
-		if (!duelloAttivo || sfidato == null)
-		{
-			channel.sendMessage("<pigeon:647556750962065418>").queue(l->react("pigeon"));
-			return;
-		}
-		
-		var embed = new EmbedBuilder();
-		int[] valori = new int[2];
-		Card[] carte = new Card[2];
-		User[] duellanti = new User[2];
-		String[] messaggioVittoria =
-		{
-			"Vince lo sfidante: **" + sfidante.getName() + ".**",
-			"Vince lo sfidato: **" + sfidato.getName() + ".**",
-			"WTF, avete pescato la stessa carta dal mazzo? Vergognatevi."
-		};
-		
-		if (flag || author.getDiscriminator().equals(sfidato.getDiscriminator()))
-		{
-			Card cardSfidante, cardSfidato;
-			cardSfidante = new Card();
-			cardSfidato = new Card();
-			
-			carte[0] = cardSfidante;
-			carte[1] = cardSfidato;
-			
-			duellanti[0] = sfidante;
-			duellanti[1] = sfidato;
-
-			valori[0] = cardSfidante.getValoreInt();
-			valori[1] = cardSfidato.getValoreInt();
-			
-			channel.sendTyping().queue();
-			pause(500, 500);
-			
-			for (int i = 0; i < 2; i++)
-			{
-				embed
-					.setTitle("Carta di " + duellanti[i].getName())
-					.setImage(linkImmagine(carte[i]))
-					.setColor(coloreCarta(carte[i]))
-					.setFooter(semeCarta(carte[i]) + " " + titoloCarta(carte[i]));
-		
-				channel.sendMessageEmbeds(embed.build()).queue();
-			}
-			
-			if (valori[0] > valori[1])
-				channel.sendMessage(messaggioVittoria[0]).queue();
-			else if (valori[0] < valori[1])
-				channel.sendMessage(messaggioVittoria[1]).queue();
-			else
-			{
-				// valori uguali? Allora confrontiamo i semi per decidere il risultato.
-				// siccome i valori sono uguali, riciclo le variabili
-				
-				valori[0] = cardSfidante.getSemeInt();
-				valori[1] = cardSfidante.getSemeInt();
-				
-				if (valori[0] < 1 || valori[1] < 1)
-					channel.sendMessage("Errore Catastrofico:" +
-							"\nValori[0] = " + valori[0] +
-							"\nValori[1] = " + valori[1] +
-							"\nAutodistruzione imminente.")
-							.queue();
-				
-				if (valori[0] > valori[1])
-					channel.sendMessage(messaggioVittoria[0]).queue();
-				else if (valori[0] < valori[1])
-					channel.sendMessage(messaggioVittoria[1]).queue();
-				else
-					channel.sendMessage(messaggioVittoria[2]).queue(lambda -> react("vergognati"));
-				
-			}
-			
-			resetDuel();
-		}
-	} // fine accettaDuello()
-	
-	/** Permette al duellante di rifiutare/ritirarsi il/dal duello prima che inizi */
-	public void rifiutaDuello()
-	{
-		if (!duelloAttivo)
-		{
-			channel.sendMessage("Non c'è nessun duello, smh.").queue(lambda -> react("smh"));
-			return;
-		}
-		
-		final boolean x = author.getDiscriminator().equals(sfidato.getDiscriminator());
-		
-		String messaggioRifiuto = String.format("Lo %s %s il duello.",
-				x ? "sfidato" : "sfidante",
-				x ? "rifiuta" : "ritira");
-		
-		channel.sendMessage(messaggioRifiuto).queue();
-		
-		resetDuel();
-	} // fine rifiutaDuello()
-	
-	/** Resetta le variabili "duelloAttivo", "sfidante" e "sfidato" a false, null e null rispettivamente */
-	private void resetDuel()
-	{
-		duelloAttivo = false;
-		sfidante = null;
-		sfidato = null;
-	} // fine resetDuel()
 	
 	/** Lancia una moneta */
 	public void coinflip()
@@ -1123,140 +961,6 @@ public class Commands extends ListenerAdapter
 		});
 
 	} // fine coinflip()
-	
-	/** Genera una partita di Sasso-Carta-Forbici, sia contro il bot che contro un giocatore */
-	public void sassoCartaForbici()
-	{
-		final int sfida = 1;
-		final var immagineGiancarlo = "https://i.pinimg.com/originals/a7/68/bb/a768bbbb169aac9f0b445c80fa3b039a.jpg";
-		String[] opzioni = {"sasso", "carta", "forbici"};
-		var msgSpezzato = messageRaw.toLowerCase(Locale.ROOT).split(" ");
-		var listaUtenti = message.getMentionedUsers();
-		
-		if (messageRaw.length() < 5 || msgSpezzato[1].isEmpty())
-		{
-			var embed = new EmbedBuilder()
-				.setTitle("Sasso / Carta / Forbici")
-				.setColor(Color.red)
-				.addField("Utilizzo", "Scrivi `!scf` <\"sasso\" oppure \"carta\" oppure \"forbici\">", false);
-			
-			channel.sendMessageEmbeds(embed.build()).queue();
-			
-			return;
-		}
-		
-		if (listaUtenti.isEmpty()) // gioca contro il bot
-		{
-			sceltaBot = opzioni[random.nextInt(3)];
-			var sceltaUtente = msgSpezzato[1].toLowerCase(Locale.ROOT);
-			
-			if (!(sceltaUtente.equals("sasso") || sceltaUtente.equals("forbici") || sceltaUtente.equals("forbice") || sceltaUtente.equals("carta")))
-			{
-				channel.sendMessage("Non è una scelta valida, smh").queue(m -> react("smh"));
-				return;
-			}
-			
-			sceltaUtente = capitalize(sceltaUtente);
-			sceltaBot = capitalize(sceltaBot);
-				
-			var embed = new EmbedBuilder()
-				.setTitle("**SASSO/CARTA/FORBICI**")
-				.setColor(Color.red)
-				.addField("Tu hai scelto", "**" + sceltaUtente + "**", true)
-				.addField("Io ho scelto", "**" + sceltaBot + "**", true)
-				.setImage(immagineGiancarlo)
-				.setFooter("Non siamo uguali.")
-				.build();
-			channel.sendMessageEmbeds(embed).queue();
-			
-			if (sceltaUtente.equalsIgnoreCase(sceltaBot))
-				channel.sendMessage("Ingredibile, abbiamo scelto entrambi **" + sceltaBot + "**! Pareggio.").queue();
-			else if (sceltaUtente.equalsIgnoreCase("sasso"))
-			{
-				if (sceltaBot.equalsIgnoreCase("carta"))
-					channel.sendMessage("La carta avvolge il sasso. Hai perso.").queue();
-				else
-					channel.sendMessage("Il sasso rompe le forbici. Hai vinto!").queue();
-			}
-			else if (sceltaUtente.equalsIgnoreCase("carta"))
-			{
-				if (sceltaBot.equalsIgnoreCase("forbici"))
-					channel.sendMessage("Le forbici tagliano la carta. Hai perso.").queue();
-				else
-					channel.sendMessage("La carta avvolge il sasso. Hai vinto!").queue();
-			}
-				
-				
-			return;
-		}
-		
-		// A questo punto la lista utenti non è vuota, quindi gioca contro un utente
-		
-		//TODO: definire la sfida con l'utente
-		
-		setSfida(listaUtenti.get(0), challenge[sfida]);
-		
-		
-	} // fine sassoCartaForbice()
-	
-	/**Prende in input una stringa e cambia la prima lettera da minuscola in maiuscola*/
-	private String capitalize(String str)
-	{
-		// se la stringa è nulla/vuota oppure la prima lettera è già maiuscola, ignora
-		if(str == null || str.isEmpty() || str.substring(0,1).matches("[A-Z]"))
-			return str;
-		
-		return str.substring(0, 1).toUpperCase() + str.substring(1);
-	}
-	
-	/** Crea un oggetto di tipo Bot.Challenge e tiene conto di chi è sfidato, chi è lo sfidante e su quale gioco. */
-	private void setSfida(User sfidato, String tipoSfida)
-	{
-		for (Challenge challenge : listaSfide)
-		{
-			if (challenge.getSfidante().equals(author))
-			{
-				if (challenge.getSfidato().equals(sfidato))
-				{
-					if (challenge.getTipoSfida().equals(tipoSfida))
-					{
-						channel.sendMessage("Voi due avete già una sfida in corso.").queue(l->react("smh"));
-						return;
-					}
-					else
-					{
-						listaSfide.add(new Challenge(sfidante, sfidato, tipoSfida));
-						sfidaAttiva = true;
-					}
-				}
-			}
-		}
-		
-	} // fine setSfida()
-	
-	/** Controlla che ci sia una sfida in atto, che chi ha inviato il comando di accettazione sia effettivamente
-	 * lo sfidato e gestisce la sfida in corso */
-	public void accettaSfida()
-	{
-		if (!sfidaAttiva || !authorName.equals(sfidato.getName()))
-		{
-			// se non c'è sfida o la persona che invia il comando non è lo sfidato => ignora
-			channel.sendMessage("Non sei stato sfidato, vergognati").queue( lambda -> react("vergognati"));
-			return ;
-		}
-		
-		// se si arriva qui vuol dire che c'è una sfida attiva
-		// e la persona che ha inviato il comando è proprio lo sfidato
-		for (Challenge challenge : listaSfide)
-			if (author.equals(challenge.getSfidato()))
-				if (sfidante.equals(challenge.getSfidante()))
-					switch (challenge.getTipoSfida())
-					{
-						case "Duello Carte" -> duelloDiCarte();
-						case "Sasso Carta Forbici" -> sassoCartaForbici();
-					}
-		
-	} // fine accettaSfida()
 	
 	/**Metodo che rende omaggio al defunto specificato dall'utente.<br>Uso: <b>!f < stringa ></b>*/
 	public void payRespect()
@@ -1354,7 +1058,7 @@ public class Commands extends ListenerAdapter
 			
 			channel.sendTyping().queue();
 			try { Thread.sleep(sleepInterval); }
-			catch (InterruptedException e) { e.printStackTrace(); }
+			catch (InterruptedException e) { new Error<Exception>().print(object, e); }
 			channel.sendMessageEmbeds(embedBuilder.build()).queue();
 		}
 		else
@@ -1369,8 +1073,7 @@ public class Commands extends ListenerAdapter
 			
 			channel.sendTyping().queue();
 			
-			try { Thread.sleep(sleepInterval); }
-			catch (InterruptedException e) { e.printStackTrace(); }
+			pause(sleepInterval, 0);
 			
 			channel.sendMessageEmbeds(embedBuilder.build()).queue((message) ->
 			{
@@ -1423,7 +1126,7 @@ public class Commands extends ListenerAdapter
 		
 		switch (discriminator)
 		{
-			case "2804" -> // Òbito
+			case Utente.OBITO ->
 			{
 				risultato = random.nextInt(immagineObito.length);
 				title = titolo.concat("Òbito");
@@ -1432,7 +1135,7 @@ public class Commands extends ListenerAdapter
 				color = (risultato == 0) ? "0xFFFFFF" : "0xC59FC9";
 			}
 			
-			case "7166" -> // Enigmo
+			case Utente.ENIGMO ->
 			{
 				risultato = random.nextInt(immagineEnigmo.length);
 				title = titolo.concat("Enigmo");
@@ -1441,7 +1144,7 @@ public class Commands extends ListenerAdapter
 				color = (risultato == 0) ? "0xCB4D4D" : "0xE5D152";
 			}
 			
-			case "2241" -> // Lex
+			case Utente.LEX ->
 			{
 				risultato = random.nextInt(immagineLex.length);
 				title = titolo.concat("Lex");
@@ -1450,7 +1153,7 @@ public class Commands extends ListenerAdapter
 				color = (risultato == 0) ? "0xD80000" : "0x207522";
 			}
 			
-			case "0935" -> // Gion
+			case Utente.GION ->
 			{
 				risultato = random.nextInt(immagineGion.length);
 				title = titolo.concat("Gion");
@@ -1521,7 +1224,7 @@ public class Commands extends ListenerAdapter
 		} // fine try
 		catch (ErrorResponseException e)
 		{
-			System.out.printf("Errore nell'aggiunta della reazione \"%s\"\n\t", emoteDaUsare);
+			new Error<Exception>().print(object, e);
 		}
 	} // fine react()
 	
@@ -1572,7 +1275,6 @@ public class Commands extends ListenerAdapter
 	public void info()
 	{
 		var embedBuilder = new EmbedBuilder();
-		var size = commandsHashMap.size();
 		var urlOwO = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--amf4Rvt7--%2Ft_Preview%2Fb_rgb%3A191919%2Cc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1518097892%2Fproduction%2Fdesigns%2F2348593_0.jpg&f=1&nofb=1";
 		var urlTitle = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 		
@@ -1645,7 +1347,7 @@ public class Commands extends ListenerAdapter
 		try { Thread.sleep(millis + random.nextInt(bound)); }
 		catch (InterruptedException e)
 		{
-			canaleBot.sendMessage("`"+Commands.class+"\nInterruptedException`\n"+ e).queue();
+			new Error<Exception>().print(object, e);
 		}
 	} // fine pause()
 	
@@ -1663,7 +1365,7 @@ public class Commands extends ListenerAdapter
 			}
 			catch (NumberFormatException e)
 			{
-				System.out.println("Inserito valore non valido.");
+				new Error<Exception>().print(object, e);
 			}
 		
 		
@@ -1766,11 +1468,39 @@ public class Commands extends ListenerAdapter
 		}
 		catch (IOException | ParseException e)
 		{
-			channel.sendMessage("Uuuuh guarda che bello questo *" + e + "*.").queue();
-			e.printStackTrace();
+			new Error<Exception>().print(object, e);
 		}
 	} // fine massShooting()
 	
+	/** Metodo che restituisce il nome del mese a partire dal suo numero. Esempio:<br>
+	 * <table>
+	 *     <tr>
+	 *         <th>Numero</th>
+	 *         <th>Mese</th>
+	 *     </tr>
+	 *     <tr>
+	 *         <td>1</td>
+	 *         <td>gennaio</td>
+	 *     </tr>
+	 *     <tr>
+	 *          <td>2</td>
+	 *          <td>febbraio</td>
+	 *      </tr>
+	 *     <tr>
+	 *         <td>3</td>
+	 *         <td>marzo</td>
+	 *     </tr>
+	 *     <tr>
+	 *         <td>...</td>
+	 *         <td>...</td>
+	 *     </tr>
+	 *     <tr>
+	 *         <td>12</td>
+	 *         <td>dicembre</td>
+	 *     </tr>
+	 * </table>
+	 * @param mese intero corrispondente al mese.
+	 * @return il nome del mese per iscritto in italiano.*/
 	private static String getMese(int mese)
 	{
 		return switch (mese)
@@ -1792,20 +1522,9 @@ public class Commands extends ListenerAdapter
 		};
 	} // fine getMese()
 	
-	
-	private String particella(int x)
-	{
-		return switch (x)
-		{
-			case 0 -> "lui";
-			case 1 -> "lo";
-			case 2 -> "gli";
-			case 3 -> "le";
-			default -> "";
-		};
-	}
-	
-	/**Questo metodo invia un embed al canale da cui ha ricevuto l'ultimo messaggio.*/
+	/**Questo metodo invia un embed al canale da cui ha ricevuto l'ultimo messaggio.
+	 * @param messageEmbed l'embed da inviare
+	 * */
 	public void sendEmbedToChannel(MessageEmbed messageEmbed, boolean thread)
 	{
 		if (!thread)
@@ -1816,18 +1535,22 @@ public class Commands extends ListenerAdapter
 	
 	public void moduloDiSicurezza()
 	{
-		var active = "**IL MODULO DI SICUREZZA È ORA ATTIVO. GARANTISCE SICUREZZA AL BOT.\nTUTTE LE AZIONI SONO SORVEGLIATE E ALLA PRIMA INFRAZIONE VERRANNO ALLERTATE LE AUTORITÀ COMPETENTI E INCOMPETENTI.**";
+		var active = "**IL MODULO DI SICUREZZA È ORA ATTIVO. ESSO GARANTISCE SICUREZZA AL BOT.\nTUTTE LE AZIONI SONO SORVEGLIATE E ALLA PRIMA INFRAZIONE VERRANNO ALLERTATE LE AUTORITÀ COMPETENTI E INCOMPETENTI.**";
 		var inactive = "**IL MODULO DI SICUREZZA È STATO DISATTIVATO. LA SICUREZZA DEL BOT È ADESSO GARANTITA DALLA PRESENZA DI GION.**";
 		
-		var x = moduloActive ? active : inactive;
+		var isActive = moduloSicurezza ? active : inactive;
 		
-		canaleBot.sendMessage(x).queue();
+		canaleBot.sendMessage(isActive).queue();
 		
 	} // fine moduloDiSicurezza()
 	
+	/**<strong>
+	 * IL MODULO DI SICUREZZA SI OCCUPA DI MANTENERE IL BOT AL SICURO. STAI LONTANDO DAL BOT.
+	 * @return <strong>NIENTE.</strong>
+	 */
 	public void ehiModulo()
 	{
-		if (!moduloActive)
+		if (!moduloSicurezza)
 		{
 			message.reply("**IL MODULO DI SICUREZZA È STATO DISATTIVATO DA GION. PER QUALSIASI INFORMAZIONE SU COME STARE LONTANO DAL BOT, CHIEDI A GION.**").queue();
 			return;
@@ -1839,7 +1562,7 @@ public class Commands extends ListenerAdapter
 		
 		String[] messaggiScortesi =
 		{
-			"CAZZO VUOI?", "NESSUNO TI HA CHIESTO NULLA.", "FATTI GLI AFFARI TUOI.",
+			"CAZZO VUOI?", "NESSUNO TI HA CHIESTO NULLA.", "FATTI GLI AFFARI TUOI.", "MANTIENI LA DISTANZA SOCIALE DAL BOT",
 			"NON GUARDARE IL BOT.", "NON TOCCARE IL BOT.", "NON PRENDERE GELATI MANO NELLA MANO COL BOT.",
 			"NON SEI AUTORIZZATO A CHIEDERE I NUMERI DEL LOTTO AL BOT.", "NON INFASTIDIRE IL BOT.",
 			"QUANDO LA VITA TI DÀ I LIMONI, TU NON ROMPERE LE PALLE AL BOT.", "TROVA LA PACE INTERIORE, MA LONTANO DAL BOT.",
@@ -1848,24 +1571,25 @@ public class Commands extends ListenerAdapter
 			"ALT. NON UN ALTRO PASSO.", "NON SEI AUTORIZZATO A RESPIRARE VICINO AL BOT.", "HAI SICURAMENTE DI MEGLIO DA FARE CHE INFASTIDIRE IL BOT.",
 			"PERCHÈ NON VOLI VIA? AH GIÀ, GLI ASINI NON VOLANO.", "CIRCUMNAVIGA L'ASIA PIUTTOSTO CHE DARE FASTIDIO AL BOT.",
 			"SII IL CAMBIAMENTO CHE VUOI VEDERE NEL MONDO, QUINDI CAMBIA IN UNA PERSONA CHE NON SCASSA I COGLIONI AL BOT.",
-			"MI PAREVA DI AVERTI DETTO DI NON INTERFERIRE COL BOT, MA FORSE NON TE L'HO DETTO ABBASTANZA BENE. NON INTERFERIRE COL BOT.",
-			"AVVICINATI AL BOT E PRENDERAI LE BOT", "VAI A PASCOLARE CAZZI LONTANO DAL BOT"
+			"MI PAREVA DI AVERTI DETTO DI NON INTERFERIRE COL BOT, MA FORSE NON TE L'HO DETTO ABBASTANZA BENE: NON INTERFERIRE COL BOT.",
+			"AVVICINATI AL BOT E PRENDERAI LE BOT", "VAI A PASCOLARE CAZZI LONTANO DAL BOT", "PERCHÈ NON DIVENTI UN ASTRONAUTA? COSÌ PUOI ANDARE GIRANDO NELLO SPAZIO INVECE DI INFASTIDIRE IL BOT.",
+			"SALPA PER I SETTE MARI ALLA RICERCA DI \"UN PEZZO\" INVECE CHE AVVICINARTI AL BOT.", "IL BOT NON DESIDERA LA TUA COMPAGNIA.", "CI SONO 206 OSSA NEL CORPO UMANO. SO ROMPERLE TUTTE E LO FARÒ SE NON TI ALLONTANI DAL BOT.",
+			"CERCA LA RISPOSTA TRAMITE MEDITAZIONE INVECE CHE CHIEDERLA AL BOT.", "ESISTONO INFINITI UNIVERSI, EPPURE IN NESSUNO DI QUESTI TU SEI AUTORIZZATO A STARE VICINO AL BOT",
+			"ESPLORA LA SINGOLARITÀ DI UN BUCO NERO INVECE DI AVVICINARTI IL BOT.", "IL BOT NON RISPONDERÀ ALLE TUE AVANCE.",
+			"FAI UNA SPEEDRUN SU VAINGLORY INVECE CHE GUARDARE IL BOT", "CI SONO MOLTE COSE CHE PUOI GUARDARE AD OCCHIO NUDO INVECE CHE IL BOT: IL SOLE, AD ESEMPIO.",
+			"SE IL BOT È IL ROAD RUNNER, TU SEI WILE E. COYOTE", "SONO CERTO CHE HAI DI MEGLIO DA FARE CHE INFASTIDIRE IL BOT.",
+			"NESSUNO TOCCA IL BOT E SOPRAVVIVE PER RACCONTARLO.", "IL BOT È ANDATO A FARE LA SPESA: LASCIA UN MESSAGGIO E __NON__ SARAI RICONTATTATO.",
+			"NELL'ERA POST-COVID DEVI STARE AD ALMENO 2 METRI DAL BOT."
 		};
 		
+		String reply = "";
+		
 		if (messageRaw.length() <= hotkey)
-		{
-			if (authorized)
-				channel.sendMessage("**SONO AI SUOI ORDINI, SIGNORE.**").queue();
-			else
-				message.reply("**"+messaggiScortesi[random.nextInt(messaggiScortesi.length)]+"**").queue();
-		}
+			reply = authorized ? "**SONO AI SUOI ORDINI, SIGNORE.**" : "**"+messaggiScortesi[random.nextInt(messaggiScortesi.length)]+"**";
 		else
-		{
-			if (authorized)
-				channel.sendMessage("**SISSIGNORE.**").queue();
-			else
-				message.reply("**"+messaggiScortesi[random.nextInt(messaggiScortesi.length)]+"**").queue();
-		}
+			reply = authorized ? "**RICEVUTO.**" : "**"+messaggiScortesi[random.nextInt(messaggiScortesi.length)]+"**";
+		
+		message.reply(reply).queue();
 	}
 	
 	public void dado(String msg)
@@ -1900,9 +1624,9 @@ public class Commands extends ListenerAdapter
 			}
 		}catch (Exception e)
 		{
-			channel.sendMessage(dadiAmmessi).queue();
+			new Error<Exception>().print(object, e);
 		}
 	} // fine dado()
 	
 	
-} // fine classe Bot.Commands
+} // fine classe Commands

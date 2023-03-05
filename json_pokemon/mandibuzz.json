@@ -1,0 +1,10 @@
+{
+	"id" : "630",
+	"name" : "mandibuzz",
+	"types" :
+	[
+		"dark", "flying"
+	],
+	"flavor_text": "It makes a nest out of bones it finds. It grabs weakened prey in its talons and hauls it to its nest of bones.",
+	"generation" : "5"
+}

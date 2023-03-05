@@ -5,6 +5,8 @@ import net.dv8tion.jda.api.entities.User;
 
 public class ThreadTimer extends Thread
 {
+	private final Object object = ThreadTimer.class;
+	
 	private final Message message;
 	private JDA jda;
 	private TextChannel tc;
@@ -36,7 +38,7 @@ public class ThreadTimer extends Thread
 				Thread.sleep(seconds * 1000L);
 			} catch (InterruptedException e)
 			{
-				tc.sendMessage("" + e).queue();
+				new Error<Exception>().print(object, e);
 			}
 			var msgParziale = "<@"+user.getIdLong()+">\nTimer, timer, timer! È suonato il tuo timer!";
 			var msgTotale = msgParziale + (reason.isEmpty() ? "" : "\n\""+reason+"\"");
