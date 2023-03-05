@@ -6,26 +6,26 @@ public class Error <T>
 	{
 		var type = t.getClass().toString();
 		var gion = new PrivateMessage(Utente.getGion());
+		String lessThan2k;
 		if (type.contains("Exception"))
 		{
-			String lessThan2k;
 			Exception e = (Exception) t;
 			var eMsg = e.getMessage();
 			var stackTrace = e.getStackTrace();
 			var stackTraceString = Arrays.toString(stackTrace);
 			
-			lessThan2k = (stackTraceString.length() > 2000 ? stackTraceString.substring(0, 1999) : stackTraceString);
+			lessThan2k = (stackTraceString.length() > 2000 ? stackTraceString.substring(0, 2000) : stackTraceString);
 			
-			String msg = "<@" + Utente.ID_GION + ">\n" + "`" + object + "`\n" + eMsg;
-			//Commands.canaleBot.sendMessage(msg).queue();
 			gion.send("`" + eMsg + "`\n"+lessThan2k);
 		}
 		else if (type.equalsIgnoreCase("String"))
 		{
 			String s = (String) t;
+			var l = s.length();
 			
-			String msg = "<@" + Utente.ID_GION + ">\n" + "`" + object + "`\n" + s;
-			//Commands.canaleBot.sendMessage(msg).queue();
+			lessThan2k = l > 2000 ? s.substring(0, 2000) : s ;
+			
+			gion.send(lessThan2k);
 		}
 	} // fine print
 	
