@@ -18,6 +18,7 @@ public abstract class Emotes
 	public static final int[] hitman = {7, 8, 19, 12, 0, 13}; // posizioni lettere nell'alfabeto
 	public static final int[] XCOM = {23, 2, 14, 12}; // posizioni lettere nell'alfabeto
 	public static final String bigBrain = "BigBrain:619059338883104771";
+	public static final String birds = "birds:1081894118126518272";
 	public static final String borisK = "BorisK:858638399426396161";
 	public static final String boo2 = "Boo2:598597182123147275";
 	public static final String comedyGenius = "ComedyGenius:774950569474916364";
@@ -91,6 +92,7 @@ public abstract class Emotes
 			case "vergognati2" -> vergognati[1];
 			case "getrekt" -> getRekt;
 			case "smh" -> smh;
+			case "birds" -> birds;
 			case "giorno" -> giorno;
 			case "obi" -> obito[0];
 			case "ito" -> obito[1];
