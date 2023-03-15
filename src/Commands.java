@@ -236,6 +236,16 @@ public class Commands extends ListenerAdapter
 		{
 			new Error<Exception>().print(object, e);
 		}
+		
+		if (message.getAuthor().getDiscriminator().equalsIgnoreCase(Utente.BOWOT))
+		{
+			if (authorName.contains(Utente.NOME_ENIGMO) && emote.getName().contains("vergogna") && random.nextInt(10) == 0)
+			{
+				channel.sendMessage("Enigmo come ti permetti di reagire ad un mio messaggio <:" + Emotes.everyone + ">").queue();
+			}
+		}
+		
+		
 	} // fine onMessageReactionAdd
 	
 	/**Inserisce come reazioni tutte le emote che trova nel messaggio*/
@@ -1050,7 +1060,7 @@ public class Commands extends ListenerAdapter
 		
 		if (size < 2 || size > letters.length || flag)
 		{
-			//embedBuilder.setFooter("");
+			// embedBuilder.setFooter("");
 			embedBuilder.setTitle("`!poll` - Istruzioni per l'uso");
 			embedBuilder.addField("Sondaggio", "Per creare un sondaggio devi usare il comando `!poll` + `domanda?` + `[risposte]`\nSepara le risposte con uno slash `/`.", false);
 			embedBuilder.addField("Esempio", "`!poll domanda? opzione 1 / opzione 2 / opzione 3 ...`\n`!poll Cosa preferite? Pizza / Pollo / Panino / Sushi`", false);
