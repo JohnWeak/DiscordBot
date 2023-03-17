@@ -220,8 +220,10 @@ public class Commands extends ListenerAdapter
 		var emote = event.getReactionEmote();
 		channel = event.getChannel();
 		id = event.getMessageIdLong();
+		channel.retrieveMessageById(id).queue();
 		message = channel.getHistory().getMessageById(id);
-		if (channel.getHistory().isEmpty())
+		
+		if (event.getChannel().getHistory().isEmpty())
 		{
 			new PrivateMessage(Utente.getGion()).send("`channel history is empty`");
 			return;
