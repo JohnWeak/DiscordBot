@@ -221,9 +221,9 @@ public class Commands extends ListenerAdapter
 		channel = event.getChannel();
 		id = event.getMessageIdLong();
 		message = channel.getHistory().getMessageById(id);
-		if (message == null)
+		if (channel.getHistory().isEmpty())
 		{
-			new PrivateMessage(Utente.getGion()).send("`channel.getHistory() -> null`");
+			new PrivateMessage(Utente.getGion()).send("`channel history is empty`");
 			return;
 		}
 		// System.out.println("Reaction: " + event.getReaction());
@@ -263,19 +263,19 @@ public class Commands extends ListenerAdapter
 	/**Inserisce come reazioni tutte le emote che trova nel messaggio*/
 	private void aggiungiReazioni()
 	{
-		List<Emote> emoteList = new ArrayList<>();
-		
 		if (message != null)
-			emoteList = message.getEmotes();
-		
-		for (Emote emote : emoteList)
 		{
-			try
+			List<Emote> emoteList = message.getEmotes();
+			
+			for (Emote emote : emoteList)
 			{
-				message.addReaction(emote).queue();
+				try
+				{
+					message.addReaction(emote).queue();
+				} catch (Exception ignored) {}
 			}
-			catch (Exception ignored) {}
 		}
+		
 	} // fine aggiungiReazioni()
 	
 	
