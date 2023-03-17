@@ -221,7 +221,11 @@ public class Commands extends ListenerAdapter
 		channel = event.getChannel();
 		id = event.getMessageIdLong();
 		message = channel.getHistory().getMessageById(id);
-
+		if (message == null)
+		{
+			new PrivateMessage(Utente.getGion()).send("`channel.getHistory() -> null`");
+			return;
+		}
 		// System.out.println("Reaction: " + event.getReaction());
 		
 		try
