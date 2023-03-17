@@ -232,11 +232,13 @@ public class Commands extends ListenerAdapter
 		{
 			if (emote.isEmoji())
 			{
-				message.addReaction(emote.getEmoji()).queue();
+				channel.addReactionById(id,emote.getEmoji()).queue();
+				//	message.addReaction(emote.getEmoji()).queue();
 			}
 			else if (emote.isEmote())
 			{
-				message.addReaction(emote.getEmote()).queue();
+				channel.addReactionById(id,emote.getEmote()).queue();
+				// message.addReaction(emote.getEmote()).queue();
 			}
 		}
 		catch (Exception e)
