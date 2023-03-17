@@ -134,7 +134,7 @@ public class Commands extends ListenerAdapter
 		var emotes = event.getMessage().getEmotes();
 		for (Emote e : emotes)
 		{
-			sds
+			//
 		}
 		
 		
