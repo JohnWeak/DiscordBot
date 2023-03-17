@@ -232,13 +232,13 @@ public class Commands extends ListenerAdapter
 			else
 				react(emoteString);
 			
-			if (message.getAuthor().getDiscriminator().equalsIgnoreCase(Utente.BOWOT))
-			{
-				if (authorName.contains(Utente.NOME_ENIGMO) && emote.getName().contains("vergogna") && random.nextInt(10) == 0)
-				{
-					channel.sendMessage("Enigmo come ti permetti di reagire ad un mio messaggio <:" + Emotes.everyone + ">").queue();
-				}
-			}
+			//if (message.getAuthor().getDiscriminator().equalsIgnoreCase(Utente.BOWOT))
+			//{
+			//	if (authorName.contains(Utente.NOME_ENIGMO) && emote.getName().contains("vergogna") && random.nextInt(10) == 0)
+			//	{
+			//		channel.sendMessage("Enigmo come ti permetti di reagire ad un mio messaggio <:" + Emotes.everyone + ">").queue();
+			//	}
+			//}
 		}
 		catch (Exception e)
 		{
