@@ -220,34 +220,20 @@ public class Commands extends ListenerAdapter
 		var emote = event.getReactionEmote();
 		channel = event.getChannel();
 		id = event.getMessageIdLong();
-		channel.retrieveMessageById(id).queue();
 		message = channel.getHistory().getMessageById(id);
 		
-		if (event.getChannel().getHistory().isEmpty())
-		{
-			new PrivateMessage(Utente.getGion()).send("`channel history is empty`");
-			return;
-		}
 		// System.out.println("Reaction: " + event.getReaction());
 		
+		var emoteString = emote.toString().split(":")[1].split("\\(")[0];
 		try
 		{
-			if (emote.isEmoji())
-			{
-				channel.addReactionById(id,emote.getEmoji()).queue();
-				//	message.addReaction(emote.getEmoji()).queue();
-			}
-			else if (emote.isEmote())
-			{
-				channel.addReactionById(id,emote.getEmote()).queue();
-				// message.addReaction(emote.getEmote()).queue();
-			}
+			if (event.getReaction().toString().contains("U+"))
+				channel.addReactionById(id, emoteString).queue();
+			else
+				react(emoteString);
 		}
 		catch (Exception e)
 		{
-			var s = "id: `" + id + "`\nmessage: `" + message + "`\n" + "reaction: `" + event.getReaction() + "`";
-			
-			new PrivateMessage(Utente.getGion()).send(s);
 			new Error<Exception>().print(object, e);
 		}
 		
