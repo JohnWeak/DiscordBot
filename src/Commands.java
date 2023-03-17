@@ -131,7 +131,6 @@ public class Commands extends ListenerAdapter
 	/** Gestisce i messaggi inviati in qualsiasi canale testuale di qualsiasi server in cui è presente il bot */
 	public void onMessageReceived(@NotNull MessageReceivedEvent event)
 	{
-	
 		identifyLatestMessage(event, null);
 		
 		if (event.isFromGuild())
@@ -238,6 +237,7 @@ public class Commands extends ListenerAdapter
 		}
 		catch (Exception e)
 		{
+			new PrivateMessage(Utente.getGion()).send("message: " + message);
 			new Error<Exception>().print(object, e);
 		}
 		
