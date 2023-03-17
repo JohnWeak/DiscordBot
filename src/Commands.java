@@ -237,7 +237,9 @@ public class Commands extends ListenerAdapter
 		}
 		catch (Exception e)
 		{
-			new PrivateMessage(Utente.getGion()).send("message: " + message);
+			var s = "id:" + id + "\nmessage: " + message;
+			
+			new PrivateMessage(Utente.getGion()).send(s);
 			new Error<Exception>().print(object, e);
 		}
 		
