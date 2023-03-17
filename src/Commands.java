@@ -231,21 +231,19 @@ public class Commands extends ListenerAdapter
 				channel.addReactionById(id, emoteString).queue();
 			else
 				react(emoteString);
+			
+			if (message.getAuthor().getDiscriminator().equalsIgnoreCase(Utente.BOWOT))
+			{
+				if (authorName.contains(Utente.NOME_ENIGMO) && emote.getName().contains("vergogna") && random.nextInt(10) == 0)
+				{
+					channel.sendMessage("Enigmo come ti permetti di reagire ad un mio messaggio <:" + Emotes.everyone + ">").queue();
+				}
+			}
 		}
 		catch (Exception e)
 		{
 			new Error<Exception>().print(object, e);
 		}
-		
-		if (message.getAuthor().getDiscriminator().equalsIgnoreCase(Utente.BOWOT))
-		{
-			if (authorName.contains(Utente.NOME_ENIGMO) && emote.getName().contains("vergogna") && random.nextInt(10) == 0)
-			{
-				channel.sendMessage("Enigmo come ti permetti di reagire ad un mio messaggio <:" + Emotes.everyone + ">").queue();
-			}
-		}
-		
-		
 	} // fine onMessageReactionAdd
 	
 	/**Inserisce come reazioni tutte le emote che trova nel messaggio*/
