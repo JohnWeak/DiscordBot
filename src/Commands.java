@@ -131,6 +131,13 @@ public class Commands extends ListenerAdapter
 	/** Gestisce i messaggi inviati in qualsiasi canale testuale di qualsiasi server in cui è presente il bot */
 	public void onMessageReceived(@NotNull MessageReceivedEvent event)
 	{
+		var emotes = event.getMessage().getEmotes();
+		for (Emote e : emotes)
+		{
+			sds
+		}
+		
+		
 		identifyLatestMessage(event, null);
 		
 		if (event.isFromGuild())
@@ -223,6 +230,15 @@ public class Commands extends ListenerAdapter
 		message = channel.getHistory().getMessageById(id);
 
 		// System.out.println("Reaction: " + event.getReaction());
+		
+		if (emote.isEmoji())
+		{
+			new PrivateMessage(Utente.getGion()).send("Emoji: "+emote.getEmoji());
+		}
+		else if (emote.isEmote())
+		{
+			new PrivateMessage(Utente.getGion()).send("Emote: "+emote.getEmote());
+		}
 		
 		var emoteString = emote.toString().split(":")[1].split("\\(")[0];
 		try
