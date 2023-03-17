@@ -401,10 +401,12 @@ public class Commands extends ListenerAdapter
 			// case "!ch" -> channelHistory();
 			case "!toggleactivity", "!ta" -> toggleActivity(msgStrippedLowerCase, threadActivity);
 			case "!testpokemon", "!tp" -> testPokemon();
+			case "!apple" -> apple();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
 		var reazioni = new ArrayList<String>();
+		var emojis = findEmojis(msgStrippedLowerCase);
 		
 		if (msgStrippedLowerCase.contains("ehi modulo"))
 			ehiModulo();
@@ -680,6 +682,43 @@ public class Commands extends ListenerAdapter
 			channel.sendMessage(x).queue();
 		
 	} // fine getEmotes()
+	
+	private List<String> findEmojis(String s)
+	{
+		List<String> list = new ArrayList<>();
+		final int index = s.indexOf(':');
+		
+		// nota, ci possono essere più emoji per messaggio ( :apple: :eggplant: )
+		
+		String newStr = s.substring(index);
+		var chars = s.toCharArray();
+		final int size = chars.length;
+		int[] pos = new int[100];
+		int count = 0;
+		for (int i = 0; i < size; i++)
+		{
+			if (chars[i] == ':')
+			{
+				count++;
+			}
+			if (count == 100) // 100 emoji sono più che sufficienti
+				break;
+			// FIXME finire qui
+		}
+		if (count < 2)
+			return null;
+		else
+		{
+		
+		}
+		
+		return list;
+	}
+	
+	private void apple()
+	{
+		react(":apple:");
+	}
 	
 	private void encounter()
 	{
