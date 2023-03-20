@@ -45,7 +45,6 @@ public class Commands extends ListenerAdapter
 	public static TextChannel canaleBot;
 	private static final boolean moduloSicurezza = false;
 	private static final boolean sendMsgActivity = false;
-	private static ThreadActivity threadActivity;
 	
 	
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
@@ -111,8 +110,8 @@ public class Commands extends ListenerAdapter
 		
 		// moduloDiSicurezza();
 		
-		threadActivity = new ThreadActivity(true);
-		threadActivity.start();
+		//threadActivity = new ThreadActivity(true);
+		//threadActivity.start();
 		
 		gion.send("Riavvio completato.");
 		
@@ -137,6 +136,10 @@ public class Commands extends ListenerAdapter
 			guildMessage(event, author.isBot());
 		else
 			privateMessage(author.isBot());
+	
+		if (random.nextInt(500) == 42)
+			Main.getJda().getPresence().setActivity(Main.selectActivity());
+		
 		
 	} // fine onMessageReceived()
 	
@@ -399,7 +402,6 @@ public class Commands extends ListenerAdapter
 			case "!timer" -> timer();
 			case "!dm" -> dm(msgStrippedLowerCase);
 			// case "!ch" -> channelHistory();
-			case "!toggleactivity", "!ta" -> toggleActivity(msgStrippedLowerCase, threadActivity);
 			case "!testpokemon", "!tp" -> testPokemon();
 			case "!apple" -> apple();
 		}
@@ -829,70 +831,6 @@ public class Commands extends ListenerAdapter
 		}
 		
 	} // fine metodo dm()
-	
-	public static void toggleActivity(String messaggio, ThreadActivity thrActivity)
-	{
-		String option, msg;
-		boolean active;
-		
-		if (!thrActivity.isAlive())
-		{
-			message.reply("Il thread non è più attivo.").queue();
-			return;
-		}
-		
-		try
-		{
-			if (messaggio.split(" ").length == 1)
-			{
-				// nessun messaggio dopo il comando, quindi funzione toggle
-				active = !(thrActivity.isKeepGoing());
-				thrActivity.setKeepGoing(active); // false -> true / true -> false
-				msg = "Ok, il cambio casuale delle activity è stato " + (active ? "attivato" : "disattivato") + ".";
-				
-				message.reply(msg).queue();
-				return;
-			}
-			else
-			{
-				option = messaggio.split(" ")[1];
-			}
-			
-			switch (option.toLowerCase(Locale.ITALIAN))
-			{
-				case "true", "t" ->
-				{
-					if (thrActivity.isKeepGoing())
-					{
-						message.reply("Il cambio delle activity era già attivo.").queue();
-						return;
-					}
-					thrActivity.setKeepGoing(false); // disattiva il vecchio thread
-					message.reply("Ok, ho attivato il cambio delle activity.").queue();
-					
-					
-					threadActivity = new ThreadActivity(true);
-					threadActivity.start();
-				}
-				case "false", "f" ->
-				{
-					if (!thrActivity.isKeepGoing())
-					{
-						message.reply("Il cambio delle activity era già disattivato.").queue();
-						return;
-					}
-					message.reply("Ok, ho disattivato il cambio delle activity.").queue();
-					thrActivity.setKeepGoing(false);
-				}
-				default -> message.reply("<:"+Emotes.harry_fotter+">").queue();
-			}
-			
-		}catch (Exception e)
-		{
-			new Error<Exception>().print(object, e);
-		}
-		
-	}
 	
 	private boolean contains(String source, String[] subItem)
 	{
