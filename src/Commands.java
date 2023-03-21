@@ -143,6 +143,7 @@ public class Commands extends ListenerAdapter
 		
 	} // fine onMessageReceived()
 	
+	
 	private void guildMessage(MessageReceivedEvent event, boolean isBot)
 	{
 		/*
