@@ -420,8 +420,12 @@ public class Commands extends ListenerAdapter
 		
 		if (msgStrippedLowerCase.contains("owo"))
 		{
-			new PrivateMessage(Utente.getGion()).send("contains:owo");
 			reazioni.add(Emotes.OwO);
+		}
+		else
+		{
+			final var msg = msgStrippedLowerCase+" doesn't contain \"owo\".";
+			new PrivateMessage(Utente.getGion()).send(msg);
 		}
 		
 		//if (msgStrippedLowerCase.contains("splitta questo"))
