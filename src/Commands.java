@@ -410,7 +410,7 @@ public class Commands extends ListenerAdapter
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
 		var reazioni = new ArrayList<String>();
-		var emojis = findEmojis(msgStrippedLowerCase);
+		//var emojis = findEmojis(msgStrippedLowerCase);
 		
 		if (msgStrippedLowerCase.contains("ehi modulo"))
 			ehiModulo();
@@ -419,9 +419,7 @@ public class Commands extends ListenerAdapter
 			new ThreadPigeon(authorName, channel).start();
 		
 		if (msgStrippedLowerCase.contains("owo"))
-		{
 			reazioni.add(Emotes.OwO);
-		}
 		
 		//if (msgStrippedLowerCase.contains("splitta questo"))
 		//	splitMsgAndReply();
