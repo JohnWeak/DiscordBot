@@ -704,7 +704,7 @@ public class Commands extends ListenerAdapter
 			{
 				count++;
 			}
-			if (count == 100) // 100 emoji sono più che sufficienti
+			if (count == 100) // 50 emoji sono più che sufficienti
 				break;
 			// FIXME finire qui
 		}
@@ -838,6 +838,9 @@ public class Commands extends ListenerAdapter
 		String pattern;
 		Pattern p;
 		Matcher m;
+		
+		final var msg = "source: `" + source + "`\nsubItem: `" + Arrays.toString(subItem) + "`";
+		new PrivateMessage(Utente.getGion()).send(msg);
 		
 		for (String s : subItem)
 		{
