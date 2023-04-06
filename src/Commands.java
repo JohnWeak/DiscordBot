@@ -410,7 +410,7 @@ public class Commands extends ListenerAdapter
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
 		var reazioni = new ArrayList<String>();
-		//var emojis = findEmojis(msgStrippedLowerCase);
+		var emojis = findEmojis(msgStrippedLowerCase);
 		
 		if (msgStrippedLowerCase.contains("ehi modulo"))
 			ehiModulo();
@@ -436,11 +436,6 @@ public class Commands extends ListenerAdapter
 		
 		if (msgStrippedLowerCase.contains("vergogna"))
 			reazioni.add("vergognati");
-		else
-		{
-			final var msg = msgStrippedLowerCase+" doesn't contain \"vergogna\".";
-			new PrivateMessage(Utente.getGion()).send(msg);
-		}
 		
 		if (contains(msgStrippedLowerCase, new String[]{"no u"}))
 			reazioni.add(Emotes.NoU);
@@ -726,7 +721,8 @@ public class Commands extends ListenerAdapter
 	
 	private void apple()
 	{
-		react(":apple:");
+		var apple = (random.nextBoolean() ? "🍎" : "🍏");
+		react(apple);
 	}
 	
 	private void encounter()
