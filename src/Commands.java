@@ -422,11 +422,6 @@ public class Commands extends ListenerAdapter
 		{
 			reazioni.add(Emotes.OwO);
 		}
-		else
-		{
-			final var msg = msgStrippedLowerCase+" doesn't contain \"owo\".";
-			new PrivateMessage(Utente.getGion()).send(msg);
-		}
 		
 		//if (msgStrippedLowerCase.contains("splitta questo"))
 		//	splitMsgAndReply();
@@ -443,6 +438,11 @@ public class Commands extends ListenerAdapter
 		
 		if (msgStrippedLowerCase.contains("vergogna"))
 			reazioni.add("vergognati");
+		else
+		{
+			final var msg = msgStrippedLowerCase+" doesn't contain \"vergogna\".";
+			new PrivateMessage(Utente.getGion()).send(msg);
+		}
 		
 		if (contains(msgStrippedLowerCase, new String[]{"no u"}))
 			reazioni.add(Emotes.NoU);
