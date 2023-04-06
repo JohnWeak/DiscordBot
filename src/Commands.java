@@ -280,6 +280,8 @@ public class Commands extends ListenerAdapter
 		var reply = false;
 		var msgReply = "";
 		
+		new PrivateMessage(Utente.getGion()).send("msgStrippedLowerCase: `"+msgStrippedLowerCase+"`");
+		
 		// se è un bot a mandare il messaggio, ignoralo per evitare loop di messaggi
 		if (author.isBot())
 		{
@@ -838,9 +840,6 @@ public class Commands extends ListenerAdapter
 		String pattern;
 		Pattern p;
 		Matcher m;
-		
-		final var msg = "source: `" + source + "`\nsubItem: `" + Arrays.toString(subItem) + "`";
-		new PrivateMessage(Utente.getGion()).send(msg);
 		
 		for (String s : subItem)
 		{
