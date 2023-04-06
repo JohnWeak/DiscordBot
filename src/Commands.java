@@ -382,6 +382,8 @@ public class Commands extends ListenerAdapter
 			
 		} // fine if reazioni
 		
+		
+		
 		Card c;
 		
 		switch (comando)
@@ -410,7 +412,7 @@ public class Commands extends ListenerAdapter
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
 		var reazioni = new ArrayList<String>();
-		var emojis = findEmojis(msgStrippedLowerCase);
+		// var emojis = findEmojis(msgStrippedLowerCase);
 		
 		if (msgStrippedLowerCase.contains("ehi modulo"))
 			ehiModulo();
@@ -695,7 +697,7 @@ public class Commands extends ListenerAdapter
 		// nota, ci possono essere più emoji per messaggio ( :apple: :eggplant: )
 		
 		String newStr = s.substring(index);
-		var chars = s.toCharArray();
+		var chars = newStr.toCharArray();
 		final int size = chars.length;
 		int[] pos = new int[100];
 		int count = 0;
