@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
+import net.dv8tion.jda.api.utils.AttachmentOption;
 import org.jetbrains.annotations.NotNull;
 
 import org.json.simple.JSONArray;
@@ -191,6 +192,9 @@ public class Commands extends ListenerAdapter
 				enigmo.send("<:"+Emotes.ragey+">");
 			}
 		}
+		
+		if (messageRaw.equals("values"))
+			gion.send(Arrays.toString(AttachmentOption.values()));
 		
 		checkForKeywords(message.getContentStripped().toLowerCase());
 		
