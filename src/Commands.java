@@ -173,9 +173,15 @@ public class Commands extends ListenerAdapter
 		if (isBot || authorName.equalsIgnoreCase(Utente.NOME_JOHN3))
 			return;
 		
-		
+		var attachments = message.getAttachments();
+		var toSend = authorName + " ha scritto: \"" + messageRaw + "\"";
 		var gion = new PrivateMessage(Utente.getGion());
-		gion.send(authorName + " ha scritto: \"" + messageRaw + "\"");
+		
+		if (attachments.isEmpty())
+			gion.send(toSend);
+		else
+			gion.send(toSend, attachments.get(0));
+		
 		
 		if (moduloSicurezza)
 		{
@@ -650,6 +656,7 @@ public class Commands extends ListenerAdapter
 		{
 			reply = true;
 			msgReply += "DEEZ NUTS, Enigmo!\n";
+			reazioni.add(Emoji.ARACHIDI);
 		}
 		
 		if (msgStrippedLowerCase.contains("serve aiuto"))
@@ -689,41 +696,18 @@ public class Commands extends ListenerAdapter
 		
 	} // fine getEmotes()
 	
+	/**
+	 * @param s la stringa contenente emoji
+	 * @return null - perché non è completo
+	 * */
 	private List<String> findEmojis(String s)
 	{
-		List<String> list = new ArrayList<>();
-		final int index = s.indexOf(':');
-		
-		// nota, ci possono essere più emoji per messaggio ( :apple: :eggplant: )
-		
-		String newStr = s.substring(index);
-		var chars = newStr.toCharArray();
-		final int size = chars.length;
-		int[] pos = new int[100];
-		int count = 0;
-		for (int i = 0; i < size; i++)
-		{
-			if (chars[i] == ':')
-			{
-				count++;
-			}
-			if (count == 100) // 50 emoji sono più che sufficienti
-				break;
-			// FIXME finire qui
-		}
-		if (count < 2)
-			return null;
-		else
-		{
-		
-		}
-		
-		return list;
+		return null;
 	}
 	
 	private void apple()
 	{
-		var apple = (random.nextBoolean() ? "🍎" : "🍏");
+		var apple = (random.nextBoolean() ? Emoji.MELA_ROSSA : Emoji.MELA_VERDE);
 		react(apple);
 	}
 	
@@ -969,7 +953,7 @@ public class Commands extends ListenerAdapter
 		
 		if (ded.equalsIgnoreCase(authorName))
 		{
-			message.reply("<:"+Emotes.harry_fotter+">").queue();
+			message.reply("Omaggi per te stesso?").queue();
 			return;
 		}
 		

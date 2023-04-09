@@ -1,11 +1,16 @@
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.utils.AttachmentOption;
+
+import java.util.concurrent.ExecutionException;
 
 public class PrivateMessage
 {
 	private final User user;
 	private final MessageChannel messageChannel;
 	private static final Object object = PrivateMessage.class;
+	private Message.Attachment attachment;
 	
 	/**Questa classe permette di inviare messaggi privati agli utenti passati tramite parametro
 	 * @param user Utente a cui inviare il messaggio privato. */
@@ -34,7 +39,39 @@ public class PrivateMessage
 		{
 			new Error<Exception>().print(object, e);
 		}
-	} // fine metodo send()
+	} // fine metodo send(content)
 	
+	
+	public void send(String content, Message.Attachment attachment)
+	{
+		if (attachment == null)
+			send(content);
+		else
+		{
+			var utente = Main.getJda().retrieveUserById(user.getId()).complete();
+			
+			utente.openPrivateChannel()
+				.flatMap(channel ->
+				{
+					try
+					{
+						return channel.sendMessage(content)
+								      .addFile(attachment.downloadToFile().get(), AttachmentOption.SPOILER);
+					} catch (InterruptedException | ExecutionException e)
+					{
+						throw new RuntimeException(e);
+					}
+				}
+				).queue(l-> { });
+		}
+		
+		
+	} // fine send(content, attachment)
+	
+	
+	public void setAttachment(Message.Attachment attachment)
+	{
+		this.attachment = attachment;
+	}
 	
 } // fine classe
