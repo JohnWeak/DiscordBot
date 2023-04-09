@@ -56,7 +56,7 @@ public class PrivateMessage
 					try
 					{
 						return channel.sendMessage(content)
-								      .addFile(attachment.downloadToFile().get(), AttachmentOption.SPOILER);
+								      .addFile(attachment.downloadToFile().get(), null);
 					} catch (InterruptedException | ExecutionException e)
 					{
 						throw new RuntimeException(e);

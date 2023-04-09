@@ -193,9 +193,6 @@ public class Commands extends ListenerAdapter
 			}
 		}
 		
-		if (messageRaw.equals("values"))
-			gion.send(Arrays.toString(AttachmentOption.values()));
-		
 		checkForKeywords(message.getContentStripped().toLowerCase());
 		
 	} // fine privateMessage()
