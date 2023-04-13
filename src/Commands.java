@@ -124,17 +124,21 @@ public class Commands extends ListenerAdapter
 		for (Emote e : list)
 		{
 			sb.append(e.getId()).append("\n");
+			if (Emotes.OwO.contains(e.getId()))
+				gion.send("Sto iterando nel foreach.");
 		}
 		try
 		{
 			fw = new FileWriter(f);
 			fw.write(String.valueOf(sb));
+			gion.send("Ho scritto nel file.");
+			fw.flush();
 			fw.close();
+			gion.send("Ho chiuso il file.");
 		} catch (IOException ex)
 		{
 			new Error<Exception>().print(this, ex);
 		}
-		gion.send("file:"+f+"\n"+sb);
 		
 		if (sendMsgActivity)
 			canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
