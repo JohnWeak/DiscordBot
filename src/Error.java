@@ -2,6 +2,7 @@ import java.util.Arrays;
 
 public class Error <T>
 {
+	/**Invia un messaggio privato a Gion contenente i dettagli dell'errore*/
 	public void print(Object object, T t)
 	{
 		var type = t.getClass().toString();

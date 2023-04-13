@@ -87,6 +87,8 @@ public class Commands extends ListenerAdapter
 		var jda = event.getJDA();
 		var nome = jda.getSelfUser().getName();
 		var act = jda.getPresence().getActivity();
+		var list = event.getJDA().getEmotes();
+		
 		String activityType="act_type", nomeActivity="act_name", activityTradotta="act_trad";
 		PrivateMessage gion = new PrivateMessage(Utente.getGion());
 		
@@ -115,6 +117,7 @@ public class Commands extends ListenerAdapter
 		//threadActivity.start();
 		
 		gion.send("Riavvio completato.");
+		gion.send("Lista emote: " + list);
 		
 		if (sendMsgActivity)
 			canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
