@@ -117,7 +117,24 @@ public class Commands extends ListenerAdapter
 		//threadActivity.start();
 		
 		gion.send("Riavvio completato.");
-		gion.send("Lista emote: " + list);
+		File f = new File("emotes.txt");
+		FileWriter fw;
+		StringBuilder sb = new StringBuilder();
+		
+		for (Emote e : list)
+		{
+			sb.append(e.getId()).append("\n");
+		}
+		try
+		{
+			fw = new FileWriter(f);
+			fw.write(String.valueOf(sb));
+			fw.close();
+		} catch (IOException ex)
+		{
+			new Error<Exception>().print(this, ex);
+		}
+		
 		
 		if (sendMsgActivity)
 			canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
