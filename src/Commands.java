@@ -134,7 +134,7 @@ public class Commands extends ListenerAdapter
 		{
 			new Error<Exception>().print(this, ex);
 		}
-		
+		gion.send("file:"+f+"\n"+sb);
 		
 		if (sendMsgActivity)
 			canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
