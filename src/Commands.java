@@ -46,6 +46,7 @@ public class Commands extends ListenerAdapter
 	public static TextChannel canaleBot;
 	private static final boolean moduloSicurezza = false;
 	private static final boolean sendMsgActivity = false;
+	private static List<Emote> emoteList;
 	
 	
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
@@ -87,7 +88,7 @@ public class Commands extends ListenerAdapter
 		var jda = event.getJDA();
 		var nome = jda.getSelfUser().getName();
 		var act = jda.getPresence().getActivity();
-		var list = event.getJDA().getEmotes();
+		emoteList = event.getJDA().getEmotes();
 		
 		String activityType="act_type", nomeActivity="act_name", activityTradotta="act_trad";
 		PrivateMessage gion = new PrivateMessage(Utente.getGion());
@@ -117,24 +118,24 @@ public class Commands extends ListenerAdapter
 		//threadActivity.start();
 		
 		gion.send("Riavvio completato.");
-		File f = new File("emotes.txt");
-		FileWriter fw;
-		StringBuilder sb = new StringBuilder();
-		
-		for (Emote e : list)
-		{
-			sb.append(e.getId()).append("\n");
-		}
-		
-		try
-		{
-			fw = new FileWriter(f);
-			fw.write(String.valueOf(sb));
-			fw.close();
-		} catch (IOException ex)
-		{
-			new Error<Exception>().print(this, ex);
-		}
+//		File f = new File("emotes.txt");
+//		FileWriter fw;
+//		StringBuilder sb = new StringBuilder();
+//
+//		for (Emote e : emoteList)
+//		{
+//			sb.append(e.getId()).append("\n");
+//		}
+//
+//		try
+//		{
+//			fw = new FileWriter(f);
+//			fw.write(String.valueOf(sb));
+//			fw.close();
+//		} catch (IOException ex)
+//		{
+//			new Error<Exception>().print(this, ex);
+//		}
 		
 		if (sendMsgActivity)
 			canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
@@ -253,7 +254,9 @@ public class Commands extends ListenerAdapter
 		id = event.getMessageIdLong();
 		message = channel.getHistory().getMessageById(id);
 		
-		// System.out.println("Reaction: " + event.getReaction());
+		var gion = new PrivateMessage(Utente.getGion());
+		
+		gion.send("Reaction: " + event);
 		
 		var emoteString = emote.toString().split(":")[1].split("\\(")[0];
 		try
