@@ -1,4 +1,5 @@
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
@@ -47,6 +48,7 @@ public class Commands extends ListenerAdapter
 	private static final boolean moduloSicurezza = false;
 	private static final boolean sendMsgActivity = false;
 	private static List<Emote> emoteList;
+	private static JDA jda;
 	
 	
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
@@ -85,7 +87,7 @@ public class Commands extends ListenerAdapter
 	{
 		commandsHashMap = Cmd.init();
 		
-		var jda = event.getJDA();
+		jda = event.getJDA();
 		var nome = jda.getSelfUser().getName();
 		var act = jda.getPresence().getActivity();
 		emoteList = event.getJDA().getEmotes();
@@ -302,6 +304,7 @@ public class Commands extends ListenerAdapter
 		var reply = false;
 		var msgReply = "";
 		
+		emoteList = jda.getEmotes();
 		
 		// se è un bot a mandare il messaggio, ignoralo per evitare loop di messaggi
 		if (author.isBot())
@@ -318,7 +321,7 @@ public class Commands extends ListenerAdapter
 					var size = msgSplittato.length;
 					var auth = "";
 					var numGiorni = 0;
-					//var gion = new PrivateMessage(Utente.getGion());
+					
 					var channelHistory = channel.getHistory().retrievePast(3).complete();
 					
 					try
@@ -333,7 +336,6 @@ public class Commands extends ListenerAdapter
 								break;
 							}
 						}
-						//gion.send("Daily di " + auth +": "+numGiorni);
 					} // fine try
 					catch (Exception e)
 					{
