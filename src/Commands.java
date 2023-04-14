@@ -131,7 +131,6 @@ public class Commands extends ListenerAdapter
 			fw = new FileWriter(f);
 			fw.write(String.valueOf(sb));
 			fw.close();
-			
 		} catch (IOException ex)
 		{
 			new Error<Exception>().print(this, ex);
@@ -324,7 +323,7 @@ public class Commands extends ListenerAdapter
 					var size = msgSplittato.length;
 					var auth = "";
 					var numGiorni = 0;
-					var gion = new PrivateMessage(Utente.getGion());
+					//var gion = new PrivateMessage(Utente.getGion());
 					var channelHistory = channel.getHistory().retrievePast(3).complete();
 					
 					try
@@ -339,7 +338,7 @@ public class Commands extends ListenerAdapter
 								break;
 							}
 						}
-						gion.send("Daily di " + auth +": "+numGiorni);
+						//gion.send("Daily di " + auth +": "+numGiorni);
 					} // fine try
 					catch (Exception e)
 					{
