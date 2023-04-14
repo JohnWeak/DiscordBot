@@ -253,13 +253,20 @@ public class Commands extends ListenerAdapter
 		channel = event.getChannel();
 		id = event.getMessageIdLong();
 		message = channel.getHistory().getMessageById(id);
+		boolean isEmoji = emote.isEmoji();
 		
-		var emoteName = emote.getName();
-		var emoteId = emote.getId();
+		String emoteName, emoteId="";
+		
+		emoteName = emote.getName();
+		
+		if (!isEmoji)
+		{
+			emoteId = emote.getId();
+		}
 		
 		try
 		{
-			if (event.getReaction().toString().contains("U+"))
+			if (isEmoji)
 				channel.addReactionById(id, emoteName).queue();
 			else
 				react(emoteName+":"+emoteId);
