@@ -260,20 +260,11 @@ public class Commands extends ListenerAdapter
 		if (!isEmoji)
 			emoteId = emote.getId();
 		
+		String reaction = (isEmoji ? emoteName : emoteName+":"+emoteId);
+		
 		try
 		{
-			if (isEmoji)
-				react(emoteName);
-			else
-				react(emoteName+":"+emoteId);
-			
-			//if (message.getAuthor().getDiscriminator().equalsIgnoreCase(Utente.BOWOT))
-			//{
-			//	if (authorName.contains(Utente.NOME_ENIGMO) && emote.getName().contains("vergogna") && random.nextInt(10) == 0)
-			//	{
-			//		channel.sendMessage("Enigmo come ti permetti di reagire ad un mio messaggio <:" + Emotes.everyone + ">").queue();
-			//	}
-			//}
+			react(reaction);
 		}
 		catch (Exception e)
 		{
