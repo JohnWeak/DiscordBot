@@ -254,11 +254,11 @@ public class Commands extends ListenerAdapter
 		id = event.getMessageIdLong();
 		message = channel.getHistory().getMessageById(id);
 		
+		var emoteName = emote.getName();
+		var emoteId = emote.getId();
+		
 		try
 		{
-			var emoteName = emote.getName();
-			var emoteId = emote.getId();
-			
 			if (event.getReaction().toString().contains("U+"))
 				channel.addReactionById(id, emoteName).queue();
 			else
