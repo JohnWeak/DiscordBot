@@ -258,16 +258,12 @@ public class Commands extends ListenerAdapter
 		var s = String.format("Event `%s` in channel `%s` with reaction `%s`", event, event.getChannel(), event.getReaction());
 //		gion.send(s);
 		var name = emote.getName();
-		var emoteString = emote.toString().split(":")[1].split("\\(")[0];
-		
-		gion.send("emote.getName() = `"+ name+"`\nemoteString = `" + emoteString+"`.");
-		
 		try
 		{
 			if (event.getReaction().toString().contains("U+"))
-				channel.addReactionById(id, emoteString).queue();
+				channel.addReactionById(id, name).queue();
 			else
-				react(emote.getName());
+				react(String.valueOf(emote));
 			
 			//if (message.getAuthor().getDiscriminator().equalsIgnoreCase(Utente.BOWOT))
 			//{
