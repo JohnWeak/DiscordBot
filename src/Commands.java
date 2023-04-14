@@ -255,19 +255,15 @@ public class Commands extends ListenerAdapter
 		message = channel.getHistory().getMessageById(id);
 		boolean isEmoji = emote.isEmoji();
 		
-		String emoteName, emoteId="";
-		
-		emoteName = emote.getName();
+		String emoteName = emote.getName(), emoteId = "";
 		
 		if (!isEmoji)
-		{
 			emoteId = emote.getId();
-		}
 		
 		try
 		{
 			if (isEmoji)
-				channel.addReactionById(id, emoteName).queue();
+				react(emoteName);
 			else
 				react(emoteName+":"+emoteId);
 			
