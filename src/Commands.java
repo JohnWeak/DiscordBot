@@ -255,8 +255,9 @@ public class Commands extends ListenerAdapter
 		message = channel.getHistory().getMessageById(id);
 		
 		var gion = new PrivateMessage(Utente.getGion());
+		var s = String.format("Event {%s} in channel {%s} with reaction {%s}", event, event.getChannel(), event.getReaction());
 		
-		gion.send("Reaction: " + event);
+		gion.send(s);
 		
 		var emoteString = emote.toString().split(":")[1].split("\\(")[0];
 		try
