@@ -255,15 +255,16 @@ public class Commands extends ListenerAdapter
 		message = channel.getHistory().getMessageById(id);
 		
 		var gion = new PrivateMessage(Utente.getGion());
-		var s = String.format("Event `%s` in channel `%s` with reaction `%s`", event, event.getChannel(), event.getReaction());
-//		gion.send(s);
-		var name = emote.getName();
+		var s = String.format("Event `%s` in channel %s with reaction `%s`", event, event.getChannel(), event.getReaction());
+		gion.send(s);
+		var emoteName = emote.getName();
+		var emoteId = emote.getId();
 		try
 		{
 			if (event.getReaction().toString().contains("U+"))
-				channel.addReactionById(id, name).queue();
+				channel.addReactionById(id, emoteName).queue();
 			else
-				react(String.valueOf(emote));
+				react(emoteName+":"+emoteId);
 			
 			//if (message.getAuthor().getDiscriminator().equalsIgnoreCase(Utente.BOWOT))
 			//{
