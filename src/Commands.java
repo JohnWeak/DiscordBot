@@ -256,16 +256,18 @@ public class Commands extends ListenerAdapter
 		
 		var gion = new PrivateMessage(Utente.getGion());
 		var s = String.format("Event `%s` in channel `%s` with reaction `%s`", event, event.getChannel(), event.getReaction());
-		
-		gion.send(s);
-		
+//		gion.send(s);
+		var name = emote.getName();
 		var emoteString = emote.toString().split(":")[1].split("\\(")[0];
+		
+		gion.send("emote.getName() = `"+ name+"`\nemoteString = `" + emoteString+"`.");
+		
 		try
 		{
 			if (event.getReaction().toString().contains("U+"))
 				channel.addReactionById(id, emoteString).queue();
 			else
-				react(emoteString);
+				react(emote.getName());
 			
 			//if (message.getAuthor().getDiscriminator().equalsIgnoreCase(Utente.BOWOT))
 			//{
@@ -884,10 +886,10 @@ public class Commands extends ListenerAdapter
 		else
 		{
 			var timeInSeconds = Integer.parseInt(msgSplittato[1]); // time to sleep in seconds
-			String reason = "";
+			StringBuilder reason = new StringBuilder();
 			
 			for (String s : msgSplittato)
-				reason += s + " ";
+				reason.append(s).append(" ");
 			
 			// Todo: migliorare il timer per permettere di impostare i minuti o le ore
 			//  e potergli dare un nome
@@ -902,7 +904,7 @@ public class Commands extends ListenerAdapter
 					channel.sendMessage("Hai inserito un numero non valido. Timer non impostato.").queue();
 					return;
 				}
-				new ThreadTimer(message, timeInSeconds, author, reason).start();
+				new ThreadTimer(message, timeInSeconds, author, reason.toString()).start();
 			} catch (Exception e)
 			{
 				new Error<Exception>().print(object, e);
@@ -962,7 +964,7 @@ public class Commands extends ListenerAdapter
 
 	} // fine coinflip()
 	
-	/**Metodo che rende omaggio al defunto specificato dall'utente.<br>Uso: <b>!f < stringa ></b>*/
+	/**Metodo che rende omaggio al defunto specificato dall'utente.<br>Uso: <b>!f &lt;stringa&gt; </b>*/
 	public void payRespect()
 	{
 		if (messageRaw.split(" ")[1] == null)
@@ -1185,7 +1187,7 @@ public class Commands extends ListenerAdapter
 	/** Aggiunge una reazione all'ultimo messaggio inviato */
 	public static void react(String emote)
 	{
-		var emoteDaUsare = Emotes.emoteDaUsare(emote);
+		var emoteDaUsare = Emotes.emoteDaUsare(emote.toLowerCase());
 		
 		if (emoteDaUsare.equals(""))
 			return;
