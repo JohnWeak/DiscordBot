@@ -696,7 +696,7 @@ public class Commands extends ListenerAdapter
 			
 			if (matchFound)
 			{
-				String actTrad, name, tipo, saluto, activity;
+				String actTrad, name, tipo, saluto, activity, risposta;
 				
 				actTrad = Main.getActivityTradotta();
 				name = act.getName();
@@ -704,14 +704,12 @@ public class Commands extends ListenerAdapter
 				saluto = (random.nextInt(5) == 3) ? getSaluto() : "Ciao";
 				activity = actTrad.equals("guardo") ? "guardando " : "giocando a";
 				
-				
-				var risposta = String.format("%s, sto %s **%s**", saluto, activity, name);
+				risposta = String.format("%s, sto %s **%s**", saluto, activity, name);
 				risposta += tipo.equals("gioco") ? " ("+tipo+")." : ".";
 				
 				message.reply(risposta).queue();
 			}
 		}
-		
 		
 		
 		
