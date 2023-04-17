@@ -705,7 +705,7 @@ public class Commands extends ListenerAdapter
 				activity = actTrad.equals("guardo") ? "guardando " : "giocando a";
 				
 				
-				var risposta = String.format("%s, sto %s **%s**.", saluto, activity, name);
+				var risposta = String.format("%s, sto %s **%s**", saluto, activity, name);
 				risposta += tipo.equals("gioco") ? " ("+tipo+")." : ".";
 				
 				message.reply(risposta).queue();
