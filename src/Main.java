@@ -18,6 +18,7 @@ public class Main
 {
 	static final String token = System.getenv("TOKEN");
 	private static JDA jda;
+	private static Activity activity;
 	
 	public static void main(String[] args)
 	{
@@ -25,6 +26,7 @@ public class Main
 		
 		if (jda != null)
 			jda.upsertCommand("pog", "questo è un comando slash. woah.").queue();
+		
 	} // fine metodo main()
 	
 	private static JDA generateJDA()
@@ -43,16 +45,10 @@ public class Main
 		return jda;
 	} // fine generateJDA()
 	
-	public static JDA getJda()
-	{
-		return jda;
-	}
-	
 	public static Activity selectActivity()
 	{
 		var random = new Random();
 		String giocoScelto, showScelto, easterEggScelto;
-		Activity activity;
 		
 		final String[] games =
 		{
@@ -78,20 +74,22 @@ public class Main
 			"Caccia a Ottobre Rosso", "Ghost in the Shell", "Into the Spiderverse", "La Teoria del Tutto",
 			"Kingsman: Secret Service", "Lupin III: The First", "Kubo e la spada magica", "Megamind",
 			"Shawn of the dead", "Star Trek", "Soul", "your name.", "Bullet Train", "Il diritto di contare",
-			"Up", "X-MEN", "Omicidio all'italiana", "Morbius", "L'era Glaciale"
+			"Up", "X-MEN", "Omicidio all'italiana", "Morbius", "L'era Glaciale", "Super Mario Bros. (2023)",
+			"Dungeons&Dragons: l'onore dei ladri"
 		};
 		
 		final String[] series =
 		{
 			"Dr. House", "Lie to me", "Mr. Robot", "Sherlock", "The Mentalist", "Forever", "Elementary",
-			"Breaking Bad", "Limitless", "Squid Game"
+			"Breaking Bad", "Limitless", "Squid Game", "LOST"
 		};
 
 		final String[] easterEgg =
 		{
 			"Òbito che perde soldi in borsa", "Enigmo che simpa per Yano",
 			"Gion che mangia una pizza con ananas", "Lex che guida un'auto elettrica",
-			"il mondo bruciare", "una partita di calcio", "gli americani spararsi a vicenda"
+			"il mondo bruciare", "una partita di calcio", "gli americani spararsi a vicenda",
+			"un gender reveal party finito male", "le tipe nude attraverso lo spioncino della porta"
 		};
 		
 		var percent = random.nextInt(100);
@@ -107,7 +105,7 @@ public class Main
 			};
 			activity = Activity.watching(showScelto);
 		}
-		else if (percent <= 95)// play: 46-95
+		else if (percent <= 95) // play: 46-95
 		{
 			giocoScelto = games[random.nextInt(games.length)];
 			activity = Activity.playing(giocoScelto);
@@ -117,7 +115,21 @@ public class Main
 			easterEggScelto = easterEgg[random.nextInt(easterEgg.length)];
 			activity = Activity.watching(easterEggScelto);
 		}
+		
 		return activity;
 	} // fine selectActivity()
+	
+	/**@return l'attività che il bot sta eseguendo al momento*/
+	public static Activity getActivity()
+	{
+		return activity;
+	}
+	
+	/**@return l'istanza del JDA*/
+	public static JDA getJda()
+	{
+		return jda;
+	}
+	
 	
 } // fine classe Main

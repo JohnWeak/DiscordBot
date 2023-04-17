@@ -34,10 +34,7 @@ public class Ore
 	
 	public String getMinuti()
 	{
-		if (minuti == 0)
-			return "";
-		else
-			return numeriParole[minuti];
+		return (minuti == 0 ? "" : numeriParole[minuti]);
 	}
 	
 	

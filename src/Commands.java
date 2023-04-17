@@ -161,8 +161,8 @@ public class Commands extends ListenerAdapter
 		else
 			privateMessage(author.isBot());
 	
-		if (random.nextInt(500) == 42)
-			Main.getJda().getPresence().setActivity(Main.selectActivity());
+		if (random.nextInt(100) == 42)
+			jda.getPresence().setActivity(Main.selectActivity());
 		
 		
 	} // fine onMessageReceived()
@@ -682,6 +682,31 @@ public class Commands extends ListenerAdapter
 			reply = true;
 			msgReply += "Nemico assente!\n";
 		}
+		
+		int i;
+		var x = message.getMentionedUsers();
+		
+		if (!x.isEmpty() && x.get(0).getDiscriminator().equals(Utente.BOWOT))
+		{
+			boolean matchFound = false;
+			String[] cases = {"che fai", "cosa fai", "che stai facendo", ""};
+			Activity act = Main.getActivity();
+			final int size = cases.length;
+			for (i = 0; i < size; i++)
+				if (msgStrippedLowerCase.contains(cases[i]))
+					matchFound = true;
+			
+			act = Main.getActivity();
+			var risp = "";
+			if (matchFound)
+				risp += act.getType() + " " + act.getName();
+			
+			message.reply(risp).queue();
+		}
+		
+		
+		
+		
 		
 		
 		/*if (msgStrippedLowerCase.contains("activity"))
