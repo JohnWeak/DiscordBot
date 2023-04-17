@@ -116,11 +116,12 @@ public class Commands extends ListenerAdapter
 		
 		// moduloDiSicurezza();
 		
-		//threadActivity = new ThreadActivity(true);
-		//threadActivity.start();
+		if (sendMsgActivity)
+			canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
 		
 		gion.send("Riavvio completato.");
-//		File f = new File("emotes.txt");
+
+		//		File f = new File("emotes.txt");
 //		FileWriter fw;
 //		StringBuilder sb = new StringBuilder();
 //
@@ -138,9 +139,6 @@ public class Commands extends ListenerAdapter
 //		{
 //			new Error<Exception>().print(this, ex);
 //		}
-		
-		if (sendMsgActivity)
-			canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
 	} // fine onReady()
 
 	/** Questo metodo decide cosa fare quando un messaggio viene modificato */
@@ -689,16 +687,17 @@ public class Commands extends ListenerAdapter
 		if (!x.isEmpty() && x.get(0).getDiscriminator().equals(Utente.BOWOT))
 		{
 			boolean matchFound = false;
-			String[] cases = {"che fai", "cosa fai", "che stai facendo"};
+			String[] cases = {"che fai", "cosa fai", "che stai facendo", "cazzo fai", "minchia fai"};
 			Activity act = Main.getActivity();
 			final int size = cases.length;
 			for (i = 0; i < size; i++)
 				if (msgStrippedLowerCase.contains(cases[i]))
 					matchFound = true;
 			
-			var risp = "";
+			String risp="";
+			var activityTradotta = act.getType().toString().equals("WATCHING") ? "guardo " : "gioco a ";
 			if (matchFound)
-				risp += act.getType() + " " + act.getName();
+				risp = activityTradotta + " " + act.getName();
 			
 			message.reply(risp).queue();
 		}
