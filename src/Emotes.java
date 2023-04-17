@@ -47,6 +47,7 @@ public abstract class Emotes
 	public static final String thonking = "thonking:596753589666447377";
 	public static final String what = "what:913701372996759593";
 	public static final String monkaSTEER = "monkaSTEER:869346241794949140";
+	public static final String lonk = "lonk:1095778061229768755";
 	// public static final String emote = "";
 	
 	
@@ -132,6 +133,7 @@ public abstract class Emotes
 			case "thonking" -> thonking;
 			case "what" -> what;
 			case "monkasteer" -> monkaSTEER;
+			case "lonk" -> lonk;
 			
 			default -> s;
 		};

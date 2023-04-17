@@ -21,7 +21,8 @@ public class Ore
 			this.ore = ore;
 			this.minuti = minuti;
 		}
-		else System.out.println("Errore! Ore o minuti sbagliati.");
+		else
+			new Error<String>().print(this,"Errore! Ore o minuti sbagliati.");
 	}
 	
 	
@@ -43,7 +44,7 @@ public class Ore
 	//SETTER
 	public void setOre(int ore)
 	{
-		if (ore > -1 && ore < 60)
+		if (ore > -1 && ore < 25)
 			this.ore = ore;
 	}
 	
@@ -54,4 +55,4 @@ public class Ore
 	}
 	
 	
-}
+} // fine classe Ore
