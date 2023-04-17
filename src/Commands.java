@@ -701,7 +701,7 @@ public class Commands extends ListenerAdapter
 				actTrad = Main.getActivityTradotta();
 				name = act.getName();
 				tipo = Main.getTipo();
-				saluto = getSaluto();
+				saluto = (random.nextInt(5) == 3) ? getSaluto() : "Ciao";
 				activity = actTrad.equals("guardo") ? "guardando " : "giocando a";
 				
 				
