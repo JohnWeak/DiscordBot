@@ -696,7 +696,6 @@ public class Commands extends ListenerAdapter
 				if (msgStrippedLowerCase.contains(cases[i]))
 					matchFound = true;
 			
-			act = Main.getActivity();
 			var risp = "";
 			if (matchFound)
 				risp += act.getType() + " " + act.getName();
