@@ -695,9 +695,8 @@ public class Commands extends ListenerAdapter
 					matchFound = true;
 			
 			String risp="";
-			var activityTradotta = act.getType().toString().equals("WATCHING") ? "guardo " : "gioco a ";
 			if (matchFound)
-				risp = activityTradotta + " " + act.getName();
+				risp = Main.getActivityTradotta() + act.getName();
 			
 			message.reply(risp).queue();
 		}

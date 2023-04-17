@@ -125,6 +125,18 @@ public class Main
 		return activity;
 	}
 	
+	/**@return il tipo di attività tradotta in italiano e formattata.*/
+	public static String getActivityTradotta()
+	{
+		return getActivityType().toString().equals("WATCHING") ? "guardo " : "gioco a ";
+	}
+	
+	/**@return il tipo di attività: guarda/gioca*/
+	public static Activity.ActivityType getActivityType()
+	{
+		return activity.getType();
+	}
+	
 	/**@return l'istanza del JDA*/
 	public static JDA getJda()
 	{
