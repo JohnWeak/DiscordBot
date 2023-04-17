@@ -19,6 +19,7 @@ public class Main
 	static final String token = System.getenv("TOKEN");
 	private static JDA jda;
 	private static Activity activity;
+	private static String tipo = "anime/gioco/serieTv";
 	
 	public static void main(String[] args)
 	{
@@ -96,23 +97,41 @@ public class Main
 		
 		if (percent <= 45) // watch: 0-45
 		{
-			showScelto = switch (random.nextInt(3))
+			switch (random.nextInt(3))
 			{
-				case 0 -> anime[random.nextInt(anime.length)];
-				case 1 -> movies[random.nextInt(movies.length)];
-				case 2 -> series[random.nextInt(series.length)];
-				default -> "il nulla cosmico";
-			};
+				case 0 ->
+				{
+					showScelto=anime[random.nextInt(anime.length)];
+					tipo = "Anime";
+				}
+				case 1 ->
+				{
+					showScelto = movies[random.nextInt(movies.length)];
+					tipo = "Film";
+				}
+				case 2 ->
+				{
+					showScelto = series[random.nextInt(series.length)];
+					tipo = "Serie TV";
+				}
+				default ->
+				{
+					showScelto = "il nulla cosmico";
+					tipo = null;
+				}
+			}
 			activity = Activity.watching(showScelto);
 		}
 		else if (percent <= 95) // play: 46-95
 		{
 			giocoScelto = games[random.nextInt(games.length)];
+			tipo = "Gioco";
 			activity = Activity.playing(giocoScelto);
 		}
 		else // easter egg: 96-99
 		{
 			easterEggScelto = easterEgg[random.nextInt(easterEgg.length)];
+			tipo = "Easter Egg";
 			activity = Activity.watching(easterEggScelto);
 		}
 		
@@ -135,6 +154,12 @@ public class Main
 	public static Activity.ActivityType getActivityType()
 	{
 		return activity.getType();
+	}
+	
+	/**@return la stringa che descrive il tipo di activity eseguita dal bot*/
+	public static String getTipo()
+	{
+		return tipo;
 	}
 	
 	/**@return l'istanza del JDA*/
