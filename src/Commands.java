@@ -696,7 +696,7 @@ public class Commands extends ListenerAdapter
 			
 			String risp="";
 			if (matchFound)
-				risp = Main.getActivityTradotta() + act.getName() + "("+Main.getTipo()+")";
+				risp = Main.getActivityTradotta() + act.getName() + " ("+Main.getTipo()+")";
 			
 			message.reply(risp).queue();
 		}
