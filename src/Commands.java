@@ -694,11 +694,22 @@ public class Commands extends ListenerAdapter
 				if (msgStrippedLowerCase.contains(cases[i]))
 					matchFound = true;
 			
-			String risp="";
 			if (matchFound)
-				risp = Main.getActivityTradotta() + act.getName() + " ("+Main.getTipo()+")";
-			
-			message.reply(risp).queue();
+			{
+				String actTrad, name, tipo, saluto, activity;
+				
+				actTrad = Main.getActivityTradotta();
+				name = act.getName();
+				tipo = Main.getTipo();
+				saluto = getSaluto() + ", ";
+				activity = actTrad.equals("guardo") ? "guardando " : "giocando a";
+				
+				
+				var risposta = String.format("%s, sto %s **%s**.", saluto, activity, name);
+				risposta += tipo.equals("gioco") ? "." : " ("+tipo+").";
+				
+				message.reply(risposta).queue();
+			}
 		}
 		
 		
