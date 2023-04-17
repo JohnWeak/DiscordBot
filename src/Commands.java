@@ -689,7 +689,7 @@ public class Commands extends ListenerAdapter
 		if (!x.isEmpty() && x.get(0).getDiscriminator().equals(Utente.BOWOT))
 		{
 			boolean matchFound = false;
-			String[] cases = {"che fai", "cosa fai", "che stai facendo", ""};
+			String[] cases = {"che fai", "cosa fai", "che stai facendo"};
 			Activity act = Main.getActivity();
 			final int size = cases.length;
 			for (i = 0; i < size; i++)
