@@ -706,7 +706,7 @@ public class Commands extends ListenerAdapter
 				
 				
 				var risposta = String.format("%s, sto %s **%s**.", saluto, activity, name);
-				risposta += tipo.equals("gioco") ? "." : " ("+tipo+").";
+				risposta += tipo.equals("gioco") ? " ("+tipo+")." : ".";
 				
 				message.reply(risposta).queue();
 			}
