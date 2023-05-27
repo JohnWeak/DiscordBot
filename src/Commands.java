@@ -734,9 +734,15 @@ public class Commands extends ListenerAdapter
 
 	private void dioporco()
 	{
-		var f = new File("/res/nomiPokemon.txt");
-		message.reply("AAAA: " + Arrays.toString(f.listFiles())).queue();
+		var cwd = new File(".");
+		var f = new File("/res/");
+		var prefix = "cwd: ";
+		var list = cwd.list();
 
+		message.reply(prefix + Arrays.toString(list)).queue();
+		list = f.list();
+		prefix = "res: ";
+		message.reply(prefix + Arrays.toString(list)).queue();
 
 	} // fine dioporco()
 
