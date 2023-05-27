@@ -5,7 +5,6 @@ import org.json.simple.parser.JSONParser;
 
 import java.awt.*;
 import java.io.*;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -39,9 +38,15 @@ public class Pokemon
 	{
 		var pm = new PrivateMessage(Utente.getGion());
 		this.pokedex = pokedex;
-		final var dir = new File("/json_pokemon");
 		final var cwd = new File(".");
 		final var files = cwd.listFiles();
+
+		if (files == null)
+		{
+			for (int i = 0; i < 10; i++)
+				System.out.println("PANICO PANICO PANICO FILES=NULL AAAAAAAAAAAAAAA");
+			return;
+		}
 		var path = new StringBuilder();
 		
 		for (File f : files)

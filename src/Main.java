@@ -58,7 +58,7 @@ public class Main
 			"A Plague Tale", "Subnautica", "OneShot", "Child of Light", "Ghost Trick: Phantom Detective",
 			"XCOM 2", "Papers, Please", "Celeste", "The Stanley Parable", "To The Moon", "GTA: San Andreas",
 			"Fallout: New Vegas", "Half-Life 2", "Divinity: Original Sin 2", "Dark Souls", "Hollow Knight",
-			"Celeste", "Total War: Shogun 2", "Lawn Moving Simulator", "Tetris"
+			"Celeste", "Total War: Shogun 2", "Lawn Moving Simulator", "Tetris", "Outer Wilds"
 		};
 		
 		final String[] anime =
@@ -71,7 +71,7 @@ public class Main
 		
 		final String[] movies =
 		{
-			"WALL•E", "Avatar", "Avatar 2", "Big Hero 6", "Deadpool", "Dragon Trainer", "Freaks Out",
+			"WALL•E", "Big Hero 6", "Deadpool", "Dragon Trainer", "Freaks Out", "Il diritto di contare",
 			"Caccia a Ottobre Rosso", "Ghost in the Shell", "Into the Spiderverse", "La Teoria del Tutto",
 			"Kingsman: Secret Service", "Lupin III: The First", "Kubo e la spada magica", "Megamind",
 			"Shawn of the dead", "Star Trek", "Soul", "your name.", "Bullet Train", "Il diritto di contare",
@@ -82,7 +82,7 @@ public class Main
 		final String[] series =
 		{
 			"Dr. House", "Lie to me", "Mr. Robot", "Sherlock", "The Mentalist", "Forever", "Elementary",
-			"Breaking Bad", "Limitless", "Squid Game", "LOST"
+			"Breaking Bad", "Limitless", "Squid Game", "LOST", "Arcane"
 		};
 
 		final String[] easterEgg =

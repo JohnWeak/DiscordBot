@@ -430,6 +430,7 @@ public class Commands extends ListenerAdapter
 			// case "!ch" -> channelHistory();
 			case "!testpokemon", "!tp" -> testPokemon();
 			case "!apple" -> apple();
+			case "!dioporco" -> dioporco();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -529,8 +530,7 @@ public class Commands extends ListenerAdapter
 		
 		if (msgStrippedLowerCase.contains("live") && author.getDiscriminator().equals(Utente.OBITO))
 			reazioni.add(Emotes.harry_fotter);
-		
-		
+
 		// a questo punto smetto di controllare se ci siano reazioni e le aggiungo effettivamente al messaggio
 		if (!reazioni.isEmpty())
 		{
@@ -731,7 +731,15 @@ public class Commands extends ListenerAdapter
 			message.reply("***ULTIMO AVVISO: __NON FARLO MAI PIÙ__.***").queue();
 		
 	} // fine checkForKeywords()
-	
+
+	private void dioporco()
+	{
+		var f = new File("/res/nomiPokemon.txt");
+		message.reply("AAAA: " + Arrays.toString(f.listFiles())).queue();
+
+
+	} // fine dioporco()
+
 	/**Ottiene le emote custom del canale*/
 	private void getEmotes()
 	{
