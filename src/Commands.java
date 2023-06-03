@@ -735,8 +735,8 @@ public class Commands extends ListenerAdapter
 	private void dioporco()
 	{
 		var cwd = new File(".");
-		var parent_dir = new File("../");
-		var f = new File("../res");
+		var parent_dir = new File("..");
+		var f = new File("../Bot");
 		String prefix, msgReply="";
 		String[] list;
 
