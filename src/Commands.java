@@ -21,6 +21,9 @@ import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -735,31 +738,35 @@ public class Commands extends ListenerAdapter
 	private void dioporco()
 	{
 		File cwd, parent_dir, f;
-		String prefix, msgReply="";
+		String prefix, msgReply="", line="";
 		String[] list;
-		InputStream inputStream = null;
-
+		BufferedReader reader = null;
+	
 		cwd = new File(".");
 		parent_dir = new File("..");
-		f = new File("../Bot/nomiPokemon.txt");
+//		f = new File("../Bot/nomiPokemon.txt");
+		
+		Path path = Paths.get("../Bot/nomiPokemon.txt");
 		
 		try
 		{
-			inputStream = new FileInputStream(f);
-			msgReply += inputStream.read();
+			reader = Files.newBufferedReader(path);
+			line = reader.readLine();
+			msgReply += line;
 
-		}catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			new PrivateMessage(Utente.getGion()).send("AAAARGH errore catastrofico:\n" + e);
 			return;
 		}
 		finally
 		{
-			if (inputStream != null)
+			if (reader != null)
 			{
 				try
 				{
-					inputStream.close();
+					reader.close();
 				}catch (IOException e) { e.printStackTrace(); }
 			}
 		}
