@@ -737,11 +737,34 @@ public class Commands extends ListenerAdapter
 		File cwd, parent_dir, f;
 		String prefix, msgReply="";
 		String[] list;
+		InputStream inputStream = null;
 
 		cwd = new File(".");
 		parent_dir = new File("..");
-		f = new File("../Bot");
+		f = new File("../Bot/nomiPokemon.txt");
+		
+		try
+		{
+			inputStream = new FileInputStream(f);
+			msgReply += inputStream.read();
 
+		}catch (Exception e)
+		{
+			new PrivateMessage(Utente.getGion()).send("AAAARGH errore catastrofico:\n" + e);
+			return;
+		}
+		finally
+		{
+			if (inputStream != null)
+			{
+				try
+				{
+					inputStream.close();
+				}catch (IOException e) { e.printStackTrace(); }
+			}
+		}
+		
+		/* ******************************
 		list = cwd.list();
 		prefix = "`cwd`: ";
 		msgReply += prefix + Arrays.toString(list) + "\n\n";
@@ -753,6 +776,7 @@ public class Commands extends ListenerAdapter
 		list = parent_dir.list();
 		prefix = "`parent_dir`: ";
 		msgReply += prefix + Arrays.toString(list) + "\n\n";
+		****************/
 
 		message.reply(msgReply).queue();
 
