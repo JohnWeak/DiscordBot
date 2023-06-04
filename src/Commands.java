@@ -737,19 +737,13 @@ public class Commands extends ListenerAdapter
 
 	private void dioporco()
 	{
-		File cwd, parent_dir, f;
-		String prefix, msgReply="", line="";
-		String[] list;
+		String msgReply="", line;
 		BufferedReader reader = null;
-	
-		cwd = new File(".");
-		parent_dir = new File("..");
-//		f = new File("../Bot/nomiPokemon.txt");
-		
-		Path path = Paths.get("../Bot/nomiPokemon.txt");
+		Path path;
 		
 		try
 		{
+			path = Paths.get("nomiPokemon.txt");
 			reader = Files.newBufferedReader(path);
 			line = reader.readLine();
 			msgReply += line;
@@ -771,20 +765,6 @@ public class Commands extends ListenerAdapter
 			}
 		}
 		
-		/* ******************************
-		list = cwd.list();
-		prefix = "`cwd`: ";
-		msgReply += prefix + Arrays.toString(list) + "\n\n";
-
-		list = f.list();
-		prefix = "`f`: ";
-		msgReply += prefix + Arrays.toString(list) + "\n\n";
-
-		list = parent_dir.list();
-		prefix = "`parent_dir`: ";
-		msgReply += prefix + Arrays.toString(list) + "\n\n";
-		****************/
-
 		message.reply(msgReply).queue();
 
 	} // fine dioporco()
