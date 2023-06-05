@@ -769,8 +769,7 @@ public class Commands extends ListenerAdapter
 		try
 		{
 			reader = Files.newBufferedReader(data);
-			for (int i = 0; i < x; i++)
-				m = reader.readLine();
+			m = reader.readLine();
 			
 		} catch (IOException e)
 		{
