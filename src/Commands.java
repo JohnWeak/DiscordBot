@@ -747,7 +747,7 @@ public class Commands extends ListenerAdapter
 		{
 			reader = Files.newBufferedReader(path);
 			for (int i = 0; i < x; i++)
-				nome = reader.readLine();
+				nome = reader.readLine().toLowerCase();
 			
 		} catch (IOException e)
 		{
