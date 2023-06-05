@@ -737,15 +737,16 @@ public class Commands extends ListenerAdapter
 
 	private void dioporco()
 	{
-		StringBuilder m = new StringBuilder();
 		BufferedReader reader = null;
 		int x = random.nextInt(1,10);
-		Path path = Paths.get("./json/nomiPokemon.txt");
+		String m = x+"\n", nome = "";
+		Path data, path = Paths.get("./json/nomiPokemon.txt");
+		
 		try
 		{
 			reader = Files.newBufferedReader(path);
 			for (int i = 0; i < x; i++)
-				m.append(reader.readLine());
+				nome = reader.readLine();
 			
 		} catch (IOException e)
 		{
@@ -764,13 +765,35 @@ public class Commands extends ListenerAdapter
 				}
 			}
 		}
+		data = Paths.get("./json/"+nome+".json");
+		try
+		{
+			reader = Files.newBufferedReader(data);
+			for (int i = 0; i < x; i++)
+				m = reader.readLine();
+			
+		} catch (IOException e)
+		{
+			throw new RuntimeException(e);
+		}
+		finally
+		{
+			try
+			{
+				reader.close();
+			} catch (IOException e)
+			{
+				new Error<String>().print(this, "Impossibile chiudere il reader2 nella funzione dioporco()");
+			}
+		}
 		
-		message.reply(m.toString()).queue();
+		
+		message.reply(m).queue();
 		
 		
 		
-		if (random.nextInt(10) == 0)
-			message.reply("Non bestemmiare il nostro signore e salvatore **cl__z**.").queue();
+		//if (random.nextInt(10) == 0)
+		//	message.reply("Non bestemmiare il nostro signore e salvatore **cl__z**.").queue();
 
 	} // fine dioporco()
 
