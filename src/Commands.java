@@ -737,6 +737,7 @@ public class Commands extends ListenerAdapter
 
 	private void dioporco()
 	{
+		PrivateMessage pm = new PrivateMessage(Utente.getGion());
 		BufferedReader reader = null;
 		int x = random.nextInt(1,10);
 		String m = x+"\n", nome = "";
@@ -750,7 +751,7 @@ public class Commands extends ListenerAdapter
 			
 		} catch (IOException e)
 		{
-			throw new RuntimeException(e);
+			pm.send("`PRIMO CATCH:`\n" + e);
 		}
 		finally
 		{
@@ -773,13 +774,14 @@ public class Commands extends ListenerAdapter
 			
 		} catch (IOException e)
 		{
-			throw new RuntimeException(e);
+			pm.send("`SECONDO CATCH:`\n" + e);
 		}
 		finally
 		{
 			try
 			{
-				reader.close();
+				if (reader != null)
+					reader.close();
 			} catch (IOException e)
 			{
 				new Error<String>().print(this, "Impossibile chiudere il reader2 nella funzione dioporco()");
