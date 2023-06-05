@@ -5,16 +5,22 @@ import org.json.simple.parser.JSONParser;
 
 import java.awt.*;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Pokemon
 {
 	private static final Object object = Pokemon.class;
+	public static final String FILE_LOCATION = "nomiPokemon.txt";
 	
-	private static final File nomiPokemon = new File("nomiPokemon.txt");
+	private static final File nomiPokemon = new File(FILE_LOCATION);
 	private static final Random random = new Random();
 	private final boolean pokedex;
+	private final int max = 898;
 	
 	private String nome;
 	private String img;
@@ -38,58 +44,39 @@ public class Pokemon
 	{
 		var pm = new PrivateMessage(Utente.getGion());
 		this.pokedex = pokedex;
-		final var cwd = new File(".");
-		final var files = cwd.listFiles();
-
-		if (files == null)
+		
+		String msgReply="", line="";
+		BufferedReader reader = null;
+		Path path, path2;
+		
+		if (id > max)
+			return;
+		
+		try
 		{
-			for (int i = 0; i < 10; i++)
-				System.out.println("PANICO PANICO PANICO FILES=NULL AAAAAAAAAAAAAAA");
+			path = Paths.get(Pokemon.FILE_LOCATION);
+			reader = Files.newBufferedReader(path);
+			for (int i = 0; i < id; i++)
+				line = reader.readLine();
+			
+			nome = line;
+			
+		}
+		catch (Exception e)
+		{
+			new PrivateMessage(Utente.getGion()).send("AAAARGH errore catastrofico:\n" + e);
 			return;
 		}
-		var path = new StringBuilder();
-		
-		for (File f : files)
+		finally
 		{
-			if (f.isDirectory())
-				path.append("Directory: ").append(f.getName()).append("\n");
-			else
-				path.append("File: ").append(f.getName()).append("\n");
-			
-			try
+			if (reader != null)
 			{
-				path.append("Canonical Path: ").append(f.getCanonicalPath()).append("\n\n");
-				
-			}catch (IOException e)
-			{
-				new Error<Exception>().print(object, e);
+				try
+				{
+					reader.close();
+				}catch (IOException e) { e.printStackTrace(); }
 			}
-			
 		}
-		var pog = String.valueOf(path);
-		String[] parts = new String[]{" "," "};
-		if (pog.length() > 2000)
-		{
-			parts[0] = pog.substring(0, 2000);
-			if (pog.length() > 4000)
-				parts[1] = pog.substring(2000, 4000);
-			else
-				parts[1] = pog.substring(2000);
-		}
-		
-		for (String s : parts)
-			pm.send(s);
-		
-		
-		/*final var pokemons = dir.listFiles();
-		if (!dir.exists() || pokemons == null)
-		{
-			pm.send("`dir doesn't exist`");
-			return;
-		}
-		
-		final int max = pokemons.length;
-		
 		// determina se il pokemon sarà shiny
 		if (random.nextInt(8142) == 42)
 			shiny = true;
@@ -100,10 +87,10 @@ public class Pokemon
 		for (int index : individualValues)
 			individualValues[index] = random.nextInt(32); // IVs: 0-31
 		
-		if (id <= 0 || id > max)
+		if (id <= 0)
 			id = random.nextInt(1, max+1);
 		
-		
+		/* ***********************************
 		// prendere i dati dal .json
 		JSONObject data = getJsonObject(pokemons[id]);
 		
@@ -129,8 +116,8 @@ public class Pokemon
 		pm.send("descrizione: " + descrizione);
 		pm.send("generazione: " + generazione);
 		pm.send("tipo/i: " + Arrays.toString(tipo));
+		*****************************************************/
 		
-		*/
 	} // fine costruttore
 	
 	

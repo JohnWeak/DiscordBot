@@ -737,35 +737,40 @@ public class Commands extends ListenerAdapter
 
 	private void dioporco()
 	{
-		String msgReply="", line;
+		StringBuilder m = new StringBuilder();
 		BufferedReader reader = null;
-		Path path;
-		
+		int x = random.nextInt(1,10);
+		Path path = Paths.get("./json/nomiPokemon.txt");
 		try
 		{
-			path = Paths.get("nomiPokemon.txt");
 			reader = Files.newBufferedReader(path);
-			line = reader.readLine();
-			msgReply += line;
-
-		}
-		catch (Exception e)
+			for (int i = 0; i < x; i++)
+				m.append(reader.readLine());
+			
+		} catch (IOException e)
 		{
-			new PrivateMessage(Utente.getGion()).send("AAAARGH errore catastrofico:\n" + e);
-			return;
+			throw new RuntimeException(e);
 		}
 		finally
 		{
-			if (reader != null)
+			if (reader!= null)
 			{
 				try
 				{
 					reader.close();
-				}catch (IOException e) { e.printStackTrace(); }
+				} catch (IOException e)
+				{
+					new Error<String>().print(this, "Impossibile chiudere il reader nella funzione dioporco()");
+				}
 			}
 		}
 		
-		message.reply(msgReply).queue();
+		message.reply(m.toString()).queue();
+		
+		
+		
+		if (random.nextInt(10) == 0)
+			message.reply("Non bestemmiare il nostro signore e salvatore **cl__z**.").queue();
 
 	} // fine dioporco()
 
