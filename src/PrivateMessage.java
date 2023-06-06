@@ -1,7 +1,6 @@
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.utils.AttachmentOption;
 
 import java.util.concurrent.ExecutionException;
 
@@ -50,19 +49,17 @@ public class PrivateMessage
 		{
 			var utente = Main.getJda().retrieveUserById(user.getId()).complete();
 			
-			utente.openPrivateChannel()
-				.flatMap(channel ->
+			utente.openPrivateChannel().flatMap(channel ->
+			{
+				try
 				{
-					try
-					{
-						return channel.sendMessage(content)
-								      .addFile(attachment.downloadToFile().get(), null);
-					} catch (InterruptedException | ExecutionException e)
-					{
-						throw new RuntimeException(e);
-					}
+					return channel.sendMessage(content)
+						.addFile(attachment.downloadToFile().get(), null);
+				} catch (InterruptedException | ExecutionException e)
+				{
+					throw new RuntimeException(e);
 				}
-				).queue(l-> { });
+			}).queue(l-> { });
 		}
 		
 		
