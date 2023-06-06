@@ -108,7 +108,7 @@ public class Commands extends ListenerAdapter
 		}
 		catch (Exception e)
 		{
-			new Error<Exception>().print(object, e);
+			error.print(object, e);
 		}
 		
 		if (act != null)
@@ -141,7 +141,7 @@ public class Commands extends ListenerAdapter
 //			fw.close();
 //		} catch (IOException ex)
 //		{
-//			new Error<Exception>().print(this, ex);
+//			error.print(this, ex);
 //		}
 	} // fine onReady()
 
@@ -272,7 +272,7 @@ public class Commands extends ListenerAdapter
 		}
 		catch (Exception e)
 		{
-			new Error<Exception>().print(object, e);
+			error.print(object, e);
 		}
 	} // fine onMessageReactionAdd
 	
@@ -341,7 +341,7 @@ public class Commands extends ListenerAdapter
 					} // fine try
 					catch (Exception e)
 					{
-						new Error<Exception>().print(object, e);
+						error.print(object, e);
 					} // fine catch
 					
 					if (numGiorni == 0 || !(numGiorni % 365 == 0))
@@ -435,6 +435,7 @@ public class Commands extends ListenerAdapter
 			case "!testpokemon", "!tp" -> testPokemon();
 			case "!apple" -> apple();
 			case "!dioporco" -> dioporco();
+			case "!debug" -> debug();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -963,7 +964,7 @@ public class Commands extends ListenerAdapter
 			msgSplittato = messageRaw.split(" ");
 		}catch (Exception e)
 		{
-			new Error<Exception>().print(object, e);
+			error.print(object, e);
 			return;
 		}
 		
@@ -996,7 +997,7 @@ public class Commands extends ListenerAdapter
 				new ThreadTimer(message, timeInSeconds, author, reason.toString()).start();
 			} catch (Exception e)
 			{
-				new Error<Exception>().print(object, e);
+				error.print(object, e);
 			}
 		}
 	} // fine timer()
@@ -1149,7 +1150,7 @@ public class Commands extends ListenerAdapter
 			
 			channel.sendTyping().queue();
 			try { Thread.sleep(sleepInterval); }
-			catch (InterruptedException e) { new Error<Exception>().print(object, e); }
+			catch (InterruptedException e) { error.print(object, e); }
 			channel.sendMessageEmbeds(embedBuilder.build()).queue();
 		}
 		else
@@ -1176,6 +1177,18 @@ public class Commands extends ListenerAdapter
 		
 	} // fine sondaggio()
 
+	private void debug()
+	{
+		if (author.equals(Utente.getGion()))
+		{
+			String reply = "`Pokemon debug is ";
+			Pokemon.debug = !Pokemon.debug;
+			reply += Pokemon.debug ? "on.`" : "off.`";
+			message.reply(reply).queue();
+		}
+		
+	} // fine debug()
+	
 	/** Infastidisce le persone */
 	public void triggera(String discriminator)
 	{
@@ -1315,7 +1328,7 @@ public class Commands extends ListenerAdapter
 		} // fine try
 		catch (ErrorResponseException e)
 		{
-			new Error<Exception>().print(object, e);
+			error.print(object, e);
 		}
 	} // fine react()
 	
@@ -1438,7 +1451,7 @@ public class Commands extends ListenerAdapter
 		try { Thread.sleep(millis + random.nextInt(bound)); }
 		catch (InterruptedException e)
 		{
-			new Error<Exception>().print(object, e);
+			error.print(object, e);
 		}
 	} // fine pause()
 	
@@ -1450,15 +1463,15 @@ public class Commands extends ListenerAdapter
 		int anno = currentYear;
 		var msg = messageRaw.toLowerCase().split(" ");
 		if (msg.length > 1)
+		{
 			try
 			{
 				anno = Integer.parseInt(msg[1]);
-			}
-			catch (NumberFormatException e)
+			} catch (NumberFormatException e)
 			{
-				new Error<Exception>().print(object, e);
+				error.print(object, e);
 			}
-		
+		}
 		
 		if (anno < 2013 || anno > currentYear)
 		{
@@ -1544,22 +1557,22 @@ public class Commands extends ListenerAdapter
 			final var massShootingSite = "https://www.MassShootingTracker.site/";
 			var embed = new EmbedBuilder()
 				.setColor(Color.RED)
-				.addField("Sparatorie negli USA", ""+sparatorie, true);
+				.addField("Sparatorie negli USA", sparatorie, true);
 				
 			if (anno == currentYear)
 				embed.addField(daysField);
 			else
 				embed.addField(vittimeField);
 				
-			embed.addField("Cronaca",""+finalResp,false)
-				.setFooter(""+massShootingSite,""+footerURL);
+			embed.addField("Cronaca",finalResp,false)
+				.setFooter(massShootingSite,footerURL);
 			
 			channel.sendMessageEmbeds(embed.build()).queue();
 			
 		}
 		catch (IOException | ParseException e)
 		{
-			new Error<Exception>().print(object, e);
+			error.print(object, e);
 		}
 	} // fine massShooting()
 	
@@ -1637,19 +1650,21 @@ public class Commands extends ListenerAdapter
 	
 	/**<strong>
 	 * IL MODULO DI SICUREZZA SI OCCUPA DI MANTENERE IL BOT AL SICURO. STAI LONTANDO DAL BOT.
+	 * @params <strong>NESSUN PARAMETRO.</strong>
 	 * @return <strong>NIENTE.</strong>
 	 */
 	public void ehiModulo()
 	{
+		String discr = author.getDiscriminator();
+		int hotkey = "ehi modulo".length();
+		boolean authorized = discr.equals(Utente.GION);
+		String reply;
+		
 		if (!moduloSicurezza)
 		{
 			message.reply("**IL MODULO DI SICUREZZA È STATO DISATTIVATO DA GION. PER QUALSIASI INFORMAZIONE SU COME STARE LONTANO DAL BOT, CHIEDI A GION.**").queue();
 			return;
 		}
-		
-		var discr = author.getDiscriminator();
-		var hotkey = "ehi modulo".length();
-		var authorized = discr.equals(Utente.GION);
 		
 		String[] messaggiScortesi =
 		{
@@ -1670,10 +1685,9 @@ public class Commands extends ListenerAdapter
 			"FAI UNA SPEEDRUN SU VAINGLORY INVECE CHE GUARDARE IL BOT", "CI SONO MOLTE COSE CHE PUOI GUARDARE AD OCCHIO NUDO INVECE CHE IL BOT: IL SOLE, AD ESEMPIO.",
 			"SE IL BOT È IL ROAD RUNNER, TU SEI WILE E. COYOTE", "SONO CERTO CHE HAI DI MEGLIO DA FARE CHE INFASTIDIRE IL BOT.",
 			"NESSUNO TOCCA IL BOT E SOPRAVVIVE PER RACCONTARLO.", "IL BOT È ANDATO A FARE LA SPESA: LASCIA UN MESSAGGIO E __NON__ SARAI RICONTATTATO.",
-			"NELL'ERA POST-COVID DEVI STARE AD ALMENO 2 METRI DAL BOT."
+			"NELL'ERA POST-COVID DEVI STARE AD ALMENO 2 METRI DAL BOT.", "GIOCA A QUALCHE VIDEOGIOCO INVECE DI PARLARE AL BOT.",
+			"IL BOT È OCCUPATO, NON HA TEMPO DA DEDICARTI."
 		};
-		
-		String reply = "";
 		
 		if (messageRaw.length() <= hotkey)
 			reply = authorized ? "**SONO AI SUOI ORDINI, SIGNORE.**" : "**"+messaggiScortesi[random.nextInt(messaggiScortesi.length)]+"**";
@@ -1715,7 +1729,7 @@ public class Commands extends ListenerAdapter
 			}
 		}catch (Exception e)
 		{
-			new Error<Exception>().print(object, e);
+			error.print(object, e);
 		}
 	} // fine dado()
 	

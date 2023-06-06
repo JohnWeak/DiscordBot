@@ -14,16 +14,23 @@ import java.util.Scanner;
 
 public class Pokemon
 {
+	// UNRELATED TO POKEMON
 	private static final Object object = Pokemon.class;
 	private static final Error<Exception> error = new Error<>();
 	public static final String NAMES_FILE = "nomiPokemon.txt";
 	public static final String JSON_FILES = "./json/";
+	public static boolean debug = false;
 	
+	// FILE
 	private static final File nomiPokemon = new File(NAMES_FILE);
 	private static final Random random = new Random();
 	private final boolean pokedex;
 	public static final int ALL = 898;
+	private JSONArray jsonArray = new JSONArray();
+	private static JSONParser jsonParser = new JSONParser();
+	private EmbedBuilder embedBuilder = null;
 	
+	// POKEMON INFO
 	private String nome;
 	private String img;
 	private boolean shiny = false;
@@ -34,9 +41,6 @@ public class Pokemon
 	private int[] individualValues = new int[6];
 	private boolean catturato = false;
 	private JSONArray types;
-	private JSONArray jsonArray = new JSONArray();
-	private static JSONParser jsonParser = new JSONParser();
-	private EmbedBuilder embedBuilder = null;
 	
 	// private static int pokemon_id = 261; -> Poochyena
 	// https://pokeapi.co/api/v2/pokemon/261/
@@ -61,7 +65,8 @@ public class Pokemon
 				line = reader.readLine();
 			
 			nome = line.toLowerCase();
-			new PrivateMessage(Utente.getGion()).send("`\n\nnome="+nome+"\n\n`");
+			if (debug)
+				new PrivateMessage(Utente.getGion()).send("`\n\nnome="+nome+"\n\n`");
 			jsonFile = new File(JSON_FILES + nome + ".json");
 			
 		}
@@ -113,13 +118,17 @@ public class Pokemon
 		
 		img = (shiny ? urlShinyImg : urlImg);
 		
-		PrivateMessage pm = new PrivateMessage(Utente.getGion());
-		pm.send("nome: " + nome);
-		pm.send("dexNumber: " + dexNumber);
-		pm.send("descrizione: " + descrizione);
-		pm.send("generazione: " + generazione);
-		pm.send("tipo/i: " + Arrays.toString(tipo));
-	
+		if (debug)
+		{
+			PrivateMessage pm = new PrivateMessage(Utente.getGion());
+			pm.send("nome: " + nome);
+			pm.send("dexNumber: " + dexNumber);
+			pm.send("descrizione: " + descrizione);
+			pm.send("generazione: " + generazione);
+			pm.send("tipo/i: " + Arrays.toString(tipo));
+		}
+		
+		embedBuilder = buildEmbed(pokedex);
 		
 	} // fine costruttore
 	
@@ -142,7 +151,9 @@ public class Pokemon
 			var tout = random.nextInt(2, 30);
 			t.setTimeoutTime(t.MINUTES, tout);
 			t.start();
-			new PrivateMessage(Utente.getGion()).send("\nThread alive:" + t.isAlive() + "\ntout: " + tout + "\n");
+			
+			if (debug)
+				new PrivateMessage(Utente.getGion()).send("\nThread alive:" + t.isAlive() + "\ntout: " + tout + "\n");
 		}
 	} // fine startEncounter
 	
