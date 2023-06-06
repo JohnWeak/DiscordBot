@@ -61,6 +61,7 @@ public class Pokemon
 				line = reader.readLine();
 			
 			nome = line.toLowerCase();
+			new PrivateMessage(Utente.getGion()).send("\n\n`nome="+nome+"`\n\n");
 			jsonFile = new File(JSON_FILES + nome + ".json");
 			
 		}
