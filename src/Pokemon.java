@@ -201,7 +201,7 @@ public class Pokemon
 		if (pokedex) // se è una entry del pokedex, mostra le informazioni varie
 		{
 			stringBuilder.append(tipo[0]);
-			if (!(tipo[1].equals(" ")))
+			if (!(tipo[1].equals("")))
 			{
 				stringBuilder.append(" / ").append(tipo[1]);
 			}
