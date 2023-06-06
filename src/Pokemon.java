@@ -17,7 +17,7 @@ public class Pokemon
 	private static final Object object = Pokemon.class;
 	private static final Error<Exception> error = new Error<>();
 	public static final String NAMES_FILE = "nomiPokemon.txt";
-	public static final String JSON_FILES = "json/";
+	public static final String JSON_FILES = "./json/";
 	
 	private static final File nomiPokemon = new File(NAMES_FILE);
 	private static final Random random = new Random();
@@ -61,7 +61,7 @@ public class Pokemon
 				line = reader.readLine();
 			
 			nome = line.toLowerCase();
-			new PrivateMessage(Utente.getGion()).send("\n\n`nome="+nome+"`\n\n");
+			new PrivateMessage(Utente.getGion()).send("`\n\nnome="+nome+"\n\n`");
 			jsonFile = new File(JSON_FILES + nome + ".json");
 			
 		}
