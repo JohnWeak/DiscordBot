@@ -132,18 +132,13 @@ public class Pokemon
 			pm.send("tipo/i: " + Arrays.toString(tipo));
 		}
 		
-		embedBuilder = buildEmbed(pokedex);
-		
 	} // fine costruttore
 	
 	
 	public void spawn(Pokemon pokemon)
 	{
 		if (embedBuilder == null)
-		{
-			new Error<String>().print(object, "`Can't execute because embedBuilder is null`");
-			return;
-		}
+			embedBuilder = buildEmbed(pokedex);
 		
 		if (pokedex)
 		{
