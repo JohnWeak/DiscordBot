@@ -20,6 +20,7 @@ public class Pokemon
 	public static final String NAMES_FILE = "nomiPokemon.txt";
 	public static final String JSON_FILES = "./json/";
 	public static boolean debug = false;
+	private final PrivateMessage pm = new PrivateMessage(Utente.getGion());
 	
 	// FILE
 	private static final File nomiPokemon = new File(NAMES_FILE);
@@ -50,9 +51,9 @@ public class Pokemon
 		this.pokedex = pokedex;
 		File jsonFile;
 		
-		String msgReply="", line="";
+		String line="";
 		BufferedReader reader = null;
-		Path path, path2;
+		Path path;
 		
 		if (id > ALL)
 			return;
@@ -66,7 +67,7 @@ public class Pokemon
 			
 			nome = line.toLowerCase();
 			if (debug)
-				new PrivateMessage(Utente.getGion()).send("`\n\nnome="+nome+"\n\n`");
+				pm.send("`\n\nnome="+nome+"\n\n`");
 			jsonFile = new File(JSON_FILES + nome + ".json");
 			
 		}
@@ -124,7 +125,6 @@ public class Pokemon
 		
 		if (debug)
 		{
-			PrivateMessage pm = new PrivateMessage(Utente.getGion());
 			pm.send("nome: " + nome);
 			pm.send("dexNumber: " + dexNumber);
 			pm.send("descrizione: " + descrizione);

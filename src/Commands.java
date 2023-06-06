@@ -35,6 +35,7 @@ public class Commands extends ListenerAdapter
 {
 	private static final Object object = Commands.class;
 	private static final Error<Exception> error = new Error<>();
+	private static final Error<String> errorString = new Error<>();
 	
 	public static final String botChannel = "\uD83E\uDD16bot-owo";
 	private static final Random random = new Random();
@@ -352,8 +353,7 @@ public class Commands extends ListenerAdapter
 					{
 						if (auth.equals(""))
 						{
-							var e = new Error<String>();
-							e.print(object,"<@"+Utente.ID_GION+">\n`auth è una stringa vuota`.");
+							errorString.print(object,"<@"+Utente.ID_GION+">\n`auth è una stringa vuota`.");
 							return;
 						}
 						
@@ -764,7 +764,7 @@ public class Commands extends ListenerAdapter
 					reader.close();
 				} catch (IOException e)
 				{
-					new Error<String>().print(this, "Impossibile chiudere il reader nella funzione dioporco()");
+					errorString.print(this, "Impossibile chiudere il reader nella funzione dioporco()");
 				}
 			}
 		}
@@ -786,7 +786,7 @@ public class Commands extends ListenerAdapter
 					reader.close();
 			} catch (IOException e)
 			{
-				new Error<String>().print(this, "Impossibile chiudere il reader2 nella funzione dioporco()");
+				errorString.print(this, "Impossibile chiudere il reader2 nella funzione dioporco()");
 			}
 		}
 		
@@ -855,6 +855,13 @@ public class Commands extends ListenerAdapter
 			}
 			
 			p = new Pokemon(idPokemon, pokedex);
+			
+			if (msgSplittato.length > 2)
+			{
+				if (msgSplittato[2].equalsIgnoreCase("s") || msgSplittato[2].equalsIgnoreCase("shiny"))
+					p.setShiny(true);
+			}
+			
 			p.spawn(p);
 			
 		}catch (Exception e)
@@ -927,13 +934,13 @@ public class Commands extends ListenerAdapter
 			
 			if (!matchFound)
 			{
-				Commands.message.reply("Utente non trovato!").queue();
+				message.reply("Utente non trovato!").queue();
 			}
 		}
 		else
 		{
 			var msgUso = "Usa `!dm <utente> [messaggio]` per fare sì che io importuni in privato l'utente da te specificato.";
-			Commands.channel.sendMessage(msgUso).queue();
+			channel.sendMessage(msgUso).queue();
 		}
 		
 	} // fine metodo dm()
