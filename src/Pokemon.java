@@ -22,7 +22,7 @@ public class Pokemon
 	private static final File nomiPokemon = new File(NAMES_FILE);
 	private static final Random random = new Random();
 	private final boolean pokedex;
-	private final int max = 898;
+	public static final int ALL = 898;
 	
 	private String nome;
 	private String img;
@@ -50,7 +50,7 @@ public class Pokemon
 		BufferedReader reader = null;
 		Path path, path2;
 		
-		if (id > max)
+		if (id > ALL)
 			return;
 		
 		try
@@ -91,7 +91,7 @@ public class Pokemon
 			individualValues[index] = random.nextInt(32); // IVs: 0-31
 		
 		if (id <= 0)
-			id = random.nextInt(1, max+1);
+			id = random.nextInt(1, ALL+1);
 		
 		
 		// prendere i dati dal .json

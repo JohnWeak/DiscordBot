@@ -831,7 +831,7 @@ public class Commands extends ListenerAdapter
 	{
 		String[] msgSplittato = messageRaw.split(" ");
 		String nomePokemon;
-		int idPokemon = 0;
+		int idPokemon = random.nextInt(1,Pokemon.ALL);
 		Pokemon p;
 		boolean pokedex;
 		
@@ -841,7 +841,7 @@ public class Commands extends ListenerAdapter
 			{
 				nomePokemon = msgSplittato[1];
 				idPokemon = Pokemon.getId(nomePokemon);
-				if (idPokemon == 0)
+				if (idPokemon <= 0)
 				{
 					message.reply("Il pokedex non ha informazioni su `" + nomePokemon + "`.").queue();
 					return;
