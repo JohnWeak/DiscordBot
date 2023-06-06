@@ -113,12 +113,12 @@ public class Pokemon
 		
 		img = (shiny ? urlShinyImg : urlImg);
 		
-//		PrivateMessage pm = new PrivateMessage(Utente.getGion());
-//		pm.send("nome: " + nome);
-//		pm.send("dexNumber: " + dexNumber);
-//		pm.send("descrizione: " + descrizione);
-//		pm.send("generazione: " + generazione);
-//		pm.send("tipo/i: " + Arrays.toString(tipo));
+		PrivateMessage pm = new PrivateMessage(Utente.getGion());
+		pm.send("nome: " + nome);
+		pm.send("dexNumber: " + dexNumber);
+		pm.send("descrizione: " + descrizione);
+		pm.send("generazione: " + generazione);
+		pm.send("tipo/i: " + Arrays.toString(tipo));
 	
 		
 	} // fine costruttore
