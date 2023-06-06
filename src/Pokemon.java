@@ -109,9 +109,13 @@ public class Pokemon
 		generazione = (String) data.get("generation");
 		
 		tipo[0] = (String) types.get(0);
-		if (types.size() > 1)
-			tipo[1] = (String) types.get(1);
+		tipo[0] = tipo[0].toUpperCase();
 		
+		if (types.size() > 1)
+		{
+			tipo[1] = (String) types.get(1);
+			tipo[1] = tipo[1].toUpperCase();
+		}
 		
 		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png";
 		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/" + id + ".png";
@@ -218,7 +222,7 @@ public class Pokemon
 			if (descrizione != null)
 			{
 				String type = "Type";
-				if (!tipo[1].equals(" "))
+				if (!tipo[1].equals(""))
 					type += "s";
 				
 				embedBuilder.addField("**"+type+"**", types, true);
