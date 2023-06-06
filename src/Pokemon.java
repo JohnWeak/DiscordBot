@@ -34,6 +34,7 @@ public class Pokemon
 	// POKEMON INFO
 	private String nome;
 	private String img;
+	private int id;
 	private boolean shiny = false;
 	private String descrizione;
 	private String[] tipo = new String[]{" "," "};
@@ -50,6 +51,7 @@ public class Pokemon
 	{
 		this.pokedex = pokedex;
 		File jsonFile;
+		this.id = id;
 		
 		String line="";
 		BufferedReader reader = null;
@@ -96,9 +98,6 @@ public class Pokemon
 		for (int index : individualValues)
 			individualValues[index] = random.nextInt(32); // IVs: 0-31
 		
-		if (id <= 0)
-			id = random.nextInt(1, ALL+1);
-		
 		
 		// prendere i dati dal .json
 		JSONObject data = getJsonObject(jsonFile);
@@ -118,11 +117,6 @@ public class Pokemon
 			tipo[1] = tipo[1].toUpperCase();
 		}
 		
-		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png";
-		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/" + id + ".png";
-		
-		img = (shiny ? urlShinyImg : urlImg);
-		
 		if (debug)
 		{
 			pm.send("nome: " + nome);
@@ -134,11 +128,9 @@ public class Pokemon
 		
 	} // fine costruttore
 	
-	
 	public void spawn(Pokemon pokemon)
 	{
-		if (embedBuilder == null)
-			embedBuilder = buildEmbed(pokedex);
+		embedBuilder = buildEmbed(pokedex);
 		
 		if (pokedex)
 		{
@@ -196,6 +188,8 @@ public class Pokemon
 		var embedBuilder = new EmbedBuilder();
 		var stringBuilder = new StringBuilder();
 		var types = "";
+		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png";
+		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/" + id + ".png";
 		
 		if (pokedex) // se è una entry del pokedex, mostra le informazioni varie
 		{
@@ -207,6 +201,8 @@ public class Pokemon
 			types = String.valueOf(stringBuilder);
 			
 			// final String iconURL = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F5%2F53%2FPok%25C3%25A9_Ball_icon.svg%2F1026px-Pok%25C3%25A9_Ball_icon.svg.png&f=1&nofb=1";
+			
+			img = (shiny ? urlShinyImg : urlImg);
 			
 			try
 			{
