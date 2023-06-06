@@ -12,13 +12,14 @@ public class Error <T>
 		if (type.contains("Exception"))
 		{
 			Exception e = (Exception) t;
+			var erClass = object.getClass();
 			var eMsg = e.getMessage();
 			var stackTrace = e.getStackTrace();
 			var stackTraceString = Arrays.toString(stackTrace);
+			var msgToSend = "`" +erClass + "\n" + eMsg + "`\n"+stackTraceString;
 			
-			lessThan2k = lessThan2K(stackTraceString);
-			
-			gion.send("`" + eMsg + "`\n"+lessThan2k);
+			msgToSend = lessThan2K(msgToSend);
+			gion.send(msgToSend);
 		}
 		else if (type.equalsIgnoreCase("String"))
 		{
@@ -34,6 +35,7 @@ public class Error <T>
 	
 	private String lessThan2K(String s)
 	{
+		
 		return s.length() > 2000 ? s.substring(0, 2000) : s;
 	}
 	

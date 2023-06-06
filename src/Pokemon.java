@@ -15,9 +15,11 @@ import java.util.Scanner;
 public class Pokemon
 {
 	private static final Object object = Pokemon.class;
-	public static final String FILE_LOCATION = "nomiPokemon.txt";
+	private static final Error<Exception> error = new Error<>();
+	public static final String NAMES_FILE = "nomiPokemon.txt";
+	public static final String JSON_FILES = "json/";
 	
-	private static final File nomiPokemon = new File(FILE_LOCATION);
+	private static final File nomiPokemon = new File(NAMES_FILE);
 	private static final Random random = new Random();
 	private final boolean pokedex;
 	private final int max = 898;
@@ -27,7 +29,6 @@ public class Pokemon
 	private boolean shiny = false;
 	private String descrizione;
 	private String[] tipo = new String[]{" "," "};
-	private String[] lineaEvolutiva = new String[]{"1","2","3"};
 	private String generazione;
 	private String dexNumber;
 	private int[] individualValues = new int[6];
@@ -42,8 +43,8 @@ public class Pokemon
 	
 	public Pokemon(int id, boolean pokedex)
 	{
-		var pm = new PrivateMessage(Utente.getGion());
 		this.pokedex = pokedex;
+		File jsonFile;
 		
 		String msgReply="", line="";
 		BufferedReader reader = null;
@@ -54,17 +55,18 @@ public class Pokemon
 		
 		try
 		{
-			path = Paths.get(Pokemon.FILE_LOCATION);
+			path = Paths.get(Pokemon.NAMES_FILE);
 			reader = Files.newBufferedReader(path);
 			for (int i = 0; i < id; i++)
 				line = reader.readLine();
 			
-			nome = line;
+			nome = line.toLowerCase();
+			jsonFile = new File(JSON_FILES + nome + ".json");
 			
 		}
 		catch (Exception e)
 		{
-			new PrivateMessage(Utente.getGion()).send("AAAARGH errore catastrofico:\n" + e);
+			error.print(object,e);
 			return;
 		}
 		finally
@@ -74,7 +76,7 @@ public class Pokemon
 				try
 				{
 					reader.close();
-				}catch (IOException e) { e.printStackTrace(); }
+				}catch (IOException e) { error.print(object,e); }
 			}
 		}
 		// determina se il pokemon sarà shiny
@@ -90,9 +92,9 @@ public class Pokemon
 		if (id <= 0)
 			id = random.nextInt(1, max+1);
 		
-		/* ***********************************
+		
 		// prendere i dati dal .json
-		JSONObject data = getJsonObject(pokemons[id]);
+		JSONObject data = getJsonObject(jsonFile);
 		
 		dexNumber = (String) data.get("id");
 		nome = (String) data.get("name");
@@ -110,13 +112,13 @@ public class Pokemon
 		
 		img = (shiny ? urlShinyImg : urlImg);
 		
-		
-		pm.send("nome: " + nome);
-		pm.send("dexNumber: " + dexNumber);
-		pm.send("descrizione: " + descrizione);
-		pm.send("generazione: " + generazione);
-		pm.send("tipo/i: " + Arrays.toString(tipo));
-		*****************************************************/
+//		PrivateMessage pm = new PrivateMessage(Utente.getGion());
+//		pm.send("nome: " + nome);
+//		pm.send("dexNumber: " + dexNumber);
+//		pm.send("descrizione: " + descrizione);
+//		pm.send("generazione: " + generazione);
+//		pm.send("tipo/i: " + Arrays.toString(tipo));
+	
 		
 	} // fine costruttore
 	
@@ -139,7 +141,7 @@ public class Pokemon
 			var tout = random.nextInt(2, 30);
 			t.setTimeoutTime(t.MINUTES, tout);
 			t.start();
-			//new PrivateMessage(Utente.getGion()).send("\nThread alive:" + t.isAlive() + "\ntout: " + tout + "\n");
+			new PrivateMessage(Utente.getGion()).send("\nThread alive:" + t.isAlive() + "\ntout: " + tout + "\n");
 		}
 	} // fine startEncounter
 	
@@ -163,7 +165,7 @@ public class Pokemon
 		}
 		catch (FileNotFoundException e)
 		{
-			new Error<Exception>().print(object, e);
+			error.print(object, e);
 		}
 		
 		JSONObject rtrn = null;
@@ -172,7 +174,7 @@ public class Pokemon
 			rtrn = (JSONObject) jsonParser.parse(String.valueOf(sb));
 		}catch (Exception e)
 		{
-			System.out.println("Errore con "+f.getName());
+			error.print(object,e);
 		}
 		return rtrn;
 	}
@@ -199,7 +201,7 @@ public class Pokemon
 			{
 				embedBuilder.setTitle(nome.toUpperCase());
 			}
-			catch (Exception e) { new Error<Exception>().print(object, e); }
+			catch (Exception e) { error.print(object, e); }
 			
 			if (descrizione != null)
 			{
@@ -207,9 +209,9 @@ public class Pokemon
 				if (!tipo[1].equals(" "))
 					type += "s";
 				
-				embedBuilder.addField("**"+type+"**", ""+types, true);
-				embedBuilder.addField("Generation", ""+generazione, true);
-				embedBuilder.addField("National Dex", ""+dexNumber, true);
+				embedBuilder.addField("**"+type+"**", types, true);
+				embedBuilder.addField("Generation", generazione, true);
+				embedBuilder.addField("National Dex", dexNumber, true);
 				
 				embedBuilder.addField("Pokedex Entry", "*"+descrizione+"*", false);
 				embedBuilder.setThumbnail(img);
@@ -251,7 +253,7 @@ public class Pokemon
 				if (scanner.nextLine().equalsIgnoreCase(nome))
 					break;
 			}
-		}catch (Exception e) { new Error<Exception>().print(object, e); }
+		}catch (Exception e) { error.print(object, e); }
 		return x;
 	}
 	
@@ -263,7 +265,6 @@ public class Pokemon
 	public String[] getTipo() { return tipo; }
 	public String getGenerazione() { return generazione; }
 	public String getDexNumber() { return dexNumber; }
-	public String[] getLineaEvolutiva() { return lineaEvolutiva; }
 	public int[] getIndividualValues() { return individualValues; }
 	public boolean isCatturato() { return catturato; }
 	
@@ -275,7 +276,6 @@ public class Pokemon
 	public void setTipo(String[] tipi) { this.tipo = tipi; }
 	public void setGenerazione(String generazione) { this.generazione = generazione; }
 	public void setDexNumber(String dexNumber) { this.dexNumber = dexNumber; }
-	public void setLineaEvolutiva(String[] lineaEvolutiva) { this.lineaEvolutiva = lineaEvolutiva; }
 	public void setIndividualValues(int[] individualValues) { this.individualValues = individualValues; }
 	public void setCatturato(boolean catturato) { this.catturato = catturato; }
 	

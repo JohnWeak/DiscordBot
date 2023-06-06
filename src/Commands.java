@@ -34,6 +34,7 @@ import java.util.regex.Pattern;
 public class Commands extends ListenerAdapter
 {
 	private static final Object object = Commands.class;
+	private static final Error<Exception> error = new Error<>();
 	
 	public static final String botChannel = "\uD83E\uDD16bot-owo";
 	private static final Random random = new Random();
@@ -857,7 +858,7 @@ public class Commands extends ListenerAdapter
 			
 		}catch (Exception e)
 		{
-			new Error<Exception>().print(object, e);
+			error.print(object, e);
 		}
 	} // fine encounter()
 	
@@ -886,7 +887,7 @@ public class Commands extends ListenerAdapter
 		}
 		catch (Exception e)
 		{
-			new Error<Exception>().print(object, e);
+			error.print(object, e);
 		}
 	}
 	
