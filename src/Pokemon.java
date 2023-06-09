@@ -145,10 +145,11 @@ public class Pokemon
 			
 			if (debug)
 			{
-				PrivateMessage pm = new PrivateMessage(Utente.getGion());
+				final String resp = "nome: " + pokemon.getNome()+"\nimg: " + pokemon.getImg()+"\n";
+				final PrivateMessage pm = new PrivateMessage(Utente.getGion());
+				
 				pm.send("\nThread alive:" + t.isAlive() + "\ntout: " + tout + "\n");
-				pm.send("nome: "+pokemon.getNome());
-				pm.send("img: "+pokemon.getImg());
+				pm.send(resp);
 			}
 		}
 	} // fine startEncounter
