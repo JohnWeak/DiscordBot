@@ -145,8 +145,8 @@ public class Pokemon
 			
 			if (debug)
 			{
-				final String resp = "nome: " + pokemon.getNome()+"\nimg: " + pokemon.getImg()+"\n";
 				final PrivateMessage pm = new PrivateMessage(Utente.getGion());
+				final String resp = "nome: " + pokemon.getNome()+"\nimg: " + pokemon.getImg()+"\n"+"id: "+pokemon.getId();
 				
 				pm.send("\nThread alive:" + t.isAlive() + "\ntout: " + tout + "\n");
 				pm.send(resp);
@@ -271,6 +271,7 @@ public class Pokemon
 	//GETTER
 	public String getNome() { return nome; }
 	public String getImg() { return img; }
+	public int getId() { return id; }
 	public boolean isShiny() { return shiny; }
 	public String getDescrizione() { return descrizione; }
 	public String[] getTipo() { return tipo; }
