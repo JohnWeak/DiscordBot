@@ -34,7 +34,7 @@ public class Pokemon
 	// POKEMON INFO
 	private String nome;
 	private String img;
-	private int id;
+	private final int id;
 	private boolean shiny = false;
 	private String descrizione;
 	private String[] tipo = new String[]{" "," "};
@@ -144,7 +144,12 @@ public class Pokemon
 			t.start();
 			
 			if (debug)
-				new PrivateMessage(Utente.getGion()).send("\nThread alive:" + t.isAlive() + "\ntout: " + tout + "\n");
+			{
+				PrivateMessage pm = new PrivateMessage(Utente.getGion());
+				pm.send("\nThread alive:" + t.isAlive() + "\ntout: " + tout + "\n");
+				pm.send("nome: "+pokemon.getNome());
+				pm.send("img: "+pokemon.getImg());
+			}
 		}
 	} // fine startEncounter
 	
@@ -185,9 +190,9 @@ public class Pokemon
 	/** Genera un embed con il Pokemon */
 	private EmbedBuilder buildEmbed(boolean pokedex)
 	{
-		var embedBuilder = new EmbedBuilder();
-		var stringBuilder = new StringBuilder();
-		var types = "";
+		EmbedBuilder embedBuilder = new EmbedBuilder();
+		StringBuilder stringBuilder = new StringBuilder();
+		String type, types;
 		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png";
 		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/" + id + ".png";
 		
@@ -212,14 +217,13 @@ public class Pokemon
 			
 			if (descrizione != null)
 			{
-				String type = "Type";
+				type = "Type";
 				if (!tipo[1].equals(""))
 					type += "s";
 				
 				embedBuilder.addField("**"+type+"**", types, true);
 				embedBuilder.addField("Generation", generazione, true);
 				embedBuilder.addField("National Dex", dexNumber, true);
-				
 				embedBuilder.addField("Pokedex Entry", "*"+descrizione+"*", false);
 				embedBuilder.setThumbnail(img);
 			}
@@ -228,7 +232,7 @@ public class Pokemon
 				embedBuilder.setImage(img);
 			}
 			
-			var color = shiny ? 0xFFD020 : 0xFF0000;
+			int color = shiny ? 0xFFD020 : 0xFF0000;
 			embedBuilder.setColor(color);
 			
 			if (shiny)
@@ -244,7 +248,6 @@ public class Pokemon
 				.setFooter("Type !catch to capture it.")
 			;
 		}
-		
 		return embedBuilder;
 	} // fine buildEmbed()
 	

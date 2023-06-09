@@ -1468,7 +1468,7 @@ public class Commands extends ListenerAdapter
 	private void massShooting()
 	{
 		int anno = currentYear;
-		var msg = messageRaw.toLowerCase().split(" ");
+		String[] msg = messageRaw.toLowerCase().split(" ");
 		if (msg.length > 1)
 		{
 			try
@@ -1488,7 +1488,7 @@ public class Commands extends ListenerAdapter
 		
 		JSONArray jsonArray;
 		JSONParser jsonParser = new JSONParser();
-		var mortiAnno = 0;
+		int mortiAnno = 0;
 		
 		try
 		{
@@ -1584,31 +1584,11 @@ public class Commands extends ListenerAdapter
 	} // fine massShooting()
 	
 	/** Metodo che restituisce il nome del mese a partire dal suo numero. Esempio:<br>
-	 * <table>
-	 *     <tr>
-	 *         <th>Numero</th>
-	 *         <th>Mese</th>
-	 *     </tr>
-	 *     <tr>
-	 *         <td>1</td>
-	 *         <td>gennaio</td>
-	 *     </tr>
-	 *     <tr>
-	 *          <td>2</td>
-	 *          <td>febbraio</td>
-	 *      </tr>
-	 *     <tr>
-	 *         <td>3</td>
-	 *         <td>marzo</td>
-	 *     </tr>
-	 *     <tr>
-	 *         <td>...</td>
-	 *         <td>...</td>
-	 *     </tr>
-	 *     <tr>
-	 *         <td>12</td>
-	 *         <td>dicembre</td>
-	 *     </tr>
+	 * <table><tr><th>Numero</th><th>Mese</th></tr><tr><td>1</td><td>gennaio</td></tr>
+	 *     <tr><td>2</td><td>febbraio</td></tr>
+	 *     <tr><td>3</td><td>marzo</td></tr>
+	 *     <tr><td>...</td><td>...</td></tr>
+	 *     <tr><td>12</td><td>dicembre</td></tr>
 	 * </table>
 	 * @param mese intero corrispondente al mese.
 	 * @return il nome del mese per iscritto in italiano.*/
