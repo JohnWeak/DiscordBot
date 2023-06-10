@@ -1,4 +1,5 @@
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -21,6 +22,7 @@ public class Pokemon
 	public static final String JSON_FILES = "./json/";
 	public static boolean debug = false;
 	private final PrivateMessage pm = new PrivateMessage(Utente.getGion());
+	private ThreadPokemon thread = null;
 	
 	// FILE
 	private static final File nomiPokemon = new File(NAMES_FILE);
@@ -42,6 +44,8 @@ public class Pokemon
 	private String dexNumber;
 	private int[] individualValues = new int[6];
 	private boolean catturato = false;
+	private boolean catturabile = true;
+	private User owner = null;
 	private JSONArray types;
 	
 	// private static int pokemon_id = 261; -> Poochyena
@@ -138,17 +142,17 @@ public class Pokemon
 		}
 		else
 		{
-			var t = new ThreadPokemon(pokemon, Commands.canaleBotPokemon, embedBuilder);
+			thread = new ThreadPokemon(pokemon, Commands.canaleBotPokemon, embedBuilder);
 			var tout = random.nextInt(2, 30);
-			t.setTimeoutTime(t.MINUTES, tout);
-			t.start();
+			thread.setTimeoutTime(thread.MINUTES, tout);
+			thread.start();
 			
 			if (debug)
 			{
 				final PrivateMessage pm = new PrivateMessage(Utente.getGion());
 				final String resp = "nome: " + pokemon.getNome()+"\nimg: " + pokemon.getImg()+"\n"+"id: "+pokemon.getId();
 				
-				pm.send("\nThread alive:" + t.isAlive() + "\ntout: " + tout + "\n");
+				pm.send("\nThread alive:" + thread.isAlive() + "\ntout: " + tout + "\n");
 				pm.send(resp);
 			}
 		}
@@ -279,6 +283,9 @@ public class Pokemon
 	public String getDexNumber() { return dexNumber; }
 	public int[] getIndividualValues() { return individualValues; }
 	public boolean isCatturato() { return catturato; }
+	public boolean isCatturabile() { return catturabile; }
+	public User getOwner() { return owner; }
+	public Thread getThread() { return thread; }
 	
 	//SETTER
 	public void setNome(String nome) { this.nome = nome;}
@@ -289,7 +296,10 @@ public class Pokemon
 	public void setGenerazione(String generazione) { this.generazione = generazione; }
 	public void setDexNumber(String dexNumber) { this.dexNumber = dexNumber; }
 	public void setIndividualValues(int[] individualValues) { this.individualValues = individualValues; }
+	public void setCatturabile(boolean catturabile) { this.catturabile = catturabile; }
 	public void setCatturato(boolean catturato) { this.catturato = catturato; }
+	public void setOwner(User owner) { this.owner = owner; }
+	public void setThread(ThreadPokemon thread) { this.thread = thread; }
 	
 	
 } // fine classe

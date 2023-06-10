@@ -54,6 +54,7 @@ public class Commands extends ListenerAdapter
 	private static final boolean sendMsgActivity = false;
 	private static List<Emote> emoteList;
 	private static JDA jda;
+	private static Pokemon pokemon;
 	
 	
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
@@ -427,7 +428,7 @@ public class Commands extends ListenerAdapter
 			// case "!emotes" -> getEmotes();
 			case "!smh" -> new ThreadSmh(channel).start();
 			case "!dado" -> dado(msgStrippedLowerCase);
-			// case "!cattura", "!catch" -> Pokemon.catturaPokemon();
+			 case "!cattura", "!catch" -> cattura(pokemon);
 			case "!f" -> payRespect();
 			case "!timer" -> timer();
 			case "!dm" -> dm(msgStrippedLowerCase);
@@ -833,7 +834,6 @@ public class Commands extends ListenerAdapter
 		String[] msgSplittato = messageRaw.split(" ");
 		String nomePokemon;
 		int idPokemon = random.nextInt(1,Pokemon.ALL);
-		Pokemon p;
 		boolean pokedex;
 		
 		try
@@ -854,21 +854,38 @@ public class Commands extends ListenerAdapter
 				pokedex = false;
 			}
 			
-			p = new Pokemon(idPokemon, pokedex);
+			pokemon = new Pokemon(idPokemon, pokedex);
 			
 			if (msgSplittato.length > 2)
 			{
 				if (msgSplittato[2].equalsIgnoreCase("s") || msgSplittato[2].equalsIgnoreCase("shiny"))
-					p.setShiny(true);
+					pokemon.setShiny(true);
 			}
 			
-			p.spawn(p);
+			pokemon.spawn(pokemon);
 			
 		}catch (Exception e)
 		{
 			error.print(object, e);
 		}
 	} // fine encounter()
+	
+	public void cattura(Pokemon pokemon)
+	{
+		if (pokemon == null || !pokemon.isCatturabile() || pokemon.isCatturato())
+		{
+			message.reply("Non puoi catturarlo gne gne").queue();
+			return;
+		}
+		
+		pokemon.setCatturabile(false);
+		pokemon.setCatturato(true);
+		pokemon.setOwner(author);
+		
+		if (pokemon.getThread() != null)
+			pokemon.setThread(null);
+		
+	} // fine cattura()
 	
 	private void channelHistory()
 	{

@@ -15,6 +15,7 @@ public class ThreadPokemon extends Thread
 	private final TextChannel tc;
 	private final EmbedBuilder eb;
 	
+	private final Error<Exception> error = new Error<>();
 	
 	public ThreadPokemon(Pokemon pokemon, TextChannel tc, EmbedBuilder eb)
 	{
@@ -49,6 +50,8 @@ public class ThreadPokemon extends Thread
 		{
 			tc.sendMessageEmbeds(eb.build()).queue(l ->
 			{
+				gion.send("Pokemon spawnato.");
+				
 				var pokemonNome = pokemon.getNome();
 				if (pokemonNome.equalsIgnoreCase("poochyena") || pokemonNome.equalsIgnoreCase("mightyena"))
 				{
@@ -64,8 +67,10 @@ public class ThreadPokemon extends Thread
 				
 				try
 				{
+					gion.send("Prima della sleep ("+timeout+").");
 					Thread.sleep(timeout);
-				}catch (Exception e) { new Error<Exception>().print(object,e); }
+					gion.send("Dopo la sleep.");
+				}catch (Exception e) { error.print(object,e); }
 				
 				var msgFooter = pokemonNome + "ran away.";
 				var types = pokemon.getTipo();
@@ -89,7 +94,7 @@ public class ThreadPokemon extends Thread
 				
 			});
 		}
-		catch (Exception e) { new Error<Exception>().print(object,e); }
+		catch (Exception e) { error.print(object,e); }
 		
 		gion.send("Il thread ha finito.");
 	} // fine run()
