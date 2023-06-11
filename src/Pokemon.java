@@ -1,5 +1,4 @@
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -22,7 +21,6 @@ public class Pokemon
 	public static final String JSON_FILES = "./json/";
 	public static boolean debug = false;
 	private final PrivateMessage pm = new PrivateMessage(Utente.getGion());
-	private ThreadPokemon thread = null;
 	
 	// FILE
 	private static final File nomiPokemon = new File(NAMES_FILE);
@@ -36,7 +34,6 @@ public class Pokemon
 	// POKEMON INFO
 	private String nome;
 	private String img;
-	private final int id;
 	private boolean shiny = false;
 	private String descrizione;
 	private String[] tipo = new String[]{" "," "};
@@ -44,8 +41,6 @@ public class Pokemon
 	private String dexNumber;
 	private int[] individualValues = new int[6];
 	private boolean catturato = false;
-	private boolean catturabile = true;
-	private User owner = null;
 	private JSONArray types;
 	
 	// private static int pokemon_id = 261; -> Poochyena
@@ -55,7 +50,6 @@ public class Pokemon
 	{
 		this.pokedex = pokedex;
 		File jsonFile;
-		this.id = id;
 		
 		String line="";
 		BufferedReader reader = null;
@@ -102,6 +96,9 @@ public class Pokemon
 		for (int index : individualValues)
 			individualValues[index] = random.nextInt(32); // IVs: 0-31
 		
+		if (id <= 0)
+			id = random.nextInt(1, ALL+1);
+		
 		
 		// prendere i dati dal .json
 		JSONObject data = getJsonObject(jsonFile);
@@ -121,6 +118,11 @@ public class Pokemon
 			tipo[1] = tipo[1].toUpperCase();
 		}
 		
+		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png";
+		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/" + id + ".png";
+		
+		img = (shiny ? urlShinyImg : urlImg);
+		
 		if (debug)
 		{
 			pm.send("nome: " + nome);
@@ -132,9 +134,11 @@ public class Pokemon
 		
 	} // fine costruttore
 	
+	
 	public void spawn(Pokemon pokemon)
 	{
-		embedBuilder = buildEmbed(pokedex);
+		if (embedBuilder == null)
+			embedBuilder = buildEmbed(pokedex);
 		
 		if (pokedex)
 		{
@@ -142,19 +146,13 @@ public class Pokemon
 		}
 		else
 		{
-			thread = new ThreadPokemon(pokemon, Commands.canaleBotPokemon, embedBuilder);
+			var t = new ThreadPokemon(pokemon, Commands.canaleBotPokemon, embedBuilder);
 			var tout = random.nextInt(2, 30);
-			thread.setTimeoutTime(thread.MINUTES, tout);
-			thread.start();
+			t.setTimeoutTime(t.MINUTES, tout);
+			t.start();
 			
 			if (debug)
-			{
-				final PrivateMessage pm = new PrivateMessage(Utente.getGion());
-				final String resp = "nome: " + pokemon.getNome()+"\nimg: " + pokemon.getImg()+"\n"+"id: "+pokemon.getId();
-				
-				pm.send("\nThread alive:" + thread.isAlive() + "\ntout: " + tout + "\n");
-				pm.send(resp);
-			}
+				new PrivateMessage(Utente.getGion()).send("\nThread alive:" + t.isAlive() + "\ntout: " + tout + "\n");
 		}
 	} // fine startEncounter
 	
@@ -195,11 +193,9 @@ public class Pokemon
 	/** Genera un embed con il Pokemon */
 	private EmbedBuilder buildEmbed(boolean pokedex)
 	{
-		EmbedBuilder embedBuilder = new EmbedBuilder();
-		StringBuilder stringBuilder = new StringBuilder();
-		String type, types;
-		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png";
-		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/" + id + ".png";
+		var embedBuilder = new EmbedBuilder();
+		var stringBuilder = new StringBuilder();
+		var types = "";
 		
 		if (pokedex) // se è una entry del pokedex, mostra le informazioni varie
 		{
@@ -212,8 +208,6 @@ public class Pokemon
 			
 			// final String iconURL = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F5%2F53%2FPok%25C3%25A9_Ball_icon.svg%2F1026px-Pok%25C3%25A9_Ball_icon.svg.png&f=1&nofb=1";
 			
-			img = (shiny ? urlShinyImg : urlImg);
-			
 			try
 			{
 				embedBuilder.setTitle(nome.toUpperCase());
@@ -222,13 +216,14 @@ public class Pokemon
 			
 			if (descrizione != null)
 			{
-				type = "Type";
+				String type = "Type";
 				if (!tipo[1].equals(""))
 					type += "s";
 				
 				embedBuilder.addField("**"+type+"**", types, true);
 				embedBuilder.addField("Generation", generazione, true);
 				embedBuilder.addField("National Dex", dexNumber, true);
+				
 				embedBuilder.addField("Pokedex Entry", "*"+descrizione+"*", false);
 				embedBuilder.setThumbnail(img);
 			}
@@ -237,7 +232,7 @@ public class Pokemon
 				embedBuilder.setImage(img);
 			}
 			
-			int color = shiny ? 0xFFD020 : 0xFF0000;
+			var color = shiny ? 0xFFD020 : 0xFF0000;
 			embedBuilder.setColor(color);
 			
 			if (shiny)
@@ -253,6 +248,7 @@ public class Pokemon
 				.setFooter("Type !catch to capture it.")
 			;
 		}
+		
 		return embedBuilder;
 	} // fine buildEmbed()
 	
@@ -275,7 +271,6 @@ public class Pokemon
 	//GETTER
 	public String getNome() { return nome; }
 	public String getImg() { return img; }
-	public int getId() { return id; }
 	public boolean isShiny() { return shiny; }
 	public String getDescrizione() { return descrizione; }
 	public String[] getTipo() { return tipo; }
@@ -283,9 +278,6 @@ public class Pokemon
 	public String getDexNumber() { return dexNumber; }
 	public int[] getIndividualValues() { return individualValues; }
 	public boolean isCatturato() { return catturato; }
-	public boolean isCatturabile() { return catturabile; }
-	public User getOwner() { return owner; }
-	public Thread getThread() { return thread; }
 	
 	//SETTER
 	public void setNome(String nome) { this.nome = nome;}
@@ -296,10 +288,7 @@ public class Pokemon
 	public void setGenerazione(String generazione) { this.generazione = generazione; }
 	public void setDexNumber(String dexNumber) { this.dexNumber = dexNumber; }
 	public void setIndividualValues(int[] individualValues) { this.individualValues = individualValues; }
-	public void setCatturabile(boolean catturabile) { this.catturabile = catturabile; }
 	public void setCatturato(boolean catturato) { this.catturato = catturato; }
-	public void setOwner(User owner) { this.owner = owner; }
-	public void setThread(ThreadPokemon thread) { this.thread = thread; }
 	
 	
 } // fine classe
