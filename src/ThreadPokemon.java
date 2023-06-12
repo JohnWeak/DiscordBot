@@ -87,7 +87,7 @@ public class ThreadPokemon extends Thread
 	public void runAway()
 	{
 		var pokemonNome = pokemon.getNome();
-		var msgFooter = pokemonNome + "ran away.";
+		var msgFooter = pokemonNome + " ran away.";
 		var types = pokemon.getTipo();
 		
 		for (String s : types)
