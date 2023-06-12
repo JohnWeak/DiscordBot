@@ -1,4 +1,5 @@
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import java.awt.Color;
 
@@ -14,6 +15,7 @@ public class ThreadPokemon extends Thread
 	private final Pokemon pokemon;
 	private final TextChannel tc;
 	private final EmbedBuilder eb;
+	private Message l;
 	
 	private final Error<Exception> error = new Error<>();
 	
@@ -50,6 +52,7 @@ public class ThreadPokemon extends Thread
 		{
 			tc.sendMessageEmbeds(eb.build()).queue(l ->
 			{
+				this.l = l;
 				gion.send("Pokemon spawnato.");
 				
 				var pokemonNome = pokemon.getNome();
@@ -72,25 +75,7 @@ public class ThreadPokemon extends Thread
 					gion.send("Dopo la sleep.");
 				}catch (Exception e) { error.print(object,e); }
 				
-				var msgFooter = pokemonNome + "ran away.";
-				var types = pokemon.getTipo();
-				
-				for (String s : types)
-				{
-					if (s.equalsIgnoreCase("flying"))
-					{
-						msgFooter = pokemonNome + " flew away.";
-						break;
-					}
-				}
-				
-				eb.setTitle("The wild " + pokemonNome + " fled.");
-				eb.setFooter(msgFooter);
-				eb.setColor(Color.GRAY);
-				
-				l.clearReactions().queue();
-				
-				l.editMessageEmbeds(eb.build()).queue();
+				runAway();
 				
 			});
 		}
@@ -98,5 +83,33 @@ public class ThreadPokemon extends Thread
 		
 		gion.send("Il thread ha finito.");
 	} // fine run()
+	
+	public void runAway()
+	{
+		var pokemonNome = pokemon.getNome();
+		var msgFooter = pokemonNome + "ran away.";
+		var types = pokemon.getTipo();
+		
+		for (String s : types)
+		{
+			if (s.equalsIgnoreCase("flying"))
+			{
+				msgFooter = pokemonNome + " flew away.";
+				break;
+			}
+		}
+		
+		eb.setTitle("The wild " + pokemonNome + " fled.");
+		eb.setFooter(msgFooter);
+		eb.setColor(Color.GRAY);
+		
+		l.clearReactions().queue();
+		l.editMessageEmbeds(eb.build()).queue();
+		
+		
+	} // fine runAway()
+	
+	
+	
 	
 } // fine ThreadPokemon

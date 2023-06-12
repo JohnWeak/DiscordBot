@@ -872,6 +872,7 @@ public class Commands extends ListenerAdapter
 	
 	public void cattura(Pokemon pokemon)
 	{
+		ThreadPokemon t;
 		if (pokemon == null || !pokemon.isCatturabile() || pokemon.isCatturato())
 		{
 			message.reply("Non puoi catturarlo gne gne").queue();
@@ -881,9 +882,13 @@ public class Commands extends ListenerAdapter
 		pokemon.setCatturabile(false);
 		pokemon.setCatturato(true);
 		pokemon.setOwner(author);
+		t = pokemon.getThread();
 		
-		if (pokemon.getThread() != null)
-			pokemon.setThread(null);
+		if (t != null)
+		{
+			t.runAway();
+			t.interrupt();
+		}
 		
 	} // fine cattura()
 	
