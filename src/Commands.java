@@ -884,7 +884,7 @@ public class Commands extends ListenerAdapter
 		pokemon.setOwner(author);
 		t = pokemon.getThread();
 		
-		if (t != null)
+		if (t != null && t.isAlive())
 		{
 			t.runAway();
 			t.interrupt();
@@ -897,6 +897,8 @@ public class Commands extends ListenerAdapter
 		final var amount = 3;
 		var history = channel.getHistory().retrievePast(amount).complete();
 		var pm = new PrivateMessage(Utente.getGion());
+		var msg = new StringBuilder();
+		
 		for (int i = 0; i < 3; i++)
 		{
 			var auth = history.get(i).getAuthor();
@@ -904,8 +906,10 @@ public class Commands extends ListenerAdapter
 			var disc = auth.getDiscriminator();
 			var m = history.get(i).getContentStripped();
 			
-			pm.send("Messaggio numero "+i+":\t"+auth+" --- "+name+" ("+disc+"): " + m);
+			msg.append("Messaggio numero ").append(i).append(":\t").append(auth).append(" --- ").append(name).append(" (").append(disc).append("): ").append(m);
 		}
+		
+		pm.send(msg.toString());
 		
 	} // fine metodo channelHistory()
 	

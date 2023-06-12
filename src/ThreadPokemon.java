@@ -103,6 +103,10 @@ public class ThreadPokemon extends Thread
 		eb.setFooter(msgFooter);
 		eb.setColor(Color.GRAY);
 		
+		pokemon.setCatturato(false);
+		pokemon.setCatturabile(false);
+		pokemon.setOwner(null);
+		
 		l.clearReactions().queue();
 		l.editMessageEmbeds(eb.build()).queue();
 		
