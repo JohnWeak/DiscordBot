@@ -915,15 +915,28 @@ public class Commands extends ListenerAdapter
 	
 	private static void testPokemon()
 	{
+		var msg = messageRaw.split(" ");
+		var pkmnID = random.nextInt(Pokemon.ALL);
+		
+		for (var s : msg)
+		{
+			if (s.contains("poochyena"))
+			{
+				pkmnID = 261;
+				break;
+			}
+		}
+		
 		try
 		{
-			new Pokemon(261,true);
+			new Pokemon(pkmnID, true);
 		}
 		catch (Exception e)
 		{
 			error.print(object, e);
 		}
-	}
+		
+	} // fine testPokemon()
 	
 	
 	/**Questo metodo fa sì che il bot invii un messaggio privato all'utente che lo esegue
