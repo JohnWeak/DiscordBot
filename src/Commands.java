@@ -427,7 +427,7 @@ public class Commands extends ListenerAdapter
 			case "!league" -> new Clash().clashWarLeague(false);
 			// case "!emotes" -> getEmotes();
 			case "!smh" -> new ThreadSmh(channel).start();
-			case "!dado" -> dado(msgStrippedLowerCase);
+			case "!dado" -> dado();
 			 case "!cattura", "!catch" -> cattura(pokemon);
 			case "!f" -> payRespect();
 			case "!timer" -> timer();
@@ -947,7 +947,7 @@ public class Commands extends ListenerAdapter
 		final String[] nomi = {Utente.NOME_JOHN, Utente.NOME_JOHN2, Utente.NOME_OBITO, Utente.NOME_OBITO2, Utente.NOME_ENIGMO, Utente.NOME_LEX};
 		PrivateMessage privateMessage;
 		final int length = msg.length;
-		StringBuilder msgToSend = new StringBuilder("Prova test 123");
+		StringBuilder msgToSend = new StringBuilder("Test");
 		
 		if (length > 2)
 		{
@@ -1051,8 +1051,13 @@ public class Commands extends ListenerAdapter
 	/** Gestisce i comandi slash (ancora da implementare) */
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
 	{
-		if (event.getName().equalsIgnoreCase("pog"))
+		var eventName = event.getName();
+		
+		if (eventName.equalsIgnoreCase("pog"))
 			event.getChannel().sendMessage("<:"+ Emotes.pogey + ">").queue();
+		
+		if (eventName.equalsIgnoreCase("dice") || eventName.equalsIgnoreCase("dado"))
+			dado();
 
 	} // fine onSlashCommand()
 
@@ -1676,7 +1681,7 @@ public class Commands extends ListenerAdapter
 	
 	/**<strong>
 	 * IL MODULO DI SICUREZZA SI OCCUPA DI MANTENERE IL BOT AL SICURO. STAI LONTANDO DAL BOT.
-	 * @params <strong>NESSUN PARAMETRO.</strong>
+	 * </strong>
 	 * @return <strong>NIENTE.</strong>
 	 */
 	public void ehiModulo()
@@ -1712,7 +1717,8 @@ public class Commands extends ListenerAdapter
 			"SE IL BOT È IL ROAD RUNNER, TU SEI WILE E. COYOTE", "SONO CERTO CHE HAI DI MEGLIO DA FARE CHE INFASTIDIRE IL BOT.",
 			"NESSUNO TOCCA IL BOT E SOPRAVVIVE PER RACCONTARLO.", "IL BOT È ANDATO A FARE LA SPESA: LASCIA UN MESSAGGIO E __NON__ SARAI RICONTATTATO.",
 			"NELL'ERA POST-COVID DEVI STARE AD ALMENO 2 METRI DAL BOT.", "GIOCA A QUALCHE VIDEOGIOCO INVECE DI PARLARE AL BOT.",
-			"IL BOT È OCCUPATO, NON HA TEMPO DA DEDICARTI."
+			"IL BOT È OCCUPATO, NON HA TEMPO DA DEDICARTI.", "PENSA A TERRAFORMARE MARTE INVECE CHE OFFRIRE PROMESSE VACUE DI AMORE ETERNO AL BOT",
+			"EVITA DI SPAVENTARE IL BOT CON I TUOI MODI DA ELEFANTE IN UN NEGOZIO DI PREGIATI VASI CINESI"
 		};
 		
 		if (messageRaw.length() <= hotkey)
@@ -1723,8 +1729,10 @@ public class Commands extends ListenerAdapter
 		message.reply(reply).queue();
 	}
 	
-	public void dado(String msg)
+	public void dado()
 	{
+		final var msg = message.getContentStripped().toLowerCase();
+		
 		if (msg.length() <= 5) // 5 = "!dado".length()
 		{
 			channel.sendMessage("Per favore specifica che tipo di dado devo lanciare.\nEsempio:\n`!dado 6` lancerà un dado con 6 facce.").queue();
@@ -1745,7 +1753,7 @@ public class Commands extends ListenerAdapter
 				if (facce == 20 && res == 1) // 1 naturale
 					channel.sendMessage("Si mette male per te, " +authorName+"... **1 naturale**!").queue();
 				else if (facce == 20 && res == 20) // 20 naturale
-					channel.sendMessage("La fortuna ti sorride, "+authorName+", hai crittato! **20 naturale**!").queue();
+					channel.sendMessage("La fortuna ti sorride, "+authorName+"! **20 naturale**!").queue();
 				
 				channel.sendMessage("È uscito **"+ res + "**!").queue();
 			}

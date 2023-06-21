@@ -53,7 +53,7 @@ public class Main
 		
 		final String[] games =
 		{
-			"Minecraft", "Dead Space", "Hitman", "Hitman 2", "Hitman 3", "Rimworld", "Darkest Dungeon",
+			"Minecraft", "Dead Space", "Hitman", "Rimworld", "Darkest Dungeon",
 			"FTL: Faster Than Light", "Terraria", "Team Fortress 2", "Farming Simulator", "Portal",
 			"A Plague Tale", "Subnautica", "OneShot", "Child of Light", "Ghost Trick: Phantom Detective",
 			"XCOM 2", "Papers, Please", "Celeste", "The Stanley Parable", "To The Moon", "GTA: San Andreas",
@@ -66,7 +66,7 @@ public class Main
 			"Steins;Gate", "FullMetal Alchemist", "Gurren Lagann", "Demon Slayer",
 			"Attack on Titan", "The Promised Neverland", "Kill La Kill", "Death Parade", "Death Note",
 			"Cowboy Bebop", "Goblin Slayer", "ID: Invaded", "Jujutsu Kaisen", "ODDTAXI", "Noragami",
-			"My Hero Academia", "One-Punch Man", "HunterxHunter", "Chainsaw Man", "Gintama", "Made in Abyss"
+			"My Hero Academia", "One-Punch Man", "HunterxHunter", "Chainsaw Man", "Gintama"
 		};
 		
 		final String[] movies =
@@ -90,7 +90,7 @@ public class Main
 			"Òbito che perde soldi in borsa", "Enigmo che simpa per Yano",
 			"Gion che mangia una pizza con ananas", "Lex che guida un'auto elettrica",
 			"il mondo bruciare", "una partita di calcio", "gli americani spararsi a vicenda",
-			"un gender reveal party finito male", "le tipe nude attraverso lo spioncino della porta"
+			"un gender reveal party incendiare una foresta", "le tipe nude attraverso lo spioncino della porta"
 		};
 		
 		var percent = random.nextInt(100);
