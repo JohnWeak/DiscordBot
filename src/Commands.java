@@ -855,7 +855,6 @@ public class Commands extends ListenerAdapter
 			}
 		}
 		
-		message.reply("twitter: `"+twitterDetected+"`").queue();
 		if (twitterDetected)
 			message.reply(newURL).queue();
 		
