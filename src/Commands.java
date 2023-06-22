@@ -839,7 +839,7 @@ public class Commands extends ListenerAdapter
 			{
 				twitterDetected = true;
 				
-				firstHalf = m.split("//")[0];
+				firstHalf = m.split("//")[0]+"//";
 				secondHalf = m.split("//")[1];
 				newURL = String.format("%sfx%s", firstHalf, secondHalf);
 				break;
@@ -848,7 +848,7 @@ public class Commands extends ListenerAdapter
 			{
 				twitterDetected = true;
 				
-				firstHalf = m.split("//")[0];
+				firstHalf = m.split("//")[0]+"//";
 				secondHalf = m.split("//")[1].substring(4) + "fx";
 				newURL = String.format("%sfx%s", firstHalf, secondHalf);
 				break;
