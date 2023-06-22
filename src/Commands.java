@@ -546,6 +546,9 @@ public class Commands extends ListenerAdapter
 			reazioni.clear();
 		}
 		
+		if (msgStrippedLowerCase.contains("http"))
+			detectTwitterLink();
+		
 		if (msgStrippedLowerCase.contains("random") || msgStrippedLowerCase.contains("numero casuale"))
 		{
 			reply = true;
@@ -822,6 +825,39 @@ public class Commands extends ListenerAdapter
 	{
 		return null;
 	}
+	
+	/**Sostituisce i link di twitter con quelli di <code>fxtwitter</code>, che caricano l'anteprima su discord*/
+	private void detectTwitterLink()
+	{
+		String[] parts = messageRaw.split(" ");
+		String firstHalf, secondHalf, newURL = "";
+		boolean twitterDetected = false;
+		
+		for (String m : parts)
+		{
+			if (m.contains("http://twitter.com") || m.contains("https://twitter.com"))
+			{
+				twitterDetected = true;
+				
+				firstHalf = m.split("//")[0];
+				secondHalf = m.split("//")[1];
+				newURL = String.format("%sfx%s", firstHalf, secondHalf);
+				break;
+			}
+			else if (m.contains("http://www.twitter.com") || m.contains("https://www.twitter.com"))
+			{
+				twitterDetected = true;
+				
+				firstHalf = m.split("//")[0];
+				secondHalf = m.split("//")[1].substring(4) + "fx";
+				newURL = String.format("%sfx%s", firstHalf, secondHalf);
+				break;
+			}
+		}
+		message.reply("twitter: `"+twitterDetected+"`").queue();
+		message.reply(newURL).queue();
+		
+	} // fine detectTwitterLink
 	
 	private void apple()
 	{
