@@ -854,8 +854,10 @@ public class Commands extends ListenerAdapter
 				break;
 			}
 		}
+		
 		message.reply("twitter: `"+twitterDetected+"`").queue();
-		message.reply(newURL).queue();
+		if (twitterDetected)
+			message.reply(newURL).queue();
 		
 	} // fine detectTwitterLink
 	
