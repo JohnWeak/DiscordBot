@@ -858,13 +858,16 @@ public class Commands extends ListenerAdapter
 		if (twitterDetected)
 			message.reply(newURL).queue();
 		
-	} // fine detectTwitterLink
+	} // fine detectTwitterLink()
 	
 	private void apple()
 	{
-		var apple = (random.nextBoolean() ? Emoji.MELA_ROSSA : Emoji.MELA_VERDE);
-		react(apple);
-	}
+		if (messageRaw.contains("mela") || messageRaw.contains("apple"))
+		{
+			String apple = (random.nextBoolean() ? Emoji.MELA_ROSSA : Emoji.MELA_VERDE);
+			react(apple);
+		}
+	} // fine apple()
 	
 	private void encounter()
 	{
@@ -1606,6 +1609,9 @@ public class Commands extends ListenerAdapter
 			var y = x.split("T")[0].split("-");
 			var data = y[2] + " " + getMese(Integer.parseInt(y[1])) + " "+ y[0];
 
+			if (y[0].charAt(0) == '0')
+				y[0] = y[0].substring(1);
+			
 			final var sparatorie = "Nel "+anno+", ammontano a **" + jsonArray.size() + "**";
 			
 			final var recente = "La più recente è avvenuta il " + data + " in **" + citta + ", " + stato + "**.\n";
@@ -1642,7 +1648,7 @@ public class Commands extends ListenerAdapter
 			var daysField = new MessageEmbed.Field("Giorni dall'ultima", "**"+days+"**", true);
 			var vittimeField = new MessageEmbed.Field("Morti", "**"+mortiAnno+"**", true);
 			
-			final var massShootingSite = "https://www.MassShootingTracker.site/";
+			final var massShootingSite = "https://www.massshootingtracker.site/";
 			var embed = new EmbedBuilder()
 				.setColor(Color.RED)
 				.addField("Sparatorie negli USA", sparatorie, true);
