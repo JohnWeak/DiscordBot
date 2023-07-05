@@ -1614,7 +1614,7 @@ public class Commands extends ListenerAdapter
 			if (day.charAt(0) == '0')
 				day = day.substring(1);
 			
-			final var data = year + " " + getMese(Integer.parseInt(month)) + " "+ day;
+			final var data = day + " " + getMese(Integer.parseInt(month)) + " "+ year;
 			final var sparatorie = "Nel "+anno+", ammontano a **" + jsonArray.size() + "**";
 			final var recente = "La più recente è avvenuta il " + data + " in **" + citta + ", " + stato + "**.\n";
 			final var caso = "Una si è verificata il " + data + " in **" + citta + ", " + stato + "**.\n";
