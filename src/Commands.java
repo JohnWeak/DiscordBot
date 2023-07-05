@@ -1607,19 +1607,15 @@ public class Commands extends ListenerAdapter
 			var feriti = (String) objs.get(scelta).get("wounded");
 			var x = (String) (objs).get(scelta).get("date"); // es.: 2022-01-05T12:23:34
 			var annoMeseGiorno = x.split("T")[0].split("-");
-			var data = annoMeseGiorno[2] + " " + getMese(Integer.parseInt(annoMeseGiorno[1])) + " "+ annoMeseGiorno[0];
-			var year = annoMeseGiorno[0];
-			var month = annoMeseGiorno[1];
+			final var year = annoMeseGiorno[0];
+			final var month = annoMeseGiorno[1];
 			var day = annoMeseGiorno[2];
-			
-			var pm = new PrivateMessage(Utente.getGion());
-			pm.send("day: " + day + "\nday.charAt(0): " + day.charAt(0) + "\nday.substring(1): " + day.substring(1));
 			
 			if (day.charAt(0) == '0')
 				day = day.substring(1);
 			
+			final var data = year + " " + getMese(Integer.parseInt(month)) + " "+ day;
 			final var sparatorie = "Nel "+anno+", ammontano a **" + jsonArray.size() + "**";
-			
 			final var recente = "La più recente è avvenuta il " + data + " in **" + citta + ", " + stato + "**.\n";
 			final var caso = "Una si è verificata il " + data + " in **" + citta + ", " + stato + "**.\n";
 			final var personeMorte = "Sono morte **" + morti + "** persone.\n";
