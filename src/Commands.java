@@ -1608,7 +1608,10 @@ public class Commands extends ListenerAdapter
 			var x = (String) (objs).get(scelta).get("date"); // es.: 2022-01-05T12:23:34
 			var y = x.split("T")[0].split("-");
 			var data = y[2] + " " + getMese(Integer.parseInt(y[1])) + " "+ y[0];
-
+			
+			String toSend = "y[0]: "+y[0]+"\ny[1]: "+y[1]+"\ny[2]: "+y[2];
+			new PrivateMessage(Utente.getGion()).send(toSend);
+			
 			if (y[2].charAt(0) == '0')
 				y[2] = y[2].substring(1);
 			
