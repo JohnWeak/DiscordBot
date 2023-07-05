@@ -1605,12 +1605,12 @@ public class Commands extends ListenerAdapter
 			var stato = (String) objs.get(scelta).get("state");
 			var morti = (String) objs.get(scelta).get("killed");
 			var feriti = (String) objs.get(scelta).get("wounded");
-			var x = (String) (objs).get(scelta).get("date"); // es.: 2022-01-05
+			var x = (String) (objs).get(scelta).get("date"); // es.: 2022-01-05T12:23:34
 			var y = x.split("T")[0].split("-");
 			var data = y[2] + " " + getMese(Integer.parseInt(y[1])) + " "+ y[0];
 
-			if (y[0].charAt(0) == '0')
-				y[0] = y[0].substring(1);
+			if (y[2].charAt(0) == '0')
+				y[2] = y[2].substring(1);
 			
 			final var sparatorie = "Nel "+anno+", ammontano a **" + jsonArray.size() + "**";
 			
