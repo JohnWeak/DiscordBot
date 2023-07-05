@@ -1613,7 +1613,7 @@ public class Commands extends ListenerAdapter
 			var day = annoMeseGiorno[2];
 			
 			var pm = new PrivateMessage(Utente.getGion());
-			pm.send("day: " + day + "\nday.charAt(0): " + day.charAt(0));
+			pm.send("day: " + day + "\nday.charAt(0): " + day.charAt(0) + "\nday.substring(1): " + day.substring(1));
 			
 			if (day.charAt(0) == '0')
 				day = day.substring(1);
