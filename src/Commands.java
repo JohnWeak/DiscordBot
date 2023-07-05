@@ -1606,14 +1606,17 @@ public class Commands extends ListenerAdapter
 			var morti = (String) objs.get(scelta).get("killed");
 			var feriti = (String) objs.get(scelta).get("wounded");
 			var x = (String) (objs).get(scelta).get("date"); // es.: 2022-01-05T12:23:34
-			var y = x.split("T")[0].split("-");
-			var data = y[2] + " " + getMese(Integer.parseInt(y[1])) + " "+ y[0];
+			var annoMeseGiorno = x.split("T")[0].split("-");
+			var data = annoMeseGiorno[2] + " " + getMese(Integer.parseInt(annoMeseGiorno[1])) + " "+ annoMeseGiorno[0];
+			var year = annoMeseGiorno[0];
+			var month = annoMeseGiorno[1];
+			var day = annoMeseGiorno[2];
 			
-			String toSend = "y[0]: "+y[0]+"\ny[1]: "+y[1]+"\ny[2]: "+y[2];
-			new PrivateMessage(Utente.getGion()).send(toSend);
+			var pm = new PrivateMessage(Utente.getGion());
+			pm.send("day: " + day + "\nday.charAt(0): " + day.charAt(0));
 			
-			if (y[2].charAt(0) == '0')
-				y[2] = y[2].substring(1);
+			if (day.charAt(0) == '0')
+				day = day.substring(1);
 			
 			final var sparatorie = "Nel "+anno+", ammontano a **" + jsonArray.size() + "**";
 			
@@ -1645,7 +1648,7 @@ public class Commands extends ListenerAdapter
 			
 			var footerURL = "https://www.massshootingtracker.site/logo-400.png";
 			
-			var start = LocalDate.of(anno, Integer.parseInt(y[1]), Integer.parseInt(y[2]));
+			var start = LocalDate.of(anno, Integer.parseInt(month), Integer.parseInt(day));
 			var stop = LocalDate.now();
 			var days = ChronoUnit.DAYS.between(start, stop);
 			var daysField = new MessageEmbed.Field("Giorni dall'ultima", "**"+days+"**", true);
