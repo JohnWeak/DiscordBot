@@ -36,7 +36,7 @@ public class ThreadPigeon extends Thread
 			} else
 			{
 				Commands.react("pigeon");
-				new PrivateMessage(Utente.getGion()).send("Thread Pigeon sends his regards");
+				// new PrivateMessage(Utente.getGion()).send("Thread Pigeon sends his regards");
 			}
 		}
 		catch (Exception e)
