@@ -21,9 +21,8 @@ public class ThreadPigeon extends Thread
 	
 	public void run()
 	{
-		if (random.nextInt(1000) == 42)
+		if (random.nextInt(500) == 42)
 		{
-			System.out.println("\t<"+Thread.currentThread().getName() + "> PIGEON BAZOOKAAAAAAAA");
 			final var max = random.nextInt(5) + 5;
 			final var pigeonMessage = "Oh no! " + authorName + " ha attivato il <:"+Emotes.pigeon+"> bazooka!\n"+max+" pigeon in arrivo!";
 			channel.sendMessage(pigeonMessage).queue();
