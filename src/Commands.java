@@ -439,7 +439,6 @@ public class Commands extends ListenerAdapter
 			// case "!ch" -> channelHistory();
 			case "!testpokemon", "!tp" -> testPokemon();
 			case "!apple" -> apple();
-			case "!dioporco" -> dioporco();
 			case "!debug" -> debug();
 		}
 		
@@ -535,7 +534,7 @@ public class Commands extends ListenerAdapter
 		if (msgStrippedLowerCase.contains("òbito") && msgStrippedLowerCase.contains("india"))
 		{
 			reazioni.add("òbito");
-			reazioni.add("🇮🇳");
+			reazioni.add(Emoji.INDIA_BANDIERA);
 		}
 		
 		if (msgStrippedLowerCase.contains("live") && author.getDiscriminator().equals(Utente.OBITO))
@@ -558,12 +557,6 @@ public class Commands extends ListenerAdapter
 			reply = true;
 			int n = random.nextInt(0, 100);
 			msgReply += "Numero casuale: **"+n+"**";
-		}
-		
-		if (msgStrippedLowerCase.contains("russia") && random.nextInt(50) == 42)
-		{
-			reply = true;
-			msgReply += "Ucraina Est*\n";
 		}
 		
 		if (msgStrippedLowerCase.contains("winnie the pooh"))
@@ -654,7 +647,7 @@ public class Commands extends ListenerAdapter
 			}
 		}
 		
-		if (msgStrippedLowerCase.contains("dammi il 5") || msgStrippedLowerCase.contains("high five") || msgStrippedLowerCase.contains("dammi il cinque"))
+		if (msgStrippedLowerCase.matches("dammi il (?:cinque|5)") || msgStrippedLowerCase.contains("high five"))
 		{
 			reply = true;
 			msgReply += "🤚🏻\n";
@@ -689,9 +682,9 @@ public class Commands extends ListenerAdapter
 		}
 		
 		int i;
-		var x = message.getMentionedUsers();
+		var users = message.getMentionedUsers();
 		
-		if (!x.isEmpty() && x.get(0).getDiscriminator().equals(Utente.BOWOT))
+		if (!users.isEmpty() && users.get(0).getDiscriminator().equals(Utente.BOWOT))
 		{
 			boolean matchFound = false;
 			String[] cases = {"che fai", "cosa fai", "che stai facendo", "cazzo fai", "minchia fai"};
@@ -720,8 +713,6 @@ public class Commands extends ListenerAdapter
 		
 		
 		
-		
-		
 		/*if (msgStrippedLowerCase.contains("activity"))
 		{
 			var a = Main.selectActivity();
@@ -739,69 +730,8 @@ public class Commands extends ListenerAdapter
 		
 	} // fine checkForKeywords()
 
-	private void dioporco()
-	{
-		PrivateMessage pm = new PrivateMessage(Utente.getGion());
-		BufferedReader reader = null;
-		int x = random.nextInt(1,10);
-		String m = x+"\n", nome = "";
-		Path data, path = Paths.get("./json/nomiPokemon.txt");
-		
-		try
-		{
-			reader = Files.newBufferedReader(path);
-			for (int i = 0; i < x; i++)
-				nome = reader.readLine().toLowerCase();
-			
-		} catch (IOException e)
-		{
-			pm.send("`PRIMO CATCH:`\n" + e);
-		}
-		finally
-		{
-			if (reader!= null)
-			{
-				try
-				{
-					reader.close();
-				} catch (IOException e)
-				{
-					errorString.print(this, "Impossibile chiudere il reader nella funzione dioporco()");
-				}
-			}
-		}
-		data = Paths.get("./json/"+nome+".json");
-		try
-		{
-			reader = Files.newBufferedReader(data);
-			m = reader.readLine();
-			
-		} catch (IOException e)
-		{
-			pm.send("`SECONDO CATCH:`\n" + e);
-		}
-		finally
-		{
-			try
-			{
-				if (reader != null)
-					reader.close();
-			} catch (IOException e)
-			{
-				errorString.print(this, "Impossibile chiudere il reader2 nella funzione dioporco()");
-			}
-		}
-		
-		
-		message.reply(m).queue();
-		
-		
-		
-		//if (random.nextInt(10) == 0)
-		//	message.reply("Non bestemmiare il nostro signore e salvatore **cl__z**.").queue();
-
-	} // fine dioporco()
-
+	
+	
 	/**Ottiene le emote custom del canale*/
 	private void getEmotes()
 	{
@@ -823,6 +753,7 @@ public class Commands extends ListenerAdapter
 	{
 		return null;
 	}
+	
 	
 	/**Sostituisce i link di twitter con quelli di <code>fxtwitter</code>, che caricano l'anteprima su discord*/
 	private void detectTwitterLink()
