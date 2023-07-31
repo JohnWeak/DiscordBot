@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-import net.dv8tion.jda.api.utils.AttachmentOption;
 import org.jetbrains.annotations.NotNull;
 
 import org.json.simple.JSONArray;
@@ -60,8 +59,7 @@ public class Commands extends ListenerAdapter
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
 	private String getSaluto()
 	{
-		var roma = TimeZone.getTimeZone("Europe/Rome");
-		var c = new GregorianCalendar(roma, Locale.ITALY);
+		var c = getCurrentTime();
 		var saluto = "";
 		var hour = c.get(Calendar.HOUR_OF_DAY);
 		var month = c.get(Calendar.MONTH);
@@ -86,6 +84,12 @@ public class Commands extends ListenerAdapter
 		
 		return saluto;
 	} // fine getSaluto()
+	
+	private GregorianCalendar getCurrentTime()
+	{
+		var roma = TimeZone.getTimeZone("Europe/Rome");
+		return new GregorianCalendar(roma, Locale.ITALY);
+	} // fine getCurrentTime()
 	
 	
 	/** onReady() viene eseguita soltanto all'avvio del bot */
@@ -601,7 +605,7 @@ public class Commands extends ListenerAdapter
 		if (msgStrippedLowerCase.contains("non vedo l'ora") || msgStrippedLowerCase.contains("che ore sono") || msgStrippedLowerCase.contains("che ora è"))
 		{
 			reply = true;
-			var date = new GregorianCalendar();
+			var date = getCurrentTime();
 			var hour = date.get(Calendar.HOUR_OF_DAY);
 			var minutes = date.get(Calendar.MINUTE);
 
@@ -660,12 +664,6 @@ public class Commands extends ListenerAdapter
 		{
 			reply = true;
 			msgReply += "Prego.\n";
-		}
-		
-		if (msgStrippedLowerCase.matches("cosa\\?*") && random.nextInt(20) == 1)
-		{
-			reply = true;
-			msgReply += "Cosa? La pantera rosa\n";
 		}
 		
 		if (msgStrippedLowerCase.matches("egg *dog"))
