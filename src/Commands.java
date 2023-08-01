@@ -681,25 +681,27 @@ public class Commands extends ListenerAdapter
 			msgReply += "Nemico assente!\n";
 		}
 		
-		int i;
 		var users = message.getMentionedUsers();
 		
 		if (!users.isEmpty() && users.get(0).getDiscriminator().equals(Utente.BOWOT))
 		{
 			boolean matchFound = false;
 			String[] cases = {"che fai", "cosa fai", "che stai facendo", "cazzo fai", "minchia fai"};
-			Activity act = Main.getActivity();
-			final int size = cases.length;
-			for (i = 0; i < size; i++)
-				if (msgStrippedLowerCase.contains(cases[i]))
+			for (String m : cases)
+			{
+				if (msgStrippedLowerCase.contains(m))
+				{
 					matchFound = true;
+					break;
+				}
+			}
 			
 			if (matchFound)
 			{
 				String actTrad, name, tipo, saluto, activity, risposta;
 				
 				actTrad = Main.getActivityTradotta();
-				name = act.getName();
+				name = Main.getActivity().getName();
 				tipo = Main.getTipo();
 				saluto = (random.nextInt(5) == 3) ? getSaluto() : "Ciao";
 				activity = actTrad.equals("guardo") ? "guardando " : "giocando a";
@@ -711,16 +713,6 @@ public class Commands extends ListenerAdapter
 			}
 		}
 		
-		
-		
-		/*if (msgStrippedLowerCase.contains("activity"))
-		{
-			var a = Main.selectActivity();
-			Commands.message.getJDA().getPresence().setActivity(a);
-			PrivateMessage pm = new PrivateMessage(Utente.getUtenteFromID(author.getId()));
-			pm.send(a.getName());
-		}*/
-		
 //		if (msgStrippedLowerCase.contains("") && random.nextInt(42) == 0){}
 		
 		if (reply)
@@ -729,8 +721,6 @@ public class Commands extends ListenerAdapter
 			message.reply("***ULTIMO AVVISO: __NON FARLO MAI PIÙ__.***").queue();
 		
 	} // fine checkForKeywords()
-
-	
 	
 	/**Ottiene le emote custom del canale*/
 	private void getEmotes()
