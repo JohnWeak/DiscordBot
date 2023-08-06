@@ -869,7 +869,7 @@ public class Commands extends ListenerAdapter
 				var disc = auth.getDiscriminator();
 				var m = history.get(i).getContentStripped();
 				
-				msg.append("Messaggio numero ").append(i).append(":\t").append(auth).append(" --- ").append(name).append(" (").append(disc).append("): ").append(m);
+				msg.append("Messaggio numero ").append(i).append(":\t").append(auth).append(" --- ").append(name).append(" (").append(disc).append("): ").append(m).append("\n");
 			}
 			
 			pm.send(msg.toString());
