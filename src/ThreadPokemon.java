@@ -47,56 +47,34 @@ public class ThreadPokemon extends Thread
 	@Override
 	public void run()
 	{
-		// var gion = new PrivateMessage(Utente.getGion());
-		
 		try
 		{
-			tc.sendMessageEmbeds(eb.build()).queue(lambda -> this.l = lambda);
+			tc.sendMessageEmbeds(eb.build()).queue();
 			
-			sleep(500);
+			sleep(500); // necessario così che non si confonda fra i due ultimi messaggi inviati nel canale
 			
-			if (l == null)
+			var history = Commands.channelHistory(tc, false);
+			var latest = history.get(0);
+			Message m = tc.retrieveMessageById(latest.getId()).complete();
+				
+				
+			if (m == null)
 			{
-				var history = Commands.channelHistory(tc, false);
-				var latest = history.get(0);
-				Message m = tc.retrieveMessageById(latest.getId()).complete();
+				new PrivateMessage(Utente.getGion()).send("AAAAAAAAAAA");
+				return;
+			}
 				
-				
-				if (m == null)
-				{
-					new PrivateMessage(Utente.getGion()).send("AAAAAAAAAAA");
-					return;
-				}
-				
-				if (pokemon.getNome().toLowerCase().matches("(?:pooch|might)yena"))
-				{
-					// Commands.react("pogey");
-					m.addReaction(Emotes.pogey).queue();
-					m.addReaction("❤️").queue();
-				}
-				else
-				{
-					m.addReaction("👍🏻").queue();
-					m.addReaction("❤️").queue();
-					m.addReaction("👎🏻").queue();
-				}
+			if (pokemon.getNome().toLowerCase().matches("(?:pooch|might)yena"))
+			{
+				m.addReaction(Emotes.pogey).queue();
+				m.addReaction("❤️").queue();
 			}
 			else
 			{
-				if (pokemon.getNome().toLowerCase().matches("(?:pooch|might)yena"))
-				{
-					Commands.react("pogey");
-					l.addReaction("❤️").queue();
-				}
-				else
-				{
-					l.addReaction("👍🏻").queue();
-					l.addReaction("❤️").queue();
-					l.addReaction("👎🏻").queue();
-				}
+				m.addReaction("👍🏻").queue();
+				m.addReaction("❤️").queue();
+				m.addReaction("👎🏻").queue();
 			}
-			
-			
 		}
 		catch (Exception e) { error.print(object,e); }
 		
