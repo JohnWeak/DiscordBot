@@ -52,11 +52,7 @@ public class ThreadPokemon extends Thread
 		
 		try
 		{
-			gion.send("Dentro il try, parte 1");
 			tc.sendMessageEmbeds(eb.build()).queue(x-> this.l = x);
-			
-			gion.send("Dentro il try, parte 2");
-			gion.send("Pokemon spawnato.");
 			
 			if (pokemon.getNome().toLowerCase().matches("(?:pooch|might)yena"))
 			{
@@ -69,22 +65,16 @@ public class ThreadPokemon extends Thread
 				l.addReaction("❤️").queue();
 				l.addReaction("👎🏻").queue();
 			}
-			
-			
-			
 		}
 		catch (Exception e) { error.print(object,e); }
 		
 		try
 		{
-			gion.send("Prima della sleep ("+timeout+").");
 			Thread.sleep(timeout);
-			gion.send("Dopo la sleep.");
 			runAway();
+			
 		}catch (Exception e) { error.print(object,e); }
 		
-		
-		gion.send("Il thread ha finito.");
 	} // fine run()
 	
 	public void runAway()

@@ -152,7 +152,7 @@ public class Pokemon
 		else
 		{
 			t = new ThreadPokemon(pokemon, Commands.canaleBotPokemon, embedBuilder);
-			var tout = random.nextInt(2, 3);
+			var tout = random.nextInt(2, 15);
 			t.setTimeoutTime(t.MINUTES, tout);
 			t.start();
 			
