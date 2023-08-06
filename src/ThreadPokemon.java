@@ -53,6 +53,8 @@ public class ThreadPokemon extends Thread
 		{
 			tc.sendMessageEmbeds(eb.build()).queue(lambda -> this.l = lambda);
 			
+			sleep(500);
+			
 			if (l == null)
 			{
 				var history = Commands.channelHistory(tc, false);

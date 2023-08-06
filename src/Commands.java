@@ -816,6 +816,7 @@ public class Commands extends ListenerAdapter
 			
 			//todo: delet this
 			idPokemon = 261;
+			
 			pokemon = new Pokemon(idPokemon, pokedex);
 			
 			if (msgSplittato.length > 2)
