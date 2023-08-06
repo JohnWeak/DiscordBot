@@ -793,7 +793,7 @@ public class Commands extends ListenerAdapter
 	{
 		String[] msgSplittato = messageRaw.split(" ");
 		String nomePokemon;
-		int idPokemon = random.nextInt(1,Pokemon.ALL);
+		int idPokemon;
 		boolean pokedex;
 		
 		try
@@ -814,6 +814,8 @@ public class Commands extends ListenerAdapter
 				pokedex = false;
 			}
 			
+			//todo: delet this
+			idPokemon = 261;
 			pokemon = new Pokemon(idPokemon, pokedex);
 			
 			if (msgSplittato.length > 2)
