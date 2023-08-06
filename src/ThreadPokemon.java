@@ -48,10 +48,14 @@ public class ThreadPokemon extends Thread
 	public void run()
 	{
 		var gion = new PrivateMessage(Utente.getGion());
+		gion.send("Prima del try");
+		
 		try
 		{
+			gion.send("Dentro il try, parte 1");
 			tc.sendMessageEmbeds(eb.build()).queue(l ->
 			{
+				gion.send("Dentro il try, parte 2");
 				this.l = l;
 				gion.send("Pokemon spawnato.");
 				
@@ -80,7 +84,7 @@ public class ThreadPokemon extends Thread
 			});
 		}
 		catch (Exception e) { error.print(object,e); }
-		
+		gion.send("Dopo il try");
 		gion.send("Il thread ha finito.");
 	} // fine run()
 	
