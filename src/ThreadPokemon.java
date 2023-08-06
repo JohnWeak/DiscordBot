@@ -53,25 +53,25 @@ public class ThreadPokemon extends Thread
 		try
 		{
 			gion.send("Dentro il try, parte 1");
-			tc.sendMessageEmbeds(eb.build()).queue(x->
+			tc.sendMessageEmbeds(eb.build()).queue(x-> this.l = x);
+			
+			gion.send("Dentro il try, parte 2");
+			gion.send("Pokemon spawnato.");
+			
+			if (pokemon.getNome().toLowerCase().matches("(?:pooch|might)yena"))
 			{
-				this.l = x;
-				gion.send("Dentro il try, parte 2");
-				gion.send("Pokemon spawnato.");
-				
-				var pokemonNome = pokemon.getNome().toLowerCase();
-				if (pokemonNome.matches("(?:pooch|might)yena"))
-				{
-					Commands.react("pogey");
-					l.addReaction("❤️").queue();
-				}
-				else
-				{
-					l.addReaction("👍🏻").queue();
-					l.addReaction("❤️").queue();
-					l.addReaction("👎🏻").queue();
-				}
-			});
+				Commands.react("pogey");
+				l.addReaction("❤️").queue();
+			}
+			else
+			{
+				l.addReaction("👍🏻").queue();
+				l.addReaction("❤️").queue();
+				l.addReaction("👎🏻").queue();
+			}
+			
+			
+			
 		}
 		catch (Exception e) { error.print(object,e); }
 		
