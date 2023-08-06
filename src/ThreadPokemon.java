@@ -15,7 +15,7 @@ public class ThreadPokemon extends Thread
 	private final Pokemon pokemon;
 	private final TextChannel tc;
 	private final EmbedBuilder eb;
-	private Message l;
+	private Message m;
 	
 	private final Error<Exception> error = new Error<>();
 	
@@ -55,7 +55,7 @@ public class ThreadPokemon extends Thread
 			
 			var history = Commands.channelHistory(tc, false);
 			var latest = history.get(0);
-			Message m = tc.retrieveMessageById(latest.getId()).complete();
+			m = tc.retrieveMessageById(latest.getId()).complete();
 				
 				
 			if (m == null)
@@ -110,8 +110,8 @@ public class ThreadPokemon extends Thread
 		pokemon.setCatturabile(false);
 		pokemon.setOwner(null);
 		
-		l.clearReactions().queue();
-		l.editMessageEmbeds(eb.build()).queue();
+		m.clearReactions().queue();
+		m.editMessageEmbeds(eb.build()).queue();
 		
 		
 	} // fine runAway()
