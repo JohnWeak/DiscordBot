@@ -57,6 +57,7 @@ public class ThreadPokemon extends Thread
 			{
 				String id = tc.getLatestMessageId();
 				Message m = tc.retrieveMessageById(id).complete();
+				var history = Commands.channelHistory(tc, true);
 				
 				if (m == null)
 				{

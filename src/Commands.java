@@ -15,6 +15,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.w3c.dom.Text;
 
 import java.awt.*;
 import java.io.*;
@@ -851,24 +852,29 @@ public class Commands extends ListenerAdapter
 		
 	} // fine cattura()
 	
-	private void channelHistory()
+	public static List<Message> channelHistory(TextChannel channel, boolean debug)
 	{
 		final var amount = 3;
 		var history = channel.getHistory().retrievePast(amount).complete();
-		var pm = new PrivateMessage(Utente.getGion());
-		var msg = new StringBuilder();
 		
-		for (int i = 0; i < 3; i++)
+		if (debug)
 		{
-			var auth = history.get(i).getAuthor();
-			var name = auth.getName();
-			var disc = auth.getDiscriminator();
-			var m = history.get(i).getContentStripped();
+			var pm = new PrivateMessage(Utente.getGion());
+			var msg = new StringBuilder();
 			
-			msg.append("Messaggio numero ").append(i).append(":\t").append(auth).append(" --- ").append(name).append(" (").append(disc).append("): ").append(m);
+			for (int i = 0; i < 3; i++)
+			{
+				var auth = history.get(i).getAuthor();
+				var name = auth.getName();
+				var disc = auth.getDiscriminator();
+				var m = history.get(i).getContentStripped();
+				
+				msg.append("Messaggio numero ").append(i).append(":\t").append(auth).append(" --- ").append(name).append(" (").append(disc).append("): ").append(m);
+			}
+			
+			pm.send(msg.toString());
 		}
-		
-		pm.send(msg.toString());
+		return history;
 		
 	} // fine metodo channelHistory()
 	
