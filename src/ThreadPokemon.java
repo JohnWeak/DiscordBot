@@ -59,8 +59,8 @@ public class ThreadPokemon extends Thread
 				this.l = l;
 				gion.send("Pokemon spawnato.");
 				
-				var pokemonNome = pokemon.getNome();
-				if (pokemonNome.equalsIgnoreCase("poochyena") || pokemonNome.equalsIgnoreCase("mightyena"))
+				var pokemonNome = pokemon.getNome().toLowerCase();
+				if (pokemonNome.matches("(?:pooch|might)yena"))
 				{
 					Commands.react("pogey");
 					l.addReaction("❤️").queue();
@@ -71,20 +71,19 @@ public class ThreadPokemon extends Thread
 					l.addReaction("❤️").queue();
 					l.addReaction("👎🏻").queue();
 				}
-				
-				try
-				{
-					gion.send("Prima della sleep ("+timeout+").");
-					Thread.sleep(timeout);
-					gion.send("Dopo la sleep.");
-				}catch (Exception e) { error.print(object,e); }
-				
-				runAway();
-				
 			});
 		}
 		catch (Exception e) { error.print(object,e); }
-		gion.send("Dopo il try");
+		
+		try
+		{
+			gion.send("Prima della sleep ("+timeout+").");
+			Thread.sleep(timeout);
+			gion.send("Dopo la sleep.");
+			runAway();
+		}catch (Exception e) { error.print(object,e); }
+		
+		
 		gion.send("Il thread ha finito.");
 	} // fine run()
 	
