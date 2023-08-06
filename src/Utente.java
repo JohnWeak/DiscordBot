@@ -100,6 +100,6 @@ public abstract class Utente
 	public static User getEnigmo()
 	{
 		return Main.getJda().retrieveUserById(Utente.ID_ENIGMO).complete();
-	} // fine getEnigmo()
+	}
 	
 } // fine classe Utente

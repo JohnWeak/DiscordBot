@@ -754,7 +754,7 @@ public class Commands extends ListenerAdapter
 		
 		for (String m : parts)
 		{
-			if (m.contains("http://twitter.com") || m.contains("https://twitter.com"))
+			if (m.matches("https*://twitter\\.com"))
 			{
 				twitterDetected = true;
 				
@@ -763,7 +763,7 @@ public class Commands extends ListenerAdapter
 				newURL = String.format("%sfx%s", firstHalf, secondHalf);
 				break;
 			}
-			else if (m.contains("http://www.twitter.com") || m.contains("https://www.twitter.com"))
+			else if (m.matches("https*://www\\.twitter\\.com"))
 			{
 				twitterDetected = true;
 				
@@ -817,7 +817,7 @@ public class Commands extends ListenerAdapter
 			
 			if (msgSplittato.length > 2)
 			{
-				if (msgSplittato[2].equalsIgnoreCase("s") || msgSplittato[2].equalsIgnoreCase("shiny"))
+				if (msgSplittato[2].equals("s") || msgSplittato[2].equals("shiny"))
 					pokemon.setShiny(true);
 			}
 			

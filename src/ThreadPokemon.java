@@ -53,19 +53,45 @@ public class ThreadPokemon extends Thread
 		{
 			tc.sendMessageEmbeds(eb.build()).queue(lambda -> this.l = lambda);
 			
-			if (l != null)
+			if (l == null)
+			{
+				String id = tc.getLatestMessageId();
+				Message m = tc.retrieveMessageById(id).complete();
+				
+				if (m == null)
+				{
+					new PrivateMessage(Utente.getGion()).send("AAAAAAAAAAA");
+					return;
+				}
+				
+				if (pokemon.getNome().toLowerCase().matches("(?:pooch|might)yena"))
+				{
+					Commands.react("pogey");
+					m.addReaction("❤️").queue();
+				}
+				else
+				{
+					m.addReaction("👍🏻").queue();
+					m.addReaction("❤️").queue();
+					m.addReaction("👎🏻").queue();
+				}
+			}
+			else
 			{
 				if (pokemon.getNome().toLowerCase().matches("(?:pooch|might)yena"))
 				{
 					Commands.react("pogey");
 					l.addReaction("❤️").queue();
-				} else
+				}
+				else
 				{
 					l.addReaction("👍🏻").queue();
 					l.addReaction("❤️").queue();
 					l.addReaction("👎🏻").queue();
 				}
 			}
+			
+			
 		}
 		catch (Exception e) { error.print(object,e); }
 		
