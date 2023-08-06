@@ -51,7 +51,7 @@ public class ThreadPokemon extends Thread
 		
 		try
 		{
-			tc.sendMessageEmbeds(eb.build()).queue(x-> this.l = x);
+			tc.sendMessageEmbeds(eb.build()).queue(lambda -> this.l = lambda);
 			
 			if (l != null)
 			{
