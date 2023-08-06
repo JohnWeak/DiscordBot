@@ -56,13 +56,7 @@ public class ThreadPokemon extends Thread
 			tc.sendMessageEmbeds(eb.build()).queue(x->
 			{
 				this.l = x;
-			});
-			
-			/* *****************************
-			tc.sendMessageEmbeds(eb.build()).queue(l ->
-			{
 				gion.send("Dentro il try, parte 2");
-				this.l = l;
 				gion.send("Pokemon spawnato.");
 				
 				var pokemonNome = pokemon.getNome().toLowerCase();
@@ -77,7 +71,7 @@ public class ThreadPokemon extends Thread
 					l.addReaction("❤️").queue();
 					l.addReaction("👎🏻").queue();
 				}
-			}); ************************/
+			});
 		}
 		catch (Exception e) { error.print(object,e); }
 		
