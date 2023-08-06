@@ -867,7 +867,7 @@ public class Commands extends ListenerAdapter
 				var auth = history.get(i).getAuthor();
 				var name = auth.getName();
 				var disc = auth.getDiscriminator();
-				var m = "`"+history.get(i).getContentStripped()+"`";
+				var m = history.get(i).getContentStripped();
 				
 				msg.append("Messaggio numero ").append(i).append(":\t").append(auth).append(" --- ").append(name).append(" (").append(disc).append("): ").append(m).append("\n");
 			}
