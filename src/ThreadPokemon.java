@@ -53,6 +53,12 @@ public class ThreadPokemon extends Thread
 		try
 		{
 			gion.send("Dentro il try, parte 1");
+			tc.sendMessageEmbeds(eb.build()).queue(x->
+			{
+				this.l = x;
+			});
+			
+			/* *****************************
 			tc.sendMessageEmbeds(eb.build()).queue(l ->
 			{
 				gion.send("Dentro il try, parte 2");
@@ -71,7 +77,7 @@ public class ThreadPokemon extends Thread
 					l.addReaction("❤️").queue();
 					l.addReaction("👎🏻").queue();
 				}
-			});
+			}); ************************/
 		}
 		catch (Exception e) { error.print(object,e); }
 		
