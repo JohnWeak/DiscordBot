@@ -47,23 +47,24 @@ public class ThreadPokemon extends Thread
 	@Override
 	public void run()
 	{
-		var gion = new PrivateMessage(Utente.getGion());
-		gion.send("Prima del try");
+		// var gion = new PrivateMessage(Utente.getGion());
 		
 		try
 		{
 			tc.sendMessageEmbeds(eb.build()).queue(x-> this.l = x);
 			
-			if (pokemon.getNome().toLowerCase().matches("(?:pooch|might)yena"))
+			if (l != null)
 			{
-				Commands.react("pogey");
-				l.addReaction("❤️").queue();
-			}
-			else
-			{
-				l.addReaction("👍🏻").queue();
-				l.addReaction("❤️").queue();
-				l.addReaction("👎🏻").queue();
+				if (pokemon.getNome().toLowerCase().matches("(?:pooch|might)yena"))
+				{
+					Commands.react("pogey");
+					l.addReaction("❤️").queue();
+				} else
+				{
+					l.addReaction("👍🏻").queue();
+					l.addReaction("❤️").queue();
+					l.addReaction("👎🏻").queue();
+				}
 			}
 		}
 		catch (Exception e) { error.print(object,e); }
