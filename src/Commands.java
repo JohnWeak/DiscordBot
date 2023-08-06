@@ -1309,7 +1309,7 @@ public class Commands extends ListenerAdapter
 	{
 		var emoteDaUsare = Emotes.emoteDaUsare(emote.toLowerCase());
 		
-		if (emoteDaUsare.equals(""))
+		if (emoteDaUsare.isEmpty())
 			return;
 		
 		try

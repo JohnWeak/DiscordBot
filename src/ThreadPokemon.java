@@ -56,8 +56,8 @@ public class ThreadPokemon extends Thread
 			if (l == null)
 			{
 				var history = Commands.channelHistory(tc, false);
-				var last = history.get(0);
-				Message m = tc.retrieveMessageById(last.getId()).complete();
+				var latest = history.get(0);
+				Message m = tc.retrieveMessageById(latest.getId()).complete();
 				
 				
 				if (m == null)
@@ -68,7 +68,8 @@ public class ThreadPokemon extends Thread
 				
 				if (pokemon.getNome().toLowerCase().matches("(?:pooch|might)yena"))
 				{
-					Commands.react("pogey");
+					// Commands.react("pogey");
+					m.addReaction(Emotes.pogey).queue();
 					m.addReaction("❤️").queue();
 				}
 				else
