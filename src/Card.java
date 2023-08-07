@@ -103,14 +103,14 @@ public class Card
 	public int getSemeInt()
 	{
 		return switch (seme)
-				       {
-					       case "Cuori" -> 45;
-					       case "Quadri" -> 44;
-					       case "Fiori" -> 43;
-					       case "Picche" -> 42;
-					
-					       default -> -1;
-				       };
+		{
+			case "Cuori" -> 45;
+			case "Quadri" -> 44;
+			case "Fiori" -> 43;
+			case "Picche" -> 42;
+			
+			default -> -1;
+		};
 	}
 	public String getValoreString()
 	{

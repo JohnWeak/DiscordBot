@@ -18,6 +18,7 @@ public class ThreadPokemon extends Thread
 	private Message m;
 	
 	private final Error<Exception> error = new Error<>();
+	private final PrivateMessage gion = new PrivateMessage(Utente.getGion());
 	
 	public ThreadPokemon(Pokemon pokemon, TextChannel tc, EmbedBuilder eb)
 	{
@@ -53,14 +54,19 @@ public class ThreadPokemon extends Thread
 			
 			sleep(500); // necessario così che non si confonda fra i due ultimi messaggi inviati nel canale
 			
-			var history = Commands.channelHistory(tc, false);
+			var history = Utilities.channelHistory(tc, false, 3);
+			if (history.isEmpty())
+			{
+				gion.send("Errore nel caricamento del channel history");
+				return;
+			}
 			var latest = history.get(0);
 			m = tc.retrieveMessageById(latest.getId()).complete();
-				
-				
+			
+			
 			if (m == null)
 			{
-				new PrivateMessage(Utente.getGion()).send("AAAAAAAAAAA");
+				gion.send("AAAAAAAAAAA");
 				return;
 			}
 				

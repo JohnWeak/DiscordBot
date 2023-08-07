@@ -430,14 +430,12 @@ public class Commands extends ListenerAdapter
 			case "!massshooting", "!ms" -> massShooting();
 			case "!war" -> new Clash().clashWar();
 			case "!league" -> new Clash().clashWarLeague(false);
-			// case "!emotes" -> getEmotes();
 			case "!smh" -> new ThreadSmh(channel).start();
 			case "!dado" -> dado();
 			 case "!cattura", "!catch" -> cattura(pokemon);
 			case "!f" -> payRespect();
 			case "!timer" -> timer();
 			case "!dm" -> dm(msgStrippedLowerCase);
-			// case "!ch" -> channelHistory();
 			case "!testpokemon", "!tp" -> testPokemon();
 			case "!apple" -> apple();
 			case "!debug" -> debug();
@@ -852,31 +850,6 @@ public class Commands extends ListenerAdapter
 		
 	} // fine cattura()
 	
-	public static List<Message> channelHistory(TextChannel channel, boolean debug)
-	{
-		final var amount = 3;
-		var history = channel.getHistory().retrievePast(amount).complete();
-		
-		if (debug)
-		{
-			var pm = new PrivateMessage(Utente.getGion());
-			var msg = new StringBuilder();
-			
-			for (int i = 0; i < 3; i++)
-			{
-				var auth = history.get(i).getAuthor();
-				var name = auth.getName();
-				var disc = auth.getDiscriminator();
-				var m = history.get(i).getContentStripped();
-				
-				msg.append("Messaggio numero ").append(i).append(":\t").append(auth).append(" --- ").append(name).append(" (").append(disc).append("): ").append(m).append("\n");
-			}
-			
-			pm.send(msg.toString());
-		}
-		return history;
-		
-	} // fine metodo channelHistory()
 	
 	private static void testPokemon()
 	{
@@ -1688,7 +1661,9 @@ public class Commands extends ListenerAdapter
 			"NESSUNO TOCCA IL BOT E SOPRAVVIVE PER RACCONTARLO.", "IL BOT È ANDATO A FARE LA SPESA: LASCIA UN MESSAGGIO E __NON__ SARAI RICONTATTATO.",
 			"NELL'ERA POST-COVID DEVI STARE AD ALMENO 2 METRI DAL BOT.", "GIOCA A QUALCHE VIDEOGIOCO INVECE DI PARLARE AL BOT.",
 			"IL BOT È OCCUPATO, NON HA TEMPO DA DEDICARTI.", "PENSA A TERRAFORMARE MARTE INVECE CHE OFFRIRE PROMESSE VACUE DI AMORE ETERNO AL BOT",
-			"EVITA DI SPAVENTARE IL BOT CON I TUOI MODI DA ELEFANTE IN UN NEGOZIO DI PREGIATI VASI CINESI"
+			"EVITA DI SPAVENTARE IL BOT CON I TUOI MODI DA ELEFANTE IN UN NEGOZIO DI PREGIATI VASI CINESI",
+			"VAI A FARE UNA ROLEPLAY CON CHATGPT INVECE DI SCOCCIARE IL BOT", "QUANDO L'UNIVERSO AVRÀ FINE TI SARÀ COMUNQUE INTERDETTO DI AVVICINARTI AL BOT",
+			"SE NON TI PIACE AVERE DUE GAMBE FUNZIONANTI ALLORA AVVICINATI PURE AL BOT"
 		};
 		
 		if (messageRaw.length() <= hotkey)

@@ -70,7 +70,7 @@ public class Pokemon
 			for (int i = 0; i < id; i++)
 				line = reader.readLine();
 			
-			nome = line.toLowerCase();
+			nome = Utilities.capitalize(line.toLowerCase());
 			if (debug)
 				pm.send("`\n\nnome="+nome+"\n\n`");
 			jsonFile = new File(JSON_FILES + nome + ".json");
