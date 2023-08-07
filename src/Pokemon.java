@@ -35,6 +35,7 @@ public class Pokemon
 	
 	// POKEMON INFO
 	private String nome;
+	private String nomeFile;
 	private String img;
 	private boolean shiny = false;
 	private String descrizione;
@@ -68,12 +69,13 @@ public class Pokemon
 			path = Paths.get(Pokemon.NAMES_FILE);
 			reader = Files.newBufferedReader(path);
 			for (int i = 0; i < id; i++)
-				line = reader.readLine();
+				line = reader.readLine().toLowerCase();
 			
-			nome = Utilities.capitalize(line.toLowerCase());
+			nomeFile = line;
+			
 			if (debug)
-				pm.send("`\n\nnome="+nome+"\n\n`");
-			jsonFile = new File(JSON_FILES + nome + ".json");
+				pm.send("`\n\nnome="+nomeFile+"\n\n`");
+			jsonFile = new File(JSON_FILES + nomeFile+ ".json");
 			
 		}
 		catch (Exception e)
@@ -109,7 +111,7 @@ public class Pokemon
 		JSONObject data = getJsonObject(jsonFile);
 		
 		dexNumber = (String) data.get("id");
-		nome = (String) data.get("name");
+		nome = Utilities.capitalize((String) data.get("name"));
 		types = (JSONArray) data.get("types");
 		descrizione = (String) data.get("flavor_text");
 		generazione = (String) data.get("generation");
@@ -130,11 +132,16 @@ public class Pokemon
 		
 		if (debug)
 		{
-			pm.send("nome: " + nome);
-			pm.send("dexNumber: " + dexNumber);
-			pm.send("descrizione: " + descrizione);
-			pm.send("generazione: " + generazione);
-			pm.send("tipo/i: " + Arrays.toString(tipo));
+			var msg = "nome: "+nome+"\ndexNumber: "+dexNumber+"\ndescrizione: "+descrizione+
+					"\ngenerazione: "+generazione+"\ntipo/i: "+Arrays.toString(tipo);
+			
+			pm.send(msg);
+			
+			// pm.send("nome: " + nome);
+			// pm.send("dexNumber: " + dexNumber);
+			// pm.send("descrizione: " + descrizione);
+			// pm.send("generazione: " + generazione);
+			// pm.send("tipo/i: " + Arrays.toString(tipo));
 		}
 		
 	} // fine costruttore
@@ -222,7 +229,7 @@ public class Pokemon
 			if (descrizione != null)
 			{
 				String type = "Type";
-				if (!tipo[1].equals(""))
+				if (!tipo[1].isEmpty())
 					type += "s";
 				
 				embedBuilder.addField("**"+type+"**", types, true);
