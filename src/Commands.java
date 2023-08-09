@@ -36,7 +36,6 @@ public class Commands extends ListenerAdapter
 	private static final Object object = Commands.class;
 	private static final Error<Exception> error = new Error<>();
 	private static final Error<String> errorString = new Error<>();
-	
 	public static final String botChannel = "\uD83E\uDD16bot-owo";
 	private static final Random random = new Random();
 	public static MessageChannel channel;
@@ -52,45 +51,9 @@ public class Commands extends ListenerAdapter
 	public static TextChannel canaleBot;
 	private static final boolean moduloSicurezza = false;
 	private static final boolean sendMsgActivity = false;
-	private static List<Emote> emoteList;
+	// private static List<Emote> emoteList;
 	private static JDA jda;
 	private static Pokemon pokemon;
-	
-	
-	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
-	private String getSaluto()
-	{
-		var c = getCurrentTime();
-		var saluto = "";
-		var hour = c.get(Calendar.HOUR_OF_DAY);
-		var month = c.get(Calendar.MONTH);
-		short tramonto;
-		
-		switch (month) // se è estate, il tramonto avviene più tardi
-		{
-			case 4, 5, 6, 7 -> tramonto = 20;
-			default -> tramonto = 17;
-		}
-		
-		if (hour > 0 && hour < 7)
-			saluto = "Buona mattina";
-		else if (hour >= 7 && hour < 13)
-			saluto = "Buongiorno";
-		else if (hour >= 13 && hour < tramonto)
-			saluto = "Buon pomeriggio";
-		else if (hour >= tramonto && hour < 23)
-			saluto = "Buonasera";
-		else
-			saluto = "Buonanotte";
-		
-		return saluto;
-	} // fine getSaluto()
-	
-	private GregorianCalendar getCurrentTime()
-	{
-		var roma = TimeZone.getTimeZone("Europe/Rome");
-		return new GregorianCalendar(roma, Locale.ITALY);
-	} // fine getCurrentTime()
 	
 	
 	/** onReady() viene eseguita soltanto all'avvio del bot */
@@ -99,14 +62,15 @@ public class Commands extends ListenerAdapter
 		commandsHashMap = Cmd.init();
 		
 		jda = event.getJDA();
-		var nome = jda.getSelfUser().getName();
+		// var nome = jda.getSelfUser().getName();
+		// emoteList = event.getJDA().getEmotes();
 		var act = jda.getPresence().getActivity();
-		emoteList = event.getJDA().getEmotes();
+		
 		
 		String activityType="act_type", nomeActivity="act_name", activityTradotta="act_trad";
 		PrivateMessage gion = new PrivateMessage(Utente.getGion());
 		
-		System.out.printf("%s si è connesso a Discord!\n\npublic class MessageHistory\n{\n", nome);
+		// System.out.printf("%s si è connesso a Discord!\n\npublic class MessageHistory\n{\n", nome);
 		
 		try
 		{
@@ -128,28 +92,10 @@ public class Commands extends ListenerAdapter
 		// moduloDiSicurezza();
 		
 		if (sendMsgActivity)
-			canaleBot.sendMessage(getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
+			canaleBot.sendMessage(Utilities.getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
 		
 		gion.send("Riavvio completato.");
-
-		//		File f = new File("emotes.txt");
-//		FileWriter fw;
-//		StringBuilder sb = new StringBuilder();
-//
-//		for (Emote e : emoteList)
-//		{
-//			sb.append(e.getId()).append("\n");
-//		}
-//
-//		try
-//		{
-//			fw = new FileWriter(f);
-//			fw.write(String.valueOf(sb));
-//			fw.close();
-//		} catch (IOException ex)
-//		{
-//			error.print(this, ex);
-//		}
+		
 	} // fine onReady()
 
 	/** Questo metodo decide cosa fare quando un messaggio viene modificato */
@@ -313,7 +259,7 @@ public class Commands extends ListenerAdapter
 		var reply = false;
 		var msgReply = "";
 		
-		emoteList = jda.getEmotes();
+		// emoteList = jda.getEmotes();
 		
 		// se è un bot a mandare il messaggio, ignoralo per evitare loop di messaggi
 		if (author.isBot())
@@ -330,8 +276,7 @@ public class Commands extends ListenerAdapter
 					var size = msgSplittato.length;
 					var auth = "";
 					var numGiorni = 0;
-					
-					var channelHistory = channel.getHistory().retrievePast(3).complete();
+					var channelHistory = Utilities.channelHistory(channel,false,3);
 					
 					try
 					{
@@ -408,7 +353,7 @@ public class Commands extends ListenerAdapter
 				final String[] reazione = {"dansgame", "pigeon", "smh"};
 				final var scelta = random.nextInt(reazione.length);
 				
-				message.reply(camelCase(messageRaw)).queue(lambda -> react(reazione[scelta]));
+				message.reply(Utilities.camelCase(messageRaw)).queue(lambda -> react(reazione[scelta]));
 				
 			} // fine else
 			
@@ -436,9 +381,7 @@ public class Commands extends ListenerAdapter
 			case "!f" -> payRespect();
 			case "!timer" -> timer();
 			case "!dm" -> dm(msgStrippedLowerCase);
-			case "!testpokemon", "!tp" -> testPokemon();
 			case "!apple" -> apple();
-			case "!debug" -> debug();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -597,7 +540,7 @@ public class Commands extends ListenerAdapter
 		if (msgStrippedLowerCase.contains("non vedo l'ora") || msgStrippedLowerCase.contains("che ore sono") || msgStrippedLowerCase.contains("che ora è"))
 		{
 			reply = true;
-			var date = getCurrentTime();
+			var date = Utilities.getCurrentTime();
 			var hour = date.get(Calendar.HOUR_OF_DAY);
 			var minutes = date.get(Calendar.MINUTE);
 
@@ -640,7 +583,7 @@ public class Commands extends ListenerAdapter
 				flag = false;
 				final int bound = 1000;
 				if (random.nextInt(bound) < bound - 1)
-					message.reply(getSaluto() + " anche a te").queue();
+					message.reply(Utilities.getSaluto() + " anche a te").queue();
 				else
 					message.reply("No, vaffanculo >:(").queue();
 			}
@@ -702,7 +645,7 @@ public class Commands extends ListenerAdapter
 				actTrad = Main.getActivityTradotta();
 				name = Main.getActivity().getName();
 				tipo = Main.getTipo();
-				saluto = (random.nextInt(5) == 3) ? getSaluto() : "Ciao";
+				saluto = (random.nextInt(5) == 3) ? Utilities.getSaluto() : "Ciao";
 				activity = actTrad.equals("guardo") ? "guardando " : "giocando a";
 				
 				risposta = String.format("%s, sto %s **%s**", saluto, activity, name);
@@ -851,32 +794,6 @@ public class Commands extends ListenerAdapter
 	} // fine cattura()
 	
 	
-	private static void testPokemon()
-	{
-		var msg = messageRaw.split(" ");
-		var pkmnID = random.nextInt(Pokemon.ALL);
-		
-		for (var s : msg)
-		{
-			if (s.contains("poochyena"))
-			{
-				pkmnID = 261;
-				break;
-			}
-		}
-		
-		try
-		{
-			new Pokemon(pkmnID, true);
-		}
-		catch (Exception e)
-		{
-			error.print(object, e);
-		}
-		
-	} // fine testPokemon()
-	
-	
 	/**Questo metodo fa sì che il bot invii un messaggio privato all'utente che lo esegue
 	 * @param content il messaggio da inviare all'utente. */
 	private void dm(String content)
@@ -998,25 +915,6 @@ public class Commands extends ListenerAdapter
 			dado();
 
 	} // fine onSlashCommand()
-
-	/** Trasforma il testo da normale a parodia simil-CaMeL cAsE
-	 * @param msg il testo originale.
-	 * @return la stringa originale adesso trasformata.
-	 * */
-	private String camelCase(String msg)
-	{
-		var chars = msg.toCharArray();
-		var len = chars.length;
-		char c;
-		
-		for (int i = 0; i < len; i++)
-		{
-			c = chars[i];
-			chars[i] = (i % 2 == 0 ? Character.toUpperCase(c) : Character.toLowerCase(c));
-		}
-		
-		return new String(chars);
-	} // fine camelCase()
 	
 	
 	/** Lancia una moneta */
@@ -1059,7 +957,7 @@ public class Commands extends ListenerAdapter
 		
 		if (ded.equalsIgnoreCase(authorName))
 		{
-			message.reply("Omaggi per te stesso?").queue();
+			message.reply("Omaggi te stesso? <:"+Emotes.smh+">").queue();
 			return;
 		}
 		
@@ -1165,18 +1063,6 @@ public class Commands extends ListenerAdapter
 		}
 		
 	} // fine sondaggio()
-
-	private void debug()
-	{
-		if (author.equals(Utente.getGion()))
-		{
-			String reply = "`Pokemon debug is ";
-			Pokemon.debug = !Pokemon.debug;
-			reply += Pokemon.debug ? "on.`" : "off.`";
-			message.reply(reply).queue();
-		}
-		
-	} // fine debug()
 	
 	/** Infastidisce le persone */
 	public void triggera(String discriminator)
