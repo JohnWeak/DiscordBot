@@ -724,10 +724,9 @@ public class Commands extends ListenerAdapter
 		}
 		
 		if (twitterDetected)
-		{
-			gion.send(reply);
 			message.reply(newURL).queue();
-		}
+		
+		gion.send(reply);
 		
 	} // fine detectTwitterLink()
 	
