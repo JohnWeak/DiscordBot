@@ -694,7 +694,7 @@ public class Commands extends ListenerAdapter
 		String firstHalf, secondHalf, newURL = "";
 		boolean twitterDetected = false;
 		var gion = new PrivateMessage(Utente.getGion());
-		String reply = "";
+		String reply = "Link non rilevato";
 		
 		for (String m : parts)
 		{
@@ -724,7 +724,10 @@ public class Commands extends ListenerAdapter
 		}
 		
 		if (twitterDetected)
+		{
+			gion.send(reply);
 			message.reply(newURL).queue();
+		}
 		
 	} // fine detectTwitterLink()
 	
