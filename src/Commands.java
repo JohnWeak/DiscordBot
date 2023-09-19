@@ -693,16 +693,21 @@ public class Commands extends ListenerAdapter
 		String[] parts = messageRaw.split(" ");
 		String firstHalf, secondHalf, newURL = "";
 		boolean twitterDetected = false;
+		var gion = new PrivateMessage(Utente.getGion());
+		String reply = "";
 		
 		for (String m : parts)
 		{
 			if (m.matches("https*://twitter\\.com"))
 			{
+				
 				twitterDetected = true;
 				
 				firstHalf = m.split("//")[0]+"//";
 				secondHalf = m.split("//")[1];
 				newURL = String.format("%sfx%s", firstHalf, secondHalf);
+				
+				reply = "link rilevato (primo if): " + newURL;
 				break;
 			}
 			else if (m.matches("https*://www\\.twitter\\.com"))
@@ -712,6 +717,8 @@ public class Commands extends ListenerAdapter
 				firstHalf = m.split("//")[0]+"//";
 				secondHalf = m.split("//")[1].substring(4) + "fx";
 				newURL = String.format("%sfx%s", firstHalf, secondHalf);
+				
+				reply = "link rilevato (primo if, clausola else) " + newURL;
 				break;
 			}
 		}
