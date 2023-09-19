@@ -698,8 +698,8 @@ public class Commands extends ListenerAdapter
 		
 		for (String m : parts)
 		{
-			var regex1 = "https*://twitter\\.com";
-			var regex2 = "https*://www\\.twitter\\.com";
+			var regex1 = "https*://twitter\\.com.*";
+			var regex2 = "https*://www\\.twitter\\.com.*";
 			
 			if (m.matches(regex1))
 			{
