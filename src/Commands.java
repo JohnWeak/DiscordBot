@@ -693,8 +693,6 @@ public class Commands extends ListenerAdapter
 		String[] parts = messageRaw.split(" ");
 		String firstHalf, secondHalf, newURL = "";
 		boolean twitterDetected = false;
-		// var gion = new PrivateMessage(Utente.getGion());
-		// String reply = "Link non rilevato";
 		
 		for (String m : parts)
 		{
@@ -710,7 +708,6 @@ public class Commands extends ListenerAdapter
 				secondHalf = m.split("//")[1];
 				newURL = String.format("%sfx%s", firstHalf, secondHalf);
 				
-				// reply = "link rilevato (primo if): " + newURL;
 				break;
 			}
 			else if (m.matches(regex2))
@@ -721,15 +718,12 @@ public class Commands extends ListenerAdapter
 				secondHalf = m.split("//")[1].substring(4) + "fx";
 				newURL = String.format("%sfx%s", firstHalf, secondHalf);
 				
-				// reply = "link rilevato (primo if, clausola else) " + newURL;
 				break;
 			}
 		}
 		
 		if (twitterDetected)
 			message.reply(newURL).queue();
-		
-		// gion.send(reply);
 		
 	} // fine detectTwitterLink()
 	
