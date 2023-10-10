@@ -19,7 +19,7 @@ public abstract class Utilities
 	 * @param debug booleano che manda come messaggio privato il risultato a Gion.
 	 * @param amount la quantità di messaggi da recuperare.
 	 *
-	 * @return la lista dei messaggi nella cronologia.*/
+	 * @return la lista dei messaggi nella cronologia. list[0] = ultimo messaggio*/
 	public static List<Message> channelHistory(MessageChannel channel, boolean debug, int amount)
 	{
 		var history = channel.getHistory().retrievePast(amount).complete();
