@@ -391,7 +391,9 @@ public class Commands extends ListenerAdapter
 		if (msgStrippedLowerCase.contains("ehi modulo"))
 			ehiModulo();
 		
-		if (msgStrippedLowerCase.matches(".*piccion[ei].*|.*pigeon.*"))
+		final var pigeon = ".*piccion[ei].*|.*pigeon.*|.*igm[oa].*";
+		
+		if (msgStrippedLowerCase.matches(pigeon))
 			new ThreadPigeon(authorName, channel).start();
 		
 		if (msgStrippedLowerCase.contains("owo"))
