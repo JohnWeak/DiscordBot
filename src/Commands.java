@@ -15,15 +15,11 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.w3c.dom.Text;
 
 import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -273,7 +269,7 @@ public class Commands extends ListenerAdapter
 				if (msgStrippedLowerCase.contains("daily streak"))
 				{
 					var msgSplittato = msgStrippedLowerCase.split(" ");
-					var size = msgSplittato.length;
+					final var size = msgSplittato.length;
 					var auth = "";
 					var numGiorni = 0;
 					var channelHistory = Utilities.channelHistory(channel,false,3);
@@ -361,8 +357,6 @@ public class Commands extends ListenerAdapter
 		
 		
 		
-		Card c;
-		
 		switch (comando)
 		{
 			case "!coinflip", "!cf" -> coinflip();
@@ -371,13 +365,13 @@ public class Commands extends ListenerAdapter
 			case "!8ball" -> eightBall();
 			case "!pokemon" -> encounter();
 			case "!colpevolezza", "!colpevole" -> colpevolezza();
-			case "!carta" -> {c = new Card(); c.sendCarta(c);}
+			case "!carta" -> {Card c = new Card(); c.sendCarta(c);}
 			case "!massshooting", "!ms" -> massShooting();
 			case "!war" -> new Clash().clashWar();
 			case "!league" -> new Clash().clashWarLeague(false);
 			case "!smh" -> new ThreadSmh(channel).start();
 			case "!dado" -> dado();
-			 case "!cattura", "!catch" -> cattura(pokemon);
+			case "!cattura", "!catch" -> cattura(pokemon);
 			case "!f" -> payRespect();
 			case "!timer" -> timer();
 			case "!dm" -> dm(msgStrippedLowerCase);
@@ -680,15 +674,6 @@ public class Commands extends ListenerAdapter
 			channel.sendMessage(x).queue();
 		
 	} // fine getEmotes()
-	
-	/**
-	 * @param s la stringa contenente emoji
-	 * @return null - perché non è completo
-	 * */
-	private List<String> findEmojis(String s)
-	{
-		return null;
-	}
 	
 	
 	/**Sostituisce i link di twitter con quelli di <code>fxtwitter</code>, che caricano l'anteprima su discord*/
