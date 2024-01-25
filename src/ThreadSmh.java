@@ -7,7 +7,7 @@ public class ThreadSmh extends Thread
 	private final Object object = ThreadSmh.class;
 	
 	private final String smh = "<:" + Emotes.smh + "> ";
-	private final int max;
+	private final int MAX;
 	private final MessageChannel mc;
 	private final Random random;
 	
@@ -15,7 +15,7 @@ public class ThreadSmh extends Thread
 	{
 		this.mc = mc;
 		random = new Random();
-		max = random.nextInt(2, 10);
+		MAX = random.nextInt(2, 10);
 	}
 	
 	@Override
@@ -26,11 +26,10 @@ public class ThreadSmh extends Thread
 			String newSmh = smh;
 			try
 			{
-				for (int i = 0; i < max; i++)
+				for (int i = 0; i < MAX; i++)
 				{
-					var sleep = random.nextInt(500, 3000);
 					l.editMessage(newSmh).queue();
-					Thread.sleep(sleep);
+					Thread.sleep(random.nextInt(500, 2000));
 					newSmh += smh;
 				}
 			}

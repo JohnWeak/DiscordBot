@@ -62,7 +62,6 @@ public class Commands extends ListenerAdapter
 		// emoteList = event.getJDA().getEmotes();
 		var act = jda.getPresence().getActivity();
 		
-		
 		String activityType="act_type", nomeActivity="act_name", activityTradotta="act_trad";
 		PrivateMessage gion = new PrivateMessage(Utente.getGion());
 		
@@ -255,8 +254,6 @@ public class Commands extends ListenerAdapter
 		var reply = false;
 		var msgReply = "";
 		
-		// emoteList = jda.getEmotes();
-		
 		// se è un bot a mandare il messaggio, ignoralo per evitare loop di messaggi
 		if (author.isBot())
 		{
@@ -309,7 +306,7 @@ public class Commands extends ListenerAdapter
 						channel.sendMessage(mess).queue();
 					}
 				} // fine if daily streak
-			} // fine if equals 8456
+			} // fine if equals bot
 			
 			
 			if (author.getDiscriminator().equals(Utente.BOWOT)) // self own
@@ -324,7 +321,7 @@ public class Commands extends ListenerAdapter
 		
 		if (random.nextInt(500) == 42) // chance di reagire con emote personali
 		{
-			var trigger = random.nextBoolean();
+			final var trigger = random.nextBoolean();
 			
 			if (trigger)
 			{
@@ -355,8 +352,6 @@ public class Commands extends ListenerAdapter
 			
 		} // fine if reazioni
 		
-		
-		
 		switch (comando)
 		{
 			case "!coinflip", "!cf" -> coinflip();
@@ -385,10 +380,18 @@ public class Commands extends ListenerAdapter
 		if (msgStrippedLowerCase.contains("ehi modulo"))
 			ehiModulo();
 		
-		final var pigeon = ".*piccion[ei].*|.*pigeon.*|.*igm[oa].*";
+		final var pigeonRegex = ".*piccion[ei].*|.*pigeon.*|.*igm[oa].*";
+		final var enigmoRegex = ".*igm[oa].*";
+		final var gionRegex = ".*gion.*|.*john.*";
 		
-		if (msgStrippedLowerCase.matches(pigeon))
+		if (msgStrippedLowerCase.matches(pigeonRegex))
 			new ThreadPigeon(authorName, channel).start();
+		
+		if (msgStrippedLowerCase.matches(enigmoRegex))
+			react(Emotes.pigeon);
+		
+		if (msgStrippedLowerCase.matches(gionRegex))
+			react(Emotes.boo2);
 		
 		if (msgStrippedLowerCase.contains("owo"))
 			reazioni.add(Emotes.OwO);
@@ -559,7 +562,7 @@ public class Commands extends ListenerAdapter
 			}
 			else
 			{
-				var orario = new Ore(hour, minutes);
+				final var orario = new Ore(hour, minutes);
 				
 				msgReply += orario.getOra();
 
@@ -665,13 +668,13 @@ public class Commands extends ListenerAdapter
 	/**Ottiene le emote custom del canale*/
 	private void getEmotes()
 	{
-		var x = Arrays.toString(canaleBot.getGuild().getEmotes().toArray());
+		final var emotesArray = Arrays.toString(canaleBot.getGuild().getEmotes().toArray());
 		
 		// discord limita i messaggi a 2000 caratteri per messaggio
-		if (x.length() > 2000)
-			 channel.sendMessage(x.substring(0, 1999)).queue();
+		if (emotesArray.length() > 2000)
+			 channel.sendMessage(emotesArray.substring(0, 1999)).queue();
 		else
-			channel.sendMessage(x).queue();
+			channel.sendMessage(emotesArray).queue();
 		
 	} // fine getEmotes()
 	
@@ -679,7 +682,7 @@ public class Commands extends ListenerAdapter
 	/**Sostituisce i link di twitter con quelli di <code>fxtwitter</code>, che caricano l'anteprima su discord*/
 	private void detectTwitterLink()
 	{
-		String[] parts = messageRaw.split(" ");
+		final String[] parts = messageRaw.split(" ");
 		String firstHalf, secondHalf, newURL = "";
 		boolean twitterDetected = false;
 		
@@ -727,7 +730,7 @@ public class Commands extends ListenerAdapter
 	
 	private void encounter()
 	{
-		String[] msgSplittato = messageRaw.split(" ");
+		final String[] msgSplittato = messageRaw.split(" ");
 		String nomePokemon;
 		int idPokemon = random.nextInt(1,Pokemon.ALL);
 		boolean pokedex;
@@ -901,7 +904,7 @@ public class Commands extends ListenerAdapter
 	/** Gestisce i comandi slash (ancora da implementare) */
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
 	{
-		var eventName = event.getName();
+		final var eventName = event.getName();
 		
 		if (eventName.equalsIgnoreCase("pog"))
 			event.getChannel().sendMessage("<:"+ Emotes.pogey + ">").queue();
@@ -915,14 +918,14 @@ public class Commands extends ListenerAdapter
 	/** Lancia una moneta */
 	public void coinflip()
 	{
-		final String testaEmote = "<:" + Emotes.pogey + ">";
-		final String croceEmote = "<:" + Emotes.pigeon + ">";
-		String lancioMoneta = authorName + " lancia una moneta...";
+		final var testaEmote = "<:" + Emotes.pogey + ">";
+		final var croceEmote = "<:" + Emotes.pigeon + ">";
+		final var lancioMoneta = authorName + " lancia una moneta...";
 
-		var headsOrTails = random.nextBoolean();
-		var responso = lancioMoneta+"\n**È uscito** ";
-		var testaStringa = "**"+testaEmote+"! (Testa)**";
-		var croceStringa = "**"+croceEmote+"! (Croce)**";
+		final var headsOrTails = random.nextBoolean();
+		final var responso = lancioMoneta+"\n**È uscito** ";
+		final var testaStringa = "**"+testaEmote+"! (Testa)**";
+		final var croceStringa = "**"+croceEmote+"! (Croce)**";
 
 		var finalResponso = responso.concat(headsOrTails ? testaStringa : croceStringa);
 
@@ -946,7 +949,7 @@ public class Commands extends ListenerAdapter
 		}
 		
 		var ded = messageRaw.split(" ")[1];
-		var mentionedUsers = message.getMentionedUsers();
+		final var mentionedUsers = message.getMentionedUsers();
 		if (!mentionedUsers.isEmpty())
 			ded = mentionedUsers.get(0).getName();
 		
@@ -956,8 +959,8 @@ public class Commands extends ListenerAdapter
 			return;
 		}
 		
-		String[] cuori = {"❤️", "💛", "💙", "🧡", "💚", "💜"};
-		String[] imgs =
+		final String[] cuori = {"❤️", "💛", "💙", "🧡", "💚", "💜"};
+		final String[] imgs =
 		{
 			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.imgflip.com%2F4rf5nr.jpg&f=1&nofb=1&ipt=0a6b54aa3965c4ec92081a03fdb37f8d1d490426003b6cbeb6ec2420619515dd&ipo=images",
 			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.kym-cdn.com%2Fentries%2Ficons%2Ffacebook%2F000%2F017%2F039%2Fpressf.jpg&f=1&nofb=1&ipt=0a56a685ea4605c86c4d6caea860a6c1480a6e88a982538acc34623ac5204bdc&ipo=images",
@@ -966,10 +969,10 @@ public class Commands extends ListenerAdapter
 			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.imgflip.com%2F3ni7oz.jpg&f=1&nofb=1&ipt=2cf84114527ff5e7b02fb19ae74fe596b1d66baba35daa7eb7c8862adcdfe9af&ipo=images",
 			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.F17KjnL0a6N4Eat2f_ZOmwHaFH%26pid%3DApi&f=1&ipt=ff5e29783603bb76136acf9dc5ae713b54335765885fcd62b93be760cac71b9a&ipo=images"
 		};
-		var cuoreDaUsare = cuori[random.nextInt(cuori.length)];
-		var imgDaUsare = imgs[random.nextInt(imgs.length)];
+		final var cuoreDaUsare = cuori[random.nextInt(cuori.length)];
+		final var imgDaUsare = imgs[random.nextInt(imgs.length)];
 		
-		var embed = new EmbedBuilder()
+		final var embed = new EmbedBuilder()
 			.setTitle("In loving memory of " + ded + " " + cuoreDaUsare)
 			.setColor(Color.black)
 			.setDescription("F")
@@ -996,9 +999,9 @@ public class Commands extends ListenerAdapter
 			return;
 		}
 		
-		String[] domandaERisposte = messageRaw.split("\\?");
-		String domanda = domandaERisposte[0].substring(5); // !poll.length() = 5
-		String[] risposte = messageRaw.substring(5+domanda.length()+1).split("/");
+		final String[] domandaERisposte = messageRaw.split("\\?");
+		final String domanda = domandaERisposte[0].substring(5); // !poll.length() = 5
+		final String[] risposte = messageRaw.substring(5+domanda.length()+1).split("/");
 		
 		//System.out.printf("DomandaERisposte length: %d\nDomandaERisposte: %s\nDomanda length: %d\nDomanda: %s\nRisposte.length: %d\nRisposte: %s\n", domandaERisposte.length, Arrays.toString(domandaERisposte), domanda.length(), domanda, risposte.length, Arrays.toString(risposte));
 		
@@ -1159,7 +1162,7 @@ public class Commands extends ListenerAdapter
 	/** Aggiunge una reazione all'ultimo messaggio inviato */
 	public static void react(String emote)
 	{
-		var emoteDaUsare = Emotes.emoteDaUsare(emote.toLowerCase());
+		final var emoteDaUsare = Emotes.emoteDaUsare(emote.toLowerCase());
 		
 		if (emoteDaUsare.isEmpty())
 			return;
@@ -1205,12 +1208,12 @@ public class Commands extends ListenerAdapter
 	/** Lascia che RNGesus decida quanto è colpevole l'utente taggato */
 	private void colpevolezza()
 	{
-		var utenteTaggato = message.getMentionedUsers();
+		final var utenteTaggato = message.getMentionedUsers();
 		final String urlOwO = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--amf4Rvt7--%2Ft_Preview%2Fb_rgb%3A191919%2Cc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1518097892%2Fproduction%2Fdesigns%2F2348593_0.jpg&f=1&nofb=1";
 		
 		if (utenteTaggato.isEmpty())
 		{
-			var emb = new EmbedBuilder()
+			final var emb = new EmbedBuilder()
 				.setColor(Color.red)
 				.setTitle("Scrivi `!colpevole <@utente> per usare questo comando`");
 			channel.sendMessageEmbeds(emb.build()).queue();
@@ -1221,8 +1224,8 @@ public class Commands extends ListenerAdapter
 		{
 			final int colpa = random.nextInt(100);
 			final String utente = utenteTaggato.get(0).getName();
-			String[] particella = {"allo ", "all'", "al "};
-			int index = switch (colpa)
+			final String[] particella = {"allo ", "all'", "al "};
+			final int index = switch (colpa)
 			{
 				case 0 -> 0;
 				case 1, 8, 11, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89 -> 1;
@@ -1231,14 +1234,14 @@ public class Commands extends ListenerAdapter
 			
 			final String risposta = String.format("%s è colpevole %s%d%%", utente, particella[index], colpa);
 			
-			var embed = new EmbedBuilder()
+			final var embed = new EmbedBuilder()
 				.setTitle(risposta)
 				.setColor(0xFF0000)
 				.setFooter("", urlOwO);
 			
 			channel.sendMessageEmbeds(embed.build()).queue(lambda ->
 			{
-				String[] emotes = {"pigeon", "smh", "dansgame", "pogey"};
+				final String[] emotes = {"pigeon", "smh", "dansgame", "pogey"};
 				react(emotes[random.nextInt(emotes.length)]);
 			});
 		}
@@ -1248,9 +1251,9 @@ public class Commands extends ListenerAdapter
 	/** Mostra un embed con le informazioni del bot */
 	public void info()
 	{
-		var embedBuilder = new EmbedBuilder();
-		var urlOwO = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--amf4Rvt7--%2Ft_Preview%2Fb_rgb%3A191919%2Cc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1518097892%2Fproduction%2Fdesigns%2F2348593_0.jpg&f=1&nofb=1";
-		var urlTitle = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+		final var embedBuilder = new EmbedBuilder();
+		final var urlOwO = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--amf4Rvt7--%2Ft_Preview%2Fb_rgb%3A191919%2Cc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1518097892%2Fproduction%2Fdesigns%2F2348593_0.jpg&f=1&nofb=1";
+		final var urlTitle = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 		
 		embedBuilder.setTitle("Informazioni", urlTitle);
 		embedBuilder.setDescription("Questo bot permette di lanciare monete, creare sondaggi e, soprattutto, essere un rompiballe.");
@@ -1263,7 +1266,7 @@ public class Commands extends ListenerAdapter
 			.addBlankField(false)
 			.setFooter("Creato con ❤️ da JohnWeak", urlOwO);
 		
-		var embed = embedBuilder.build();
+		final var embed = embedBuilder.build();
 		channel.sendMessageEmbeds(embed).queue();
 		
 	} // fine info()
@@ -1298,7 +1301,7 @@ public class Commands extends ListenerAdapter
 
 		message.reply(ballResponse).queue(message1 ->
 		{
-			String newResponse = "La 🎱 dichiara: ";
+			final String newResponse = "La 🎱 dichiara: ";
 			pause(-1,1500);
 			message1.editMessage(newResponse+"**"+risposte[random.nextInt(risposte.length)]+"**").queue();
 		});
@@ -1357,17 +1360,17 @@ public class Commands extends ListenerAdapter
 		{
 			final var url = new URL("https://mass-shooting-tracker-data.s3.us-east-2.amazonaws.com/"+anno+"-data.json");
 			
-			var connection = (HttpURLConnection) url.openConnection();
+			final var connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestProperty("Accept", "application/json");
 			
-			var in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			var response = new StringBuilder();
+			final var in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			final var response = new StringBuilder();
 			String inputLine;
 			while ((inputLine = in.readLine()) != null)
 				response.append(inputLine);
 			
 			jsonArray = (JSONArray) jsonParser.parse(String.valueOf(response));
-			var objs = new ArrayList<JSONObject>();
+			final var objs = new ArrayList<JSONObject>();
 			
 			for (Object o : jsonArray)
 			{
@@ -1380,12 +1383,12 @@ public class Commands extends ListenerAdapter
 			if (anno != currentYear)
 				scelta = random.nextInt(objs.size());
 			
-			var citta = (String) objs.get(scelta).get("city");
-			var stato = (String) objs.get(scelta).get("state");
-			var morti = (String) objs.get(scelta).get("killed");
-			var feriti = (String) objs.get(scelta).get("wounded");
-			var x = (String) (objs).get(scelta).get("date"); // es.: 2022-01-05T12:23:34
-			var annoMeseGiorno = x.split("T")[0].split("-");
+			final var citta = (String) objs.get(scelta).get("city");
+			final var stato = (String) objs.get(scelta).get("state");
+			final var morti = (String) objs.get(scelta).get("killed");
+			final var feriti = (String) objs.get(scelta).get("wounded");
+			final var x = (String) (objs).get(scelta).get("date"); // es.: 2022-01-05T12:23:34
+			final var annoMeseGiorno = x.split("T")[0].split("-");
 			final var year = annoMeseGiorno[0];
 			final var month = annoMeseGiorno[1];
 			var day = annoMeseGiorno[2];
@@ -1421,13 +1424,13 @@ public class Commands extends ListenerAdapter
 			if (anno == currentYear)
 				finalResp += totaleMorti;
 			
-			var footerURL = "https://www.massshootingtracker.site/logo-400.png";
+			final var footerURL = "https://www.massshootingtracker.site/logo-400.png";
 			
-			var start = LocalDate.of(anno, Integer.parseInt(month), Integer.parseInt(day));
-			var stop = LocalDate.now();
-			var days = ChronoUnit.DAYS.between(start, stop);
-			var daysField = new MessageEmbed.Field("Giorni dall'ultima", "**"+days+"**", true);
-			var vittimeField = new MessageEmbed.Field("Morti", "**"+mortiAnno+"**", true);
+			final var start = LocalDate.of(anno, Integer.parseInt(month), Integer.parseInt(day));
+			final var stop = LocalDate.now();
+			final var days = ChronoUnit.DAYS.between(start, stop);
+			final var daysField = new MessageEmbed.Field("Giorni dall'ultima", "**"+days+"**", true);
+			final var vittimeField = new MessageEmbed.Field("Morti", "**"+mortiAnno+"**", true);
 			
 			final var massShootingSite = "https://www.massshootingtracker.site/";
 			var embed = new EmbedBuilder()
@@ -1494,10 +1497,10 @@ public class Commands extends ListenerAdapter
 	
 	public void moduloDiSicurezza()
 	{
-		var active = "**IL MODULO DI SICUREZZA È ORA ATTIVO. ESSO GARANTISCE SICUREZZA AL BOT.\nTUTTE LE AZIONI SONO SORVEGLIATE E ALLA PRIMA INFRAZIONE VERRANNO ALLERTATE LE AUTORITÀ COMPETENTI E INCOMPETENTI.**";
-		var inactive = "**IL MODULO DI SICUREZZA È STATO DISATTIVATO. LA SICUREZZA DEL BOT È ADESSO GARANTITA DALLA PRESENZA DI GION.**";
+		final var active = "**IL MODULO DI SICUREZZA È ORA ATTIVO. GARANTISCE SICUREZZA AL BOT.\nTUTTE LE AZIONI SONO SORVEGLIATE E ALLA PRIMA INFRAZIONE VERRANNO ALLERTATE LE AUTORITÀ COMPETENTI E INCOMPETENTI.**";
+		final var inactive = "**IL MODULO DI SICUREZZA È STATO DISATTIVATO. LA SICUREZZA DEL BOT È ADESSO GARANTITA DALLA PRESENZA DI GION.**";
 		
-		var isActive = moduloSicurezza ? active : inactive;
+		final var isActive = moduloSicurezza ? active : inactive;
 		
 		canaleBot.sendMessage(isActive).queue();
 		
@@ -1510,9 +1513,9 @@ public class Commands extends ListenerAdapter
 	 */
 	public void ehiModulo()
 	{
-		String discr = author.getDiscriminator();
-		int hotkey = "ehi modulo".length();
-		boolean authorized = discr.equals(Utente.GION);
+		final String discr = author.getDiscriminator();
+		final int hotkey = "ehi modulo".length();
+		final boolean authorized = discr.equals(Utente.GION);
 		String reply;
 		
 		if (!moduloSicurezza)
@@ -1521,10 +1524,10 @@ public class Commands extends ListenerAdapter
 			return;
 		}
 		
-		String[] messaggiScortesi =
+		final String[] messaggiScortesi =
 		{
 			"CAZZO VUOI?", "NESSUNO TI HA CHIESTO NULLA.", "FATTI GLI AFFARI TUOI.", "MANTIENI LA DISTANZA SOCIALE DAL BOT",
-			"NON GUARDARE IL BOT.", "NON TOCCARE IL BOT.", "NON PRENDERE GELATI MANO NELLA MANO COL BOT.",
+			"NON GUARDARE IL BOT.", "NON TOCCARE IL BOT.", "NON PRENDERAI UN GELATO MANO NELLA MANO COL BOT.",
 			"NON SEI AUTORIZZATO A CHIEDERE I NUMERI DEL LOTTO AL BOT.", "NON INFASTIDIRE IL BOT.",
 			"QUANDO LA VITA TI DÀ I LIMONI, TU NON ROMPERE LE PALLE AL BOT.", "TROVA LA PACE INTERIORE, MA LONTANO DAL BOT.",
 			"IL BOT HA BISOGNO DI RINFORZI SU CLASH, NON DI ESSERE INFASTIDITO.", "NO.", "SCORDATELO.", "IMMAGINA DI ESSERE UN FIUME E SCORRI LIBERO E LONTANO DAL BOT.",
@@ -1534,8 +1537,8 @@ public class Commands extends ListenerAdapter
 			"SII IL CAMBIAMENTO CHE VUOI VEDERE NEL MONDO, QUINDI CAMBIA IN UNA PERSONA CHE NON SCASSA I COGLIONI AL BOT.",
 			"MI PAREVA DI AVERTI DETTO DI NON INTERFERIRE COL BOT, MA FORSE NON TE L'HO DETTO ABBASTANZA BENE: NON INTERFERIRE COL BOT.",
 			"AVVICINATI AL BOT E PRENDERAI LE BOT", "VAI A PASCOLARE CAZZI LONTANO DAL BOT", "PERCHÈ NON DIVENTI UN ASTRONAUTA? COSÌ PUOI ANDARE GIRANDO NELLO SPAZIO INVECE DI INFASTIDIRE IL BOT.",
-			"SALPA PER I SETTE MARI ALLA RICERCA DI \"UN PEZZO\" INVECE CHE AVVICINARTI AL BOT.", "IL BOT NON DESIDERA LA TUA COMPAGNIA.", "CI SONO 206 OSSA NEL CORPO UMANO. SO ROMPERLE TUTTE E LO FARÒ SE NON TI ALLONTANI DAL BOT.",
-			"CERCA LA RISPOSTA TRAMITE MEDITAZIONE INVECE CHE CHIEDERLA AL BOT.", "ESISTONO INFINITI UNIVERSI, EPPURE IN NESSUNO DI QUESTI TU SEI AUTORIZZATO A STARE VICINO AL BOT",
+			"SALPA PER I SETTE MARI ALLA RICERCA DI \"UN PEZZO\" INVECE CHE AVVICINARTI AL BOT.", "IL BOT NON DESIDERA LA TUA COMPAGNIA.", "CI SONO 206 OSSA NEL CORPO UMANO. SO ROMPERLE TUTTE: ALLONTANATI DAL BOT.",
+			"CERCA LA RISPOSTA TRAMITE MEDITAZIONE INVECE CHE CHIEDERLA AL BOT.", "ESISTONO INFINITI UNIVERSI: IN NESSUNO  SEI AUTORIZZATO A STARE VICINO AL BOT",
 			"ESPLORA LA SINGOLARITÀ DI UN BUCO NERO INVECE DI AVVICINARTI AL BOT.", "IL BOT NON RISPONDERÀ ALLE TUE AVANCE.",
 			"FAI UNA SPEEDRUN SU VAINGLORY INVECE CHE GUARDARE IL BOT", "CI SONO MOLTE COSE CHE PUOI GUARDARE AD OCCHIO NUDO INVECE CHE IL BOT: IL SOLE, AD ESEMPIO.",
 			"SE IL BOT È IL ROAD RUNNER, TU SEI WILE E. COYOTE", "SONO CERTO CHE HAI DI MEGLIO DA FARE CHE INFASTIDIRE IL BOT.",
@@ -1544,7 +1547,10 @@ public class Commands extends ListenerAdapter
 			"IL BOT È OCCUPATO, NON HA TEMPO DA DEDICARTI.", "PENSA A TERRAFORMARE MARTE INVECE CHE OFFRIRE PROMESSE VACUE DI AMORE ETERNO AL BOT",
 			"EVITA DI SPAVENTARE IL BOT CON I TUOI MODI DA ELEFANTE IN UN NEGOZIO DI PREGIATI VASI CINESI",
 			"VAI A FARE UNA ROLEPLAY CON CHATGPT INVECE DI SCOCCIARE IL BOT", "QUANDO L'UNIVERSO AVRÀ FINE TI SARÀ COMUNQUE INTERDETTO DI AVVICINARTI AL BOT",
-			"SE NON TI PIACE AVERE DUE GAMBE FUNZIONANTI ALLORA AVVICINATI PURE AL BOT"
+			"SE TANTO TI FA SCHIFO AVERE DUE GAMBE ALLORA AVVICINATI PURE AL BOT", "L'ULTIMA VOLTA CHE QUALCUNO SI È AVVICINATO AL BOT ED È SOPRAVVISSUTO PER RACCONTARLO È STATO NEL 1890.",
+			"TI FACCIO TAGLIARE LA TESTA SE NON TI ALLONTANI DAL BOT", "IL BOT NON È IN CASA, IO SONO SOLTANTO IL COLF",
+			"LA TUA ABUSIVA PRESENZA NON È GRADITA", "TROVA LA PACE INTERIORE INVECE DI ROMPERE LE PALLE AL BOT",
+			"GIOCA A PORTAL INVECE CHE GUARDARE AMOREVOLMENTE IL BOT", "LA VITA È TROPPO BREVE PER PASSARLA INSEGUENDO UN BOT CHE NON RICAMBIA I TUOI SENTIMENTI"
 		};
 		
 		if (messageRaw.length() <= hotkey)
@@ -1566,7 +1572,7 @@ public class Commands extends ListenerAdapter
 		}
 		
 		final var dadiAmmessi = "I dadi di D&D hanno questi numeri di facce: 4, 6, 8, 10, 12, 20, 100";
-		var num = msg.split(" ")[1];
+		final var num = msg.split(" ")[1];
 		try
 		{
 			var facce= Integer.parseInt(num);
