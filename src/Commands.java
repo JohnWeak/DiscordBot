@@ -669,12 +669,18 @@ public class Commands extends ListenerAdapter
 	private void getEmotes()
 	{
 		final var emotesArray = Arrays.toString(canaleBot.getGuild().getEmotes().toArray());
+		// discord limita i messaggi a 2000 caratteri per messaggio
+		final var msg = emotesArray.length() > 2000 ? emotesArray.substring(0,1999) : emotesArray;
+		channel.sendMessage(msg).queue();
 		
+		/* ********
 		// discord limita i messaggi a 2000 caratteri per messaggio
 		if (emotesArray.length() > 2000)
 			 channel.sendMessage(emotesArray.substring(0, 1999)).queue();
 		else
 			channel.sendMessage(emotesArray).queue();
+			
+		************/
 		
 	} // fine getEmotes()
 	
@@ -688,6 +694,7 @@ public class Commands extends ListenerAdapter
 		
 		for (String m : parts)
 		{
+			// due regex anziché uno solo perché il numero di caratteri da manipolare cambia
 			var regex1 = "https*://twitter\\.com.*";
 			var regex2 = "https*://www\\.twitter\\.com.*";
 			
