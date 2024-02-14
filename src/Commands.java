@@ -43,7 +43,7 @@ public class Commands extends ListenerAdapter
 	public Message message;
 	public String messageRaw;
 	public User author;
-	public TextChannel canaleBotPokemon;
+	public static TextChannel canaleBotPokemon;
 	private final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	public TextChannel canaleBot;
 	private final boolean moduloSicurezza = false;
