@@ -692,12 +692,14 @@ public class Commands extends ListenerAdapter
 		green = random.nextInt(255);
 		blue = random.nextInt(255);
 		String[] certificazioni = { " ha la certificazione IP68", " ha la certificazione TonyAKARadio105"};
+		String[] check = {"✅","❌"};
 		
 		// testing
-		new PrivateMessage(Utente.getGion()).send("author="+author+"\nauthorName="+authorName+"\ndiscriminator="+author.getDiscriminator()+"\nid="+author.getId());
+		new PrivateMessage(Utente.getGion()).send("author="+author+"\nauthorName="+authorName+"\ngetAsTag="+author.getAsTag()+"\nid="+author.getId());
 		
 		if (author.getId().equals(Utente.ID_GION))
 		{
+			
 			certificazioni[0] = authorName + certificazioni[0];
 			certificazioni[1] = authorName + certificazioni[1];
 		}
