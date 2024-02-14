@@ -34,7 +34,8 @@ public class ThreadActivity extends Thread
 		//int minutesToSleep = (new Random().nextInt(minuti, minuti*2));
 		
 		int timeToSleep;
-		String colpevole = (Commands.author == null || Commands.authorName.isEmpty() ? "il governo" : Commands.authorName);
+		final String name = Commands.author.getName();
+		String colpevole = (Commands.author == null || name.isEmpty() ? "il governo" : name);
 		Activity activity;
 		Random random = new Random();
 		

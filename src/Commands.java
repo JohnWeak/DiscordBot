@@ -33,20 +33,22 @@ public class Commands extends ListenerAdapter
 	private static final Error<Exception> error = new Error<>();
 	private static final Error<String> errorString = new Error<>();
 	public static final String botChannel = "\uD83E\uDD16bot-owo";
-	private final Random random = new Random();
-	public MessageChannel channel;
+	private static final Random random = new Random();
+	public static MessageChannel channel;
+	private static long messageID;
+	public static Message message;
+	public static User author;
+	public static TextChannel canaleBotPokemon;
+	public static TextChannel canaleBot;
+	
+	private final Locale locale = Locale.ITALIAN;
+	private final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
+	private final boolean moduloSicurezza = false;
+	
 	public String authorName;
-	private long messageID;
 	private String authorID;
 	private HashMap<String,String> commandsHashMap;
-	private final Locale locale = Locale.ITALIAN;
-	public Message message;
 	public String messageRaw;
-	public User author;
-	public static TextChannel canaleBotPokemon;
-	private final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
-	public static TextChannel canaleBot;
-	private final boolean moduloSicurezza = false;
 	private JDA jda;
 	private Pokemon pokemon;
 	
@@ -1149,7 +1151,7 @@ public class Commands extends ListenerAdapter
 	
 	
 	/** Aggiunge una reazione all'ultimo messaggio inviato */
-	public void react(String emote)
+	public static void react(String emote)
 	{
 		final var emoteDaUsare = Emotes.emoteDaUsare(emote.toLowerCase());
 		
@@ -1302,7 +1304,7 @@ public class Commands extends ListenerAdapter
 	 * @param millis tempo minimo per il quale deve dormire il thread.
 	 * @param bound valore casuale da sommare a <code>millis</code>. 0 = nessun tempo di sleep aggiuntivo.
 	 * */
-	public void pause(int millis, int bound)
+	public static void pause(int millis, int bound)
 	{
 		if (millis < 0)
 			millis = 1500;
