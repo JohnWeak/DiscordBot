@@ -695,18 +695,19 @@ public class Commands extends ListenerAdapter
 		String[] check = {"✅","❌"};
 		
 		// testing
-		new PrivateMessage(Utente.getGion()).send("author="+author+"\nauthorName="+authorName+"\ngetAsTag="+author.getAsTag()+"\nid="+author.getId());
+		new PrivateMessage(Utente.getGion())
+			.send("author="+author+"\nauthorName="+authorName+"\nid="+author.getId());
 		
 		if (author.getId().equals(Utente.ID_GION))
 		{
 			
-			certificazioni[0] = authorName + certificazioni[0];
-			certificazioni[1] = authorName + certificazioni[1];
+			certificazioni[0] = check[0] + certificazioni[0];
+			certificazioni[1] = check[0] + certificazioni[1];
 		}
 		else // if (authorName.contains("Enigmo"))
 		{
-			certificazioni[0] = authorName + "non" + certificazioni[0];
-			certificazioni[1] = authorName + "non" + certificazioni[1];
+			certificazioni[0] = check[1] + "non" + certificazioni[0];
+			certificazioni[1] = check[1] + "non" + certificazioni[1];
 		}
 		
 		final StringBuilder msg = new StringBuilder();
