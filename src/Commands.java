@@ -371,6 +371,7 @@ public class Commands extends ListenerAdapter
 			case "!timer" -> timer();
 			case "!dm" -> dm(msgStrippedLowerCase);
 			case "!apple" -> apple();
+			case "!certificazione" -> certificazione();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -684,6 +685,42 @@ public class Commands extends ListenerAdapter
 		
 	} // fine getEmotes()
 	
+	
+	private void certificazione()
+	{
+		final int red, green, blue;
+		red = random.nextInt(255);
+		green = random.nextInt(255);
+		blue = random.nextInt(255);
+		String[] certificazioni = { "ha la certificazione IP68", "ha la certificazione TonyAKARadio105"};
+		
+		// testing
+		new PrivateMessage(Utente.getGion()).send("author="+author+"\nauthorName="+authorName+"\ndiscriminator="+author.getDiscriminator());
+		
+		if (authorName.contains("John") || authorName.contains("Gion"))
+		{
+			certificazioni[0] = authorName + certificazioni[0];
+			certificazioni[1] = authorName + certificazioni[1];
+		}
+		else // if (authorName.contains("Enigmo"))
+		{
+			certificazioni[0] = authorName + "non " + certificazioni[0];
+			certificazioni[1] = authorName + "non " + certificazioni[1];
+		}
+		
+		final StringBuilder msg = new StringBuilder();
+		for (String s : certificazioni)
+			msg.append(s).append("\n");
+		
+		final var embed = new EmbedBuilder()
+			.setTitle(authorName)
+			.setColor(new Color(red,green,blue))
+			.setDescription(msg)
+			.setImage(author.getAvatarUrl())
+			.build();
+		
+		message.replyEmbeds(embed).queue();
+	} // fine certificazione()
 	
 	/**Sostituisce i link di twitter con quelli di <code>fxtwitter</code>, che caricano l'anteprima su discord*/
 	private void detectTwitterLink()
