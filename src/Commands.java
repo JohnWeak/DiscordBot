@@ -159,7 +159,7 @@ public class Commands extends ListenerAdapter
 		
 		if (moduloSicurezza)
 		{
-			if (author.getDiscriminator().equals(Utente.ENIGMO))
+			if (author.getId().equals(Utente.ID_ENIGMO))
 			{
 				PrivateMessage enigmo = new PrivateMessage(Utente.getEnigmo());
 				enigmo.send("<:"+Emotes.ragey+">");
@@ -248,7 +248,7 @@ public class Commands extends ListenerAdapter
 	 * */
 	public void checkForKeywords(String msgStrippedLowerCase)
 	{
-		final var discriminator = author.getDiscriminator();
+		final var id = author.getId();
 		final var args = messageRaw.split(" ");
 		final var comando = args[0].toLowerCase(locale);
 		var reply = false;
@@ -258,7 +258,7 @@ public class Commands extends ListenerAdapter
 		if (author.isBot())
 		{
 			// se però è il bot owo a mandare il messaggio, prima fai un paio di robe e poi return
-			if (discriminator.equals(Utente.OWOBOT))
+			if (id.equals(Utente.ID_BOWOT))
 			{
 				react("owo");
 				react("vergognati");
@@ -309,7 +309,7 @@ public class Commands extends ListenerAdapter
 			} // fine if equals bot
 			
 			
-			if (author.getDiscriminator().equals(Utente.BOWOT)) // self own
+			if (id.equals(Utente.ID_BOWOT)) // self own
 				if (random.nextInt(1000) == 42) // 0,1%
 					message.reply("BOwOt vergognati").queue(lambda -> react("vergognati"));
 			
@@ -325,21 +325,21 @@ public class Commands extends ListenerAdapter
 			
 			if (trigger)
 			{
-				triggera(discriminator);
+				triggera(id);
 			}
 			else
 			{
-				switch (discriminator)
+				switch (id)
 				{
-					case Utente.OBITO ->
+					case Utente.ID_OBITO ->
 					{
 						react("obito");
 						react("vergognati");
 						message.reply("Òbito vergognati").queue();
 					}
-					case Utente.ENIGMO -> react("pigeon");
-					case Utente.LEX -> channel.addReactionById(id, "🇷🇴").queue();
-					case Utente.GION -> react("smh");
+					case Utente.ID_ENIGMO -> react("pigeon");
+					case Utente.ID_LEX -> channel.addReactionById(id, "🇷🇴").queue();
+					case Utente.ID_GION -> react("smh");
 					
 				} // fine switch
 				
@@ -479,7 +479,7 @@ public class Commands extends ListenerAdapter
 			reazioni.add(Emoji.INDIA_BANDIERA);
 		}
 		
-		if (msgStrippedLowerCase.contains("live") && author.getDiscriminator().equals(Utente.OBITO))
+		if (msgStrippedLowerCase.contains("live") && id.equals(Utente.ID_OBITO))
 			reazioni.add(Emotes.harry_fotter);
 
 		// a questo punto smetto di controllare se ci siano reazioni e le aggiungo effettivamente al messaggio
@@ -612,7 +612,7 @@ public class Commands extends ListenerAdapter
 		if (msgStrippedLowerCase.matches("you(?:'re| are) ugly"))
 			message.reply(GIF.engineer).queue();
 		
-		if (msgStrippedLowerCase.contains("deez nuts") && discriminator.equals(Utente.ENIGMO))
+		if (msgStrippedLowerCase.contains("deez nuts") && id.equals(Utente.ID_ENIGMO))
 		{
 			reply = true;
 			msgReply += "DEEZ NUTS, Enigmo!\n";
@@ -627,7 +627,7 @@ public class Commands extends ListenerAdapter
 		
 		var users = message.getMentionedUsers();
 		
-		if (!users.isEmpty() && users.get(0).getDiscriminator().equals(Utente.BOWOT))
+		if (!users.isEmpty() && users.get(0).getId().equals(Utente.ID_BOWOT))
 		{
 			boolean matchFound = false;
 			String[] cases = {"che fai", "cosa fai", "che stai facendo", "cazzo fai", "minchia fai"};
@@ -1107,7 +1107,7 @@ public class Commands extends ListenerAdapter
 	} // fine sondaggio()
 	
 	/** Infastidisce le persone */
-	public void triggera(String discriminator)
+	public void triggera(String id)
 	{
 		String title, image, footer, color;
 		int risultato;
@@ -1145,9 +1145,9 @@ public class Commands extends ListenerAdapter
 
 		var embedBuilder = new EmbedBuilder();
 		
-		switch (discriminator)
+		switch (id)
 		{
-			case Utente.OBITO ->
+			case Utente.ID_OBITO ->
 			{
 				risultato = random.nextInt(immagineObito.length);
 				title = titolo.concat("Òbito");
@@ -1156,7 +1156,7 @@ public class Commands extends ListenerAdapter
 				color = (risultato == 0) ? "0xFFFFFF" : "0xC59FC9";
 			}
 			
-			case Utente.ENIGMO ->
+			case Utente.ID_ENIGMO ->
 			{
 				risultato = random.nextInt(immagineEnigmo.length);
 				title = titolo.concat("Enigmo");
@@ -1165,7 +1165,7 @@ public class Commands extends ListenerAdapter
 				color = (risultato == 0) ? "0xCB4D4D" : "0xE5D152";
 			}
 			
-			case Utente.LEX ->
+			case Utente.ID_LEX ->
 			{
 				risultato = random.nextInt(immagineLex.length);
 				title = titolo.concat("Lex");
@@ -1174,7 +1174,7 @@ public class Commands extends ListenerAdapter
 				color = (risultato == 0) ? "0xD80000" : "0x207522";
 			}
 			
-			case Utente.GION ->
+			case Utente.ID_GION ->
 			{
 				risultato = random.nextInt(immagineGion.length);
 				title = titolo.concat("Gion");
@@ -1557,9 +1557,9 @@ public class Commands extends ListenerAdapter
 	 */
 	public void ehiModulo()
 	{
-		final String discr = author.getDiscriminator();
+		final String id = author.getId();
 		final int hotkey = "ehi modulo".length();
-		final boolean authorized = discr.equals(Utente.GION);
+		final boolean authorized = id.equals(Utente.ID_GION);
 		String reply;
 		
 		if (!moduloSicurezza)

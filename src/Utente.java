@@ -4,14 +4,6 @@ public abstract class Utente
 {
 	private static final Object object = Utente.class;
 	
-	// Numeri (discriminator)
-	public static final String GION = "0935";
-	public static final String ENIGMO = "7166";
-	public static final String OBITO = "2804"; // Òbito, l'accento sulla 'o' è importante
-	public static final String LEX = "2241";
-	public static final String OWOBOT = "8456"; // bot altrui
-	public static final String BOWOT = "5269"; // mio bot
-	
 	// ID
 	public static final String ID_GION = "180759114291478528";
 	public static final String ID_ENIGMO = "222014453741256705";
@@ -67,25 +59,6 @@ public abstract class Utente
 		}
 		return user;
 	} // fine getUtenteFromName()
-	
-	/**Prende in input il discriminatore (#0935) e restituisce il nome utente (JohnWeak)
-	 * @param discriminator il discriminatore (es: <code>#1234</code>) dell'utente da cercare
-	 * @return Il nome dell'utente <code>(Utente.NOME)</code>
-	 * */
-	public static String getNomeUtente(String discriminator)
-	{
-		return switch (discriminator)
-		{
-			case Utente.GION -> Utente.NOME_JOHN;
-			case Utente.ENIGMO -> Utente.NOME_ENIGMO;
-			case Utente.LEX -> Utente.NOME_LEX;
-			case Utente.OBITO -> Utente.NOME_OBITO;
-			case Utente.OWOBOT -> Utente.NOME_OWOBOT;
-			case Utente.BOWOT -> Utente.NOME_BOWOT;
-			
-			default -> "E io che cazzo ne so, scusi";
-		};
-	} // fine getNomeUtente()
 	
 	public static User getUtenteFromID(String id)
 	{
