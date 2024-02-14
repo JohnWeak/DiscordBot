@@ -33,23 +33,22 @@ public class Commands extends ListenerAdapter
 	private static final Error<Exception> error = new Error<>();
 	private static final Error<String> errorString = new Error<>();
 	public static final String botChannel = "\uD83E\uDD16bot-owo";
-	private static final Random random = new Random();
-	public static MessageChannel channel;
-	public static String authorName;
-	private static long id;
-	private static HashMap<String,String> commandsHashMap;
-	private static final Locale locale = Locale.ITALIAN;
-	public static Message message;
-	public static String messageRaw;
-	public static User author;
-	public static TextChannel canaleBotPokemon;
-	private static final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
-	public static TextChannel canaleBot;
-	private static final boolean moduloSicurezza = false;
-	private static final boolean sendMsgActivity = false;
-	// private static List<Emote> emoteList;
-	private static JDA jda;
-	private static Pokemon pokemon;
+	private final Random random = new Random();
+	public MessageChannel channel;
+	public String authorName;
+	private long messageID;
+	private String authorID;
+	private HashMap<String,String> commandsHashMap;
+	private final Locale locale = Locale.ITALIAN;
+	public Message message;
+	public String messageRaw;
+	public User author;
+	public TextChannel canaleBotPokemon;
+	private final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
+	public TextChannel canaleBot;
+	private final boolean moduloSicurezza = false;
+	private JDA jda;
+	private Pokemon pokemon;
 	
 	
 	/** onReady() viene eseguita soltanto all'avvio del bot */
@@ -86,6 +85,7 @@ public class Commands extends ListenerAdapter
 		
 		// moduloDiSicurezza();
 		
+		boolean sendMsgActivity = false;
 		if (sendMsgActivity)
 			canaleBot.sendMessage(Utilities.getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
 		
@@ -120,19 +120,6 @@ public class Commands extends ListenerAdapter
 	
 	private void guildMessage(MessageReceivedEvent event, boolean isBot)
 	{
-		/*
-		var botOrHuman = isBot ? "Bot" : "User";
-		final var mockupCode = "\t%s %s = \"%s\"; // in \"%s\" (%s) - %s \n}\r";
-		var date = new Date();
-		var dFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
-		var dataFormattata = dFormat.format(date);
-		
-		var messageChannelString = "#"+ channel.toString().split(":")[1].split("\\(")[0];
-		var guild = event.getGuild().toString().split("\\(")[0].split(":")[1];
-		
-		System.out.printf(mockupCode, botOrHuman, authorName, messageRaw, messageChannelString, guild, dataFormattata);
-		*/
-		
 		aggiungiReazioni();
 		checkForKeywords(message.getContentStripped().toLowerCase());
 	} // fine guildEvent()
@@ -144,7 +131,7 @@ public class Commands extends ListenerAdapter
 		var botOrHuman = isBot ? "Bot" : "User";
 		System.out.printf("\t%s %s = \"%s\"; // Private Message\n}\r", botOrHuman, authorName, messageRaw);
 		
-		if (isBot || authorName.equalsIgnoreCase(Utente.NOME_JOHN3))
+		if (isBot || author.getId().equals(Utente.ID_GION))
 			return;
 		
 		var attachments = message.getAttachments();
@@ -179,7 +166,7 @@ public class Commands extends ListenerAdapter
 	{
 		if (received != null) // received
 		{
-			id = received.getMessageIdLong();
+			messageID = received.getMessageIdLong();
 			author = received.getAuthor();
 			authorName = author.getName();
 			message = received.getMessage();
@@ -188,7 +175,7 @@ public class Commands extends ListenerAdapter
 		}
 		else // updated
 		{
-			id = updated.getMessageIdLong();
+			messageID = updated.getMessageIdLong();
 			author = updated.getAuthor();
 			authorName = author.getName();
 			message = updated.getMessage();
@@ -203,8 +190,8 @@ public class Commands extends ListenerAdapter
 	{
 		var emote = event.getReactionEmote();
 		channel = event.getChannel();
-		id = event.getMessageIdLong();
-		message = channel.getHistory().getMessageById(id);
+		messageID = event.getMessageIdLong();
+		message = channel.getHistory().getMessageById(messageID);
 		boolean isEmoji = emote.isEmoji();
 		
 		String emoteName = emote.getName(), emoteId = "";
@@ -248,7 +235,7 @@ public class Commands extends ListenerAdapter
 	 * */
 	public void checkForKeywords(String msgStrippedLowerCase)
 	{
-		final var id = author.getId();
+		authorID = author.getId();
 		final var args = messageRaw.split(" ");
 		final var comando = args[0].toLowerCase(locale);
 		var reply = false;
@@ -258,7 +245,7 @@ public class Commands extends ListenerAdapter
 		if (author.isBot())
 		{
 			// se però è il bot owo a mandare il messaggio, prima fai un paio di robe e poi return
-			if (id.equals(Utente.ID_BOWOT))
+			if (authorID.equals(Utente.ID_OWOBOT))
 			{
 				react("owo");
 				react("vergognati");
@@ -309,7 +296,7 @@ public class Commands extends ListenerAdapter
 			} // fine if equals bot
 			
 			
-			if (id.equals(Utente.ID_BOWOT)) // self own
+			if (authorID.equals(Utente.ID_BOWOT)) // self own
 				if (random.nextInt(1000) == 42) // 0,1%
 					message.reply("BOwOt vergognati").queue(lambda -> react("vergognati"));
 			
@@ -325,11 +312,11 @@ public class Commands extends ListenerAdapter
 			
 			if (trigger)
 			{
-				triggera(id);
+				triggera(authorID);
 			}
 			else
 			{
-				switch (id)
+				switch (authorID)
 				{
 					case Utente.ID_OBITO ->
 					{
@@ -338,7 +325,7 @@ public class Commands extends ListenerAdapter
 						message.reply("Òbito vergognati").queue();
 					}
 					case Utente.ID_ENIGMO -> react("pigeon");
-					case Utente.ID_LEX -> channel.addReactionById(id, "🇷🇴").queue();
+					case Utente.ID_LEX -> channel.addReactionById(authorID, "🇷🇴").queue();
 					case Utente.ID_GION -> react("smh");
 					
 				} // fine switch
@@ -478,7 +465,7 @@ public class Commands extends ListenerAdapter
 			reazioni.add(Emoji.INDIA_BANDIERA);
 		}
 		
-		if (msgStrippedLowerCase.contains("live") && id.equals(Utente.ID_OBITO))
+		if (msgStrippedLowerCase.contains("live") && authorID.equals(Utente.ID_OBITO))
 			reazioni.add(Emotes.harry_fotter);
 
 		// a questo punto smetto di controllare se ci siano reazioni e le aggiungo effettivamente al messaggio
@@ -611,7 +598,7 @@ public class Commands extends ListenerAdapter
 		if (msgStrippedLowerCase.matches("you(?:'re| are) ugly"))
 			message.reply(GIF.engineer).queue();
 		
-		if (msgStrippedLowerCase.contains("deez nuts") && id.equals(Utente.ID_ENIGMO))
+		if (msgStrippedLowerCase.contains("deez nuts") && authorID.equals(Utente.ID_ENIGMO))
 		{
 			reply = true;
 			msgReply += "DEEZ NUTS, Enigmo!\n";
@@ -691,7 +678,7 @@ public class Commands extends ListenerAdapter
 		red = random.nextInt(255);
 		green = random.nextInt(255);
 		blue = random.nextInt(255);
-		String[] certificazioni = { " ha la certificazione IP68", " ha la certificazione TonyAKARadio105"};
+		String[] certificazioni = { " ha la certificazione **IP68**", " ha la certificazione **TonyAKARadio105**"};
 		String[] check = {"✅","❌"};
 		
 		// testing
@@ -1161,7 +1148,7 @@ public class Commands extends ListenerAdapter
 	
 	
 	/** Aggiunge una reazione all'ultimo messaggio inviato */
-	public static void react(String emote)
+	public void react(String emote)
 	{
 		final var emoteDaUsare = Emotes.emoteDaUsare(emote.toLowerCase());
 		
@@ -1175,29 +1162,29 @@ public class Commands extends ListenerAdapter
 				case "obito" ->
 				{
 					for (String str : Emotes.obito)
-						channel.addReactionById(id, str).queue();
+						channel.addReactionById(messageID, str).queue();
 				}
 				case "sabaping" ->
 				{
 					for (String str : Emotes.sabaPing)
-						channel.addReactionById(id, str).queue();
+						channel.addReactionById(messageID, str).queue();
 				}
 				case "hitman", "uomo colpo" ->
 				{
 					for (int i : Emotes.hitman)
-						channel.addReactionById(id, Emotes.letters[i]).queue();
+						channel.addReactionById(messageID, Emotes.letters[i]).queue();
 				}
 				case "xcom", "icscom" ->
 				{
 					for (int i : Emotes.XCOM)
-						channel.addReactionById(id, Emotes.letters[i]).queue();
+						channel.addReactionById(messageID, Emotes.letters[i]).queue();
 				}
 				case "scarab" ->
 				{
 					for (String str : Emotes.scarab)
-						channel.addReactionById(id, str).queue();
+						channel.addReactionById(messageID, str).queue();
 				}
-				default -> channel.addReactionById(id, emoteDaUsare).queue();
+				default -> channel.addReactionById(messageID, emoteDaUsare).queue();
 			} // fine switch
 		} // fine try
 		catch (ErrorResponseException e)
@@ -1314,7 +1301,7 @@ public class Commands extends ListenerAdapter
 	 * @param millis tempo minimo per il quale deve dormire il thread.
 	 * @param bound valore casuale da sommare a <code>millis</code>. 0 = nessun tempo di sleep aggiuntivo.
 	 * */
-	public static void pause(int millis, int bound)
+	public void pause(int millis, int bound)
 	{
 		if (millis < 0)
 			millis = 1500;
