@@ -369,7 +369,6 @@ public class Commands extends ListenerAdapter
 			case "!cattura", "!catch" -> cattura(pokemon);
 			case "!f" -> payRespect();
 			case "!timer" -> timer();
-			case "!dm" -> dm(msgStrippedLowerCase);
 			case "!apple" -> apple();
 			case "!certificazione" -> certificazione();
 		}
@@ -692,20 +691,20 @@ public class Commands extends ListenerAdapter
 		red = random.nextInt(255);
 		green = random.nextInt(255);
 		blue = random.nextInt(255);
-		String[] certificazioni = { "ha la certificazione IP68", "ha la certificazione TonyAKARadio105"};
+		String[] certificazioni = { " ha la certificazione IP68", " ha la certificazione TonyAKARadio105"};
 		
 		// testing
 		new PrivateMessage(Utente.getGion()).send("author="+author+"\nauthorName="+authorName+"\ndiscriminator="+author.getDiscriminator()+"\nid="+author.getId());
 		
-		if (authorName.contains("John") || authorName.contains("Gion"))
+		if (author.getId().equals(Utente.ID_GION))
 		{
 			certificazioni[0] = authorName + certificazioni[0];
 			certificazioni[1] = authorName + certificazioni[1];
 		}
 		else // if (authorName.contains("Enigmo"))
 		{
-			certificazioni[0] = authorName + "non " + certificazioni[0];
-			certificazioni[1] = authorName + "non " + certificazioni[1];
+			certificazioni[0] = authorName + "non" + certificazioni[0];
+			certificazioni[1] = authorName + "non" + certificazioni[1];
 		}
 		
 		final StringBuilder msg = new StringBuilder();
@@ -835,51 +834,6 @@ public class Commands extends ListenerAdapter
 		
 	} // fine cattura()
 	
-	
-	/**Questo metodo fa sì che il bot invii un messaggio privato all'utente che lo esegue
-	 * @param content il messaggio da inviare all'utente. */
-	private void dm(String content)
-	{
-		final String[] msg = content.split(" ");
-		final String[] nomi = {Utente.NOME_JOHN, Utente.NOME_JOHN2, Utente.NOME_OBITO, Utente.NOME_OBITO2, Utente.NOME_ENIGMO, Utente.NOME_LEX};
-		PrivateMessage privateMessage;
-		final int length = msg.length;
-		StringBuilder msgToSend = new StringBuilder("Test");
-		
-		if (length > 2)
-		{
-			msgToSend = new StringBuilder();
-			for (int i = 2; i < length; i++)
-			{
-				msgToSend.append(msg[i].concat(" "));
-			}
-		}
-		if (length > 1)
-		{
-			boolean matchFound = false;
-			
-			for (String n : nomi)
-			{
-				if (n.equalsIgnoreCase(msg[1]))
-				{
-					privateMessage = new PrivateMessage(Utente.getUtenteFromName(n));
-					privateMessage.send(msgToSend.toString());
-					matchFound = true;
-				}
-			}
-			
-			if (!matchFound)
-			{
-				message.reply("Utente non trovato!").queue();
-			}
-		}
-		else
-		{
-			var msgUso = "Usa `!dm <utente> [messaggio]` per fare sì che io importuni in privato l'utente da te specificato.";
-			channel.sendMessage(msgUso).queue();
-		}
-		
-	} // fine metodo dm()
 	
 	private boolean contains(String source, String[] subItem)
 	{
