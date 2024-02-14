@@ -45,7 +45,7 @@ public class Commands extends ListenerAdapter
 	public User author;
 	public static TextChannel canaleBotPokemon;
 	private final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
-	public TextChannel canaleBot;
+	public static TextChannel canaleBot;
 	private final boolean moduloSicurezza = false;
 	private JDA jda;
 	private Pokemon pokemon;
@@ -104,6 +104,8 @@ public class Commands extends ListenerAdapter
 	/** Gestisce i messaggi inviati in qualsiasi canale testuale di qualsiasi server in cui è presente il bot */
 	public void onMessageReceived(@NotNull MessageReceivedEvent event)
 	{
+		authorID = event.getAuthor().getId();
+		
 		identifyLatestMessage(event, null);
 		
 		if (event.isFromGuild())
@@ -131,7 +133,7 @@ public class Commands extends ListenerAdapter
 		var botOrHuman = isBot ? "Bot" : "User";
 		System.out.printf("\t%s %s = \"%s\"; // Private Message\n}\r", botOrHuman, authorName, messageRaw);
 		
-		if (isBot || author.getId().equals(Utente.ID_GION))
+		if (isBot || authorID.equals(Utente.ID_GION))
 			return;
 		
 		var attachments = message.getAttachments();
@@ -235,7 +237,6 @@ public class Commands extends ListenerAdapter
 	 * */
 	public void checkForKeywords(String msgStrippedLowerCase)
 	{
-		authorID = author.getId();
 		final var args = messageRaw.split(" ");
 		final var comando = args[0].toLowerCase(locale);
 		var reply = false;
