@@ -695,7 +695,7 @@ public class Commands extends ListenerAdapter
 		String[] certificazioni = { "ha la certificazione IP68", "ha la certificazione TonyAKARadio105"};
 		
 		// testing
-		new PrivateMessage(Utente.getGion()).send("author="+author+"\nauthorName="+authorName+"\ndiscriminator="+author.getDiscriminator());
+		new PrivateMessage(Utente.getGion()).send("author="+author+"\nauthorName="+authorName+"\ndiscriminator="+author.getDiscriminator()+"\nid="+author.getId());
 		
 		if (authorName.contains("John") || authorName.contains("Gion"))
 		{
