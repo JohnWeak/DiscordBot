@@ -684,10 +684,6 @@ public class Commands extends ListenerAdapter
 		String[] certificazioni = { " ha la certificazione **IP68**", " ha la certificazione **TonyAKARadio105**"};
 		String[] check = {"✅","❌"};
 		
-		// testing
-		new PrivateMessage(Utente.getGion())
-			.send("author="+author+"\nauthorName="+authorName+"\nid="+author.getId());
-		
 		if (author.getId().equals(Utente.ID_GION))
 		{
 			
