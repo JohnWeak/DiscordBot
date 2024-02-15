@@ -361,6 +361,7 @@ public class Commands extends ListenerAdapter
 			case "!timer" -> timer();
 			case "!apple" -> apple();
 			case "!certificazione" -> certificazione();
+			case "!dm" -> dm();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -674,6 +675,26 @@ public class Commands extends ListenerAdapter
 		
 	} // fine getEmotes()
 	
+	private void dm()
+	{
+		final List<User> tagged = message.getMentionedUsers();
+		PrivateMessage pm;
+		if (tagged.isEmpty())
+			return;
+		/*
+		for (User user : tagged)
+		{
+			pm = new PrivateMessage(user);
+			pm.send(message.getContentStripped());
+		}
+		*/
+		
+		final String m = "message="+message+"\nmentionedUsers="+message.getMentionedUsers()+"\ncontentRaw="+message.getContentRaw();
+		
+		new PrivateMessage(Utente.getGion())
+		.send(m);
+		
+	} // fine dm()
 	
 	private void certificazione()
 	{
