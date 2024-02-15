@@ -696,11 +696,14 @@ public class Commands extends ListenerAdapter
 			if (as.contains("@"))
 				asasda.add(as);
 		}
+		new PrivateMessage(Utente.getGion())
+				.send(asasda.toString());
+		
 		for (String a:asasda)
 		{
 			try
 			{
-				users.add(jda.getUserByTag(a));
+				users.add(jda.getUserByTag(a.substring(1)));
 			}catch (Exception e)
 			{
 				new PrivateMessage(Utente.getGion())
