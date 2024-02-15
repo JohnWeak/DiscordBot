@@ -360,6 +360,7 @@ public class Commands extends ListenerAdapter
 			case "!f" -> payRespect();
 			case "!timer" -> timer();
 			case "!certificazione" -> certificazione();
+			case "!pigeons" -> pigeons();
 			// case "!dm" -> dm();
 		}
 		
@@ -656,6 +657,31 @@ public class Commands extends ListenerAdapter
 		************/
 		
 	} // fine getEmotes()
+	
+	private void pigeons()
+	{
+		final String[] urls =
+		{
+			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.V1RVSmHl3MqMMGmXMKgcnwHaFk%26pid%3DApi&f=1&ipt=f055c51255e37f52fca69d9410933b4a1520963c184be4946a4d736f197e6768&ipo=images",
+			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsandiegobirdspot.com%2Fwp-content%2Fgallery%2Frock-pigeon%2FQL0A6004.jpg&f=1&nofb=1&ipt=1034b878d7be04b8254c55e089faf6498df8263e75ffd454b27105293e143315&ipo=images",
+			"https://www.allaboutbirds.org/guide/assets/og/75368111-1200px.jpg",
+			"http://www.nejohnston.org/birds/2015/12/Images/IMG_7695.jpg",
+			"https://petkeen.com/wp-content/uploads/2021/07/pigeon-resting-on-rail.jpg",
+			"http://pigeondaily.com/wp-content/uploads/2012/10/photodune-2094416-pigeon-s.jpg",
+			"https://pixnio.com/free-images/2017/05/23/2017-05-23-15-00-41.jpg",
+			"https://www.publicdomainpictures.net/pictures/80000/velka/pigeon-1395295275oKY.jpg",
+			"https://www.paws.org/wp-content/uploads/2019/12/Wild-Pigeon.jpg",
+			"https://www.publicdomainpictures.net/pictures/50000/velka/pigeon-1368534985dAa.jpg",
+			"https://pngimg.com/uploads/pigeon/pigeon_PNG3424.png"
+		};
+		
+		final var img = urls[random.nextInt(urls.length)];
+		final var embed = new EmbedBuilder()
+			.setImage(img)
+			.build();
+		
+		message.replyEmbeds(embed).queue();
+	}
 	
 	private void certificazione()
 	{
