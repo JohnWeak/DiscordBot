@@ -689,8 +689,8 @@ public class Commands extends ListenerAdapter
 		}
 		*/
 		final var s = messageRaw.split(" ");
-		List<String> asasda = new ArrayList<>();
-		List<User> users = new ArrayList<>();
+		final List<String> asasda = new ArrayList<>();
+		final List<User> users = new ArrayList<>();
 		for (String as : s)
 		{
 			if (as.contains("@"))
@@ -698,7 +698,15 @@ public class Commands extends ListenerAdapter
 		}
 		for (String a:asasda)
 		{
-			users.add(jda.getUserByTag(a));
+			try
+			{
+				users.add(jda.getUserByTag(a));
+			}catch (Exception e)
+			{
+				new PrivateMessage(Utente.getGion())
+						.send("è sploso");
+				
+			}
 		}
 		
 		final String m = "message="+message+"\nmentionedUsers="+message.getMentionedUsers()+"\ncontentRaw="+message.getContentRaw()+"\nasada="+asasda+"\nusers="+users;
