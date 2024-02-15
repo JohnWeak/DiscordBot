@@ -361,7 +361,7 @@ public class Commands extends ListenerAdapter
 			case "!timer" -> timer();
 			case "!apple" -> apple();
 			case "!certificazione" -> certificazione();
-			case "!dm" -> dm();
+			// case "!dm" -> dm();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -674,50 +674,6 @@ public class Commands extends ListenerAdapter
 		************/
 		
 	} // fine getEmotes()
-	
-	private void dm()
-	{
-		final List<User> tagged = message.getMentionedUsers();
-		PrivateMessage pm;
-		if (tagged.isEmpty())
-			return;
-		/*
-		for (User user : tagged)
-		{
-			pm = new PrivateMessage(user);
-			pm.send(message.getContentStripped());
-		}
-		*/
-		final var s = messageRaw.split(" ");
-		final List<String> asasda = new ArrayList<>();
-		final List<User> users = new ArrayList<>();
-		for (String as : s)
-		{
-			if (as.contains("@"))
-				asasda.add(as);
-		}
-		new PrivateMessage(Utente.getGion())
-				.send(asasda.toString());
-		
-		for (String a:asasda)
-		{
-			try
-			{
-				users.add(jda.getUserByTag(a.substring(1)));
-			}catch (Exception e)
-			{
-				new PrivateMessage(Utente.getGion())
-						.send("è sploso");
-				
-			}
-		}
-		
-		final String m = "message="+message+"\nmentionedUsers="+message.getMentionedUsers()+"\ncontentRaw="+message.getContentRaw()+"\nasada="+asasda+"\nusers="+users;
-		
-		new PrivateMessage(Utente.getGion())
-		.send(m);
-		
-	} // fine dm()
 	
 	private void certificazione()
 	{
