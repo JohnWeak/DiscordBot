@@ -359,7 +359,6 @@ public class Commands extends ListenerAdapter
 			case "!cattura", "!catch" -> cattura(pokemon);
 			case "!f" -> payRespect();
 			case "!timer" -> timer();
-			case "!apple" -> apple();
 			case "!certificazione" -> certificazione();
 			// case "!dm" -> dm();
 		}
@@ -394,11 +393,13 @@ public class Commands extends ListenerAdapter
 			reazioni.add(Emotes.pogey);
 		
 		if (contains(msgStrippedLowerCase, new String[]{"òbito", "obito", "óbito"}))
+		{
 			if (random.nextInt(50) == 42) // 2%
 			{
 				reazioni.add("obito");
 				reazioni.add("vergogna");
 			}
+		}
 		
 		if (msgStrippedLowerCase.contains("vergogna"))
 			reazioni.add("vergognati");
@@ -489,26 +490,6 @@ public class Commands extends ListenerAdapter
 			reply = true;
 			int n = random.nextInt(0, 100);
 			msgReply += "Numero casuale: **"+n+"**";
-		}
-		
-		if (msgStrippedLowerCase.contains("winnie the pooh"))
-		{
-			reply = true;
-			msgReply += """
-					⣿⣿⣿⣿⣿⠟⠋⠄⠄⠄⠄⠄⠄⠄⢁⠈⢻⢿⣿⣿⣿⣿⣿⣿⣿\s
-					⣿⣿⣿⣿⣿⠃⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⡀⠭⢿⣿⣿⣿⣿\s
-					⣿⣿⣿⣿⡟⠄⢀⣾⣿⣿⣿⣷⣶⣿⣷⣶⣶⡆⠄⠄⠄⣿⣿⣿⣿\s
-					⣿⣿⣿⣿⡇⢀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠄⠄⢸⣿⣿⣿⣿\s
-					⣿⣿⣿⣿⣇⣼⣿⣿⠿⠶⠙⣿⡟⠡⣴⣿⣽⣿⣧⠄⢸⣿⣿⣿⣿\s
-					⣿⣿⣿⣿⣿⣾⣿⣿⣟⣭⣾⣿⣷⣶⣶⣴⣶⣿⣿⢄⣿⣿⣿⣿⣿\s
-					⣿⣿⣿⣿⣿⣿⣿⣿⡟⣩⣿⣿⣿⡏⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\s
-					⣿⣿⣿⣿⣿⣿⣹⡋⠘⠷⣦⣀⣠⡶⠁⠈⠁⠄⣿⣿⣿⣿⣿⣿⣿\s
-					⣿⣿⣿⣿⣿⣿⣍⠃⣴⣶⡔⠒⠄⣠⢀⠄⠄⠄⡨⣿⣿⣿⣿⣿⣿\s
-					⣿⣿⣿⣿⣿⣿⣿⣦⡘⠿⣷⣿⠿⠟⠃⠄⠄⣠⡇⠈⠻⣿⣿⣿⣿\s
-					⣿⣿⣿⣿⡿⠟⠋⢁⣷⣠⠄⠄⠄⠄⣀⣠⣾⡟⠄⠄⠄⠄⠉⠙⠻\s
-					⡿⠟⠋⠁⠄⠄⠄⢸⣿⣿⡯⢓⣴⣾⣿⣿⡟⠄⠄⠄⠄⠄⠄⠄⠄\s
-					⠄⠄⠄⠄⠄⠄⠄⣿⡟⣷⠄⠹⣿⣿⣿⡿⠁⠄⠄⠄⠄⠄⠄⠄⠄\s
-					""";
 		}
 		
 		if (msgStrippedLowerCase.equalsIgnoreCase("cancella questo messaggio"))
@@ -632,7 +613,8 @@ public class Commands extends ListenerAdapter
 			
 			if (matchFound)
 			{
-				String actTrad, name, tipo, saluto, activity, risposta;
+				final String actTrad, name, tipo, saluto, activity;
+				String risposta;
 				
 				actTrad = Main.getActivityTradotta();
 				name = Main.getActivity().getName();
@@ -750,15 +732,6 @@ public class Commands extends ListenerAdapter
 			message.reply(newURL).queue();
 		
 	} // fine detectTwitterLink()
-	
-	private void apple()
-	{
-		if (messageRaw.contains("mela") || messageRaw.contains("apple"))
-		{
-			String apple = (random.nextBoolean() ? Emoji.MELA_ROSSA : Emoji.MELA_VERDE);
-			react(apple);
-		}
-	} // fine apple()
 	
 	private void encounter()
 	{
