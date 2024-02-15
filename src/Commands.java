@@ -672,11 +672,23 @@ public class Commands extends ListenerAdapter
 			"https://www.publicdomainpictures.net/pictures/80000/velka/pigeon-1395295275oKY.jpg",
 			"https://www.paws.org/wp-content/uploads/2019/12/Wild-Pigeon.jpg",
 			"https://www.publicdomainpictures.net/pictures/50000/velka/pigeon-1368534985dAa.jpg",
-			"https://pngimg.com/uploads/pigeon/pigeon_PNG3424.png"
+			"https://pngimg.com/uploads/pigeon/pigeon_PNG3424.png",
+			"https://wackyroger.com/z-photogalleries/2018/03-24-18pigeon/pigeon0004.jpg",
+			"https://i.pinimg.com/originals/f4/f2/7d/f4f27d3588fa94058e21e35bb083bb5c.jpg",
+			"http://4.bp.blogspot.com/-eTvxapTkhVg/T_x2G-LkRLI/AAAAAAAAEoc/m6V4djAgjtE/s1600/Pigeon+Birds+Wallpapers_3.jpeg",
+			"https://wallpapercave.com/wp/wp1976143.jpg",
+			"https://www.pigeonsloobuyck.be/wp-content/uploads/2017/04/be12-4153458_pigeon.jpg",
+			"https://www.animalstown.com/animals/p/pigeon/wallpapers/pigeon-wallpaper-4.jpg",
+			"http://2.bp.blogspot.com/_U2RoHEXMKA4/TPRn6OeL5dI/AAAAAAAAAAQ/AgDGd0ANbO0/s1600-R/pigeon2508wb.jpg",
+			"https://b.rgbimg.com/users/l/lu/lusi/600/nrAohvg.jpg",
+			"https://vergez.net/blog/public/Pigeon_Ramier/.DSC_0063a_m.jpg",
+			"https://static.actu.fr/uploads/2019/05/pigeon-854x640.jpg",
+			"https://protectiondesoiseaux.be/wp-content/uploads/2020/06/photo-pigeon-site.jpg",
 		};
 		
 		final var img = urls[random.nextInt(urls.length)];
 		final var embed = new EmbedBuilder()
+			.setColor(new Color(42,42,42))
 			.setImage(img)
 			.build();
 		
