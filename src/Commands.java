@@ -681,12 +681,13 @@ public class Commands extends ListenerAdapter
 		red = random.nextInt(255);
 		green = random.nextInt(255);
 		blue = random.nextInt(255);
-		String[] certificazioni = { " ha la certificazione **IP68**", " ha la certificazione **TonyAKARadio105**"};
-		String[] check = {"✅","❌"};
+		final String tony = "<:"+Emotes.tonyakaradio105+">";
+		final String[] certificazioni = { " ha la certificazione **IP68**", " ha la certificazione "+tony};
+		final String[] check = {"✅","❌"};
+		final StringBuilder msg = new StringBuilder();
 		
-		if (author.getId().equals(Utente.ID_GION))
+		if (authorID.equals(Utente.ID_GION))
 		{
-			
 			certificazioni[0] = check[0] + certificazioni[0];
 			certificazioni[1] = check[0] + certificazioni[1];
 		}
@@ -696,7 +697,6 @@ public class Commands extends ListenerAdapter
 			certificazioni[1] = check[1] + "non" + certificazioni[1];
 		}
 		
-		final StringBuilder msg = new StringBuilder();
 		for (String s : certificazioni)
 			msg.append(s).append("\n");
 		
