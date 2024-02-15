@@ -688,8 +688,20 @@ public class Commands extends ListenerAdapter
 			pm.send(message.getContentStripped());
 		}
 		*/
+		final var s = messageRaw.split(" ");
+		List<String> asasda = new ArrayList<>();
+		List<User> users = new ArrayList<>();
+		for (String as : s)
+		{
+			if (as.contains("@"))
+				asasda.add(as);
+		}
+		for (String a:asasda)
+		{
+			users.add(jda.getUserByTag(a));
+		}
 		
-		final String m = "message="+message+"\nmentionedUsers="+message.getMentionedUsers()+"\ncontentRaw="+message.getContentRaw();
+		final String m = "message="+message+"\nmentionedUsers="+message.getMentionedUsers()+"\ncontentRaw="+message.getContentRaw()+"\nasada="+asasda+"\nusers="+users;
 		
 		new PrivateMessage(Utente.getGion())
 		.send(m);
