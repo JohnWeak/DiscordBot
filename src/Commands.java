@@ -45,6 +45,7 @@ public class Commands extends ListenerAdapter
 	private final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	private final boolean moduloSicurezza = false;
 	
+	private User user;
 	public String authorName;
 	private String authorID;
 	private HashMap<String,String> commandsHashMap;
@@ -98,6 +99,7 @@ public class Commands extends ListenerAdapter
 	/** Questo metodo decide cosa fare quando un messaggio viene modificato */
 	public void onMessageUpdate(@NotNull MessageUpdateEvent event)
 	{ //
+		user = event.getAuthor();
 		identifyLatestMessage(null, event);
 		aggiungiReazioni();
 		checkForKeywords(message.getContentStripped().toLowerCase());
@@ -106,6 +108,7 @@ public class Commands extends ListenerAdapter
 	/** Gestisce i messaggi inviati in qualsiasi canale testuale di qualsiasi server in cui è presente il bot */
 	public void onMessageReceived(@NotNull MessageReceivedEvent event)
 	{
+		user = event.getAuthor();
 		authorID = event.getAuthor().getId();
 		
 		identifyLatestMessage(event, null);
