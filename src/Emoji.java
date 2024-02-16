@@ -1,11 +1,11 @@
 public abstract class Emoji
 {
-	public static String MELA_ROSSA = "🍎";
-	public static String MELA_VERDE = "🍏";
-	public static String ARACHIDI = "🥜";
-	public static String INDIA_BANDIERA = "🇮🇳";
-	public static String POLLICE_SU = "👍🏻";
-	public static String POLLICE_GIU = "👎🏻";
-	public static String MELANZANA = "🍆";
+	public final static String MELA_ROSSA = "🍎";
+	public final static String MELA_VERDE = "🍏";
+	public final static String ARACHIDI = "🥜";
+	public final static String INDIA_BANDIERA = "🇮🇳";
+	public final static String POLLICE_SU = "👍🏻";
+	public final static String POLLICE_GIU = "👎🏻";
+	public final static String MELANZANA = "🍆";
 	
 } // fine classe Emoji
