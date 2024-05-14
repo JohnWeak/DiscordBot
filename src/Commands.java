@@ -62,10 +62,10 @@ public class Commands extends ListenerAdapter
 		jda = event.getJDA();
 		// var nome = jda.getSelfUser().getName();
 		// emoteList = event.getJDA().getEmotes();
-		var act = jda.getPresence().getActivity();
+		final var act = jda.getPresence().getActivity();
 		
 		String activityType="act_type", nomeActivity="act_name", activityTradotta="act_trad";
-		PrivateMessage gion = new PrivateMessage(Utente.getGion());
+		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
 		
 		// System.out.printf("%s si è connesso a Discord!\n\npublic class MessageHistory\n{\n", nome);
 		
@@ -87,10 +87,6 @@ public class Commands extends ListenerAdapter
 		}
 		
 		// moduloDiSicurezza();
-		
-		boolean sendMsgActivity = false;
-		if (sendMsgActivity)
-			canaleBot.sendMessage(Utilities.getSaluto() + ", oggi " + activityTradotta + nomeActivity).queue();
 		
 		gion.send("Riavvio completato.");
 		
@@ -344,6 +340,11 @@ public class Commands extends ListenerAdapter
 			} // fine else
 			
 		} // fine if reazioni
+		
+		if (random.nextInt(100) == 42)
+		{
+			canaleBot.sendMessage(Emotes.readyToSend(Emotes.pogey)).queue();
+		}
 		
 		switch (comando)
 		{
@@ -705,7 +706,7 @@ public class Commands extends ListenerAdapter
 		green = random.nextInt(255);
 		blue = random.nextInt(255);
 		final String tony = "<:"+Emotes.tonyakaradio105+">";
-		final String[] certificazioni = { " ha la certificazione **IP68**", " ha la certificazione "+tony};
+		final String[] certificazioni = {" ha la certificazione **IP68**", " ha la certificazione "+tony};
 		final String[] check = {"✅","❌"};
 		final StringBuilder msg = new StringBuilder();
 		
@@ -714,7 +715,7 @@ public class Commands extends ListenerAdapter
 			certificazioni[0] = check[0] + certificazioni[0];
 			certificazioni[1] = check[0] + certificazioni[1];
 		}
-		else // if (authorName.contains("Enigmo"))
+		else
 		{
 			certificazioni[0] = check[1] + "non" + certificazioni[0];
 			certificazioni[1] = check[1] + "non" + certificazioni[1];
@@ -908,7 +909,7 @@ public class Commands extends ListenerAdapter
 		final var eventName = event.getName();
 		
 		if (eventName.equalsIgnoreCase("pog"))
-			event.getChannel().sendMessage("<:"+ Emotes.pogey + ">").queue();
+			event.getChannel().sendMessage(Emotes.readyToSend(Emotes.pogey)).queue();
 		
 		if (eventName.equalsIgnoreCase("dice") || eventName.equalsIgnoreCase("dado"))
 			dado();
@@ -1537,7 +1538,7 @@ public class Commands extends ListenerAdapter
 			"PERCHÈ NON VOLI VIA? AH GIÀ, GLI ASINI NON VOLANO.", "CIRCUMNAVIGA L'ASIA PIUTTOSTO CHE DARE FASTIDIO AL BOT.",
 			"SII IL CAMBIAMENTO CHE VUOI VEDERE NEL MONDO, QUINDI CAMBIA IN UNA PERSONA CHE NON SCASSA I COGLIONI AL BOT.",
 			"MI PAREVA DI AVERTI DETTO DI NON INTERFERIRE COL BOT, MA FORSE NON TE L'HO DETTO ABBASTANZA BENE: NON INTERFERIRE COL BOT.",
-			"AVVICINATI AL BOT E PRENDERAI LE BOT", "VAI A PASCOLARE CAZZI LONTANO DAL BOT", "PERCHÈ NON DIVENTI UN ASTRONAUTA? COSÌ PUOI ANDARE GIRANDO NELLO SPAZIO INVECE DI INFASTIDIRE IL BOT.",
+			"AVVICINATI AL BOT E PRENDERAI LE BOT", "VAI A PASCOLARE CAZZI LONTANO DAL BOT", "PERCHÈ NON DIVENTI UN ASTRONAUTA? COSÌ PUOI ESPLORARE	LO SPAZIO INVECE DI INFASTIDIRE IL BOT.",
 			"SALPA PER I SETTE MARI ALLA RICERCA DI \"UN PEZZO\" INVECE CHE AVVICINARTI AL BOT.", "IL BOT NON DESIDERA LA TUA COMPAGNIA.", "CI SONO 206 OSSA NEL CORPO UMANO. SO ROMPERLE TUTTE: ALLONTANATI DAL BOT.",
 			"CERCA LA RISPOSTA TRAMITE MEDITAZIONE INVECE CHE CHIEDERLA AL BOT.", "ESISTONO INFINITI UNIVERSI: IN NESSUNO  SEI AUTORIZZATO A STARE VICINO AL BOT",
 			"ESPLORA LA SINGOLARITÀ DI UN BUCO NERO INVECE DI AVVICINARTI AL BOT.", "IL BOT NON RISPONDERÀ ALLE TUE AVANCE.",
@@ -1550,7 +1551,7 @@ public class Commands extends ListenerAdapter
 			"VAI A FARE UNA ROLEPLAY CON CHATGPT INVECE DI SCOCCIARE IL BOT", "QUANDO L'UNIVERSO AVRÀ FINE TI SARÀ COMUNQUE INTERDETTO DI AVVICINARTI AL BOT",
 			"SE TANTO TI FA SCHIFO AVERE DUE GAMBE ALLORA AVVICINATI PURE AL BOT", "L'ULTIMA VOLTA CHE QUALCUNO SI È AVVICINATO AL BOT ED È SOPRAVVISSUTO PER RACCONTARLO È STATO NEL 1890.",
 			"TI FACCIO TAGLIARE LA TESTA SE NON TI ALLONTANI DAL BOT", "IL BOT NON È IN CASA, IO SONO SOLTANTO IL COLF",
-			"LA TUA ABUSIVA PRESENZA NON È GRADITA", "TROVA LA PACE INTERIORE INVECE DI ROMPERE LE PALLE AL BOT",
+			"LA TUA ABUSIVA PRESENZA NON È GRADITA", "CI SONO TANTE GIUSTE CAUSE PER CUI COMBATTERE PIUTTOSTO CHE STARE VICINO AL BOT",
 			"GIOCA A PORTAL INVECE CHE GUARDARE AMOREVOLMENTE IL BOT", "LA VITA È TROPPO BREVE PER PASSARLA INSEGUENDO UN BOT CHE NON RICAMBIA I TUOI SENTIMENTI"
 		};
 		
@@ -1565,8 +1566,9 @@ public class Commands extends ListenerAdapter
 	public void dado()
 	{
 		final var msg = message.getContentStripped().toLowerCase();
+		final int minLen = "!dado".length();
 		
-		if (msg.length() <= 5) // 5 = "!dado".length()
+		if (msg.length() <= minLen)
 		{
 			channel.sendMessage("Per favore specifica che tipo di dado devo lanciare.\nEsempio:\n`!dado 6` lancerà un dado con 6 facce.").queue();
 		    return;
