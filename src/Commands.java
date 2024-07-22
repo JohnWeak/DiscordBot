@@ -1025,7 +1025,9 @@ public class Commands extends ListenerAdapter
 		else
 		{
 			final PrivateMessage gion = new PrivateMessage(Utente.getGion());
-			
+			gion.send(Arrays.toString(risposte));
+			if (true) return;
+			// TODO risolvere sta cosa della prima risposta troncata e togliere sto trim()
 			risposte[0] = risposte[0].substring(0, risposte[0].length()-1).trim();
 			
 			final String[] letters =
