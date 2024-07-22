@@ -1001,7 +1001,8 @@ public class Commands extends ListenerAdapter
 		
 		final String[] domandaERisposte = messageRaw.split("\\?");
 		final String domanda = domandaERisposte[0].substring(5).trim(); // !poll.length() = 5
-		final String[] risposte = messageRaw.substring(5+domanda.length()+1).split("/");
+		final String[] risposte = domandaERisposte[1].split("/");
+		//final String[] risposte = messageRaw.substring(5+domanda.length()+1).split("/");
 		
 		sondaggio(domanda, risposte, false);
 	} // fine poll()
@@ -1024,9 +1025,9 @@ public class Commands extends ListenerAdapter
 		else
 		{
 			final PrivateMessage gion = new PrivateMessage(Utente.getGion());
-			gion.send("r0 senza trim: "+risposte[0]);
+			
 			risposte[0] = risposte[0].substring(0, risposte[0].length()-1).trim();
-			gion.send("r0 con trim: "+risposte[0]);
+			
 			final String[] letters =
 			{
 			    "\uD83C\uDDE6", "\uD83C\uDDE7", "\uD83C\uDDE8", "\uD83C\uDDE9", "\uD83C\uDDEA", "\uD83C\uDDEB",
