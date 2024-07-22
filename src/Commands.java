@@ -1000,33 +1000,33 @@ public class Commands extends ListenerAdapter
 		}
 		
 		final String[] domandaERisposte = messageRaw.split("\\?");
-		final String domanda = domandaERisposte[0].substring(5); // !poll.length() = 5
+		final String domanda = domandaERisposte[0].substring(5).trim(); // !poll.length() = 5
 		final String[] risposte = messageRaw.substring(5+domanda.length()+1).split("/");
 		
 		sondaggio(domanda, risposte, false);
 	} // fine poll()
 	
 	/** Crea un sondaggio. Se non sono soddisfatte le condizioni, mostra un messaggio su come usare il comando !poll */
-	public void sondaggio(String domanda, String[] risposte, boolean flag)
+	public void sondaggio(String domanda, String[] risposte, boolean error)
 	{
 		final EmbedBuilder embedBuilder = new EmbedBuilder();
 		
-		if (flag)
+		if (error)
 		{
 			embedBuilder.setTitle("`!poll` - Istruzioni per l'uso");
 			embedBuilder.addField("Sondaggio", "Per creare un sondaggio devi usare il comando `!poll` + `domanda?` + `[risposte]`\nSepara le risposte con uno slash `/`.", false);
 			embedBuilder.addField("Esempio", "`!poll domanda? opzione 1 / opzione 2 / opzione 3 ...`\n`!poll Cosa preferite? Pizza / Pollo / Panino / Sushi`", false);
-			embedBuilder.addField("Votazione", "Per votare, usa le reazioni!", false);
+			embedBuilder.addField("Votazione", "Per votare, usa le reazioni al messaggio.", false);
 			embedBuilder.setColor(0xFFFFFF);
 			
 			channel.sendMessageEmbeds(embedBuilder.build()).queue();
 		}
 		else
 		{
+			final PrivateMessage gion = new PrivateMessage(Utente.getGion());
+			gion.send("r0 senza trim: "+risposte[0]);
 			risposte[0] = risposte[0].substring(0, risposte[0].length()-1).trim();
-			
-			final int size = risposte.length;
-			
+			gion.send("r0 con trim: "+risposte[0]);
 			final String[] letters =
 			{
 			    "\uD83C\uDDE6", "\uD83C\uDDE7", "\uD83C\uDDE8", "\uD83C\uDDE9", "\uD83C\uDDEA", "\uD83C\uDDEB",
@@ -1039,6 +1039,7 @@ public class Commands extends ListenerAdapter
 			String descrizione = "";
 			embedBuilder.setTitle(domanda+"?");
 			final int lenghtRisposte = risposte.length;
+			
 			for (int i = 0; i < lenghtRisposte; i++)
 				descrizione = descrizione.concat(letters[i] + "\t" + risposte[i]) + "\n";
 			embedBuilder.setDescription(descrizione);
@@ -1046,7 +1047,7 @@ public class Commands extends ListenerAdapter
 			
 			channel.sendMessageEmbeds(embedBuilder.build()).queue((message) ->
 			{
-				for (int i = 0; i < size; i++)
+				for (int i = 0; i < lenghtRisposte; i++)
 					message.addReaction(letters[i]).queue();
 			});
 			
@@ -1058,8 +1059,8 @@ public class Commands extends ListenerAdapter
 	/** Infastidisce le persone */
 	public void triggera(String id)
 	{
-		String title, image, footer, color;
-		int risultato;
+		final String title, image, footer, color;
+		final int risultato;
 		
 		final String titolo = "Get rekt ";
 
@@ -1091,7 +1092,7 @@ public class Commands extends ListenerAdapter
 		
 		channel.sendTyping().queue();
 
-		var embedBuilder = new EmbedBuilder();
+		final EmbedBuilder embedBuilder = new EmbedBuilder();
 		
 		switch (id)
 		{
@@ -1303,7 +1304,7 @@ public class Commands extends ListenerAdapter
 	private void massShooting()
 	{
 		int anno = currentYear;
-		String[] msg = messageRaw.toLowerCase().split(" ");
+		final String[] msg = messageRaw.toLowerCase().split(" ");
 		if (msg.length > 1)
 		{
 			try
@@ -1321,8 +1322,8 @@ public class Commands extends ListenerAdapter
 			return;
 		}
 		
-		JSONArray jsonArray;
-		JSONParser jsonParser = new JSONParser();
+		final JSONArray jsonArray;
+		final JSONParser jsonParser = new JSONParser();
 		int mortiAnno = 0;
 		
 		try
@@ -1516,7 +1517,7 @@ public class Commands extends ListenerAdapter
 			"IL BOT È OCCUPATO, NON HA TEMPO DA DEDICARTI.", "PENSA A TERRAFORMARE MARTE INVECE CHE OFFRIRE PROMESSE VACUE DI AMORE ETERNO AL BOT",
 			"EVITA DI SPAVENTARE IL BOT CON I TUOI MODI DA ELEFANTE IN UN NEGOZIO DI PREGIATI VASI CINESI",
 			"VAI A FARE UNA ROLEPLAY CON CHATGPT INVECE DI SCOCCIARE IL BOT", "QUANDO L'UNIVERSO AVRÀ FINE TI SARÀ COMUNQUE INTERDETTO DI AVVICINARTI AL BOT",
-			"SE TANTO TI FA SCHIFO AVERE DUE GAMBE ALLORA AVVICINATI PURE AL BOT", "L'ULTIMA VOLTA CHE QUALCUNO SI È AVVICINATO AL BOT ED È SOPRAVVISSUTO PER RACCONTARLO È STATO NEL 1890.",
+			"SE TANTO TI FA SCHIFO AVERE DUE GAMBE ALLORA AVVICINATI PURE AL BOT", "L'ULTIMA VOLTA CHE QUALCUNO SI È AVVICINATO AL BOT ED È SOPRAVVISSUTO PER RACCONTARLO È STATO NEL 1652.",
 			"TI FACCIO TAGLIARE LA TESTA SE NON TI ALLONTANI DAL BOT", "IL BOT NON È IN CASA, IO SONO SOLTANTO IL COLF",
 			"LA TUA ABUSIVA PRESENZA NON È GRADITA", "CI SONO TANTE GIUSTE CAUSE PER CUI COMBATTERE PIUTTOSTO CHE STARE VICINO AL BOT",
 			"GIOCA A PORTAL INVECE CHE GUARDARE AMOREVOLMENTE IL BOT", "LA VITA È TROPPO BREVE PER PASSARLA INSEGUENDO UN BOT CHE NON RICAMBIA I TUOI SENTIMENTI"
