@@ -994,26 +994,34 @@ public class Commands extends ListenerAdapter
 		// args[1] = domanda
 		// args[2, 3, ...] = risposte
 		
+		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
+		
 		final String format = "^.*\\?\\s*([^/]+\\s*/?\\s*)+[^/]+\\s*$";
 		if (!messageRaw.toLowerCase().matches(format) || messageRaw.length() <= 5)
 		{
+			gion.send("Oh-ho, qualcosa non ha funzionato");
 			sondaggio(null,null,true);
 			//flag = true fa comparire il messaggio di utilizzo del comando !poll
 			return;
 		}
 		
+		gion.send("Qualcosa ha funzionato");
+		
 		final String[] domandaERisposte = messageRaw.split("\\?");
 		final String domanda = domandaERisposte[0].substring(5); // !poll.length() = 5
 		final String[] risposte = messageRaw.substring(5+domanda.length()+1).split("/");
 		
-		sondaggio(domanda, risposte, false);
+		gion.send("Sta continuando a funzionare\n" + domanda + "\n" + Arrays.toString(risposte));
+		
+		sondaggio(domanda, risposte, false, Optional.of(gion));
 	} // fine poll()
 	
 	/** Crea un sondaggio. Se non sono soddisfatte le condizioni, mostra un messaggio su come usare il comando !poll */
-	public void sondaggio(String domanda, String[] risposte, boolean flag)
+	public void sondaggio(String domanda, String[] risposte, boolean flag, Optional<PrivateMessage> gion)
 	{
 		final EmbedBuilder embedBuilder = new EmbedBuilder();
 		final int sleepInterval = random.nextInt(500) + 1000;
+		gion.ifPresent(privateMessage -> privateMessage.send("Oibò, sono entrato addirittura nel metodo sondaggio()"));
 		
 		if (flag)
 		{
