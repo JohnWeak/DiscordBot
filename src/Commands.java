@@ -1024,20 +1024,8 @@ public class Commands extends ListenerAdapter
 		}
 		else
 		{
-			final PrivateMessage gion = new PrivateMessage(Utente.getGion());
-			String msg = domanda + "\n" + Arrays.toString(risposte);
-			
-			gion.send(msg);
-			
-			for (int i = 0; i < risposte.length; i++)
-				risposte[i] = risposte[i].trim();
-			
-			msg = domanda + "\n" + Arrays.toString(risposte);
-			gion.send(msg);
-			
-			if (true) return;
-			
-			final String[] letters =
+			final int lenghtRisposte = risposte.length;
+			final String[] reactionLetters =
 			{
 			    "\uD83C\uDDE6", "\uD83C\uDDE7", "\uD83C\uDDE8", "\uD83C\uDDE9", "\uD83C\uDDEA", "\uD83C\uDDEB",
 				"\uD83C\uDDEC", "\uD83C\uDDED", "\uD83C\uDDEE", "\uD83C\uDDEF", "\uD83C\uDDF0", "\uD83C\uDDF1",
@@ -1048,17 +1036,22 @@ public class Commands extends ListenerAdapter
 			
 			String descrizione = "";
 			embedBuilder.setTitle(domanda+"?");
-			final int lenghtRisposte = risposte.length;
 			
 			for (int i = 0; i < lenghtRisposte; i++)
-				descrizione = descrizione.concat(letters[i] + "\t" + risposte[i]) + "\n";
+			{
+				risposte[i] = risposte[i].trim();
+				descrizione = descrizione.concat(reactionLetters[i] + "\t" + risposte[i]) + "\n";
+			}
+			
+			//for (int i = 0; i < lenghtRisposte; i++)
+			
 			embedBuilder.setDescription(descrizione);
 			embedBuilder.setColor(0xFF0000);
 			
 			channel.sendMessageEmbeds(embedBuilder.build()).queue((message) ->
 			{
 				for (int i = 0; i < lenghtRisposte; i++)
-					message.addReaction(letters[i]).queue();
+					message.addReaction(reactionLetters[i]).queue();
 			});
 			
 		}
