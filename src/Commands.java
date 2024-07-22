@@ -41,7 +41,7 @@ public class Commands extends ListenerAdapter
 	public static TextChannel canaleBotPokemon;
 	public static TextChannel canaleBot;
 	
-	private final Locale locale = Locale.ITALIAN;
+	private final Locale italian = Locale.ITALIAN;
 	private final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	private final boolean moduloSicurezza = false;
 	
@@ -60,14 +60,10 @@ public class Commands extends ListenerAdapter
 		commandsHashMap = Cmd.init();
 		
 		jda = event.getJDA();
-		// var nome = jda.getSelfUser().getName();
-		// emoteList = event.getJDA().getEmotes();
 		final var act = jda.getPresence().getActivity();
 		
 		String activityType="act_type", nomeActivity="act_name", activityTradotta="act_trad";
 		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
-		
-		// System.out.printf("%s si è connesso a Discord!\n\npublic class MessageHistory\n{\n", nome);
 		
 		try
 		{
@@ -105,7 +101,7 @@ public class Commands extends ListenerAdapter
 	public void onMessageReceived(@NotNull MessageReceivedEvent event)
 	{
 		user = event.getAuthor();
-		authorID = event.getAuthor().getId();
+		authorID = user.getId();
 		
 		identifyLatestMessage(event, null);
 		
@@ -238,10 +234,10 @@ public class Commands extends ListenerAdapter
 	 * */
 	public void checkForKeywords(String msgStrippedLowerCase)
 	{
-		final var args = messageRaw.split(" ");
-		final var comando = args[0].toLowerCase(locale);
-		var reply = false;
-		var msgReply = "";
+		final String[] args = messageRaw.split(" ");
+		final String comando = args[0].toLowerCase(italian);
+		boolean reply = false;
+		String msgReply = "";
 		
 		// se è un bot a mandare il messaggio, ignoralo per evitare loop di messaggi
 		if (author.isBot())
@@ -356,8 +352,10 @@ public class Commands extends ListenerAdapter
 			case "!colpevolezza", "!colpevole" -> colpevolezza();
 			case "!carta" -> {Card c = new Card(); c.sendCarta(c);}
 			case "!massshooting", "!ms" -> massShooting();
-			case "!war" -> new Clash().clashWar();
-			case "!league" -> new Clash().clashWarLeague(false);
+			// Nota: i comandi di clash sono disabilitati poiché la loro API
+			//  richiede un token diverso ogni volta che cambia l'indirizzo IP
+			//case "!war" -> new Clash().clashWar();
+			//case "!league" -> new Clash().clashWarLeague(false);
 			case "!smh" -> new ThreadSmh(channel).start();
 			case "!dado" -> dado();
 			case "!cattura", "!catch" -> cattura(pokemon);
@@ -1042,8 +1040,6 @@ public class Commands extends ListenerAdapter
 				risposte[i] = risposte[i].trim();
 				descrizione = descrizione.concat(reactionLetters[i] + "\t" + risposte[i]) + "\n";
 			}
-			
-			//for (int i = 0; i < lenghtRisposte; i++)
 			
 			embedBuilder.setDescription(descrizione);
 			embedBuilder.setColor(0xFF0000);

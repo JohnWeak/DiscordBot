@@ -60,9 +60,9 @@ public class Clash
 				return;
 			}
 
-			String[] percentage = new String[2];
-			String[] attacks = new String[2];
-			String[] stars = new String[2];
+			final String[] percentage = new String[2];
+			final String[] attacks = new String[2];
+			final String[] stars = new String[2];
 			
 			var name = (String) clan.get("name");
 			percentage[0] = String.format("%.2f", (double) clan.get("destructionPercentage"));
