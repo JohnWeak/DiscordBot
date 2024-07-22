@@ -30,7 +30,6 @@ public class ThreadPigeon extends Thread
 				final var pigeonMessage = "Oh no! " + authorName + " ha attivato il <:" + Emotes.pigeon + "> bazooka!\n" + max + " pigeon in arrivo!";
 				channel.sendMessage(pigeonMessage).queue();
 				channel.sendTyping().queue();
-				Commands.pause(500, 500);
 				for (int i = 0; i < max; i++)
 					channel.sendMessage("<:" + Emotes.pigeon + ">").queue(l -> Commands.react("pigeon"));
 			} else
