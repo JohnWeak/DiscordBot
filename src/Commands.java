@@ -994,6 +994,10 @@ public class Commands extends ListenerAdapter
 		// args[1] = domanda
 		// args[2, 3, ...] = risposte
 		
+		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
+		gion.send("Ho ricevuto un messaggio !poll. Ecco qual è: \n"+messageRaw);
+		if (true) return;
+		
 		if (messageRaw.length() <= 5)
 		{
 			sondaggio("Pog?", new String[]{"Pog sì", "Pog no", "Porgo Tensing"}, true);
