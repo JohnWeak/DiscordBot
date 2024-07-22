@@ -1000,7 +1000,7 @@ public class Commands extends ListenerAdapter
 		if (!messageRaw.toLowerCase().matches(format) || messageRaw.length() <= 5)
 		{
 			gion.send("Oh-ho, qualcosa non ha funzionato");
-			sondaggio(null,null,true);
+			sondaggio(null,null,true, Optional.empty());
 			//flag = true fa comparire il messaggio di utilizzo del comando !poll
 			return;
 		}
