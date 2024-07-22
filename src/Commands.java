@@ -504,7 +504,6 @@ public class Commands extends ListenerAdapter
 			else
 			{
 				channel.sendTyping().queue();
-				pause(500, -1);
 				message.delete().queue();
 			}
 		}
@@ -932,10 +931,8 @@ public class Commands extends ListenerAdapter
 		var finalResponso = responso.concat(headsOrTails ? testaStringa : croceStringa);
 
 		channel.sendTyping().queue();
-		pause(500, 500);
 		message.reply(lancioMoneta).queue(m ->
 		{
-			pause(500, 500);
 			message.editMessage(finalResponso).queue(m2 -> react(headsOrTails ? "pogey" : "pigeon"));
 		});
 
@@ -1093,7 +1090,6 @@ public class Commands extends ListenerAdapter
 		final String testoFooter = "";
 		
 		channel.sendTyping().queue();
-		pause(1000, 0);
 
 		var embedBuilder = new EmbedBuilder();
 		
@@ -1293,36 +1289,13 @@ public class Commands extends ListenerAdapter
 
 		channel.sendTyping().queue();
 
-		pause(-1, -1);
-
 		message.reply(ballResponse).queue(message1 ->
 		{
 			final String newResponse = "La 🎱 dichiara: ";
-			pause(-1,1500);
 			message1.editMessage(newResponse+"**"+risposte[random.nextInt(risposte.length)]+"**").queue();
 		});
 		
 	} // fine eightBall()
-
-	/** Mette in pausa il thread per un totale di secondi pari a <code>millis</code> + un valore casuale fra <code>0</code> e <code>bound</code>.
-	 * <br>Parametri negativi faranno sì che vengano usati i valori di default:<br><code>millis=1500</code><br><code>bound=500</code>.
-	 * @param millis tempo minimo per il quale deve dormire il thread.
-	 * @param bound valore casuale da sommare a <code>millis</code>. 0 = nessun tempo di sleep aggiuntivo.
-	 * */
-	public static void pause(int millis, int bound)
-	{
-		if (millis < 0)
-			millis = 1500;
-
-		if (bound < 0)
-			bound = 500;
-
-		try { Thread.sleep(millis + random.nextInt(bound)); }
-		catch (InterruptedException e)
-		{
-			error.print(object, e);
-		}
-	} // fine pause()
 	
 	
 	
