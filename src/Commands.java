@@ -1020,7 +1020,6 @@ public class Commands extends ListenerAdapter
 	public void sondaggio(String domanda, String[] risposte, boolean flag, Optional<PrivateMessage> gion)
 	{
 		final EmbedBuilder embedBuilder = new EmbedBuilder();
-		final int sleepInterval = random.nextInt(500) + 1000;
 		gion.ifPresent(privateMessage -> privateMessage.send("Oibò, sono entrato addirittura nel metodo sondaggio()"));
 		
 		if (flag)
@@ -1031,9 +1030,6 @@ public class Commands extends ListenerAdapter
 			embedBuilder.addField("Votazione", "Per votare, usa le reazioni!", false);
 			embedBuilder.setColor(0xFFFFFF);
 			
-			channel.sendTyping().queue();
-			try { Thread.sleep(sleepInterval); }
-			catch (InterruptedException e) { error.print(object, e); }
 			channel.sendMessageEmbeds(embedBuilder.build()).queue();
 		}
 		else
@@ -1058,10 +1054,6 @@ public class Commands extends ListenerAdapter
 				descrizione = descrizione.concat(letters[i] + "\t" + risposte[i]) + "\n";
 			embedBuilder.setDescription(descrizione);
 			embedBuilder.setColor(0xFF0000);
-			
-			channel.sendTyping().queue();
-			
-			pause(sleepInterval, 0);
 			
 			channel.sendMessageEmbeds(embedBuilder.build()).queue((message) ->
 			{
