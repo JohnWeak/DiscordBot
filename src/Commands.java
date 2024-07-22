@@ -994,13 +994,10 @@ public class Commands extends ListenerAdapter
 		// args[1] = domanda
 		// args[2, 3, ...] = risposte
 		
-		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
-		gion.send("Ho ricevuto un messaggio !poll. Ecco qual è: \n"+messageRaw);
-		if (true) return;
-		
-		if (messageRaw.length() <= 5)
+		final String format = "^.*\\?\\s*([^/]+\\s*/?\\s*)+[^/]+\\s*$";
+		if (!messageRaw.toLowerCase().matches(format) || messageRaw.length() <= 5)
 		{
-			sondaggio("Pog?", new String[]{"Pog sì", "Pog no", "Porgo Tensing"}, true);
+			sondaggio(null,null,true);
 			//flag = true fa comparire il messaggio di utilizzo del comando !poll
 			return;
 		}
@@ -1009,30 +1006,17 @@ public class Commands extends ListenerAdapter
 		final String domanda = domandaERisposte[0].substring(5); // !poll.length() = 5
 		final String[] risposte = messageRaw.substring(5+domanda.length()+1).split("/");
 		
-		//System.out.printf("DomandaERisposte length: %d\nDomandaERisposte: %s\nDomanda length: %d\nDomanda: %s\nRisposte.length: %d\nRisposte: %s\n", domandaERisposte.length, Arrays.toString(domandaERisposte), domanda.length(), domanda, risposte.length, Arrays.toString(risposte));
-		
 		sondaggio(domanda, risposte, false);
 	} // fine poll()
 	
 	/** Crea un sondaggio. Se non sono soddisfatte le condizioni, mostra un messaggio su come usare il comando !poll */
 	public void sondaggio(String domanda, String[] risposte, boolean flag)
 	{
-		risposte[0] = risposte[0].substring(0, risposte[0].length()-1).trim();
-		var sleepInterval = random.nextInt(500) + 1000;
-		final var size = risposte.length;
-		var embedBuilder = new EmbedBuilder();
-		final String[] letters =
-		{
-			"\uD83C\uDDE6", "\uD83C\uDDE7", "\uD83C\uDDE8", "\uD83C\uDDE9", "\uD83C\uDDEA", "\uD83C\uDDEB",
-			"\uD83C\uDDEC", "\uD83C\uDDED", "\uD83C\uDDEE", "\uD83C\uDDEF", "\uD83C\uDDF0", "\uD83C\uDDF1",
-			"\uD83C\uDDF2", "\uD83C\uDDF3", "\uD83C\uDDF4", "\uD83C\uDDF5", "\uD83C\uDDF6", "\uD83C\uDDF7",
-			"\uD83C\uDDF8", "\uD83C\uDDF9", "\uD83C\uDDFA", "\uD83C\uDDFB", "\uD83C\uDDFC", "\uD83C\uDDFD",
-			"\uD83C\uDDFE", "\uD83C\uDDFF"
-		}; // array di lettere emoji A -> Z
+		final EmbedBuilder embedBuilder = new EmbedBuilder();
+		final int sleepInterval = random.nextInt(500) + 1000;
 		
-		if (size < 2 || size > letters.length || flag)
+		if (flag)
 		{
-			// embedBuilder.setFooter("");
 			embedBuilder.setTitle("`!poll` - Istruzioni per l'uso");
 			embedBuilder.addField("Sondaggio", "Per creare un sondaggio devi usare il comando `!poll` + `domanda?` + `[risposte]`\nSepara le risposte con uno slash `/`.", false);
 			embedBuilder.addField("Esempio", "`!poll domanda? opzione 1 / opzione 2 / opzione 3 ...`\n`!poll Cosa preferite? Pizza / Pollo / Panino / Sushi`", false);
@@ -1046,9 +1030,22 @@ public class Commands extends ListenerAdapter
 		}
 		else
 		{
+			risposte[0] = risposte[0].substring(0, risposte[0].length()-1).trim();
+			
+			final int size = risposte.length;
+			
+			final String[] letters =
+			{
+			    "\uD83C\uDDE6", "\uD83C\uDDE7", "\uD83C\uDDE8", "\uD83C\uDDE9", "\uD83C\uDDEA", "\uD83C\uDDEB",
+				"\uD83C\uDDEC", "\uD83C\uDDED", "\uD83C\uDDEE", "\uD83C\uDDEF", "\uD83C\uDDF0", "\uD83C\uDDF1",
+				"\uD83C\uDDF2", "\uD83C\uDDF3", "\uD83C\uDDF4", "\uD83C\uDDF5", "\uD83C\uDDF6", "\uD83C\uDDF7",
+				"\uD83C\uDDF8", "\uD83C\uDDF9", "\uD83C\uDDFA", "\uD83C\uDDFB", "\uD83C\uDDFC", "\uD83C\uDDFD",
+				"\uD83C\uDDFE", "\uD83C\uDDFF"
+			}; // array di lettere emoji A -> Z
+			
 			String descrizione = "";
 			embedBuilder.setTitle(domanda+"?");
-			var lenghtRisposte = risposte.length;
+			final int lenghtRisposte = risposte.length;
 			for (int i = 0; i < lenghtRisposte; i++)
 				descrizione = descrizione.concat(letters[i] + "\t" + risposte[i]) + "\n";
 			embedBuilder.setDescription(descrizione);
@@ -1065,6 +1062,7 @@ public class Commands extends ListenerAdapter
 			});
 			
 		}
+		
 		
 	} // fine sondaggio()
 	
