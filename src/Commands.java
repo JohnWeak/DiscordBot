@@ -705,6 +705,7 @@ public class Commands extends ListenerAdapter
 		embed.setColor(Color.RED);
 		embed.addField("Festeggiato",author,true);
 		embed.addField("Anni", String.valueOf(years), true);
+		embed.setThumbnail(Utente.getGion().getAvatarUrl());
 		embed.addField("", descr,false);
 		
 		//channel.sendMessageEmbeds(embed.build()).queue();
