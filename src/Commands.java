@@ -239,6 +239,10 @@ public class Commands extends ListenerAdapter
 		boolean reply = false;
 		String msgReply = "";
 		
+		// TESTING TESTING TESTING
+		anniversario("Gion",5);
+		// TESTING TESTING TESTING
+		
 		// se è un bot a mandare il messaggio, ignoralo per evitare loop di messaggi
 		if (author.isBot())
 		{
@@ -287,8 +291,7 @@ public class Commands extends ListenerAdapter
 						}
 						
 						var years = (numGiorni / 365);
-						var mess = "Complimenti, " + auth + "! Sono " + years + " anni di OwO daily!";
-						channel.sendMessage(mess).queue();
+						anniversario(auth, years);
 					}
 				} // fine if daily streak
 			} // fine if equals bot
@@ -603,7 +606,7 @@ public class Commands extends ListenerAdapter
 		if (!users.isEmpty() && users.get(0).getId().equals(Utente.ID_BOWOT))
 		{
 			boolean matchFound = false;
-			String[] cases = {"che fai", "cosa fai", "che stai facendo", "cazzo fai", "minchia fai"};
+			final String[] cases = {"che fai", "cosa fai", "che stai facendo", "cazzo fai", "minchia fai"};
 			for (String m : cases)
 			{
 				if (msgStrippedLowerCase.contains(m))
@@ -694,6 +697,21 @@ public class Commands extends ListenerAdapter
 			.build();
 		
 		message.replyEmbeds(embed).queue();
+	}
+	
+	private void anniversario(String author, int years)
+	{
+		final String descr = String.format("%s, sono passati ben %d anni dal tuo primo OwO daily. Sono davvero orgoglioso e fiero di te.", author,years);
+		final EmbedBuilder embed = new EmbedBuilder();
+		
+		embed.setTitle("OwO dailyversario di " + author);
+		embed.addField("Autore",author,true);
+		embed.addField("Anni", String.valueOf(years), true);
+		embed.addField("Fiero","Sono fiero di te",true);
+		embed.setDescription(descr);
+		
+		//channel.sendMessageEmbeds(embed.build()).queue();
+		canaleBotPokemon.sendMessageEmbeds(embed.build()).queue();
 	}
 	
 	private void certificazione()
