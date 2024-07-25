@@ -705,11 +705,17 @@ public class Commands extends ListenerAdapter
 		embed.setColor(Color.RED);
 		embed.addField("Festeggiato",author,true);
 		embed.addField("Anni", String.valueOf(years), true);
-		embed.setThumbnail(Utente.getGion().getAvatarUrl());
+		
+		
+		//embed.setThumbnail(user.getAvatarUrl());
+		embed.setThumbnail(Utente.getEnigmo().getAvatarUrl());
+		
+		
 		embed.addField("", descr,false);
 		
 		//channel.sendMessageEmbeds(embed.build()).queue();
-		canaleBotPokemon.sendMessageEmbeds(embed.build()).queue();
+		//canaleBotPokemon.sendMessageEmbeds(embed.build()).queue();
+		message.replyEmbeds(embed.build()).queue();
 	}
 	
 	private void certificazione()
