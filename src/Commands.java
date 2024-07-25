@@ -701,10 +701,11 @@ public class Commands extends ListenerAdapter
 		final String descr = String.format("%s, sono passati ben %d anni dal tuo primo OwO daily. Sono davvero orgoglioso e fiero di te.", author,years);
 		final EmbedBuilder embed = new EmbedBuilder();
 		
-		embed.setTitle("OwO dailyversario di " + author);
-		embed.addField("Autore",author,true);
+		embed.setTitle("È il tuo dailyversario!");
+		embed.setColor(Color.RED);
+		embed.addField("Festeggiato",author,true);
 		embed.addField("Anni", String.valueOf(years), true);
-		embed.addField("Dailies", descr,false);
+		embed.addField("", descr,false);
 		
 		//channel.sendMessageEmbeds(embed.build()).queue();
 		canaleBotPokemon.sendMessageEmbeds(embed.build()).queue();
