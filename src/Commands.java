@@ -240,7 +240,7 @@ public class Commands extends ListenerAdapter
 		String msgReply = "";
 		
 		// TESTING TESTING TESTING
-		anniversario("Gion",5);
+		// anniversario("Gion",5);
 		// TESTING TESTING TESTING
 		
 		// se è un bot a mandare il messaggio, ignoralo per evitare loop di messaggi
@@ -711,7 +711,7 @@ public class Commands extends ListenerAdapter
 		embed.setDescription(descr);
 		
 		//channel.sendMessageEmbeds(embed.build()).queue();
-		canaleBotPokemon.sendMessageEmbeds(embed.build()).queue();
+		// canaleBotPokemon.sendMessageEmbeds(embed.build()).queue();
 	}
 	
 	private void certificazione()
