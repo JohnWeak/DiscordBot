@@ -239,10 +239,6 @@ public class Commands extends ListenerAdapter
 		boolean reply = false;
 		String msgReply = "";
 		
-		// TESTING TESTING TESTING
-		// anniversario("Gion",5);
-		// TESTING TESTING TESTING
-		
 		// se è un bot a mandare il messaggio, ignoralo per evitare loop di messaggi
 		if (author.isBot())
 		{
@@ -367,6 +363,7 @@ public class Commands extends ListenerAdapter
 			case "!certificazione" -> certificazione();
 			case "!pigeons" -> pigeons();
 			// case "!dm" -> dm();
+			case "!ann" -> anniversario("Gion", 5);
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -707,11 +704,10 @@ public class Commands extends ListenerAdapter
 		embed.setTitle("OwO dailyversario di " + author);
 		embed.addField("Autore",author,true);
 		embed.addField("Anni", String.valueOf(years), true);
-		embed.addField("Fiero","Sono fiero di te",true);
-		embed.setDescription(descr);
+		embed.addField("Dailies", descr,false);
 		
 		//channel.sendMessageEmbeds(embed.build()).queue();
-		// canaleBotPokemon.sendMessageEmbeds(embed.build()).queue();
+		canaleBotPokemon.sendMessageEmbeds(embed.build()).queue();
 	}
 	
 	private void certificazione()
