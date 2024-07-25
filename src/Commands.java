@@ -363,7 +363,6 @@ public class Commands extends ListenerAdapter
 			case "!certificazione" -> certificazione();
 			case "!pigeons" -> pigeons();
 			// case "!dm" -> dm();
-			case "!ann" -> anniversario("Gion", 5);
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -705,16 +704,9 @@ public class Commands extends ListenerAdapter
 		embed.setColor(Color.RED);
 		embed.addField("Festeggiato",author,true);
 		embed.addField("Anni", String.valueOf(years), true);
-		
-		
-		//embed.setThumbnail(user.getAvatarUrl());
-		embed.setThumbnail(Utente.getEnigmo().getAvatarUrl());
-		
-		
 		embed.addField("", descr,false);
+		embed.setThumbnail(user.getAvatarUrl());
 		
-		//channel.sendMessageEmbeds(embed.build()).queue();
-		//canaleBotPokemon.sendMessageEmbeds(embed.build()).queue();
 		message.replyEmbeds(embed.build()).queue();
 	}
 	
