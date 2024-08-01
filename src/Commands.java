@@ -903,9 +903,9 @@ public class Commands extends ListenerAdapter
 		future = now.plusSeconds(time/1000);
 		
 		final String yearFuture, monthFuture, dayFuture, hourFuture, minuteFuture;
-		yearFuture = String.valueOf(future.getYear());
-		monthFuture = String.valueOf(future.getMonthValue());
-		dayFuture = String.valueOf(future.getDayOfMonth());
+		yearFuture = ""+future.getYear();
+		monthFuture = ""+future.getMonthValue();
+		dayFuture = ""+future.getDayOfMonth();
 		hourFuture = future.getHour() < 10 ? "0"+future.getHour() : ""+future.getHour();
 		minuteFuture = future.getMinute() < 10 ? "0"+future.getMinute() : ""+future.getMinute();
 		
