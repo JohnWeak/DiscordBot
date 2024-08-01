@@ -906,6 +906,10 @@ public class Commands extends ListenerAdapter
 		hourFuture = future.getHour();
 		minuteFuture = future.getMinute();
 		
+		final var gionMSG = new PrivateMessage(Utente.getGion());
+		gionMSG.send(now.getHour()+" "+now.getMinute());
+		gionMSG.send(future.getHour()+" "+future.getMinute());
+		
 		String nome = "";
 		
 		for (int i = 2; i < mes.length; i++)
@@ -917,6 +921,7 @@ public class Commands extends ListenerAdapter
 		{
 			nome = "Promemoria generico";
 		}
+		nome = nome.trim();
 		
 		for (ThreadReminder r : remindersArray)
 		{
