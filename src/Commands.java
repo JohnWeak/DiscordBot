@@ -907,8 +907,7 @@ public class Commands extends ListenerAdapter
 		minuteFuture = future.getMinute();
 		
 		final var gionMSG = new PrivateMessage(Utente.getGion());
-		gionMSG.send(now.getHour()+" "+now.getMinute());
-		gionMSG.send(future.getHour()+" "+future.getMinute());
+		gionMSG.send(now.getZone()+"\n"+future.getZone());
 		
 		String nome = "";
 		
