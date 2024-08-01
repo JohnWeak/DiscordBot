@@ -918,7 +918,7 @@ public class Commands extends ListenerAdapter
 		
 		if (nome.isBlank())
 		{
-			nome = "Promemoria generico";
+			nome = "Promemoria Senza Nome";
 		}
 		nome = nome.trim();
 		
