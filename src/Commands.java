@@ -901,15 +901,13 @@ public class Commands extends ListenerAdapter
 		time += minutes_int * 60 * 1000;
 		
 		future = now.plusSeconds(time/1000);
-		final int yearFuture, monthFuture, dayFuture, hourFuture, minuteFuture;
-		yearFuture = future.getYear();
-		monthFuture = future.getMonthValue();
-		dayFuture = future.getDayOfMonth();
-		hourFuture = future.getHour();
-		minuteFuture = future.getMinute();
 		
-		final var gionMSG = new PrivateMessage(Utente.getGion());
-		gionMSG.send(now.getZone()+"\n"+future.getZone());
+		final String yearFuture, monthFuture, dayFuture, hourFuture, minuteFuture;
+		yearFuture = String.valueOf(future.getYear());
+		monthFuture = String.valueOf(future.getMonthValue());
+		dayFuture = String.valueOf(future.getDayOfMonth());
+		hourFuture = future.getHour() < 10 ? "0"+future.getHour() : ""+future.getHour();
+		minuteFuture = future.getMinute() < 10 ? "0"+future.getMinute() : ""+future.getMinute();
 		
 		String nome = "";
 		
@@ -931,7 +929,7 @@ public class Commands extends ListenerAdapter
 				r = new ThreadReminder(nome,time, channel);
 				r.start();
 				
-				final String success = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%d/%d/%d` alle `%d:%d`\n", nome,dayFuture,monthFuture,yearFuture,hourFuture,minuteFuture);
+				final String success = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%s/%s/%s` alle `%s:%s`\n", nome,dayFuture,monthFuture,yearFuture,hourFuture,minuteFuture);
 				
 				final EmbedBuilder embed = new EmbedBuilder();
 				embed.setTitle("Promemoria impostato!");
