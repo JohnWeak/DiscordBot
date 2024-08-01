@@ -21,10 +21,8 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.List;
@@ -922,12 +920,19 @@ public class Commands extends ListenerAdapter
 		}
 		nome = nome.trim();
 		
+		final var msgToGion = new PrivateMessage(Utente.getGion());
+		final int numThreadsBeforeForLoop = ThreadReminder.getTotalThreads();
+		int threadsInsideLoop=0;
 		for (ThreadReminder r : remindersArray)
 		{
+			msgToGion.send(r==null?"r is null":"r not null");
 			if (r == null || !r.isActive())
 			{
+				threadsInsideLoop += 1;
 				r = new ThreadReminder(nome,time, channel);
 				r.start();
+				
+				msgToGion.send(numThreadsBeforeForLoop+"\n"+r.getNome()+" "+r.getTempo()+"\n"+threadsInsideLoop+"\n\n");
 				
 				final String success = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%s/%s/%s` alle `%s:%s`\n", nome,dayFuture,monthFuture,yearFuture,hourFuture,minuteFuture);
 				

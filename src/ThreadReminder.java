@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public class ThreadReminder extends Thread
 {
-	private static int id = 0;
+	private static int totalThreads = 0;
 	private final int tempo;
 	private final String nome;
 	private final MessageChannel channel;
@@ -16,7 +16,7 @@ public class ThreadReminder extends Thread
 	
 	public ThreadReminder(String nome, int tempo, MessageChannel channel)
 	{
-		id += 1;
+		totalThreads += 1;
 		
 		this.nome = nome;
 		this.tempo = tempo;
@@ -36,9 +36,9 @@ public class ThreadReminder extends Thread
 		return nome;
 	}
 	
-	public static int getThreadId()
+	public static int getTotalThreads()
 	{
-		return id;
+		return totalThreads;
 	}
 	
 	public boolean isActive()
