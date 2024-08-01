@@ -791,6 +791,8 @@ public class Commands extends ListenerAdapter
 	
 	private void reminder()
 	{
+		final short MAX_REMINDERS = 3;
+		
 		final String title = "Utilizzo comando !reminder", description = "Il comando permette di impostare un promemoria. I parametri sono i seguenti.";
 		final MessageEmbed.Field[] fields = new MessageEmbed.Field[]
 		{
@@ -817,113 +819,113 @@ public class Commands extends ListenerAdapter
 			return;
 		}
 		
-		final String timeString = mes[1];
-		final int d = timeString.indexOf('d');
-		final int h = timeString.indexOf('h');
-		final int m = timeString.indexOf('m');
-		
-		
-		String days=null, hours=null, minutes=null;
-		
-		// controllare quale formato è presente
-		
-		final String formatError = "I giorni `(d)` devono precedere le ore `(h)`, che devono precedere i minuti `(m)`. Promemoria non impostato.";
-		
-		if (d != -1)
-		{
-			days = timeString.substring(0, d);
-		}
-		
-		if (h != -1)
-		{
-			if (h < d)
-			{
-				message.reply(formatError).queue();
-				return;
-			}
-			
-			hours = days != null ? timeString.substring(d+1, h) : timeString.substring(0, h);
-		}
-		
-		if (m != -1)
-		{
-			if ((h != -1 && m < h) || (d != -1 && m < d))
-			{
-				message.reply(formatError).queue();
-				return;
-			}
-			
-			if (days == null && hours == null) // minuti soltanto (5m)
-			{
-				minutes = timeString.substring(0, m);
-			}
-			else if (days != null && hours == null) // giorni e minuti (1d2m)
-			{
-				minutes = timeString.substring(d+1, m);
-			}
-			else // tutto incluso (1d2h3m)
-			{
-				minutes = timeString.substring(h+1, m);
-			}
-			
-		}
-		// converti le stringhe di tempo in interi
-		final int days_int, hours_int, minutes_int;
-		int time = 0;
-		
-		days_int = days == null ? 0 : Integer.parseInt(days);
-		hours_int = hours == null ? 0 : Integer.parseInt(hours);
-		minutes_int = minutes == null ? 0 : Integer.parseInt(minutes);
-		
-		final int maxDays = 7, maxHours = 23, maxMinutes = 59;
-		if (days_int > maxDays || hours_int > maxHours || minutes_int > maxMinutes)
-		{
-			final EmbedBuilder embed = new EmbedBuilder();
-			
-			embed.setTitle(title);
-			embed.setColor(Color.RED);
-			embed.setDescription(description);
-			embed.addField(fields[0]);
-			embed.addField(fields[1]);
-			embed.addField(fields[2]);
-			embed.addField(fields[3]);
-			
-			channel.sendMessageEmbeds(embed.build()).queue();
-			return;
-		}
-		final ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Europe/Rome")), future;
-		
-		// converti interi in millisecondi
-		time += days_int * 24 * 60 * 60 * 1000;
-		time += hours_int * 60 * 60 * 1000;
-		time += minutes_int * 60 * 1000;
-		
-		future = now.plusSeconds(time/1000);
-		
-		final String yearFuture, monthFuture, dayFuture, hourFuture, minuteFuture;
-		yearFuture = ""+future.getYear();
-		monthFuture = ""+future.getMonthValue();
-		dayFuture = ""+future.getDayOfMonth();
-		hourFuture = future.getHour() < 10 ? "0"+future.getHour() : ""+future.getHour();
-		minuteFuture = future.getMinute() < 10 ? "0"+future.getMinute() : ""+future.getMinute();
-		
-		String nome = "";
-		
-		for (int i = 2; i < mes.length; i++)
-		{
-			nome = nome.concat(" ").concat(mes[i]);
-		}
-		
-		if (nome.isBlank())
-		{
-			nome = "Promemoria Senza Nome";
-		}
-		nome = nome.trim();
-		
-		final short MAX_REMINDERS = 3;
 		reminders.removeIf(r -> !r.isActive());
+		
 		if (reminders.size() < MAX_REMINDERS)
 		{
+			
+			final String timeString = mes[1];
+			final int d = timeString.indexOf('d');
+			final int h = timeString.indexOf('h');
+			final int m = timeString.indexOf('m');
+			
+			String days=null, hours=null, minutes=null;
+			
+			// controllare quale formato è presente
+			
+			final String formatError = "I giorni `(d)` devono precedere le ore `(h)`, che devono precedere i minuti `(m)`. Promemoria non impostato.";
+			
+			if (d != -1)
+			{
+				days = timeString.substring(0, d);
+			}
+			
+			if (h != -1)
+			{
+				if (h < d)
+				{
+					message.reply(formatError).queue();
+					return;
+				}
+				
+				hours = days != null ? timeString.substring(d+1, h) : timeString.substring(0, h);
+			}
+			
+			if (m != -1)
+			{
+				if ((h != -1 && m < h) || (d != -1 && m < d))
+				{
+					message.reply(formatError).queue();
+					return;
+				}
+				
+				if (days == null && hours == null) // minuti soltanto (5m)
+				{
+					minutes = timeString.substring(0, m);
+				}
+				else if (days != null && hours == null) // giorni e minuti (1d2m)
+				{
+					minutes = timeString.substring(d+1, m);
+				}
+				else // tutto incluso (1d2h3m)
+				{
+					minutes = timeString.substring(h+1, m);
+				}
+				
+			}
+			// converti le stringhe di tempo in interi
+			final int days_int, hours_int, minutes_int;
+			int time = 0;
+			
+			days_int = days == null ? 0 : Integer.parseInt(days);
+			hours_int = hours == null ? 0 : Integer.parseInt(hours);
+			minutes_int = minutes == null ? 0 : Integer.parseInt(minutes);
+			
+			final int maxDays = 7, maxHours = 23, maxMinutes = 59;
+			if (days_int > maxDays || hours_int > maxHours || minutes_int > maxMinutes)
+			{
+				final EmbedBuilder embed = new EmbedBuilder();
+				
+				embed.setTitle(title);
+				embed.setColor(Color.RED);
+				embed.setDescription(description);
+				embed.addField(fields[0]);
+				embed.addField(fields[1]);
+				embed.addField(fields[2]);
+				embed.addField(fields[3]);
+				
+				channel.sendMessageEmbeds(embed.build()).queue();
+				return;
+			}
+			final ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Europe/Rome")), future;
+			
+			// converti interi in millisecondi
+			time += days_int * 24 * 60 * 60 * 1000;
+			time += hours_int * 60 * 60 * 1000;
+			time += minutes_int * 60 * 1000;
+			
+			future = now.plusSeconds(time/1000);
+			
+			final String yearFuture, monthFuture, dayFuture, hourFuture, minuteFuture;
+			yearFuture = ""+future.getYear();
+			monthFuture = ""+future.getMonthValue();
+			dayFuture = ""+future.getDayOfMonth();
+			hourFuture = future.getHour() < 10 ? "0"+future.getHour() : ""+future.getHour();
+			minuteFuture = future.getMinute() < 10 ? "0"+future.getMinute() : ""+future.getMinute();
+			
+			String nome = "";
+			
+			for (int i = 2; i < mes.length; i++)
+			{
+				nome = nome.concat(" ").concat(mes[i]);
+			}
+			
+			if (nome.isBlank())
+			{
+				nome = "Promemoria Senza Nome";
+			}
+			nome = nome.trim();
+			
 			final ThreadReminder reminder = new ThreadReminder(nome, time, channel);
 			reminders.add(reminder);
 			reminder.start();
