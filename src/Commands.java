@@ -23,6 +23,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.List;
@@ -889,13 +890,13 @@ public class Commands extends ListenerAdapter
 			channel.sendMessageEmbeds(embed.build()).queue();
 			return;
 		}
-		final LocalDateTime now=LocalDateTime.now(ZoneId.of("Europe/Rome")), future;
+		final ZonedDateTime now = ZonedDateTime.now(), future;
 		// converti interi in millisecondi
 		time += days_int * 24 * 60 * 60 * 1000;
 		time += hours_int * 60 * 60 * 1000;
 		time += minutes_int * 60 * 1000;
 		
-		future = LocalDateTime.now().plusSeconds(time/1000);
+		future = now.plusSeconds(time/1000);
 		final int yearFuture, monthFuture, dayFuture, hourFuture, minuteFuture;
 		yearFuture = future.getYear();
 		monthFuture = future.getMonthValue();
@@ -907,7 +908,7 @@ public class Commands extends ListenerAdapter
 		
 		for (int i = 2; i < mes.length; i++)
 		{
-			nome = nome.concat(mes[i]);
+			nome = nome.concat(" ").concat(mes[i]);
 		}
 		
 		if (nome.isBlank())
