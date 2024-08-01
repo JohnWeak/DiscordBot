@@ -21,6 +21,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.List;
@@ -44,6 +45,7 @@ public class Commands extends ListenerAdapter
 	private final Locale italian = Locale.ITALIAN;
 	private final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	private final boolean moduloSicurezza = false;
+	private final ThreadReminder[] remindersArray = new ThreadReminder[3];
 	
 	private User user;
 	public String authorName;
@@ -359,7 +361,7 @@ public class Commands extends ListenerAdapter
 			case "!dado" -> dado();
 			case "!cattura", "!catch" -> cattura(pokemon);
 			case "!f" -> payRespect();
-			case "!timer" -> timer();
+			case "!r", "!reminder" -> reminder();
 			case "!certificazione" -> certificazione();
 			case "!pigeons" -> pigeons();
 			// case "!dm" -> dm();
@@ -786,6 +788,156 @@ public class Commands extends ListenerAdapter
 		
 	} // fine detectTwitterLink()
 	
+	private void reminder()
+	{
+		final String title = "Utilizzo comando !reminder", description = "Il promemoria deve essere compreso fra 5 minuti e 7 giorni. I parametri sono i seguenti.";
+		final MessageEmbed.Field[] fields = new MessageEmbed.Field[]
+		{
+			new MessageEmbed.Field("d", "Imposta i giorni", true),
+			new MessageEmbed.Field("h", "Imposta le ore",true),
+			new MessageEmbed.Field("m","Imposta i minuti",true),
+			new MessageEmbed.Field("Esempio","!r 3d10h12m",false),
+		};
+		
+		final String[] mes = messageRaw.split(" ");
+		if(mes.length < 2 || mes[1].isEmpty())
+		{
+			final EmbedBuilder embed = new EmbedBuilder();
+			
+			embed.setTitle(title);
+			embed.setDescription(description);
+			embed.addField(fields[0]);
+			embed.addField(fields[1]);
+			embed.addField(fields[2]);
+			embed.addField(fields[3]);
+			
+			channel.sendMessageEmbeds(embed.build()).queue();
+			return;
+		}
+		
+		final String timeString = mes[1];
+		final int d = timeString.indexOf('d');
+		final int h = timeString.indexOf('h');
+		final int m = timeString.indexOf('m');
+		
+		
+		String days=null, hours=null, minutes=null;
+		
+		// controllare quale formato è presente
+		
+		final String formatError = "I giorni `(d)` devono precedere le ore `(h)`, che devono precedere i minuti `(m)`. Promemoria non impostato.";
+		
+		if (d != -1)
+		{
+			days = timeString.substring(0, d);
+		}
+		
+		if (h != -1)
+		{
+			if (h < d)
+			{
+				message.reply(formatError).queue();
+				return;
+			}
+			
+			hours = days != null ? timeString.substring(d+1, h) : timeString.substring(0, h);
+		}
+		
+		if (m != -1)
+		{
+			if ((h != -1 && m < h) || (d != -1 && m < d))
+			{
+				message.reply(formatError).queue();
+				return;
+			}
+			
+			if (days == null && hours == null) // minuti soltanto (5m)
+			{
+				minutes = timeString.substring(0, m);
+			}
+			else if (days != null && hours == null) // giorni e minuti (1d2m)
+			{
+				minutes = timeString.substring(d+1, m);
+			}
+			else // tutto incluso (1d2h3m)
+			{
+				minutes = timeString.substring(h+1, m);
+			}
+			
+		}
+		// converti le stringhe di tempo in interi
+		final int days_int, hours_int, minutes_int;
+		int time = 0;
+		
+		days_int = days == null ? 0 : Integer.parseInt(days);
+		hours_int = hours == null ? 0 : Integer.parseInt(hours);
+		minutes_int = minutes == null ? 0 : Integer.parseInt(minutes);
+		
+		final int maxDays = 7, maxHours = 23, maxMinutes = 59;
+		if (days_int > maxDays || hours_int > maxHours || minutes_int > maxMinutes)
+		{
+			final EmbedBuilder embed = new EmbedBuilder();
+			
+			embed.setTitle(title);
+			embed.setDescription(description);
+			embed.addField(fields[0]);
+			embed.addField(fields[1]);
+			embed.addField(fields[2]);
+			embed.addField(fields[3]);
+			
+			channel.sendMessageEmbeds(embed.build()).queue();
+			return;
+		}
+		final LocalDateTime now=LocalDateTime.now(), future;
+		// converti interi in millisecondi
+		time += days_int * 24 * 60 * 60 * 1000;
+		time += hours_int * 60 * 60 * 1000;
+		time += minutes_int * 60 * 1000;
+		
+		future = LocalDateTime.now().plusSeconds(time/1000);
+		final int yearFuture, monthFuture, dayFuture, hourFuture, minuteFuture;
+		yearFuture = future.getYear();
+		monthFuture = future.getMonthValue();
+		dayFuture = future.getDayOfMonth();
+		hourFuture = future.getHour();
+		minuteFuture = future.getMinute();
+		
+		String nome = "";
+		if (mes.length > 2)
+			nome = mes[2];
+		
+		for (ThreadReminder r : remindersArray)
+		{
+			if (r == null || !r.isActive())
+			{
+				r = new ThreadReminder(nome,time, channel);
+				r.start();
+				
+				final String success = String.format("Il tuo promemoria, %s, è impostato per il giorno %d/%d/%d alle %d:%d\n",nome,dayFuture,monthFuture,yearFuture,hourFuture,minuteFuture);
+				
+				final EmbedBuilder embed = new EmbedBuilder();
+				embed.setTitle("Promemoria impostato!");
+				embed.setDescription(success);
+				embed.setColor(Color.RED);
+				channel.sendMessageEmbeds(embed.build()).queue();
+				
+				break;
+			}
+			else
+			{
+				message.reply("Strunz, hai già 3 promemoria impostati, smh").queue(msg ->
+				{
+					final StringBuilder sb = new StringBuilder();
+					for (ThreadReminder rem : remindersArray)
+					{
+						sb.append("id: ").append(rem.getId()).append(", nome: ").append(rem.getNome()).append("\n");
+					}
+					msg.reply(sb).queue(e->react(Emotes.smh));
+				});
+			}
+		}
+	} // reminder()
+	
 	private void encounter()
 	{
 		final String[] msgSplittato = messageRaw.split(" ");
@@ -867,52 +1019,6 @@ public class Commands extends ListenerAdapter
 		return false;
 	} // fine metodo contains()
 	
-	private void timer()
-	{
-		final var max = 604800; // 604800 secondi = 1 settimana
-		String[] msgSplittato;
-		try
-		{
-			msgSplittato = messageRaw.split(" ");
-		}catch (Exception e)
-		{
-			error.print(object, e);
-			return;
-		}
-		
-		if (msgSplittato.length == 1) // !timer senza argomenti
-		{
-			var m = "Usa `!timer <tempo in secondi> [nome del timer] per impostare un timer.`\nEsempio: `!timer 5` imposterà un timer di 5 secondi.";
-			channel.sendMessage(m).queue();
-		}
-		else
-		{
-			var timeInSeconds = Integer.parseInt(msgSplittato[1]); // time to sleep in seconds
-			StringBuilder reason = new StringBuilder();
-			
-			for (String s : msgSplittato)
-				reason.append(s).append(" ");
-			
-			// Todo: migliorare il timer per permettere di impostare i minuti o le ore
-			//  e potergli dare un nome
-			//  [!timer][2][m][piatto nel microonde] -> 0=<!timer>, 1=<2>; 2=<m>; 3=<piatto nel microonde>
-			//  Permettere anche il controllo granulare del timer come: 1h30m20s
-			//  [1h][30m][20s]
-			
-			try
-			{
-				if (timeInSeconds < 0 || timeInSeconds > max)
-				{
-					channel.sendMessage("Hai inserito un numero non valido. Timer non impostato.").queue();
-					return;
-				}
-				new ThreadTimer(message, timeInSeconds, author, reason.toString()).start();
-			} catch (Exception e)
-			{
-				error.print(object, e);
-			}
-		}
-	} // fine timer()
 	
 	/** Gestisce i comandi slash (ancora da implementare) */
 	public void onSlashCommand(@NotNull SlashCommandEvent event)

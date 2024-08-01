@@ -3,7 +3,10 @@ import java.util.Arrays;
 /**@param <T> Gli unici tipi ammessi sono Exception e String.*/
 public class Error <T>
 {
-	/**Invia un messaggio privato a Gion contenente i dettagli dell'errore*/
+	/**Invia un messaggio privato a Gion contenente i dettagli dell'errore
+	 * @param object la classe che ha lanciato l'eccezione
+	 * @param t il tipo (in formato Exception o String) di eccezione
+	 * */
 	public void print(Object object, T t)
 	{
 		var type = t.getClass().toString();
@@ -35,7 +38,6 @@ public class Error <T>
 	
 	private String lessThan2K(String s)
 	{
-		
 		return s.length() > 2000 ? s.substring(0, 2000) : s;
 	}
 	
