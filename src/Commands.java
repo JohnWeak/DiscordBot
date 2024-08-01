@@ -43,10 +43,11 @@ public class Commands extends ListenerAdapter
 	public static TextChannel canaleBotPokemon;
 	public static TextChannel canaleBot;
 	
+	private final int MAX_REMINDERS = 3;
 	private final Locale italian = Locale.ITALIAN;
 	private final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	private final boolean moduloSicurezza = false;
-	private final ThreadReminder[] remindersArray = new ThreadReminder[3];
+	private final ThreadReminder[] remindersArray = new ThreadReminder[MAX_REMINDERS];
 	
 	private User user;
 	public String authorName;
@@ -920,19 +921,12 @@ public class Commands extends ListenerAdapter
 		}
 		nome = nome.trim();
 		
-		final var msgToGion = new PrivateMessage(Utente.getGion());
-		final int numThreadsBeforeForLoop = ThreadReminder.getTotalThreads();
-		int threadsInsideLoop=0;
-		for (ThreadReminder r : remindersArray)
+		for(int i = 0; i < MAX_REMINDERS; i++)
 		{
-			msgToGion.send(r==null?"r is null":"r not null");
-			if (r == null || !r.isActive())
+			if (remindersArray[i] == null || !remindersArray[i].isActive())
 			{
-				threadsInsideLoop += 1;
-				r = new ThreadReminder(nome,time, channel);
-				r.start();
-				
-				msgToGion.send(numThreadsBeforeForLoop+"\n"+r.getNome()+" "+r.getTempo()+"\n"+threadsInsideLoop+"\n\n");
+				remindersArray[i] = new ThreadReminder(nome,time, channel);
+				remindersArray[i].start();
 				
 				final String success = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%s/%s/%s` alle `%s:%s`\n", nome,dayFuture,monthFuture,yearFuture,hourFuture,minuteFuture);
 				
