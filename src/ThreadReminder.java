@@ -47,6 +47,12 @@ public class ThreadReminder extends Thread
 	}
 	
 	@Override
+	public String toString()
+	{
+		return "Total Threads: " + totalThreads +"\nNome: " + nome + "\nChannel: " + channel + "\n";
+	}
+	
+	@Override
 	public void run()
 	{
 		//final LocalDateTime end;

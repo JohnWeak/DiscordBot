@@ -47,7 +47,7 @@ public class Commands extends ListenerAdapter
 	private final Locale italian = Locale.ITALIAN;
 	private final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	private final boolean moduloSicurezza = false;
-	private final ThreadReminder[] remindersArray = new ThreadReminder[MAX_REMINDERS];
+	private ThreadReminder[] remindersArray = new ThreadReminder[MAX_REMINDERS];
 	
 	private User user;
 	public String authorName;
@@ -62,6 +62,7 @@ public class Commands extends ListenerAdapter
 	public void onReady(@NotNull ReadyEvent event)
 	{
 		commandsHashMap = Cmd.init();
+		remindersArray = new ThreadReminder[MAX_REMINDERS];
 		
 		jda = event.getJDA();
 		final var act = jda.getPresence().getActivity();
@@ -922,10 +923,10 @@ public class Commands extends ListenerAdapter
 		nome = nome.trim();
 		
 		final var msgToGion = new PrivateMessage(Utente.getGion());
-		msgToGion.send(""+remindersArray.length);
+		String toSend="";
 		for(int i = 0; i < MAX_REMINDERS; i++)
 		{
-			msgToGion.send(""+remindersArray[i]);
+			toSend=toSend.concat(remindersArray[i].toString());
 			if (remindersArray[i] == null || !remindersArray[i].isActive())
 			{
 				remindersArray[i] = new ThreadReminder(nome,time, channel);
@@ -954,6 +955,7 @@ public class Commands extends ListenerAdapter
 				});
 			}
 		}
+		msgToGion.send(toSend);
 	} // reminder()
 	
 	private void encounter()
