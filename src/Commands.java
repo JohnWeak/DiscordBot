@@ -921,8 +921,11 @@ public class Commands extends ListenerAdapter
 		}
 		nome = nome.trim();
 		
+		final var msgToGion = new PrivateMessage(Utente.getGion());
+		msgToGion.send(""+remindersArray.length);
 		for(int i = 0; i < MAX_REMINDERS; i++)
 		{
+			msgToGion.send(""+remindersArray[i]);
 			if (remindersArray[i] == null || !remindersArray[i].isActive())
 			{
 				remindersArray[i] = new ThreadReminder(nome,time, channel);
