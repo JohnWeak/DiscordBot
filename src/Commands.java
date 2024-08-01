@@ -24,6 +24,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.List;
@@ -891,6 +892,7 @@ public class Commands extends ListenerAdapter
 			return;
 		}
 		final ZonedDateTime now = ZonedDateTime.now(), future;
+		
 		// converti interi in millisecondi
 		time += days_int * 24 * 60 * 60 * 1000;
 		time += hours_int * 60 * 60 * 1000;
@@ -923,7 +925,7 @@ public class Commands extends ListenerAdapter
 				r = new ThreadReminder(nome,time, channel);
 				r.start();
 				
-				final String success = String.format("Il tuo promemoria, %s, è impostato per il giorno %d/%d/%d alle %d:%d\n", nome,dayFuture,monthFuture,yearFuture,hourFuture,minuteFuture);
+				final String success = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno %d/%d/%d alle %d:%d\n", nome,dayFuture,monthFuture,yearFuture,hourFuture,minuteFuture);
 				
 				final EmbedBuilder embed = new EmbedBuilder();
 				embed.setTitle("Promemoria impostato!");
