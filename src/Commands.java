@@ -937,7 +937,7 @@ public class Commands extends ListenerAdapter
 		}
 		else
 		{
-			message.reply("Strunz, hai già impostato 3 promemoria. smh.").queue();
+			message.reply("Strunz, hai già impostato 3 promemoria. smh.").queue(l->react(Emotes.smh));
 		}
 		
 	} // reminder()
