@@ -891,7 +891,7 @@ public class Commands extends ListenerAdapter
 			channel.sendMessageEmbeds(embed.build()).queue();
 			return;
 		}
-		final ZonedDateTime now = ZonedDateTime.now(), future;
+		final ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Europe/Rome")), future;
 		
 		// converti interi in millisecondi
 		time += days_int * 24 * 60 * 60 * 1000;
