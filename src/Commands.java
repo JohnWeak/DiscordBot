@@ -793,13 +793,13 @@ public class Commands extends ListenerAdapter
 	
 	private void reminder()
 	{
-		final String title = "Utilizzo comando !reminder", description = "Il promemoria deve essere compreso fra 5 minuti e 7 giorni. I parametri sono i seguenti.";
+		final String title = "Utilizzo comando !reminder", description = "Il comando permette di impostare un promemoria. I parametri sono i seguenti.";
 		final MessageEmbed.Field[] fields = new MessageEmbed.Field[]
 		{
 			new MessageEmbed.Field("d", "Imposta i giorni", true),
 			new MessageEmbed.Field("h", "Imposta le ore",true),
 			new MessageEmbed.Field("m","Imposta i minuti",true),
-			new MessageEmbed.Field("Esempio","!r 3d10h12m",false),
+			new MessageEmbed.Field("Esempio","`!reminder 3d10h12m`",false),
 		};
 		
 		final String[] mes = messageRaw.split(" ");
@@ -929,7 +929,7 @@ public class Commands extends ListenerAdapter
 				r = new ThreadReminder(nome,time, channel);
 				r.start();
 				
-				final String success = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno %d/%d/%d alle %d:%d\n", nome,dayFuture,monthFuture,yearFuture,hourFuture,minuteFuture);
+				final String success = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%d/%d/%d` alle `%d:%d`\n", nome,dayFuture,monthFuture,yearFuture,hourFuture,minuteFuture);
 				
 				final EmbedBuilder embed = new EmbedBuilder();
 				embed.setTitle("Promemoria impostato!");
