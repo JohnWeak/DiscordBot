@@ -22,6 +22,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.List;
@@ -888,7 +889,7 @@ public class Commands extends ListenerAdapter
 			channel.sendMessageEmbeds(embed.build()).queue();
 			return;
 		}
-		final LocalDateTime now=LocalDateTime.now(), future;
+		final LocalDateTime now=LocalDateTime.now(ZoneId.of("Europe/Rome")), future;
 		// converti interi in millisecondi
 		time += days_int * 24 * 60 * 60 * 1000;
 		time += hours_int * 60 * 60 * 1000;
@@ -903,8 +904,16 @@ public class Commands extends ListenerAdapter
 		minuteFuture = future.getMinute();
 		
 		String nome = "";
-		if (mes.length > 2)
-			nome = mes[2];
+		
+		for (int i = 2; i < mes.length; i++)
+		{
+			nome = nome.concat(mes[i]);
+		}
+		
+		if (nome.isBlank())
+		{
+			nome = "Promemoria generico";
+		}
 		
 		for (ThreadReminder r : remindersArray)
 		{
@@ -913,7 +922,7 @@ public class Commands extends ListenerAdapter
 				r = new ThreadReminder(nome,time, channel);
 				r.start();
 				
-				final String success = String.format("Il tuo promemoria, %s, è impostato per il giorno %d/%d/%d alle %d:%d\n",nome,dayFuture,monthFuture,yearFuture,hourFuture,minuteFuture);
+				final String success = String.format("Il tuo promemoria, %s, è impostato per il giorno %d/%d/%d alle %d:%d\n", nome,dayFuture,monthFuture,yearFuture,hourFuture,minuteFuture);
 				
 				final EmbedBuilder embed = new EmbedBuilder();
 				embed.setTitle("Promemoria impostato!");

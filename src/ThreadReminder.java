@@ -49,24 +49,23 @@ public class ThreadReminder extends Thread
 	@Override
 	public void run()
 	{
-		final LocalDateTime end;
+		//final LocalDateTime end;
 		try
 		{
 			Thread.sleep(tempo);
-			end = LocalDateTime.now();
+			//end = LocalDateTime.now();
 			
 			final EmbedBuilder eb = new EmbedBuilder();
-			eb.setTitle(nome);
+			eb.setTitle("Promemoria scaduto!");
 			eb.setColor(Color.RED);
-			eb.addField("Promemoria scaduto!","",false);
+			eb.addField(nome,"",false);
 			channel.sendMessageEmbeds(eb.build()).queue();
 			
 			active = false;
 			
 		}catch (InterruptedException e)
 		{
-			Error<Exception> error = new Error<>();
-			error.print(this,e);
+			new Error<>().print(this,e);
 		}
 		
 		
