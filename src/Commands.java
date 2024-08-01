@@ -43,11 +43,10 @@ public class Commands extends ListenerAdapter
 	public static TextChannel canaleBotPokemon;
 	public static TextChannel canaleBot;
 	
-	private final int MAX_REMINDERS = 3;
 	private final Locale italian = Locale.ITALIAN;
 	private final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	private final boolean moduloSicurezza = false;
-	private ThreadReminder[] remindersArray = new ThreadReminder[MAX_REMINDERS];
+	private final ArrayList<ThreadReminder> reminders = new ArrayList<>();
 	
 	private User user;
 	public String authorName;
@@ -62,7 +61,6 @@ public class Commands extends ListenerAdapter
 	public void onReady(@NotNull ReadyEvent event)
 	{
 		commandsHashMap = Cmd.init();
-		remindersArray = new ThreadReminder[MAX_REMINDERS];
 		
 		jda = event.getJDA();
 		final var act = jda.getPresence().getActivity();
@@ -925,43 +923,30 @@ public class Commands extends ListenerAdapter
 		final var msgToGion = new PrivateMessage(Utente.getGion());
 		String toSend="";
 		
-		for(int i = 0; i < MAX_REMINDERS; i++)
+		
+		
+		final short MAX_REMINDERS = 3;
+		
+		reminders.removeIf(r -> !r.isActive());
+		
+		if (reminders.size() < MAX_REMINDERS)
 		{
-			try
-			{
-				toSend=toSend.concat(remindersArray[i].toString());
-			}
-			catch (Exception e) { new Error<>().print(this,e);}
+			final ThreadReminder reminder = new ThreadReminder(nome, time, channel);
+			reminders.add(reminder);
+			reminder.start();
 			
-			if (remindersArray[i] == null || !remindersArray[i].isActive())
-			{
-				remindersArray[i] = new ThreadReminder(nome,time, channel);
-				remindersArray[i].start();
-				
-				final String success = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%s/%s/%s` alle `%s:%s`\n", nome,dayFuture,monthFuture,yearFuture,hourFuture,minuteFuture);
-				
-				final EmbedBuilder embed = new EmbedBuilder();
-				embed.setTitle("Promemoria impostato!");
-				embed.setDescription(success);
-				embed.setColor(Color.RED);
-				channel.sendMessageEmbeds(embed.build()).queue();
-				
-				break;
-			}
-			else
-			{
-				message.reply("Strunz, hai già impostato 3 promemoria. smh.").queue(msg ->
-				{
-					final StringBuilder sb = new StringBuilder();
-					for (ThreadReminder rem : remindersArray)
-					{
-						sb.append("id: ").append(rem.getId()).append(", nome: ").append(rem.getNome()).append("\n");
-					}
-					msg.reply(sb).queue(e->react(Emotes.smh));
-				});
-			}
+			final String success = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%s/%s/%s` alle `%s:%s`\n", nome,dayFuture,monthFuture,yearFuture,hourFuture,minuteFuture);
+			final EmbedBuilder embed = new EmbedBuilder();
+			embed.setTitle("Promemoria impostato!");
+			embed.setDescription(success);
+			embed.setColor(Color.RED);
+			channel.sendMessageEmbeds(embed.build()).queue();
 		}
-		msgToGion.send(toSend);
+		else
+		{
+			message.reply("Strunz, hai già impostato 3 promemoria. smh.").queue();
+		}
+		
 	} // reminder()
 	
 	private void encounter()
