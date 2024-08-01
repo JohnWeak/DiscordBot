@@ -808,6 +808,7 @@ public class Commands extends ListenerAdapter
 			final EmbedBuilder embed = new EmbedBuilder();
 			
 			embed.setTitle(title);
+			embed.setColor(Color.RED);
 			embed.setDescription(description);
 			embed.addField(fields[0]);
 			embed.addField(fields[1]);
@@ -882,6 +883,7 @@ public class Commands extends ListenerAdapter
 			final EmbedBuilder embed = new EmbedBuilder();
 			
 			embed.setTitle(title);
+			embed.setColor(Color.RED);
 			embed.setDescription(description);
 			embed.addField(fields[0]);
 			embed.addField(fields[1]);
@@ -941,7 +943,7 @@ public class Commands extends ListenerAdapter
 			}
 			else
 			{
-				message.reply("Strunz, hai già 3 promemoria impostati, smh").queue(msg ->
+				message.reply("Strunz, hai già impostato 3 promemoria. smh.").queue(msg ->
 				{
 					final StringBuilder sb = new StringBuilder();
 					for (ThreadReminder rem : remindersArray)
