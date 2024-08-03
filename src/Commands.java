@@ -4,11 +4,9 @@ import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.ShutdownEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
-import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.events.user.UserTypingEvent;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -28,6 +26,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.List;
@@ -51,7 +50,7 @@ public class Commands extends ListenerAdapter
 	private final Locale italian = Locale.ITALIAN;
 	private final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	private final boolean moduloSicurezza = false;
-	private final ArrayList<ThreadReminder> reminders = new ArrayList<>();
+	private final ArrayList<ThreadReminder> remindersList = new ArrayList<>();
 	private boolean oneTimeOnly = true;
 	
 	private User user;
@@ -851,9 +850,9 @@ public class Commands extends ListenerAdapter
 			return;
 		}
 		
-		reminders.removeIf(r -> !r.isActive());
+		remindersList.removeIf(r -> !r.isActive());
 		
-		if (reminders.size() < MAX_REMINDERS)
+		if (remindersList.size() < MAX_REMINDERS)
 		{
 			
 			final String timeString = mes[1];
@@ -862,6 +861,13 @@ public class Commands extends ListenerAdapter
 			final int m = timeString.indexOf('m');
 			
 			String days=null, hours=null, minutes=null;
+			int time;
+			final int days_int, hours_int, minutes_int, maxDays, maxHours, maxMinutes;
+			final DateTimeFormatter formatter;
+			final ZonedDateTime now, future;
+			final ThreadReminder reminder;
+			final String success, footer;
+			EmbedBuilder embed;
 			
 			// controllare quale formato è presente
 			
@@ -906,18 +912,18 @@ public class Commands extends ListenerAdapter
 				
 			}
 			// converti le stringhe di tempo in interi
-			final int days_int, hours_int, minutes_int;
-			int time = 0;
-			
+			time = 0;
 			days_int = days == null ? 0 : Integer.parseInt(days);
 			hours_int = hours == null ? 0 : Integer.parseInt(hours);
 			minutes_int = minutes == null ? 0 : Integer.parseInt(minutes);
 			
-			final int maxDays = 7, maxHours = 23, maxMinutes = 59;
+			maxDays = 7;
+			maxHours = 23;
+			maxMinutes = 59;
+			
 			if (days_int > maxDays || hours_int > maxHours || minutes_int > maxMinutes)
 			{
-				final EmbedBuilder embed = new EmbedBuilder();
-				
+				embed = new EmbedBuilder();
 				embed.setTitle(title);
 				embed.setColor(Color.RED);
 				embed.setDescription(description);
@@ -929,7 +935,8 @@ public class Commands extends ListenerAdapter
 				channel.sendMessageEmbeds(embed.build()).queue();
 				return;
 			}
-			final ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Europe/Rome")), future;
+			
+			now = ZonedDateTime.now(ZoneId.of("Europe/Rome"));
 			
 			// converti interi in millisecondi
 			time += days_int * 24 * 60 * 60 * 1000;
@@ -938,12 +945,7 @@ public class Commands extends ListenerAdapter
 			
 			future = now.plusSeconds(time/1000);
 			
-			final String yearFuture, monthFuture, dayFuture, hourFuture, minuteFuture;
-			yearFuture = ""+future.getYear();
-			monthFuture = ""+future.getMonthValue();
-			dayFuture = ""+future.getDayOfMonth();
-			hourFuture = future.getHour() < 10 ? "0"+future.getHour() : ""+future.getHour();
-			minuteFuture = future.getMinute() < 10 ? "0"+future.getMinute() : ""+future.getMinute();
+			formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
 			
 			String nome = "";
 			
@@ -958,17 +960,19 @@ public class Commands extends ListenerAdapter
 			}
 			nome = nome.trim();
 			
-			final ThreadReminder reminder = new ThreadReminder(nome, time, channel, user.getName());
-			reminders.add(reminder);
+			reminder = new ThreadReminder(nome, time, channel, user.getName());
+			remindersList.add(reminder);
 			reminder.start();
 			
-			final String success = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%s/%s/%s` alle `%s:%s`\n", nome,dayFuture,monthFuture,yearFuture,hourFuture,minuteFuture);
-			final String footer = "Impostato da ".concat(user.getName());
-			final EmbedBuilder embed = new EmbedBuilder();
+			success = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%s`\n", nome,future.format(formatter));
+			footer = "Impostato da ".concat(user.getName());
+			
+			embed = new EmbedBuilder();
 			embed.setTitle("Promemoria impostato!");
 			embed.setDescription(success);
 			embed.setColor(Color.RED);
 			embed.setFooter(footer);
+			
 			channel.sendMessageEmbeds(embed.build()).queue();
 		}
 		else

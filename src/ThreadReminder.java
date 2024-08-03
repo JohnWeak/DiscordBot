@@ -3,6 +3,7 @@ import net.dv8tion.jda.api.entities.MessageChannel;
 
 import java.awt.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ThreadReminder extends Thread
 {
@@ -53,19 +54,14 @@ public class ThreadReminder extends Thread
 		try
 		{
 			final LocalDateTime end;
-			final String day, month, year, hour, minutes, footer;
+			final String footer;
 			final EmbedBuilder eb;
+			final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 			
 			Thread.sleep(tempo);
 			end = LocalDateTime.now();
 			
-			day = end.getDayOfMonth() < 10 ? "0"+end.getDayOfMonth() : ""+end.getDayOfMonth();
-			month = end.getMonthValue() < 10 ? "0"+end.getMonthValue() : ""+end.getMonthValue();
-			year = ""+end.getYear();
-			hour = end.getHour() < 10 ? "0"+end.getHour() : ""+end.getHour();
-			minutes = end.getMinute() < 10 ? "0"+end.getMinute() : ""+end.getMinute();
-			
-			footer = String.format("⏰ Promemoria di %s, `%s/%s/%s %s:%s`",nomeUtente, day, month, year, hour, minutes);
+			footer = String.format("⏰ Promemoria di %s\t`%s`",nomeUtente, end.format(formatter));
 			
 			eb = new EmbedBuilder();
 			eb.setTitle("Promemoria scaduto!");
