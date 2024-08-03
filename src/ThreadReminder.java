@@ -6,21 +6,20 @@ import java.time.LocalDateTime;
 
 public class ThreadReminder extends Thread
 {
-	private static int totalThreads = 0;
 	private final int tempo;
 	private final String nome;
 	private final MessageChannel channel;
+	private final String nomeUtente;
 	
 	private final LocalDateTime start;
 	private boolean active;
 	
-	public ThreadReminder(String nome, int tempo, MessageChannel channel)
+	public ThreadReminder(String nome, int tempo, MessageChannel channel, String nomeUtente)
 	{
-		totalThreads += 1;
-		
 		this.nome = nome;
 		this.tempo = tempo;
 		this.channel = channel;
+		this.nomeUtente = nomeUtente;
 		
 		start = LocalDateTime.now();
 		active = true;
@@ -36,20 +35,16 @@ public class ThreadReminder extends Thread
 		return nome;
 	}
 	
-	public static int getTotalThreads()
-	{
-		return totalThreads;
-	}
-	
 	public boolean isActive()
 	{
 		return active;
 	}
 	
+	
 	@Override
 	public String toString()
 	{
-		return "Total Threads: " + totalThreads +"\nNome: " + nome + "\nChannel: " + channel + "\n";
+		return "Nome: " + nome + "\nChannel: " + channel + "\n";
 	}
 	
 	@Override

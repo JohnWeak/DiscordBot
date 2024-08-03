@@ -931,10 +931,12 @@ public class Commands extends ListenerAdapter
 			reminder.start();
 			
 			final String success = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%s/%s/%s` alle `%s:%s`\n", nome,dayFuture,monthFuture,yearFuture,hourFuture,minuteFuture);
+			final String footer = "Impostato da ".concat(user.getName());
 			final EmbedBuilder embed = new EmbedBuilder();
 			embed.setTitle("Promemoria impostato!");
 			embed.setDescription(success);
 			embed.setColor(Color.RED);
+			embed.setFooter(footer);
 			channel.sendMessageEmbeds(embed.build()).queue();
 		}
 		else
