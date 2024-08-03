@@ -53,7 +53,7 @@ public class ThreadReminder extends Thread
 		try
 		{
 			final LocalDateTime end;
-			final String day, month, year, footer;
+			final String day, month, year, hour, minutes, footer;
 			final EmbedBuilder eb;
 			
 			Thread.sleep(tempo);
@@ -62,7 +62,10 @@ public class ThreadReminder extends Thread
 			day = end.getDayOfMonth() < 10 ? "0"+end.getDayOfMonth() : ""+end.getDayOfMonth();
 			month = end.getMonthValue() < 10 ? "0"+end.getMonthValue() : ""+end.getMonthValue();
 			year = ""+end.getYear();
-			footer = String.format("⏰ Promemoria di %s `%s/%s/%s`",nomeUtente, day,month,year);
+			hour = end.getHour() < 10 ? "0"+end.getHour() : ""+end.getHour();
+			minutes = end.getMinute() < 10 ? "0"+end.getMinute() : ""+end.getMinute();
+			
+			footer = String.format("⏰ Promemoria di %s, `%s/%s/%s %s:%s`",nomeUtente, day, month, year, hour, minutes);
 			
 			eb = new EmbedBuilder();
 			eb.setTitle("Promemoria scaduto!");

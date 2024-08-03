@@ -2,14 +2,18 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.events.ShutdownEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
+import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.events.user.UserTypingEvent;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
+import net.dv8tion.jda.api.requests.CloseCode;
 import org.jetbrains.annotations.NotNull;
 
 import org.json.simple.JSONArray;
@@ -94,12 +98,27 @@ public class Commands extends ListenerAdapter
 	} // fine onReady()
 	
 	@Override
+	public void onShutdown(@NotNull ShutdownEvent event)
+	{
+		final CloseCode closeCode = event.getCloseCode();
+		final String meaning;
+		final PrivateMessage gion;
+		
+		if (closeCode != null)
+		{
+			meaning = closeCode.getMeaning();
+			gion = new PrivateMessage(Utente.getGion());
+			gion.send("Mi sto spegnendo.\n"+meaning+"\n");
+		}
+	} // onShutdown()
+	
+	@Override
 	public void onUserTyping(@NotNull UserTypingEvent event)
 	{
-		if (oneTimeOnly)
+		if (oneTimeOnly && random.nextInt(1,100) == 42)
 		{
-			final String msg = String.format("Vedo che stai scrivendo %s. Smettila.", event.getUser().getName());
-			channel.sendMessage(msg).queue();
+			final String msg = String.format("Ehi, %s, vedo che stai scrivendo. Smettila.", event.getUser().getName());
+			channel.sendMessage(msg).queue(m->react(Emotes.ragey));
 			oneTimeOnly = false;
 		}
 	}
