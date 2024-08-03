@@ -50,16 +50,25 @@ public class ThreadReminder extends Thread
 	@Override
 	public void run()
 	{
-		//final LocalDateTime end;
 		try
 		{
-			Thread.sleep(tempo);
-			//end = LocalDateTime.now();
+			final LocalDateTime end;
+			final String day, month, year, footer;
+			final EmbedBuilder eb;
 			
-			final EmbedBuilder eb = new EmbedBuilder();
+			Thread.sleep(tempo);
+			end = LocalDateTime.now();
+			
+			day = end.getDayOfMonth() < 10 ? "0"+end.getDayOfMonth() : ""+end.getDayOfMonth();
+			month = end.getMonthValue() < 10 ? "0"+end.getMonthValue() : ""+end.getMonthValue();
+			year = ""+end.getYear();
+			footer = String.format("⏰ Promemoria di %s `%s/%s/%s`",nomeUtente, day,month,year);
+			
+			eb = new EmbedBuilder();
 			eb.setTitle("Promemoria scaduto!");
 			eb.setColor(Color.RED);
 			eb.addField(nome,"",false);
+			eb.setFooter(footer);
 			channel.sendMessageEmbeds(eb.build()).queue();
 			
 			active = false;

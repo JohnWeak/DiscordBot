@@ -5,16 +5,16 @@ public class Error <T>
 {
 	/**Invia un messaggio privato a Gion contenente i dettagli dell'errore
 	 * @param object la classe che ha lanciato l'eccezione
-	 * @param t il tipo (in formato Exception o String) di eccezione
+	 * @param exception l'eccezione (in formato Exception) o la stringa d'errore
 	 * */
-	public void print(Object object, T t)
+	public void print(Object object, T exception)
 	{
-		var type = t.getClass().toString();
+		var type = exception.getClass().toString();
 		var gion = new PrivateMessage(Utente.getGion());
 		String lessThan2k;
 		if (type.contains("Exception"))
 		{
-			Exception e = (Exception) t;
+			Exception e = (Exception) exception;
 			var erClass = object.getClass();
 			var eMsg = e.getMessage();
 			var stackTrace = e.getStackTrace();
@@ -26,7 +26,7 @@ public class Error <T>
 		}
 		else if (type.equalsIgnoreCase("String"))
 		{
-			String s = (String) t;
+			String s = (String) exception;
 			
 			lessThan2k = lessThan2K(s);
 			

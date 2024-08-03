@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
+import net.dv8tion.jda.api.events.user.UserTypingEvent;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -47,6 +48,7 @@ public class Commands extends ListenerAdapter
 	private final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	private final boolean moduloSicurezza = false;
 	private final ArrayList<ThreadReminder> reminders = new ArrayList<>();
+	private boolean oneTimeOnly = true;
 	
 	private User user;
 	public String authorName;
@@ -90,7 +92,18 @@ public class Commands extends ListenerAdapter
 		gion.send("Riavvio completato.");
 		
 	} // fine onReady()
-
+	
+	@Override
+	public void onUserTyping(@NotNull UserTypingEvent event)
+	{
+		if (oneTimeOnly)
+		{
+			final String msg = String.format("Vedo che stai scrivendo %s. Smettila.", event.getUser().getName());
+			channel.sendMessage(msg).queue();
+			oneTimeOnly = false;
+		}
+	}
+	
 	/** Questo metodo decide cosa fare quando un messaggio viene modificato */
 	public void onMessageUpdate(@NotNull MessageUpdateEvent event)
 	{ //
@@ -926,7 +939,7 @@ public class Commands extends ListenerAdapter
 			}
 			nome = nome.trim();
 			
-			final ThreadReminder reminder = new ThreadReminder(nome, time, channel);
+			final ThreadReminder reminder = new ThreadReminder(nome, time, channel, user.getName());
 			reminders.add(reminder);
 			reminder.start();
 			

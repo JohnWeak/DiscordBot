@@ -2,6 +2,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.events.user.UserTypingEvent;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -11,6 +12,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -41,7 +44,7 @@ public class Main
 				.build();
 		}catch (LoginException e)
 		{
-			e.printStackTrace();
+			new Error<>().print(Main.class,e);
 		}
 		return jda;
 	} // fine generateJDA()
