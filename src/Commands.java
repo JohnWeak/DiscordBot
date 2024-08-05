@@ -383,7 +383,7 @@ public class Commands extends ListenerAdapter
 			case "!8ball" -> eightBall();
 			case "!pokemon" -> encounter();
 			case "!colpevolezza", "!colpevole" -> colpevolezza();
-			case "!carta" -> {Card c = new Card(); c.sendCarta(c);}
+			case "!carta" -> {new Card().sendCarta();}
 			case "!massshooting", "!ms" -> massShooting();
 			// Nota: i comandi di clash sono disabilitati poiché la loro API
 			//  richiede un token diverso ogni volta che cambia l'indirizzo IP

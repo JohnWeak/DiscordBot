@@ -6,9 +6,9 @@ import java.util.Random;
 
 public class Card
 {
-	private String seme;
-	private String valore;
-	private String link;
+	private final String seme;
+	private final String valore;
+	private final String link;
 	
 	private static final Random random = new Random();
 	private static final String[] semi = {"Cuori", "Quadri", "Fiori", "Picche"}; // Hearts, Diamonds, Clubs, Spades
@@ -46,17 +46,18 @@ public class Card
 	
 	
 	
-	public void sendCarta(Card carta)
+	public void sendCarta()
 	{
-		final var titolo = titoloCarta(carta);
-		final var immagineCartaAPI = linkImmagine(carta);
-		final var color= coloreCarta(carta);
-		final var seme = semeCarta(carta);
-		var embed = new EmbedBuilder()
+		final String titolo = titoloCarta();
+		final String immagineCartaAPI = linkImmagine();
+		final Color color= coloreCarta();
+		final String seme = semeCarta();
+		final EmbedBuilder embed = new EmbedBuilder()
 			.setTitle(titolo)
 			.setImage(immagineCartaAPI)
 			.setColor(color)
-			.setFooter(seme);
+			.setFooter(seme)
+		;
 		
 		Commands.channel.sendMessageEmbeds(embed.build()).queue();
 		
@@ -64,27 +65,27 @@ public class Card
 	
 	
 	/** Restituisce il titolo della carta sotto forma di stringa */
-	private String titoloCarta(Card carta)
+	private String titoloCarta()
 	{
-		return carta.getValoreString() + " di " + carta.getSeme();
+		return this.getValoreString() + " di " + this.getSeme();
 	}
 	
 	/** Restituisce il link dell'immagine della carta sotto forma di stringa */
-	private String linkImmagine(Card carta)
+	private String linkImmagine()
 	{
-		return carta.getLink();
+		return this.getLink();
 	}
 	
 	/** Restituisce il colore della carta sotto forma di Color */
-	private Color coloreCarta(Card carta)
+	private Color coloreCarta()
 	{
-		return carta.getSeme().equals("Cuori") || carta.getSeme().equals("Quadri") ? Color.red : Color.black;
+		return this.getSeme().equals("Cuori") || this.getSeme().equals("Quadri") ? Color.red : Color.black;
 	}
 	
 	/** Restituisce il valore del seme della carta sotto forma di stringa */
-	private String semeCarta(Card carta)
+	private String semeCarta()
 	{
-		return switch (carta.getSeme())
+		return switch (this.getSeme())
 		{
 			case "Cuori" -> Card.simboli[0];
 			case "Quadri" -> Card.simboli[1];
@@ -131,20 +132,6 @@ public class Card
 	public String getLink()
 	{
 		return link;
-	}
-	
-	// SETTER
-	public void setSeme(String seme)
-	{
-		this.seme = seme;
-	}
-	public void setValore(String valore)
-	{
-		this.valore = valore;
-	}
-	public void setLink(String link)
-	{
-		this.link = link;
 	}
 	
 	
