@@ -140,6 +140,10 @@ public abstract class Emotes
 		
 	} // fine emoteDaUsare()
 	
+	/**Questo metodo restituisce l'emote con i caratteri speciali già inclusi<br/>
+	 * Esempio: <code>readyToSend(Emotes.smh)</code> restituirà <code>"&lt;:smh:880423534365659176&gt;"</code>
+	 * <br/>
+	 * @param emote l'emote da convertire in stringa pronta per l'uso*/
 	public static String readyToSend(String emote)
 	{
 		return "<:"+emote+">";

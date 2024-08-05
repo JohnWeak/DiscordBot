@@ -476,7 +476,7 @@ public class Commands extends ListenerAdapter
 			reazioni.add("❤️");
 		}
 		
-		if (contains(msgStrippedLowerCase, new String[]{"ape", "api", "apecar", "apicoltore"}))
+		if (contains(msgStrippedLowerCase, new String[]{"ape", "api", "apecar"}))
 			reazioni.add("🐝");
 		
 		if (msgStrippedLowerCase.contains("cl__z"))
@@ -548,9 +548,9 @@ public class Commands extends ListenerAdapter
 		if (msgStrippedLowerCase.contains("non vedo l'ora") || msgStrippedLowerCase.contains("che ore sono") || msgStrippedLowerCase.contains("che ora è"))
 		{
 			reply = true;
-			var date = Utilities.getCurrentTime();
-			var hour = date.get(Calendar.HOUR_OF_DAY);
-			var minutes = date.get(Calendar.MINUTE);
+			final GregorianCalendar date = Utilities.getCurrentTime();
+			final int hour = date.get(Calendar.HOUR_OF_DAY);
+			final int minutes = date.get(Calendar.MINUTE);
 
 			msgReply += switch (hour)
 			{
@@ -569,7 +569,7 @@ public class Commands extends ListenerAdapter
 			}
 			else
 			{
-				final var orario = new Ore(hour, minutes);
+				final Ore orario = new Ore(hour, minutes);
 				
 				msgReply += orario.getOra();
 
@@ -582,9 +582,9 @@ public class Commands extends ListenerAdapter
 			}
 		}
 		
-		final String[] saluti = {"ciao", "buondì", "saluti", "distinti saluti", "buongiorno", "buon pomeriggio", "buonasera", "salve"};
+		final String[] saluti = {"ciao", "buondì", "saluti", "buongiorno", "buon pomeriggio", "buonasera", "salve"};
 		boolean flag = true;
-		for (String s : saluti)
+		for (final String s : saluti)
 		{
 			if (flag && msgStrippedLowerCase.contains(s))
 			{
@@ -593,7 +593,7 @@ public class Commands extends ListenerAdapter
 				if (random.nextInt(bound) < bound - 1)
 					message.reply(Utilities.getSaluto() + " anche a te").queue();
 				else
-					message.reply("No, vaffanculo >:(").queue();
+					message.reply("No, vaffanculo "+Emotes.readyToSend(Emotes.ragey)).queue();
 			}
 		}
 		
