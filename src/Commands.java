@@ -548,7 +548,7 @@ public class Commands extends ListenerAdapter
 		if (msgStrippedLowerCase.contains("non vedo l'ora") || msgStrippedLowerCase.contains("che ore sono") || msgStrippedLowerCase.contains("che ora è"))
 		{
 			reply = true;
-			final GregorianCalendar date = Utilities.getCurrentTime();
+			final GregorianCalendar date = Utilities.getLocalizedCalendar();
 			final int hour = date.get(Calendar.HOUR_OF_DAY);
 			final int minutes = date.get(Calendar.MINUTE);
 

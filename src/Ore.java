@@ -22,7 +22,9 @@ public class Ore
 			this.minuti = minuti;
 		}
 		else
-			new Error<String>().print(this,"Errore! Ore o minuti sbagliati.");
+		{
+			new Error<String>().print(this, "Errore! Ore o minuti sbagliati.");
+		}
 	}
 	
 	
@@ -31,25 +33,12 @@ public class Ore
 	{
 		return numeriParole[ore];
 	}
-	
 	public String getMinuti()
 	{
 		return (minuti == 0 ? "" : numeriParole[minuti]);
 	}
 	
 	
-	//SETTER
-	public void setOre(int ore)
-	{
-		if (ore > -1 && ore < 25)
-			this.ore = ore;
-	}
-	
-	public void setMinuti(int minuti)
-	{
-		if (minuti > -1 && minuti < 60)
-			this.minuti = minuti;
-	}
 	
 	
 } // fine classe Ore

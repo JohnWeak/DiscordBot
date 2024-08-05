@@ -6,7 +6,7 @@ public class ThreadPigeon extends Thread
 	private final String authorName;
 	private final MessageChannel channel;
 	private final Random random;
-	private static final Object object = ThreadPigeon.class;
+	private final Object object = this;
 	private final Error<Exception> error = new Error<>();
 	
 	/** Il pigeon avrà la sua vendetta
@@ -26,16 +26,19 @@ public class ThreadPigeon extends Thread
 		{
 			if (random.nextInt(500) == 42)
 			{
-				final var max = random.nextInt(5) + 5;
-				final var pigeonMessage = "Oh no! " + authorName + " ha attivato il <:" + Emotes.pigeon + "> bazooka!\n" + max + " pigeon in arrivo!";
+				final int pigeons = random.nextInt(5,11); // 5-10
+				final String pigeonEmote = Emotes.readyToSend(Emotes.pigeon);
+				final String pigeonMessage = String.format("Oh no! %s ha attivato il %s bazooka!\nCi sono %d pigeon in arrivo!", authorName, pigeonEmote, pigeons);
+				
 				channel.sendMessage(pigeonMessage).queue();
-				channel.sendTyping().queue();
-				for (int i = 0; i < max; i++)
-					channel.sendMessage("<:" + Emotes.pigeon + ">").queue(l -> Commands.react("pigeon"));
-			} else
+				for (int i = 0; i < pigeons; i++)
+				{
+					channel.sendMessage(pigeonEmote).queue(m -> Commands.react("pigeon"));
+				}
+			}
+			else
 			{
 				Commands.react("pigeon");
-				// new PrivateMessage(Utente.getGion()).send("Thread Pigeon sends his regards");
 			}
 		}
 		catch (Exception e)

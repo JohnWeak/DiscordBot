@@ -1,5 +1,6 @@
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.User;
 
 import java.util.*;
 
@@ -22,20 +23,20 @@ public abstract class Utilities
 	 * @return la lista dei messaggi nella cronologia. list[0] = ultimo messaggio*/
 	public static List<Message> channelHistory(MessageChannel channel, boolean debug, int amount)
 	{
-		var history = channel.getHistory().retrievePast(amount).complete();
+		final List<Message> history = channel.getHistory().retrievePast(amount).complete();
 		
 		if (debug)
 		{
-			var pm = new PrivateMessage(Utente.getGion());
-			var msg = new StringBuilder();
+			final PrivateMessage pm = new PrivateMessage(Utente.getGion());
+			final StringBuilder msg = new StringBuilder();
 			int i = 0;
 			
 			for (Message message : history)
 			{
-				var auth = message.getAuthor();
-				var name = auth.getName();
-				var disc = auth.getDiscriminator();
-				var m = message.getContentStripped();
+				final User auth = message.getAuthor();
+				final String name = auth.getName();
+				final String disc = auth.getDiscriminator(); // nota: possibilmente deprecato
+				final String m = message.getContentStripped();
 				
 				msg.append("Messaggio numero ").append(i).append(":\t").append(auth).append(" --- ").append(name).append(" (").append(disc).append("): ").append(m).append("\n");
 				i+=1;
@@ -53,8 +54,8 @@ public abstract class Utilities
 	 * */
 	public static String camelCase(String msg)
 	{
-		var chars = msg.toCharArray();
-		var len = chars.length;
+		final char[] chars = msg.toCharArray();
+		final int len = chars.length;
 		char c;
 		
 		for (int i = 0; i < len; i++)
@@ -69,11 +70,11 @@ public abstract class Utilities
 	/**Determina l'ora del giorno e restituisce la stringa del saluto corrispondente*/
 	public static String getSaluto()
 	{
-		var c = getCurrentTime();
-		var saluto = "";
-		var hour = c.get(Calendar.HOUR_OF_DAY);
-		var month = c.get(Calendar.MONTH);
-		short tramonto;
+		final GregorianCalendar c = getLocalizedCalendar();
+		String saluto = "";
+		final int hour = c.get(Calendar.HOUR_OF_DAY);
+		final int month = c.get(Calendar.MONTH);
+		final short tramonto;
 		
 		switch (month) // se è estate, il tramonto avviene più tardi
 		{
@@ -96,9 +97,11 @@ public abstract class Utilities
 	} // fine getSaluto()
 	
 	
-	public static GregorianCalendar getCurrentTime()
+	/**Restituisce un calendario gregoriano localizzato in Italia, a Roma.
+	 * @return a GregorianCalendar object*/
+	public static GregorianCalendar getLocalizedCalendar()
 	{
-		var roma = TimeZone.getTimeZone("Europe/Rome");
+		final TimeZone roma = TimeZone.getTimeZone("Europe/Rome");
 		return new GregorianCalendar(roma, Locale.ITALY);
 	} // fine getCurrentTime()
 	

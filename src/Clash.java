@@ -16,6 +16,8 @@ import java.util.*;
 
 public class Clash
 {
+	private final Object obj = this;
+	
 	private static final JSONParser jsonParser = new JSONParser();
 	private static final String bearer = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjYwOGY2MGU5LTQwZjUtNDQ2YS1iMGIyLTY3ZDE0ODk1ZDgyZiIsImlhdCI6MTY3NTg3MjQwMCwic3ViIjoiZGV2ZWxvcGVyLzRhNmIzZDczLTMyZjktNDRkMS0xMGMzLWMzOTcxMDA2YzI4YiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjk0LjcyLjE0My4xNzYiXSwidHlwZSI6ImNsaWVudCJ9XX0.Fl8VXJovFzV4PY1Qcfw3EdqhBCjNEKnYWheNFNL3zfr0ryoaB-skrkow1bYxpUx7hVVXyqLAeoqaO-_3pgLeUw";
 	
@@ -24,9 +26,6 @@ public class Clash
 	public static final String tagCompleto = hashtag + clanTag;
 	
 	private final static String warLeague = "https://api.clashofclans.com/v1/clans/"+ tagCompleto +"/currentwar/leaguegroup";
-	
-	// TODO: recuperare la lista dei membri del clan ogni volta che si invoca il costruttore
-	private static final ArrayList<String> listaMembri = new ArrayList<>();
 	
 	
 	/**Controlla se il clan è in war e mostra l'andamento*/
@@ -103,7 +102,7 @@ public class Clash
 		}
 		catch (IOException | ParseException e)
 		{
-			new Error<Exception>().print(Clash.class, e);
+			new Error<Exception>().print(obj, e);
 		}
 	} // fine clashWar()
 	
@@ -122,7 +121,7 @@ public class Clash
 			if (((String) jsonObject.get("state")).equalsIgnoreCase("inwar"))
 				return true;
 			
-		}catch (IOException | ParseException e) { new Error<Exception>().print(this, e); }
+		}catch (IOException | ParseException e) { new Error<Exception>().print(obj, e); }
 		
 		return false;
 	} // fine isClanInLeague()
@@ -152,7 +151,7 @@ public class Clash
 				final EmbedBuilder embed = search(warTags, dayOfWar);
 				
 				new Commands().sendEmbedToChannel(Objects.requireNonNullElseGet(embed, () -> new EmbedBuilder().addField("Oh noes", "Errore catastrofico (non è vero) in clashWarLeague()", false)).build(), thread);
-			}catch (Exception e) { new Error<Exception>().print(this, e); }
+			}catch (Exception e) { new Error<Exception>().print(obj, e); }
 		}
 		
 	} // fine clashWarLeague()
