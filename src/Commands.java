@@ -720,13 +720,13 @@ public class Commands extends ListenerAdapter
 			"https://protectiondesoiseaux.be/wp-content/uploads/2020/06/photo-pigeon-site.jpg",
 		};
 		
-		final var img = urls[random.nextInt(urls.length)];
-		final var embed = new EmbedBuilder()
+		final String img = urls[random.nextInt(urls.length)];
+		final EmbedBuilder embed = new EmbedBuilder()
 			.setColor(new Color(42,42,42))
 			.setImage(img)
-			.build();
+		;
 		
-		message.replyEmbeds(embed).queue();
+		message.replyEmbeds(embed.build()).queue();
 	}
 	
 	private void anniversario(String author, int years)
@@ -769,14 +769,14 @@ public class Commands extends ListenerAdapter
 		for (String s : certificazioni)
 			msg.append(s).append("\n");
 		
-		final var embed = new EmbedBuilder()
+		final EmbedBuilder embed = new EmbedBuilder()
 			.setTitle(authorName)
 			.setColor(new Color(red,green,blue))
 			.setDescription(msg)
 			.setImage(author.getAvatarUrl())
-			.build();
+		;
 		
-		message.replyEmbeds(embed).queue();
+		message.replyEmbeds(embed.build()).queue();
 	} // fine certificazione()
 	
 	/**Sostituisce i link di twitter con quelli di <code>fxtwitter</code>, che caricano l'anteprima su discord*/
@@ -789,8 +789,8 @@ public class Commands extends ListenerAdapter
 		for (String m : parts)
 		{
 			// due regex anziché uno solo perché il numero di caratteri da manipolare cambia
-			var regex1 = "https*://twitter\\.com.*";
-			var regex2 = "https*://www\\.twitter\\.com.*";
+			final String regex1 = "https*://twitter\\.com.*";
+			final String regex2 = "https*://www\\.twitter\\.com.*";
 			
 			if (m.matches(regex1))
 			{
