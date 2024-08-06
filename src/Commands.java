@@ -24,6 +24,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -852,9 +853,11 @@ public class Commands extends ListenerAdapter
 		
 		remindersList.removeIf(r -> !r.isActive());
 		
+		EmbedBuilder embed;
+		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
+		
 		if (remindersList.size() < MAX_REMINDERS)
 		{
-			
 			final String timeString = mes[1];
 			final int d = timeString.indexOf('d');
 			final int h = timeString.indexOf('h');
@@ -863,11 +866,9 @@ public class Commands extends ListenerAdapter
 			String days=null, hours=null, minutes=null;
 			int time;
 			final int days_int, hours_int, minutes_int, minimo, maxDays, maxHours, maxMinutes;
-			final DateTimeFormatter formatter;
 			final ZonedDateTime now, future;
 			final ThreadReminder reminder;
 			final String success, footer;
-			EmbedBuilder embed;
 			
 			final String formatError = "I giorni `(d)` devono precedere le ore `(h)`, che devono precedere i minuti `(m)`. Promemoria non impostato.";
 			
@@ -950,8 +951,6 @@ public class Commands extends ListenerAdapter
 			
 			future = now.plusSeconds(time/1000);
 			
-			formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
-			
 			String nome = "";
 			
 			for (int i = 2; i < mes.length; i++)
@@ -982,7 +981,25 @@ public class Commands extends ListenerAdapter
 		}
 		else
 		{
-			message.reply("Strunz, hai già impostato 3 promemoria. smh.").queue(l->react(Emotes.smh));
+			
+			embed = new EmbedBuilder();
+			embed.setTitle("Promemoria attuali");
+			for (ThreadReminder r : remindersList)
+			{
+				final String name = r.getName();
+				final LocalDateTime scad = r.getEnd();
+				final String desc = scad.format(formatter);
+				final MessageEmbed.Field rem = new MessageEmbed.Field(name,desc,true);
+				
+				embed.addField(rem);
+			}
+			embed.setColor(Color.RED);
+			
+			message.reply("Strunz, hai già impostato 3 promemoria. smh.").queue(l->
+			{
+				react(Emotes.smh);
+				l.replyEmbeds(embed.build()).queue();
+			});
 		}
 		
 	} // reminder()
@@ -1644,10 +1661,16 @@ public class Commands extends ListenerAdapter
 		
 	} // fine moduloDiSicurezza()
 	
+	class classNotFound{}
+	
 	/**<strong>
 	 * IL MODULO DI SICUREZZA SI OCCUPA DI MANTENERE IL BOT AL SICURO. STAI LONTANDO DAL BOT.
 	 * </strong>
 	 * @return <strong>NIENTE.</strong>
+	 * @since QUELLA VOLTA IN CUI ENIGMO HA MOSSO DELLE AVANCE AL BOT.
+	 * @throws ENIGMO DALLA FINESTRA.
+	 * @apiNote QUELLE CHE FANNO BZZ E IMPOLLINANO I FIORI.
+	 * @see classNotFound QUELLO CHE È SUCCESSO A CHI HA MOLESTATO IL BOT PRIMA DI TE.
 	 */
 	public void ehiModulo()
 	{
@@ -1691,10 +1714,20 @@ public class Commands extends ListenerAdapter
 			"GIOCA A PORTAL INVECE CHE GUARDARE AMOREVOLMENTE IL BOT", "LA VITA È TROPPO BREVE PER PASSARLA INSEGUENDO UN BOT CHE NON RICAMBIA I TUOI SENTIMENTI"
 		};
 		
+		final String agliOrdini;
+		final String ricevuto;
+		final String scortese = messaggiScortesi[random.nextInt(messaggiScortesi.length)];
+		
 		if (messageRaw.length() <= hotkey)
-			reply = authorized ? "**SONO AI SUOI ORDINI, SIGNORE.**" : "**"+messaggiScortesi[random.nextInt(messaggiScortesi.length)]+"**";
+		{
+			agliOrdini = "SONO AI SUOI ORDINI, SIGNORE.";
+			reply = String.format("**%s**", authorized ? agliOrdini : scortese);
+		}
 		else
-			reply = authorized ? "**RICEVUTO.**" : "**"+messaggiScortesi[random.nextInt(messaggiScortesi.length)]+"**";
+		{
+			ricevuto = "RICEVUTO.";
+			reply = String.format("**%s**", authorized ? ricevuto : scortese);
+		}
 		
 		message.reply(reply).queue();
 	}

@@ -12,7 +12,7 @@ public class ThreadReminder extends Thread
 	private final MessageChannel channel;
 	private final String nomeUtente;
 	
-	private final LocalDateTime start;
+	private final LocalDateTime start, end;
 	private boolean active;
 	
 	public ThreadReminder(String nome, int tempo, MessageChannel channel, String nomeUtente)
@@ -23,6 +23,7 @@ public class ThreadReminder extends Thread
 		this.nomeUtente = nomeUtente;
 		
 		start = LocalDateTime.now();
+		end = start.plusSeconds(tempo/1000);
 		active = true;
 	}
 	
@@ -41,6 +42,19 @@ public class ThreadReminder extends Thread
 		return active;
 	}
 	
+	/**Restituisce il tempo di partenza in cui è stato impostato promemoria
+	 * @return la data in cui il promemoria è stato creato*/
+	public LocalDateTime getStart()
+	{
+		return start;
+	}
+	
+	/**Restituisce il tempo in cui il promemoria scadrà
+	 * @return la data in cui il promemoria suonerà*/
+	public LocalDateTime getEnd()
+	{
+		return end;
+	}
 	
 	@Override
 	public String toString()
