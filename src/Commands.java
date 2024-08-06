@@ -862,14 +862,12 @@ public class Commands extends ListenerAdapter
 			
 			String days=null, hours=null, minutes=null;
 			int time;
-			final int days_int, hours_int, minutes_int, maxDays, maxHours, maxMinutes;
+			final int days_int, hours_int, minutes_int, minimo, maxDays, maxHours, maxMinutes;
 			final DateTimeFormatter formatter;
 			final ZonedDateTime now, future;
 			final ThreadReminder reminder;
 			final String success, footer;
 			EmbedBuilder embed;
-			
-			// controllare quale formato è presente
 			
 			final String formatError = "I giorni `(d)` devono precedere le ore `(h)`, che devono precedere i minuti `(m)`. Promemoria non impostato.";
 			
@@ -913,24 +911,31 @@ public class Commands extends ListenerAdapter
 			}
 			// converti le stringhe di tempo in interi
 			time = 0;
-			days_int = days == null ? 0 : Integer.parseInt(days);
-			hours_int = hours == null ? 0 : Integer.parseInt(hours);
-			minutes_int = minutes == null ? 0 : Integer.parseInt(minutes);
+			days_int = (days == null ? 0 : Integer.parseInt(days));
+			hours_int = (hours == null ? 0 : Integer.parseInt(hours));
+			minutes_int = (minutes == null ? 0 : Integer.parseInt(minutes));
 			
+			minimo = 0;
 			maxDays = 7;
 			maxHours = 23;
 			maxMinutes = 59;
 			
 			if (days_int > maxDays || hours_int > maxHours || minutes_int > maxMinutes)
 			{
+				final String illegalValuesTitle = "Errore durante l'impostazione del promemoria";
+				final String legalDayValues = String.format("Valori ammessi: da %d a %d", minimo, maxDays);
+				final String legalHourValues = String.format("Valori ammessi: da %d a %d", minimo, maxHours);
+				final String legalMinuteValues = String.format("Valori ammessi: da %d a %d", minimo, maxMinutes);
+				
 				embed = new EmbedBuilder();
-				embed.setTitle(title);
+				embed.setTitle(illegalValuesTitle);
 				embed.setColor(Color.RED);
-				embed.setDescription(description);
-				embed.addField(fields[0]);
-				embed.addField(fields[1]);
-				embed.addField(fields[2]);
-				embed.addField(fields[3]);
+				embed.addField("d", legalDayValues,true);
+				embed.addField("h", legalHourValues,true);
+				embed.addField("m", legalMinuteValues,true);
+				embed.addField("Valori validi","`1d7m`\n`5d2h4m`\n`10m`",false);
+				embed.addField("Valori **non** validi","`11d`\n`5d205h4m`\n`1d5h700m`",false);
+				embed.setFooter("smh");
 				
 				channel.sendMessageEmbeds(embed.build()).queue();
 				return;
