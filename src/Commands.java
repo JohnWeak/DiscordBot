@@ -1538,29 +1538,27 @@ public class Commands extends ListenerAdapter
 			if (anno != currentYear)
 				scelta = random.nextInt(objs.size());
 			
-			final var citta = (String) objs.get(scelta).get("city");
-			final var stato = (String) objs.get(scelta).get("state");
-			final var morti = (String) objs.get(scelta).get("killed");
-			final var feriti = (String) objs.get(scelta).get("wounded");
-			final var x = (String) (objs).get(scelta).get("date"); // es.: 2022-01-05T12:23:34
-			final var annoMeseGiorno = x.split("T")[0].split("-");
-			final var year = annoMeseGiorno[0];
-			final var month = annoMeseGiorno[1];
-			var day = annoMeseGiorno[2];
+			final String citta = (String) objs.get(scelta).get("city");
+			final String stato = (String) objs.get(scelta).get("state");
+			final String morti = (String) objs.get(scelta).get("killed");
+			final String feriti = (String) objs.get(scelta).get("wounded");
+			final String x = (String) (objs).get(scelta).get("date"); // es.: 2022-01-05T12:23:34
+			final String[] annoMeseGiorno = x.split("T")[0].split("-");
+			final String year = annoMeseGiorno[0];
+			final String month = annoMeseGiorno[1];
+			final String day = (annoMeseGiorno[2].charAt(0) == '0' ? annoMeseGiorno[2].substring(1) : annoMeseGiorno[2]);
 			
-			if (day.charAt(0) == '0')
-				day = day.substring(1);
+			final String data = String.format("%s %s %s", day, getMese(Integer.parseInt(month)), year);
+			final String sparatorie = String.format("Nel %s ammontano a **%d**", anno, jsonArray.size());
+			final String recente = String.format("La più recente è avvenuta il %s in **%s, %s**\n",data, citta, stato);
+			final String caso = String.format("Una si è verificata il %s in **%s, %s**\n", data, citta, stato);
+			final String personeMorte = String.format("Sono morte **%s** persone\n", morti);
+			final String personaMorta = "È morta **1** persona.\n";
+			final String noVittime = "Per fortuna non ci sono state vittime.\n";
+			final String personeFerite = String.format("I feriti ammontano a **%s**\n", feriti);
+			final String totaleMorti = String.format("In totale sono morte **%s** persone durante l'anno\n", mortiAnno);
 			
-			final var data = day + " " + getMese(Integer.parseInt(month)) + " "+ year;
-			final var sparatorie = "Nel "+anno+", ammontano a **" + jsonArray.size() + "**";
-			final var recente = "La più recente è avvenuta il " + data + " in **" + citta + ", " + stato + "**.\n";
-			final var caso = "Una si è verificata il " + data + " in **" + citta + ", " + stato + "**.\n";
-			final var personeMorte = "Sono morte **" + morti + "** persone.\n";
-			final var personaMorta = "È morta **1** persona.\n";
-			final var noVittime = "Per fortuna non ci sono state vittime.\n";
-			final var personeFerite = "I feriti ammontano a **" + feriti + "**.\n";
-			final var totaleMorti = "In totale sono morte **" + mortiAnno + "** persone durante l'anno.\n";
-			var finalResp = "";
+			String finalResp = "";
 			
 			if (anno == currentYear)
 				finalResp += recente;
@@ -1579,16 +1577,16 @@ public class Commands extends ListenerAdapter
 			if (anno == currentYear)
 				finalResp += totaleMorti;
 			
-			final var footerURL = "https://www.massshootingtracker.site/logo-400.png";
+			final String footerURL = "https://www.massshootingtracker.site/logo-400.png";
 			
-			final var start = LocalDate.of(anno, Integer.parseInt(month), Integer.parseInt(day));
-			final var stop = LocalDate.now();
-			final var days = ChronoUnit.DAYS.between(start, stop);
-			final var daysField = new MessageEmbed.Field("Giorni dall'ultima", "**"+days+"**", true);
-			final var vittimeField = new MessageEmbed.Field("Morti", "**"+mortiAnno+"**", true);
+			final LocalDate start = LocalDate.of(anno, Integer.parseInt(month), Integer.parseInt(day));
+			final LocalDate stop = LocalDate.now();
+			final long days = ChronoUnit.DAYS.between(start, stop);
+			final MessageEmbed.Field daysField = new MessageEmbed.Field("Giorni dall'ultima", "**"+days+"**", true);
+			final MessageEmbed.Field vittimeField = new MessageEmbed.Field("Morti", "**"+mortiAnno+"**", true);
 			
-			final var massShootingSite = "https://www.massshootingtracker.site/";
-			var embed = new EmbedBuilder()
+			final String massShootingSite = "https://www.massshootingtracker.site/";
+			final EmbedBuilder embed = new EmbedBuilder()
 				.setColor(Color.RED)
 				.addField("Sparatorie negli USA", sparatorie, true);
 				
@@ -1734,7 +1732,7 @@ public class Commands extends ListenerAdapter
 	
 	public void dado()
 	{
-		final var msg = message.getContentStripped().toLowerCase();
+		final String msg = message.getContentStripped().toLowerCase();
 		final int minLen = "!dado".length();
 		
 		if (msg.length() <= minLen)
@@ -1743,17 +1741,17 @@ public class Commands extends ListenerAdapter
 		    return;
 		}
 		
-		final var dadiAmmessi = "I dadi di D&D hanno questi numeri di facce: 4, 6, 8, 10, 12, 20, 100";
-		final var num = msg.split(" ")[1];
+		final String dadiAmmessi = "I dadi di D&D hanno questi numeri di facce: 4, 6, 8, 10, 12, 20, 100";
+		final String num = msg.split(" ")[1];
 		try
 		{
-			var facce= Integer.parseInt(num);
+			final int facce = Integer.parseInt(num);
 			if (facce == 4 || facce == 6 || facce == 8 || facce == 10 || facce == 12 || facce == 20 || facce == 100)
 			{
 				channel.sendMessage(authorName+" lancia un D" + facce + "...").queue();
 				channel.sendTyping().queue();
 				
-				var res = random.nextInt(facce) + 1;
+				final int res = random.nextInt(1,facce+1);
 				if (facce == 20 && res == 1) // 1 naturale
 					channel.sendMessage("Si mette male per te, " +authorName+"... **1 naturale**!").queue();
 				else if (facce == 20 && res == 20) // 20 naturale
