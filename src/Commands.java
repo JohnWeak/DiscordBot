@@ -1340,7 +1340,7 @@ public class Commands extends ListenerAdapter
 	/** Aggiunge una reazione all'ultimo messaggio inviato */
 	public static void react(String emote)
 	{
-		final var emoteDaUsare = Emotes.emoteDaUsare(emote.toLowerCase());
+		final String emoteDaUsare = Emotes.emoteDaUsare(emote.toLowerCase());
 		
 		if (emoteDaUsare.isEmpty())
 			return;
@@ -1386,12 +1386,12 @@ public class Commands extends ListenerAdapter
 	/** Lascia che RNGesus decida quanto è colpevole l'utente taggato */
 	private void colpevolezza()
 	{
-		final var utenteTaggato = message.getMentionedUsers();
+		final List<User> utenteTaggato = message.getMentionedUsers();
 		final String urlOwO = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--amf4Rvt7--%2Ft_Preview%2Fb_rgb%3A191919%2Cc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1518097892%2Fproduction%2Fdesigns%2F2348593_0.jpg&f=1&nofb=1";
 		
 		if (utenteTaggato.isEmpty())
 		{
-			final var emb = new EmbedBuilder()
+			final EmbedBuilder emb = new EmbedBuilder()
 				.setColor(Color.red)
 				.setTitle("Scrivi `!colpevole <@utente> per usare questo comando`");
 			channel.sendMessageEmbeds(emb.build()).queue();
@@ -1412,7 +1412,7 @@ public class Commands extends ListenerAdapter
 			
 			final String risposta = String.format("%s è colpevole %s%d%%", utente, particella[index], colpa);
 			
-			final var embed = new EmbedBuilder()
+			final EmbedBuilder embed = new EmbedBuilder()
 				.setTitle(risposta)
 				.setColor(0xFF0000)
 				.setFooter("", urlOwO);
