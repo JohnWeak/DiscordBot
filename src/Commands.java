@@ -1513,19 +1513,19 @@ public class Commands extends ListenerAdapter
 		
 		try
 		{
-			final var url = new URL("https://mass-shooting-tracker-data.s3.us-east-2.amazonaws.com/"+anno+"-data.json");
+			final URL url = new URL("https://mass-shooting-tracker-data.s3.us-east-2.amazonaws.com/"+anno+"-data.json");
 			
-			final var connection = (HttpURLConnection) url.openConnection();
+			final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestProperty("Accept", "application/json");
 			
-			final var in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			final var response = new StringBuilder();
+			final BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			final StringBuilder response = new StringBuilder();
 			String inputLine;
 			while ((inputLine = in.readLine()) != null)
 				response.append(inputLine);
 			
 			jsonArray = (JSONArray) jsonParser.parse(String.valueOf(response));
-			final var objs = new ArrayList<JSONObject>();
+			final ArrayList<JSONObject> objs = new ArrayList<>();
 			
 			for (Object o : jsonArray)
 			{
