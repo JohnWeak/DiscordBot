@@ -70,7 +70,7 @@ public class Commands extends ListenerAdapter
 		commandsHashMap = Cmd.init();
 		
 		jda = event.getJDA();
-		final var act = jda.getPresence().getActivity();
+		final Activity act = jda.getPresence().getActivity();
 		
 		String activityType="act_type", nomeActivity="act_name", activityTradotta="act_trad";
 		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
