@@ -874,7 +874,7 @@ public class Commands extends ListenerAdapter
 			final int days_int, hours_int, minutes_int, minimo, maxDays, maxHours, maxMinutes;
 			final ZonedDateTime now, future;
 			final ThreadReminder reminder;
-			final String success, footer;
+			final String success, author;
 			
 			final String formatError = "I giorni `(d)` devono precedere le ore `(h)`, che devono precedere i minuti `(m)`. Promemoria non impostato.";
 			
@@ -970,20 +970,18 @@ public class Commands extends ListenerAdapter
 			}
 			nome = nome.trim();
 			
-			reminder = new ThreadReminder(nome, time, channel, user);
-			remindersList.add(reminder);
-			reminder.start();
-			;
-			success = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%s`\n", nome,future.format(formatter));
-			footer = "Impostato da ".concat(user.getName());
+			success = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%s`\n", nome, future.format(formatter));
+			author = "Impostato da ".concat(user.getName());
 			
 			embed = new EmbedBuilder();
 			embed.setTitle("Promemoria impostato!");
 			embed.setDescription(success);
 			embed.setColor(Color.RED);
-			embed.setThumbnail(user.getAvatarUrl());
-			embed.setFooter(footer);
-			embed.setAuthor(user.getName(), rickroll, user.getAvatarUrl());
+			embed.setAuthor(author, rickroll, user.getAvatarUrl());
+			
+			reminder = new ThreadReminder( time, channel, embed);
+			remindersList.add(reminder);
+			reminder.start();
 			
 			channel.sendMessageEmbeds(embed.build()).queue();
 		}
