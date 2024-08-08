@@ -1,3 +1,5 @@
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 
 public abstract class Utente
@@ -30,10 +32,10 @@ public abstract class Utente
 	 * */
 	public static User getUtenteFromName(String nome)
 	{
-		var jda = Main.getJda();
-		var channel = Commands.message.getChannel();
-		var utente = "";
-		User user;
+		final JDA jda = Main.getJda();
+		final MessageChannel channel = Commands.message.getChannel();
+		String utente = "";
+		final User user;
 		
 		try
 		{
