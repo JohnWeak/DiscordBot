@@ -975,25 +975,33 @@ public class Commands extends ListenerAdapter
 			author = "Impostato da ".concat(user.getName());
 			img = "stopwatch.png";
 			
-			impostato = new EmbedBuilder();
-			impostato.setTitle("Promemoria impostato!");
-			impostato.setDescription(createdSuccess);
-			impostato.setColor(Color.RED);
-			impostato.setThumbnail(img);
-			impostato.setAuthor(author, rickroll, user.getAvatarUrl());
+			try
+			{
+				impostato = new EmbedBuilder();
+				impostato.setTitle("Promemoria impostato!");
+				impostato.setDescription(createdSuccess);
+				impostato.setColor(Color.RED);
+				impostato.setThumbnail(img);
+				impostato.setAuthor(author, rickroll, user.getAvatarUrl());
+				
+				scaduto = new EmbedBuilder();
+				scaduto.setTitle("Promemoria scaduto!");
+				scaduto.setDescription(endedSuccess);
+				scaduto.setColor(Color.RED);
+				scaduto.setThumbnail(img);
+				scaduto.setAuthor(author, rickroll, user.getAvatarUrl());
+				
+				reminder = new ThreadReminder( time, channel, scaduto);
+				remindersList.add(reminder);
+				reminder.start();
+				
+				channel.sendMessageEmbeds(impostato.build()).queue();
+			}
+			catch (Exception e)
+			{
+				new Error<String>().print(this,e.getMessage());
+			}
 			
-			scaduto = new EmbedBuilder();
-			scaduto.setTitle("Promemoria scaduto!");
-			scaduto.setDescription(endedSuccess);
-			scaduto.setColor(Color.RED);
-			scaduto.setThumbnail(img);
-			scaduto.setAuthor(author, rickroll, user.getAvatarUrl());
-			
-			reminder = new ThreadReminder( time, channel, scaduto);
-			remindersList.add(reminder);
-			reminder.start();
-			
-			channel.sendMessageEmbeds(impostato.build()).queue();
 		}
 		else
 		{
