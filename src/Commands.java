@@ -973,7 +973,7 @@ public class Commands extends ListenerAdapter
 			createdSuccess = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%s`\n", nome, future.format(formatter));
 			endedSuccess = String.format("Il tuo promemoria, \"%s\", è scaduto!", nome);
 			author = "Impostato da ".concat(user.getName());
-			img = "stopwatch.png";
+			img = "https://static.vecteezy.com/system/resources/previews/029/722/371/large_2x/reminder-icon-in-trendy-flat-style-isolated-on-white-background-reminder-silhouette-symbol-for-your-website-design-logo-app-ui-illustration-eps10-free-vector.jpg";
 			
 			try
 			{
