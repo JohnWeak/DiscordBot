@@ -843,6 +843,8 @@ public class Commands extends ListenerAdapter
 		if(mes.length < 2 || mes[1].isEmpty())
 		{
 			final EmbedBuilder embed = new EmbedBuilder();
+			final String rickRoll = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+			final String rickImg = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Glasto2023_%28149_of_468%29_%2853009108914%29_%28cropped%29.jpg/1280px-Glasto2023_%28149_of_468%29_%2853009108914%29_%28cropped%29.jpg";
 			
 			embed.setTitle(title);
 			embed.setColor(Color.RED);
@@ -851,6 +853,7 @@ public class Commands extends ListenerAdapter
 			embed.addField(fields[1]);
 			embed.addField(fields[2]);
 			embed.addField(fields[3]);
+			embed.setAuthor(Utente.getGion().getName(),rickRoll, rickImg);
 			
 			channel.sendMessageEmbeds(embed.build()).queue();
 			return;
