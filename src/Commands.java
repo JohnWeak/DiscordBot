@@ -874,7 +874,7 @@ public class Commands extends ListenerAdapter
 			final int days_int, hours_int, minutes_int, minimo, maxDays, maxHours, maxMinutes;
 			final ZonedDateTime now, future;
 			final ThreadReminder reminder;
-			final String createdSuccess, endedSuccess, author;
+			final String createdSuccess, endedSuccess, author, img;
 			
 			final String formatError = "I giorni `(d)` devono precedere le ore `(h)`, che devono precedere i minuti `(m)`. Promemoria non impostato.";
 			
@@ -973,17 +973,20 @@ public class Commands extends ListenerAdapter
 			createdSuccess = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%s`\n", nome, future.format(formatter));
 			endedSuccess = String.format("Il tuo promemoria, \"%s\", è scaduto!", nome);
 			author = "Impostato da ".concat(user.getName());
+			img = "https://creazilla-store.fra1.digitaloceanspaces.com/icons/3251164/timer-icon-md.png";
 			
 			impostato = new EmbedBuilder();
 			impostato.setTitle("Promemoria impostato!");
 			impostato.setDescription(createdSuccess);
 			impostato.setColor(Color.RED);
+			impostato.setThumbnail(img);
 			impostato.setAuthor(author, rickroll, user.getAvatarUrl());
 			
 			scaduto = new EmbedBuilder();
 			scaduto.setTitle("Promemoria scaduto!");
 			scaduto.setDescription(endedSuccess);
 			scaduto.setColor(Color.RED);
+			scaduto.setThumbnail(img);
 			scaduto.setAuthor(author, rickroll, user.getAvatarUrl());
 			
 			reminder = new ThreadReminder( time, channel, scaduto);
