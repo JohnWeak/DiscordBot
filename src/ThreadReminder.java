@@ -11,17 +11,17 @@ public class ThreadReminder extends Thread
 	private final int tempo;
 	private final String nome;
 	private final MessageChannel channel;
-	private final String nomeUtente;
+	private final User utente;
 	
 	private final LocalDateTime start, end;
 	private boolean active;
 	
-	public ThreadReminder(String nome, int tempo, MessageChannel channel, String nomeUtente)
+	public ThreadReminder(String nome, int tempo, MessageChannel channel, User utente)
 	{
 		this.nome = nome;
 		this.tempo = tempo;
 		this.channel = channel;
-		this.nomeUtente = nomeUtente;
+		this.utente = utente;
 		
 		start = LocalDateTime.now();
 		end = start.plusSeconds(tempo/1000);
@@ -72,16 +72,15 @@ public class ThreadReminder extends Thread
 			final String footer;
 			final EmbedBuilder eb;
 			final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm:ss");
-			final User u = Utente.getUtenteFromName(nomeUtente);
 			Thread.sleep(tempo);
 			end = LocalDateTime.now();
 			
-			footer = String.format("⏰ Promemoria di %s\t%s",nomeUtente, end.format(formatter));
+			footer = String.format("⏰ Promemoria di %s\t%s", utente.getName(), end.format(formatter));
 			
 			eb = new EmbedBuilder();
 			eb.setTitle("Promemoria scaduto!");
 			eb.setColor(Color.RED);
-			eb.setThumbnail(u == null ? "" : u.getAvatarUrl());
+			eb.setThumbnail(utente.getAvatarUrl());
 			eb.addField(nome,"",false);
 			eb.setFooter(footer);
 			channel.sendMessageEmbeds(eb.build()).queue();

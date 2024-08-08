@@ -964,7 +964,7 @@ public class Commands extends ListenerAdapter
 			}
 			nome = nome.trim();
 			
-			reminder = new ThreadReminder(nome, time, channel, user.getName());
+			reminder = new ThreadReminder(nome, time, channel, user);
 			remindersList.add(reminder);
 			reminder.start();
 			
