@@ -997,7 +997,6 @@ public class Commands extends ListenerAdapter
 		}
 		else
 		{
-			
 			impostato = new EmbedBuilder();
 			impostato.setTitle("Promemoria attuali");
 			for (ThreadReminder r : remindersList)
