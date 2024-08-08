@@ -68,6 +68,8 @@ public class ThreadReminder extends Thread
 	{
 		try
 		{
+			final String rickroll = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+			
 			final LocalDateTime end;
 			final String footer;
 			final EmbedBuilder eb;
@@ -84,6 +86,7 @@ public class ThreadReminder extends Thread
 			eb.setThumbnail(utente.getAvatarUrl());
 			eb.addField(nome,"",false);
 			eb.setFooter(footer);
+			eb.setAuthor(utente.getName(), rickroll, utente.getAvatarUrl());
 			channel.sendMessageEmbeds(eb.build()).queue();
 			
 			active = false;

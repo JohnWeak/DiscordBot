@@ -829,6 +829,7 @@ public class Commands extends ListenerAdapter
 	private void reminder()
 	{
 		final short MAX_REMINDERS = 3;
+		final String rickroll = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 		
 		final String title = "Utilizzo comando !reminder", description = "Il comando permette di impostare un promemoria. I parametri sono i seguenti.";
 		final MessageEmbed.Field[] fields = new MessageEmbed.Field[]
@@ -843,8 +844,6 @@ public class Commands extends ListenerAdapter
 		if(mes.length < 2 || mes[1].isEmpty())
 		{
 			final EmbedBuilder embed = new EmbedBuilder();
-			final String rickRoll = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-			final String rickImg = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Glasto2023_%28149_of_468%29_%2853009108914%29_%28cropped%29.jpg/1280px-Glasto2023_%28149_of_468%29_%2853009108914%29_%28cropped%29.jpg";
 			
 			embed.setTitle(title);
 			embed.setColor(Color.RED);
@@ -853,7 +852,6 @@ public class Commands extends ListenerAdapter
 			embed.addField(fields[1]);
 			embed.addField(fields[2]);
 			embed.addField(fields[3]);
-			embed.setAuthor(Utente.getGion().getName(),rickRoll, rickImg);
 			
 			channel.sendMessageEmbeds(embed.build()).queue();
 			return;
@@ -975,7 +973,7 @@ public class Commands extends ListenerAdapter
 			reminder = new ThreadReminder(nome, time, channel, user);
 			remindersList.add(reminder);
 			reminder.start();
-			
+			;
 			success = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%s`\n", nome,future.format(formatter));
 			footer = "Impostato da ".concat(user.getName());
 			
@@ -985,6 +983,7 @@ public class Commands extends ListenerAdapter
 			embed.setColor(Color.RED);
 			embed.setThumbnail(user.getAvatarUrl());
 			embed.setFooter(footer);
+			embed.setAuthor(user.getName(), rickroll, user.getAvatarUrl());
 			
 			channel.sendMessageEmbeds(embed.build()).queue();
 		}
