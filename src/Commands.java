@@ -1414,7 +1414,7 @@ public class Commands extends ListenerAdapter
 			
 			final EmbedBuilder embed = new EmbedBuilder()
 				.setTitle(risposta)
-				.setColor(0xFF0000)
+				.setColor(Color.RED)
 				.setFooter("", urlOwO);
 			
 			channel.sendMessageEmbeds(embed.build()).queue(lambda ->
@@ -1429,9 +1429,9 @@ public class Commands extends ListenerAdapter
 	/** Mostra un embed con le informazioni del bot */
 	public void info()
 	{
-		final var embedBuilder = new EmbedBuilder();
-		final var urlOwO = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--amf4Rvt7--%2Ft_Preview%2Fb_rgb%3A191919%2Cc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1518097892%2Fproduction%2Fdesigns%2F2348593_0.jpg&f=1&nofb=1";
-		final var urlTitle = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+		final EmbedBuilder embedBuilder = new EmbedBuilder();
+		final String urlOwO = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--amf4Rvt7--%2Ft_Preview%2Fb_rgb%3A191919%2Cc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1518097892%2Fproduction%2Fdesigns%2F2348593_0.jpg&f=1&nofb=1";
+		final String urlTitle = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 		
 		embedBuilder.setTitle("Informazioni", urlTitle);
 		embedBuilder.setDescription("Questo bot permette di lanciare monete, creare sondaggi e, soprattutto, essere un rompiballe.");
@@ -1444,8 +1444,7 @@ public class Commands extends ListenerAdapter
 			.addBlankField(false)
 			.setFooter("Creato con ❤️ da JohnWeak", urlOwO);
 		
-		final var embed = embedBuilder.build();
-		channel.sendMessageEmbeds(embed).queue();
+		channel.sendMessageEmbeds(embedBuilder.build()).queue();
 		
 	} // fine info()
 	
