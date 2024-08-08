@@ -924,9 +924,9 @@ public class Commands extends ListenerAdapter
 			if (days_int > maxDays || hours_int > maxHours || minutes_int > maxMinutes)
 			{
 				final String illegalValuesTitle = "Errore durante l'impostazione del promemoria";
-				final String legalDayValues = String.format("Valori ammessi: da %d a %d", minimo, maxDays);
-				final String legalHourValues = String.format("Valori ammessi: da %d a %d", minimo, maxHours);
-				final String legalMinuteValues = String.format("Valori ammessi: da %d a %d", minimo, maxMinutes);
+				final String legalDayValues = String.format("Valori ammessi: %d - %d", minimo, maxDays);
+				final String legalHourValues = String.format("Valori ammessi: %d - %d", minimo, maxHours);
+				final String legalMinuteValues = String.format("Valori ammessi: %d - %d", minimo, maxMinutes);
 				
 				embed = new EmbedBuilder();
 				embed.setTitle(illegalValuesTitle);
