@@ -971,7 +971,7 @@ public class Commands extends ListenerAdapter
 			nome = nome.trim();
 			
 			createdSuccess = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%s`\n", nome, future.format(formatter));
-			endedSuccess = String.format("Il tuo promemoria, \"%s\", è scaduto!", nome);
+			endedSuccess = String.format("Il promemoria \"%s\" è scaduto!", nome);
 			author = "Impostato da ".concat(user.getName());
 			img = "https://thumbs.dreamstime.com/b/reminder-icon-vector-illustration-simple-vector-icon-reminder-icon-vector-illustration-175544158.jpg";
 			
