@@ -54,12 +54,12 @@ public class Pokemon
 	public Pokemon(int id, boolean pokedex)
 	{
 		this.pokedex = pokedex;
-		File jsonFile;
+		final File jsonFile;
 		owner = null;
 		
 		String line="";
 		BufferedReader reader = null;
-		Path path;
+		final Path path;
 		
 		if (id > ALL)
 			return;
@@ -147,7 +147,7 @@ public class Pokemon
 	} // fine costruttore
 	
 	
-	public void spawn(Pokemon pokemon)
+	public void spawn()
 	{
 		if (embedBuilder == null)
 			embedBuilder = buildEmbed(pokedex);
@@ -158,7 +158,7 @@ public class Pokemon
 		}
 		else
 		{
-			t = new ThreadPokemon(pokemon, Commands.canaleBotPokemon, embedBuilder);
+			t = new ThreadPokemon(this, Commands.canaleBotPokemon, embedBuilder);
 			var tout = random.nextInt(2, 15);
 			t.setTimeoutTime(t.MINUTES, tout);
 			t.start();
@@ -205,14 +205,14 @@ public class Pokemon
 	/** Genera un embed con il Pokemon */
 	private EmbedBuilder buildEmbed(boolean pokedex)
 	{
-		var embedBuilder = new EmbedBuilder();
-		var stringBuilder = new StringBuilder();
-		var types = "";
+		final EmbedBuilder embedBuilder = new EmbedBuilder();
+		final StringBuilder stringBuilder = new StringBuilder();
+		String types = "";
 		
 		if (pokedex) // se è una entry del pokedex, mostra le informazioni varie
 		{
 			stringBuilder.append(tipo[0]);
-			if (!(tipo[1].equals("")))
+			if (!(tipo[1].isEmpty()))
 			{
 				stringBuilder.append(" / ").append(tipo[1]);
 			}
@@ -244,7 +244,7 @@ public class Pokemon
 				embedBuilder.setImage(img);
 			}
 			
-			var color = shiny ? 0xFFD020 : 0xFF0000;
+			final int color = shiny ? 0xFFD020 : 0xFF0000;
 			embedBuilder.setColor(color);
 			
 			if (shiny)

@@ -115,12 +115,12 @@ public class Commands extends ListenerAdapter
 	@Override
 	public void onUserTyping(@NotNull UserTypingEvent event)
 	{
-		if (oneTimeOnly && random.nextInt(1,100) == 42)
-		{
+//		if (oneTimeOnly && random.nextInt(1,100) == 42)
+//		{
 			final String msg = String.format("Ehi, %s, vedo che stai scrivendo. Smettila.", event.getUser().getName());
 			channel.sendMessage(msg).queue(m->react(Emotes.ragey));
 			oneTimeOnly = false;
-		}
+//		}
 	}
 	
 	/** Questo metodo decide cosa fare quando un messaggio viene modificato */
@@ -1008,9 +1008,9 @@ public class Commands extends ListenerAdapter
 	private void encounter()
 	{
 		final String[] msgSplittato = messageRaw.split(" ");
-		String nomePokemon;
+		final String nomePokemon;
 		int idPokemon = random.nextInt(1,Pokemon.ALL);
-		boolean pokedex;
+		final boolean pokedex;
 		
 		try
 		{
@@ -1038,7 +1038,7 @@ public class Commands extends ListenerAdapter
 					pokemon.setShiny(true);
 			}
 			
-			pokemon.spawn(pokemon);
+			pokemon.spawn();
 			
 		}catch (Exception e)
 		{

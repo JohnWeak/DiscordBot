@@ -2,6 +2,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import java.awt.Color;
+import java.util.List;
 
 public class ThreadPokemon extends Thread
 {
@@ -54,13 +55,13 @@ public class ThreadPokemon extends Thread
 			
 			sleep(500); // necessario così che non si confonda fra i due ultimi messaggi inviati nel canale
 			
-			var history = Utilities.channelHistory(tc, false, 3);
+			final List<Message> history = Utilities.channelHistory(tc, false, 3);
 			if (history.isEmpty())
 			{
 				gion.send("Errore nel caricamento del channel history");
 				return;
 			}
-			var latest = history.get(0);
+			final Message latest = history.get(0);
 			m = tc.retrieveMessageById(latest.getId()).complete();
 			
 			
@@ -95,20 +96,15 @@ public class ThreadPokemon extends Thread
 	
 	public void runAway()
 	{
-		var pokemonNome = pokemon.getNome();
-		var msgFooter = pokemonNome + " ran away.";
-		var types = pokemon.getTipo();
+		final String pokemonNome = pokemon.getNome();
+		final String msgFooter;
+		final String[] types = pokemon.getTipo();
+		final String title = String.format("The wild %s fled.", pokemonNome);
 		
-		for (String s : types)
-		{
-			if (s.equalsIgnoreCase("flying"))
-			{
-				msgFooter = pokemonNome + " flew away.";
-				break;
-			}
-		}
+		msgFooter = (types[0].equalsIgnoreCase("flying") || types[1].equalsIgnoreCase("flying") ? String.format("%s flew away",pokemonNome) : String.format("%s ran away",pokemonNome));
 		
-		eb.setTitle("The wild " + pokemonNome + " fled.");
+		
+		eb.setTitle(title);
 		eb.setFooter(msgFooter);
 		eb.setColor(Color.GRAY);
 		

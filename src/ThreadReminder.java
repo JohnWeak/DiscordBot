@@ -72,6 +72,7 @@ public class ThreadReminder extends Thread
 			final String footer;
 			final EmbedBuilder eb;
 			final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm:ss");
+			
 			Thread.sleep(tempo);
 			end = LocalDateTime.now();
 			
