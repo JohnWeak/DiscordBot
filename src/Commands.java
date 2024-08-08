@@ -164,15 +164,12 @@ public class Commands extends ListenerAdapter
 	 * @param isBot <code>true</code> se l'autore del messaggio è un bot a sua volta, <code>false</code> altrimenti. */
 	public void privateMessage(boolean isBot)
 	{
-		var botOrHuman = isBot ? "Bot" : "User";
-		System.out.printf("\t%s %s = \"%s\"; // Private Message\n}\r", botOrHuman, authorName, messageRaw);
-		
 		if (isBot || authorID.equals(Utente.ID_GION))
 			return;
 		
-		var attachments = message.getAttachments();
-		var toSend = authorName + " ha scritto: \"" + messageRaw + "\"";
-		var gion = new PrivateMessage(Utente.getGion());
+		final List<Message.Attachment> attachments = message.getAttachments();
+		final String toSend = authorName + " ha scritto: \"" + messageRaw + "\"";
+		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
 		
 		if (attachments.isEmpty())
 			gion.send(toSend);
@@ -184,8 +181,8 @@ public class Commands extends ListenerAdapter
 		{
 			if (author.getId().equals(Utente.ID_ENIGMO))
 			{
-				PrivateMessage enigmo = new PrivateMessage(Utente.getEnigmo());
-				enigmo.send("<:"+Emotes.ragey+">");
+				final PrivateMessage enigmo = new PrivateMessage(Utente.getEnigmo());
+				enigmo.send(Emotes.readyToSend(Emotes.ragey));
 			}
 		}
 		
@@ -224,18 +221,19 @@ public class Commands extends ListenerAdapter
 	/**Questo metodo aggiunge a un messaggio la stessa reazione che piazza l'utente*/
 	public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event)
 	{
-		var emote = event.getReactionEmote();
+		final MessageReaction.ReactionEmote emote = event.getReactionEmote();
 		channel = event.getChannel();
 		messageID = event.getMessageIdLong();
 		message = channel.getHistory().getMessageById(messageID);
-		boolean isEmoji = emote.isEmoji();
+		final boolean isEmoji = emote.isEmoji();
 		
-		String emoteName = emote.getName(), emoteId = "";
+		final String emoteName = emote.getName();
+		String emoteId = "";
 		
 		if (!isEmoji)
 			emoteId = emote.getId();
 		
-		String reaction = (isEmoji ? emoteName : emoteName+":"+emoteId);
+		final String reaction = (isEmoji ? emoteName : emoteName+":"+emoteId);
 		
 		try
 		{
@@ -252,7 +250,7 @@ public class Commands extends ListenerAdapter
 	{
 		if (message != null)
 		{
-			List<Emote> emoteList = message.getEmotes();
+			final List<Emote> emoteList = message.getEmotes();
 			
 			for (Emote emote : emoteList)
 			{
