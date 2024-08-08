@@ -1,6 +1,7 @@
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.events.DisconnectEvent;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.ShutdownEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
@@ -98,7 +99,7 @@ public class Commands extends ListenerAdapter
 	} // fine onReady()
 	
 	@Override
-	public void onShutdown(@NotNull ShutdownEvent event)
+	public void onDisconnect(@NotNull DisconnectEvent event)
 	{
 		final CloseCode closeCode = event.getCloseCode();
 		final String meaning;
@@ -110,17 +111,17 @@ public class Commands extends ListenerAdapter
 			gion = new PrivateMessage(Utente.getGion());
 			gion.send("Mi sto spegnendo.\n"+meaning+"\n");
 		}
-	} // onShutdown()
+	}
 	
 	@Override
 	public void onUserTyping(@NotNull UserTypingEvent event)
 	{
-//		if (oneTimeOnly && random.nextInt(1,100) == 42)
-//		{
+		if (oneTimeOnly && random.nextInt(1,100) == 42)
+		{
 			final String msg = String.format("Ehi, %s, vedo che stai scrivendo. Smettila.", event.getUser().getName());
 			channel.sendMessage(msg).queue(m->react(Emotes.ragey));
 			oneTimeOnly = false;
-//		}
+		}
 	}
 	
 	/** Questo metodo decide cosa fare quando un messaggio viene modificato */
