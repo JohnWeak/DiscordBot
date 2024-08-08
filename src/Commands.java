@@ -103,12 +103,13 @@ public class Commands extends ListenerAdapter
 	{
 		final CloseCode closeCode = event.getCloseCode();
 		final String meaning;
-		final PrivateMessage gion;
+		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
+		
+		gion.send("lmao");
 		
 		if (closeCode != null)
 		{
 			meaning = closeCode.getMeaning();
-			gion = new PrivateMessage(Utente.getGion());
 			gion.send("Mi sto spegnendo.\n"+meaning+"\n");
 		}
 	}
