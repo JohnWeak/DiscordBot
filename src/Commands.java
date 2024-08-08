@@ -859,7 +859,7 @@ public class Commands extends ListenerAdapter
 		
 		remindersList.removeIf(r -> !r.isActive());
 		
-		EmbedBuilder embed;
+		final EmbedBuilder impostato, scaduto;
 		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
 		
 		if (remindersList.size() < MAX_REMINDERS)
@@ -874,7 +874,7 @@ public class Commands extends ListenerAdapter
 			final int days_int, hours_int, minutes_int, minimo, maxDays, maxHours, maxMinutes;
 			final ZonedDateTime now, future;
 			final ThreadReminder reminder;
-			final String success, author;
+			final String createdSuccess, endedSuccess, author;
 			
 			final String formatError = "I giorni `(d)` devono precedere le ore `(h)`, che devono precedere i minuti `(m)`. Promemoria non impostato.";
 			
@@ -934,17 +934,17 @@ public class Commands extends ListenerAdapter
 				final String legalHourValues = String.format("Valori ammessi: %d - %d", minimo, maxHours);
 				final String legalMinuteValues = String.format("Valori ammessi: %d - %d", minimo, maxMinutes);
 				
-				embed = new EmbedBuilder();
-				embed.setTitle(illegalValuesTitle);
-				embed.setColor(Color.RED);
-				embed.addField("d", legalDayValues,true);
-				embed.addField("h", legalHourValues,true);
-				embed.addField("m", legalMinuteValues,true);
-				embed.addField("Valori validi","`1d7m`\n`5d2h4m`\n`10m`",false);
-				embed.addField("Valori **non** validi","`11d`\n`5d205h4m`\n`1d5h700m`",false);
-				embed.setFooter("smh");
+				impostato = new EmbedBuilder();
+				impostato.setTitle(illegalValuesTitle);
+				impostato.setColor(Color.RED);
+				impostato.addField("d", legalDayValues,true);
+				impostato.addField("h", legalHourValues,true);
+				impostato.addField("m", legalMinuteValues,true);
+				impostato.addField("Valori validi","`1d7m`\n`5d2h4m`\n`10m`",false);
+				impostato.addField("Valori **non** validi","`11d`\n`5d205h4m`\n`1d5h700m`",false);
+				impostato.setFooter("smh");
 				
-				channel.sendMessageEmbeds(embed.build()).queue();
+				channel.sendMessageEmbeds(impostato.build()).queue();
 				return;
 			}
 			
@@ -970,26 +970,33 @@ public class Commands extends ListenerAdapter
 			}
 			nome = nome.trim();
 			
-			success = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%s`\n", nome, future.format(formatter));
+			createdSuccess = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%s`\n", nome, future.format(formatter));
+			endedSuccess = String.format("Il tuo promemoria, \"%s\", è scaduto!", nome);
 			author = "Impostato da ".concat(user.getName());
 			
-			embed = new EmbedBuilder();
-			embed.setTitle("Promemoria impostato!");
-			embed.setDescription(success);
-			embed.setColor(Color.RED);
-			embed.setAuthor(author, rickroll, user.getAvatarUrl());
+			impostato = new EmbedBuilder();
+			impostato.setTitle("Promemoria impostato!");
+			impostato.setDescription(createdSuccess);
+			impostato.setColor(Color.RED);
+			impostato.setAuthor(author, rickroll, user.getAvatarUrl());
 			
-			reminder = new ThreadReminder( time, channel, embed);
+			scaduto = new EmbedBuilder();
+			scaduto.setTitle("Promemoria scaduto!");
+			scaduto.setDescription(endedSuccess);
+			scaduto.setColor(Color.RED);
+			scaduto.setAuthor(author, rickroll, user.getAvatarUrl());
+			
+			reminder = new ThreadReminder( time, channel, scaduto);
 			remindersList.add(reminder);
 			reminder.start();
 			
-			channel.sendMessageEmbeds(embed.build()).queue();
+			channel.sendMessageEmbeds(impostato.build()).queue();
 		}
 		else
 		{
 			
-			embed = new EmbedBuilder();
-			embed.setTitle("Promemoria attuali");
+			impostato = new EmbedBuilder();
+			impostato.setTitle("Promemoria attuali");
 			for (ThreadReminder r : remindersList)
 			{
 				final String name = r.getName();
@@ -997,14 +1004,14 @@ public class Commands extends ListenerAdapter
 				final String desc = scad.format(formatter);
 				final MessageEmbed.Field rem = new MessageEmbed.Field(name,desc,true);
 				
-				embed.addField(rem);
+				impostato.addField(rem);
 			}
-			embed.setColor(Color.RED);
+			impostato.setColor(Color.RED);
 			
 			message.reply("Strunz, hai già impostato 3 promemoria. smh.").queue(l->
 			{
 				react(Emotes.smh);
-				l.replyEmbeds(embed.build()).queue();
+				l.replyEmbeds(impostato.build()).queue();
 			});
 		}
 		
