@@ -116,7 +116,7 @@ public class Commands extends ListenerAdapter
 	public void onReconnected(@NotNull ReconnectedEvent event)
 	{
 		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
-		gion.send("Riconnesso.");
+		gion.send("Reconnected.");
 	}
 	
 	@Override
