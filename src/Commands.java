@@ -975,6 +975,7 @@ public class Commands extends ListenerAdapter
 			embed.setTitle("Promemoria impostato!");
 			embed.setDescription(success);
 			embed.setColor(Color.RED);
+			embed.setThumbnail(user.getAvatarUrl());
 			embed.setFooter(footer);
 			
 			channel.sendMessageEmbeds(embed.build()).queue();

@@ -1,5 +1,6 @@
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.User;
 
 import java.awt.*;
 import java.time.LocalDateTime;
@@ -70,16 +71,17 @@ public class ThreadReminder extends Thread
 			final LocalDateTime end;
 			final String footer;
 			final EmbedBuilder eb;
-			final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			
+			final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm:ss");
+			final User u = Utente.getUtenteFromName(nomeUtente);
 			Thread.sleep(tempo);
 			end = LocalDateTime.now();
 			
-			footer = String.format("⏰ Promemoria di %s\t`%s`",nomeUtente, end.format(formatter));
+			footer = String.format("⏰ Promemoria di %s\t%s",nomeUtente, end.format(formatter));
 			
 			eb = new EmbedBuilder();
 			eb.setTitle("Promemoria scaduto!");
 			eb.setColor(Color.RED);
+			eb.setThumbnail(u == null ? "" : u.getAvatarUrl());
 			eb.addField(nome,"",false);
 			eb.setFooter(footer);
 			channel.sendMessageEmbeds(eb.build()).queue();
