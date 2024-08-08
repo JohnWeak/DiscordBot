@@ -105,12 +105,12 @@ public class Commands extends ListenerAdapter
 		final String meaning;
 		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
 		
-		gion.send("lmao");
+		gion.send("ehi tu, controlla onDisconnect");
 		
 		if (closeCode != null)
 		{
 			meaning = closeCode.getMeaning();
-			gion.send("Mi sto spegnendo.\n"+meaning+"\n");
+			gion.send("Mi disconnetto.\n"+meaning+"\n");
 		}
 	}
 	
