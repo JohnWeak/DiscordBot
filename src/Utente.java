@@ -13,7 +13,7 @@ public abstract class Utente
 	public static final String ID_BOWOT = "836586862213726228";
 	
 	// NOMI
-	public static final String NOME_JOHN = "JOHNWEAK";
+	public static final String NOME_JOHN = "JOHNWEAK_";
 	public static final String NOME_JOHN2 = "JOHN_WEAK";
 	public static final String NOME_JOHN3 = "JOHN WEAK";
 	public static final String NOME_ENIGMO = "ENIGMO";
@@ -37,7 +37,7 @@ public abstract class Utente
 		
 		try
 		{
-			utente = switch (nome)
+			utente = switch (nome.toUpperCase())
 			{
 				case NOME_JOHN -> ID_GION;
 				case NOME_ENIGMO -> ID_ENIGMO;
