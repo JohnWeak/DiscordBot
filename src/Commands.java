@@ -3,6 +3,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.DisconnectEvent;
 import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.events.ReconnectedEvent;
 import net.dv8tion.jda.api.events.ShutdownEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -101,17 +102,21 @@ public class Commands extends ListenerAdapter
 	@Override
 	public void onDisconnect(@NotNull DisconnectEvent event)
 	{
-		final CloseCode closeCode = event.getCloseCode();
-		final String meaning;
-		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
-		
-		gion.send("ehi tu, controlla onDisconnect");
-		
-		if (closeCode != null)
+		final CloseCode closeCode;
+		if ((closeCode = event.getCloseCode()) != null)
 		{
-			meaning = closeCode.getMeaning();
-			gion.send("Mi disconnetto.\n"+meaning+"\n");
+			final PrivateMessage gion = new PrivateMessage(Utente.getGion());
+			final String closingMessage = String.format("%s\n",closeCode.getMeaning());
+			
+			gion.send(closingMessage);
 		}
+	}
+	
+	@Override
+	public void onReconnected(@NotNull ReconnectedEvent event)
+	{
+		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
+		gion.send("Riconnesso.");
 	}
 	
 	@Override
