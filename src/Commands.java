@@ -973,7 +973,7 @@ public class Commands extends ListenerAdapter
 			createdSuccess = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%s`\n", nome, future.format(formatter));
 			endedSuccess = String.format("Il tuo promemoria, \"%s\", è scaduto!", nome);
 			author = "Impostato da ".concat(user.getName());
-			img = "https://creazilla-store.fra1.digitaloceanspaces.com/icons/3251164/timer-icon-md.png";
+			img = "stopwatch.png";
 			
 			impostato = new EmbedBuilder();
 			impostato.setTitle("Promemoria impostato!");
