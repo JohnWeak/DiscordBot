@@ -105,18 +105,26 @@ public class Commands extends ListenerAdapter
 		final CloseCode closeCode;
 		if ((closeCode = event.getCloseCode()) != null)
 		{
-			final PrivateMessage gion = new PrivateMessage(Utente.getGion());
+			final PrivateMessage[] users = new PrivateMessage[2];
 			final String closingMessage = String.format("%s\n",closeCode.getMeaning());
 			
-			gion.send(closingMessage);
+			users[0] = new PrivateMessage(Utente.getGion());
+			users[1] = new PrivateMessage(Utente.getEnigmo());
+			
+			for (PrivateMessage pm : users)
+				pm.send(closingMessage);
 		}
 	}
 	
 	@Override
 	public void onReconnected(@NotNull ReconnectedEvent event)
 	{
-		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
-		gion.send("Reconnected.");
+		final PrivateMessage[] users = new PrivateMessage[2];
+		users[0] = new PrivateMessage(Utente.getGion());
+		users[1] = new PrivateMessage(Utente.getEnigmo());
+		
+		for (PrivateMessage pm : users)
+			pm.send("Reconnected.");
 	}
 	
 	@Override
