@@ -23,7 +23,6 @@ public class ThreadPigeon extends Thread
 	public void run()
 	{
 		final int num = random.nextInt(500);
-		new PrivateMessage(Utente.getGion()).send(""+num);
 		try
 		{
 			if (num == 42)
