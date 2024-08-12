@@ -22,9 +22,11 @@ public class ThreadPigeon extends Thread
 	
 	public void run()
 	{
+		final int num = random.nextInt(500);
+		new PrivateMessage(Utente.getGion()).send(""+num);
 		try
 		{
-			if (random.nextInt(500) == 42)
+			if (num == 42)
 			{
 				final int pigeons = random.nextInt(5,11); // 5-10
 				final String pigeonEmote = Emotes.readyToSend(Emotes.pigeon);

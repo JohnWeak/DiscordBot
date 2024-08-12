@@ -4,7 +4,6 @@ import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.DisconnectEvent;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.ReconnectedEvent;
-import net.dv8tion.jda.api.events.ShutdownEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
@@ -102,6 +101,10 @@ public class Commands extends ListenerAdapter
 	@Override
 	public void onDisconnect(@NotNull DisconnectEvent event)
 	{
+		record RegisteredEvent(String a, LocalDateTime b) {}
+		
+		final ArrayList<RegisteredEvent> pog = new ArrayList<>();
+		
 		final CloseCode closeCode;
 		if ((closeCode = event.getCloseCode()) != null)
 		{
@@ -110,6 +113,8 @@ public class Commands extends ListenerAdapter
 			
 			users[0] = new PrivateMessage(Utente.getGion());
 			users[1] = new PrivateMessage(Utente.getEnigmo());
+			
+			
 			
 			for (PrivateMessage pm : users)
 				pm.send(closingMessage);
@@ -1162,8 +1167,8 @@ public class Commands extends ListenerAdapter
 			return;
 		}
 		
-		var ded = messageRaw.split(" ")[1];
-		final var mentionedUsers = message.getMentionedUsers();
+		String ded = messageRaw.split(" ")[1];
+		final List<User> mentionedUsers = message.getMentionedUsers();
 		if (!mentionedUsers.isEmpty())
 			ded = mentionedUsers.get(0).getName();
 		
@@ -1183,16 +1188,17 @@ public class Commands extends ListenerAdapter
 			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.imgflip.com%2F3ni7oz.jpg&f=1&nofb=1&ipt=2cf84114527ff5e7b02fb19ae74fe596b1d66baba35daa7eb7c8862adcdfe9af&ipo=images",
 			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.F17KjnL0a6N4Eat2f_ZOmwHaFH%26pid%3DApi&f=1&ipt=ff5e29783603bb76136acf9dc5ae713b54335765885fcd62b93be760cac71b9a&ipo=images"
 		};
-		final var cuoreDaUsare = cuori[random.nextInt(cuori.length)];
-		final var imgDaUsare = imgs[random.nextInt(imgs.length)];
+		final String cuoreDaUsare = cuori[random.nextInt(cuori.length)];
+		final String imgDaUsare = imgs[random.nextInt(imgs.length)];
 		
-		final var embed = new EmbedBuilder()
+		final MessageEmbed embed = new EmbedBuilder()
 			.setTitle("In loving memory of " + ded + " " + cuoreDaUsare)
 			.setColor(Color.black)
 			.setDescription("F")
 			.setImage(imgDaUsare)
 			.setFooter(authorName + " pays his respects.")
-			.build();
+			.build()
+		;
 		
 		channel.sendMessageEmbeds(embed).queue(l->react(Emotes.o7));
 		
