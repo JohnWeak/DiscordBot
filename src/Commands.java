@@ -101,24 +101,52 @@ public class Commands extends ListenerAdapter
 	@Override
 	public void onDisconnect(@NotNull DisconnectEvent event)
 	{
-		record RegisteredEvent(String a, LocalDateTime b) {}
+		if (true) return; // NOTA
+		
+		PrivateMessage[] users = null;
+		
+		record RegisteredEvent(String a, LocalDateTime b)
+		{
+			@Override
+			public String toString()
+			{
+				final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
+				return String.format("`%s` - `%s`", a, b.format(formatter));
+			}
+		}
 		
 		final ArrayList<RegisteredEvent> pog = new ArrayList<>();
 		
 		final CloseCode closeCode;
 		if ((closeCode = event.getCloseCode()) != null)
 		{
-			final PrivateMessage[] users = new PrivateMessage[2];
+			
+			users = new PrivateMessage[2];
+			
 			final String closingMessage = String.format("%s\n",closeCode.getMeaning());
 			
-			users[0] = new PrivateMessage(Utente.getGion());
-			users[1] = new PrivateMessage(Utente.getEnigmo());
+			final RegisteredEvent registeredEvent = new RegisteredEvent(closingMessage, LocalDateTime.now());
+			pog.add(registeredEvent);
 			
+			//users[0] = new PrivateMessage(Utente.getGion());
+			//users[1] = new PrivateMessage(Utente.getEnigmo());
 			
-			
-			for (PrivateMessage pm : users)
-				pm.send(closingMessage);
 		}
+		
+		if (users != null) //TODO CHECK IF TIME IS RIGHT
+		{
+			for (PrivateMessage pm : users)
+			{
+				for (RegisteredEvent e : pog)
+				{
+					pm.send(e.toString());
+				}
+			}
+			
+		}
+		
+		
+		
 	}
 	
 	@Override
