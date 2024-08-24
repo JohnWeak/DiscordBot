@@ -24,6 +24,8 @@ import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -55,6 +57,10 @@ public class Commands extends ListenerAdapter
 	private final ArrayList<ThreadReminder> remindersList = new ArrayList<>();
 	private boolean oneTimeOnly = true;
 	
+	private final User[] utenti = new User[]{Utente.getGion(), Utente.getEnigmo()};
+	private final MessageTask task = new MessageTask(utenti);
+	private final Timer timer = new Timer(true);
+	
 	private User user;
 	public String authorName;
 	private String authorID;
@@ -63,6 +69,33 @@ public class Commands extends ListenerAdapter
 	private JDA jda;
 	private Pokemon pokemon;
 	
+	public Commands()
+	{
+		final long period = 24 * 60 * 60 * 1000; // 24 ore in millisecondi
+		timer.schedule(task, calcDelay(), period);
+	}
+	
+	/**Calcola il ritardo iniziale fino al prossimo orario desiderato
+	 * @return la quantità, in millisecondi, di tempo che deve trascorrere prima di eseguire il task. */
+	private long calcDelay()
+	{
+		final int targetHour = 20, targetMinute = 0, targetSecond = 0;
+		final Calendar now, nextRun;
+		
+		now = Calendar.getInstance();
+		nextRun = (Calendar) now.clone();
+		
+		nextRun.set(Calendar.HOUR_OF_DAY, targetHour);
+		nextRun.set(Calendar.MINUTE, targetMinute);
+		nextRun.set(Calendar.SECOND, targetSecond);
+		
+		if (nextRun.before(now))
+		{
+			// Se l'orario desiderato è già passato per oggi, impostalo per il giorno successivo
+			nextRun.add(Calendar.DAY_OF_MONTH, 1);
+		}
+		return nextRun.getTimeInMillis() - now.getTimeInMillis();
+	}
 	
 	/** onReady() viene eseguita soltanto all'avvio del bot */
 	public void onReady(@NotNull ReadyEvent event)
@@ -101,63 +134,25 @@ public class Commands extends ListenerAdapter
 	@Override
 	public void onDisconnect(@NotNull DisconnectEvent event)
 	{
-		if (true) return; // NOTA
-		
-		PrivateMessage[] users = null;
-		
-		record RegisteredEvent(String a, LocalDateTime b)
-		{
-			@Override
-			public String toString()
-			{
-				final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
-				return String.format("`%s` - `%s`", a, b.format(formatter));
-			}
-		}
-		
-		final ArrayList<RegisteredEvent> pog = new ArrayList<>();
-		
 		final CloseCode closeCode;
+		final String closingMessage;
+		final RegisteredEvent registeredEvent;
+		
+		
 		if ((closeCode = event.getCloseCode()) != null)
 		{
+			closingMessage = String.format("%s\n",closeCode.getMeaning());
 			
-			users = new PrivateMessage[2];
-			
-			final String closingMessage = String.format("%s\n",closeCode.getMeaning());
-			
-			final RegisteredEvent registeredEvent = new RegisteredEvent(closingMessage, LocalDateTime.now());
-			pog.add(registeredEvent);
-			
-			//users[0] = new PrivateMessage(Utente.getGion());
-			//users[1] = new PrivateMessage(Utente.getEnigmo());
-			
+			registeredEvent = new RegisteredEvent(closingMessage, LocalDateTime.now());
+			task.addEvent(registeredEvent);
 		}
-		
-		if (users != null) //TODO CHECK IF TIME IS RIGHT
-		{
-			for (PrivateMessage pm : users)
-			{
-				for (RegisteredEvent e : pog)
-				{
-					pm.send(e.toString());
-				}
-			}
-			
-		}
-		
-		
 		
 	}
 	
 	@Override
 	public void onReconnected(@NotNull ReconnectedEvent event)
 	{
-		final PrivateMessage[] users = new PrivateMessage[2];
-		users[0] = new PrivateMessage(Utente.getGion());
-		users[1] = new PrivateMessage(Utente.getEnigmo());
-		
-		for (PrivateMessage pm : users)
-			pm.send("Reconnected.");
+		// todo
 	}
 	
 	@Override
