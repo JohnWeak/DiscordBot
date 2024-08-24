@@ -951,20 +951,19 @@ public class Commands extends ListenerAdapter
 			
 			future = now.plusSeconds(time/1000);
 			
-			String nome = "";
+			final StringBuilder nome = new StringBuilder();
 			
 			for (int i = 2; i < mes.length; i++)
 			{
-				nome = nome.concat(" ").concat(mes[i]);
+				nome.append(" ").append(mes[i]);
 			}
 			
-			if (nome.isBlank())
+			if (nome.isEmpty())
 			{
-				nome = "Promemoria Senza Nome";
+				nome.append("Promemoria Senza Nome");
 			}
-			nome = nome.trim();
 			
-			createdSuccess = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%s`\n", nome, future.format(formatter));
+			createdSuccess = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%s`\n", nome.toString().trim(), future.format(formatter));
 			endedSuccess = String.format("Il promemoria \"%s\" è scaduto!", nome);
 			author = "Impostato da ".concat(user.getName());
 			img = "https://thumbs.dreamstime.com/b/reminder-icon-vector-illustration-simple-vector-icon-reminder-icon-vector-illustration-175544158.jpg";
@@ -1032,11 +1031,12 @@ public class Commands extends ListenerAdapter
 		{
 			if (msgSplittato.length > 1)
 			{
+				final StringBuilder s = new StringBuilder();
 				nomePokemon = msgSplittato[1];
 				idPokemon = Pokemon.getId(nomePokemon);
 				if (idPokemon <= 0)
 				{
-					message.reply("Il pokedex non ha informazioni su `" + nomePokemon + "`.").queue();
+					message.reply(s.append("Il pokedex non ha informazioni su `").append(nomePokemon).append("`.")).queue();
 					return;
 				}
 				pokedex = true;
@@ -1064,10 +1064,10 @@ public class Commands extends ListenerAdapter
 	
 	public void cattura(Pokemon pokemon)
 	{
-		ThreadPokemon t;
+		final ThreadPokemon t;
 		if (pokemon == null || !pokemon.isCatturabile() || pokemon.isCatturato())
 		{
-			message.reply("Non puoi catturarlo gne gne").queue();
+			message.reply("Errore durante la cattura.").queue();
 			return;
 		}
 		
@@ -1120,16 +1120,26 @@ public class Commands extends ListenerAdapter
 	/** Lancia una moneta */
 	public void coinflip()
 	{
-		final var testaEmote = "<:" + Emotes.pogey + ">";
-		final var croceEmote = "<:" + Emotes.pigeon + ">";
-		final var lancioMoneta = authorName + " lancia una moneta...";
+		final String startEmote = "<:", endEmote = ">";
+		final StringBuilder testaEmote, croceEmote, lancioMoneta, responso, testaStringa, croceStringa;
+		final boolean headsOrTails = random.nextBoolean();
+		
+		testaEmote = new StringBuilder();
+		croceEmote = new StringBuilder();
+		lancioMoneta = new StringBuilder();
+		responso = new StringBuilder();
+		testaStringa = new StringBuilder();
+		croceStringa = new StringBuilder();
+		
+		testaEmote.append(startEmote).append(Emotes.pogey).append(endEmote);
+		croceEmote.append(startEmote).append(Emotes.pigeon).append(endEmote);
+		lancioMoneta.append(authorName).append(" lancia una moneta...");
+		responso.append(lancioMoneta).append("\n**È uscito** ");
+		
+		testaStringa.append("**").append(testaEmote).append("! (Testa)**");
+		croceEmote.append("**").append(croceEmote).append("! (Croce)**");
 
-		final var headsOrTails = random.nextBoolean();
-		final var responso = lancioMoneta+"\n**È uscito** ";
-		final var testaStringa = "**"+testaEmote+"! (Testa)**";
-		final var croceStringa = "**"+croceEmote+"! (Croce)**";
-
-		var finalResponso = responso.concat(headsOrTails ? testaStringa : croceStringa);
+		final String finalResponso = responso.append(headsOrTails ? testaStringa : croceStringa).toString();
 
 		channel.sendTyping().queue();
 		message.reply(lancioMoneta).queue(m ->
@@ -1155,7 +1165,8 @@ public class Commands extends ListenerAdapter
 		
 		if (ded.equalsIgnoreCase(authorName))
 		{
-			message.reply("Omaggi te stesso? <:"+Emotes.smh+">").queue();
+			final StringBuilder s = new StringBuilder();
+			message.reply(s.append("Omaggi te stesso? <:").append(Emotes.smh).append(">").toString()).queue();
 			return;
 		}
 		
@@ -1172,12 +1183,15 @@ public class Commands extends ListenerAdapter
 		final String cuoreDaUsare = cuori[random.nextInt(cuori.length)];
 		final String imgDaUsare = imgs[random.nextInt(imgs.length)];
 		
+		final StringBuilder title = new StringBuilder();
+		final StringBuilder footer = new StringBuilder();
+		
 		final MessageEmbed embed = new EmbedBuilder()
-			.setTitle("In loving memory of " + ded + " " + cuoreDaUsare)
+			.setTitle(title.append("In loving memory of ").append(ded).append(" ").append(cuoreDaUsare).toString())
 			.setColor(Color.black)
 			.setDescription("F")
 			.setImage(imgDaUsare)
-			.setFooter(authorName + " pays his respects.")
+			.setFooter(footer.append(authorName).append(" pays his respects.").toString())
 			.build()
 		;
 		
@@ -1236,13 +1250,14 @@ public class Commands extends ListenerAdapter
 				"\uD83C\uDDFE", "\uD83C\uDDFF"
 			}; // array di lettere emoji A -> Z
 			
-			String descrizione = "";
-			embedBuilder.setTitle(domanda+"?");
+			final StringBuilder title = new StringBuilder();
+			final StringBuilder descrizione = new StringBuilder();
+			embedBuilder.setTitle(title.append(domanda).append("?").toString());
 			
 			for (int i = 0; i < lenghtRisposte; i++)
 			{
 				risposte[i] = risposte[i].trim();
-				descrizione = descrizione.concat(reactionLetters[i] + "\t" + risposte[i]) + "\n";
+				descrizione.append(reactionLetters[i]).append("\t").append(risposte[i]).append("\n");
 			}
 			
 			embedBuilder.setDescription(descrizione);
@@ -1253,10 +1268,7 @@ public class Commands extends ListenerAdapter
 				for (int i = 0; i < lenghtRisposte; i++)
 					message.addReaction(reactionLetters[i]).queue();
 			});
-			
 		}
-		
-		
 	} // fine sondaggio()
 	
 	/** Infastidisce le persone */
