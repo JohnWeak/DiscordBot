@@ -51,7 +51,6 @@ public class Commands extends ListenerAdapter
 	public static TextChannel canaleBotPokemon;
 	public static TextChannel canaleBot;
 	
-	private final Locale italian = Locale.ITALIAN;
 	private final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	private final boolean moduloSicurezza = false;
 	private final ArrayList<ThreadReminder> remindersList = new ArrayList<>();
@@ -103,9 +102,9 @@ public class Commands extends ListenerAdapter
 		commandsHashMap = Cmd.init();
 		
 		jda = event.getJDA();
-		final Activity act = jda.getPresence().getActivity();
+		// final Activity act = jda.getPresence().getActivity();
 		
-		String activityType="act_type", nomeActivity="act_name", activityTradotta="act_trad";
+		// String activityType="act_type", nomeActivity="act_name", activityTradotta="act_trad";
 		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
 		
 		try
@@ -118,12 +117,12 @@ public class Commands extends ListenerAdapter
 			error.print(object, e);
 		}
 		
-		if (act != null)
-		{
-			activityType = act.getType().toString();
-		    nomeActivity = "**" + act.getName() + "**";
-		    activityTradotta = activityType.equals("WATCHING") ? "guardo " : "gioco a ";
-		}
+//		if (act != null)
+//		{
+//			activityType = act.getType().toString();
+//		    nomeActivity = "**" + act.getName() + "**";
+//		    activityTradotta = activityType.equals("WATCHING") ? "guardo " : "gioco a ";
+//		}
 		
 		// moduloDiSicurezza();
 		
@@ -138,7 +137,6 @@ public class Commands extends ListenerAdapter
 		final String closingMessage;
 		final RegisteredEvent registeredEvent;
 		
-		
 		if ((closeCode = event.getCloseCode()) != null)
 		{
 			closingMessage = String.format("%s\n",closeCode.getMeaning());
@@ -147,12 +145,6 @@ public class Commands extends ListenerAdapter
 			task.addEvent(registeredEvent);
 		}
 		
-	}
-	
-	@Override
-	public void onReconnected(@NotNull ReconnectedEvent event)
-	{
-		// todo
 	}
 	
 	@Override
@@ -209,13 +201,14 @@ public class Commands extends ListenerAdapter
 			return;
 		
 		final List<Message.Attachment> attachments = message.getAttachments();
-		final String toSend = authorName + " ha scritto: \"" + messageRaw + "\"";
+		final StringBuilder toSend = new StringBuilder();
+		toSend.append(authorName).append(" ha scritto \"").append(messageRaw).append("\"");
 		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
 		
 		if (attachments.isEmpty())
-			gion.send(toSend);
+			gion.send(toSend.toString());
 		else
-			gion.send(toSend, attachments.get(0));
+			gion.send(toSend.toString(), attachments.get(0));
 		
 		
 		if (moduloSicurezza)
@@ -311,9 +304,9 @@ public class Commands extends ListenerAdapter
 	public void checkForKeywords(String msgStrippedLowerCase)
 	{
 		final String[] args = messageRaw.split(" ");
-		final String comando = args[0].toLowerCase(italian);
+		final String comando = args[0].toLowerCase();
 		boolean reply = false;
-		String msgReply = "";
+		final StringBuilder msgReply = new StringBuilder();
 		
 		// se è un bot a mandare il messaggio, ignoralo per evitare loop di messaggi
 		if (author.isBot())
@@ -358,11 +351,13 @@ public class Commands extends ListenerAdapter
 					{
 						if (auth.isEmpty())
 						{
-							errorString.print(object,"<@"+Utente.ID_GION+">\n`auth è una stringa vuota`.");
+							final StringBuilder s = new StringBuilder();
+							s.append("<@").append(Utente.ID_GION).append(">\n`auth è una stringa vuota.`");
+							errorString.print(object,s.toString());
 							return;
 						}
 						
-						var years = (numGiorni / 365);
+						final int years = (numGiorni / 365);
 						anniversario(auth, years);
 					}
 				} // fine if daily streak
@@ -524,7 +519,7 @@ public class Commands extends ListenerAdapter
 		if (msgStrippedLowerCase.contains("cl__z"))
 		{
 			reply = true;
-			msgReply += "Sempre sia lodato\n";
+			msgReply.append("Sempre sia lodato\n");
 		}
 		
 		if (msgStrippedLowerCase.contains("scarab"))
@@ -567,7 +562,7 @@ public class Commands extends ListenerAdapter
 		{
 			reply = true;
 			int n = random.nextInt(0, 100);
-			msgReply += "Numero casuale: **"+n+"**";
+			msgReply.append("Numero casuale: **").append(n).append("**");
 		}
 		
 		if (msgStrippedLowerCase.equalsIgnoreCase("cancella questo messaggio"))
@@ -580,12 +575,6 @@ public class Commands extends ListenerAdapter
 				message.delete().queue();
 			}
 		}
-		
-		if ((msgStrippedLowerCase.contains("ehil")) && author.getDiscriminator().equals("4781"))
-		{
-			reply = true;
-			msgReply += "Salve!";
-		}
 			
 		if (msgStrippedLowerCase.contains("non vedo l'ora") || msgStrippedLowerCase.contains("che ore sono") || msgStrippedLowerCase.contains("che ora è"))
 		{
@@ -593,34 +582,34 @@ public class Commands extends ListenerAdapter
 			final GregorianCalendar date = Utilities.getLocalizedCalendar();
 			final int hour = date.get(Calendar.HOUR_OF_DAY);
 			final int minutes = date.get(Calendar.MINUTE);
-
-			msgReply += switch (hour)
+			
+			msgReply.append(switch (hour) // switch nello stringbuilder... CAFONATA, ADORO!
 			{
 				case 0 -> "È ";
 				case 1 -> "È l' ";
 				default -> "Sono le ";
-			};
+			});
 			
 			if (random.nextInt(2) == 0)
 			{
-				msgReply += hour + ":";
+				msgReply.append(hour).append(":");
 				if (minutes < 10)
-					msgReply += "0" + minutes + "\n";
+					msgReply.append("0").append(minutes).append("\n");
 				else
-					msgReply += minutes + "\n";
+					msgReply.append(minutes).append("\n");
 			}
 			else
 			{
 				final Ore orario = new Ore(hour, minutes);
 				
-				msgReply += orario.getOra();
+				msgReply.append(orario.getOra());
 
-				msgReply += switch (minutes)
+				msgReply.append(switch (minutes)
 				{
 					case 0 -> "";
 					case 1 -> " e uno";
 					default -> " e " + orario.getMinuti();
-				};
+				});
 			}
 		}
 		
@@ -630,25 +619,27 @@ public class Commands extends ListenerAdapter
 		{
 			if (flag && msgStrippedLowerCase.contains(s))
 			{
+				final StringBuilder r = new StringBuilder();
+				
 				flag = false;
 				final int bound = 1000;
 				if (random.nextInt(bound) < bound - 1)
-					message.reply(Utilities.getSaluto() + " anche a te").queue();
+					message.reply(r.append(Utilities.getSaluto()).append(" anche a te").toString()).queue();
 				else
-					message.reply("No, vaffanculo "+Emotes.readyToSend(Emotes.ragey)).queue();
+					message.reply(r.append("No, vaffanculo ").append(Emotes.readyToSend(Emotes.ragey)).toString()).queue();
 			}
 		}
 		
 		if (msgStrippedLowerCase.matches("dammi il (?:cinque|5)") || msgStrippedLowerCase.contains("high five"))
 		{
 			reply = true;
-			msgReply += "🤚🏻\n";
+			msgReply.append("🤚🏻\n");
 		}
 		
 		if (msgStrippedLowerCase.contains("grazie") && random.nextInt(50) == 42)
 		{
 			reply = true;
-			msgReply += "Prego.\n";
+			msgReply.append("Prego.\n");
 		}
 		
 		if (msgStrippedLowerCase.matches("egg *dog"))
@@ -663,47 +654,14 @@ public class Commands extends ListenerAdapter
 		if (msgStrippedLowerCase.contains("deez nuts") && authorID.equals(Utente.ID_ENIGMO))
 		{
 			reply = true;
-			msgReply += "DEEZ NUTS, Enigmo!\n";
+			msgReply.append("DEEZ NUTS, Enigmo!\n");
 			reazioni.add(Emoji.ARACHIDI);
 		}
 		
 		if (msgStrippedLowerCase.contains("serve aiuto"))
 		{
 			reply = true;
-			msgReply += "Nemico assente!\n";
-		}
-		
-		var users = message.getMentionedUsers();
-		
-		if (!users.isEmpty() && users.get(0).getId().equals(Utente.ID_BOWOT))
-		{
-			boolean matchFound = false;
-			final String[] cases = {"che fai", "cosa fai", "che stai facendo", "cazzo fai", "minchia fai"};
-			for (String m : cases)
-			{
-				if (msgStrippedLowerCase.contains(m))
-				{
-					matchFound = true;
-					break;
-				}
-			}
-			
-			if (matchFound)
-			{
-				final String actTrad, name, tipo, saluto, activity;
-				String risposta;
-				
-				actTrad = Main.getActivityTradotta();
-				name = Main.getActivity().getName();
-				tipo = Main.getTipo();
-				saluto = (random.nextInt(5) == 3) ? Utilities.getSaluto() : "Ciao";
-				activity = actTrad.equals("guardo") ? "guardando " : "giocando a";
-				
-				risposta = String.format("%s, sto %s **%s**", saluto, activity, name);
-				risposta += tipo.equals("gioco") ? " ("+tipo+")." : ".";
-				
-				message.reply(risposta).queue();
-			}
+			msgReply.append("Nemico assente!\n");
 		}
 		
 //		if (msgStrippedLowerCase.contains("") && random.nextInt(42) == 0){}
