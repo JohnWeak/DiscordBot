@@ -676,9 +676,9 @@ public class Commands extends ListenerAdapter
 	/**Ottiene le emote custom del canale*/
 	private void getEmotes()
 	{
-		final var emotesArray = Arrays.toString(canaleBot.getGuild().getEmotes().toArray());
+		final String emotesArray = Arrays.toString(canaleBot.getGuild().getEmotes().toArray());
 		// discord limita i messaggi a 2000 caratteri per messaggio
-		final var msg = emotesArray.length() > 2000 ? emotesArray.substring(0,1999) : emotesArray;
+		final String msg = emotesArray.length() > 2000 ? emotesArray.substring(0,1999) : emotesArray;
 		channel.sendMessage(msg).queue();
 		
 		/* ********
