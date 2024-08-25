@@ -29,7 +29,7 @@ public class MessageTask extends TimerTask
 				{
 					for (User u : usersToNotify)
 					{
-						new PrivateMessage(u).send(event.description());
+						new PrivateMessage(u).send(event.toString());
 					}
 				}
 			}
