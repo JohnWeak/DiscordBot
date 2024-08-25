@@ -287,6 +287,7 @@ public class Commands extends ListenerAdapter
 			{
 				error.print(object, e);
 			}
+			
 		}
 		
 		final String reaction = (isEmoji ? emoteName.toString() : emoteName.append(":").append(emoteID).toString());
