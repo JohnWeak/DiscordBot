@@ -55,6 +55,7 @@ public class Commands extends ListenerAdapter
 	private final boolean moduloSicurezza = false;
 	private final ArrayList<ThreadReminder> remindersList = new ArrayList<>();
 	private boolean oneTimeOnly = true;
+	private static final ArrayList<String> messagesToDelete = new ArrayList<>();
 	
 	private final User[] utenti = new User[]{Utente.getGion(), Utente.getEnigmo()};
 	private final MessageTask task = new MessageTask(utenti);
@@ -261,13 +262,34 @@ public class Commands extends ListenerAdapter
 		message = channel.getHistory().getMessageById(messageID);
 		final boolean isEmoji = emote.isEmoji();
 		
-		final String emoteName = emote.getName();
-		String emoteId = "";
+		final StringBuilder emoteName = new StringBuilder(emote.getName());
+		final StringBuilder emoteID = new StringBuilder();
 		
 		if (!isEmoji)
-			emoteId = emote.getId();
+		{
+			emoteID.append(emote.getId());
+		}
+		else if (emote.getEmoji().equals(Emoji.CHECK) || emote.getEmoji().equals(Emoji.CROSS))
+		{
+			try
+			{
+				final String msgToDelete = event.getMessageId();
+				for (String m : messagesToDelete)
+				{
+					if (m.equals(msgToDelete))
+					{
+						messagesToDelete.remove(msgToDelete);
+						message.delete().queue();
+						return;
+					}
+				}
+			}catch (Exception e)
+			{
+				error.print(object, e);
+			}
+		}
 		
-		final String reaction = (isEmoji ? emoteName : emoteName+":"+emoteId);
+		final String reaction = (isEmoji ? emoteName.toString() : emoteName.append(":").append(emoteID).toString());
 		
 		try
 		{
@@ -1798,5 +1820,14 @@ public class Commands extends ListenerAdapter
 		}
 	} // fine dado()
 	
+	public static void addToList(String id)
+	{
+		if (id == null || id.isEmpty() || id.isBlank())
+		{
+			return;
+		}
+		
+		messagesToDelete.add(id);
+	}
 	
 } // fine classe Commands

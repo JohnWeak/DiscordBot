@@ -7,5 +7,7 @@ public abstract class Emoji
 	public final static String POLLICE_SU = "👍🏻";
 	public final static String POLLICE_GIU = "👎🏻";
 	public final static String MELANZANA = "🍆";
+	public final static String CHECK = "✅";
+	public final static String CROSS = "❌";
 	
 } // fine classe Emoji

@@ -8,7 +8,6 @@ public class ThreadReminder extends Thread
 	private final int tempo;
 	private final MessageChannel channel;
 	private final EmbedBuilder eb;
-	
 	private final LocalDateTime start, end;
 	private boolean active;
 	
@@ -42,16 +41,22 @@ public class ThreadReminder extends Thread
 		return end;
 	}
 	
+	private String id;
+	
 	@Override
 	public void run()
 	{
-		final LocalDateTime end;
 		try
 		{
 			Thread.sleep(tempo);
-			end = LocalDateTime.now();
 			
-			channel.sendMessageEmbeds(eb.build()).queue();
+			channel.sendMessageEmbeds(eb.build()).queue(l ->
+			{
+				l.addReaction(Emoji.CHECK).queue();
+				l.addReaction(Emoji.CROSS).queue();
+				
+				Commands.addToList(l.getId());
+			});
 			
 		}catch (InterruptedException e)
 		{
