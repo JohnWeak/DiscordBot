@@ -71,8 +71,8 @@ public class Commands extends ListenerAdapter
 	
 	public Commands()
 	{
-		final long period = 24 * 60 * 60 * 1000; // 24 ore in millisecondi
-		timer.schedule(task, calcDelay(), period);
+		//final long period = 24 * 60 * 60 * 1000; // 24 ore in millisecondi
+		//timer.schedule(task, calcDelay(), period);
 	}
 	
 	/**Calcola il ritardo iniziale fino al prossimo orario desiderato
