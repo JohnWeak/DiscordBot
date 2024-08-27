@@ -271,6 +271,7 @@ public class Commands extends ListenerAdapter
 		final StringBuilder emoteName = new StringBuilder(emote.getName());
 		final StringBuilder emoteID = new StringBuilder();
 		
+		
 		if (!isEmoji)
 		{
 			emoteID.append(emote.getId());
