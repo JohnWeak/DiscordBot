@@ -50,13 +50,7 @@ public class ThreadReminder extends Thread
 		{
 			Thread.sleep(tempo);
 			
-			channel.sendMessageEmbeds(eb.build()).queue(l ->
-			{
-				l.addReaction(Emoji.CHECK).queue();
-				l.addReaction(Emoji.CROSS).queue();
-				
-				Commands.addToList(l.getId());
-			});
+			channel.sendMessageEmbeds(eb.build()).queue();
 			
 		}catch (InterruptedException e)
 		{
