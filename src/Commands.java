@@ -55,7 +55,6 @@ public class Commands extends ListenerAdapter
 	private final boolean moduloSicurezza = false;
 	private final ArrayList<ThreadReminder> remindersList = new ArrayList<>();
 	private boolean oneTimeOnly = true;
-	private static final ArrayList<String> messagesToDelete = new ArrayList<>();
 	
 	private final MessageTask task = new MessageTask();
 	
@@ -1807,15 +1806,5 @@ public class Commands extends ListenerAdapter
 			error.print(object, e);
 		}
 	} // fine dado()
-	
-	public static void addToList(String id)
-	{
-		if (id == null || id.isEmpty() || id.isBlank())
-		{
-			return;
-		}
-		
-		messagesToDelete.add(id);
-	}
 	
 } // fine classe Commands
