@@ -256,6 +256,13 @@ public class Commands extends ListenerAdapter
 	/**Questo metodo aggiunge a un messaggio la stessa reazione che piazza l'utente*/
 	public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event)
 	{
+		// ignora le tue stesse reazioni
+		if (author.getId().equals(Utente.ID_BOWOT))
+		{
+			System.out.println("test pls cancellami sono in onMessageReactionAdd al rigo 262 circa");
+			return;
+		}
+		
 		final MessageReaction.ReactionEmote emote = event.getReactionEmote();
 		channel = event.getChannel();
 		messageID = event.getMessageIdLong();
@@ -268,27 +275,6 @@ public class Commands extends ListenerAdapter
 		if (!isEmoji)
 		{
 			emoteID.append(emote.getId());
-		}
-		else if (emote.getEmoji().equals(Emoji.CHECK) || emote.getEmoji().equals(Emoji.CROSS))
-		{
-			System.out.printf("nome:{%s} emoji:{%s}\n",emote.getName(), emote.getEmoji());
-			try
-			{
-				final String msgToDelete = event.getMessageId();
-				for (String m : messagesToDelete)
-				{
-					if (m.equals(msgToDelete))
-					{
-						messagesToDelete.remove(msgToDelete);
-						message.delete().queue();
-						return;
-					}
-				}
-			}catch (Exception e)
-			{
-				error.print(object, e);
-			}
-			
 		}
 		
 		final String reaction = (isEmoji ? emoteName.toString() : emoteName.append(":").append(emoteID).toString());
