@@ -271,6 +271,7 @@ public class Commands extends ListenerAdapter
 		}
 		else if (emote.getEmoji().equals(Emoji.CHECK) || emote.getEmoji().equals(Emoji.CROSS))
 		{
+			System.out.printf("nome:{%s} emoji:{%s} id:{%d}\n",emote.getName(), emote.getEmoji(), emote.getId());
 			try
 			{
 				final String msgToDelete = event.getMessageId();
