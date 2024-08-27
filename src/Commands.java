@@ -57,8 +57,7 @@ public class Commands extends ListenerAdapter
 	private boolean oneTimeOnly = true;
 	private static final ArrayList<String> messagesToDelete = new ArrayList<>();
 	
-	private final User[] utenti = new User[]{Utente.getGion(), Utente.getEnigmo()};
-	private final MessageTask task = new MessageTask(utenti);
+	private final MessageTask task = new MessageTask();
 	private final Timer timer = new Timer(true);
 	
 	private User user;

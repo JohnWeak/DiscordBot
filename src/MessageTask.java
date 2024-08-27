@@ -7,17 +7,13 @@ import java.util.TimerTask;
 public class MessageTask extends TimerTask
 {
 	private final ArrayList<RegisteredEvent> allEvents = new ArrayList<>();
-	private final User[] usersToNotify;
 	
-	
-	public MessageTask(User[] usersToNotify)
-	{
-		this.usersToNotify = usersToNotify;
-	}
+	public MessageTask() { }
 	
 	@Override
 	public void run()
 	{
+		final User[] usersToNotify = new User[]{Utente.getGion(), Utente.getEnigmo()};
 		final Random random = new Random();
 		final int DUPLICATES = 10;
 		
