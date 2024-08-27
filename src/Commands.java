@@ -58,7 +58,6 @@ public class Commands extends ListenerAdapter
 	private static final ArrayList<String> messagesToDelete = new ArrayList<>();
 	
 	private final MessageTask task = new MessageTask();
-	private final Timer timer = new Timer(true);
 	
 	private User user;
 	public String authorName;
@@ -70,7 +69,9 @@ public class Commands extends ListenerAdapter
 	
 	public Commands()
 	{
+		final Timer timer = new Timer(true);
 		final long period = 24 * 60 * 60 * 1000; // 24 ore in millisecondi
+		
 		timer.schedule(task, calcDelay(), period);
 	}
 	
