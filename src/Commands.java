@@ -150,12 +150,19 @@ public class Commands extends ListenerAdapter
 	@Override
 	public void onUserTyping(@NotNull UserTypingEvent event)
 	{
-		if (oneTimeOnly && random.nextInt(1,100) == 42)
+		try
 		{
-			final String msg = String.format("Ehi, %s, vedo che stai scrivendo. Smettila.", event.getUser().getName());
-			channel.sendMessage(msg).queue(m->react(Emotes.ragey));
-			oneTimeOnly = false;
+			System.out.printf("%s\n%s\n%s", event, event.getUser(), event.getType());
+		}catch (Exception e)
+		{
+			System.out.println("È sploso onUserTyping");
 		}
+//		if (oneTimeOnly && random.nextInt(1,100) == 42)
+//		{
+//			final String msg = String.format("Ehi, %s, vedo che stai scrivendo. Smettila.", event.getUser().getName());
+//			channel.sendMessage(msg).queue(m->react(Emotes.ragey));
+//			oneTimeOnly = false;
+//		}
 	}
 	
 	/** Questo metodo decide cosa fare quando un messaggio viene modificato */

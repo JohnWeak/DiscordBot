@@ -15,10 +15,12 @@ public class MessageTask extends TimerTask
 	{
 		final User[] usersToNotify = new User[]{Utente.getGion(), Utente.getEnigmo()};
 		final Random random = new Random();
-		final int DUPLICATES = 10;
+		final int DUPLICATES = 5;
+		final StringBuilder eventString = new StringBuilder();
 		
 		if (random.nextInt(69420) == 42)
 		{
+			eventString.append("Oh no...\n");
 			for (var event : allEvents)
 			{
 				for (int i = 0; i < DUPLICATES; i++)
@@ -29,16 +31,17 @@ public class MessageTask extends TimerTask
 					}
 				}
 			}
+			eventString.setLength(0);
 			return;
 		}
 		
 		
-		final StringBuilder eventString = new StringBuilder();
+		eventString.append("Here's the recap of all the disconnection events.\n");
 		for (RegisteredEvent event : allEvents)
 		{
 			eventString.append(event.toString());
 		}
-		
+		eventString.append("End of recap. Enjoy the rest of the day. Or don't, I don't really care.");
 		for (User u : usersToNotify)
 		{
 			new PrivateMessage(u).send(eventString.toString());
