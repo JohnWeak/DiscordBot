@@ -149,12 +149,6 @@ public class Commands extends ListenerAdapter
 		
 	}
 	
-	@Override
-	public void onUserTyping(@NotNull UserTypingEvent event)
-	{
-	
-	}
-	
 	/** Questo metodo decide cosa fare quando un messaggio viene modificato */
 	public void onMessageUpdate(@NotNull MessageUpdateEvent event)
 	{ //
@@ -170,10 +164,6 @@ public class Commands extends ListenerAdapter
 		user = event.getAuthor();
 		authorID = user.getId();
 		
-		if (event.getMember() != null)
-			System.out.println(PermissionUtil.getExplicitPermission(event.getMember()));
-		
-		
 		identifyLatestMessage(event, null);
 		
 		if (event.isFromGuild())
@@ -183,7 +173,6 @@ public class Commands extends ListenerAdapter
 	
 		if (random.nextInt(100) == 42)
 			jda.getPresence().setActivity(Main.selectActivity());
-		
 		
 	} // fine onMessageReceived()
 	
