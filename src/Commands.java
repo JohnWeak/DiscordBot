@@ -1,5 +1,6 @@
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.DisconnectEvent;
 import net.dv8tion.jda.api.events.ReadyEvent;
@@ -150,19 +151,8 @@ public class Commands extends ListenerAdapter
 	@Override
 	public void onUserTyping(@NotNull UserTypingEvent event)
 	{
-		try
-		{
-			System.out.printf("%s\n%s\n%s", event, event.getUser(), event.getType());
-		}catch (Exception e)
-		{
-			System.out.println("È sploso onUserTyping");
-		}
-//		if (oneTimeOnly && random.nextInt(1,100) == 42)
-//		{
-//			final String msg = String.format("Ehi, %s, vedo che stai scrivendo. Smettila.", event.getUser().getName());
-//			channel.sendMessage(msg).queue(m->react(Emotes.ragey));
-//			oneTimeOnly = false;
-//		}
+		System.out.println("Ciao");
+		System.out.println(event);
 	}
 	
 	/** Questo metodo decide cosa fare quando un messaggio viene modificato */
