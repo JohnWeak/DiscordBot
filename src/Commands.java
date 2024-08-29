@@ -14,6 +14,7 @@ import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import net.dv8tion.jda.api.requests.CloseCode;
+import net.dv8tion.jda.internal.utils.PermissionUtil;
 import org.jetbrains.annotations.NotNull;
 
 import org.json.simple.JSONArray;
@@ -151,8 +152,7 @@ public class Commands extends ListenerAdapter
 	@Override
 	public void onUserTyping(@NotNull UserTypingEvent event)
 	{
-		System.out.println("Ciao");
-		System.out.println(event);
+	
 	}
 	
 	/** Questo metodo decide cosa fare quando un messaggio viene modificato */
@@ -169,6 +169,10 @@ public class Commands extends ListenerAdapter
 	{
 		user = event.getAuthor();
 		authorID = user.getId();
+		
+		if (event.getMember() != null)
+			System.out.println(PermissionUtil.getExplicitPermission(event.getMember()));
+		
 		
 		identifyLatestMessage(event, null);
 		
@@ -189,6 +193,7 @@ public class Commands extends ListenerAdapter
 		aggiungiReazioni();
 		checkForKeywords(message.getContentStripped().toLowerCase());
 	} // fine guildEvent()
+	
 	
 	/**Gestisce i messaggi privati che il bot riceve. Se è un altro bot a inviarli, li ignora.
 	 * @param isBot <code>true</code> se l'autore del messaggio è un bot a sua volta, <code>false</code> altrimenti. */
