@@ -38,15 +38,15 @@ public class MessageTask extends TimerTask
 		eventString
 			.append("Here's the recap of the `")
 			.append(allEvents.size())
-			.append("` disconnection events.\n");
+			.append("` disconnection events.\n\n");
 		for (RegisteredEvent event : allEvents)
 		{
 			eventString.append(event.toString());
 		}
-		eventString.append("End of recap. Enjoy the rest of the day. Or don't, I don't really care.");
-		for (User u : usersToNotify)
+		eventString.append("\nEnd of recap. Enjoy the rest of the day. Or don't, I don't really care.");
+		for (User user : usersToNotify)
 		{
-			new PrivateMessage(u).send(eventString.toString());
+			new PrivateMessage(user).send(eventString.toString());
 		}
 		
 		allEvents.clear();

@@ -56,7 +56,6 @@ public class Commands extends ListenerAdapter
 	private final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	private final boolean moduloSicurezza = false;
 	private final ArrayList<ThreadReminder> remindersList = new ArrayList<>();
-	
 	private final MessageTask task = new MessageTask();
 	
 	private User user;
@@ -79,22 +78,15 @@ public class Commands extends ListenerAdapter
 	 * @return la quantità, in millisecondi, di tempo che deve trascorrere prima di eseguire il task. */
 	private long calcDelay()
 	{
-		final int targetHour = 20, targetMinute = 0, targetSecond = 0;
-		final Calendar now, nextRun;
+		final int targetHour = 22, targetMinute = 0, targetSecond = 0;
+		final ZonedDateTime now, nextRun;
 		
-		now = Calendar.getInstance();
-		nextRun = (Calendar) now.clone();
+		now = ZonedDateTime.now();
+		nextRun = now.getHour() < targetHour ?
+			now.withHour(targetHour).withMinute(targetMinute).withSecond(targetSecond) :
+			now.withHour(targetHour).withMinute(targetMinute).withSecond(targetSecond).plusDays(1);
 		
-		nextRun.set(Calendar.HOUR_OF_DAY, targetHour);
-		nextRun.set(Calendar.MINUTE, targetMinute);
-		nextRun.set(Calendar.SECOND, targetSecond);
-		
-		if (nextRun.before(now))
-		{
-			// Se l'orario desiderato è già passato per oggi, impostalo per il giorno successivo
-			nextRun.add(Calendar.DAY_OF_MONTH, 1);
-		}
-		return nextRun.getTimeInMillis() - now.getTimeInMillis();
+		return ChronoUnit.MILLIS.between(now, nextRun);
 	}
 	
 	/** onReady() viene eseguita soltanto all'avvio del bot */
