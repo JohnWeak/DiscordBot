@@ -1103,6 +1103,10 @@ public class Commands extends ListenerAdapter
 		{
 			event.reply(Emotes.readyToSend(Emotes.pogey)).queue();
 		}
+		
+		// todo ricreare dado() come comando slash, implementare l'autocomplete e conquistare il mondo
+		// nota https://jda.wiki/using-jda/interactions/#slash-commands
+		
 
 	} // fine onSlashCommand()
 	
