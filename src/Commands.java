@@ -1100,7 +1100,9 @@ public class Commands extends ListenerAdapter
 		final String eventName = event.getName();
 		
 		if (eventName.equalsIgnoreCase("pog"))
-			event.getChannel().sendMessage(Emotes.readyToSend(Emotes.pogey)).queue();
+		{
+			event.reply(Emotes.readyToSend(Emotes.pogey)).queue();
+		}
 
 	} // fine onSlashCommand()
 	
