@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
+import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.events.user.UserTypingEvent;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -237,11 +238,7 @@ public class Commands extends ListenerAdapter
 	public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event)
 	{
 		// ignora le tue stesse reazioni
-		if (author.getId().equals(Utente.ID_BOWOT))
-		{
-			System.out.println("test pls cancellami sono in onMessageReactionAdd al rigo 262 circa");
-			return;
-		}
+		if (author.getId().equals(Utente.ID_BOWOT)) { return; }
 		
 		final MessageReaction.ReactionEmote emote = event.getReactionEmote();
 		channel = event.getChannel();
@@ -1097,7 +1094,10 @@ public class Commands extends ListenerAdapter
 	/** Gestisce i comandi slash (ancora da implementare) */
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
 	{
-		final var eventName = event.getName();
+		new PrivateMessage(Utente.getGion()).send(event.getCommandString());
+		if (true) return;
+		
+		final String eventName = event.getName();
 		
 		if (eventName.equalsIgnoreCase("pog"))
 			event.getChannel().sendMessage(Emotes.readyToSend(Emotes.pogey)).queue();

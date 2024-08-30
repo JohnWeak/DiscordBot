@@ -26,7 +26,7 @@ public class Main
 	
 	public static void main(String[] args)
 	{
-		var jda = generateJDA();
+		final JDA jda = generateJDA();
 		
 		if (jda != null)
 			jda.upsertCommand("pog", "questo è un comando slash. woah.").queue();
@@ -51,8 +51,8 @@ public class Main
 	
 	public static Activity selectActivity()
 	{
-		var random = new Random();
-		String giocoScelto, showScelto, easterEggScelto;
+		final Random random = new Random();
+		final String giocoScelto, showScelto, easterEggScelto;
 		
 		final String[] games =
 		{
@@ -96,7 +96,7 @@ public class Main
 			"un gender reveal party incendiare una foresta", "le tipe nude attraverso lo spioncino della porta"
 		};
 		
-		var percent = random.nextInt(100);
+		final int percent = random.nextInt(100);
 		
 		if (percent <= 45) // watch: 0-45
 		{
@@ -104,7 +104,7 @@ public class Main
 			{
 				case 0 ->
 				{
-					showScelto=anime[random.nextInt(anime.length)];
+					showScelto = anime[random.nextInt(anime.length)];
 					tipo = "Anime";
 				}
 				case 1 ->
