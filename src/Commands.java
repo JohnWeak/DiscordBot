@@ -1094,16 +1094,13 @@ public class Commands extends ListenerAdapter
 	/** Gestisce i comandi slash (ancora da implementare) */
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
 	{
-		new PrivateMessage(Utente.getGion()).send(event.getCommandString());
-		if (true) return;
+//		new PrivateMessage(Utente.getGion()).send(event.getCommandString());
+//		if (true) return;
 		
 		final String eventName = event.getName();
 		
 		if (eventName.equalsIgnoreCase("pog"))
 			event.getChannel().sendMessage(Emotes.readyToSend(Emotes.pogey)).queue();
-		
-		if (eventName.equalsIgnoreCase("dice") || eventName.equalsIgnoreCase("dado"))
-			dado();
 
 	} // fine onSlashCommand()
 	
