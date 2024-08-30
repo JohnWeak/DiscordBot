@@ -35,8 +35,10 @@ public class MessageTask extends TimerTask
 			return;
 		}
 		
-		
-		eventString.append("Here's the recap of all the disconnection events.\n");
+		eventString
+			.append("Here's the recap of the `")
+			.append(allEvents.size())
+			.append("` disconnection events.\n");
 		for (RegisteredEvent event : allEvents)
 		{
 			eventString.append(event.toString());

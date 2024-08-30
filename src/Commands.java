@@ -56,7 +56,6 @@ public class Commands extends ListenerAdapter
 	private final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	private final boolean moduloSicurezza = false;
 	private final ArrayList<ThreadReminder> remindersList = new ArrayList<>();
-	private boolean oneTimeOnly = true;
 	
 	private final MessageTask task = new MessageTask();
 	
@@ -175,7 +174,6 @@ public class Commands extends ListenerAdapter
 			jda.getPresence().setActivity(Main.selectActivity());
 		
 	} // fine onMessageReceived()
-	
 	
 	private void guildMessage(MessageReceivedEvent event, boolean isBot)
 	{
