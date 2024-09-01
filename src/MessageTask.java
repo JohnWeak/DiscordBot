@@ -13,12 +13,12 @@ public class MessageTask extends TimerTask
 	@Override
 	public void run()
 	{
-		final User[] usersToNotify = new User[]{Utente.getGion(), Utente.getEnigmo()};
+		final PrivateMessage[] usersToNotify = new PrivateMessage[]{new PrivateMessage(Utente.getGion()), new PrivateMessage(Utente.getEnigmo())};
 		final Random random = new Random();
 		final int DUPLICATES = 5;
 		final StringBuilder eventString = new StringBuilder();
 		int index = 1;
-		
+		usersToNotify[0] = new PrivateMessage(Utente.getGion());
 		if (random.nextInt(69420) == 42)
 		{
 			eventString.append("Oh no...\n");
@@ -26,9 +26,9 @@ public class MessageTask extends TimerTask
 			{
 				for (int i = 0; i < DUPLICATES; i++)
 				{
-					for (User u : usersToNotify)
+					for (PrivateMessage pm : usersToNotify)
 					{
-						new PrivateMessage(u).send(event.toString());
+						pm.send(event.toString());
 					}
 				}
 			}
@@ -47,9 +47,9 @@ public class MessageTask extends TimerTask
 		}
 		
 		eventString.append("\nEnd of recap. Enjoy the rest of the day. Or don't, I don't really care.");
-		for (User user : usersToNotify)
+		for (PrivateMessage pm : usersToNotify)
 		{
-			new PrivateMessage(user).send(eventString.toString());
+			pm.send(eventString.toString());
 		}
 		
 		allEvents.clear();
