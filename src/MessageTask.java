@@ -17,6 +17,7 @@ public class MessageTask extends TimerTask
 		final Random random = new Random();
 		final int DUPLICATES = 5;
 		final StringBuilder eventString = new StringBuilder();
+		int index = 1;
 		
 		if (random.nextInt(69420) == 42)
 		{
@@ -39,10 +40,12 @@ public class MessageTask extends TimerTask
 			.append("Here's the recap of the `")
 			.append(allEvents.size())
 			.append("` disconnection events.\n\n");
+		
 		for (RegisteredEvent event : allEvents)
 		{
-			eventString.append(event.toString());
+			eventString.append(index++).append(") ").append(event.toString());
 		}
+		
 		eventString.append("\nEnd of recap. Enjoy the rest of the day. Or don't, I don't really care.");
 		for (User user : usersToNotify)
 		{
