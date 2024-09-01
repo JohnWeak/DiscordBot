@@ -81,8 +81,9 @@ public class Commands extends ListenerAdapter
 	{
 		final int targetHour = 22, targetMinute = 0, targetSecond = 0;
 		final ZonedDateTime now, nextRun;
+		final String rome = "Europe/Rome";
 		
-		now = ZonedDateTime.now();
+		now = ZonedDateTime.now(ZoneId.of(rome));
 		nextRun = now.getHour() < targetHour ?
 			now.withHour(targetHour).withMinute(targetMinute).withSecond(targetSecond) :
 			now.withHour(targetHour).withMinute(targetMinute).withSecond(targetSecond).plusDays(1);
