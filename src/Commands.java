@@ -53,6 +53,7 @@ public class Commands extends ListenerAdapter
 	public static User author;
 	public static TextChannel canaleBotPokemon;
 	public static TextChannel canaleBot;
+	private static PrivateMessage gion;
 	
 	private final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	private final boolean moduloSicurezza = false;
@@ -81,9 +82,10 @@ public class Commands extends ListenerAdapter
 	{
 		final int targetHour = 22, targetMinute = 0, targetSecond = 0;
 		final ZonedDateTime now, nextRun;
-		final String rome = "Europe/Rome";
+		final String romeString = "Europe/Rome";
+		final ZoneId amaggica = ZoneId.of(romeString);
 		
-		now = ZonedDateTime.now(ZoneId.of(rome));
+		now = ZonedDateTime.now(amaggica);
 		nextRun = now.getHour() < targetHour ?
 			now.withHour(targetHour).withMinute(targetMinute).withSecond(targetSecond) :
 			now.withHour(targetHour).withMinute(targetMinute).withSecond(targetSecond).plusDays(1);
@@ -97,27 +99,17 @@ public class Commands extends ListenerAdapter
 		commandsHashMap = Cmd.init();
 		
 		jda = event.getJDA();
-		// final Activity act = jda.getPresence().getActivity();
-		
-		// String activityType="act_type", nomeActivity="act_name", activityTradotta="act_trad";
-		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
 		
 		try
 		{
 			canaleBot = jda.getTextChannelsByName(botChannel, true).get(0);
 			canaleBotPokemon = jda.getTextChannelsByName("pokémowon", true).get(0);
+			gion = new PrivateMessage(Utente.getGion());
 		}
 		catch (Exception e)
 		{
 			error.print(object, e);
 		}
-		
-//		if (act != null)
-//		{
-//			activityType = act.getType().toString();
-//		    nomeActivity = "**" + act.getName() + "**";
-//		    activityTradotta = activityType.equals("WATCHING") ? "guardo " : "gioco a ";
-//		}
 		
 		// moduloDiSicurezza();
 		
@@ -186,7 +178,6 @@ public class Commands extends ListenerAdapter
 		final List<Message.Attachment> attachments = message.getAttachments();
 		final StringBuilder toSend = new StringBuilder();
 		toSend.append(authorName).append(" ha scritto \"").append(messageRaw).append("\"");
-		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
 		
 		if (attachments.isEmpty())
 			gion.send(toSend.toString());
@@ -1095,8 +1086,6 @@ public class Commands extends ListenerAdapter
 	/** Gestisce i comandi slash (ancora da implementare) */
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
 	{
-//		new PrivateMessage(Utente.getGion()).send(event.getCommandString());
-//		if (true) return;
 		
 		final String eventName = event.getName();
 		
