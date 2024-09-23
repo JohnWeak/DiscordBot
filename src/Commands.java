@@ -1086,7 +1086,6 @@ public class Commands extends ListenerAdapter
 	/** Gestisce i comandi slash (ancora da implementare) */
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
 	{
-		
 		final String eventName = event.getName();
 		
 		if (eventName.equalsIgnoreCase("pog"))
@@ -1097,7 +1096,6 @@ public class Commands extends ListenerAdapter
 		// todo ricreare dado() come comando slash, implementare l'autocomplete e conquistare il mondo
 		// nota https://jda.wiki/using-jda/interactions/#slash-commands
 		
-
 	} // fine onSlashCommand()
 	
 	

@@ -3,6 +3,8 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.user.UserTypingEvent;
+import net.dv8tion.jda.api.interactions.commands.Command;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -29,7 +31,14 @@ public class Main
 		final JDA jda = generateJDA();
 		
 		if (jda != null)
+		{
 			jda.upsertCommand("pog", "questo è un comando slash. woah.").queue();
+			
+			jda.upsertCommand("Comando di Test","Descrizione di comando di test")
+				.addOption(OptionType.STRING, "a", "description of a")
+				.addOption(OptionType.STRING, "b", "description of b")
+				.queue();
+		}
 		
 	} // fine metodo main()
 	
