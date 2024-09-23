@@ -38,13 +38,13 @@ public class Main
 			{
 				jda.upsertCommand("pog", "questo è un comando slash. woah.").queue();
 				
-				jda.upsertCommand("Comando di Test","Descrizione di comando di test")
+				jda.upsertCommand("comando_test","Descrizione di comando di test")
 					.addOption(OptionType.STRING, "a", "description of a")
 					.addOption(OptionType.STRING, "b", "description of b")
 					.queue();
 			}catch (Exception e)
 			{
-				new Error<Exception>().print(cls,e);
+				System.out.println(e.getLocalizedMessage());
 			}
 			
 		}

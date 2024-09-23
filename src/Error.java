@@ -9,24 +9,25 @@ public class Error <T>
 	 * */
 	public void print(Object object, T exception)
 	{
-		var type = exception.getClass().toString();
-		var gion = new PrivateMessage(Utente.getGion());
+		final String type = exception.getClass().toString();
+		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
 		String lessThan2k;
+		
 		if (type.contains("Exception"))
 		{
-			Exception e = (Exception) exception;
-			var erClass = object.getClass();
-			var eMsg = e.getMessage();
-			var stackTrace = e.getStackTrace();
-			var stackTraceString = Arrays.toString(stackTrace);
-			var msgToSend = "`" +erClass + "\n" + eMsg + "`\n"+stackTraceString;
+			final Exception e = (Exception) exception;
+			final Class<?> erClass = object.getClass();
+			final String eMsg = e.getMessage();
+			final StackTraceElement[] stackTrace = e.getStackTrace();
+			final String stackTraceString = Arrays.toString(stackTrace);
+			String msgToSend = "`" +erClass + "\n" + eMsg + "`\n"+stackTraceString;
 			
 			msgToSend = lessThan2K(msgToSend);
 			gion.send(msgToSend);
 		}
 		else if (type.equalsIgnoreCase("String"))
 		{
-			String s = (String) exception;
+			final String s = (String) exception;
 			
 			lessThan2k = lessThan2K(s);
 			
