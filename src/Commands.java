@@ -1119,7 +1119,7 @@ public class Commands extends ListenerAdapter
 						error.print(object, e);
 					}
 				}
-				final int res = random.nextInt(facce+1);
+				final int res = random.nextInt(1,facce+1);
 				final String message = String.format("%s ha scelto di lanciare un dado con %d facce. È uscito %d.",
 						event.getUser().getName(), facce, res);
 				
