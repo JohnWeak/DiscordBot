@@ -1068,15 +1068,12 @@ public class Commands extends ListenerAdapter
 	
 	private boolean contains(String source, String[] subItem)
 	{
-		String pattern;
-		Pattern p;
-		Matcher m;
-		
 		for (String s : subItem)
 		{
-			pattern = "\\b" + s + "\\b";
-			p = Pattern.compile(pattern);
-			m = p.matcher(source);
+			final String pattern = "\\b" + s + "\\b";;
+			final Pattern p = Pattern.compile(pattern);
+			final Matcher m = p.matcher(source);
+			
 			if (m.find())
 				return true;
 		}
@@ -1126,7 +1123,6 @@ public class Commands extends ListenerAdapter
 				event.reply(message).queue();
 			}
 		}
-		
 		
 	} // fine onSlashCommand()
 	
