@@ -1086,11 +1086,22 @@ public class Commands extends ListenerAdapter
 	/** Gestisce i comandi slash (ancora da implementare) */
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
 	{
-		final String eventName = event.getName();
+		final String eventName = event.getName().toLowerCase();
 		
-		if (eventName.equalsIgnoreCase("pog"))
+		switch (eventName)
 		{
-			event.reply(Emotes.readyToSend(Emotes.pogey)).queue();
+			case "pog" ->
+			{
+				event.reply(Emotes.readyToSend(Emotes.pogey)).queue();
+			}
+			case "echo" ->
+			{
+				final var option = event.getOption("message");
+				String toRepeat = "";
+				if (option != null)
+					toRepeat = event.getOption("message").getAsString();
+				event.reply(toRepeat).queue();
+			}
 		}
 		
 		// todo ricreare dado() come comando slash, implementare l'autocomplete e conquistare il mondo

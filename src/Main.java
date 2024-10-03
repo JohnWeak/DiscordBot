@@ -2,22 +2,13 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.events.user.UserTypingEvent;
-import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 import javax.security.auth.login.LoginException;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.Random;
-import java.util.Scanner;
+
 
 public class Main
 {
@@ -37,11 +28,12 @@ public class Main
 			try
 			{
 				jda.upsertCommand("pog", "questo è un comando slash. woah.").queue();
+				final CommandData echoCommand = new CommandData("echo", "Ripete il messaggio dato")
+					.addOptions(new OptionData(OptionType.STRING, "message", "Il messaggio da ripetere", true));
 				
-				jda.upsertCommand("comando_test","Descrizione di comando di test")
-					.addOption(OptionType.STRING, "a", "description of a")
-					.addOption(OptionType.STRING, "b", "description of b")
-					.queue();
+				jda.upsertCommand(echoCommand).queue();
+			
+				
 			}catch (Exception e)
 			{
 				System.out.println(e.getLocalizedMessage());
