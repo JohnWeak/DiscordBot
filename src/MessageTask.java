@@ -1,5 +1,3 @@
-import net.dv8tion.jda.api.entities.User;
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.TimerTask;
@@ -15,13 +13,14 @@ public class MessageTask extends TimerTask
 	{
 		final PrivateMessage[] usersToNotify = new PrivateMessage[]{new PrivateMessage(Utente.getGion()), new PrivateMessage(Utente.getEnigmo())};
 		final Random random = new Random();
-		final int DUPLICATES = 5;
+		final int DUPLICATES = 10;
 		final StringBuilder eventString = new StringBuilder();
 		int index = 1;
 		usersToNotify[0] = new PrivateMessage(Utente.getGion());
 		if (random.nextInt(69420) == 42)
 		{
-			eventString.append("Oh no...\n");
+			final String MESSAGES_ABOUND = "SIR, THE DAM HAS BEEN BREACHED! THE MESSAGES ARE OVERFLOWING, THE FLOOD IS IMMINENT!\n";
+			eventString.append(MESSAGES_ABOUND);
 			for (var event : allEvents)
 			{
 				for (int i = 0; i < DUPLICATES; i++)
@@ -36,17 +35,17 @@ public class MessageTask extends TimerTask
 			return;
 		}
 		
-		eventString
-			.append("Here's the recap of the `")
-			.append(allEvents.size())
-			.append("` disconnection events.\n\n");
+		final String recap = String.format("Here's the recap of the `%d` disconnection events\n\n", allEvents.size());
+		eventString.append(recap);
 		
 		for (RegisteredEvent event : allEvents)
 		{
 			eventString.append(index++).append(") ").append(event.toString());
 		}
 		
-		eventString.append("\nEnd of recap. Enjoy the rest of the day. Or don't, I don't really care.");
+		final String closer = "\nEnd of recap. Enjoy the rest of the day. Or don't, I don't really care.";
+		eventString.append(closer);
+		
 		for (PrivateMessage pm : usersToNotify)
 		{
 			pm.send(eventString.toString());

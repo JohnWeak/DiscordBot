@@ -18,6 +18,6 @@ public record RegisteredEvent(String description, LocalDateTime timeItHappened)
 	public String toString()
 	{
 		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
-		return String.format("`%s` happened at `%s`\n", description, timeItHappened.format(formatter));
+		return String.format("`%s` happened at `%s`\n", description.trim(), timeItHappened.format(formatter));
 	}
 }
