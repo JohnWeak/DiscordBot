@@ -1118,10 +1118,8 @@ public class Commands extends ListenerAdapter
 					{
 						error.print(object, e);
 					}
-					
-					
-					event.reply(""+random.nextInt(facce)).queue();
 				}
+				event.reply(""+random.nextInt(facce)).queue();
 			}
 		}
 		
