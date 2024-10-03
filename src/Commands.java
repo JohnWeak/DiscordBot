@@ -14,6 +14,7 @@ import net.dv8tion.jda.api.events.user.UserTypingEvent;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.requests.CloseCode;
 import net.dv8tion.jda.internal.utils.PermissionUtil;
 import org.jetbrains.annotations.NotNull;
@@ -1083,10 +1084,12 @@ public class Commands extends ListenerAdapter
 	} // fine metodo contains()
 	
 	
-	/** Gestisce i comandi slash (ancora da implementare) */
+	/** Gestisce i comandi slash */
+	// https://jda.wiki/using-jda/interactions/#slash-commands
 	public void onSlashCommand(@NotNull SlashCommandEvent event)
 	{
 		final String eventName = event.getName().toLowerCase();
+		final OptionMapping option;
 		
 		switch (eventName)
 		{
@@ -1096,16 +1099,32 @@ public class Commands extends ListenerAdapter
 			}
 			case "echo" ->
 			{
-				final var option = event.getOption("message");
+				option = event.getOption("message");
 				String toRepeat = "";
 				if (option != null)
-					toRepeat = event.getOption("message").getAsString();
+					toRepeat = option.getAsString();
 				event.reply(toRepeat).queue();
+			}
+			case "dado" ->
+			{
+				int facce = 6;
+				option = event.getOption("facce");
+				if (option != null)
+				{
+					try
+					{
+						facce = Integer.parseInt(option.getAsString());
+					}catch (Exception e)
+					{
+						error.print(object, e);
+					}
+					
+					
+					event.reply(""+random.nextInt(facce)).queue();
+				}
 			}
 		}
 		
-		// todo ricreare dado() come comando slash, implementare l'autocomplete e conquistare il mondo
-		// nota https://jda.wiki/using-jda/interactions/#slash-commands
 		
 	} // fine onSlashCommand()
 	
@@ -1145,7 +1164,7 @@ public class Commands extends ListenerAdapter
 	/**Metodo che rende omaggio al defunto specificato dall'utente.<br>Uso: <b>!f &lt;stringa&gt; </b>*/
 	public void payRespect()
 	{
-		if (messageRaw.split(" ")[1] == null)
+		if (messageRaw.split(" ")[1] == null || messageRaw.split(" ")[1].isEmpty())
 		{
 			channel.sendMessage("`Usa !f per omaggiare qualcuno.`").queue();
 			return;

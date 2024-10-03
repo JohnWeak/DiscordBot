@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 import javax.security.auth.login.LoginException;
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -27,12 +28,34 @@ public class Main
 		{
 			try
 			{
-				jda.upsertCommand("pog", "questo è un comando slash. woah.").queue();
-				final CommandData echoCommand = new CommandData("echo", "Ripete il messaggio dato")
-					.addOptions(new OptionData(OptionType.STRING, "message", "Il messaggio da ripetere", true));
+				final ArrayList<CommandData> commands = new ArrayList<>();
 				
-				jda.upsertCommand(echoCommand).queue();
-			
+				commands.add(new CommandData("pog", "Risponde con l'emote \"pog\""));
+				
+				commands.add(new CommandData("echo", "Ripete il messaggio dato")
+					.addOptions(new OptionData(
+						OptionType.STRING,
+						"message",
+						"Il messaggio da ripetere",
+						true
+						)
+					)
+				);
+				commands.add(new CommandData("dado","Lancia un dado")
+					.addOptions(new OptionData(
+						OptionType.STRING,
+						"facce",
+						"quante facce deve avere il dado",
+						false
+						)
+					)
+				);
+				
+				for (CommandData command : commands)
+				{
+					jda.upsertCommand(command).queue();
+				}
+				
 				
 			}catch (Exception e)
 			{
