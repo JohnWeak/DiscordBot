@@ -1122,6 +1122,22 @@ public class Commands extends ListenerAdapter
 				
 				event.reply(message).queue();
 			}
+			case "cena" ->
+			{
+				option = event.getOption("message");
+				if (option != null)
+				{
+					final String m = option.getAsString();
+					if (m.contains("@"))
+					{
+						final var x = m.substring(m.indexOf("@"), m.indexOf(" "));
+						System.out.println("Test: " + x);
+					}
+					
+					
+					
+				}
+			}
 		}
 		
 	} // fine onSlashCommand()
