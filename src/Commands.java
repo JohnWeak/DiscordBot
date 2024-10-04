@@ -1110,7 +1110,13 @@ public class Commands extends ListenerAdapter
 				{
 					try
 					{
+						final int min = 2;
 						facce = Integer.parseInt(option.getAsString());
+						if (facce <= min)
+						{
+							event.reply("Il numero dev'essere maggiore di "+min).queue();
+							return;
+						}
 					}catch (Exception e)
 					{
 						error.print(object, e);
