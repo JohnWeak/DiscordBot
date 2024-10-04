@@ -1140,9 +1140,6 @@ public class Commands extends ListenerAdapter
 						final var x = m.substring(m.indexOf("@"), m.indexOf(" "));
 						System.out.println("Test: " + x);
 					}
-					
-					
-					
 				}
 			}
 		}
