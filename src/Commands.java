@@ -1110,13 +1110,13 @@ public class Commands extends ListenerAdapter
 				{
 					try
 					{
-						final int min = 2;
+						final int min = 3;
 						
-						facce = Integer.parseInt(option.getAsString());
+						facce = Integer.parseInt(option.getAsString()); // JDA 5.0 -> manca getAsInt()
 						if (facce < min)
 						{
-							final String reply = String.format("Il dado deve avere almeno %d facce.", min);
-							event.reply(reply).queue();
+							final String reply = String.format("Il dado deve avere almeno %d facce. Riprova con un numero valido.", min);
+							event.reply(reply).setEphemeral(true).queue();
 							return;
 						}
 					}catch (Exception e)
@@ -1125,10 +1125,31 @@ public class Commands extends ListenerAdapter
 					}
 				}
 				final int res = random.nextInt(1,facce+1);
-				final String message = String.format("%s ha scelto di lanciare un dado con %d facce. È uscito %d.",
-						event.getUser().getName(), facce, res);
+				final String message = String.format("Il dado è tratto! 🎲 **%d**.", res);
 				
 				event.reply(message).queue();
+			}
+			case "cena" ->
+			{
+				final User author = event.getUser();
+				
+				option = event.getOption("utente");
+				if (option != null)
+				{
+					final User user = option.getAsUser();
+					if (user.isBot())
+					{
+						final String m = String.format("Spiacente, %s non può uscire a cena con te.", user.getName());
+						event.reply(m).setEphemeral(true).queue();
+						return;
+					}
+					else
+					{
+						final String m = String.format("%s ha ufficialmente invitato a cena %s!",author.getName(), user.getName());
+						event.reply(m).queue();
+					}
+				}
+				event.reply("Devi menzionare qualcuno da invitare a cena!").setEphemeral(true).queue();
 			}
 		}
 		
