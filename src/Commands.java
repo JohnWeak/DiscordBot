@@ -106,6 +106,7 @@ public class Commands extends ListenerAdapter
 			canaleBot = jda.getTextChannelsByName(botChannel, true).get(0);
 			canaleBotPokemon = jda.getTextChannelsByName("pokémowon", true).get(0);
 			gion = new PrivateMessage(Utente.getGion());
+			Main.cmds();
 		}
 		catch (Exception e)
 		{

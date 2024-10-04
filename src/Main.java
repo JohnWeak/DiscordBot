@@ -26,56 +26,58 @@ public class Main
 		
 		if (jda != null)
 		{
-			try
-			{
-				final ArrayList<CommandData> commands = new ArrayList<>();
-				
-				commands.add(new CommandData("pog", "Risponde con l'emote \"pog\""));
-				
-				commands.add(new CommandData("echo", "Ripete il messaggio dato")
-					.addOptions(new OptionData(
-						OptionType.STRING,
-						"message",
-						"Il messaggio da ripetere",
-						true
-						)
-					)
-				);
-				commands.add(new CommandData("dado","Lancia un dado")
-					.addOptions(new OptionData(
-						OptionType.STRING,
-						"facce",
-						"quante facce deve avere il dado",
-						false
-						)
-					)
-				);
-				commands.add(new CommandData("cena", "Chiedi ad un utente di uscire a cena con te")
-					.addOptions(new OptionData(
-						OptionType.USER,
-						"utente",
-						"L'utente con cui vuoi andare a cena",
-						true
-						)
-					)
-				);
-				
-				jda.updateCommands().queue();
-				
-				for (CommandData command : commands)
-				{
-					jda.upsertCommand(command).queue();
-				}
-				
-				
-			}catch (Exception e)
-			{
-				System.out.println(e.getLocalizedMessage());
-			}
-			
 		}
 		
 	} // fine metodo main()
+	
+	public static void cmds()
+	{
+		jda.updateCommands().queue();
+		
+		try
+		{
+			final ArrayList<CommandData> commands = new ArrayList<>();
+			
+			commands.add(new CommandData("pog", "Risponde con l'emote \"pog\""));
+			
+			commands.add(new CommandData("echo", "Ripete il messaggio dato")
+				.addOptions(new OptionData(
+					OptionType.STRING,
+					"message",
+					"Il messaggio da ripetere",
+					true
+					)
+				)
+			);
+			commands.add(new CommandData("dado","Lancia un dado")
+				.addOptions(new OptionData(
+					OptionType.STRING,
+					"facce",
+					"quante facce deve avere il dado",
+					false
+					)
+				)
+			);
+			commands.add(new CommandData("cena", "Chiedi ad un utente di uscire a cena con te")
+				.addOptions(new OptionData(
+					OptionType.USER,
+					"utente",
+					"L'utente con cui vuoi andare a cena",
+					true
+					)
+				)
+			);
+			
+			jda.updateCommands().queue(); // elimina i comandi precedenti
+			jda.updateCommands().addCommands(commands).queue(); // aggiunge i comandi attuali
+			
+			
+		}catch (Exception e)
+		{
+			new Error<Exception>().print(object,e);
+		}
+		
+	}
 	
 	private static JDA generateJDA()
 	{
