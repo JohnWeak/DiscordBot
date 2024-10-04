@@ -18,53 +18,56 @@ public class Main
 	private static Activity activity;
 	private static String tipo = "anime/gioco/serieTv";
 	
-	private static final Object cls = Main.class;
+	private static final Object object = Main.class;
 	
 	public static void main(String[] args)
 	{
-		final JDA jda = generateJDA();
-		
-		if (jda != null)
-		{
-			try
-			{
-				final ArrayList<CommandData> commands = new ArrayList<>();
-				
-				commands.add(new CommandData("pog", "Risponde con l'emote \"pog\""));
-				
-				commands.add(new CommandData("echo", "Ripete il messaggio dato")
-					.addOptions(new OptionData(
-						OptionType.STRING,
-						"message",
-						"Il messaggio da ripetere",
-						true
-						)
-					)
-				);
-				commands.add(new CommandData("dado","Lancia un dado")
-					.addOptions(new OptionData(
-						OptionType.STRING,
-						"facce",
-						"quante facce deve avere il dado",
-						false
-						)
-					)
-				);
-				
-				for (CommandData command : commands)
-				{
-					jda.upsertCommand(command).queue();
-				}
-				
-				
-			}catch (Exception e)
-			{
-				System.out.println(e.getLocalizedMessage());
-			}
-			
-		}
+		jda = generateJDA();
 		
 	} // fine metodo main()
+	
+	public static void cmds()
+	{
+		if (jda == null)
+		{
+			return;
+		}
+		
+		try
+		{
+			final ArrayList<CommandData> commands = new ArrayList<>();
+			
+			commands.add(new CommandData("pog", "Risponde con l'emote \"pog\""));
+			
+			commands.add(new CommandData("echo", "Ripete il messaggio dato")
+				.addOptions(new OptionData(
+					OptionType.STRING,
+					"message",
+					"Il messaggio da ripetere",
+					true
+					)
+				)
+			);
+			commands.add(new CommandData("dado","Lancia un dado")
+				.addOptions(new OptionData(
+					OptionType.STRING,
+					"facce",
+					"quante facce deve avere il dado",
+					false
+					)
+				)
+			);
+			commands.add(new CommandData("cena", "Chiedi ad un utente di uscire a cena con te"));
+			
+			jda.updateCommands().addCommands(commands).queue(); // aggiunge i comandi attuali
+			
+			
+		}catch (Exception e)
+		{
+			new Error<Exception>().print(object,e);
+		}
+		
+	}
 	
 	private static JDA generateJDA()
 	{
@@ -77,7 +80,7 @@ public class Main
 				.build();
 		}catch (LoginException e)
 		{
-			new Error<>().print(Main.class,e);
+			new Error<>().print(object,e);
 		}
 		return jda;
 	} // fine generateJDA()
