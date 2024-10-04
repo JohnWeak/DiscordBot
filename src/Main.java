@@ -22,17 +22,16 @@ public class Main
 	
 	public static void main(String[] args)
 	{
-		final JDA jda = generateJDA();
-		
-		if (jda != null)
-		{
-		}
+		jda = generateJDA();
 		
 	} // fine metodo main()
 	
 	public static void cmds()
 	{
-		jda.updateCommands().queue();
+		if (jda == null)
+		{
+			return;
+		}
 		
 		try
 		{
