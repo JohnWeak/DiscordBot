@@ -18,7 +18,7 @@ public class Main
 	private static Activity activity;
 	private static String tipo = "anime/gioco/serieTv";
 	
-	private static final Object cls = Main.class;
+	private static final Object object = Main.class;
 	
 	public static void main(String[] args)
 	{
@@ -60,6 +60,8 @@ public class Main
 					)
 				);
 				
+				jda.updateCommands().queue();
+				
 				for (CommandData command : commands)
 				{
 					jda.upsertCommand(command).queue();
@@ -86,7 +88,7 @@ public class Main
 				.build();
 		}catch (LoginException e)
 		{
-			new Error<>().print(Main.class,e);
+			new Error<>().print(object,e);
 		}
 		return jda;
 	} // fine generateJDA()
