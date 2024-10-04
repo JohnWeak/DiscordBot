@@ -50,6 +50,15 @@ public class Main
 						)
 					)
 				);
+				commands.add(new CommandData("cena", "Chiedi ad un utente di uscire a cena con te")
+					.addOptions(new OptionData(
+						OptionType.USER,
+						"utente",
+						"L'utente con cui vuoi andare a cena",
+						true
+						)
+					)
+				);
 				
 				for (CommandData command : commands)
 				{
