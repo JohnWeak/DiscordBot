@@ -1111,6 +1111,7 @@ public class Commands extends ListenerAdapter
 					try
 					{
 						final int min = 2;
+						
 						facce = Integer.parseInt(option.getAsString());
 						if (facce < min)
 						{
