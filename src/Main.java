@@ -39,15 +39,6 @@ public class Main
 			
 			commands.add(new CommandData("pog", "Risponde con l'emote \"pog\""));
 			
-			commands.add(new CommandData("echo", "Ripete il messaggio dato")
-				.addOptions(new OptionData(
-					OptionType.STRING,
-					"message",
-					"Il messaggio da ripetere",
-					true
-					)
-				)
-			);
 			commands.add(new CommandData("dado","Lancia un dado")
 				.addOptions(new OptionData(
 					OptionType.STRING,

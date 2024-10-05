@@ -1094,14 +1094,7 @@ public class Commands extends ListenerAdapter
 			{
 				event.reply(Emotes.readyToSend(Emotes.pogey)).queue();
 			}
-			case "echo" ->
-			{
-				option = event.getOption("message");
-				String toRepeat = "";
-				if (option != null)
-					toRepeat = option.getAsString();
-				event.reply(toRepeat).queue();
-			}
+			
 			case "dado" ->
 			{
 				int facce = 6;
