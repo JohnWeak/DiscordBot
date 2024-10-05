@@ -1094,7 +1094,6 @@ public class Commands extends ListenerAdapter
 			{
 				event.reply(Emotes.readyToSend(Emotes.pogey)).queue();
 			}
-			
 			case "dado" ->
 			{
 				int facce = 6;
@@ -1129,17 +1128,23 @@ public class Commands extends ListenerAdapter
 				option = event.getOption("utente");
 				if (option != null)
 				{
-					final User user = option.getAsUser();
-					if (user.isBot())
+					try
 					{
-						final String m = String.format("Spiacente, %s non può uscire a cena con te.", user.getName());
-						event.reply(m).setEphemeral(true).queue();
-						return;
+						final User user = option.getAsUser();
+						if (user.isBot())
+						{
+							final String m = String.format("Spiacente, %s non può uscire a cena con te.", user.getName());
+							event.reply(m).setEphemeral(true).queue();
+							return;
+						} else
+						{
+							final String m = String.format("%s ha ufficialmente invitato a cena %s!", author.getName(), user.getName());
+							event.reply(m).queue();
+						}
 					}
-					else
+					catch (Exception e)
 					{
-						final String m = String.format("%s ha ufficialmente invitato a cena %s!",author.getName(), user.getName());
-						event.reply(m).queue();
+						error.print(object, e);
 					}
 				}
 				event.reply("Devi menzionare qualcuno da invitare a cena!").setEphemeral(true).queue();
