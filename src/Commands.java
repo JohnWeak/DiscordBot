@@ -1134,32 +1134,35 @@ public class Commands extends ListenerAdapter
 				final String replyMessage;
 				final boolean isEphemeral;
 				
-				option = event.getOption("utente");
-				if (option != null)
+				try
 				{
-					try
+					option = event.getOption("utente");
+					if (option != null)
 					{
-						final User user = option.getAsUser();
-						if (user.isBot())
+						try
 						{
-							isEphemeral = true;
-							replyMessage = user.getId().equals(Utente.ID_BOWOT) ?
-								String.format("No, non uscirò a cena con te, %s.", author.getName()) :
-								String.format("Spiacente, %s non può uscire a cena con te.", user.getName());
-						}
-						else
+							final User user = option.getAsUser();
+							if (user.isBot())
+							{
+								isEphemeral = true;
+								replyMessage = user.getId().equals(Utente.ID_BOWOT) ?
+										String.format("No, non uscirò a cena con te, %s.", author.getName()) :
+										String.format("Spiacente, %s non può uscire a cena con te.", user.getName());
+							} else
+							{
+								isEphemeral = false;
+								replyMessage = String.format("%s ti ha ufficialmente invitato a cena, <@%s>! Accetti?", author.getName(), user.getId());
+							}
+							event.reply(replyMessage).setEphemeral(isEphemeral).queue();
+						} catch (Exception e)
 						{
-							isEphemeral = false;
-							replyMessage = String.format("%s ti ha ufficialmente invitato a cena, <@%s>! Accetti?", author.getName(), user.getId());
+							error.print(object, e);
 						}
-						event.reply(replyMessage).setEphemeral(isEphemeral).queue();
-					}
-					catch (Exception e)
+					} else
 					{
-						error.print(object, e);
+						event.reply("Devi menzionare qualcuno da invitare a cena!").setEphemeral(true).queue();
 					}
-				}
-				else
+				}catch (Exception e)
 				{
 					event.reply("Devi menzionare qualcuno da invitare a cena!").setEphemeral(true).queue();
 				}
