@@ -1146,25 +1146,28 @@ public class Commands extends ListenerAdapter
 							{
 								isEphemeral = true;
 								replyMessage = user.getId().equals(Utente.ID_BOWOT) ?
-										String.format("No, non uscirò a cena con te, %s.", author.getName()) :
-										String.format("Spiacente, %s non può uscire a cena con te.", user.getName());
-							} else
+									String.format("No, non uscirò a cena con te, %s.", author.getName()) :
+									String.format("Spiacente, %s non può uscire a cena con te.", user.getName());
+							}
+							else
 							{
 								isEphemeral = false;
 								replyMessage = String.format("%s ti ha ufficialmente invitato a cena, <@%s>! Accetti?", author.getName(), user.getId());
 							}
 							event.reply(replyMessage).setEphemeral(isEphemeral).queue();
-						} catch (Exception e)
+						}
+						catch (Exception e)
 						{
 							error.print(object, e);
 						}
-					} else
+					}
+					else
 					{
 						event.reply("Devi menzionare qualcuno da invitare a cena!").setEphemeral(true).queue();
 					}
-				}catch (Exception e)
+				} catch (Exception e)
 				{
-					event.reply("Devi menzionare qualcuno da invitare a cena!").setEphemeral(true).queue();
+					event.reply("Impossibile creare un invito a cena. Tutti i ristoranti e i pub sono chiusi.").setEphemeral(true).queue();
 				}
 			}
 		}
@@ -1734,16 +1737,14 @@ public class Commands extends ListenerAdapter
 	
 	public void moduloDiSicurezza()
 	{
-		final var active = "**IL MODULO DI SICUREZZA È ORA ATTIVO. GARANTISCE SICUREZZA AL BOT.\nTUTTE LE AZIONI SONO SORVEGLIATE E ALLA PRIMA INFRAZIONE VERRANNO ALLERTATE LE AUTORITÀ COMPETENTI E INCOMPETENTI.**";
-		final var inactive = "**IL MODULO DI SICUREZZA È STATO DISATTIVATO. LA SICUREZZA DEL BOT È ADESSO GARANTITA DALLA PRESENZA DI GION.**";
+		final String active = "**IL MODULO DI SICUREZZA È ORA ATTIVO. GARANTISCE SICUREZZA AL BOT.\nTUTTE LE AZIONI SONO SORVEGLIATE E ALLA PRIMA INFRAZIONE VERRANNO ALLERTATE LE AUTORITÀ COMPETENTI E INCOMPETENTI.**";
+		final String inactive = "**IL MODULO DI SICUREZZA È STATO DISATTIVATO. LA SICUREZZA DEL BOT È ADESSO GARANTITA DALLA PRESENZA DI GION.**";
+		final String[] msg = {active, inactive};
+		final short toSend = moduloSicurezza ? 0 : 1;
 		
-		final var isActive = moduloSicurezza ? active : inactive;
-		
-		canaleBot.sendMessage(isActive).queue();
+		canaleBot.sendMessage(msg[toSend]).queue();
 		
 	} // fine moduloDiSicurezza()
-	
-	class classNotFound{}
 	
 	/**<strong>
 	 * IL MODULO DI SICUREZZA SI OCCUPA DI MANTENERE IL BOT AL SICURO. STAI LONTANDO DAL BOT.
@@ -1752,8 +1753,8 @@ public class Commands extends ListenerAdapter
 	 * @since QUELLA VOLTA IN CUI ENIGMO HA MOSSO DELLE AVANCE AL BOT.
 	 * @throws ENIGMO DALLA FINESTRA.
 	 * @apiNote QUELLE CHE FANNO BZZ E IMPOLLINANO I FIORI.
-	 * @see classNotFound QUELLO CHE È SUCCESSO A CHI HA MOLESTATO IL BOT PRIMA DI TE.
-	 */
+	 * @see <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">QUELLO CHE È SUCCESSO A CHI HA MOLESTATO IL BOT PRIMA DI TE.</a>
+	*/
 	public void ehiModulo()
 	{
 		final String id = author.getId();
