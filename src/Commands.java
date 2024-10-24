@@ -1117,13 +1117,22 @@ public class Commands extends ListenerAdapter
 					}
 				}
 				final int res = random.nextInt(1,facce+1);
-				final String message = String.format("Il dado è tratto! 🎲 **%d**.", res);
+				final String message = "Sto lanciando il dado... 🎲";
 				
-				event.reply(message).queue();
+				event.reply(message).queue(m -> {
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						error.print(object,e);
+					}
+					m.editOriginal(String.format("🎲 È uscito **%d**!", res)).queue();
+				});
 			}
 			case "cena" ->
 			{
 				final User author = event.getUser();
+				final String replyMessage;
+				final boolean isEphemeral;
 				
 				option = event.getOption("utente");
 				if (option != null)
@@ -1133,21 +1142,27 @@ public class Commands extends ListenerAdapter
 						final User user = option.getAsUser();
 						if (user.isBot())
 						{
-							final String m = String.format("Spiacente, %s non può uscire a cena con te.", user.getName());
-							event.reply(m).setEphemeral(true).queue();
-							return;
-						} else
-						{
-							final String m = String.format("%s ha ufficialmente invitato a cena %s!", author.getName(), user.getName());
-							event.reply(m).queue();
+							isEphemeral = true;
+							replyMessage = user.getId().equals(Utente.ID_BOWOT) ?
+								String.format("No, non uscirò a cena con te, %s.", author.getName()) :
+								String.format("Spiacente, %s non può uscire a cena con te.", user.getName());
 						}
+						else
+						{
+							isEphemeral = false;
+							replyMessage = String.format("%s ti ha ufficialmente invitato a cena, <@%s>! Accetti?", author.getName(), user.getId());
+						}
+						event.reply(replyMessage).setEphemeral(isEphemeral).queue();
 					}
 					catch (Exception e)
 					{
 						error.print(object, e);
 					}
 				}
-				event.reply("Devi menzionare qualcuno da invitare a cena!").setEphemeral(true).queue();
+				else
+				{
+					event.reply("Devi menzionare qualcuno da invitare a cena!").setEphemeral(true).queue();
+				}
 			}
 		}
 		
