@@ -51,7 +51,7 @@ public class Main
 			);
 			commands.add(new CommandData("cena", "Chiedi ad un utente di uscire a cena con te")
 				.addOptions(new OptionData(
-					OptionType.MENTIONABLE,
+					OptionType.USER,
 					"utente",
 					"l'utente che vuoi invitare a cena",
 					true
