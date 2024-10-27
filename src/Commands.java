@@ -1115,7 +1115,7 @@ public class Commands extends ListenerAdapter
 				
 				event.reply(message).queue(m -> {
 					try {
-						Thread.sleep(500);
+						Thread.sleep(random.nextInt(1000, 2000));
 					} catch (InterruptedException e) {
 						error.print(object,e);
 					}
