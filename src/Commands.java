@@ -1111,7 +1111,7 @@ public class Commands extends ListenerAdapter
 					}
 				}
 				final int res = random.nextInt(1,facce+1);
-				final String message = "Sto lanciando il dado... 🎲";
+				final String message = String.format("Sto lanciando il dado con %d facce... 🎲", facce);
 				
 				event.reply(message).queue(m -> {
 					try {
