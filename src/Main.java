@@ -37,27 +37,41 @@ public class Main
 		try
 		{
 			final ArrayList<CommandData> commands = new ArrayList<>();
+			CommandData newCommand;
 			
-			commands.add(new CommandData("pog", "Risponde con l'emote \"pog\""));
+			newCommand = new CommandData("pog", "Risponde con l'emote \"pog\"");
+			commands.add(newCommand);
 			
-			commands.add(new CommandData("dado","Lancia un dado")
+			
+			newCommand = new CommandData("dado","Lancia un dado")
 				.addOptions(new OptionData(
 					OptionType.STRING,
 					"facce",
 					"quante facce deve avere il dado",
 					false
 					)
-				)
-			);
-			commands.add(new CommandData("cena", "Chiedi ad un utente di uscire a cena con te")
+					.setRequiredRange(2,100)
+				);
+			commands.add(newCommand);
+			
+			newCommand = new CommandData("cena", "Chiedi ad un utente di uscire a cena con te")
 				.addOptions(new OptionData(
-					OptionType.USER,
-					"utente",
-					"l'utente che vuoi invitare a cena",
-					true
+				OptionType.USER,
+				"utente",
+				"l'utente che vuoi invitare a cena",
+				true
 					)
-				)
-			);
+				);
+			commands.add(newCommand);
+			
+			final OptionData[] options = new OptionData[]
+			{
+				new OptionData(OptionType.STRING, "","",true),
+				new OptionData(OptionType.STRING, "","",true),
+			};
+			newCommand = new CommandData("sondaggio", "Crea un sondaggio")
+				.addOptions(options);
+			commands.add(newCommand);
 			
 			jda.updateCommands().addCommands(commands).queue();
 			
