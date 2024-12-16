@@ -1,0 +1,10 @@
+{
+	"id" : "639",
+	"name" : "terrakion",
+	"types" :
+	[
+		"rock", "fighting"
+	],
+	"flavor_text": "This Pokémon came to the defense of Pokémon that had lost their homes in a war among humans.",
+	"generation" : "5"
+}

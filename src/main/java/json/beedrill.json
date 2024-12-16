@@ -1,0 +1,10 @@
+{
+	"id" : "15",
+	"name" : "beedrill",
+	"types" :
+	[
+		"bug", "poison"
+	],
+	"flavor_text": "It has three poisonous stingers on its forelegs and its tail. They are used to jab its enemy repeatedly.",
+	"generation" : "1"
+}

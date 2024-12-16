@@ -1,0 +1,10 @@
+{
+	"id" : "793",
+	"name" : "nihilego",
+	"types" :
+	[
+		"rock", "poison"
+	],
+	"flavor_text": "One of several mysterious Ultra Beasts. People on the street report observing those infested by it suddenly becoming violent.",
+	"generation" : "7"
+}

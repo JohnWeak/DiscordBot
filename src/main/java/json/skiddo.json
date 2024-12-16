@@ -1,0 +1,10 @@
+{
+	"id" : "672",
+	"name" : "skiddo",
+	"types" :
+	[
+		"grass", ""
+	],
+	"flavor_text": "Thought to be one of the first Pokémon to live in harmony with humans, it has a placid disposition.",
+	"generation" : "6"
+}

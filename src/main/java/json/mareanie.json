@@ -1,0 +1,10 @@
+{
+	"id" : "747",
+	"name" : "mareanie",
+	"types" :
+	[
+		"poison", "water"
+	],
+	"flavor_text": "It plunges the poison spike on its head into its prey. When the prey has weakened, Mareanie deals the finishing blow with its 10 tentacles.",
+	"generation" : "7"
+}

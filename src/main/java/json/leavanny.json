@@ -1,0 +1,10 @@
+{
+	"id" : "542",
+	"name" : "leavanny",
+	"types" :
+	[
+		"bug", "grass"
+	],
+	"flavor_text": "Upon finding a small Pokémon, it weaves clothing for it from leaves, using the cutters on its arms and sticky silk.",
+	"generation" : "5"
+}

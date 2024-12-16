@@ -1,0 +1,10 @@
+{
+	"id" : "154",
+	"name" : "meganium",
+	"types" :
+	[
+		"grass", ""
+	],
+	"flavor_text": "The aroma that rises from its petals contains a substance that calms aggressive feelings.",
+	"generation" : "2"
+}

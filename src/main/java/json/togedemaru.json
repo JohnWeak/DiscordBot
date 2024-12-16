@@ -1,0 +1,10 @@
+{
+	"id" : "777",
+	"name" : "togedemaru",
+	"types" :
+	[
+		"electric", "steel"
+	],
+	"flavor_text": "The spiny fur on its back is normally at rest. When this Pokémon becomes agitated, its fur stands on end and stabs into its attackers.",
+	"generation" : "7"
+}

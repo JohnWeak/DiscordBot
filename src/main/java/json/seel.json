@@ -1,0 +1,10 @@
+{
+	"id" : "86",
+	"name" : "seel",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "The protruding horn on its head is very hard. It is used for bashing through thick ice.",
+	"generation" : "1"
+}

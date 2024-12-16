@@ -1,0 +1,10 @@
+{
+	"id" : "727",
+	"name" : "incineroar",
+	"types" :
+	[
+		"fire", "dark"
+	],
+	"flavor_text": "This Pokémon has a violent, selfish disposition. If it’s not in the mood to listen, it will ignore its Trainer’s orders with complete nonchalance.",
+	"generation" : "7"
+}

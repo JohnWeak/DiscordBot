@@ -1,0 +1,10 @@
+{
+	"id" : "661",
+	"name" : "fletchling",
+	"types" :
+	[
+		"normal", "flying"
+	],
+	"flavor_text": "These friendly Pokémon send signals to one another with beautiful chirps and tail-feather movements.",
+	"generation" : "6"
+}

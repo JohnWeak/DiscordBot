@@ -1,0 +1,10 @@
+{
+	"id" : "842",
+	"name" : "appletun",
+	"types" :
+	[
+		"grass", "dragon"
+	],
+	"flavor_text": "Eating a sweet apple caused its evolution. A nectarous scent wafts from its body, luring in the bug Pokémon it preys on.",
+	"generation" : "8"
+}

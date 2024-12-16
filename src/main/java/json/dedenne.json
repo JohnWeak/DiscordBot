@@ -1,0 +1,10 @@
+{
+	"id" : "702",
+	"name" : "dedenne",
+	"types" :
+	[
+		"electric", "fairy"
+	],
+	"flavor_text": "Its whiskers serve as antennas. By sending and receiving electrical waves, it can communicate with others over vast distances.",
+	"generation" : "6"
+}

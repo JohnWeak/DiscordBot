@@ -1,0 +1,10 @@
+{
+	"id" : "680",
+	"name" : "doublade",
+	"types" :
+	[
+		"steel", "ghost"
+	],
+	"flavor_text": "When Honedge evolves, it divides into two swords, which cooperate via telepathy to coordinate attacks and slash their enemies to ribbons.",
+	"generation" : "6"
+}

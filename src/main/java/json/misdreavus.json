@@ -1,0 +1,10 @@
+{
+	"id" : "200",
+	"name" : "misdreavus",
+	"types" :
+	[
+		"ghost", ""
+	],
+	"flavor_text": "It likes playing mischievous tricks such as screaming and wailing to startle people at night.",
+	"generation" : "2"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "608",
+	"name" : "lampent",
+	"types" :
+	[
+		"ghost", "fire"
+	],
+	"flavor_text": "This ominous Pokémon is feared. Through cities it wanders, searching for the spirits of the fallen.",
+	"generation" : "5"
+}

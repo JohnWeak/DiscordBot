@@ -1,0 +1,10 @@
+{
+	"id" : "309",
+	"name" : "electrike",
+	"types" :
+	[
+		"electric", ""
+	],
+	"flavor_text": "ELECTRIKE stores electricity in its long body hair. This POKéMON stimulates its leg muscles with electric charges. These jolts of power give its legs explosive acceleration performance.",
+	"generation" : "3"
+}

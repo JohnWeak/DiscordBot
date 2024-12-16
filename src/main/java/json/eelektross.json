@@ -1,0 +1,10 @@
+{
+	"id" : "604",
+	"name" : "eelektross",
+	"types" :
+	[
+		"electric", ""
+	],
+	"flavor_text": "They crawl out of the ocean using their arms. They will attack prey on shore and immediately drag it into the ocean.",
+	"generation" : "5"
+}

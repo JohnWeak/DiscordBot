@@ -1,0 +1,10 @@
+{
+	"id" : "481",
+	"name" : "mesprit",
+	"types" :
+	[
+		"psychic", ""
+	],
+	"flavor_text": "Known as “The Being of Emotion.” It taught humans the nobility of sorrow, pain, and joy.",
+	"generation" : "4"
+}

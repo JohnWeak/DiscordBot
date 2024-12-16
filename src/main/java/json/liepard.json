@@ -1,0 +1,10 @@
+{
+	"id" : "510",
+	"name" : "liepard",
+	"types" :
+	[
+		"dark", ""
+	],
+	"flavor_text": "These Pokémon vanish and appear unexpectedly. Many Trainers are drawn to their beautiful form and fur.",
+	"generation" : "5"
+}

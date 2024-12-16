@@ -1,0 +1,10 @@
+{
+	"id" : "342",
+	"name" : "crawdaunt",
+	"types" :
+	[
+		"water", "dark"
+	],
+	"flavor_text": "CRAWDAUNT has an extremely violent nature that compels it to challenge other living things to battle. Other life-forms refuse to live in ponds inhabited by this POKéMON, making them desolate places.",
+	"generation" : "3"
+}

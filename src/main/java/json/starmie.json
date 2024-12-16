@@ -1,0 +1,10 @@
+{
+	"id" : "121",
+	"name" : "starmie",
+	"types" :
+	[
+		"water", "psychic"
+	],
+	"flavor_text": "Its central core glows with the seven colors of the rainbow. Some people value the core as a gem.",
+	"generation" : "1"
+}

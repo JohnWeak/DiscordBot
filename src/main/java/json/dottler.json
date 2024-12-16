@@ -1,0 +1,10 @@
+{
+	"id" : "825",
+	"name" : "dottler",
+	"types" :
+	[
+		"bug", "psychic"
+	],
+	"flavor_text": "It barely moves, but it’s still alive. Hiding in its shell without food or water seems to have awakened its psychic powers.",
+	"generation" : "8"
+}

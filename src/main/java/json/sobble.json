@@ -1,0 +1,10 @@
+{
+	"id" : "816",
+	"name" : "sobble",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "When scared, this Pokémon cries. Its tears pack the chemical punch of 100 onions, and attackers won’t be able to resist weeping.",
+	"generation" : "8"
+}

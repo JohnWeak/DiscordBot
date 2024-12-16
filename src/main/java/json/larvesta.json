@@ -1,0 +1,10 @@
+{
+	"id" : "636",
+	"name" : "larvesta",
+	"types" :
+	[
+		"bug", "fire"
+	],
+	"flavor_text": "This Pokémon was believed to have been born from the sun. When it evolves, its entire body is engulfed in flames.",
+	"generation" : "5"
+}

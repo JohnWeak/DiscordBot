@@ -1,0 +1,10 @@
+{
+	"id" : "443",
+	"name" : "gible",
+	"types" :
+	[
+		"dragon", "ground"
+	],
+	"flavor_text": "It nests in small, horizontal holes in cave walls. It pounces to catch prey that stray too close.",
+	"generation" : "4"
+}

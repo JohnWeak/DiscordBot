@@ -1,0 +1,10 @@
+{
+	"id" : "788",
+	"name" : "tapu-fini",
+	"types" :
+	[
+		"water", "fairy"
+	],
+	"flavor_text": "The dense fog it creates brings the downfall and destruction of its confused enemies. Ocean currents are the source of its energy.",
+	"generation" : "7"
+}

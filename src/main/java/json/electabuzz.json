@@ -1,0 +1,10 @@
+{
+	"id" : "125",
+	"name" : "electabuzz",
+	"types" :
+	[
+		"electric", ""
+	],
+	"flavor_text": "Normally found near power plants, they can wander away and cause major blackouts in cities.",
+	"generation" : "1"
+}

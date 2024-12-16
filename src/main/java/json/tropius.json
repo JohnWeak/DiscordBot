@@ -1,0 +1,10 @@
+{
+	"id" : "357",
+	"name" : "tropius",
+	"types" :
+	[
+		"grass", "flying"
+	],
+	"flavor_text": "The bunches of fruit around TROPIUS’s neck are very popular with children. This POKéMON loves fruit, and eats it continuously. Apparently, its love for fruit resulted in its own outgrowth of fruit.",
+	"generation" : "3"
+}

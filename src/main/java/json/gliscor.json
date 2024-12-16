@@ -1,0 +1,10 @@
+{
+	"id" : "472",
+	"name" : "gliscor",
+	"types" :
+	[
+		"ground", "flying"
+	],
+	"flavor_text": "It observes prey while hanging inverted from branches. When the chance presents itself, it swoops!",
+	"generation" : "4"
+}

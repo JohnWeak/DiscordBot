@@ -1,0 +1,10 @@
+{
+	"id" : "72",
+	"name" : "tentacool",
+	"types" :
+	[
+		"water", "poison"
+	],
+	"flavor_text": "Drifts in shallow seas. Anglers who hook them by accident are often punished by its stinging acid.",
+	"generation" : "1"
+}

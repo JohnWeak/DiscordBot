@@ -1,0 +1,10 @@
+{
+	"id" : "132",
+	"name" : "ditto",
+	"types" :
+	[
+		"normal", ""
+	],
+	"flavor_text": "Capable of copying an enemy's genetic code to instantly transform itself into a duplicate of the enemy.",
+	"generation" : "1"
+}

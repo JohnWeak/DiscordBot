@@ -1,0 +1,10 @@
+{
+	"id" : "729",
+	"name" : "brionne",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "A skillful dancer, it creates a sequence of water balloons as it dances, and briskly bombards its enemies.",
+	"generation" : "7"
+}

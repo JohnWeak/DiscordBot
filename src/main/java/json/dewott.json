@@ -1,0 +1,10 @@
+{
+	"id" : "502",
+	"name" : "dewott",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "Strict training is how it learns its flowing double-scalchop technique.",
+	"generation" : "5"
+}

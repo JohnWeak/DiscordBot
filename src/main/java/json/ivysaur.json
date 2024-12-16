@@ -1,0 +1,10 @@
+{
+	"id" : "2",
+	"name" : "ivysaur",
+	"types" :
+	[
+		"grass", "poison"
+	],
+	"flavor_text": "When the bulb on its back grows large, it appears to lose the ability to stand on its hind legs.",
+	"generation" : "1"
+}

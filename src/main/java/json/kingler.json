@@ -1,0 +1,10 @@
+{
+	"id" : "99",
+	"name" : "kingler",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "The large pincer has 10000 hp of crushing power. However, its huge size makes it unwieldy to use.",
+	"generation" : "1"
+}

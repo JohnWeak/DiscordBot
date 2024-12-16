@@ -1,0 +1,10 @@
+{
+	"id" : "39",
+	"name" : "jigglypuff",
+	"types" :
+	[
+		"normal", "fairy"
+	],
+	"flavor_text": "When its huge eyes light up, it sings a mysteriously soothing melody that lulls its enemies to sleep.",
+	"generation" : "1"
+}

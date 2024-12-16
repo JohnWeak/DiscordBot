@@ -1,0 +1,10 @@
+{
+	"id" : "574",
+	"name" : "gothita",
+	"types" :
+	[
+		"psychic", ""
+	],
+	"flavor_text": "Their ribbonlike feelers increase their psychic power. They are always staring at something.",
+	"generation" : "5"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "248",
+	"name" : "tyranitar",
+	"types" :
+	[
+		"rock", "dark"
+	],
+	"flavor_text": "Its body can't be harmed by any sort of attack, so it is very eager to make challenges against enemies.",
+	"generation" : "2"
+}

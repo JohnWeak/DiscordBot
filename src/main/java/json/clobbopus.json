@@ -1,0 +1,10 @@
+{
+	"id" : "852",
+	"name" : "clobbopus",
+	"types" :
+	[
+		"fighting", ""
+	],
+	"flavor_text": "It’s very curious, but its means of investigating things is to try to punch them with its tentacles. The search for food is what brings it onto land.",
+	"generation" : "8"
+}

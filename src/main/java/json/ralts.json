@@ -1,0 +1,10 @@
+{
+	"id" : "280",
+	"name" : "ralts",
+	"types" :
+	[
+		"psychic", "fairy"
+	],
+	"flavor_text": "RALTS senses the emotions of people using the horns on its head. This POKéMON rarely appears before people. But when it does, it draws closer if it senses that the person has a positive disposition.",
+	"generation" : "3"
+}

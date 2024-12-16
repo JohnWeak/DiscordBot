@@ -1,0 +1,10 @@
+{
+	"id" : "434",
+	"name" : "stunky",
+	"types" :
+	[
+		"poison", "dark"
+	],
+	"flavor_text": "It protects itself by spraying a noxious fluid from its rear. The stench lingers for 24 hours.",
+	"generation" : "4"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "351",
+	"name" : "castform",
+	"types" :
+	[
+		"normal", ""
+	],
+	"flavor_text": "CASTFORM’s appearance changes with the weather. This POKéMON gained the ability to use the vast power of nature to protect its tiny body.",
+	"generation" : "3"
+}

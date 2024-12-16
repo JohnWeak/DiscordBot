@@ -1,0 +1,10 @@
+{
+	"id" : "97",
+	"name" : "hypno",
+	"types" :
+	[
+		"psychic", ""
+	],
+	"flavor_text": "When it locks eyes with an enemy, it will use a mix of PSI moves such as HYPNOSIS and CONFUSION.",
+	"generation" : "1"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "235",
+	"name" : "smeargle",
+	"types" :
+	[
+		"normal", ""
+	],
+	"flavor_text": "A special fluid oozes from the tip of its tail. It paints the fluid everywhere to mark its territory.",
+	"generation" : "2"
+}

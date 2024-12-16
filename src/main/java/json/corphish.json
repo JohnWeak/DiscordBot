@@ -1,0 +1,10 @@
+{
+	"id" : "341",
+	"name" : "corphish",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "Its hardy vitality enables it to adapt to any environment. Its pincers will never release prey.",
+	"generation" : "3"
+}

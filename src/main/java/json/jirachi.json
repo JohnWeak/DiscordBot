@@ -1,0 +1,10 @@
+{
+	"id" : "385",
+	"name" : "jirachi",
+	"types" :
+	[
+		"steel", "psychic"
+	],
+	"flavor_text": "A legend states that JIRACHI will make true any wish that is written on notes attached to its head when it awakens. If this POKéMON senses danger, it will fight without awakening.",
+	"generation" : "3"
+}

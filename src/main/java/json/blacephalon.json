@@ -1,0 +1,10 @@
+{
+	"id" : "806",
+	"name" : "blacephalon",
+	"types" :
+	[
+		"fire", "ghost"
+	],
+	"flavor_text": "It slithers toward people. Then, without warning, it triggers the explosion of its own head. It’s apparently one kind of Ultra Beast.",
+	"generation" : "7"
+}

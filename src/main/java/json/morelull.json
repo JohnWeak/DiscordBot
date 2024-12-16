@@ -1,0 +1,10 @@
+{
+	"id" : "755",
+	"name" : "morelull",
+	"types" :
+	[
+		"grass", "fairy"
+	],
+	"flavor_text": "It scatters spores that flicker and glow. Anyone seeing these lights falls into a deep slumber.",
+	"generation" : "7"
+}

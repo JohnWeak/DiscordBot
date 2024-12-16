@@ -1,0 +1,10 @@
+{
+	"id" : "668",
+	"name" : "pyroar",
+	"types" :
+	[
+		"fire", "normal"
+	],
+	"flavor_text": "The male with the largest mane of fire is the leader of the pride.",
+	"generation" : "6"
+}

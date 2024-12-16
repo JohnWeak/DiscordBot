@@ -1,0 +1,10 @@
+{
+	"id" : "233",
+	"name" : "porygon2",
+	"types" :
+	[
+		"normal", ""
+	],
+	"flavor_text": "This upgraded version of PORYGON is designed for space exploration. It can't fly, though.",
+	"generation" : "2"
+}

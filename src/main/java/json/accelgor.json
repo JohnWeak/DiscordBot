@@ -1,0 +1,10 @@
+{
+	"id" : "617",
+	"name" : "accelgor",
+	"types" :
+	[
+		"bug", ""
+	],
+	"flavor_text": "When its body dries out, it weakens. So, to prevent dehydration, it wraps itself in many layers of thin membrane.",
+	"generation" : "5"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "250",
+	"name" : "ho-oh",
+	"types" :
+	[
+		"fire", "flying"
+	],
+	"flavor_text": "Legends claim this POKéMON flies the world's skies con­ tinuously on its magnificent seven- colored wings.",
+	"generation" : "2"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "466",
+	"name" : "electivire",
+	"types" :
+	[
+		"electric", ""
+	],
+	"flavor_text": "As its electric charge amplifies, blue sparks begin to crackle between its horns.",
+	"generation" : "4"
+}

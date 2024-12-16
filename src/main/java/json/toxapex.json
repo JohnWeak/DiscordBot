@@ -1,0 +1,10 @@
+{
+	"id" : "748",
+	"name" : "toxapex",
+	"types" :
+	[
+		"poison", "water"
+	],
+	"flavor_text": "Toxapex crawls along the ocean floor on its 12 legs. It leaves a trail of Corsola bits scattered in its wake.",
+	"generation" : "7"
+}

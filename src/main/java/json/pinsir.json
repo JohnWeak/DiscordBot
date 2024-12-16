@@ -1,0 +1,10 @@
+{
+	"id" : "127",
+	"name" : "pinsir",
+	"types" :
+	[
+		"bug", ""
+	],
+	"flavor_text": "If it fails to crush the victim in its pincers, it will swing it around and toss it hard.",
+	"generation" : "1"
+}

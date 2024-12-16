@@ -1,0 +1,10 @@
+{
+	"id" : "841",
+	"name" : "flapple",
+	"types" :
+	[
+		"grass", "dragon"
+	],
+	"flavor_text": "It ate a sour apple, and that induced its evolution. In its cheeks, it stores an acid capable of causing chemical burns.",
+	"generation" : "8"
+}

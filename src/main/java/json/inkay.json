@@ -1,0 +1,10 @@
+{
+	"id" : "686",
+	"name" : "inkay",
+	"types" :
+	[
+		"dark", "psychic"
+	],
+	"flavor_text": "Opponents who stare at the flashing of the light-emitting spots on its body become dazed and lose their will to fight.",
+	"generation" : "6"
+}

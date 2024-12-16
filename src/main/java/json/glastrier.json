@@ -1,0 +1,10 @@
+{
+	"id" : "896",
+	"name" : "glastrier",
+	"types" :
+	[
+		"ice", ""
+	],
+	"flavor_text": "Glastrier emits intense cold from its hooves. It’s also a belligerent Pokémon—anything it wants, it takes by force.",
+	"generation" : "8"
+}

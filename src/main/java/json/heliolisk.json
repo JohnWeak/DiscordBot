@@ -1,0 +1,10 @@
+{
+	"id" : "695",
+	"name" : "heliolisk",
+	"types" :
+	[
+		"electric", "normal"
+	],
+	"flavor_text": "They flare their frills and generate energy. A single Heliolisk can generate sufficient electricity to power a skyscraper.",
+	"generation" : "6"
+}

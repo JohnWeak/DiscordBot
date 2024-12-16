@@ -1,0 +1,10 @@
+{
+	"id" : "712",
+	"name" : "bergmite",
+	"types" :
+	[
+		"ice", ""
+	],
+	"flavor_text": "It blocks opponents’ attacks with the ice that shields its body. It uses cold air to repair any cracks with new ice.",
+	"generation" : "6"
+}

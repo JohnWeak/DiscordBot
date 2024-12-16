@@ -1,0 +1,10 @@
+{
+	"id" : "108",
+	"name" : "lickitung",
+	"types" :
+	[
+		"normal", ""
+	],
+	"flavor_text": "Its tongue can be extended like a chameleon's. It leaves a tingling sensation when it licks enemies.",
+	"generation" : "1"
+}

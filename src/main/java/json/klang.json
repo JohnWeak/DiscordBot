@@ -1,0 +1,10 @@
+{
+	"id" : "600",
+	"name" : "klang",
+	"types" :
+	[
+		"steel", ""
+	],
+	"flavor_text": "By changing the direction in which it rotates, it communicates its feelings to others. When angry, it rotates faster.",
+	"generation" : "5"
+}

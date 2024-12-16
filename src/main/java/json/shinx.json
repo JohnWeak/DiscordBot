@@ -1,0 +1,10 @@
+{
+	"id" : "403",
+	"name" : "shinx",
+	"types" :
+	[
+		"electric", ""
+	],
+	"flavor_text": "All of its fur dazzles if danger is sensed. It flees while the foe is momentarily blinded.",
+	"generation" : "4"
+}

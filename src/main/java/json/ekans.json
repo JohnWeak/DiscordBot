@@ -1,0 +1,10 @@
+{
+	"id" : "23",
+	"name" : "ekans",
+	"types" :
+	[
+		"poison", ""
+	],
+	"flavor_text": "Moves silently and stealthily. Eats the eggs of birds, such as PIDGEY and SPEAROW, whole.",
+	"generation" : "1"
+}

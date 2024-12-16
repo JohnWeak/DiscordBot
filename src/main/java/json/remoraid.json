@@ -1,0 +1,10 @@
+{
+	"id" : "223",
+	"name" : "remoraid",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "It has superb ac­ curacy. The water it shoots out can strike even moving prey from more than 300 feet.",
+	"generation" : "2"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "184",
+	"name" : "azumarill",
+	"types" :
+	[
+		"water", "fairy"
+	],
+	"flavor_text": "It lives in water virtually all day long. Its body color and pattern act as camouflage that makes it tough for enemies to spot in water.",
+	"generation" : "2"
+}

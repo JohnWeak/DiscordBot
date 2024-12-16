@@ -1,0 +1,10 @@
+{
+	"id" : "89",
+	"name" : "muk",
+	"types" :
+	[
+		"poison", ""
+	],
+	"flavor_text": "Thickly covered with a filthy, vile sludge. It is so toxic, even its footprints contain poison.",
+	"generation" : "1"
+}

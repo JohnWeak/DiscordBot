@@ -1,0 +1,10 @@
+{
+	"id" : "544",
+	"name" : "whirlipede",
+	"types" :
+	[
+		"bug", "poison"
+	],
+	"flavor_text": "Protected by a hard shell, it spins its body like a wheel and crashes furiously into its enemies.",
+	"generation" : "5"
+}

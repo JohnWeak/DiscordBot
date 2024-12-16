@@ -1,0 +1,10 @@
+{
+	"id" : "865",
+	"name" : "sirfetchd",
+	"types" :
+	[
+		"fighting", ""
+	],
+	"flavor_text": "Only Farfetch’d that have survived many battles can attain this evolution. When this Pokémon’s leek withers, it will retire from combat.",
+	"generation" : "8"
+}

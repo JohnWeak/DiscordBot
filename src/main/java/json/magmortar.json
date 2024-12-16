@@ -1,0 +1,10 @@
+{
+	"id" : "467",
+	"name" : "magmortar",
+	"types" :
+	[
+		"fire", ""
+	],
+	"flavor_text": "It blasts fireballs of over 3,600 degrees F from the ends of its arms. It lives in volcanic craters.",
+	"generation" : "4"
+}

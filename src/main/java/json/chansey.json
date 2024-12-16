@@ -1,0 +1,10 @@
+{
+	"id" : "113",
+	"name" : "chansey",
+	"types" :
+	[
+		"normal", ""
+	],
+	"flavor_text": "A rare and elusive POKéMON that is said to bring happiness to those who manage to get it.",
+	"generation" : "1"
+}

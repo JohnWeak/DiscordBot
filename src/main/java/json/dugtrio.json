@@ -1,0 +1,10 @@
+{
+	"id" : "51",
+	"name" : "dugtrio",
+	"types" :
+	[
+		"ground", ""
+	],
+	"flavor_text": "A team of DIGLETT triplets. It triggers huge earthquakes by burrowing 60 miles underground.",
+	"generation" : "1"
+}

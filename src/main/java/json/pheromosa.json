@@ -1,0 +1,10 @@
+{
+	"id" : "795",
+	"name" : "pheromosa",
+	"types" :
+	[
+		"bug", "fighting"
+	],
+	"flavor_text": "One of the dangerous Ultra Beasts, it has been spotted running across the land at terrific speeds.",
+	"generation" : "7"
+}

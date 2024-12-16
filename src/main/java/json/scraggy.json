@@ -1,0 +1,10 @@
+{
+	"id" : "559",
+	"name" : "scraggy",
+	"types" :
+	[
+		"dark", "fighting"
+	],
+	"flavor_text": "Its skin has a rubbery elasticity, so it can reduce damage by defensively pulling its skin up to its neck.",
+	"generation" : "5"
+}
