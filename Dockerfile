@@ -1,6 +1,6 @@
-FROM openjdk:17
+FROM gradle:8.5-jdk21
 WORKDIR /Bot
-COPY ./src/ .
-RUN javac -cp \* *.java
-RUN jar cfm bot.jar manifest.txt *.class *.jar *.txt
+COPY . .
+RUN ./gradlew shadowJar
+RUN mv ./build/libs/discord-bot-1.0-SNAPSHOT-all.jar ./bot.jar
 CMD ["java", "-jar", "bot.jar"]
