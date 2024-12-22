@@ -1,0 +1,10 @@
+{
+	"id" : "406",
+	"name" : "budew",
+	"types" :
+	[
+		"grass", "poison"
+	],
+	"flavor_text": "Over the winter, it closes its bud and endures the cold. In spring, the bud opens and releases pollen.",
+	"generation" : "4"
+}

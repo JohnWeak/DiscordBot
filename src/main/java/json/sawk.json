@@ -1,0 +1,10 @@
+{
+	"id" : "539",
+	"name" : "sawk",
+	"types" :
+	[
+		"fighting", ""
+	],
+	"flavor_text": "The sound of Sawk punching boulders and trees can be heard all the way from the mountains where they train.",
+	"generation" : "5"
+}

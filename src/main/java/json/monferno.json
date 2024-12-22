@@ -1,0 +1,10 @@
+{
+	"id" : "391",
+	"name" : "monferno",
+	"types" :
+	[
+		"fire", "fighting"
+	],
+	"flavor_text": "To intimidate attackers, it stretches the fire on its tail to make itself appear bigger.",
+	"generation" : "4"
+}

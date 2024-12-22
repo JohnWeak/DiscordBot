@@ -1,0 +1,63 @@
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.TimerTask;
+
+public class MessageTask extends TimerTask
+{
+	private final ArrayList<RegisteredEvent> allEvents = new ArrayList<>();
+	
+	public MessageTask() { }
+	
+	@Override
+	public void run()
+	{
+		final PrivateMessage[] usersToNotify = new PrivateMessage[]{new PrivateMessage(Utente.getGion()), new PrivateMessage(Utente.getEnigmo())};
+		final Random random = new Random();
+		final int DUPLICATES = 10;
+		final StringBuilder eventString = new StringBuilder();
+		int index = 1;
+		usersToNotify[0] = new PrivateMessage(Utente.getGion());
+		if (random.nextInt(69420) == 42)
+		{
+			final String MESSAGES_ABOUND = "SIR, THE DAM HAS BEEN BREACHED! THE MESSAGES ARE OVERFLOWING, THE FLOOD IS IMMINENT!\n";
+			eventString.append(MESSAGES_ABOUND);
+			for (var event : allEvents)
+			{
+				for (int i = 0; i < DUPLICATES; i++)
+				{
+					for (PrivateMessage pm : usersToNotify)
+					{
+						pm.send(event.toString());
+					}
+				}
+			}
+			eventString.setLength(0);
+			return;
+		}
+		
+		final String recap = String.format("Here's the recap of the `%d` disconnection events\n\n", allEvents.size());
+		eventString.append(recap);
+		
+		for (RegisteredEvent event : allEvents)
+		{
+			eventString.append(index++).append(") ").append(event.toString());
+		}
+		
+		final String closer = "\nEnd of recap. Enjoy the rest of the day. Or don't, I don't really care.";
+		eventString.append(closer);
+		
+		for (PrivateMessage pm : usersToNotify)
+		{
+			pm.send(eventString.toString());
+		}
+		
+		allEvents.clear();
+	}
+	
+	
+	public void addEvent(RegisteredEvent event)
+	{
+		allEvents.add(event);
+	}
+	
+}

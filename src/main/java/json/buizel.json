@@ -1,0 +1,10 @@
+{
+	"id" : "418",
+	"name" : "buizel",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "It has a flotation sac that is like an inflatable collar. It floats on water with its head out.",
+	"generation" : "4"
+}

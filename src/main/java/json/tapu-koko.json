@@ -1,0 +1,10 @@
+{
+	"id" : "785",
+	"name" : "tapu-koko",
+	"types" :
+	[
+		"electric", "fairy"
+	],
+	"flavor_text": "This guardian deity of Melemele is brimming with curiosity. It summons thunderclouds and stores their lightning inside its body.",
+	"generation" : "7"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "615",
+	"name" : "cryogonal",
+	"types" :
+	[
+		"ice", ""
+	],
+	"flavor_text": "When its body temperature goes up, it turns into steam and vanishes. When its temperature lowers, it returns to ice.",
+	"generation" : "5"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "114",
+	"name" : "tangela",
+	"types" :
+	[
+		"grass", ""
+	],
+	"flavor_text": "The whole body is swathed with wide vines that are similar to sea­ weed. Its vines shake as it walks.",
+	"generation" : "1"
+}

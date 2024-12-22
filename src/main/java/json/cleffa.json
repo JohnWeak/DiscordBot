@@ -1,0 +1,10 @@
+{
+	"id" : "173",
+	"name" : "cleffa",
+	"types" :
+	[
+		"fairy", ""
+	],
+	"flavor_text": "Because of its unusual, star-like silhouette, people believe that it came here on a meteor.",
+	"generation" : "2"
+}

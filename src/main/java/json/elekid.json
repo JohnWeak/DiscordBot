@@ -1,0 +1,10 @@
+{
+	"id" : "239",
+	"name" : "elekid",
+	"types" :
+	[
+		"electric", ""
+	],
+	"flavor_text": "It rotates its arms to generate electricity, but it tires easily, so it charges up only a little bit.",
+	"generation" : "2"
+}

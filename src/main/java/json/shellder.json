@@ -1,0 +1,10 @@
+{
+	"id" : "90",
+	"name" : "shellder",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "Its hard shell repels any kind of attack. It is vulnerable only when its shell is open.",
+	"generation" : "1"
+}

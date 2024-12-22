@@ -1,0 +1,10 @@
+{
+	"id" : "638",
+	"name" : "cobalion",
+	"types" :
+	[
+		"steel", "fighting"
+	],
+	"flavor_text": "This legendary Pokémon battled against humans to protect Pokémon. Its personality is calm and composed.",
+	"generation" : "5"
+}

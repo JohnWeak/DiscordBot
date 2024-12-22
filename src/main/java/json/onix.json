@@ -1,0 +1,10 @@
+{
+	"id" : "95",
+	"name" : "onix",
+	"types" :
+	[
+		"rock", "ground"
+	],
+	"flavor_text": "As it grows, the stone portions of its body harden to become similar to a diamond, but colored black.",
+	"generation" : "1"
+}

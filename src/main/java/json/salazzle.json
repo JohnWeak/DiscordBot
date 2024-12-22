@@ -1,0 +1,10 @@
+{
+	"id" : "758",
+	"name" : "salazzle",
+	"types" :
+	[
+		"poison", "fire"
+	],
+	"flavor_text": "For some reason, only females have been found. It creates a reverse harem of male Salandit that it lives with.",
+	"generation" : "7"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "625",
+	"name" : "bisharp",
+	"types" :
+	[
+		"dark", "steel"
+	],
+	"flavor_text": "It leads a group of Pawniard. It battles to become the boss, but will be driven from the group if it loses.",
+	"generation" : "5"
+}

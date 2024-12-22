@@ -1,0 +1,10 @@
+{
+	"id" : "620",
+	"name" : "mienshao",
+	"types" :
+	[
+		"fighting", ""
+	],
+	"flavor_text": "It wields the fur on its arms like a whip. Its arm attacks come with such rapidity that they cannot even be seen.",
+	"generation" : "5"
+}

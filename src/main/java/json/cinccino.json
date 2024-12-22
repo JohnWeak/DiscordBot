@@ -1,0 +1,10 @@
+{
+	"id" : "573",
+	"name" : "cinccino",
+	"types" :
+	[
+		"normal", ""
+	],
+	"flavor_text": "Their white fur is coated in a special oil that makes it easy for them to deflect attacks.",
+	"generation" : "5"
+}

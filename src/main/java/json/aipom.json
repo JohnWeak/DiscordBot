@@ -1,0 +1,10 @@
+{
+	"id" : "190",
+	"name" : "aipom",
+	"types" :
+	[
+		"normal", ""
+	],
+	"flavor_text": "Its tail is so powerful that it can use it to grab a tree branch and hold itself up in the air.",
+	"generation" : "2"
+}

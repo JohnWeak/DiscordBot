@@ -1,0 +1,10 @@
+{
+	"id" : "244",
+	"name" : "entei",
+	"types" :
+	[
+		"fire", ""
+	],
+	"flavor_text": "Volcanoes erupt when it barks. Un­ able to restrain its extreme power, it races headlong around the land.",
+	"generation" : "2"
+}

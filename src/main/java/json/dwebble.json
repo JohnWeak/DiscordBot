@@ -1,0 +1,10 @@
+{
+	"id" : "557",
+	"name" : "dwebble",
+	"types" :
+	[
+		"bug", "rock"
+	],
+	"flavor_text": "This Pokémon can easily melt holes in hard rocks with a liquid secreted from its mouth.",
+	"generation" : "5"
+}

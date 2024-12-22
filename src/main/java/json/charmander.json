@@ -1,0 +1,10 @@
+{
+	"id" : "4",
+	"name" : "charmander",
+	"types" :
+	[
+		"fire", ""
+	],
+	"flavor_text": "Obviously prefers hot places. When it rains, steam is said to spout from the tip of its tail.",
+	"generation" : "1"
+}

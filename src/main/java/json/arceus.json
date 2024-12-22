@@ -1,0 +1,10 @@
+{
+	"id" : "493",
+	"name" : "arceus",
+	"types" :
+	[
+		"normal", ""
+	],
+	"flavor_text": "It is described in mythology as the Pokémon that shaped the universe with its 1,000 arms.",
+	"generation" : "4"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "458",
+	"name" : "mantyke",
+	"types" :
+	[
+		"water", "flying"
+	],
+	"flavor_text": "A friendly Pokémon that captures the subtle flows of seawater using its two antennae.",
+	"generation" : "4"
+}

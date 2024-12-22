@@ -1,0 +1,10 @@
+{
+	"id" : "272",
+	"name" : "ludicolo",
+	"types" :
+	[
+		"water", "grass"
+	],
+	"flavor_text": "LUDICOLO begins dancing as soon as it hears cheerful, festive music. This POKéMON is said to appear when it hears the singing of children on hiking outings.",
+	"generation" : "3"
+}

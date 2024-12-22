@@ -1,0 +1,10 @@
+{
+	"id" : "828",
+	"name" : "thievul",
+	"types" :
+	[
+		"dark", ""
+	],
+	"flavor_text": "It secretly marks potential targets with a scent. By following the scent, it stalks its targets and steals from them when they least expect it.",
+	"generation" : "8"
+}

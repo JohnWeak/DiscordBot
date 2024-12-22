@@ -1,0 +1,10 @@
+{
+	"id" : "583",
+	"name" : "vanillish",
+	"types" :
+	[
+		"ice", ""
+	],
+	"flavor_text": "Snowy mountains are this Pokémon’s habitat. During an ancient ice age, they moved to southern areas.",
+	"generation" : "5"
+}

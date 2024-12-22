@@ -1,0 +1,10 @@
+{
+	"id" : "591",
+	"name" : "amoonguss",
+	"types" :
+	[
+		"grass", "poison"
+	],
+	"flavor_text": "It lures prey close by dancing and waving its arm caps, which resemble Poké Balls, in a swaying motion.",
+	"generation" : "5"
+}

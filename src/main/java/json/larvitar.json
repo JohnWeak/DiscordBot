@@ -1,0 +1,10 @@
+{
+	"id" : "246",
+	"name" : "larvitar",
+	"types" :
+	[
+		"rock", "ground"
+	],
+	"flavor_text": "It feeds on soil. After it has eaten a large mountain, it will fall asleep so it can grow.",
+	"generation" : "2"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "452",
+	"name" : "drapion",
+	"types" :
+	[
+		"poison", "dark"
+	],
+	"flavor_text": "It has the power in its clawed arms to make scrap of a car. The tips of its claws release poison.",
+	"generation" : "4"
+}

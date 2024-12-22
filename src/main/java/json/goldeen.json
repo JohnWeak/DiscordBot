@@ -1,0 +1,10 @@
+{
+	"id" : "118",
+	"name" : "goldeen",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "Its tail fin billows like an elegant ballroom dress, giving it the nickname of the Water Queen.",
+	"generation" : "1"
+}

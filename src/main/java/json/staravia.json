@@ -1,0 +1,10 @@
+{
+	"id" : "397",
+	"name" : "staravia",
+	"types" :
+	[
+		"normal", "flying"
+	],
+	"flavor_text": "It flies around forests and fields in search of bug Pokémon. It stays within a huge flock.",
+	"generation" : "4"
+}

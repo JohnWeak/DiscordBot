@@ -1,0 +1,10 @@
+{
+	"id" : "553",
+	"name" : "krookodile",
+	"types" :
+	[
+		"ground", "dark"
+	],
+	"flavor_text": "They never allow prey to escape. Their jaws are so powerful, they can crush the body of an automobile.",
+	"generation" : "5"
+}

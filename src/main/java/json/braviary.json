@@ -1,0 +1,10 @@
+{
+	"id" : "628",
+	"name" : "braviary",
+	"types" :
+	[
+		"normal", "flying"
+	],
+	"flavor_text": "They fight for their friends without any thought about danger to themselves. One can carry a car while flying.",
+	"generation" : "5"
+}

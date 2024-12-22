@@ -1,0 +1,10 @@
+{
+	"id" : "396",
+	"name" : "starly",
+	"types" :
+	[
+		"normal", "flying"
+	],
+	"flavor_text": "They flock in great numbers. Though small, they flap their wings with great power.",
+	"generation" : "4"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "503",
+	"name" : "samurott",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "One swing of the sword incorporated in its armor can fell an opponent. A simple glare from one of them quiets everybody.",
+	"generation" : "5"
+}

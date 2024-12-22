@@ -1,0 +1,10 @@
+{
+	"id" : "870",
+	"name" : "falinks",
+	"types" :
+	[
+		"fighting", ""
+	],
+	"flavor_text": "Five of them are troopers, and one is the brass. The brass’s orders are absolute.",
+	"generation" : "8"
+}

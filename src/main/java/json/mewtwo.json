@@ -1,0 +1,10 @@
+{
+	"id" : "150",
+	"name" : "mewtwo",
+	"types" :
+	[
+		"psychic", ""
+	],
+	"flavor_text": "It was created by a scientist after years of horrific gene splicing and DNA engineering experiments.",
+	"generation" : "1"
+}

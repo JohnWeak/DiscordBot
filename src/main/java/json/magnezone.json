@@ -1,0 +1,10 @@
+{
+	"id" : "462",
+	"name" : "magnezone",
+	"types" :
+	[
+		"electric", "steel"
+	],
+	"flavor_text": "It evolved from exposure to a special magnetic field. Three units generate magnetism.",
+	"generation" : "4"
+}

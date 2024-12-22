@@ -1,0 +1,10 @@
+{
+	"id" : "829",
+	"name" : "gossifleur",
+	"types" :
+	[
+		"grass", ""
+	],
+	"flavor_text": "It anchors itself in the ground with its single leg, then basks in the sun. After absorbing enough sunlight, its petals spread as it blooms brilliantly.",
+	"generation" : "8"
+}

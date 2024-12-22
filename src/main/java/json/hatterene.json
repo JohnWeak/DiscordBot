@@ -1,0 +1,10 @@
+{
+	"id" : "858",
+	"name" : "hatterene",
+	"types" :
+	[
+		"psychic", "fairy"
+	],
+	"flavor_text": "It emits psychic power strong enough to cause headaches as a deterrent to the approach of others.",
+	"generation" : "8"
+}

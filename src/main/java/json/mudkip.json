@@ -1,0 +1,10 @@
+{
+	"id" : "258",
+	"name" : "mudkip",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "The fin on MUDKIP’s head acts as highly sensitive radar. Using this fin to sense movements of water and air, this POKéMON can determine what is taking place around it without using its eyes.",
+	"generation" : "3"
+}

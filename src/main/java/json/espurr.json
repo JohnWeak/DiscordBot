@@ -1,0 +1,10 @@
+{
+	"id" : "677",
+	"name" : "espurr",
+	"types" :
+	[
+		"psychic", ""
+	],
+	"flavor_text": "The organ that emits its intense psychic power is sheltered by its ears to keep power from leaking out.",
+	"generation" : "6"
+}

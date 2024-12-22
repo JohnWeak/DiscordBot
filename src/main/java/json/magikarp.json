@@ -1,0 +1,10 @@
+{
+	"id" : "129",
+	"name" : "magikarp",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "In the distant past, it was somewhat stronger than the horribly weak descendants that exist today.",
+	"generation" : "1"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "548",
+	"name" : "petilil",
+	"types" :
+	[
+		"grass", ""
+	],
+	"flavor_text": "The leaves on its head are very bitter. Eating one of these leaves is known to refresh a tired body.",
+	"generation" : "5"
+}

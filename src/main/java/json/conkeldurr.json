@@ -1,0 +1,10 @@
+{
+	"id" : "534",
+	"name" : "conkeldurr",
+	"types" :
+	[
+		"fighting", ""
+	],
+	"flavor_text": "It is thought that Conkeldurr taught humans how to make concrete more than 2,000 years ago.",
+	"generation" : "5"
+}

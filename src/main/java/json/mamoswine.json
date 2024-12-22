@@ -1,0 +1,10 @@
+{
+	"id" : "473",
+	"name" : "mamoswine",
+	"types" :
+	[
+		"ice", "ground"
+	],
+	"flavor_text": "Its impressive tusks are made of ice. The population thinned when it turned warm after the ice age.",
+	"generation" : "4"
+}

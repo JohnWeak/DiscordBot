@@ -1,0 +1,10 @@
+{
+	"id" : "257",
+	"name" : "blaziken",
+	"types" :
+	[
+		"fire", "fighting"
+	],
+	"flavor_text": "In battle, BLAZIKEN blows out intense flames from its wrists and attacks foes courageously. The stronger the foe, the more intensely this POKéMON’s wrists burn.",
+	"generation" : "3"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "756",
+	"name" : "shiinotic",
+	"types" :
+	[
+		"grass", "fairy"
+	],
+	"flavor_text": "Forests where Shiinotic live are treacherous to enter at night. People confused by its strange lights can never find their way home again.",
+	"generation" : "7"
+}

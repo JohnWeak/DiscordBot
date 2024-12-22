@@ -1,0 +1,10 @@
+{
+	"id" : "732",
+	"name" : "trumbeak",
+	"types" :
+	[
+		"normal", "flying"
+	],
+	"flavor_text": "It eats berries and stores their seeds in its beak. When it encounters enemies or prey, it fires off all the seeds in a burst.",
+	"generation" : "7"
+}

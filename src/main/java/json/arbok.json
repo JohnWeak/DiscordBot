@@ -1,0 +1,10 @@
+{
+	"id" : "24",
+	"name" : "arbok",
+	"types" :
+	[
+		"poison", ""
+	],
+	"flavor_text": "It is rumored that the ferocious warning markings on its belly differ from area to area.",
+	"generation" : "1"
+}

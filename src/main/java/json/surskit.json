@@ -1,0 +1,10 @@
+{
+	"id" : "283",
+	"name" : "surskit",
+	"types" :
+	[
+		"bug", "water"
+	],
+	"flavor_text": "From the tips of its feet, SURSKIT secretes an oil that enables it to walk on water as if it were skating. This POKéMON feeds on microscopic organisms in ponds and lakes.",
+	"generation" : "3"
+}

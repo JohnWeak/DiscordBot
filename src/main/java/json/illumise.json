@@ -1,0 +1,10 @@
+{
+	"id" : "314",
+	"name" : "illumise",
+	"types" :
+	[
+		"bug", ""
+	],
+	"flavor_text": "With its sweet aroma, it guides Volbeat to draw signs with light in the night sky.",
+	"generation" : "3"
+}

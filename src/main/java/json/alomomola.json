@@ -1,0 +1,10 @@
+{
+	"id" : "594",
+	"name" : "alomomola",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "The special membrane enveloping Alomomola has the ability to heal wounds.",
+	"generation" : "5"
+}

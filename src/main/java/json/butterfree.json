@@ -1,0 +1,10 @@
+{
+	"id" : "12",
+	"name" : "butterfree",
+	"types" :
+	[
+		"bug", "flying"
+	],
+	"flavor_text": "In battle, it flaps its wings at high speed to release highly toxic dust into the air.",
+	"generation" : "1"
+}

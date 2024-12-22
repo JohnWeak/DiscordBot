@@ -1,0 +1,10 @@
+{
+	"id" : "172",
+	"name" : "pichu",
+	"types" :
+	[
+		"electric", ""
+	],
+	"flavor_text": "It is not yet skilled at storing electricity. It may send out a jolt if amused or startled.",
+	"generation" : "2"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "664",
+	"name" : "scatterbug",
+	"types" :
+	[
+		"bug", ""
+	],
+	"flavor_text": "When under attack from bird Pokémon, it spews a poisonous black powder that causes paralysis on contact.",
+	"generation" : "6"
+}

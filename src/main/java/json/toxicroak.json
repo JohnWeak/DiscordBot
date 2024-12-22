@@ -1,0 +1,10 @@
+{
+	"id" : "454",
+	"name" : "toxicroak",
+	"types" :
+	[
+		"poison", "fighting"
+	],
+	"flavor_text": "Its knuckle claws secrete a toxin so vile that even a scratch could prove fatal.",
+	"generation" : "4"
+}

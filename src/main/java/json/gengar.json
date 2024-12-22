@@ -1,0 +1,10 @@
+{
+	"id" : "94",
+	"name" : "gengar",
+	"types" :
+	[
+		"ghost", "poison"
+	],
+	"flavor_text": "Under a full moon, this POKéMON likes to mimic the shadows of people and laugh at their fright.",
+	"generation" : "1"
+}

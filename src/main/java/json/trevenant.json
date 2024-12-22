@@ -1,0 +1,10 @@
+{
+	"id" : "709",
+	"name" : "trevenant",
+	"types" :
+	[
+		"ghost", "grass"
+	],
+	"flavor_text": "It can control trees at will. It will trap people who harm the forest, so they can never leave.",
+	"generation" : "6"
+}

@@ -1,0 +1,10 @@
+{
+	"id" : "869",
+	"name" : "alcremie",
+	"types" :
+	[
+		"fairy", ""
+	],
+	"flavor_text": "When it trusts a Trainer, it will treat them to berries it’s decorated with cream.",
+	"generation" : "8"
+}

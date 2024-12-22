@@ -1,0 +1,10 @@
+{
+	"id" : "705",
+	"name" : "sliggoo",
+	"types" :
+	[
+		"dragon", ""
+	],
+	"flavor_text": "It drives away opponents by excreting a sticky liquid that can dissolve anything. Its eyes devolved, so it can’t see anything.",
+	"generation" : "6"
+}

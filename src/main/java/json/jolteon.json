@@ -1,0 +1,10 @@
+{
+	"id" : "135",
+	"name" : "jolteon",
+	"types" :
+	[
+		"electric", ""
+	],
+	"flavor_text": "It accumulates negative ions in the atmosphere to blast out 10000- volt lightning bolts.",
+	"generation" : "1"
+}

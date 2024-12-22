@@ -1,0 +1,10 @@
+{
+	"id" : "723",
+	"name" : "dartrix",
+	"types" :
+	[
+		"grass", "flying"
+	],
+	"flavor_text": "A bit of a dandy, it spends its free time preening its wings. Its preoccupation with any dirt on its plumage can leave it unable to battle.",
+	"generation" : "7"
+}

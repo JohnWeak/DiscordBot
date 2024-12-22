@@ -1,0 +1,10 @@
+{
+	"id" : "69",
+	"name" : "bellsprout",
+	"types" :
+	[
+		"grass", "poison"
+	],
+	"flavor_text": "A carnivorous POKéMON that traps and eats bugs. It uses its root feet to soak up needed moisture.",
+	"generation" : "1"
+}

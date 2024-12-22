@@ -1,0 +1,10 @@
+{
+	"id" : "13",
+	"name" : "weedle",
+	"types" :
+	[
+		"bug", "poison"
+	],
+	"flavor_text": "Often found in forests, eating leaves. It has a sharp venomous stinger on its head.",
+	"generation" : "1"
+}

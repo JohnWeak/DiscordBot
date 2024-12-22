@@ -1,0 +1,10 @@
+{
+	"id" : "80",
+	"name" : "slowbro",
+	"types" :
+	[
+		"water", "psychic"
+	],
+	"flavor_text": "The SHELLDER that is latched onto SLOWPOKE's tail is said to feed on the host's left over scraps.",
+	"generation" : "1"
+}

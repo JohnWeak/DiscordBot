@@ -1,0 +1,10 @@
+{
+	"id" : "419",
+	"name" : "floatzel",
+	"types" :
+	[
+		"water", ""
+	],
+	"flavor_text": "It floats using its well-developed flotation sac. It assists in the rescues of drowning people.",
+	"generation" : "4"
+}

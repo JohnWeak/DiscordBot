@@ -1,0 +1,10 @@
+{
+	"id" : "22",
+	"name" : "fearow",
+	"types" :
+	[
+		"normal", "flying"
+	],
+	"flavor_text": "With its huge and magnificent wings, it can keep aloft without ever having to land for rest.",
+	"generation" : "1"
+}

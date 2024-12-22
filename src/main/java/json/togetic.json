@@ -1,0 +1,10 @@
+{
+	"id" : "176",
+	"name" : "togetic",
+	"types" :
+	[
+		"fairy", "flying"
+	],
+	"flavor_text": "They say that it will appear before kindhearted, car­ ing people and shower them with happiness.",
+	"generation" : "2"
+}

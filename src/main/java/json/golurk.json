@@ -1,0 +1,10 @@
+{
+	"id" : "623",
+	"name" : "golurk",
+	"types" :
+	[
+		"ground", "ghost"
+	],
+	"flavor_text": "It flies across the sky at Mach speeds. Removing the seal on its chest makes its internal energy go out of control.",
+	"generation" : "5"
+}
