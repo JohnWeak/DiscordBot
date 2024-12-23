@@ -92,7 +92,7 @@ public class Main
 			jda = JDABuilder.createDefault(token)
 				.setActivity(selectActivity())
 				.setStatus(OnlineStatus.ONLINE)
-				.addEventListeners(new Commands())
+				.addEventListeners(new NewCommands())
 				.build();
 		}catch (Exception e)
 		{
