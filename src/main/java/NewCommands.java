@@ -7,6 +7,12 @@ public class NewCommands extends ListenerAdapter
 	
 	public void onMessageReceived(@NotNull MessageReceivedEvent event)
 	{
-		System.out.println(event.getMessage().getContentDisplay());
+		final var a = event.getMessage().getContentDisplay();
+		final var b = event.getChannel().getName();
+		final var c = event.getGuildChannel().getName();
+		
+		final String reply = a.concat("\n").concat(b).concat("\n").concat(c);
+		
+		event.getChannel().sendMessage(reply).queue();
 	}
 }
