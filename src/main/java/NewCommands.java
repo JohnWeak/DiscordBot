@@ -2,18 +2,28 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 public class NewCommands extends ListenerAdapter
 {
 	
 	public void onMessageReceived(@NotNull MessageReceivedEvent event)
 	{
-		final var a = event.getMessage().getContentDisplay();
-		final var b = event.getChannel().getName();
-		final var c = event.getGuildChannel().getName();
-		final var d = event.getAuthor().getName();
-		final var e = String.valueOf(event.getAuthor().isBot());
+		final ArrayList<String> args = new ArrayList<>();
+		final StringBuilder sb = new StringBuilder();
 		
-		final String reply = a.concat("\n").concat(b).concat("\n").concat(c).concat("\n").concat(d).concat("\n").concat(e);
+		if (event.getAuthor().isBot())
+			return;
+		
+		args.add(event.getMessage().getContentDisplay());
+		args.add(event.getChannel().getName());
+		args.add(event.getAuthor().getName());
+		args.add(String.valueOf(event.getAuthor().isBot()));
+		
+		for (String s : args)
+			sb.append(s).append("\n");
+		
+		final String reply = sb.toString();
 		
 		System.out.println(reply);
 		
