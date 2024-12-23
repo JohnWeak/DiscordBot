@@ -244,6 +244,14 @@ public class Commands extends ListenerAdapter
 		messageID = event.getMessageIdLong();
 		message = channel.getHistory().getMessageById(messageID);
 		
+		if (gion == null)
+		{
+			gion = new PrivateMessage(Utente.getGion());
+		}
+		
+		final String msg = "È stata aggiunta la reazione " + event.getReaction();
+		gion.send(msg);
+		
 		try
 		{
 			react(emote.toString());

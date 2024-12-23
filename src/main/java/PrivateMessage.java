@@ -1,22 +1,20 @@
+import lombok.Setter;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
-import net.dv8tion.jda.api.utils.AttachedFile;
 import net.dv8tion.jda.api.utils.FileUpload;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
 import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 
 public class PrivateMessage
 {
 	private final User user;
 	private final GuildMessageChannel messageChannel;
 	private static final Object object = PrivateMessage.class;
+	@Setter
 	private Message.Attachment attachment;
 	
 	/**Questa classe permette di inviare messaggi privati agli utenti passati tramite parametro
@@ -24,18 +22,18 @@ public class PrivateMessage
 	public PrivateMessage(User user)
 	{
 		this.user = user;
-		messageChannel = Main.getJda().getTextChannelsByName(Commands.botChannel,true).get(0);
+		messageChannel = Main.getJda().getTextChannelsByName(Commands.botChannel,true).getFirst();
 	} // fine costruttore
 	
 	/** Invocare questa funzione per inviare un messaggio all'utente designato.
 	 * @param content Il messaggio da inviare all'utente. */
 	public void send(String content)
 	{
-		var contentToSend = (content.length() > 2000 ? content.substring(0,1999) : content);
+		final String contentToSend = (content.length() > 2000 ? content.substring(0,1999) : content);
 		
 		try
 		{
-			var utente = Main.getJda().retrieveUserById(user.getId()).complete();
+			final User utente = Main.getJda().retrieveUserById(user.getId()).complete();
 			
 			utente.openPrivateChannel().flatMap(channel -> channel.sendMessage(contentToSend)).queue(l->
 			{
@@ -52,7 +50,9 @@ public class PrivateMessage
 	public void send(String content, Message.Attachment attachment) throws IOException
 	{
 		if (attachment == null)
+		{
 			send(content);
+		}
 		else
 		{
 			final InputStream inputStream = URI.create(attachment.getUrl()).toURL().openStream();
@@ -62,11 +62,12 @@ public class PrivateMessage
 			{
 				try
 				{
-					return channel.sendMessage(content)
-						.addFiles(fileUpload);
+					return channel.sendMessage(content).addFiles(fileUpload);
 				} catch (Exception e)
 				{
-					throw new RuntimeException(e);
+					new Error<Exception>().print(object, e);
+					return null;
+					// throw new RuntimeException(e);
 				}
 			}).queue();
 		}
@@ -74,10 +75,5 @@ public class PrivateMessage
 		
 	} // fine send(content, attachment)
 	
-	
-	public void setAttachment(Message.Attachment attachment)
-	{
-		this.attachment = attachment;
-	}
 	
 } // fine classe
