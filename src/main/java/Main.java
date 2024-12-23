@@ -22,7 +22,7 @@ public class Main
 	@Getter private static String tipo;
 	private static final Object object = Main.class;
 	
-	public static void main(String[] args) throws InterruptedException
+	public static void main(String[] args)
 	{
 		jda = generateJDA();
 		cmds();
@@ -87,16 +87,16 @@ public class Main
 		
 	}
 	
-	private static JDA generateJDA() throws InterruptedException
+	private static JDA generateJDA()
 	{
 		try
 		{
 			jda = JDABuilder.createDefault(token)
-					.enableIntents(GatewayIntent.GUILD_MESSAGES)
-					.setActivity(selectActivity())
-					.setStatus(OnlineStatus.ONLINE)
-					.addEventListeners(new NewCommands())
-					.build();
+				.enableIntents(GatewayIntent.MESSAGE_CONTENT)
+				.setActivity(selectActivity())
+				.setStatus(OnlineStatus.ONLINE)
+				.addEventListeners(new NewCommands())
+				.build();
 		} catch (Exception e)
 		{
 			new Error<>().print(object, e);
@@ -213,13 +213,7 @@ public class Main
 	 */
 	public static JDA getJda()
 	{
-		JDA j = null;
-		try
-		{
-			j = jda.awaitReady();
-		}catch (Exception ignored){}
-		
-		return j;
+		return jda;
 	}
 	
 	
