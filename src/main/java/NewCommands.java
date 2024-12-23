@@ -11,8 +11,10 @@ public class NewCommands extends ListenerAdapter
 		final var b = event.getChannel().getName();
 		final var c = event.getGuildChannel().getName();
 		
-		final String reply = a.concat("\n").concat(b).concat("\n").concat(c);
+		final String reply = a.concat("\n").concat(b).concat("\n").concat(c).concat("\n").concat(String.valueOf(event.getAuthor().isBot()));
 		
-		//event.getChannel().sendMessage(reply).queue();
+		System.out.println(reply);
+		
+		// event.getChannel().sendMessage(reply).queue();
 	}
 }
