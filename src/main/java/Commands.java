@@ -136,7 +136,7 @@ public class Commands extends ListenerAdapter
 	
 	/** Questo metodo decide cosa fare quando un messaggio viene modificato */
 	public void onMessageUpdate(@NotNull MessageUpdateEvent event)
-	{ //
+	{
 		user = event.getAuthor();
 		identifyLatestMessage(null, event);
 		aggiungiReazioni();
@@ -237,16 +237,10 @@ public class Commands extends ListenerAdapter
 	/**Questo metodo aggiunge a un messaggio la stessa reazione che piazza l'utente*/
 	public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event)
 	{
-		author = event.getUser();
-		if (author != null)
-		{
-			authorName = author.getName();
-			authorID = author.getId();
-		}
-		gion.send(authorName+" --- "+authorID.equals(Utente.ID_BOWOT));
+		defineAuthor(event.getUser());
 		
 		// ignora le tue stesse reazioni
-		if (event.getUser().getId().equals(Utente.ID_BOWOT)) { return; }
+		if (author.getId().equals(Utente.ID_BOWOT)) { return; }
 		
 		final MessageReaction emote = event.getReaction();
 		channel = event.getGuildChannel();
@@ -281,6 +275,14 @@ public class Commands extends ListenerAdapter
 		
 	} // fine aggiungiReazioni()
 	
+	private void defineAuthor(User user)
+	{
+		if (this.user == null) return;
+		
+		author = user;
+		authorName = author.getName();
+		authorID = author.getId();
+	}
 	
 	/** Controlla che il messaggio abbia le parole chiave per attivare i comandi (o le reazioni) del bot
 	 * @param msgStrippedLowerCase la stringa del messaggio inviato convertita in minuscolo.
@@ -303,11 +305,11 @@ public class Commands extends ListenerAdapter
 				
 				if (msgStrippedLowerCase.contains("daily streak"))
 				{
-					var msgSplittato = msgStrippedLowerCase.split(" ");
-					final var size = msgSplittato.length;
-					var auth = "";
-					var numGiorni = 0;
-					var channelHistory = Utilities.channelHistory(channel,false,3);
+					final String[] msgSplittato = msgStrippedLowerCase.split(" ");
+					final int size = msgSplittato.length;
+					String auth = "";
+					int numGiorni = 0;
+					final List<Message> channelHistory = Utilities.channelHistory(channel,false,3);
 					
 					try
 					{
@@ -335,9 +337,7 @@ public class Commands extends ListenerAdapter
 					{
 						if (auth.isEmpty())
 						{
-							final StringBuilder s = new StringBuilder();
-							s.append("<@").append(Utente.ID_GION).append(">\n`auth è una stringa vuota.`");
-							errorString.print(object,s.toString());
+							errorString.print(object, "<@" + Utente.ID_GION + ">\n`auth è una stringa vuota.`");
 							return;
 						}
 						
@@ -421,15 +421,15 @@ public class Commands extends ListenerAdapter
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
-		var reazioni = new ArrayList<String>();
+		final ArrayList<String> reazioni = new ArrayList<>();
 		// var emojis = findEmojis(msgStrippedLowerCase);
 		
 		if (msgStrippedLowerCase.contains("ehi modulo"))
 			ehiModulo();
 		
-		final var pigeonRegex = ".*piccion[ei].*|.*pigeon.*|.*igm[oa].*";
-		final var enigmoRegex = ".*igm[oa].*";
-		final var gionRegex = ".*gion.*|.*john.*";
+		final String pigeonRegex = ".*piccion[ei].*|.*pigeon.*|.*igm[oa].*";
+		final String enigmoRegex = ".*igm[oa].*";
+		final String gionRegex = ".*gion.*|.*john.*";
 		
 		if (msgStrippedLowerCase.matches(pigeonRegex))
 			new ThreadPigeon(authorName, channel).start();

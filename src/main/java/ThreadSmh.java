@@ -21,6 +21,9 @@ public class ThreadSmh extends Thread
 	@Override
 	public void run()
 	{
+		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
+		gion.send("Sto per eseguire `run()`, sto na favola");
+		
 		mc.sendMessage(smh).queue(l->
 		{
 			String newSmh = smh;
@@ -39,6 +42,7 @@ public class ThreadSmh extends Thread
 			}
 		});
 		
+		gion.send("Ho finito di eseguire `run()`, sto na favola");
 	} // fine run()
 	
 } // fine ThreadSmh
