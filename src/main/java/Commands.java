@@ -158,7 +158,7 @@ public class Commands extends ListenerAdapter
 			try
 			{
 				privateMessage(author.isBot());
-			} catch (IOException e)
+			} catch (IOException | InterruptedException e)
 			{
 				throw new RuntimeException(e);
 			}
@@ -178,7 +178,7 @@ public class Commands extends ListenerAdapter
 	
 	/**Gestisce i messaggi privati che il bot riceve. Se è un altro bot a inviarli, li ignora.
 	 * @param isBot <code>true</code> se l'autore del messaggio è un bot a sua volta, <code>false</code> altrimenti. */
-	public void privateMessage(boolean isBot) throws IOException
+	public void privateMessage(boolean isBot) throws IOException, InterruptedException
 	{
 		if (isBot || authorID.equals(Utente.ID_GION))
 			return;

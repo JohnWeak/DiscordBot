@@ -1,4 +1,5 @@
 import lombok.Setter;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
@@ -12,17 +13,25 @@ import java.util.Objects;
 public class PrivateMessage
 {
 	private final User user;
-	private final GuildMessageChannel messageChannel;
+	private final JDA jda;
+	//private final GuildMessageChannel messageChannel;
 	private static final Object object = PrivateMessage.class;
 	@Setter
 	private Message.Attachment attachment;
 	
 	/**Questa classe permette di inviare messaggi privati agli utenti passati tramite parametro
 	 * @param user Utente a cui inviare il messaggio privato. */
-	public PrivateMessage(User user) throws InterruptedException
+	public PrivateMessage(User user)
 	{
 		this.user = user;
-		messageChannel = Main.getJda().awaitReady().getTextChannelsByName(Commands.botChannel,true).get(0);
+		jda = Main.getJda();
+		//messageChannel = null;
+		if (jda.getTextChannelsByName(Commands.botChannel,true).isEmpty())
+		{
+			System.out.println("NON ESISTE IL CANALE");
+			return;
+		}
+		// messageChannel = Main.getJda().getTextChannelsByName(Commands.botChannel,true).get(0);
 	} // fine costruttore
 	
 	/** Invocare questa funzione per inviare un messaggio all'utente designato.
@@ -57,7 +66,7 @@ public class PrivateMessage
 		{
 			final InputStream inputStream = URI.create(attachment.getUrl()).toURL().openStream();
 			final FileUpload fileUpload = FileUpload.fromData(inputStream, Objects.requireNonNull(attachment.getFileExtension())); // Ad esempio, "file.png"
-			final User utente = Main.getJda().retrieveUserById(user.getId()).complete();
+			final User utente = jda.retrieveUserById(user.getId()).complete();
 			utente.openPrivateChannel().flatMap(channel ->
 			{
 				try

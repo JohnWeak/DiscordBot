@@ -1,3 +1,4 @@
+import lombok.Getter;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -17,11 +18,11 @@ public class Main
 {
 	private static final String token = System.getenv("TOKEN");
 	private static JDA jda;
-	private static Activity activity;
-	private static String tipo;
+	@Getter private static Activity activity;
+	@Getter private static String tipo;
 	private static final Object object = Main.class;
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws InterruptedException
 	{
 		jda = generateJDA();
 		cmds();
@@ -86,21 +87,21 @@ public class Main
 		
 	}
 	
-	private static JDA generateJDA()
+	private static JDA generateJDA() throws InterruptedException
 	{
 		try
 		{
 			jda = JDABuilder.createDefault(token)
-				.enableIntents(GatewayIntent.GUILD_MESSAGES)
-				.setActivity(selectActivity())
-				.setStatus(OnlineStatus.ONLINE)
-				.addEventListeners(new NewCommands())
-				.build();
-		}catch (Exception e)
+					.enableIntents(GatewayIntent.GUILD_MESSAGES)
+					.setActivity(selectActivity())
+					.setStatus(OnlineStatus.ONLINE)
+					.addEventListeners(new NewCommands())
+					.build();
+		} catch (Exception e)
 		{
-			new Error<>().print(object,e);
+			new Error<>().print(object, e);
 		}
-		return jda;
+		return jda.awaitReady();
 	} // fine generateJDA()
 	
 	public static Activity selectActivity()
@@ -195,12 +196,6 @@ public class Main
 		return activity;
 	} // fine selectActivity()
 	
-	/**@return l'attività che il bot sta eseguendo al momento*/
-	public static Activity getActivity()
-	{
-		return activity;
-	}
-	
 	/**@return il tipo di attività tradotta in italiano e formattata.*/
 	public static String getActivityTradotta()
 	{
@@ -213,16 +208,18 @@ public class Main
 		return activity.getType();
 	}
 	
-	/**@return la stringa che descrive il tipo di activity eseguita dal bot*/
-	public static String getTipo()
-	{
-		return tipo;
-	}
-	
-	/**@return l'istanza del JDA*/
+	/**
+	 * @return l'istanza del JDA, dopo che ha raggiunto lo status CONNECTED.
+	 */
 	public static JDA getJda()
 	{
-		return jda;
+		JDA j = null;
+		try
+		{
+			j = jda.awaitReady();
+		}catch (Exception ignored){}
+		
+		return j;
 	}
 	
 	
