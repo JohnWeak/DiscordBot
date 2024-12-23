@@ -234,30 +234,15 @@ public class Commands extends ListenerAdapter
 		
 	} // fine identifyLatestMessage()
 	
-	public void onGenericMessageReaction(@NotNull GenericMessageReactionEvent event)
-	{
-		if (gion == null)
-			gion = new PrivateMessage(Utente.getGion());
-		
-		gion.send("È successo " + event.getReaction());
-	}
-	
 	/**Questo metodo aggiunge a un messaggio la stessa reazione che piazza l'utente*/
 	public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event)
 	{
-		if (gion == null)
+		/*if (gion == null)
 		{
 			gion = new PrivateMessage(Utente.getGion());
 		}
 		final String msg = "È stata aggiunta la reazione " + event.getReaction();
-		gion.send(msg);
-		
-		if (true) return;
-		
-		
-		
-		
-		
+		gion.send(msg);*/
 		
 		// ignora le tue stesse reazioni
 		if (author.getId().equals(Utente.ID_BOWOT)) { return; }
