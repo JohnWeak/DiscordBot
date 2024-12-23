@@ -237,14 +237,13 @@ public class Commands extends ListenerAdapter
 	/**Questo metodo aggiunge a un messaggio la stessa reazione che piazza l'utente*/
 	public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event)
 	{
-		/*if (gion == null)
+		if (gion == null)
 		{
 			gion = new PrivateMessage(Utente.getGion());
 		}
-		final String msg = "È stata aggiunta la reazione " + event.getReaction();
-		gion.send(msg);*/
 		
 		// ignora le tue stesse reazioni
+		gion.send(authorName+" --- "+authorID.equals(Utente.ID_BOWOT));
 		if (author.getId().equals(Utente.ID_BOWOT)) { return; }
 		
 		final MessageReaction emote = event.getReaction();
