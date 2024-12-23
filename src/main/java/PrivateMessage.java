@@ -22,7 +22,7 @@ public class PrivateMessage
 	public PrivateMessage(User user)
 	{
 		this.user = user;
-		messageChannel = Main.getJda().getTextChannelsByName(Commands.botChannel,true).getFirst();
+		messageChannel = Main.getJda().getTextChannelsByName(Commands.botChannel,true).get(0);
 	} // fine costruttore
 	
 	/** Invocare questa funzione per inviare un messaggio all'utente designato.
