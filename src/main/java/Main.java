@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.internal.interactions.CommandDataImpl;
 
 import javax.security.auth.login.LoginException;
@@ -90,6 +91,7 @@ public class Main
 		try
 		{
 			jda = JDABuilder.createDefault(token)
+				.enableIntents(GatewayIntent.GUILD_MESSAGES)
 				.setActivity(selectActivity())
 				.setStatus(OnlineStatus.ONLINE)
 				.addEventListeners(new NewCommands())
