@@ -146,7 +146,7 @@ public class Commands extends ListenerAdapter
 	/** Gestisce i messaggi inviati in qualsiasi canale testuale di qualsiasi server in cui è presente il bot */
 	public void onMessageReceived(@NotNull MessageReceivedEvent event)
 	{
-		if (author.isBot()))
+		if (author.isBot())
 			return;
 		gion.send(event.getMessage().toString());
 		
