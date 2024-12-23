@@ -19,10 +19,10 @@ public class PrivateMessage
 	
 	/**Questa classe permette di inviare messaggi privati agli utenti passati tramite parametro
 	 * @param user Utente a cui inviare il messaggio privato. */
-	public PrivateMessage(User user)
+	public PrivateMessage(User user) throws InterruptedException
 	{
 		this.user = user;
-		messageChannel = Main.getJda().getTextChannelsByName(Commands.botChannel,true).get(0);
+		messageChannel = Main.getJda().awaitReady().getTextChannelsByName(Commands.botChannel,true).get(0);
 	} // fine costruttore
 	
 	/** Invocare questa funzione per inviare un messaggio all'utente designato.
