@@ -43,7 +43,7 @@ public class Main
 			newCommand = new CommandDataImpl("pog", "Risponde con l'emote \"pog\"");
 			commands.add(newCommand);
 			
-			
+			final long min=2, max=100;
 			newCommand = new CommandDataImpl("dado","Lancia un dado")
 				.addOptions(new OptionData(
 					OptionType.STRING,
@@ -51,7 +51,7 @@ public class Main
 					"quante facce deve avere il dado",
 					false
 					)
-					.setRequiredRange(2,100)
+					.setRequiredRange(min,max)
 				);
 			commands.add(newCommand);
 			
