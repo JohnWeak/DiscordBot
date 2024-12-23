@@ -24,7 +24,8 @@ hs_err_pid*
 
 # xml files
 *.xml
-.gradle
+
+.gradle/
 build
 
 .idea/

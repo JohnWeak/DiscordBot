@@ -245,6 +245,20 @@ public class Commands extends ListenerAdapter
 	/**Questo metodo aggiunge a un messaggio la stessa reazione che piazza l'utente*/
 	public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event)
 	{
+		if (gion == null)
+		{
+			gion = new PrivateMessage(Utente.getGion());
+		}
+		final String msg = "È stata aggiunta la reazione " + event.getReaction();
+		gion.send(msg);
+		
+		if (true) return;
+		
+		
+		
+		
+		
+		
 		// ignora le tue stesse reazioni
 		if (author.getId().equals(Utente.ID_BOWOT)) { return; }
 		
@@ -253,13 +267,6 @@ public class Commands extends ListenerAdapter
 		messageID = event.getMessageIdLong();
 		message = channel.getHistory().getMessageById(messageID);
 		
-		if (gion == null)
-		{
-			gion = new PrivateMessage(Utente.getGion());
-		}
-		
-		final String msg = "È stata aggiunta la reazione " + event.getReaction();
-		gion.send(msg);
 		
 		try
 		{
