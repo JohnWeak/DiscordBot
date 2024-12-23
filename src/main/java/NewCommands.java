@@ -13,6 +13,6 @@ public class NewCommands extends ListenerAdapter
 		
 		final String reply = a.concat("\n").concat(b).concat("\n").concat(c);
 		
-		event.getChannel().sendMessage(reply).queue();
+		//event.getChannel().sendMessage(reply).queue();
 	}
 }
