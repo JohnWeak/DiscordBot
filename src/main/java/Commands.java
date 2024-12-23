@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
+import net.dv8tion.jda.api.events.message.react.GenericMessageReactionEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.events.session.SessionDisconnectEvent;
@@ -232,6 +233,14 @@ public class Commands extends ListenerAdapter
 		}
 		
 	} // fine identifyLatestMessage()
+	
+	public void onGenericMessageReaction(@NotNull GenericMessageReactionEvent event)
+	{
+		if (gion == null)
+			gion = new PrivateMessage(Utente.getGion());
+		
+		gion.send("È successo " + event.getReaction());
+	}
 	
 	/**Questo metodo aggiunge a un messaggio la stessa reazione che piazza l'utente*/
 	public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event)
