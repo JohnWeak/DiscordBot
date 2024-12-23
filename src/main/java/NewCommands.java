@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class NewCommands extends ListenerAdapter
 {
-	
 	public void onMessageReceived(@NotNull MessageReceivedEvent event)
 	{
 		final ArrayList<String> args = new ArrayList<>();

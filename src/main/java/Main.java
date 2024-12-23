@@ -95,7 +95,7 @@ public class Main
 				.enableIntents(GatewayIntent.MESSAGE_CONTENT)
 				.setActivity(selectActivity())
 				.setStatus(OnlineStatus.ONLINE)
-				.addEventListeners(new NewCommands())
+				.addEventListeners(new Commands())
 				.build();
 		} catch (Exception e)
 		{
