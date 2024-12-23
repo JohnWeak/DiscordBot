@@ -102,8 +102,8 @@ public class Commands extends ListenerAdapter
 		
 		try
 		{
-			canaleBot = jda.getTextChannelsByName(botChannel, true).get(0);
-			canaleBotPokemon = jda.getTextChannelsByName("pokémowon", true).get(0);
+			canaleBot = jda.getTextChannelsByName(botChannel, true).getFirst();
+			canaleBotPokemon = jda.getTextChannelsByName("pokémowon", true).getFirst();
 			gion = new PrivateMessage(Utente.getGion());
 		}
 		catch (Exception e)
@@ -237,20 +237,21 @@ public class Commands extends ListenerAdapter
 	/**Questo metodo aggiunge a un messaggio la stessa reazione che piazza l'utente*/
 	public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event)
 	{
-		if (gion == null)
+		author = event.getUser();
+		if (author != null)
 		{
-			gion = new PrivateMessage(Utente.getGion());
+			authorName = author.getName();
+			authorID = author.getId();
 		}
+		gion.send(authorName+" --- "+authorID.equals(Utente.ID_BOWOT));
 		
 		// ignora le tue stesse reazioni
-		gion.send(authorName+" --- "+authorID.equals(Utente.ID_BOWOT));
-		if (author.getId().equals(Utente.ID_BOWOT)) { return; }
+		if (event.getUser().getId().equals(Utente.ID_BOWOT)) { return; }
 		
 		final MessageReaction emote = event.getReaction();
 		channel = event.getGuildChannel();
 		messageID = event.getMessageIdLong();
 		message = channel.getHistory().getMessageById(messageID);
-		
 		
 		try
 		{
