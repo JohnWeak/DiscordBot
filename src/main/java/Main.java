@@ -22,7 +22,7 @@ public class Main
 	@Getter private static String tipo;
 	private static final Object object = Main.class;
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws InterruptedException
 	{
 		jda = generateJDA();
 		cmds();
@@ -87,7 +87,7 @@ public class Main
 		
 	}
 	
-	private static JDA generateJDA()
+	private static JDA generateJDA() throws InterruptedException
 	{
 		try
 		{
