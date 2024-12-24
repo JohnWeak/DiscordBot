@@ -210,7 +210,7 @@ public class Pokemon
 	{
 		final EmbedBuilder embedBuilder = new EmbedBuilder();
 		final StringBuilder stringBuilder = new StringBuilder();
-		String types = "";
+		String types;
 		
 		if (pokedex) // se è una entry del pokedex, mostra le informazioni varie
 		{

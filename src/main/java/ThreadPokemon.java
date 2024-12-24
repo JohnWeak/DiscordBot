@@ -63,7 +63,7 @@ public class ThreadPokemon extends Thread
 				gion.send("Errore nel caricamento del channel history");
 				return;
 			}
-			final Message latest = history.get(0);
+			final Message latest = history.getFirst();
 			m = tc.retrieveMessageById(latest.getId()).complete();
 			
 			
