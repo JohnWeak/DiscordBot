@@ -15,17 +15,18 @@ public abstract class Utente
 	
 	public static User getUtenteFromID(String id)
 	{
-		return Commands.message.getJDA().retrieveUserById(id).complete();
+		return Main.getJda().retrieveUserById(id).complete();
 	}
 	
 	public static User getGion()
 	{
 		return Main.getJda().retrieveUserById(Utente.ID_GION).complete();
-	} // fine getGion()
+	}
 	
 	public static User getEnigmo()
 	{
 		return Main.getJda().retrieveUserById(Utente.ID_ENIGMO).complete();
 	}
+	
 	
 } // fine classe Utente

@@ -3,12 +3,10 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
-import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
-import net.dv8tion.jda.api.events.message.react.GenericMessageReactionEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.events.session.SessionDisconnectEvent;
@@ -58,7 +56,8 @@ public class Commands extends ListenerAdapter
 	private final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	private final boolean moduloSicurezza = false;
 	private final ArrayList<ThreadReminder> remindersList = new ArrayList<>();
-	private final MessageTask task = new MessageTask();
+	private final MessageTask disconnectMessageTask = new MessageTask();
+	private final DailyTask dailyTask = new DailyTask();
 	
 	private User user;
 	public String authorName;
@@ -73,19 +72,23 @@ public class Commands extends ListenerAdapter
 		final Timer timer = new Timer(true);
 		final long period = 24 * 60 * 60 * 1000; // 24 ore in millisecondi
 		
-		timer.schedule(task, calcDelay(), period);
+		timer.schedule(disconnectMessageTask, calcDelay(22,0,0), period);
+		timer.schedule(dailyTask, calcDelay(21, 30, 0), period);
 	}
 	
 	/**Calcola il ritardo iniziale fino al prossimo orario desiderato
 	 * @return la quantità, in millisecondi, di tempo che deve trascorrere prima di eseguire il task. */
-	private long calcDelay()
+	private long calcDelay(int hour, int minute, int second)
 	{
-		final int targetHour = 22, targetMinute = 0, targetSecond = 0;
+		final int targetHour = (hour < 0 || hour > 24 ? 17 : hour);
+		final int targetMinute = (minute < 0 || minute > 59 ? 0 : minute);
+		final int targetSecond = (second < 0 || second > 59 ? 0 : second);
+		
 		final ZonedDateTime now, nextRun;
 		final String romeString = "Europe/Rome";
-		final ZoneId amaggica = ZoneId.of(romeString);
+		final ZoneId aMaggica = ZoneId.of(romeString);
 		
-		now = ZonedDateTime.now(amaggica);
+		now = ZonedDateTime.now(aMaggica);
 		nextRun = now.getHour() < targetHour ?
 			now.withHour(targetHour).withMinute(targetMinute).withSecond(targetSecond) :
 			now.withHour(targetHour).withMinute(targetMinute).withSecond(targetSecond).plusDays(1);
@@ -107,15 +110,6 @@ public class Commands extends ListenerAdapter
 			canaleBotPokemon = jda.getTextChannelsByName("pokémowon", true).getFirst();
 			gion = new PrivateMessage(Utente.getGion());
 			
-			/*
-			final File f = new File("./src/main/java/");
-			if (f.isDirectory())
-			{
-				final File[] files = f.listFiles();
-				if (files != null)
-					gion.send(Arrays.toString(files));
-			}
-			*/
 		}
 		catch (Exception e)
 		{
@@ -140,7 +134,7 @@ public class Commands extends ListenerAdapter
 			closingMessage = String.format("%s\n",closeCode.getMeaning());
 			
 			registeredEvent = new RegisteredEvent(closingMessage, LocalDateTime.now());
-			task.addEvent(registeredEvent);
+			disconnectMessageTask.addEvent(registeredEvent);
 		}
 		
 	}
@@ -201,7 +195,7 @@ public class Commands extends ListenerAdapter
 		if (attachments.isEmpty())
 			gion.send(toSend.toString());
 		else
-			gion.send(toSend.toString(), attachments.get(0));
+			gion.send(toSend.toString(), attachments.getFirst());
 		
 		
 		if (moduloSicurezza)
@@ -417,10 +411,6 @@ public class Commands extends ListenerAdapter
 			case "!colpevolezza", "!colpevole" -> colpevolezza();
 			case "!carta" -> {new Card().sendCarta();}
 			case "!massshooting", "!ms" -> massShooting();
-			// Nota: i comandi di clash sono disabilitati poiché la loro API
-			//  richiede un token diverso ogni volta che cambia l'indirizzo IP
-			//case "!war" -> new Clash().clashWar();
-			//case "!league" -> new Clash().clashWarLeague(false);
 			case "!smh" -> new ThreadSmh(channel).start();
 			case "!dado" -> dado();
 			case "!cattura", "!catch" -> cattura(pokemon);
@@ -748,7 +738,7 @@ public class Commands extends ListenerAdapter
 		red = random.nextInt(255);
 		green = random.nextInt(255);
 		blue = random.nextInt(255);
-		final String tony = "<:"+Emotes.tonyakaradio105+">";
+		final String tony = Emotes.readyToSend(Emotes.tonyakaradio105);
 		final String[] certificazioni = {" ha la certificazione **IP68**", " ha la certificazione "+tony};
 		final String[] check = {"✅","❌"};
 		final StringBuilder msg = new StringBuilder();

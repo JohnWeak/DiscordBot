@@ -11,12 +11,15 @@ public class MessageTask extends TimerTask
 	@Override
 	public void run()
 	{
-		final PrivateMessage[] usersToNotify = new PrivateMessage[]{new PrivateMessage(Utente.getGion()), new PrivateMessage(Utente.getEnigmo())};
+		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
+		final PrivateMessage enigmo = new PrivateMessage(Utente.getEnigmo());
+		
+		final PrivateMessage[] usersToNotify = new PrivateMessage[]{gion, enigmo};
 		final Random random = new Random();
 		final int DUPLICATES = 10;
 		final StringBuilder eventString = new StringBuilder();
 		int index = 1;
-		usersToNotify[0] = new PrivateMessage(Utente.getGion());
+		
 		if (random.nextInt(69420) == 42)
 		{
 			final String MESSAGES_ABOUND = "SIR, THE DAM HAS BEEN BREACHED! THE MESSAGES ARE OVERFLOWING, THE FLOOD IS IMMINENT!\n";
@@ -40,7 +43,7 @@ public class MessageTask extends TimerTask
 		
 		for (RegisteredEvent event : allEvents)
 		{
-			eventString.append(index++).append(") ").append(event.toString());
+			eventString.append(String.format("%d) %s", index++, event.toString()));
 		}
 		
 		final String closer = "\nEnd of recap. Enjoy the rest of the day. Or don't, I don't really care.";

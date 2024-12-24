@@ -48,9 +48,9 @@ public abstract class Utilities
 		
 	} // fine metodo channelHistory()
 	
-	/** Trasforma il testo da normale a parodia simil-CaMeL cAsE
+	/** Trasforma il testo da normale a parodia CaMeL cAsE.
 	 * @param msg il testo originale.
-	 * @return la stringa originale adesso trasformata.
+	 * @return la stringa originale adesso trasformata in maiuscole e minuscole alternate.
 	 * */
 	public static String camelCase(String msg)
 	{

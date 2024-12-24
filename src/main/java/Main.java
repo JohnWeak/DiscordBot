@@ -55,8 +55,8 @@ public class Main
 				"utente",
 				"l'utente che vuoi invitare a cena",
 				true
-					)
-				);
+				)
+			);
 			commands.add(newCommand);
 			
 			newCommand = new CommandDataImpl("pokemon", "Genera un incontro con un pokemon!")
@@ -65,14 +65,18 @@ public class Main
 					"nome",
 					"Il nome del pokemon che vuoi cercare",
 					true
+					),
+					new OptionData(
+						OptionType.BOOLEAN,
+						"shiny",
+						"shiny",
+						false
 					)
 				);
 			
 			commands.add(newCommand);
-			final PrivateMessage gion = new PrivateMessage(Utente.getGion());
-			gion.send("Sto prima dell'update commands, sto na favola");
+			
 			jda.updateCommands().addCommands(commands).queue();
-			gion.send("Sto dopo l'update commands, sto na favola");
 			
 		}catch (Exception e)
 		{
