@@ -107,7 +107,7 @@ public class Commands extends ListenerAdapter
 			gion = new PrivateMessage(Utente.getGion());
 			
 			
-			final File f = new File(".");
+			final File f = new File("./src/main/java/");
 			if (f.isDirectory())
 			{
 				final File[] files = f.listFiles();
