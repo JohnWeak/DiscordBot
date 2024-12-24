@@ -1,4 +1,5 @@
 import lombok.Getter;
+import lombok.Setter;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -9,7 +10,6 @@ import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.internal.interactions.CommandDataImpl;
 
-import javax.security.auth.login.LoginException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -17,7 +17,7 @@ import java.util.Random;
 public class Main
 {
 	private static final String token = System.getenv("TOKEN");
-	private static JDA jda;
+	@Getter private static JDA jda;
 	@Getter private static Activity activity;
 	@Getter private static String tipo;
 	private static final Object object = Main.class;
@@ -31,11 +31,6 @@ public class Main
 	
 	public static void cmds()
 	{
-		if (jda == null)
-		{
-			return;
-		}
-		
 		try
 		{
 			final ArrayList<CommandData> commands = new ArrayList<>();
@@ -74,8 +69,6 @@ public class Main
 				);
 			
 			commands.add(newCommand);
-			
-			
 			
 			jda.updateCommands().addCommands(commands).queue();
 			
@@ -124,7 +117,7 @@ public class Main
 			"Steins;Gate", "FullMetal Alchemist", "Gurren Lagann", "Demon Slayer",
 			"Attack on Titan", "The Promised Neverland", "Kill La Kill", "Death Parade", "Death Note",
 			"Cowboy Bebop", "Goblin Slayer", "ID: Invaded", "Jujutsu Kaisen", "ODDTAXI", "Noragami",
-			"My Hero Academia", "One-Punch Man", "HunterxHunter", "Chainsaw Man", "Gintama"
+			"My Hero Academia", "One-Punch Man", "HunterxHunter", "Chainsaw Man", "Gintama", "Dan Dan Dan"
 		};
 		
 		final String[] movies =
@@ -148,7 +141,7 @@ public class Main
 			"Òbito che perde soldi in borsa", "Enigmo che simpa per Yano",
 			"Gion che mangia una pizza con ananas", "Lex che guida un'auto elettrica",
 			"il mondo bruciare", "una partita di calcio", "gli americani spararsi a vicenda",
-			"un gender reveal party incendiare una foresta", "le tipe nude attraverso lo spioncino della porta"
+			"un gender reveal party causare un incendio", "le tipe nude attraverso lo spioncino della porta"
 		};
 		
 		final int percent = random.nextInt(100);
@@ -206,14 +199,6 @@ public class Main
 	public static Activity.ActivityType getActivityType()
 	{
 		return activity.getType();
-	}
-	
-	/**
-	 * @return l'istanza del JDA, dopo che ha raggiunto lo status CONNECTED.
-	 */
-	public static JDA getJda()
-	{
-		return jda;
 	}
 	
 	

@@ -155,23 +155,8 @@ public class Pokemon
 		if (embedBuilder == null)
 			embedBuilder = buildEmbed(pokedex);
 		
-		if (pokedex)
-		{
-			Commands.canaleBotPokemon.sendMessageEmbeds(embedBuilder.build()).queue();
-		}
-		else
-		{
-			t = new ThreadPokemon(this, (TextChannelImpl) Commands.canaleBotPokemon, embedBuilder);
-			var tout = random.nextInt(2, 15);
-			t.setTimeoutTime(t.MINUTES, tout);
-			t.start();
-			
-			if (debug)
-				new PrivateMessage(Utente.getGion()).send("\nThread alive:" + t.isAlive() + "\ntout: " + tout + "\n");
-			
-		}
 		return embedBuilder;
-	} // fine startEncounter
+	} // fine spawn()
 	
 	
 	private static JSONObject getJsonObject(File f)

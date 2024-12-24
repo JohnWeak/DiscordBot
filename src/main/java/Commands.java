@@ -17,6 +17,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.requests.CloseCode;
+import net.dv8tion.jda.internal.entities.channel.concrete.TextChannelImpl;
 import org.jetbrains.annotations.NotNull;
 
 import org.json.simple.JSONArray;
@@ -1051,7 +1052,20 @@ public class Commands extends ListenerAdapter
 					pokemon.setShiny(true);
 			}
 			
-			pokemon.spawn();
+			if (pokedex)
+			{
+				Commands.canaleBotPokemon.sendMessageEmbeds(pokemon.spawn().build()).queue();
+			}
+			else
+			{
+				final ThreadPokemon t = new ThreadPokemon(pokemon, (TextChannelImpl) Commands.canaleBotPokemon, pokemon.spawn());
+				final int tout = random.nextInt(2, 15);
+				t.setTimeoutTime(t.MINUTES, tout);
+				t.start();
+				
+				// In caso di emergenza, rompere il vetro
+				// new PrivateMessage(Utente.getGion()).send("\nThread alive:" + t.isAlive() + "\ntout: " + tout + "\n");
+			}
 			
 		}catch (Exception e)
 		{
@@ -1116,9 +1130,9 @@ public class Commands extends ListenerAdapter
 				{
 					try
 					{
-						final int min = 3;
+						final int min = 2;
 						
-						facce = Integer.parseInt(option.getAsString()); // JDA 5.0 -> manca getAsInt()
+						facce = Integer.parseInt(option.getAsString());
 						if (facce < min)
 						{
 							final String reply = String.format("Il dado deve avere almeno %d facce. Riprova con un numero valido.", min);
@@ -1131,6 +1145,13 @@ public class Commands extends ListenerAdapter
 					}
 				}
 				final int res = random.nextInt(1,facce+1);
+				final StringBuilder sb = new StringBuilder();
+				sb.append(String.format("🎲 È uscito **%d**!", res));
+				if (res == facce)
+					sb.append(String.format("\nWow, %d naturale! 🎉", res));
+				else if (res == 1)
+					sb.append("\nSventura, 1 critico... ⚠️");
+				
 				final String message = String.format("Sto lanciando il dado con %d facce... 🎲", facce);
 				
 				event.reply(message).queue(m -> {
@@ -1139,7 +1160,7 @@ public class Commands extends ListenerAdapter
 					} catch (InterruptedException e) {
 						error.print(object,e);
 					}
-					m.editOriginal(String.format("🎲 È uscito **%d**!", res)).queue();
+					m.editOriginal(sb.toString()).queue();
 				});
 			}
 			case "cena" ->
