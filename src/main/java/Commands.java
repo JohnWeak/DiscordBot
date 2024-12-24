@@ -1199,13 +1199,16 @@ public class Commands extends ListenerAdapter
 			{
 				String pkmnName = null;
 				Pokemon p = null;
+				final boolean shiny;
 				if (!event.getOptions().isEmpty())
 				{
+					shiny = event.getOption("shiny") != null && Objects.requireNonNull(event.getOption("shiny")).getAsBoolean();
 					option = event.getOption("nome");
 					if (option != null)
 					{
 						pkmnName = option.getAsString();
 						p = new Pokemon(Pokemon.getId(pkmnName), true);
+						p.setShiny(shiny);
 					}
 				}
 				if (p != null)
@@ -1213,7 +1216,7 @@ public class Commands extends ListenerAdapter
 					event.replyEmbeds(p.spawn().build()).queue();
 				}
 				else
-					event.reply("Il pokedex non ha informazioni riguardo " + pkmnName).queue();
+					event.reply("Il pokedex non ha informazioni riguardo " + pkmnName).setEphemeral(true).queue();
 				// event.deferReply().queue();
 			
 				
