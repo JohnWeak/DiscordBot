@@ -22,7 +22,7 @@ public class Pokemon
 	private static final Object object = Pokemon.class;
 	private static final Error<Exception> error = new Error<>();
 	private static final String NAMES_FILE = "./src/main/java/nomiPokemon.txt";
-	private static final String JSON_FILES = "./json/";
+	private static final String JSON_FILES = "./src/main/java/json/";
 	private final boolean debug = false;
 	private final PrivateMessage pm = new PrivateMessage(Utente.getGion());
 	
