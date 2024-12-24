@@ -4,7 +4,6 @@ import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.TimerTask;
-import java.util.stream.Collectors;
 
 public class DailyTask extends TimerTask
 {
