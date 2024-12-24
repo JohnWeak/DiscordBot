@@ -106,7 +106,14 @@ public class Commands extends ListenerAdapter
 			canaleBotPokemon = jda.getTextChannelsByName("pokémowon", true).getFirst();
 			gion = new PrivateMessage(Utente.getGion());
 			
-			gion.send(System.getProperty("user.dir"));
+			
+			final File f = new File(".");
+			if (f.isDirectory())
+			{
+				final File[] files = f.listFiles();
+				if (files != null)
+					gion.send(Arrays.toString(files));
+			}
 		}
 		catch (Exception e)
 		{
