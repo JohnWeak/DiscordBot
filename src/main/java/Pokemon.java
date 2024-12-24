@@ -129,23 +129,18 @@ public class Pokemon
 			tipo[1] = tipo[1].toUpperCase();
 		}
 		
-		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png";
-		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/" + id + ".png";
+		final String shinyString = shiny ? "shiny/" : "";
+		img = String.format("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/%s%d.png", shinyString, id);
 		
-		img = (shiny ? urlShinyImg : urlImg);
+		//final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png";
+		//final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/" + id + ".png";
+		
+		//img = (shiny ? urlShinyImg : urlImg);
 		
 		if (debug)
 		{
-			var msg = "nome: "+nome+"\ndexNumber: "+dexNumber+"\ndescrizione: "+descrizione+
-					"\ngenerazione: "+generazione+"\ntipo/i: "+Arrays.toString(tipo);
-			
+			final String msg = String.format("nome: %s\ndexNumber: %s\ndescrizione: %s\ngenerazione: %s\ntipo/i: %s", nome, dexNumber, descrizione, generazione, Arrays.toString(tipo));
 			pm.send(msg);
-			
-			// pm.send("nome: " + nome);
-			// pm.send("dexNumber: " + dexNumber);
-			// pm.send("descrizione: " + descrizione);
-			// pm.send("generazione: " + generazione);
-			// pm.send("tipo/i: " + Arrays.toString(tipo));
 		}
 		
 	} // fine costruttore
@@ -278,11 +273,8 @@ public class Pokemon
 	public void setShiny(boolean shiny)
 	{
 		this.shiny = shiny;
-		
-		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png";
-		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/" + id + ".png";
-		
-		img = (shiny ? urlShinyImg : urlImg);
+		final String shinyString = shiny ? "shiny/" : "";
+		img = String.format("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/%s%d.png",shinyString, id);
 	}
 	
 } // fine classe
