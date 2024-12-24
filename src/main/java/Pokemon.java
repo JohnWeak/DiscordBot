@@ -1,3 +1,5 @@
+import lombok.Getter;
+import lombok.Setter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.internal.entities.channel.concrete.TextChannelImpl;
@@ -19,9 +21,9 @@ public class Pokemon
 	// UNRELATED TO POKEMON
 	private static final Object object = Pokemon.class;
 	private static final Error<Exception> error = new Error<>();
-	public static final String NAMES_FILE = "nomiPokemon.txt";
-	public static final String JSON_FILES = "./json/";
-	public static boolean debug = false;
+	private static final String NAMES_FILE = "nomiPokemon.txt";
+	private static final String JSON_FILES = "./json/";
+	private final boolean debug = false;
 	private final PrivateMessage pm = new PrivateMessage(Utente.getGion());
 	
 	// FILE
@@ -35,18 +37,18 @@ public class Pokemon
 	private ThreadPokemon t = null;
 	
 	// POKEMON INFO
-	private String nome;
-	private String nomeFile;
-	private String img;
-	private boolean shiny = false;
-	private String descrizione;
-	private String[] tipo = new String[]{" "," "};
-	private String generazione;
-	private String dexNumber;
-	private int[] individualValues = new int[6];
-	private boolean catturato = false;
-	private boolean catturabile = false;
-	private User owner;
+	@Getter @Setter private String nome;
+	@Getter @Setter private String nomeFile;
+	@Getter @Setter private String img;
+	@Getter @Setter private boolean shiny = false;
+	@Getter @Setter private String descrizione;
+	@Getter @Setter private String[] tipo = new String[]{" "," "};
+	@Getter @Setter private String generazione;
+	@Getter @Setter private String dexNumber;
+	@Getter @Setter private int[] individualValues = new int[6];
+	@Getter @Setter private boolean catturato = false;
+	@Getter @Setter private boolean catturabile = false;
+	@Getter @Setter private User owner;
 	private JSONArray types;
 	
 	// private static int pokemon_id = 261; -> Poochyena
@@ -67,7 +69,7 @@ public class Pokemon
 		
 		try
 		{
-			path = Paths.get(Pokemon.NAMES_FILE);
+			path = Paths.get(NAMES_FILE);
 			reader = Files.newBufferedReader(path);
 			for (int i = 0; i < id; i++)
 				line = reader.readLine().toLowerCase();
@@ -281,32 +283,6 @@ public class Pokemon
 		return x;
 	}
 	
-	//GETTER
-	public String getNome() { return nome; }
-	public String getImg() { return img; }
-	public boolean isShiny() { return shiny; }
-	public String getDescrizione() { return descrizione; }
-	public String[] getTipo() { return tipo; }
-	public String getGenerazione() { return generazione; }
-	public String getDexNumber() { return dexNumber; }
-	public int[] getIndividualValues() { return individualValues; }
-	public boolean isCatturato() { return catturato; }
-	public boolean isCatturabile() { return catturato; }
-	public User getOwner() { return owner; }
 	public ThreadPokemon getThread() { return t; }
-	
-	//SETTER
-	public void setNome(String nome) { this.nome = nome;}
-	public void setPokemonId(String img) { this.img = img; }
-	public void setShiny(boolean shiny) { this.shiny = shiny; }
-	public void setDescrizione(String descrizione) { this.descrizione = descrizione; }
-	public void setTipo(String[] tipi) { this.tipo = tipi; }
-	public void setGenerazione(String generazione) { this.generazione = generazione; }
-	public void setDexNumber(String dexNumber) { this.dexNumber = dexNumber; }
-	public void setIndividualValues(int[] individualValues) { this.individualValues = individualValues; }
-	public void setCatturato(boolean catturato) { this.catturato = catturato; }
-	public void setCatturabile(boolean catturabile) { this.catturabile = catturabile; }
-	public void setOwner(User owner) { this.owner = owner; }
-	public void setThread(ThreadPokemon t) { this.t = t; }
 	
 } // fine classe
