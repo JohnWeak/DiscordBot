@@ -1184,17 +1184,26 @@ public class Commands extends ListenerAdapter
 					event.reply("Impossibile creare un invito a cena. Tutti i ristoranti e i pub sono chiusi.").setEphemeral(true).queue();
 				}
 			}
-			case "chat" ->
+			case "pokemon" ->
 			{
-				final String msg;
+				String pkmnName = null;
+				Pokemon p = null;
 				if (!event.getOptions().isEmpty())
 				{
-					option = event.getOption("messaggio");
+					option = event.getOption("nome");
 					if (option != null)
-						msg = option.getAsString();
+					{
+						pkmnName = option.getAsString();
+						p = new Pokemon(Pokemon.getId(pkmnName), true);
+					}
 				}
-				
-				event.deferReply().queue();
+				if (p != null)
+				{
+					event.replyEmbeds(p.spawn().build()).queue();
+				}
+				else
+					event.reply("Il pokedex non ha informazioni riguardo " + pkmnName).queue();
+				// event.deferReply().queue();
 			
 				
 				

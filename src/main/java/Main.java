@@ -65,17 +65,18 @@ public class Main
 				);
 			commands.add(newCommand);
 			
-			final OptionData[] options = new OptionData[]
-			{
-				new OptionData(OptionType.STRING, "","",true),
-				new OptionData(OptionType.STRING, "","",true),
-			};
-			newCommand = new CommandDataImpl("sondaggio", "Crea un sondaggio")
-				.addOptions(options);
+			newCommand = new CommandDataImpl("pokemon", "Genera un incontro con un pokemon!")
+				.addOptions(new OptionData(
+					OptionType.STRING,
+					"nome",
+					"Il nome del pokemon che vuoi cercare",
+					true
+					)
+				);
+			
 			commands.add(newCommand);
 			
-			newCommand = new CommandDataImpl("chat", "Parla con un chatbot AI").addOption(OptionType.STRING, "messaggio", "Scrivi il tuo messaggio alla AI", true);
-			commands.add(newCommand);
+			
 			
 			jda.updateCommands().addCommands(commands).queue();
 			

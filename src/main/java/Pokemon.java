@@ -150,7 +150,7 @@ public class Pokemon
 	} // fine costruttore
 	
 	
-	public void spawn()
+	public EmbedBuilder spawn()
 	{
 		if (embedBuilder == null)
 			embedBuilder = buildEmbed(pokedex);
@@ -168,15 +168,17 @@ public class Pokemon
 			
 			if (debug)
 				new PrivateMessage(Utente.getGion()).send("\nThread alive:" + t.isAlive() + "\ntout: " + tout + "\n");
+			
 		}
+		return embedBuilder;
 	} // fine startEncounter
 	
 	
 	private static JSONObject getJsonObject(File f)
 	{
 		String line;
-		StringBuilder sb = new StringBuilder();
-		Scanner scanner;
+		final StringBuilder sb = new StringBuilder();
+		final Scanner scanner;
 		
 		try
 		{
