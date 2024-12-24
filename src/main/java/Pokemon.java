@@ -2,7 +2,6 @@ import lombok.Getter;
 import lombok.Setter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.internal.entities.channel.concrete.TextChannelImpl;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -40,7 +39,7 @@ public class Pokemon
 	@Getter @Setter private String nome;
 	@Getter @Setter private String nomeFile;
 	@Getter @Setter private String img;
-	@Getter @Setter private boolean shiny = false;
+	@Getter private boolean shiny = false;
 	@Getter @Setter private String descrizione;
 	@Getter @Setter private String[] tipo = new String[]{" "," "};
 	@Getter @Setter private String generazione;
@@ -49,6 +48,7 @@ public class Pokemon
 	@Getter @Setter private boolean catturato = false;
 	@Getter @Setter private boolean catturabile = false;
 	@Getter @Setter private User owner;
+	@Getter @Setter private int id;
 	private JSONArray types;
 	
 	// private static int pokemon_id = 261; -> Poochyena
@@ -57,6 +57,7 @@ public class Pokemon
 	public Pokemon(int id, boolean pokedex)
 	{
 		this.pokedex = pokedex;
+		this.id = id;
 		final File jsonFile;
 		owner = null;
 		
@@ -111,7 +112,7 @@ public class Pokemon
 		
 		
 		// prendere i dati dal .json
-		JSONObject data = getJsonObject(jsonFile);
+		final JSONObject data = getJsonObject(jsonFile);
 		
 		dexNumber = (String) data.get("id");
 		nome = Utilities.capitalize((String) data.get("name"));
@@ -273,5 +274,15 @@ public class Pokemon
 	}
 	
 	public ThreadPokemon getThread() { return t; }
+	
+	public void setShiny(boolean shiny)
+	{
+		this.shiny = shiny;
+		
+		final String urlImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png";
+		final String urlShinyImg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/" + id + ".png";
+		
+		img = (shiny ? urlShinyImg : urlImg);
+	}
 	
 } // fine classe
