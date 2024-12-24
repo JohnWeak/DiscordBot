@@ -251,7 +251,9 @@ public class Pokemon
 			embedBuilder.setColor(color);
 			
 			if (shiny)
+			{
 				embedBuilder.setFooter("✨ Shiny! ✨");
+			}
 			
 		}
 		else // se non è una entry del pokedex mostra solo nome e immagine
@@ -272,14 +274,14 @@ public class Pokemon
 		int x = 0;
 		try
 		{
-			Scanner scanner = new Scanner(nomiPokemon);
+			final Scanner scanner = new Scanner(nomiPokemon);
 			while (scanner.hasNext())
 			{
-				x++;
+				x += 1;
 				if (scanner.nextLine().equalsIgnoreCase(nome))
 					break;
 			}
-		}catch (Exception e) { error.print(object, e); }
+		} catch (Exception e) { error.print(object, e); }
 		return x;
 	}
 	
