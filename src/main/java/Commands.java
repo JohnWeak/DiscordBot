@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
 import net.dv8tion.jda.api.entities.emoji.CustomEmoji;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
+import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
@@ -14,6 +15,8 @@ import net.dv8tion.jda.api.events.session.SessionDisconnectEvent;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
+import net.dv8tion.jda.api.interactions.AutoCompleteQuery;
+import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.requests.CloseCode;
 import net.dv8tion.jda.internal.entities.channel.concrete.TextChannelImpl;
@@ -28,6 +31,7 @@ import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -38,6 +42,8 @@ import java.util.*;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Commands extends ListenerAdapter
 {
@@ -1101,7 +1107,7 @@ public class Commands extends ListenerAdapter
 		return false;
 	} // fine metodo contains()
 	
-	
+	@Override
 	public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event)
 	{
 		final String eventName = event.getName().toLowerCase();
@@ -1245,6 +1251,28 @@ public class Commands extends ListenerAdapter
 		
 	} // fine onSlashCommand()
 	
+	@Override
+	public void onCommandAutoCompleteInteraction(CommandAutoCompleteInteractionEvent event)
+	{
+		final String eventName = event.getName();
+		final AutoCompleteQuery focused = event.getFocusedOption();
+		
+		if (eventName.equalsIgnoreCase("pokemon") && focused.getName().equalsIgnoreCase("name"))
+		{
+			final String NAMES_FILE = "./src/main/java/nomiPokemon.txt";
+			final File nomiPokemon = new File(NAMES_FILE);
+			
+			try (Stream<String> lines = Files.lines(nomiPokemon.toPath()))
+			{
+				final List<Command.Choice> options = lines.flatMap(line -> Stream.of(line.split("\\s+")))
+					.filter(word -> word.startsWith(focused.getValue()))
+					.map(word -> new Command.Choice(word, word)) // map the words to choices
+					.toList();
+				
+				event.replyChoices(options).queue();
+			} catch (Exception e) { new Error<Exception>().print(object,e);}
+		}
+	}
 	
 	/** Lancia una moneta */
 	public void coinflip()
