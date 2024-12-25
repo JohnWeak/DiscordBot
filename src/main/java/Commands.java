@@ -1265,7 +1265,7 @@ public class Commands extends ListenerAdapter
 				{
 					l.retrieveOriginal().queue(originalMessage ->
 					{
-						for (int i = 0; i < rs.length - 1; i++)
+						for (int i = 0; i < rs.length; i++)
 						{
 							originalMessage.addReaction(Emoji.fromUnicode(reactionLetters[i])).queue();
 						}
