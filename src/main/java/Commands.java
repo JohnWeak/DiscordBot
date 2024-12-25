@@ -1230,7 +1230,7 @@ public class Commands extends ListenerAdapter
 			case "poll" ->
 			{
 				final List<OptionMapping> options = event.getOptions();
-				final String[] rs = new String[options.size()-1];
+				final String[] rs = new String[options.size() - 1];
 				final String domanda;
 				Arrays.fill(rs,null);
 				
@@ -1240,7 +1240,7 @@ public class Commands extends ListenerAdapter
 				
 				if (options.size() > 3)
 				{
-					for (int i = 2; i < options.size()-1; i++)
+					for (int i = 2; i < options.size() - 1; i++)
 					{
 						final OptionMapping x = event.getOption("opzione"+i);
 						

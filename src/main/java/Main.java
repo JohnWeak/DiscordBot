@@ -75,15 +75,11 @@ public class Main
 			final ArrayList<OptionData> options = new ArrayList<>();
 			OptionData od = new OptionData(OptionType.STRING, "domanda", "la domanda del sondaggio", true);
 			options.add(od);
-			for (int i = 1; i < 3; i++)
-			{
-				od = new OptionData(OptionType.STRING, "opzione"+i, "opzione "+i, true);
-				options.add(od);
-			}
 			
-			for (int i = 3; i < 10; i++)
+			for (int i = 1; i < 10; i++)
 			{
-				od = new OptionData(OptionType.STRING, "opzione"+i, "opzione "+i, false);
+				final boolean required = i < 3;
+				od = new OptionData(OptionType.STRING, "opzione"+i, "opzione "+i, required);
 				options.add(od);
 			}
 			
