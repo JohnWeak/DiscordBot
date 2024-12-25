@@ -1259,7 +1259,6 @@ public class Commands extends ListenerAdapter
 	{
 		final String eventName = event.getName();
 		final AutoCompleteQuery focused = event.getFocusedOption();
-		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
 		
 		if (eventName.equalsIgnoreCase("pokemon") && focused.getName().equalsIgnoreCase("nome"))
 		{
@@ -1269,12 +1268,11 @@ public class Commands extends ListenerAdapter
 			try (Stream<String> lines = Files.lines(nomiPokemon.toPath()))
 			{
 				final List<Command.Choice> options = lines.flatMap(line -> Stream.of(line.split("\\s+")))
-					.filter(word -> word.contains(focused.getValue()))
+					.filter(word -> word.toLowerCase().contains(focused.getValue().toLowerCase()))
 					.limit(25)
 					.map(word -> new Command.Choice(word, word))
 					.toList();
 				
-				gion.send(options.toString());
 				event.replyChoices(options).queue();
 			} catch (Exception e) { new Error<Exception>().print(object,e);}
 		}
