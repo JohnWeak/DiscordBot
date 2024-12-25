@@ -255,6 +255,7 @@ public class Pokemon
 	public static int getId(String nome)
 	{
 		int x = 0;
+		boolean trovato = false;
 		try
 		{
 			final Scanner scanner = new Scanner(nomiPokemon);
@@ -262,10 +263,15 @@ public class Pokemon
 			{
 				x += 1;
 				if (scanner.nextLine().equalsIgnoreCase(nome))
+				{
+					trovato = true;
 					break;
+				}
 			}
 		} catch (Exception e) { error.print(object, e); }
-		return x;
+		
+		
+		return trovato ? x : -1;
 	}
 	
 	public ThreadPokemon getThread() { return t; }
