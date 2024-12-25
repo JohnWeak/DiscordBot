@@ -1230,19 +1230,18 @@ public class Commands extends ListenerAdapter
 			case "poll" ->
 			{
 				final List<OptionMapping> options = event.getOptions();
-				final String[] rs = new String[options.size() - 1];
-				final String domanda;
+				final String[] rs = new String[options.size()];
 				Arrays.fill(rs,null);
 				
-				domanda = Objects.requireNonNull(event.getOption("domanda")).getAsString();
-				rs[0] = Objects.requireNonNull(event.getOption("opzione1")).getAsString();
-				rs[1] = Objects.requireNonNull(event.getOption("opzione2")).getAsString();
+				rs[0] = Objects.requireNonNull(event.getOption("domanda")).getAsString();
+				rs[1] = Objects.requireNonNull(event.getOption("opzione1")).getAsString();
+				rs[2] = Objects.requireNonNull(event.getOption("opzione2")).getAsString();
 				
 				if (options.size() > 3)
 				{
-					for (int i = 2; i < options.size() - 1; i++)
+					for (int i = 3; i < options.size(); i++)
 					{
-						final OptionMapping x = event.getOption("opzione"+(i+1));
+						final OptionMapping x = event.getOption("opzione"+i);
 						
 						if (x != null)
 						{
@@ -1252,8 +1251,25 @@ public class Commands extends ListenerAdapter
 				}
 				//gion.send(String.format("size = %d\noptions = %s",options.size(), Arrays.toString(rs)));
 				
-				final EmbedBuilder embedBuilder = creaSondaggio(domanda,rs,false);
-				event.replyEmbeds(embedBuilder.build()).queue();
+				final EmbedBuilder embedBuilder = creaSondaggio(rs[0],rs,false);
+				final String[] reactionLetters =
+				{
+					"\uD83C\uDDE6", "\uD83C\uDDE7", "\uD83C\uDDE8", "\uD83C\uDDE9", "\uD83C\uDDEA", "\uD83C\uDDEB",
+					"\uD83C\uDDEC", "\uD83C\uDDED", "\uD83C\uDDEE", "\uD83C\uDDEF", "\uD83C\uDDF0", "\uD83C\uDDF1",
+					"\uD83C\uDDF2", "\uD83C\uDDF3", "\uD83C\uDDF4", "\uD83C\uDDF5", "\uD83C\uDDF6", "\uD83C\uDDF7",
+					"\uD83C\uDDF8", "\uD83C\uDDF9", "\uD83C\uDDFA", "\uD83C\uDDFB", "\uD83C\uDDFC", "\uD83C\uDDFD",
+					"\uD83C\uDDFE", "\uD83C\uDDFF"
+				}; // array di lettere emoji A -> Z
+				event.replyEmbeds(embedBuilder.build()).queue(l ->
+				{
+					for (int i = 0; i < rs.length-1; i++)
+					{
+						l.retrieveOriginal()
+							.complete()
+							.addReaction(Emoji.fromUnicode(reactionLetters[i]))
+							.queue();
+					}
+				});
 				
 				// event.reply().setEphemeral(true).queue();
 				// event.getHook().sendMessage(domanda+"\t"+Arrays.toString(rs)).queue();
@@ -1423,7 +1439,8 @@ public class Commands extends ListenerAdapter
 			
 			final StringBuilder title = new StringBuilder();
 			final StringBuilder descrizione = new StringBuilder();
-			embedBuilder.setTitle(title.append(domanda).append("?").toString());
+			if (!domanda.contains("?"))
+				embedBuilder.setTitle(title.append(domanda).append("?").toString());
 			
 			for (int i = 0; i < lenghtRisposte; i++)
 			{
