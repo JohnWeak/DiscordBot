@@ -74,12 +74,14 @@ public class Main
 			commands.add(newCommand);
 			
 			final ArrayList<OptionData> options = new ArrayList<>();
-			OptionData od = new OptionData(OptionType.STRING, "domanda", "la domanda da porre", true);
+			OptionData od = new OptionData(OptionType.STRING, "domanda", "la domanda del sondaggio", true);
 			options.add(od);
-			od = new OptionData(OptionType.STRING, "opzione1", "opzione 1", true);
-			options.add(od);
-			od = new OptionData(OptionType.STRING, "opzione2", "opzione 2", true);
-			options.add(od);
+			for (int i = 1; i < 3; i++)
+			{
+				od = new OptionData(OptionType.STRING, "opzione"+i, "opzione "+i, true);
+				options.add(od);
+			}
+			
 			for (int i = 3; i < 10; i++)
 			{
 				od = new OptionData(OptionType.STRING, "opzione"+i, "opzione "+i, false);
