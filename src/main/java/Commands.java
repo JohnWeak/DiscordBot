@@ -1271,6 +1271,7 @@ public class Commands extends ListenerAdapter
 					});
 				});
 			}
+			
 		}
 	} // fine onSlashCommand()
 	

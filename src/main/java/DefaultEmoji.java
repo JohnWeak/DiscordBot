@@ -1,3 +1,6 @@
+import lombok.Getter;
+
+@Getter
 public enum DefaultEmoji
 {
 	MELA_ROSSA("🍎"),
@@ -15,7 +18,5 @@ public enum DefaultEmoji
 	{
 		this.emoji = emoji;
 	}
-	
-	public String getEmoji() { return emoji; }
 	
 } // fine classe Emoji
