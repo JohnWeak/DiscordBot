@@ -1250,7 +1250,7 @@ public class Commands extends ListenerAdapter
 						}
 					}
 				}
-				gion.send(Arrays.toString(rs));
+				gion.send(String.format("size = %d\noptions = %s",options.size(), Arrays.toString(rs)));
 				event.reply("Ok").queue();
 				// event.reply(domanda + "\t" + Arrays.toString(rs)).queue();
 				
