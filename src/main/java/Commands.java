@@ -1269,8 +1269,9 @@ public class Commands extends ListenerAdapter
 			try (Stream<String> lines = Files.lines(nomiPokemon.toPath()))
 			{
 				final List<Command.Choice> options = lines.flatMap(line -> Stream.of(line.split("\\s+")))
-					.filter(word -> word.startsWith(focused.getValue()))
-					.map(word -> new Command.Choice(word, word)) // map the words to choices
+					.filter(word -> word.contains(focused.getValue()))
+					.limit(25)
+					.map(word -> new Command.Choice(word, word))
 					.toList();
 				
 				gion.send(options.toString());
