@@ -1250,7 +1250,6 @@ public class Commands extends ListenerAdapter
 						}
 					}
 				}
-				//gion.send(String.format("size = %d\noptions = %s",options.size(), Arrays.toString(rs)));
 				
 				final EmbedBuilder embedBuilder = creaSondaggio(domanda,rs,false);
 				final String[] reactionLetters =
@@ -1271,11 +1270,8 @@ public class Commands extends ListenerAdapter
 						}
 					});
 				});
-				// event.reply().setEphemeral(true).queue();
-				// event.getHook().sendMessage(domanda+"\t"+Arrays.toString(rs)).queue();
 			}
 		}
-		
 	} // fine onSlashCommand()
 	
 	@Override
