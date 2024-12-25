@@ -1230,13 +1230,11 @@ public class Commands extends ListenerAdapter
 			case "poll" ->
 			{
 				final List<OptionMapping> options = event.getOptions();
-				//final ArrayList<String> risposte = new ArrayList<>();
 				final String[] rs = new String[options.size()-1]; // -1 perché la domanda è da escludere
 				final String domanda;
+				Arrays.fill(rs,null);
 				
 				domanda = Objects.requireNonNull(event.getOption("domanda")).getAsString();
-				//risposte.add(Objects.requireNonNull(event.getOption("opzione 1")).getAsString());
-				//risposte.add(Objects.requireNonNull(event.getOption("opzione 2")).getAsString());
 				rs[0] = Objects.requireNonNull(event.getOption("opzione1")).getAsString();
 				rs[1] = Objects.requireNonNull(event.getOption("opzione2")).getAsString();
 				
@@ -1245,16 +1243,19 @@ public class Commands extends ListenerAdapter
 					for (int i = 3; i < options.size(); i++)
 					{
 						final OptionMapping x = event.getOption("opzione"+i);
+						
 						if (x != null)
 						{
 							rs[i] = x.getAsString();
 						}
 					}
 				}
-				event.deferReply().queue();
-				//event.reply().setEphemeral(true).queue();
+				gion.send(Arrays.toString(rs));
+				event.reply("Ok").queue();
+				// event.reply(domanda + "\t" + Arrays.toString(rs)).queue();
 				
-				event.getHook().sendMessage(domanda+"\t"+Arrays.toString(rs)).queue();
+				// event.reply().setEphemeral(true).queue();
+				// event.getHook().sendMessage(domanda+"\t"+Arrays.toString(rs)).queue();
 			}
 		}
 		
