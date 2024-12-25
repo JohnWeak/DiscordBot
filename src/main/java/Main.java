@@ -31,13 +31,10 @@ public class Main
 	
 	public static void cmds()
 	{
+		CommandData newCommand;
+		final ArrayList<CommandData> commands = new ArrayList<>();
 		try
 		{
-			final ArrayList<CommandData> commands = new ArrayList<>();
-			CommandData newCommand;
-			newCommand = new CommandDataImpl("pog", "Risponde con l'emote \"pog\"");
-			commands.add(newCommand);
-			
 			newCommand = new CommandDataImpl("dado","Lancia un dado")
 				.addOptions(new OptionData(
 					OptionType.INTEGER,
@@ -54,6 +51,7 @@ public class Main
 				OptionType.USER,
 				"utente",
 				"l'utente che vuoi invitare a cena",
+				true,
 				true
 				)
 			);
@@ -64,6 +62,7 @@ public class Main
 					OptionType.STRING,
 					"nome",
 					"Il nome del pokemon che vuoi cercare",
+					true,
 					true
 					),
 					new OptionData(
@@ -73,6 +72,23 @@ public class Main
 						false
 					)
 				);
+			commands.add(newCommand);
+			
+			final ArrayList<OptionData> options = new ArrayList<>();
+			OptionData od = new OptionData(OptionType.STRING, "domanda", "", true);
+			options.add(od);
+			od = new OptionData(OptionType.STRING, "opzione 1", "", true);
+			options.add(od);
+			od = new OptionData(OptionType.STRING, "opzione 2", "", true);
+			options.add(od);
+			for (int i = 3; i < 10; i++)
+			{
+				od = new OptionData(OptionType.STRING, "opzione "+i, "", false);
+				options.add(od);
+			}
+			
+			newCommand = new CommandDataImpl("poll","crea un sondaggio")
+				.addOptions(options);
 			
 			commands.add(newCommand);
 			

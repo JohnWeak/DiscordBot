@@ -1109,10 +1109,6 @@ public class Commands extends ListenerAdapter
 		
 		switch (eventName)
 		{
-			case "pog" ->
-			{
-				event.reply(Emotes.readyToSend(Emotes.pogey)).queue();
-			}
 			case "dado" ->
 			{
 				int facce = 6;
@@ -1221,6 +1217,28 @@ public class Commands extends ListenerAdapter
 				// event.deferReply().queue();
 			
 				
+				
+			}
+			case "poll" ->
+			{
+				final List<OptionMapping> options = event.getOptions();
+				final ArrayList<String> risposte = new ArrayList<>();
+				final String domanda;
+				
+				domanda = Objects.requireNonNull(event.getOption("domanda")).getAsString();
+				risposte.add(Objects.requireNonNull(event.getOption("opzione 1")).getAsString());
+				risposte.add(Objects.requireNonNull(event.getOption("opzione 2")).getAsString());
+				
+				
+				if (options.size() > 3)
+				{
+					for (int i = 3; i < options.size(); i++)
+					{
+						risposte.add(options.get(i).getAsString());
+					}
+				}
+				
+				event.reply(risposte.toString()).setEphemeral(true).queue();
 				
 			}
 		}
