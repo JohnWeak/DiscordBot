@@ -3,6 +3,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
@@ -34,6 +35,7 @@ public class Main
 		final ArrayList<CommandData> commands = new ArrayList<>();
 		try
 		{
+			/*
 			newCommand = new CommandDataImpl("dado","Lancia un dado")
 				.addOptions(new OptionData(
 					OptionType.INTEGER,
@@ -43,6 +45,22 @@ public class Main
 					)
 					.setRequiredRange(2,100)
 				);
+			commands.add(newCommand);
+			*/
+			final String[] DND_DICE = new String[]{"4", "6", "8", "10", "12", "20", "100"};
+			final Command.Choice[] choices = new Command.Choice[DND_DICE.length];
+			for (int i = 0; i < DND_DICE.length; i++)
+			{
+				choices[i] = new Command.Choice(DND_DICE[i], Integer.parseInt(DND_DICE[i]));
+			}
+			
+			newCommand = new CommandDataImpl("dado","Lancia un dado")
+				.addOptions(new OptionData(
+					OptionType.INTEGER,
+						"facce",
+						"quante facce avrà il dado da lanciare",
+						true
+				).addChoices(choices));
 			commands.add(newCommand);
 			
 			newCommand = new CommandDataImpl("cena", "Chiedi ad un utente di uscire a cena con te")
