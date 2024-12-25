@@ -1256,12 +1256,14 @@ public class Commands extends ListenerAdapter
 	{
 		final String eventName = event.getName();
 		final AutoCompleteQuery focused = event.getFocusedOption();
+		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
 		
 		if (eventName.equalsIgnoreCase("pokemon") && focused.getName().equalsIgnoreCase("name"))
 		{
 			final String NAMES_FILE = "./src/main/java/nomiPokemon.txt";
 			final File nomiPokemon = new File(NAMES_FILE);
-			final PrivateMessage gion = new PrivateMessage(Utente.getGion());
+			gion.send("Sto prima del try, sto na favola");
+			
 			try (Stream<String> lines = Files.lines(nomiPokemon.toPath()))
 			{
 				final List<Command.Choice> options = lines.flatMap(line -> Stream.of(line.split("\\s+")))
