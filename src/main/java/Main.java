@@ -35,18 +35,6 @@ public class Main
 		final ArrayList<CommandData> commands = new ArrayList<>();
 		try
 		{
-			/*
-			newCommand = new CommandDataImpl("dado","Lancia un dado")
-				.addOptions(new OptionData(
-					OptionType.INTEGER,
-					"facce",
-					"quante facce deve avere il dado",
-					false
-					)
-					.setRequiredRange(2,100)
-				);
-			commands.add(newCommand);
-			*/
 			final String[] DND_DICE = new String[]{"4", "6", "8", "10", "12", "20", "100"};
 			final Command.Choice[] choices = new Command.Choice[DND_DICE.length];
 			for (int i = 0; i < DND_DICE.length; i++)
@@ -57,9 +45,9 @@ public class Main
 			newCommand = new CommandDataImpl("dado","Lancia un dado")
 				.addOptions(new OptionData(
 					OptionType.INTEGER,
-						"facce",
-						"quante facce avrà il dado da lanciare",
-						true
+					"facce",
+					"quante facce avrà il dado da lanciare",
+					true
 				).addChoices(choices));
 			commands.add(newCommand);
 			
