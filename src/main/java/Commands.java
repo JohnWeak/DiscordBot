@@ -42,7 +42,6 @@ import java.util.*;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Commands extends ListenerAdapter
@@ -1223,32 +1222,30 @@ public class Commands extends ListenerAdapter
 				}
 				else
 					event.reply("Il pokedex non ha informazioni riguardo " + pkmnName).setEphemeral(true).queue();
-				// event.deferReply().queue();
-			
-				
 				
 			}
 			case "poll" ->
 			{
 				final List<OptionMapping> options = event.getOptions();
-				final ArrayList<String> risposte = new ArrayList<>();
+				//final ArrayList<String> risposte = new ArrayList<>();
+				final String[] rs = new String[options.size()-1]; // -1 perché la domanda è da escludere
 				final String domanda;
 				
 				domanda = Objects.requireNonNull(event.getOption("domanda")).getAsString();
-				risposte.add(Objects.requireNonNull(event.getOption("opzione 1")).getAsString());
-				risposte.add(Objects.requireNonNull(event.getOption("opzione 2")).getAsString());
-				
+				//risposte.add(Objects.requireNonNull(event.getOption("opzione 1")).getAsString());
+				//risposte.add(Objects.requireNonNull(event.getOption("opzione 2")).getAsString());
+				rs[0] = Objects.requireNonNull(event.getOption("opzione 1")).getAsString();
+				rs[1] = Objects.requireNonNull(event.getOption("opzione 2")).getAsString();
 				
 				if (options.size() > 3)
 				{
 					for (int i = 3; i < options.size(); i++)
 					{
-						risposte.add(options.get(i).getAsString());
+						rs[i] = options.get(i).getAsString();
 					}
 				}
 				
-				event.reply(risposte.toString()).setEphemeral(true).queue();
-				
+				event.reply(domanda+"\t"+Arrays.toString(rs)).setEphemeral(true).queue();
 			}
 		}
 		
@@ -1367,11 +1364,12 @@ public class Commands extends ListenerAdapter
 		// args[0] = "!poll"
 		// args[1] = domanda
 		// args[2, 3, ...] = risposte
-		
+		final EmbedBuilder embedBuilder;
 		final String format = "^.*\\?\\s*([^/]+\\s*/?\\s*)+[^/]+\\s*$";
 		if (!messageRaw.toLowerCase().matches(format) || messageRaw.length() <= 5)
 		{
-			sondaggio(null,null,true);
+			creaSondaggio(null,null,true);
+			
 			//flag = true fa comparire il messaggio di utilizzo del comando !poll
 			return;
 		}
@@ -1381,11 +1379,12 @@ public class Commands extends ListenerAdapter
 		final String[] risposte = domandaERisposte[1].split("/");
 		//final String[] risposte = messageRaw.substring(5+domanda.length()+1).split("/");
 		
-		sondaggio(domanda, risposte, false);
+		embedBuilder = creaSondaggio(domanda, risposte, false);
+		channel.sendMessageEmbeds(embedBuilder.build()).queue();
 	} // fine poll()
 	
 	/** Crea un sondaggio. Se non sono soddisfatte le condizioni, mostra un messaggio su come usare il comando !poll */
-	public void sondaggio(String domanda, String[] risposte, boolean error)
+	public EmbedBuilder creaSondaggio(String domanda, String[] risposte, boolean error)
 	{
 		final EmbedBuilder embedBuilder = new EmbedBuilder();
 		
@@ -1423,13 +1422,9 @@ public class Commands extends ListenerAdapter
 			
 			embedBuilder.setDescription(descrizione);
 			embedBuilder.setColor(0xFF0000);
-			
-			channel.sendMessageEmbeds(embedBuilder.build()).queue((message) ->
-			{
-				for (int i = 0; i < lenghtRisposte; i++)
-					message.addReaction(Emoji.fromUnicode(reactionLetters[i])).queue();
-			});
 		}
+		
+		return embedBuilder;
 	} // fine sondaggio()
 	
 	/** Infastidisce le persone */

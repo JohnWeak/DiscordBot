@@ -1,8 +1,6 @@
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.TimerTask;
 
 public class DailyTask extends TimerTask
@@ -12,27 +10,15 @@ public class DailyTask extends TimerTask
 	@Override
 	public void run()
 	{
-		boolean enigmosDaily = false;
-		final LocalDate today = LocalDate.now();
-		final List<Message> history = canaleBot
-			.getHistory()
+		final boolean enigmosDaily = canaleBot.getHistory()
 			.retrievePast(35)
 			.complete()
 			.stream()
-			.filter(message -> message.getTimeCreated().toLocalDate().equals(today)).toList()
-		;
-		
-		for (Message m : history)
-		{
-			if (m.getAuthor().getId().equals(Utente.getEnigmo().getId()))
-			{
-				if (m.getContentRaw().strip().toLowerCase().contains("owo daily"))
-				{
-					enigmosDaily = true;
-					break;
-				}
-			}
-		}
+			.anyMatch(message ->
+				message.getTimeCreated().toLocalDate().equals(LocalDate.now()) &&
+				message.getAuthor().getId().equals(Utente.ID_ENIGMO) &&
+				message.getContentRaw().strip().toLowerCase().contains("owo daily")
+			);
 		
 		if (!enigmosDaily)
 		{
