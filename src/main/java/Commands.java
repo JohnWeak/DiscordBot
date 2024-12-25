@@ -108,7 +108,7 @@ public class Commands extends ListenerAdapter
 	{
 		commandsHashMap = Cmd.init();
 		
-		jda = event.getJDA();
+		jda = Main.getJda();
 		
 		try
 		{
@@ -159,6 +159,9 @@ public class Commands extends ListenerAdapter
 	{
 		user = event.getAuthor();
 		authorID = user.getId();
+		
+		if (authorID.equals(Utente.ID_BOWOT))
+			return; // ignora i tuoi stessi messaggi
 		
 		identifyLatestMessage(event, null);
 		
@@ -1234,14 +1237,17 @@ public class Commands extends ListenerAdapter
 				domanda = Objects.requireNonNull(event.getOption("domanda")).getAsString();
 				//risposte.add(Objects.requireNonNull(event.getOption("opzione 1")).getAsString());
 				//risposte.add(Objects.requireNonNull(event.getOption("opzione 2")).getAsString());
-				rs[0] = Objects.requireNonNull(event.getOption("opzione 1")).getAsString();
-				rs[1] = Objects.requireNonNull(event.getOption("opzione 2")).getAsString();
+				rs[0] = Objects.requireNonNull(event.getOption("opzione1")).getAsString();
+				rs[1] = Objects.requireNonNull(event.getOption("opzione2")).getAsString();
 				
 				if (options.size() > 3)
 				{
 					for (int i = 3; i < options.size(); i++)
 					{
-						rs[i] = options.get(i).getAsString();
+						if (options.get(i) != null)
+						{
+							rs[i] = Objects.requireNonNull(event.getOption("opzione" + i)).getAsString();
+						}
 					}
 				}
 				event.deferReply().queue();
