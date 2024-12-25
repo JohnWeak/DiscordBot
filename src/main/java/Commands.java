@@ -1250,9 +1250,10 @@ public class Commands extends ListenerAdapter
 						}
 					}
 				}
-				gion.send(String.format("size = %d\noptions = %s",options.size(), Arrays.toString(rs)));
-				event.reply("Ok").queue();
-				// event.reply(domanda + "\t" + Arrays.toString(rs)).queue();
+				//gion.send(String.format("size = %d\noptions = %s",options.size(), Arrays.toString(rs)));
+				
+				final EmbedBuilder embedBuilder = creaSondaggio(domanda,rs,false);
+				event.replyEmbeds(embedBuilder.build()).queue();
 				
 				// event.reply().setEphemeral(true).queue();
 				// event.getHook().sendMessage(domanda+"\t"+Arrays.toString(rs)).queue();
