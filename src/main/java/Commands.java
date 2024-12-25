@@ -1262,15 +1262,14 @@ public class Commands extends ListenerAdapter
 				}; // array di lettere emoji A -> Z
 				event.replyEmbeds(embedBuilder.build()).queue(l ->
 				{
-					for (int i = 0; i < rs.length-1; i++)
+					l.retrieveOriginal().queue(originalMessage ->
 					{
-						l.retrieveOriginal()
-							.complete()
-							.addReaction(Emoji.fromUnicode(reactionLetters[i]))
-							.queue();
-					}
+						for (int i = 0; i < rs.length - 1; i++)
+						{
+							originalMessage.addReaction(Emoji.fromUnicode(reactionLetters[i])).queue();
+						}
+					});
 				});
-				
 				// event.reply().setEphemeral(true).queue();
 				// event.getHook().sendMessage(domanda+"\t"+Arrays.toString(rs)).queue();
 			}
@@ -1440,7 +1439,9 @@ public class Commands extends ListenerAdapter
 			final StringBuilder title = new StringBuilder();
 			final StringBuilder descrizione = new StringBuilder();
 			if (!domanda.contains("?"))
-				embedBuilder.setTitle(title.append(domanda).append("?").toString());
+				title.append("?");
+			
+			embedBuilder.setTitle(title.append(domanda).toString());
 			
 			for (int i = 0; i < lenghtRisposte; i++)
 			{
