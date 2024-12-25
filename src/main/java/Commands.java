@@ -1242,7 +1242,7 @@ public class Commands extends ListenerAdapter
 				{
 					for (int i = 2; i < options.size() - 1; i++)
 					{
-						final OptionMapping x = event.getOption("opzione"+i);
+						final OptionMapping x = event.getOption("opzione"+i+1);
 						
 						if (x != null)
 						{
