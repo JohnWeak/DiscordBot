@@ -1261,7 +1261,7 @@ public class Commands extends ListenerAdapter
 		{
 			final String NAMES_FILE = "./src/main/java/nomiPokemon.txt";
 			final File nomiPokemon = new File(NAMES_FILE);
-			
+			final PrivateMessage gion = new PrivateMessage(Utente.getGion());
 			try (Stream<String> lines = Files.lines(nomiPokemon.toPath()))
 			{
 				final List<Command.Choice> options = lines.flatMap(line -> Stream.of(line.split("\\s+")))
@@ -1269,6 +1269,7 @@ public class Commands extends ListenerAdapter
 					.map(word -> new Command.Choice(word, word)) // map the words to choices
 					.toList();
 				
+				gion.send(options.toString());
 				event.replyChoices(options).queue();
 			} catch (Exception e) { new Error<Exception>().print(object,e);}
 		}
