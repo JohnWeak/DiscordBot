@@ -68,6 +68,10 @@ public class Pokemon
 		if (id > ALL)
 			return;
 		
+		if (id <= 0)
+			id = random.nextInt(1, ALL+1);
+		
+		
 		try
 		{
 			path = Paths.get(NAMES_FILE);
@@ -79,6 +83,7 @@ public class Pokemon
 			
 			if (debug)
 				pm.send("`\n\nnome="+nomeFile+"\n\n`");
+			
 			jsonFile = new File(JSON_FILES + nomeFile+ ".json");
 			
 		}
@@ -106,9 +111,6 @@ public class Pokemon
 		
 		for (int index : individualValues)
 			individualValues[index] = random.nextInt(32); // IVs: 0-31
-		
-		if (id <= 0)
-			id = random.nextInt(1, ALL+1);
 		
 		
 		// prendere i dati dal .json
