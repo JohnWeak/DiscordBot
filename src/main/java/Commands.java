@@ -1261,11 +1261,10 @@ public class Commands extends ListenerAdapter
 		final AutoCompleteQuery focused = event.getFocusedOption();
 		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
 		
-		if (eventName.equalsIgnoreCase("pokemon") && focused.getName().equalsIgnoreCase("name"))
+		if (eventName.equalsIgnoreCase("pokemon") && focused.getName().equalsIgnoreCase("nome"))
 		{
 			final String NAMES_FILE = "./src/main/java/nomiPokemon.txt";
 			final File nomiPokemon = new File(NAMES_FILE);
-			gion.send("Sto prima del try, sto na favola");
 			
 			try (Stream<String> lines = Files.lines(nomiPokemon.toPath()))
 			{
