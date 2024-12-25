@@ -16,7 +16,7 @@ public class DailyTask extends TimerTask
 		final LocalDate today = LocalDate.now();
 		final List<Message> history = canaleBot
 			.getHistory()
-			.retrievePast(20)
+			.retrievePast(35)
 			.complete()
 			.stream()
 			.filter(message -> message.getTimeCreated().toLocalDate().equals(today)).toList()
@@ -24,10 +24,13 @@ public class DailyTask extends TimerTask
 		
 		for (Message m : history)
 		{
-			if (m.getContentRaw().strip().toLowerCase().contains("owo daily"))
+			if (m.getAuthor().getId().equals(Utente.getEnigmo().getId()))
 			{
-				enigmosDaily = true;
-				break;
+				if (m.getContentRaw().strip().toLowerCase().contains("owo daily"))
+				{
+					enigmosDaily = true;
+					break;
+				}
 			}
 		}
 		
