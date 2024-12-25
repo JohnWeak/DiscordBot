@@ -1244,8 +1244,10 @@ public class Commands extends ListenerAdapter
 						rs[i] = options.get(i).getAsString();
 					}
 				}
+				event.deferReply().queue();
+				//event.reply().setEphemeral(true).queue();
 				
-				event.reply(domanda+"\t"+Arrays.toString(rs)).setEphemeral(true).queue();
+				event.getHook().sendMessage(domanda+"\t"+Arrays.toString(rs)).queue();
 			}
 		}
 		
