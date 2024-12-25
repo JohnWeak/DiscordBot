@@ -51,7 +51,6 @@ public class Main
 				OptionType.USER,
 				"utente",
 				"l'utente che vuoi invitare a cena",
-				true,
 				true
 				)
 			);
