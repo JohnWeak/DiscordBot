@@ -1210,8 +1210,11 @@ public class Commands extends ListenerAdapter
 					if (option != null)
 					{
 						pkmnName = option.getAsString();
-						p = new Pokemon(Pokemon.getId(pkmnName), true);
-						p.setShiny(shiny);
+						if (Pokemon.getId(pkmnName) != -1)
+						{
+							p = new Pokemon(Pokemon.getId(pkmnName), true);
+							p.setShiny(shiny);
+						}
 					}
 				}
 				if (p != null)

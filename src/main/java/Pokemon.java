@@ -68,9 +68,15 @@ public class Pokemon
 		if (id > ALL)
 			return;
 		
-		if (id <= 0)
-			id = random.nextInt(1, ALL+1);
+		if (id <= 0 && pokedex)
+		{
+			return;
+		}
 		
+		if (!pokedex)
+		{
+			id = random.nextInt(1, ALL+1);
+		}
 		
 		try
 		{
