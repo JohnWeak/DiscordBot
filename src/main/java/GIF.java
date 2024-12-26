@@ -1,4 +1,7 @@
+import lombok.Getter;
+
 /**Questa classe contiene gli indirizzi URL delle GIF.*/
+@Getter
 public enum GIF
 {
 	spyHang("https://c.tenor.com/pLhXMqtRw2gAAAAC/team-fortress-spy.gif"),
@@ -11,11 +14,6 @@ public enum GIF
 	GIF(String url)
 	{
 		this.url = url;
-	}
-	
-	public String getUrl()
-	{
-		return url;
 	}
 	
 	

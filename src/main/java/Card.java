@@ -1,11 +1,14 @@
 
+import lombok.Getter;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.awt.*;
 import java.util.Random;
 
+@Getter
 public class Card
 {
+	// GETTER
 	private final String seme;
 	private final String valore;
 	private final String link;
@@ -22,24 +25,26 @@ public class Card
 		seme = semi[random.nextInt(4)];
 		valore = valori[random.nextInt(13)];
 		
-		switch (valore)
+		linkTemp[1] = switch (valore)
 		{
-			case "Asso" -> linkTemp[1] = "A";
-			case "10" -> linkTemp[1] = "0";
-			case "Jack" -> linkTemp[1] = "J";
-			case "Regina" -> linkTemp[1] = "Q";
-			case "Re" -> linkTemp[1] = "K";
-			default -> linkTemp[1] = valore;
-		}
-		switch (seme)
-		{
-			case "Cuori"    ->  linkTemp[2] = "H";     // Hearts
-			case "Quadri"   ->  linkTemp[2] = "D";     // Diamonds
-			case "Fiori"    ->  linkTemp[2] = "C";     // Clubs
-			case "Picche"   ->  linkTemp[2] = "S";     // Spades
-		}
+			case "Asso" -> "A";
+			case "10" -> "0";
+			case "Jack" -> "J";
+			case "Regina" -> "Q";
+			case "Re" -> "K";
+			default -> valore;
+		};
 		
-		link = linkTemp[0] + linkTemp[1] + linkTemp[2] + linkTemp[3];
+		linkTemp[2] = switch (seme)
+		{
+			case "Cuori" ->  "H";     // Hearts
+			case "Quadri" ->  "D";     // Diamonds
+			case "Fiori" ->  "C";     // Clubs
+			case "Picche" ->  "S";     // Spades
+			default -> null;
+		};
+		
+		link = String.format("%s%s%s%s",linkTemp[0], linkTemp[1], linkTemp[2], linkTemp[3]);
 		
 	} // fine costruttore
 	
@@ -67,7 +72,7 @@ public class Card
 	/** Restituisce il titolo della carta sotto forma di stringa */
 	private String titoloCarta()
 	{
-		return this.getValoreString() + " di " + this.getSeme();
+		return this.getValore() + " di " + this.getSeme();
 	}
 	
 	/** Restituisce il link dell'immagine della carta sotto forma di stringa */
@@ -79,7 +84,7 @@ public class Card
 	/** Restituisce il colore della carta sotto forma di Color */
 	private Color coloreCarta()
 	{
-		return this.getSeme().equals("Cuori") || this.getSeme().equals("Quadri") ? Color.red : Color.black;
+		return this.getSeme().equals("Cuori") || this.getSeme().equals("Quadri") ? Color.RED : Color.BLACK;
 	}
 	
 	/** Restituisce il valore del seme della carta sotto forma di stringa */
@@ -96,11 +101,6 @@ public class Card
 	}
 	
 	
-	// GETTER
-	public String getSeme()
-	{
-		return seme;
-	}
 	public int getSemeInt()
 	{
 		return switch (seme)
@@ -113,10 +113,7 @@ public class Card
 			default -> -1;
 		};
 	}
-	public String getValoreString()
-	{
-		return valore;
-	}
+	
 	public int getValoreInt()
 	{
 		return switch (valore)
@@ -129,11 +126,6 @@ public class Card
 			default -> Integer.parseInt(valore);
 		};
 	}
-	public String getLink()
-	{
-		return link;
-	}
-	
 	
 	
 } // fine classe Card
