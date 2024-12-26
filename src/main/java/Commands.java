@@ -256,13 +256,16 @@ public class Commands extends ListenerAdapter
 		// ignora le tue stesse reazioni
 		if (author.getId().equals(Utente.ID_BOWOT)) { return; }
 		
-		final Emoji emote = event.getReaction().getEmoji();
-		
-		channel = event.getGuildChannel();
-		messageID = event.getMessageIdLong();
-		message = channel.getHistory().getMessageById(messageID);
 		try
 		{
+			final Emoji emote = event.getReaction().getEmoji();
+			channel = event.getGuildChannel();
+			messageID = event.getMessageIdLong();
+			message = channel.getHistory().getMessageById(messageID);
+			
+			gion.send(messageID + "\n" + message);
+			if (true) return;
+			
 			if (emote.getType().equals(Emoji.Type.UNICODE))
 			{
 				message.addReaction(Emoji.fromUnicode(emote.getAsReactionCode())).queue();
