@@ -258,21 +258,20 @@ public class Commands extends ListenerAdapter
 		
 		final Emoji emote = event.getReaction().getEmoji();
 		
-		gion.send(emote.toString());
-		
 		channel = event.getGuildChannel();
 		messageID = event.getMessageIdLong();
 		message = channel.getHistory().getMessageById(messageID);
-		
-		if (emote.getType().equals(Emoji.Type.UNICODE))
+		try
 		{
-			message.addReaction(emote).queue();
-		}
-		else
-		{
-			react(emote.getFormatted());
-		}
-		gion.send("Finito\n" + emote.getType() + "\n" + emote.getAsReactionCode() + "\n" + emote.getFormatted());
+			if (emote.getType().equals(Emoji.Type.UNICODE))
+			{
+				message.addReaction(Emoji.fromUnicode(emote.getAsReactionCode())).queue();
+			}
+			else
+			{
+				react(emote.getFormatted());
+			}
+		} catch (Exception e) { error.print(object, e); }
 	} // fine onMessageReactionAdd
 	
 	/**Inserisce come reazioni tutte le emote che trova nel messaggio*/
