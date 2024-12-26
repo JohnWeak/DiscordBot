@@ -1300,12 +1300,14 @@ public class Commands extends ListenerAdapter
 				final String imgDaUsare = imgs[random.nextInt(imgs.length)];
 				final String footer = String.format("%s pays his respects.", u.getName());
 				
+				// gion.send(avatar);
+				
 				embedBuilder
 					.setTitle(title)
 					.setColor(Color.black)
 					.setImage(imgDaUsare)
 					.setThumbnail(u.getAvatarUrl())
-					.setFooter(footer, avatar)
+					.setFooter(footer, avatar != null ? avatar : "")
 				;
 				event.replyEmbeds(embedBuilder.build()).queue(l -> {
 					l.retrieveOriginal().queue(original -> {
