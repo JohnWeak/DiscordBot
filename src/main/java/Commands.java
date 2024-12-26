@@ -19,6 +19,7 @@ import net.dv8tion.jda.api.interactions.AutoCompleteQuery;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.requests.CloseCode;
+import net.dv8tion.jda.api.utils.ImageProxy;
 import net.dv8tion.jda.internal.entities.channel.concrete.TextChannelImpl;
 import org.jetbrains.annotations.NotNull;
 
@@ -1276,9 +1277,12 @@ public class Commands extends ListenerAdapter
 			case "f" ->
 			{
 				option = event.getOption("utente");
+				String avatar = "";
+				final User u = event.getUser();
 				
-				if (option != null && option.getAsUser().getName().equals(event.getUser().getName()))
+				if (option != null && option.getAsUser().getName().equals(u.getName()))
 				{
+					avatar = option.getAsUser().getAvatarUrl();
 					final String reply = String.format("Omaggi te stesso? %s", Emotes.readyToSend(Emotes.smh));
 					event.reply(reply).setEphemeral(true).queue();
 				}
@@ -1294,13 +1298,14 @@ public class Commands extends ListenerAdapter
 					"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.imgflip.com%2F3ni7oz.jpg&f=1&nofb=1&ipt=2cf84114527ff5e7b02fb19ae74fe596b1d66baba35daa7eb7c8862adcdfe9af&ipo=images",
 				};
 				final String imgDaUsare = imgs[random.nextInt(imgs.length)];
-				final String footer = String.format("%s pays his respects.", event.getUser().getName());
+				final String footer = String.format("%s pays his respects.", u.getName());
 				
 				embedBuilder
 					.setTitle(title)
 					.setColor(Color.black)
 					.setImage(imgDaUsare)
-					.setFooter(footer)
+					.setThumbnail(u.getAvatarUrl())
+					.setFooter(footer, avatar)
 				;
 				event.replyEmbeds(embedBuilder.build()).queue(l -> {
 					l.retrieveOriginal().queue(original -> {
