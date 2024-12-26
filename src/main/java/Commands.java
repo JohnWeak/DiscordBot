@@ -263,8 +263,7 @@ public class Commands extends ListenerAdapter
 			messageID = event.getMessageIdLong();
 			message = channel.getHistoryAround(messageID,1).complete().getMessageById(messageID);
 			
-			gion.send(messageID + "\n" + message);
-			if (true) return;
+			// gion.send(messageID + "\n" + message);
 			
 			if (emote.getType().equals(Emoji.Type.UNICODE))
 			{
