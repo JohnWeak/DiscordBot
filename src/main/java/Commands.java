@@ -256,7 +256,9 @@ public class Commands extends ListenerAdapter
 		// ignora le tue stesse reazioni
 		if (author.getId().equals(Utente.ID_BOWOT)) { return; }
 		
-		final MessageReaction emote = event.getReaction();
+		final Emoji emote = event.getReaction().getEmoji();
+		gion.send(emote.toString());
+		if (true) return;
 		channel = event.getGuildChannel();
 		messageID = event.getMessageIdLong();
 		message = channel.getHistory().getMessageById(messageID);
