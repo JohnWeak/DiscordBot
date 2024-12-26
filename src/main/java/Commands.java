@@ -1312,7 +1312,7 @@ public class Commands extends ListenerAdapter
 					l.retrieveOriginal().queue(original -> {
 						try {
 							Thread.sleep(300);
-							react(Emotes.o7);
+							original.addReaction(Emoji.fromFormatted(Emotes.readyToSend(Emotes.o7))).queue();
 						} catch (Exception ignored) {}
 					});
 				});

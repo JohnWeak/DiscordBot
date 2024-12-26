@@ -1,3 +1,6 @@
+import net.dv8tion.jda.api.entities.emoji.CustomEmoji;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
+
 /** Contiene la lista di tutte le emote del server privato "Server Discord" */
 public abstract class Emotes
 {
