@@ -94,6 +94,16 @@ public class Main
 			
 			commands.add(newCommand);
 			
+			newCommand = new CommandDataImpl("f", "Pay respect")
+				.addOptions(new OptionData(
+					OptionType.USER,
+					"utente",
+					"L'utente a cui vuoi portare rispetto",
+					false
+				));
+			
+			commands.add(newCommand);
+			
 			jda.updateCommands().addCommands(commands).queue();
 			
 		}catch (Exception e)

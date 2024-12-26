@@ -423,7 +423,6 @@ public class Commands extends ListenerAdapter
 			case "!smh" -> new ThreadSmh(channel).start();
 			case "!dado" -> dado();
 			case "!cattura", "!catch" -> cattura(pokemon);
-			case "!f" -> payRespect();
 			case "!r", "!reminder" -> reminder();
 			case "!certificazione" -> certificazione();
 			case "!pigeons" -> pigeons();
@@ -839,10 +838,8 @@ public class Commands extends ListenerAdapter
 			embed.setTitle(title);
 			embed.setColor(Color.RED);
 			embed.setDescription(description);
-			embed.addField(fields[0]);
-			embed.addField(fields[1]);
-			embed.addField(fields[2]);
-			embed.addField(fields[3]);
+			for (MessageEmbed.Field f : fields)
+				embed.addField(f);
 			
 			channel.sendMessageEmbeds(embed.build()).queue();
 			return;
@@ -1271,6 +1268,46 @@ public class Commands extends ListenerAdapter
 					});
 				});
 			}
+			case "f" ->
+			{
+				option = event.getOption("utente");
+				
+				if (option != null && option.getAsUser().getName().equals(event.getUser().getName()))
+				{
+					final String reply = String.format("Omaggi te stesso? %s", Emotes.readyToSend(Emotes.smh));
+					event.reply(reply).queue();
+				}
+				
+				final EmbedBuilder embedBuilder = new EmbedBuilder();
+				final String[] cuori = {"❤️", "💛", "💙", "🧡", "💚", "💜"};
+				final String title = option == null ? "F" : String.format("In loving memory of %s %s",option.getAsUser().getName(), cuori[random.nextInt(cuori.length)]);
+				final String[] imgs =
+				{
+					"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.imgflip.com%2F4rf5nr.jpg&f=1&nofb=1&ipt=0a6b54aa3965c4ec92081a03fdb37f8d1d490426003b6cbeb6ec2420619515dd&ipo=images",
+					"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.kym-cdn.com%2Fentries%2Ficons%2Ffacebook%2F000%2F017%2F039%2Fpressf.jpg&f=1&nofb=1&ipt=0a56a685ea4605c86c4d6caea860a6c1480a6e88a982538acc34623ac5204bdc&ipo=images",
+					"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--1H4GzubW--%2Fb_rgb%3A908d91%2Ct_Heather%2520Preview%2Fc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1496153439%2Fproduction%2Fdesigns%2F1634415_1.jpg&f=1&nofb=1&ipt=bb9133ef4feef513b2605c621fed68f5232116b5d0fdf22a1def833954f7121a&ipo=images",
+					"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.imgflip.com%2F3ni7oz.jpg&f=1&nofb=1&ipt=2cf84114527ff5e7b02fb19ae74fe596b1d66baba35daa7eb7c8862adcdfe9af&ipo=images",
+				};
+				final String imgDaUsare = imgs[random.nextInt(imgs.length)];
+				final String footer = String.format("%s pays his respects.", event.getUser().getName());
+				
+				embedBuilder
+					.setTitle(title)
+					.setColor(Color.black)
+					.setImage(imgDaUsare)
+					.setFooter(footer)
+				;
+				event.replyEmbeds(embedBuilder.build()).queue(l -> {
+					l.retrieveOriginal().queue(original -> {
+						try {
+							Thread.sleep(300);
+							react(Emotes.o7);
+						} catch (Exception ignored) {}
+					});
+				});
+			}
+			
+			// case "" -> {}
 			
 		}
 	} // fine onSlashCommand()
@@ -1323,64 +1360,12 @@ public class Commands extends ListenerAdapter
 
 		final String finalResponso = responso.append(headsOrTails ? testaStringa : croceStringa).toString();
 
-		channel.sendTyping().queue();
 		message.reply(lancioMoneta).queue(m ->
 		{
 			message.editMessage(finalResponso).queue(m2 -> react(headsOrTails ? "pogey" : "pigeon"));
 		});
 
 	} // fine coinflip()
-	
-	/**Metodo che rende omaggio al defunto specificato dall'utente.<br>Uso: <b>!f &lt;stringa&gt; </b>*/
-	public void payRespect()
-	{
-		if (messageRaw.split(" ")[1] == null || messageRaw.split(" ")[1].isEmpty())
-		{
-			channel.sendMessage("`Usa !f per omaggiare qualcuno.`").queue();
-			return;
-		}
-		
-		String ded = messageRaw.split(" ")[1];
-		final List<User> mentionedUsers = message.getMentions().getUsers();
-		if (!mentionedUsers.isEmpty())
-			ded = mentionedUsers.get(0).getName();
-		
-		if (ded.equalsIgnoreCase(authorName))
-		{
-			final StringBuilder s = new StringBuilder();
-			message.reply(s.append("Omaggi te stesso? <:").append(Emotes.smh).append(">").toString()).queue();
-			return;
-		}
-		
-		final String[] cuori = {"❤️", "💛", "💙", "🧡", "💚", "💜"};
-		final String[] imgs =
-		{
-			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.imgflip.com%2F4rf5nr.jpg&f=1&nofb=1&ipt=0a6b54aa3965c4ec92081a03fdb37f8d1d490426003b6cbeb6ec2420619515dd&ipo=images",
-			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.kym-cdn.com%2Fentries%2Ficons%2Ffacebook%2F000%2F017%2F039%2Fpressf.jpg&f=1&nofb=1&ipt=0a56a685ea4605c86c4d6caea860a6c1480a6e88a982538acc34623ac5204bdc&ipo=images",
-			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--1H4GzubW--%2Fb_rgb%3A908d91%2Ct_Heather%2520Preview%2Fc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1496153439%2Fproduction%2Fdesigns%2F1634415_1.jpg&f=1&nofb=1&ipt=bb9133ef4feef513b2605c621fed68f5232116b5d0fdf22a1def833954f7121a&ipo=images",
-			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flarepublica.pe%2Fresizer%2FtCNDKWPuGG-0WEGZssIsQEfLQME%3D%2F1200x660%2Ftop%2Farc-anglerfish-arc2-prod-gruporepublica.s3.amazonaws.com%2Fpublic%2F2V3AHQ3PKJGRHJKYX3H2STL7YA.png&f=1&nofb=1&ipt=278b01944e9ca2ea01cddd6f132edbb2bd89a0dc280ea67a9ba3dd9fd3f212f7&ipo=images",
-			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.imgflip.com%2F3ni7oz.jpg&f=1&nofb=1&ipt=2cf84114527ff5e7b02fb19ae74fe596b1d66baba35daa7eb7c8862adcdfe9af&ipo=images",
-			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.F17KjnL0a6N4Eat2f_ZOmwHaFH%26pid%3DApi&f=1&ipt=ff5e29783603bb76136acf9dc5ae713b54335765885fcd62b93be760cac71b9a&ipo=images"
-		};
-		final String cuoreDaUsare = cuori[random.nextInt(cuori.length)];
-		final String imgDaUsare = imgs[random.nextInt(imgs.length)];
-		
-		final StringBuilder title = new StringBuilder();
-		final StringBuilder footer = new StringBuilder();
-		
-		final MessageEmbed embed = new EmbedBuilder()
-			.setTitle(title.append("In loving memory of ").append(ded).append(" ").append(cuoreDaUsare).toString())
-			.setColor(Color.black)
-			.setDescription("F")
-			.setImage(imgDaUsare)
-			.setFooter(footer.append(authorName).append(" pays his respects.").toString())
-			.build()
-		;
-		
-		channel.sendMessageEmbeds(embed).queue(l->react(Emotes.o7));
-		
-	} // fine payRespect()
-	
 	
 	/** Verifica ci siano le condizioni giuste per creare un sondaggio */
 	public void poll()
