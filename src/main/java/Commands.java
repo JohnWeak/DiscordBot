@@ -261,7 +261,7 @@ public class Commands extends ListenerAdapter
 			final Emoji emote = event.getReaction().getEmoji();
 			channel = event.getGuildChannel();
 			messageID = event.getMessageIdLong();
-			message = channel.getHistory().getMessageById(messageID);
+			message = channel.getHistoryAround(messageID,1).complete().getMessageById(messageID);
 			
 			gion.send(messageID + "\n" + message);
 			if (true) return;
