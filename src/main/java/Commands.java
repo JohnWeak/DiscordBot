@@ -1275,7 +1275,7 @@ public class Commands extends ListenerAdapter
 				if (option != null && option.getAsUser().getName().equals(event.getUser().getName()))
 				{
 					final String reply = String.format("Omaggi te stesso? %s", Emotes.readyToSend(Emotes.smh));
-					event.reply(reply).queue();
+					event.reply(reply).setEphemeral(true).queue();
 				}
 				
 				final EmbedBuilder embedBuilder = new EmbedBuilder();
