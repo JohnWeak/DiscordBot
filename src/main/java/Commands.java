@@ -257,20 +257,22 @@ public class Commands extends ListenerAdapter
 		if (author.getId().equals(Utente.ID_BOWOT)) { return; }
 		
 		final Emoji emote = event.getReaction().getEmoji();
+		
 		gion.send(emote.toString());
-		if (true) return;
+		
 		channel = event.getGuildChannel();
 		messageID = event.getMessageIdLong();
 		message = channel.getHistory().getMessageById(messageID);
 		
-		try
+		if (emote.getType().equals(Emoji.Type.UNICODE))
 		{
-			react(emote.toString());
+			message.addReaction(emote).queue();
 		}
-		catch (Exception e)
+		else
 		{
-			error.print(object, e);
+			react(emote.getFormatted());
 		}
+		gion.send("Finito\n" + emote.getType() + "\n" + emote.getAsReactionCode() + "\n" + emote.getFormatted());
 	} // fine onMessageReactionAdd
 	
 	/**Inserisce come reazioni tutte le emote che trova nel messaggio*/
