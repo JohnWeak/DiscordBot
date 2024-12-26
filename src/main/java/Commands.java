@@ -1277,12 +1277,11 @@ public class Commands extends ListenerAdapter
 			case "f" ->
 			{
 				option = event.getOption("utente");
-				String avatar = "";
+				final String avatar = (option != null ? option.getAsUser().getAvatarUrl() : null);
 				final User u = event.getUser();
 				
 				if (option != null && option.getAsUser().getName().equals(u.getName()))
 				{
-					avatar = option.getAsUser().getAvatarUrl();
 					final String reply = String.format("Omaggi te stesso? %s", Emotes.readyToSend(Emotes.smh));
 					event.reply(reply).setEphemeral(true).queue();
 				}
@@ -1306,8 +1305,8 @@ public class Commands extends ListenerAdapter
 					.setTitle(title)
 					.setColor(Color.black)
 					.setImage(imgDaUsare)
-					.setThumbnail(u.getAvatarUrl())
-					.setFooter(footer, avatar != null ? avatar : "")
+					.setThumbnail(avatar)
+					.setFooter(footer, u.getAvatarUrl())
 				;
 				event.replyEmbeds(embedBuilder.build()).queue(l -> {
 					l.retrieveOriginal().queue(original -> {
