@@ -1349,23 +1349,23 @@ public class Commands extends ListenerAdapter
 				.toList();
 				
 				final StringBuilder sb = new StringBuilder();
-				final String pattern = "%s\n{\n%s : \"%s\"\n%s\n}\n";
+				final String pattern = "%s\n{\n%s : \"%s\"\n%s\n}\n\n";
 				sb.append("TUTTA LA STORIA:\n");
 				for (Message m : history)
 				{
-					sb.append(String.format(pattern, m, m.getAuthor().getName(), m.getContentRaw(), m.getTimeCreated()));
+					sb.append(String.format(pattern, m, m.getAuthor().getName(), m.getContentStripped(), m.getTimeCreated()));
 				}
 				
 				sb.append("\nI MESSAGGI DEL SIGNOR ENIGMO:\n");
 				for (Message m : enigmosHistory)
 				{
-					sb.append(String.format(pattern, m, m.getAuthor().getName(), m.getContentRaw(), m.getTimeCreated()));
+					sb.append(String.format(pattern, m, m.getAuthor().getName(), m.getContentStripped(), m.getTimeCreated()));
 				}
 				
 				sb.append("\nI MESSAGGI DI GION:\n");
 				for (Message m : gionsHistory)
 				{
-					sb.append(String.format(pattern, m, m.getAuthor().getName(), m.getContentRaw(), m.getTimeCreated()));
+					sb.append(String.format(pattern, m, m.getAuthor().getName(), m.getContentStripped(), m.getTimeCreated()));
 				}
 				sb.append("\nFINE DELLA STORIA.\n\n");
 				
