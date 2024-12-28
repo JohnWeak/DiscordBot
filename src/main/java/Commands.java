@@ -1327,12 +1327,14 @@ public class Commands extends ListenerAdapter
 					.retrievePast(MAX)
 				.complete();
 				
+				final String romeString = "Europe/Rome";
+				final LocalDate oggi = LocalDate.now(ZoneId.of(romeString));
 				
 				enigmosHistory = canaleBot.getHistory()
 					.retrievePast(MAX)
 					.complete()
 						.stream().filter(message ->
-						message.getTimeCreated().toLocalDate().equals(LocalDate.now()) &&
+						message.getTimeCreated().toLocalDate().equals(oggi) &&
 						message.getAuthor().getId().equals(Utente.ID_ENIGMO) &&
 						message.getContentRaw().strip().toLowerCase().contains("owo daily")
 					)
@@ -1342,30 +1344,30 @@ public class Commands extends ListenerAdapter
 					.retrievePast(MAX)
 					.complete()
 					.stream().filter(message ->
-						message.getTimeCreated().toLocalDate().equals(LocalDate.now()) &&
+						message.getTimeCreated().toLocalDate().equals(oggi) &&
 						message.getAuthor().getId().equals(Utente.ID_GION) &&
 						message.getContentRaw().strip().toLowerCase().contains("owo daily")
 					)
 				.toList();
 				
 				final StringBuilder sb = new StringBuilder();
-				final String pattern = "%s\n{\n%s : \"%s\"\n%s\n}\n\n";
+				final String pattern = "{\n%s: \"%s\"\n%s\n}\n\n";
 				sb.append("TUTTA LA STORIA:\n");
 				for (Message m : history)
 				{
-					sb.append(String.format(pattern, m, m.getAuthor().getName(), m.getContentStripped(), m.getTimeCreated()));
+					sb.append(String.format(pattern, m.getAuthor().getName(), m.getContentRaw(), m.getTimeCreated()));
 				}
 				
 				sb.append("\nI MESSAGGI DEL SIGNOR ENIGMO:\n");
 				for (Message m : enigmosHistory)
 				{
-					sb.append(String.format(pattern, m, m.getAuthor().getName(), m.getContentStripped(), m.getTimeCreated()));
+					sb.append(String.format(pattern, m.getAuthor().getName(), m.getContentRaw(), m.getTimeCreated()));
 				}
 				
 				sb.append("\nI MESSAGGI DI GION:\n");
 				for (Message m : gionsHistory)
 				{
-					sb.append(String.format(pattern, m, m.getAuthor().getName(), m.getContentStripped(), m.getTimeCreated()));
+					sb.append(String.format(pattern, m.getAuthor().getName(), m.getContentRaw(), m.getTimeCreated()));
 				}
 				sb.append("\nFINE DELLA STORIA.\n\n");
 				
