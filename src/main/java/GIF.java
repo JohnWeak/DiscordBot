@@ -8,8 +8,6 @@ public enum GIF
 	eggdog("https://c.tenor.com/OWWuHRZ53-cAAAAd/tenor.gif"),
 	engineer("https://i.warosu.org/data/diy/img/0014/73/1538282856261.gif");
 	
-	
-	
 	private final String url;
 	GIF(String url)
 	{

@@ -19,7 +19,6 @@ import net.dv8tion.jda.api.interactions.AutoCompleteQuery;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.requests.CloseCode;
-import net.dv8tion.jda.api.utils.ImageProxy;
 import net.dv8tion.jda.internal.entities.channel.concrete.TextChannelImpl;
 import org.jetbrains.annotations.NotNull;
 
@@ -63,8 +62,8 @@ public class Commands extends ListenerAdapter
 	private final int currentYear = new GregorianCalendar().get(Calendar.YEAR);
 	private final boolean moduloSicurezza = false;
 	private final ArrayList<ThreadReminder> remindersList = new ArrayList<>();
-	private final MessageTask disconnectMessageTask = new MessageTask();
-	private final DailyTask dailyTask = new DailyTask();
+	private final MessageTask disconnectMessageTask;
+	private final DailyTask dailyTask;
 	
 	private User user;
 	public String authorName;
@@ -78,6 +77,8 @@ public class Commands extends ListenerAdapter
 	{
 		final Timer timer = new Timer(true);
 		final long period = 24 * 60 * 60 * 1000; // 24 ore in millisecondi
+		disconnectMessageTask = new MessageTask();
+		dailyTask = new DailyTask();
 		
 		timer.schedule(disconnectMessageTask, calcDelay(22,0,0), period);
 		timer.schedule(dailyTask, calcDelay(21, 30, 0), period);
@@ -1317,8 +1318,56 @@ public class Commands extends ListenerAdapter
 					});
 				});
 			}
+			case "history" ->
+			{
+				final int MAX = 5;
+				final List<Message> history, enigmosHistory, gionsHistory;
+				
+				history = canaleBot.getHistory()
+					.retrievePast(MAX)
+				.complete();
+				
+				
+				enigmosHistory = canaleBot.getHistory()
+					.retrievePast(MAX)
+					.complete()
+						.stream().filter(message ->
+						message.getTimeCreated().toLocalDate().equals(LocalDate.now()) &&
+						message.getAuthor().getId().equals(Utente.ID_ENIGMO) &&
+						message.getContentRaw().strip().toLowerCase().contains("owo daily")
+					)
+				.toList();
+				
+				gionsHistory = canaleBot.getHistory()
+					.retrievePast(MAX)
+					.complete()
+					.stream().filter(message ->
+						message.getTimeCreated().toLocalDate().equals(LocalDate.now()) &&
+						message.getAuthor().getId().equals(Utente.ID_GION) &&
+						message.getContentRaw().strip().toLowerCase().contains("owo daily")
+					)
+				.toList();
+				
+				final StringBuilder sb = new StringBuilder();
+				sb.append("TUTTA LA STORIA:\n");
+				for (Message m : history)
+					sb.append(m).append("\n");
+				
+				sb.append("\nI MESSAGGI DEL SIGNOR ENIGMO:\n");
+				for (Message m : enigmosHistory)
+				{
+					sb.append(m).append("\n");
+				}
+				
+				sb.append("\nI MESSAGGI DI GION:\n");
+				for (Message m : gionsHistory)
+				{
+					sb.append(m).append("\n");
+				}
+				sb.append("\nFINE DELLA STORIA.\n\n");
+				event.reply(sb.toString()).setEphemeral(true).queue();
+			}
 			
-			// case "" -> {}
 			
 		}
 	} // fine onSlashCommand()

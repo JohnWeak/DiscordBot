@@ -104,6 +104,9 @@ public class Main
 			
 			commands.add(newCommand);
 			
+			newCommand = new CommandDataImpl("history", "get history");
+			commands.add(newCommand);
+			
 			jda.updateCommands().addCommands(commands).queue();
 			
 		}catch (Exception e)
