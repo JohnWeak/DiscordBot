@@ -1328,27 +1328,30 @@ public class Commands extends ListenerAdapter
 				.complete();
 				
 				final String romeString = "Europe/Rome";
-				final LocalDate oggi = LocalDate.now(ZoneId.of(romeString));
+				final ZoneId romeZone = ZoneId.of(romeString);
+				final LocalDate oggi = LocalDate.now(romeZone);
 				
 				enigmosHistory = canaleBot.getHistory()
 					.retrievePast(MAX)
 					.complete()
 						.stream().filter(message ->
-						message.getTimeCreated().toLocalDate().equals(oggi) &&
+						message.getTimeCreated().atZoneSameInstant(romeZone).toLocalDate().equals(oggi) &&
 						message.getAuthor().getId().equals(Utente.ID_ENIGMO) &&
 						message.getContentRaw().strip().toLowerCase().contains("owo daily")
 					)
 				.toList();
 				
+				
 				gionsHistory = canaleBot.getHistory()
 					.retrievePast(MAX)
 					.complete()
 					.stream().filter(message ->
-						message.getTimeCreated().toLocalDate().equals(oggi) &&
+						message.getTimeCreated().atZoneSameInstant(romeZone).toLocalDate().equals(oggi) &&
 						message.getAuthor().getId().equals(Utente.ID_GION) &&
 						message.getContentRaw().strip().toLowerCase().contains("owo daily")
 					)
 				.toList();
+				
 				
 				final StringBuilder sb = new StringBuilder();
 				final String pattern = "{\n%s: \"%s\"\n%s\n}\n\n";
