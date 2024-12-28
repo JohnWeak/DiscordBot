@@ -1351,18 +1351,20 @@ public class Commands extends ListenerAdapter
 				final StringBuilder sb = new StringBuilder();
 				sb.append("TUTTA LA STORIA:\n");
 				for (Message m : history)
-					sb.append(m).append("\n");
+				{
+					sb.append(String.format("%s\n{%s : \"%s\"\n%s\n}", m, m.getAuthor().getName(), m.getContentRaw(), m.getTimeCreated()));
+				}
 				
 				sb.append("\nI MESSAGGI DEL SIGNOR ENIGMO:\n");
 				for (Message m : enigmosHistory)
 				{
-					sb.append(m).append("\n");
+					sb.append(String.format("%s\n{%s : \"%s\"\n%s\n}", m, m.getAuthor().getName(), m.getContentRaw(), m.getTimeCreated()));
 				}
 				
 				sb.append("\nI MESSAGGI DI GION:\n");
 				for (Message m : gionsHistory)
 				{
-					sb.append(m).append("\n");
+					sb.append(String.format("%s\n{%s : \"%s\"\n%s\n}", m, m.getAuthor().getName(), m.getContentRaw(), m.getTimeCreated()));
 				}
 				sb.append("\nFINE DELLA STORIA.\n\n");
 				event.reply(sb.toString()).setEphemeral(true).queue();
