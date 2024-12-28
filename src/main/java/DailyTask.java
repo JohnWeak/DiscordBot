@@ -11,7 +11,7 @@ public class DailyTask extends TimerTask
 	public void run()
 	{
 		final boolean enigmosDaily = canaleBot.getHistory()
-			.retrievePast(35)
+			.retrievePast(15)
 			.complete()
 			.stream()
 			.anyMatch(message ->
@@ -25,7 +25,10 @@ public class DailyTask extends TimerTask
 			final String tag = Utente.getEnigmo().getAsMention();
 			final String msg = "ENIGMO DOV'È IL TUO DAILY?!?!?!? PERCHÉ NON HAI FATTO ANCORA IL DAILY?!?!?!?!";
 			
-			canaleBot.sendMessage(tag + msg).queue();
+			try
+			{
+				canaleBot.sendMessage(tag + msg).queue();
+			}catch (Exception e) { new Error<Exception>().print(this, e); }
 		}
 	}
 }
