@@ -1367,7 +1367,29 @@ public class Commands extends ListenerAdapter
 					sb.append(String.format("%s\n{%s : \"%s\"\n%s\n}", m, m.getAuthor().getName(), m.getContentRaw(), m.getTimeCreated()));
 				}
 				sb.append("\nFINE DELLA STORIA.\n\n");
-				event.reply(sb.toString()).setEphemeral(true).queue();
+				
+				event.reply("Check your dms my friend").setEphemeral(true).queue();
+				
+				List<String> chunks = new ArrayList<>();
+				StringBuilder sbCopy = new StringBuilder(sb); // Copia per sicurezza, si sa mai
+				final int maxChunkSize = 2000;
+				
+				while (!sbCopy.isEmpty())
+				{
+					if (sbCopy.length() > maxChunkSize)
+					{
+						chunks.add(sbCopy.substring(0, maxChunkSize));
+						sbCopy.delete(0, maxChunkSize);
+					} else
+					{
+						chunks.add(sbCopy.toString());
+						sbCopy.setLength(0);
+					}
+				}
+				
+				for (String s : chunks)
+					gion.send(s);
+				
 			}
 			
 			
