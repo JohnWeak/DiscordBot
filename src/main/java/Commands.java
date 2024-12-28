@@ -1320,7 +1320,7 @@ public class Commands extends ListenerAdapter
 			}
 			case "history" ->
 			{
-				final int MAX = 5;
+				final int MAX = 10;
 				final List<Message> history, enigmosHistory, gionsHistory;
 				
 				history = canaleBot.getHistory()
@@ -1331,23 +1331,20 @@ public class Commands extends ListenerAdapter
 				final ZoneId romeZone = ZoneId.of(romeString);
 				final LocalDate oggi = LocalDate.now(romeZone);
 				
-				enigmosHistory = canaleBot.getHistory()
-					.retrievePast(MAX)
-					.complete()
-						.stream().filter(message ->
-						message.getTimeCreated().atZoneSameInstant(romeZone).toLocalDate().equals(oggi) &&
+				enigmosHistory = history
+					.stream().filter(message ->
 						message.getAuthor().getId().equals(Utente.ID_ENIGMO) &&
+						message.getTimeCreated().atZoneSameInstant(romeZone).toLocalDate().equals(oggi) &&
 						message.getContentRaw().strip().toLowerCase().contains("owo daily")
 					)
 				.toList();
 				
 				
-				gionsHistory = canaleBot.getHistory()
-					.retrievePast(MAX)
-					.complete()
-					.stream().filter(message ->
-						message.getTimeCreated().atZoneSameInstant(romeZone).toLocalDate().equals(oggi) &&
+				gionsHistory = history
+					.stream()
+					.filter(message ->
 						message.getAuthor().getId().equals(Utente.ID_GION) &&
+						message.getTimeCreated().atZoneSameInstant(romeZone).toLocalDate().equals(oggi) &&
 						message.getContentRaw().strip().toLowerCase().contains("owo daily")
 					)
 				.toList();
