@@ -89,12 +89,12 @@ public class Main
 				options.add(od);
 			}
 			
-			newCommand = new CommandDataImpl("poll","crea un sondaggio")
+			newCommand = new CommandDataImpl("poll","Crea un sondaggio")
 				.addOptions(options);
 			
 			commands.add(newCommand);
 			
-			newCommand = new CommandDataImpl("f", "Pay respect")
+			newCommand = new CommandDataImpl("f", "Omaggia chi non c'è più")
 				.addOptions(new OptionData(
 					OptionType.USER,
 					"utente",
@@ -104,7 +104,10 @@ public class Main
 			
 			commands.add(newCommand);
 			
-			newCommand = new CommandDataImpl("history", "get history");
+			// newCommand = new CommandDataImpl("history", "get history");
+			// commands.add(newCommand);
+			
+			newCommand = new CommandDataImpl("coinflip", "Lancia una moneta");
 			commands.add(newCommand);
 			
 			jda.updateCommands().addCommands(commands).queue();

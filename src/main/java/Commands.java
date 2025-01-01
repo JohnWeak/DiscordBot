@@ -1392,7 +1392,22 @@ public class Commands extends ListenerAdapter
 					gion.send(s);
 				
 			}
-			
+			case "coinflip" ->
+			{
+				event.deferReply(true).queue(l-> {
+					l.retrieveOriginal().complete().editMessage("Lancio una moneta...").queue();
+				});
+				
+				new Timer().schedule(new TimerTask()
+				{
+					@Override public void run()
+					{
+						event.getHook().editOriginal(coinflip()).queue();
+					}
+				}, 1000);
+				
+				event.getHook().editOriginal(coinflip()).queue();
+			}
 			
 		}
 	} // fine onSlashCommand()
@@ -1422,21 +1437,13 @@ public class Commands extends ListenerAdapter
 	}
 	
 	/** Lancia una moneta */
-	public void coinflip()
+	public String coinflip()
 	{
 		final boolean headsOrTails = random.nextBoolean();
 		final String heads = Emotes.readyToSend(Emotes.pigeon);
 		final String tails = Emotes.readyToSend(Emotes.boo2);
-		final String s = "Lancio una moneta...";
 		
-		message.reply(s).queue(l->
-		{
-			try {
-				Thread.sleep(1500);
-			}catch (InterruptedException e) {error.print(object,e);}
-			l.editMessage(String.format("È uscito %s!", headsOrTails ? heads:tails)).queue();
-		});
-		
+		return headsOrTails ? heads : tails;
 	} // fine coinflip()
 	
 	/** Verifica ci siano le condizioni giuste per creare un sondaggio */
