@@ -1300,8 +1300,6 @@ public class Commands extends ListenerAdapter
 				final String imgDaUsare = imgs[random.nextInt(imgs.length)];
 				final String footer = String.format("%s pays his respects.", u.getName());
 				
-				// gion.send(avatar);
-				
 				embedBuilder
 					.setTitle(title)
 					.setColor(Color.black)
@@ -1426,32 +1424,30 @@ public class Commands extends ListenerAdapter
 	/** Lancia una moneta */
 	public void coinflip()
 	{
-		final String startEmote = "<:", endEmote = ">";
-		final StringBuilder testaEmote, croceEmote, lancioMoneta, responso, testaStringa, croceStringa;
 		final boolean headsOrTails = random.nextBoolean();
+		final String heads = Emotes.readyToSend(Emotes.pigeon);
+		final String tails = Emotes.readyToSend(Emotes.boo2);
+		final HashMap<Boolean, String> hashMap = new HashMap<>();
+		hashMap.put(true, heads);
+		hashMap.put(false, tails);
+		final int MAX = 5000;
+		final String[] a = {"Lancio una moneta...", heads, tails};
+		String s = String.format("%s\n%s", a[0], a[1]);
 		
-		testaEmote = new StringBuilder();
-		croceEmote = new StringBuilder();
-		lancioMoneta = new StringBuilder();
-		responso = new StringBuilder();
-		testaStringa = new StringBuilder();
-		croceStringa = new StringBuilder();
-		
-		testaEmote.append(startEmote).append(Emotes.pogey).append(endEmote);
-		croceEmote.append(startEmote).append(Emotes.pigeon).append(endEmote);
-		lancioMoneta.append(authorName).append(" lancia una moneta...");
-		responso.append(lancioMoneta).append("\n**È uscito** ");
-		
-		testaStringa.append("**").append(testaEmote).append("! (Testa)**");
-		croceEmote.append("**").append(croceEmote).append("! (Croce)**");
-
-		final String finalResponso = responso.append(headsOrTails ? testaStringa : croceStringa).toString();
-
-		message.reply(lancioMoneta).queue(m ->
+		channel.sendMessage(s).queue(l->
 		{
-			message.editMessage(finalResponso).queue(m2 -> react(headsOrTails ? "pogey" : "pigeon"));
+			for (int i = 0; i < MAX; i += 200)
+			{
+				final String g = String.format("%s\n%s", a[0], a[1 + (i / 200) % 2]);
+				l.editMessage(g).queue();
+				try {
+					Thread.sleep(i);
+				}catch (InterruptedException ignored) {}
+			}
+			
+			l.editMessage(String.format("È uscito %s!",hashMap.get(headsOrTails))).queue();
 		});
-
+		
 	} // fine coinflip()
 	
 	/** Verifica ci siano le condizioni giuste per creare un sondaggio */
