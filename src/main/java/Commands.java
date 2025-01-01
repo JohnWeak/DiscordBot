@@ -1394,9 +1394,7 @@ public class Commands extends ListenerAdapter
 			}
 			case "coinflip" ->
 			{
-				event.deferReply(true).queue(l-> {
-					l.retrieveOriginal().complete().editMessage("Lancio una moneta...").queue();
-				});
+				event.deferReply(true).queue();
 				
 				new Timer().schedule(new TimerTask()
 				{
@@ -1405,8 +1403,6 @@ public class Commands extends ListenerAdapter
 						event.getHook().editOriginal(coinflip()).queue();
 					}
 				}, 1000);
-				
-				event.getHook().editOriginal(coinflip()).queue();
 			}
 			
 		}
