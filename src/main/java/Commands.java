@@ -1430,18 +1430,18 @@ public class Commands extends ListenerAdapter
 		final HashMap<Boolean, String> hashMap = new HashMap<>();
 		hashMap.put(true, heads);
 		hashMap.put(false, tails);
-		final int MAX = 5000;
+		final int MAX = 15;
 		final String[] a = {"Lancio una moneta...", heads, tails};
 		String s = String.format("%s\n%s", a[0], a[1]);
 		
 		channel.sendMessage(s).queue(l->
 		{
-			for (int i = 0; i < MAX; i += 200)
+			for (int i = 0; i < MAX; i++)
 			{
-				final String g = String.format("%s\n%s", a[0], a[1 + (i / 200) % 2]);
+				final String g = String.format("%s\n%s", a[0], a[1 + (i % 2)]);
 				l.editMessage(g).queue();
 				try {
-					Thread.sleep(i);
+					Thread.sleep(200);
 				}catch (InterruptedException ignored) {}
 			}
 			
