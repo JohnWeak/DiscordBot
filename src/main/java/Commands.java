@@ -1394,6 +1394,8 @@ public class Commands extends ListenerAdapter
 			}
 			case "coinflip" ->
 			{
+				final int minDelay = 1000, maxDelay = 3000;
+				
 				event.deferReply(false).queue();
 				
 				new Timer().schedule(new TimerTask()
@@ -1402,7 +1404,7 @@ public class Commands extends ListenerAdapter
 					{
 						event.getHook().editOriginal(coinflip()).queue();
 					}
-				}, 1000 + random.nextInt(2000));
+				}, random.nextInt(minDelay, maxDelay));
 			}
 			
 		}
