@@ -1394,7 +1394,7 @@ public class Commands extends ListenerAdapter
 			}
 			case "coinflip" ->
 			{
-				event.deferReply(true).queue();
+				event.deferReply(false).queue();
 				
 				new Timer().schedule(new TimerTask()
 				{
