@@ -1402,7 +1402,7 @@ public class Commands extends ListenerAdapter
 					{
 						event.getHook().editOriginal(coinflip()).queue();
 					}
-				}, 1000);
+				}, 1000 + random.nextInt(2000));
 			}
 			
 		}
