@@ -78,6 +78,7 @@ public class Main
 				);
 			commands.add(newCommand);
 			
+			
 			final ArrayList<OptionData> options = new ArrayList<>();
 			OptionData od = new OptionData(OptionType.STRING, "domanda", "la domanda del sondaggio", true);
 			options.add(od);
@@ -85,14 +86,14 @@ public class Main
 			for (int i = 1; i < 10; i++)
 			{
 				final boolean required = i < 3;
-				od = new OptionData(OptionType.STRING, "opzione"+i, "opzione "+i, required);
+				od = new OptionData(OptionType.STRING, "opzione" + i, "opzione " + i, required);
 				options.add(od);
 			}
 			
-			newCommand = new CommandDataImpl("poll","Crea un sondaggio")
-				.addOptions(options);
-			
+			newCommand = new CommandDataImpl("poll", "Crea un sondaggio")
+					.addOptions(options);
 			commands.add(newCommand);
+			
 			
 			newCommand = new CommandDataImpl("f", "Omaggia chi non c'è più")
 				.addOptions(new OptionData(
@@ -108,6 +109,38 @@ public class Main
 			// commands.add(newCommand);
 			
 			newCommand = new CommandDataImpl("coinflip", "Lancia una moneta");
+			commands.add(newCommand);
+			
+			newCommand = new CommandDataImpl("promemoria", "Crea un promemoria")
+			.addOptions(new OptionData(
+				OptionType.STRING,
+				"nome",
+				"il nome del promemoria",
+				true
+				),
+				
+				new OptionData(
+				OptionType.INTEGER,
+				"giorni",
+				"il numero di giorni",
+				true
+				).setRequiredRange(0, 7),
+				
+				new OptionData(
+					OptionType.INTEGER,
+					"ore",
+					"il numero di ore",
+					true
+				).setRequiredRange(0,59),
+				
+				new OptionData(
+					OptionType.INTEGER,
+					"minuti",
+					"il numero di minuti",
+					true
+				).setRequiredRange(1, 59)
+			);
+			
 			commands.add(newCommand);
 			
 			jda.updateCommands().addCommands(commands).queue();

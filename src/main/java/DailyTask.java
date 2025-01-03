@@ -11,7 +11,7 @@ public class DailyTask extends TimerTask
 		try
 		{
 			final boolean enigmosDaily = Commands.canaleBot.getHistory()
-				.retrievePast(15)
+				.retrievePast(100)
 				.complete()
 				.stream()
 				.anyMatch(message ->

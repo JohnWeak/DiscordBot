@@ -419,7 +419,6 @@ public class Commands extends ListenerAdapter
 		
 		switch (comando)
 		{
-			case "!coinflip", "!cf" -> coinflip();
 			case "!poll" -> poll();
 			case "!info" -> info();
 			case "!8ball" -> eightBall();
@@ -428,12 +427,8 @@ public class Commands extends ListenerAdapter
 			case "!carta" -> {new Card().sendCarta();}
 			case "!massshooting", "!ms" -> massShooting();
 			case "!smh" -> new ThreadSmh(channel).start();
-			case "!dado" -> dado();
-			case "!cattura", "!catch" -> cattura(pokemon);
-			case "!r", "!reminder" -> reminder();
 			case "!certificazione" -> certificazione();
 			case "!pigeons" -> pigeons();
-			// case "!dm" -> dm();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -823,204 +818,6 @@ public class Commands extends ListenerAdapter
 		
 	} // fine detectTwitterLink()
 	
-	private void reminder()
-	{
-		final short MAX_REMINDERS = 3;
-		final String rickroll = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-		
-		final String title = "Utilizzo comando !reminder", description = "Il comando permette di impostare un promemoria. I parametri sono i seguenti.";
-		final MessageEmbed.Field[] fields = new MessageEmbed.Field[]
-		{
-			new MessageEmbed.Field("d", "Imposta i giorni", true),
-			new MessageEmbed.Field("h", "Imposta le ore",true),
-			new MessageEmbed.Field("m","Imposta i minuti",true),
-			new MessageEmbed.Field("Esempio","`!reminder 3d10h12m`",false),
-		};
-		
-		final String[] mes = messageRaw.split(" ");
-		if(mes.length < 2 || mes[1].isEmpty())
-		{
-			final EmbedBuilder embed = new EmbedBuilder();
-			
-			embed.setTitle(title);
-			embed.setColor(Color.RED);
-			embed.setDescription(description);
-			for (MessageEmbed.Field f : fields)
-				embed.addField(f);
-			
-			channel.sendMessageEmbeds(embed.build()).queue();
-			return;
-		}
-		
-		remindersList.removeIf(r -> !r.isActive());
-		
-		final EmbedBuilder impostato, scaduto;
-		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
-		
-		if (remindersList.size() < MAX_REMINDERS)
-		{
-			final String timeString = mes[1];
-			final int d = timeString.indexOf('d');
-			final int h = timeString.indexOf('h');
-			final int m = timeString.indexOf('m');
-			
-			String days=null, hours=null, minutes=null;
-			int time;
-			final int days_int, hours_int, minutes_int, minimo, maxDays, maxHours, maxMinutes;
-			final ZonedDateTime now, future;
-			final ThreadReminder reminder;
-			final String createdSuccess, endedSuccess, author, img;
-			
-			final String formatError = "I giorni `(d)` devono precedere le ore `(h)`, che devono precedere i minuti `(m)`. Promemoria non impostato.";
-			
-			if (d != -1)
-			{
-				days = timeString.substring(0, d);
-			}
-			
-			if (h != -1)
-			{
-				if (h < d)
-				{
-					message.reply(formatError).queue();
-					return;
-				}
-				
-				hours = days != null ? timeString.substring(d+1, h) : timeString.substring(0, h);
-			}
-			
-			if (m != -1)
-			{
-				if ((h != -1 && m < h) || (d != -1 && m < d))
-				{
-					message.reply(formatError).queue();
-					return;
-				}
-				
-				if (days == null && hours == null) // minuti soltanto (5m)
-				{
-					minutes = timeString.substring(0, m);
-				}
-				else if (days != null && hours == null) // giorni e minuti (1d2m)
-				{
-					minutes = timeString.substring(d+1, m);
-				}
-				else // tutto incluso (1d2h3m)
-				{
-					minutes = timeString.substring(h+1, m);
-				}
-				
-			}
-			// converti le stringhe di tempo in interi
-			time = 0;
-			days_int = (days == null ? 0 : Integer.parseInt(days));
-			hours_int = (hours == null ? 0 : Integer.parseInt(hours));
-			minutes_int = (minutes == null ? 0 : Integer.parseInt(minutes));
-			
-			minimo = 0;
-			maxDays = 7;
-			maxHours = 23;
-			maxMinutes = 59;
-			
-			if (days_int > maxDays || hours_int > maxHours || minutes_int > maxMinutes)
-			{
-				final String illegalValuesTitle = "Errore durante l'impostazione del promemoria";
-				final String legalDayValues = String.format("Valori ammessi: %d - %d", minimo, maxDays);
-				final String legalHourValues = String.format("Valori ammessi: %d - %d", minimo, maxHours);
-				final String legalMinuteValues = String.format("Valori ammessi: %d - %d", minimo, maxMinutes);
-				
-				impostato = new EmbedBuilder();
-				impostato.setTitle(illegalValuesTitle);
-				impostato.setColor(Color.RED);
-				impostato.addField("d", legalDayValues,true);
-				impostato.addField("h", legalHourValues,true);
-				impostato.addField("m", legalMinuteValues,true);
-				impostato.addField("Valori validi","`1d7m`\n`5d2h4m`\n`10m`",false);
-				impostato.addField("Valori **non** validi","`11d`\n`5d205h4m`\n`1d5h700m`",false);
-				impostato.setFooter("smh");
-				
-				channel.sendMessageEmbeds(impostato.build()).queue();
-				return;
-			}
-			
-			now = ZonedDateTime.now(ZoneId.of("Europe/Rome"));
-			
-			// converti interi in millisecondi
-			time += days_int * 24 * 60 * 60 * 1000;
-			time += hours_int * 60 * 60 * 1000;
-			time += minutes_int * 60 * 1000;
-			
-			future = now.plusSeconds(time/1000);
-			
-			final StringBuilder nome = new StringBuilder();
-			
-			for (int i = 2; i < mes.length; i++)
-			{
-				nome.append(" ").append(mes[i]);
-			}
-			
-			if (nome.isEmpty())
-			{
-				nome.append("Promemoria Senza Nome");
-			}
-			
-			createdSuccess = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%s`\n", nome.toString().trim(), future.format(formatter));
-			endedSuccess = String.format("Il promemoria \"%s\" è scaduto!", nome);
-			author = "Impostato da ".concat(user.getName());
-			img = "https://thumbs.dreamstime.com/b/reminder-icon-vector-illustration-simple-vector-icon-reminder-icon-vector-illustration-175544158.jpg";
-			
-			try
-			{
-				impostato = new EmbedBuilder();
-				impostato.setTitle("Promemoria impostato!");
-				impostato.setDescription(createdSuccess);
-				impostato.setColor(Color.RED);
-				impostato.setThumbnail(img);
-				impostato.setAuthor(author, rickroll, user.getAvatarUrl());
-				
-				scaduto = new EmbedBuilder();
-				scaduto.setTitle("Promemoria scaduto!");
-				scaduto.setDescription(endedSuccess);
-				scaduto.setColor(Color.RED);
-				scaduto.setThumbnail(img);
-				scaduto.setAuthor(author, rickroll, user.getAvatarUrl());
-				
-				reminder = new ThreadReminder( time, channel, scaduto);
-				remindersList.add(reminder);
-				reminder.start();
-				
-				channel.sendMessageEmbeds(impostato.build()).queue();
-			}
-			catch (Exception e)
-			{
-				new Error<String>().print(this,e.getMessage());
-			}
-			
-		}
-		else
-		{
-			impostato = new EmbedBuilder();
-			impostato.setTitle("Promemoria attuali");
-			for (ThreadReminder r : remindersList)
-			{
-				final String name = r.getName();
-				final LocalDateTime scad = r.getEnd();
-				final String desc = scad.format(formatter);
-				final MessageEmbed.Field rem = new MessageEmbed.Field(name,desc,true);
-				
-				impostato.addField(rem);
-			}
-			impostato.setColor(Color.RED);
-			
-			message.reply("Strunz, hai già impostato 3 promemoria. smh.").queue(l->
-			{
-				react(Emotes.smh);
-				l.replyEmbeds(impostato.build()).queue();
-			});
-		}
-		
-	} // reminder()
-	
 	private void encounter()
 	{
 		final String[] msgSplittato = messageRaw.split(" ");
@@ -1397,16 +1194,113 @@ public class Commands extends ListenerAdapter
 				final int minDelay = 1000, maxDelay = 3000;
 				
 				event.deferReply(false).queue();
-				
-				new Timer().schedule(new TimerTask()
+				final Timer timer = new Timer();
+				final TimerTask t = new TimerTask()
 				{
-					@Override public void run()
+					@Override
+					public void run()
 					{
-						event.getHook().editOriginal(coinflip()).queue();
+						final String[] emotes = {Emotes.readyToSend(Emotes.pigeon), Emotes.readyToSend(Emotes.boo2)};
+						for (int i = 0; i < 10; i++)
+						{
+							event.getHook().editOriginal(emotes[i % 2]).queue();
+							try {
+								Thread.sleep(300);
+							} catch (InterruptedException ignored) {}
+						}
+						
+						event.getHook().editOriginal(String.format("È uscito %s!", coinflip())).queue();
 					}
-				}, random.nextInt(minDelay, maxDelay));
+				};
+				
+				timer.schedule(t, random.nextInt(minDelay, maxDelay));
 			}
-			
+			case "promemoria" ->
+			{
+				final int MAX_REMINDERS = 5;
+				final int[] times = new int[MAX_REMINDERS];
+				final String nome;
+				
+				remindersList.removeIf(r -> !r.isActive());
+				
+				nome = Objects.requireNonNull(event.getOption("nome")).getAsString();
+				
+				for (int i = 1; i < 4; i++)
+					times[i-1] = event.getOptions().get(i).getAsInt();
+				
+				final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
+				if (remindersList.size() < MAX_REMINDERS)
+				{
+					int time = 0;
+					final ZonedDateTime future;
+					final EmbedBuilder impostato, scaduto;
+					final String createdSuccess, endedSuccess, rickroll = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+					final String img = "https://thumbs.dreamstime.com/b/reminder-icon-vector-illustration-simple-vector-icon-reminder-icon-vector-illustration-175544158.jpg";
+					final User author = event.getUser();
+					
+					time += times[0] * 24 * 60 * 60 * 1000; // giorni -> ms
+					time += times[1] * 60 * 60 * 1000; // ore -> ms
+					time += times[2] * 60 * 1000; // minuti -> ms
+					
+					future = ZonedDateTime.now(ZoneId.of("Europe/Rome")).plusSeconds(time/1000);
+					
+					createdSuccess = String.format("Il tuo promemoria, \"%s\", è impostato per il giorno `%s`\n", nome.trim(), future.format(formatter));
+					endedSuccess = String.format("Il promemoria \"%s\" è scaduto!", nome);
+					
+					try
+					{
+						impostato = new EmbedBuilder();
+						impostato.setTitle("Promemoria impostato!");
+						impostato.setDescription(createdSuccess);
+						impostato.setColor(Color.RED);
+						impostato.setThumbnail(img);
+						impostato.setAuthor(String.format("Impostato da %s", author.getName()), rickroll, author.getAvatarUrl());
+						
+						scaduto = new EmbedBuilder();
+						scaduto.setTitle("Promemoria scaduto!");
+						scaduto.setDescription(endedSuccess);
+						scaduto.setColor(Color.GRAY);
+						scaduto.setThumbnail(img);
+						scaduto.setAuthor(String.format("Impostato da %s", author.getName()), rickroll, author.getAvatarUrl());
+						
+						final ThreadReminder reminder = new ThreadReminder( time, channel, scaduto);
+						remindersList.add(reminder);
+						reminder.start();
+						
+						event.replyEmbeds(impostato.build()).queue();
+					}
+					catch (Exception e)
+					{
+						new Error<String>().print(this,e.getMessage());
+					}
+					
+				}
+				else
+				{
+					final EmbedBuilder impostato = new EmbedBuilder();
+					impostato.setTitle("Promemoria attuali");
+					for (ThreadReminder r : remindersList)
+					{
+						final String name = r.getName();
+						final LocalDateTime scad = r.getEnd();
+						final String desc = scad.format(formatter);
+						final MessageEmbed.Field rem = new MessageEmbed.Field(name,desc,true);
+						
+						impostato.addField(rem);
+					}
+					impostato.setColor(Color.RED);
+					
+					final String strunz = String.format("Strunz, hai già impostato %d promemoria.", MAX_REMINDERS);
+					
+					event.reply(strunz).queue(l->
+					{
+						react(Emotes.smh);
+						l.retrieveOriginal().complete().replyEmbeds(impostato.build()).queue();
+					});
+				}
+				
+				
+			}
 		}
 	} // fine onSlashCommand()
 	

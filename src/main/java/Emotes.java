@@ -149,7 +149,8 @@ public abstract class Emotes
 	 * @param emote l'emote da convertire in stringa pronta per l'uso*/
 	public static String readyToSend(String emote)
 	{
-		return "<:"+emote+">";
+		return String.format("<:%s>", emote);
 	}
+	
 	
 } // fine classe Bot.Emotes

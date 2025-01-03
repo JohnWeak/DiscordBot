@@ -1,3 +1,4 @@
+import lombok.Getter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
 
@@ -9,9 +10,13 @@ public class ThreadReminder extends Thread
 	private final int tempo;
 	private final GuildMessageChannel channel;
 	private final EmbedBuilder eb;
-	private final LocalDateTime start, end;
-	private boolean active;
+	@Getter private final LocalDateTime start, end;
+	@Getter private boolean active;
 	
+	/**@param tempo il tempo in millisecondi
+	 * @param channel in quale canale inviare il messaggio
+	 * @param eb l'EmbedBuilder da costruire
+	 * */
 	public ThreadReminder(int tempo, GuildMessageChannel channel, EmbedBuilder eb)
 	{
 		this.tempo = tempo;
@@ -22,27 +27,6 @@ public class ThreadReminder extends Thread
 		end = start.plusSeconds(tempo/1000);
 		active = true;
 	}
-
-	public boolean isActive()
-	{
-		return active;
-	}
-	
-	/**Restituisce il tempo di partenza in cui è stato impostato promemoria
-	 * @return la data in cui il promemoria è stato creato*/
-	public LocalDateTime getStart()
-	{
-		return start;
-	}
-	
-	/**Restituisce il tempo in cui il promemoria scadrà
-	 * @return la data in cui il promemoria suonerà*/
-	public LocalDateTime getEnd()
-	{
-		return end;
-	}
-	
-	private String id;
 	
 	@Override
 	public void run()
