@@ -1,8 +1,12 @@
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.channel.ChannelType;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
+import net.dv8tion.jda.api.entities.channel.unions.GuildMessageChannelUnion;
+import net.dv8tion.jda.api.entities.channel.unions.MessageChannelUnion;
 import net.dv8tion.jda.api.entities.emoji.CustomEmoji;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
@@ -1263,7 +1267,13 @@ public class Commands extends ListenerAdapter
 						scaduto.setThumbnail(img);
 						scaduto.setAuthor(String.format("Impostato da %s", author.getName()), rickroll, author.getAvatarUrl());
 						
-						final ThreadReminder reminder = new ThreadReminder( time, channel, scaduto);
+						GuildMessageChannelUnion canale = event.getGuildChannel();
+						if (canale.getType().equals(ChannelType.PRIVATE))
+						{
+							canale = (GuildMessageChannelUnion) event.getMessageChannel();
+						}
+						
+						final ThreadReminder reminder = new ThreadReminder( time, canale, scaduto);
 						remindersList.add(reminder);
 						reminder.start();
 						
