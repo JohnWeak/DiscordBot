@@ -1304,7 +1304,6 @@ public class Commands extends ListenerAdapter
 					
 					event.reply(strunz).queue(l->
 					{
-						react(Emotes.smh);
 						l.retrieveOriginal().complete().replyEmbeds(impostato.build()).queue();
 					});
 				}
