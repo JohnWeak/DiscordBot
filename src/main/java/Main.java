@@ -157,7 +157,7 @@ public class Main
 				.addOptions(new OptionData(
 					OptionType.STRING,
 					"domanda",
-					"la domanda che vuoi porre alla \uD83C\uDFB1 magica palla 8 \uD83C\uDFB1",
+					"la domanda che vuoi porre alla magica palla 8 \uD83C\uDFB1",
 					true
 					),
 					new OptionData(

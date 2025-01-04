@@ -1636,22 +1636,25 @@ public class Commands extends ListenerAdapter
 	{
 		final String[] risposte =
 		{
-			"Sì.",
-			"È certo.",
-			"È decisamente un sì.",
-			"Senza dubbio.",
-			"Puoi contarci.",
-			"Molto probabile.",
-			"Il responso è positivo.",
-			"I segni presagiscono di sì.",
-			"Il presagio non è né positivo né negativo.",
-			"Non ci contare.",
-			"La mia risposta è no.",
-			"Le mie fonti dicono di no.",
-			"Il responso non è favorevole.",
-			"Ci sono molti dubbi al riguardo.",
-			"Gli astri non ti sorridono.",
-			"No."
+			"Sì",
+			"È certo",
+			"È decisamente un sì",
+			"Senza dubbio",
+			"Puoi contarci",
+			"Probabile",
+			"Molto probabile",
+			"Il responso è positivo",
+			"I segni presagiscono di sì",
+			"Il presagio non è né positivo né negativo",
+			"Non ci contare",
+			"Improbabile",
+			"Molto improbabile",
+			"La mia risposta è no",
+			"Le mie fonti dicono di no",
+			"Il responso non è favorevole",
+			"Ci sono molti dubbi al riguardo",
+			"Gli astri non ti sorridono",
+			"No"
 		};
 		return risposte[random.nextInt(risposte.length)];
 	} // fine eightBall()
