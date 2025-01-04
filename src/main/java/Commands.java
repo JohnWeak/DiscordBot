@@ -1335,9 +1335,11 @@ public class Commands extends ListenerAdapter
 				final boolean secret = optionHidden != null && optionHidden.getAsBoolean();
 				if (optionDomanda == null) { return; }
 				
-				gion.send(optionDomanda.getAsString() + "\n" + optionDomanda.getAsString().length());
+				
 				final String domanda = secret ? "*".repeat(optionDomanda.getAsString().length()) : optionDomanda.getAsString();
 				final String response = eightBall();
+				
+				gion.send(optionDomanda.getAsString() + "\n" + optionDomanda.getAsString().length()+"\n"+domanda);
 				
 				final EmbedBuilder embed = new EmbedBuilder();
 				embed.setTitle("La magica palla 8 🎱 sta valutando la tua domanda...");
