@@ -1328,7 +1328,8 @@ public class Commands extends ListenerAdapter
 					
 					emptyReport.setTitle(msg);
 					emptyReport.setColor(Color.RED);
-					emptyReport.setAuthor(massShootingSite, avatar);
+					emptyReport.setFooter(massShootingSite, avatar);
+					emptyReport.setAuthor("Mass Shooting Tracker", massShootingSite);
 					
 					event.replyEmbeds(emptyReport.build()).queue();
 				}
@@ -1715,7 +1716,8 @@ public class Commands extends ListenerAdapter
 			if (anno != currentYear)
 				scelta = random.nextInt(objs.size());
 			
-			if (objs.isEmpty()) return null;
+			if (objs.isEmpty())
+				return null;
 			
 			final String citta = (String) objs.get(scelta).get("city");
 			final String stato = (String) objs.get(scelta).get("state");
@@ -1770,7 +1772,9 @@ public class Commands extends ListenerAdapter
 				embed.addField(vittimeField);
 				
 			embed.addField("Cronaca",finalResp,false)
-				.setFooter(massShootingSite,avatar);
+				.setFooter(massShootingSite,avatar)
+				.setAuthor("Mass Shooting Tracker", massShootingSite)
+			;
 		}
 		catch (IOException | ParseException e)
 		{
