@@ -1354,7 +1354,7 @@ public class Commands extends ListenerAdapter
 					embed.setTitle(String.format("La magica palla 8 🎱 risponde: `%s`.", response));
 					embed.setColor(Color.GRAY);
 					embed.setDescription(domanda);
-					embed.setFooter("Non ti piace la risposta? Usa il comando `/refund` per un rimborso!");
+					embed.setFooter("Insoddisfatto della risposta? Usa il comando `/refund` per un rimborso!");
 					embed.setAuthor(Utente.getUtenteFromID(Utente.ID_BOWOT).getName());
 					l.editOriginalEmbeds(embed.build()).queue();
 				});
