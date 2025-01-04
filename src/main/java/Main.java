@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.internal.interactions.CommandDataImpl;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.Random;
 
 
@@ -70,10 +71,10 @@ public class Main
 					true
 					),
 					new OptionData(
-						OptionType.BOOLEAN,
-						"shiny",
-						"shiny",
-						false
+					OptionType.BOOLEAN,
+					"shiny",
+					"shiny",
+					false
 					)
 				);
 			commands.add(newCommand);
@@ -140,8 +141,20 @@ public class Main
 					true
 				).setRequiredRange(1, 59)
 			);
-			
 			commands.add(newCommand);
+			
+			newCommand = new CommandDataImpl("mass_shooting","Sparatorie di massa negli USA")
+			.addOptions(new OptionData(
+				OptionType.INTEGER,
+				"anno",
+				"Specifica quale anno visualizzare",
+				false
+				).setRequiredRange(2013, new GregorianCalendar().get(GregorianCalendar.YEAR))
+			);
+			commands.add(newCommand);
+			
+			
+			
 			
 			jda.updateCommands().addCommands(commands).queue();
 			

@@ -4,9 +4,7 @@ import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.entities.channel.ChannelType;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
-import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.entities.channel.unions.GuildMessageChannelUnion;
-import net.dv8tion.jda.api.entities.channel.unions.MessageChannelUnion;
 import net.dv8tion.jda.api.entities.emoji.CustomEmoji;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
@@ -34,6 +32,7 @@ import org.json.simple.parser.ParseException;
 import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.time.LocalDate;
@@ -429,7 +428,6 @@ public class Commands extends ListenerAdapter
 			case "!pokemon" -> encounter();
 			case "!colpevolezza", "!colpevole" -> colpevolezza();
 			case "!carta" -> {new Card().sendCarta();}
-			case "!massshooting", "!ms" -> massShooting();
 			case "!smh" -> new ThreadSmh(channel).start();
 			case "!certificazione" -> certificazione();
 			case "!pigeons" -> pigeons();
@@ -1056,7 +1054,7 @@ public class Commands extends ListenerAdapter
 					}
 				}
 				
-				final EmbedBuilder embedBuilder = creaSondaggio(domanda,rs,false);
+				final EmbedBuilder embedBuilder = creaSondaggio(domanda,rs);
 				final String[] reactionLetters =
 				{
 					"\uD83C\uDDE6", "\uD83C\uDDE7", "\uD83C\uDDE8", "\uD83C\uDDE9", "\uD83C\uDDEA", "\uD83C\uDDEB",
@@ -1310,6 +1308,36 @@ public class Commands extends ListenerAdapter
 				
 				
 			}
+			case "mass_shooting" ->
+			{
+				option = event.getOption("anno");
+				int anno = new GregorianCalendar().get(GregorianCalendar.YEAR);
+				if (option != null)
+				{
+					anno = option.getAsInt();
+				}
+				
+				final String avatar = "https://www.massshootingtracker.site/logo-400.png";
+				final String massShootingSite = "https://www.massshootingtracker.site/";
+				
+				final EmbedBuilder massShootingReport = massShooting(anno);
+				if (massShootingReport == null)
+				{
+					final EmbedBuilder emptyReport = new EmbedBuilder();
+					final String msg = String.format("Nessuna sparatoria di massa trovata per l'anno %d.", anno);
+					
+					emptyReport.setTitle(msg);
+					emptyReport.setColor(Color.RED);
+					emptyReport.setAuthor(massShootingSite, avatar);
+					
+					event.replyEmbeds(emptyReport.build()).queue();
+				}
+				else
+				{
+					event.replyEmbeds(massShootingReport.build()).queue();
+				}
+				
+			}
 		}
 	} // fine onSlashCommand()
 	
@@ -1357,7 +1385,7 @@ public class Commands extends ListenerAdapter
 		final String format = "^.*\\?\\s*([^/]+\\s*/?\\s*)+[^/]+\\s*$";
 		if (!messageRaw.toLowerCase().matches(format) || messageRaw.length() <= 5)
 		{
-			creaSondaggio(null,null,true);
+			creaSondaggio("",new String[]{});
 			
 			//flag = true fa comparire il messaggio di utilizzo del comando !poll
 			return;
@@ -1368,53 +1396,41 @@ public class Commands extends ListenerAdapter
 		final String[] risposte = domandaERisposte[1].split("/");
 		//final String[] risposte = messageRaw.substring(5+domanda.length()+1).split("/");
 		
-		embedBuilder = creaSondaggio(domanda, risposte, false);
+		embedBuilder = creaSondaggio(domanda, risposte);
 		channel.sendMessageEmbeds(embedBuilder.build()).queue();
 	} // fine poll()
 	
 	/** Crea un sondaggio. Se non sono soddisfatte le condizioni, mostra un messaggio su come usare il comando !poll */
-	public EmbedBuilder creaSondaggio(String domanda, String[] risposte, boolean error)
+	public EmbedBuilder creaSondaggio(String domanda, String[] risposte)
 	{
 		final EmbedBuilder embedBuilder = new EmbedBuilder();
 		
-		if (error)
+		final int lenghtRisposte = risposte.length;
+		final String[] reactionLetters =
 		{
-			embedBuilder.setTitle("`!poll` - Istruzioni per l'uso");
-			embedBuilder.addField("Sondaggio", "Per creare un sondaggio devi usare il comando `!poll` + `domanda?` + `[risposte]`\nSepara le risposte con uno slash `/`.", false);
-			embedBuilder.addField("Esempio", "`!poll domanda? opzione 1 / opzione 2 / opzione 3 ...`\n`!poll Cosa preferite? Pizza / Pollo / Panino / Sushi`", false);
-			embedBuilder.addField("Votazione", "Per votare, usa le reazioni al messaggio.", false);
-			embedBuilder.setColor(0xFFFFFF);
-			
-			channel.sendMessageEmbeds(embedBuilder.build()).queue();
-		}
-		else
+			"\uD83C\uDDE6", "\uD83C\uDDE7", "\uD83C\uDDE8", "\uD83C\uDDE9", "\uD83C\uDDEA", "\uD83C\uDDEB",
+			"\uD83C\uDDEC", "\uD83C\uDDED", "\uD83C\uDDEE", "\uD83C\uDDEF", "\uD83C\uDDF0", "\uD83C\uDDF1",
+			"\uD83C\uDDF2", "\uD83C\uDDF3", "\uD83C\uDDF4", "\uD83C\uDDF5", "\uD83C\uDDF6", "\uD83C\uDDF7",
+			"\uD83C\uDDF8", "\uD83C\uDDF9", "\uD83C\uDDFA", "\uD83C\uDDFB", "\uD83C\uDDFC", "\uD83C\uDDFD",
+			"\uD83C\uDDFE", "\uD83C\uDDFF"
+		}; // array di lettere emoji A -> Z
+		
+		final StringBuilder title = new StringBuilder();
+		final StringBuilder descrizione = new StringBuilder();
+		if (!domanda.contains("?"))
+			title.append("?");
+		
+		embedBuilder.setTitle(title.append(domanda).toString());
+		
+		for (int i = 0; i < lenghtRisposte; i++)
 		{
-			final int lenghtRisposte = risposte.length;
-			final String[] reactionLetters =
-			{
-			    "\uD83C\uDDE6", "\uD83C\uDDE7", "\uD83C\uDDE8", "\uD83C\uDDE9", "\uD83C\uDDEA", "\uD83C\uDDEB",
-				"\uD83C\uDDEC", "\uD83C\uDDED", "\uD83C\uDDEE", "\uD83C\uDDEF", "\uD83C\uDDF0", "\uD83C\uDDF1",
-				"\uD83C\uDDF2", "\uD83C\uDDF3", "\uD83C\uDDF4", "\uD83C\uDDF5", "\uD83C\uDDF6", "\uD83C\uDDF7",
-				"\uD83C\uDDF8", "\uD83C\uDDF9", "\uD83C\uDDFA", "\uD83C\uDDFB", "\uD83C\uDDFC", "\uD83C\uDDFD",
-				"\uD83C\uDDFE", "\uD83C\uDDFF"
-			}; // array di lettere emoji A -> Z
-			
-			final StringBuilder title = new StringBuilder();
-			final StringBuilder descrizione = new StringBuilder();
-			if (!domanda.contains("?"))
-				title.append("?");
-			
-			embedBuilder.setTitle(title.append(domanda).toString());
-			
-			for (int i = 0; i < lenghtRisposte; i++)
-			{
-				risposte[i] = risposte[i].trim();
-				descrizione.append(reactionLetters[i]).append("\t").append(risposte[i]).append("\n");
-			}
-			
-			embedBuilder.setDescription(descrizione);
-			embedBuilder.setColor(0xFF0000);
+			risposte[i] = risposte[i].trim();
+			descrizione.append(reactionLetters[i]).append("\t").append(risposte[i]).append("\n");
 		}
+		
+		embedBuilder.setDescription(descrizione);
+		embedBuilder.setColor(0xFF0000);
+		
 		
 		return embedBuilder;
 	} // fine sondaggio()
@@ -1661,36 +1677,20 @@ public class Commands extends ListenerAdapter
 	} // fine eightBall()
 	
 	
-	
 	/**Ottieni un resoconto della sparatoria più recente in USA oppure ottieni un resoconto di una sparatoria scelta casualmente nell'anno da te specificato.*/
-	private void massShooting()
+	private EmbedBuilder massShooting(int anno)
 	{
-		int anno = currentYear;
-		final String[] msg = messageRaw.toLowerCase().split(" ");
-		if (msg.length > 1)
-		{
-			try
-			{
-				anno = Integer.parseInt(msg[1]);
-			} catch (NumberFormatException e)
-			{
-				error.print(object, e);
-			}
-		}
-		
-		if (anno < 2013 || anno > currentYear)
-		{
-			channel.sendMessage("`L'anno dev'essere compreso fra il 2013 e il "+currentYear+".`").queue();
-			return;
-		}
-		
 		final JSONArray jsonArray;
 		final JSONParser jsonParser = new JSONParser();
 		int mortiAnno = 0;
+		final String avatar = "https://www.massshootingtracker.site/logo-400.png";
+		final String massShootingSite = "https://www.massshootingtracker.site/";
+		final EmbedBuilder embed = new EmbedBuilder();
 		
 		try
 		{
-			final URL url = new URL("https://mass-shooting-tracker-data.s3.us-east-2.amazonaws.com/"+anno+"-data.json");
+			final String link = String.format("https://mass-shooting-tracker-data.s3.us-east-2.amazonaws.com/%d-data.json", anno);
+			final URL url = URI.create(link).toURL();
 			
 			final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestProperty("Accept", "application/json");
@@ -1701,6 +1701,11 @@ public class Commands extends ListenerAdapter
 			while ((inputLine = in.readLine()) != null)
 				response.append(inputLine);
 			
+			if (response.isEmpty())
+			{
+				return null;
+			}
+			
 			jsonArray = (JSONArray) jsonParser.parse(String.valueOf(response));
 			final ArrayList<JSONObject> objs = new ArrayList<>();
 			
@@ -1710,7 +1715,7 @@ public class Commands extends ListenerAdapter
 				mortiAnno += Integer.parseInt((String)((JSONObject) o).get("killed"));
 			}
 			
-			var scelta = 0; // se è anno corrente, prende più recente, altrimenti ne prende una a caso
+			int scelta = 0; // se è anno corrente, prende più recente, altrimenti ne prende una a caso
 			
 			if (anno != currentYear)
 				scelta = random.nextInt(objs.size());
@@ -1754,18 +1759,13 @@ public class Commands extends ListenerAdapter
 			if (anno == currentYear)
 				finalResp += totaleMorti;
 			
-			final String footerURL = "https://www.massshootingtracker.site/logo-400.png";
-			
 			final LocalDate start = LocalDate.of(anno, Integer.parseInt(month), Integer.parseInt(day));
 			final LocalDate stop = LocalDate.now();
 			final long days = ChronoUnit.DAYS.between(start, stop);
 			final MessageEmbed.Field daysField = new MessageEmbed.Field("Giorni dall'ultima", "**"+days+"**", true);
 			final MessageEmbed.Field vittimeField = new MessageEmbed.Field("Morti", "**"+mortiAnno+"**", true);
 			
-			final String massShootingSite = "https://www.massshootingtracker.site/";
-			final EmbedBuilder embed = new EmbedBuilder()
-				.setColor(Color.RED)
-				.addField("Sparatorie negli USA", sparatorie, true);
+			embed.setColor(Color.RED).addField("Sparatorie negli USA", sparatorie, true);
 				
 			if (anno == currentYear)
 				embed.addField(daysField);
@@ -1773,15 +1773,14 @@ public class Commands extends ListenerAdapter
 				embed.addField(vittimeField);
 				
 			embed.addField("Cronaca",finalResp,false)
-				.setFooter(massShootingSite,footerURL);
-			
-			channel.sendMessageEmbeds(embed.build()).queue();
-			
+				.setFooter(massShootingSite,avatar);
 		}
 		catch (IOException | ParseException e)
 		{
 			error.print(object, e);
 		}
+		
+		return embed;
 	} // fine massShooting()
 	
 	/** Metodo che restituisce il nome del mese a partire dal suo numero. Esempio:<br>
