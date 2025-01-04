@@ -1334,19 +1334,18 @@ public class Commands extends ListenerAdapter
 				final OptionMapping optionHidden = event.getOption("segreto");
 				final boolean secret = optionHidden != null && optionHidden.getAsBoolean();
 				if (optionDomanda == null) { return; }
+				final String domandaString = optionDomanda.getAsString();
 				
-				
-				final String domanda = secret ? "*".repeat(optionDomanda.getAsString().length()) : optionDomanda.getAsString();
+				final String domanda = secret ? "*".repeat(domandaString.length()) : domandaString;
 				final String response = eightBall();
 				
-				gion.send(optionDomanda.getAsString() + "\n" + optionDomanda.getAsString().length()+"\n"+domanda);
+				gion.send(domandaString + "\n" + domandaString.length()+"\n"+domanda);
 				
 				final EmbedBuilder embed = new EmbedBuilder();
-				embed.setTitle("La magica palla 8 🎱 sta valutando la tua domanda...");
+				embed.setTitle(domanda);
 				embed.setColor(Color.RED);
-				embed.setDescription(domanda);
+				embed.setDescription("La magica palla 8 🎱 sta valutando la tua domanda...");
 				embed.setFooter("");
-				embed.setAuthor(event.getUser().getName(), event.getUser().getAvatarUrl(), event.getUser().getAvatarUrl());
 				
 				event.replyEmbeds(embed.build()).queue(l ->
 				{
@@ -1354,9 +1353,9 @@ public class Commands extends ListenerAdapter
 						Thread.sleep(random.nextInt(1000,2000));
 					} catch (InterruptedException e) {error.print(object, e);}
 					
-					embed.setTitle(String.format("La magica palla 8 🎱 risponde:\n`%s`.", response));
 					embed.setColor(Color.GRAY);
-					embed.setFooter("Insoddisfatto della risposta? Usa il comando `/refund` per un rimborso!");
+					embed.setDescription(String.format("La magica palla 8 🎱 risponde:\n`%s`.", response));
+					embed.setFooter("Insoddisfatto della risposta? Usa il comando /refund per un rimborso!");
 					l.editOriginalEmbeds(embed.build()).queue();
 				});
 			}
