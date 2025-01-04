@@ -1701,11 +1701,6 @@ public class Commands extends ListenerAdapter
 			while ((inputLine = in.readLine()) != null)
 				response.append(inputLine);
 			
-			if (response.isEmpty())
-			{
-				return null;
-			}
-			
 			jsonArray = (JSONArray) jsonParser.parse(String.valueOf(response));
 			final ArrayList<JSONObject> objs = new ArrayList<>();
 			
@@ -1719,6 +1714,8 @@ public class Commands extends ListenerAdapter
 			
 			if (anno != currentYear)
 				scelta = random.nextInt(objs.size());
+			
+			if (objs.isEmpty()) return null;
 			
 			final String citta = (String) objs.get(scelta).get("city");
 			final String stato = (String) objs.get(scelta).get("state");
