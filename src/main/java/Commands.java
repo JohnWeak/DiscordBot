@@ -1336,16 +1336,27 @@ public class Commands extends ListenerAdapter
 				if (optionDomanda == null) { return; }
 				
 				final String domanda = secret ? "*".repeat(optionDomanda.getAsString().length()) : optionDomanda.getAsString();
-				final String risp_1 = String.format("Hai chiesto `%s` alla 🎱...", domanda);
-				final String risp_2 = String.format("La 🎱 risponde: `%s`.", eightBall());
-				final String final_risp = String.format("%s\n%s", risp_1, risp_2);
+				final String response = eightBall();
 				
-				event.reply(risp_1).queue(l ->
+				final EmbedBuilder embed = new EmbedBuilder();
+				embed.setTitle("La magica palla 8 🎱 sta valutando la tua domanda...");
+				embed.setColor(Color.RED);
+				embed.setDescription(domanda);
+				embed.setFooter("");
+				embed.setAuthor(Utente.getUtenteFromID(Utente.ID_BOWOT).getName());
+				
+				event.replyEmbeds(embed.build()).queue(l ->
 				{
-					try{
+					try {
 						Thread.sleep(random.nextInt(1000,2000));
-					}catch (InterruptedException e) {error.print(object, e);}
-					l.editOriginal(final_risp).queue();
+					} catch (InterruptedException e) {error.print(object, e);}
+					
+					embed.setTitle(String.format("La magica palla 8 🎱 risponde: `%s`.", response));
+					embed.setColor(Color.GRAY);
+					embed.setDescription(domanda);
+					embed.setFooter("Non ti piace la risposta? Usa il comando /refund per un rimborso!");
+					embed.setAuthor(Utente.getUtenteFromID(Utente.ID_BOWOT).getName());
+					l.editOriginalEmbeds(embed.build()).queue();
 				});
 			}
 		}
