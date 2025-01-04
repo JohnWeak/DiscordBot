@@ -159,6 +159,12 @@ public class Main
 					"domanda",
 					"la domanda che vuoi porre alla \uD83C\uDFB1 magica palla 8 \uD83C\uDFB1",
 					true
+					),
+					new OptionData(
+						OptionType.BOOLEAN,
+						"segreto",
+						"true, se non vuoi che la domanda non sia mostrata",
+						false
 					)
 				);
 			commands.add(newCommand);

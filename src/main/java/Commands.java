@@ -1330,7 +1330,15 @@ public class Commands extends ListenerAdapter
 			}
 			case "8ball" ->
 			{
+				final OptionMapping optionDomanda = event.getOption("domanda");
+				final OptionMapping optionHidden = event.getOption("segreto");
+				if (optionDomanda == null || optionHidden == null) { return; }
+				
+				final String domanda = optionHidden.getAsBoolean() ? "*".repeat(optionDomanda.getAsString().length()) : optionDomanda.getAsString();
+				
 				event.deferReply().queue();
+				
+				final String risposta = String.format("Tu chiedi `%s` alla 🎱.\nLa 🎱 risponde: `%s`.", domanda, eightBall());
 				
 				final Timer timer = new Timer();
 				final TimerTask task = new TimerTask()
@@ -1338,7 +1346,7 @@ public class Commands extends ListenerAdapter
 					@Override
 					public void run()
 					{
-						event.getHook().editOriginal(String.format("È uscito %s!", eightBall())).queue();
+						event.getHook().editOriginal(risposta).queue();
 					}
 				};
 				
@@ -1626,7 +1634,6 @@ public class Commands extends ListenerAdapter
 	/** Genera un responso usando la magica palla 8 */
 	public String eightBall()
 	{
-		final String ballResponse = "La 🎱 dichiara... ";
 		final String[] risposte =
 		{
 			"Sì.",
@@ -1646,9 +1653,7 @@ public class Commands extends ListenerAdapter
 			"Gli astri non ti sorridono.",
 			"No."
 		};
-
 		return risposte[random.nextInt(risposte.length)];
-		
 	} // fine eightBall()
 	
 	
