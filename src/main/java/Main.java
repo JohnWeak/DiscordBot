@@ -153,7 +153,15 @@ public class Main
 			);
 			commands.add(newCommand);
 			
-			
+			newCommand = new CommandDataImpl("8ball", "Lascia che la magica palla 8 risponda alla tua domanda.")
+				.addOptions(new OptionData(
+					OptionType.STRING,
+					"domanda",
+					"la domanda che vuoi porre alla \uD83C\uDFB1 magica palla 8 \uD83C\uDFB1",
+					true
+					)
+				);
+			commands.add(newCommand);
 			
 			
 			jda.updateCommands().addCommands(commands).queue();

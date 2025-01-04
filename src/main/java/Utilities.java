@@ -96,6 +96,36 @@ public abstract class Utilities
 		return saluto;
 	} // fine getSaluto()
 	
+	/** Metodo che restituisce il nome del mese a partire dal suo numero. Esempio:<br>
+	 * <table><tr><th>Numero</th><th>Mese</th></tr><tr><td>1</td><td>gennaio</td></tr>
+	 *     <tr><td>2</td><td>febbraio</td></tr>
+	 *     <tr><td>3</td><td>marzo</td></tr>
+	 *     <tr><td>...</td><td>...</td></tr>
+	 *     <tr><td>12</td><td>dicembre</td></tr>
+	 * </table>
+	 * @param mese intero corrispondente al mese.
+	 * @return il nome del mese per iscritto in italiano.*/
+	public static String getMese(int mese)
+	{
+		return switch (mese)
+		{
+			case 1 -> "gennaio";
+			case 2 -> "febbraio";
+			case 3 -> "marzo";
+			case 4 -> "aprile";
+			case 5 -> "maggio";
+			case 6 -> "giugno";
+			case 7 -> "luglio";
+			case 8 -> "agosto";
+			case 9 -> "settembre";
+			case 10 -> "ottobre";
+			case 11 -> "novembre";
+			case 12 -> "dicembre";
+			
+			default -> throw new IllegalStateException("Unexpected value: " + mese);
+		};
+	} // fine getMese()
+	
 	
 	/**Restituisce un calendario gregoriano localizzato in Italia, a Roma.
 	 * @return a GregorianCalendar object*/

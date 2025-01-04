@@ -422,9 +422,7 @@ public class Commands extends ListenerAdapter
 		
 		switch (comando)
 		{
-			case "!poll" -> poll();
 			case "!info" -> info();
-			case "!8ball" -> eightBall();
 			case "!pokemon" -> encounter();
 			case "!colpevolezza", "!colpevole" -> colpevolezza();
 			case "!carta" -> {new Card().sendCarta();}
@@ -1197,25 +1195,16 @@ public class Commands extends ListenerAdapter
 				
 				event.deferReply(false).queue();
 				final Timer timer = new Timer();
-				final TimerTask t = new TimerTask()
+				final TimerTask task = new TimerTask()
 				{
 					@Override
 					public void run()
 					{
-						final String[] emotes = {Emotes.readyToSend(Emotes.pigeon), Emotes.readyToSend(Emotes.boo2)};
-						for (int i = 0; i < 10; i++)
-						{
-							event.getHook().editOriginal(emotes[i % 2]).queue();
-							try {
-								Thread.sleep(300);
-							} catch (InterruptedException ignored) {}
-						}
-						
 						event.getHook().editOriginal(String.format("È uscito %s!", coinflip())).queue();
 					}
 				};
 				
-				timer.schedule(t, random.nextInt(minDelay, maxDelay));
+				timer.schedule(task, random.nextInt(minDelay, maxDelay));
 			}
 			case "promemoria" ->
 			{
@@ -1339,6 +1328,22 @@ public class Commands extends ListenerAdapter
 				}
 				
 			}
+			case "8ball" ->
+			{
+				event.deferReply().queue();
+				
+				final Timer timer = new Timer();
+				final TimerTask task = new TimerTask()
+				{
+					@Override
+					public void run()
+					{
+						event.getHook().editOriginal(String.format("È uscito %s!", eightBall())).queue();
+					}
+				};
+				
+				timer.schedule(task, random.nextInt(1000, 2000));
+			}
 		}
 	} // fine onSlashCommand()
 	
@@ -1375,31 +1380,6 @@ public class Commands extends ListenerAdapter
 		
 		return headsOrTails ? heads : tails;
 	} // fine coinflip()
-	
-	/** Verifica ci siano le condizioni giuste per creare un sondaggio */
-	public void poll()
-	{
-		// args[0] = "!poll"
-		// args[1] = domanda
-		// args[2, 3, ...] = risposte
-		final EmbedBuilder embedBuilder;
-		final String format = "^.*\\?\\s*([^/]+\\s*/?\\s*)+[^/]+\\s*$";
-		if (!messageRaw.toLowerCase().matches(format) || messageRaw.length() <= 5)
-		{
-			creaSondaggio("",new String[]{});
-			
-			//flag = true fa comparire il messaggio di utilizzo del comando !poll
-			return;
-		}
-		
-		final String[] domandaERisposte = messageRaw.split("\\?");
-		final String domanda = domandaERisposte[0].substring(5).trim(); // !poll.length() = 5
-		final String[] risposte = domandaERisposte[1].split("/");
-		//final String[] risposte = messageRaw.substring(5+domanda.length()+1).split("/");
-		
-		embedBuilder = creaSondaggio(domanda, risposte);
-		channel.sendMessageEmbeds(embedBuilder.build()).queue();
-	} // fine poll()
 	
 	/** Crea un sondaggio. Se non sono soddisfatte le condizioni, mostra un messaggio su come usare il comando !poll */
 	public EmbedBuilder creaSondaggio(String domanda, String[] risposte)
@@ -1644,7 +1624,7 @@ public class Commands extends ListenerAdapter
 	} // fine info()
 	
 	/** Genera un responso usando la magica palla 8 */
-	public void eightBall()
+	public String eightBall()
 	{
 		final String ballResponse = "La 🎱 dichiara... ";
 		final String[] risposte =
@@ -1667,13 +1647,7 @@ public class Commands extends ListenerAdapter
 			"No."
 		};
 
-		channel.sendTyping().queue();
-
-		message.reply(ballResponse).queue(message1 ->
-		{
-			final String newResponse = "La 🎱 dichiara: ";
-			message1.editMessage(newResponse+"**"+risposte[random.nextInt(risposte.length)]+"**").queue();
-		});
+		return risposte[random.nextInt(risposte.length)];
 		
 	} // fine eightBall()
 	
@@ -1729,7 +1703,7 @@ public class Commands extends ListenerAdapter
 			final String month = annoMeseGiorno[1];
 			final String day = (annoMeseGiorno[2].charAt(0) == '0' ? annoMeseGiorno[2].substring(1) : annoMeseGiorno[2]);
 			
-			final String data = String.format("%s %s %s", day, getMese(Integer.parseInt(month)), year);
+			final String data = String.format("%s %s %s", day, Utilities.getMese(Integer.parseInt(month)), year);
 			final String sparatorie = String.format("Nel %s ammontano a **%d**", anno, jsonArray.size());
 			final String recente = String.format("La più recente è avvenuta il %s in **%s, %s**\n",data, citta, stato);
 			final String caso = String.format("Una si è verificata il %s in **%s, %s**\n", data, citta, stato);
@@ -1739,24 +1713,24 @@ public class Commands extends ListenerAdapter
 			final String personeFerite = String.format("I feriti ammontano a **%s**\n", feriti);
 			final String totaleMorti = String.format("In totale sono morte **%s** persone durante l'anno\n", mortiAnno);
 			
-			String finalResp = "";
+			final StringBuilder finalResp = new StringBuilder();
 			
 			if (anno == currentYear)
-				finalResp += recente;
+				finalResp.append(recente);
 			else
-				finalResp += caso;
+				finalResp.append(caso);
 			
-			finalResp += switch (Integer.parseInt(morti))
+			finalResp.append(switch (Integer.parseInt(morti))
 			{
 				case 0 -> noVittime;
 				case 1 -> personaMorta;
 				default -> personeMorte;
-			};
+			});
 			
-			finalResp += personeFerite;
+			finalResp.append(personeFerite);
 			
 			if (anno == currentYear)
-				finalResp += totaleMorti;
+				finalResp.append(totaleMorti);
 			
 			final LocalDate start = LocalDate.of(anno, Integer.parseInt(month), Integer.parseInt(day));
 			final LocalDate stop = LocalDate.now();
@@ -1771,7 +1745,7 @@ public class Commands extends ListenerAdapter
 			else
 				embed.addField(vittimeField);
 				
-			embed.addField("Cronaca",finalResp,false)
+			embed.addField("Cronaca",finalResp.toString(),false)
 				.setFooter(massShootingSite,avatar)
 				.setAuthor("Mass Shooting Tracker", massShootingSite)
 			;
@@ -1784,47 +1758,15 @@ public class Commands extends ListenerAdapter
 		return embed;
 	} // fine massShooting()
 	
-	/** Metodo che restituisce il nome del mese a partire dal suo numero. Esempio:<br>
-	 * <table><tr><th>Numero</th><th>Mese</th></tr><tr><td>1</td><td>gennaio</td></tr>
-	 *     <tr><td>2</td><td>febbraio</td></tr>
-	 *     <tr><td>3</td><td>marzo</td></tr>
-	 *     <tr><td>...</td><td>...</td></tr>
-	 *     <tr><td>12</td><td>dicembre</td></tr>
-	 * </table>
-	 * @param mese intero corrispondente al mese.
-	 * @return il nome del mese per iscritto in italiano.*/
-	private static String getMese(int mese)
-	{
-		return switch (mese)
-		{
-			case 1 -> "gennaio";
-			case 2 -> "febbraio";
-			case 3 -> "marzo";
-			case 4 -> "aprile";
-			case 5 -> "maggio";
-			case 6 -> "giugno";
-			case 7 -> "luglio";
-			case 8 -> "agosto";
-			case 9 -> "settembre";
-			case 10 -> "ottobre";
-			case 11 -> "novembre";
-			case 12 -> "dicembre";
-			
-			default -> throw new IllegalStateException("Unexpected value: " + mese);
-		};
-	} // fine getMese()
-	
-	/**Questo metodo invia un embed al canale da cui ha ricevuto l'ultimo messaggio.
-	 * @param messageEmbed l'embed da inviare
-	 * */
-	public void sendEmbedToChannel(MessageEmbed messageEmbed, boolean thread)
-	{
-		if (!thread)
-			channel.sendMessageEmbeds(messageEmbed).queue();
-		else
-			canaleBot.sendMessageEmbeds(messageEmbed).queue();
-	} // fine sendEmbedToChannel()
-	
+	/**<strong>
+	 * IL MODULO DI SICUREZZA SI OCCUPA DI MANTENERE IL BOT AL SICURO. STAI LONTANDO DAL BOT.
+	 * </strong>
+	 * @return <strong>NIENTE.</strong>
+	 * @since QUELLA VOLTA IN CUI ENIGMO HA MOSSO DELLE AVANCE AL BOT.
+	 * @throws ENIGMO DALLA FINESTRA.
+	 * @apiNote QUELLE CHE FANNO BZZZ E IMPOLLINANO I FIORI.
+	 * @see <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">QUELLO CHE È SUCCESSO A CHI HA MOLESTATO IL BOT PRIMA DI TE.</a>
+	 */
 	public void moduloDiSicurezza()
 	{
 		final String active = "**IL MODULO DI SICUREZZA È ORA ATTIVO. GARANTISCE SICUREZZA AL BOT.\nTUTTE LE AZIONI SONO SORVEGLIATE E ALLA PRIMA INFRAZIONE VERRANNO ALLERTATE LE AUTORITÀ COMPETENTI E INCOMPETENTI.**";
@@ -1836,15 +1778,7 @@ public class Commands extends ListenerAdapter
 		
 	} // fine moduloDiSicurezza()
 	
-	/**<strong>
-	 * IL MODULO DI SICUREZZA SI OCCUPA DI MANTENERE IL BOT AL SICURO. STAI LONTANDO DAL BOT.
-	 * </strong>
-	 * @return <strong>NIENTE.</strong>
-	 * @since QUELLA VOLTA IN CUI ENIGMO HA MOSSO DELLE AVANCE AL BOT.
-	 * @throws ENIGMO DALLA FINESTRA.
-	 * @apiNote QUELLE CHE FANNO BZZ E IMPOLLINANO I FIORI.
-	 * @see <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">QUELLO CHE È SUCCESSO A CHI HA MOLESTATO IL BOT PRIMA DI TE.</a>
-	*/
+	
 	public void ehiModulo()
 	{
 		final String id = author.getId();
@@ -1904,44 +1838,5 @@ public class Commands extends ListenerAdapter
 		
 		message.reply(reply).queue();
 	}
-	
-	public void dado()
-	{
-		final String msg = message.getContentStripped().toLowerCase();
-		final int minLen = "!dado".length();
-		
-		if (msg.length() <= minLen)
-		{
-			channel.sendMessage("Per favore specifica che tipo di dado devo lanciare.\nEsempio:\n`!dado 6` lancerà un dado con 6 facce.").queue();
-		    return;
-		}
-		
-		final String dadiAmmessi = "I dadi di D&D hanno questi numeri di facce: 4, 6, 8, 10, 12, 20, 100";
-		final String num = msg.split(" ")[1];
-		try
-		{
-			final int facce = Integer.parseInt(num);
-			if (facce == 4 || facce == 6 || facce == 8 || facce == 10 || facce == 12 || facce == 20 || facce == 100)
-			{
-				channel.sendMessage(authorName+" lancia un D" + facce + "...").queue();
-				channel.sendTyping().queue();
-				
-				final int res = random.nextInt(1,facce+1);
-				if (facce == 20 && res == 1) // 1 naturale
-					channel.sendMessage("Si mette male per te, " +authorName+"... **1 naturale**!").queue();
-				else if (facce == 20 && res == 20) // 20 naturale
-					channel.sendMessage("La fortuna ti sorride, "+authorName+"! **20 naturale**!").queue();
-				
-				channel.sendMessage("È uscito **"+ res + "**!").queue();
-			}
-			else
-			{
-				channel.sendMessage(dadiAmmessi).queue();
-			}
-		}catch (Exception e)
-		{
-			error.print(object, e);
-		}
-	} // fine dado()
 	
 } // fine classe Commands
