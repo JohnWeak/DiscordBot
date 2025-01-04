@@ -1332,25 +1332,21 @@ public class Commands extends ListenerAdapter
 			{
 				final OptionMapping optionDomanda = event.getOption("domanda");
 				final OptionMapping optionHidden = event.getOption("segreto");
-				if (optionDomanda == null || optionHidden == null) { return; }
+				final boolean secret = optionHidden != null && optionHidden.getAsBoolean();
+				if (optionDomanda == null) { return; }
 				
-				final String domanda = optionHidden.getAsBoolean() ? "*".repeat(optionDomanda.getAsString().length()) : optionDomanda.getAsString();
+				final String domanda = secret ? "*".repeat(optionDomanda.getAsString().length()) : optionDomanda.getAsString();
+				final String risp_1 = String.format("Hai chiesto `%s` alla 🎱...", domanda);
+				final String risp_2 = String.format("La 🎱 risponde: `%s`.", eightBall());
+				final String final_risp = String.format("%s\n%s", risp_1, risp_2);
 				
-				event.deferReply().queue();
-				
-				final String risposta = String.format("Tu chiedi `%s` alla 🎱.\nLa 🎱 risponde: `%s`.", domanda, eightBall());
-				
-				final Timer timer = new Timer();
-				final TimerTask task = new TimerTask()
+				event.reply(risp_1).queue(l ->
 				{
-					@Override
-					public void run()
-					{
-						event.getHook().editOriginal(risposta).queue();
-					}
-				};
-				
-				timer.schedule(task, random.nextInt(1000, 2000));
+					try{
+						Thread.sleep(random.nextInt(1000,2000));
+					}catch (InterruptedException e) {error.print(object, e);}
+					l.editOriginal(final_risp).queue();
+				});
 			}
 		}
 	} // fine onSlashCommand()
@@ -1579,12 +1575,12 @@ public class Commands extends ListenerAdapter
 				.setTitle("Scrivi `!colpevole <@utente> per usare questo comando`");
 			channel.sendMessageEmbeds(emb.build()).queue();
 		}
-		else if (utenteTaggato.get(0).getDiscriminator().equals(author.getDiscriminator()))
+		else if (utenteTaggato.getFirst().getDiscriminator().equals(author.getDiscriminator()))
 			message.reply("Congratulazioni, sei colpevole al 100%.").queue(lambda -> react("pigeon"));
 		else
 		{
 			final int colpa = random.nextInt(100);
-			final String utente = utenteTaggato.get(0).getName();
+			final String utente = utenteTaggato.getFirst().getName();
 			final String[] particella = {"allo ", "all'", "al "};
 			final int index = switch (colpa)
 			{
