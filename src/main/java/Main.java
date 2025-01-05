@@ -169,7 +169,10 @@ public class Main
 				);
 			commands.add(newCommand);
 			
-			newCommand = new CommandDataImpl("carta", "pesca una carta dal mazzo").addOptions();
+			newCommand = new CommandDataImpl("carta", "pesca una carta dal mazzo");
+			commands.add(newCommand);
+			
+			newCommand = new CommandDataImpl("pigeons", "ottieni una foto di un piccione");
 			commands.add(newCommand);
 			
 			jda.updateCommands().addCommands(commands).queue();

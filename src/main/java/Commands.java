@@ -74,7 +74,6 @@ public class Commands extends ListenerAdapter
 	private HashMap<String,String> commandsHashMap;
 	public String messageRaw;
 	private JDA jda;
-	private Pokemon pokemon;
 	
 	public Commands()
 	{
@@ -425,8 +424,6 @@ public class Commands extends ListenerAdapter
 			case "!info" -> info();
 			case "!colpevolezza", "!colpevole" -> colpevolezza();
 			case "!smh" -> new ThreadSmh(channel).start();
-			case "!certificazione" -> certificazione();
-			case "!pigeons" -> pigeons();
 		}
 		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
@@ -669,7 +666,7 @@ public class Commands extends ListenerAdapter
 		
 	} // fine checkForKeywords()
 	
-	private void pigeons()
+	private EmbedBuilder pigeons()
 	{
 		final String[] urls =
 		{
@@ -703,7 +700,7 @@ public class Commands extends ListenerAdapter
 			.setImage(img)
 		;
 		
-		message.replyEmbeds(embed.build()).queue();
+		return embed;
 	}
 	
 	private void anniversario(String author, int years)
@@ -720,41 +717,6 @@ public class Commands extends ListenerAdapter
 		
 		message.replyEmbeds(embed.build()).queue();
 	}
-	
-	private void certificazione()
-	{
-		final int red, green, blue;
-		red = random.nextInt(255);
-		green = random.nextInt(255);
-		blue = random.nextInt(255);
-		final String tony = Emotes.readyToSend(Emotes.tonyakaradio105);
-		final String[] certificazioni = {" ha la certificazione **IP68**", " ha la certificazione "+tony};
-		final String[] check = {"✅","❌"};
-		final StringBuilder msg = new StringBuilder();
-		
-		if (authorID.equals(Utente.ID_GION))
-		{
-			certificazioni[0] = check[0] + certificazioni[0];
-			certificazioni[1] = check[0] + certificazioni[1];
-		}
-		else
-		{
-			certificazioni[0] = check[1] + "non" + certificazioni[0];
-			certificazioni[1] = check[1] + "non" + certificazioni[1];
-		}
-		
-		for (String s : certificazioni)
-			msg.append(s).append("\n");
-		
-		final EmbedBuilder embed = new EmbedBuilder()
-			.setTitle(authorName)
-			.setColor(new Color(red,green,blue))
-			.setDescription(msg)
-			.setImage(author.getAvatarUrl())
-		;
-		
-		message.replyEmbeds(embed.build()).queue();
-	} // fine certificazione()
 	
 	/**Sostituisce i link di twitter con quelli di <code>fxtwitter</code>, che caricano l'anteprima su discord*/
 	private void detectTwitterLink()
@@ -796,84 +758,6 @@ public class Commands extends ListenerAdapter
 			message.reply(newURL).queue();
 		
 	} // fine detectTwitterLink()
-	
-	private void encounter()
-	{
-		final String[] msgSplittato = messageRaw.split(" ");
-		final String nomePokemon;
-		int idPokemon = random.nextInt(1,Pokemon.ALL);
-		final boolean pokedex;
-		
-		try
-		{
-			if (msgSplittato.length > 1)
-			{
-				final StringBuilder s = new StringBuilder();
-				nomePokemon = msgSplittato[1];
-				idPokemon = Pokemon.getId(nomePokemon);
-				if (idPokemon <= 0)
-				{
-					message.reply(s.append("Il pokedex non ha informazioni su `").append(nomePokemon).append("`.")).queue();
-					return;
-				}
-				pokedex = true;
-			}
-			else
-			{
-				pokedex = false;
-			}
-			
-			pokemon = new Pokemon(idPokemon, pokedex);
-			
-			if (msgSplittato.length > 2)
-			{
-				if (msgSplittato[2].equals("s") || msgSplittato[2].equals("shiny"))
-					pokemon.setShiny(true);
-			}
-			
-			if (pokedex)
-			{
-				Commands.canaleBotPokemon.sendMessageEmbeds(pokemon.spawn().build()).queue();
-			}
-			else
-			{
-				final ThreadPokemon t = new ThreadPokemon(pokemon, (TextChannelImpl) Commands.canaleBotPokemon, pokemon.spawn());
-				final int tout = random.nextInt(2, 15);
-				t.setTimeoutTime(t.MINUTES, tout);
-				t.start();
-				
-				// In caso di emergenza, rompere il vetro
-				// new PrivateMessage(Utente.getGion()).send("\nThread alive:" + t.isAlive() + "\ntout: " + tout + "\n");
-			}
-			
-		}catch (Exception e)
-		{
-			error.print(object, e);
-		}
-	} // fine encounter()
-	
-	public void cattura(Pokemon pokemon)
-	{
-		final ThreadPokemon t;
-		if (pokemon == null || !pokemon.isCatturabile() || pokemon.isCatturato())
-		{
-			message.reply("Errore durante la cattura.").queue();
-			return;
-		}
-		
-		pokemon.setCatturabile(false);
-		pokemon.setCatturato(true);
-		pokemon.setOwner(author);
-		t = pokemon.getThread();
-		
-		if (t != null && t.isAlive())
-		{
-			t.runAway();
-			t.interrupt();
-		}
-		
-	} // fine cattura()
-	
 	
 	private boolean contains(String source, String[] subItem)
 	{
@@ -1340,6 +1224,10 @@ public class Commands extends ListenerAdapter
 			{
 				final Card c = new Card();
 				event.replyEmbeds(c.getEmbed().build()).queue();
+			}
+			case "pigeons" ->
+			{
+				event.replyEmbeds(pigeons().build()).queue();
 			}
 		}
 	} // fine onSlashCommand()
