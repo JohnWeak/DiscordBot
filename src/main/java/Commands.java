@@ -559,10 +559,10 @@ public class Commands extends ListenerAdapter
 			{
 				final String[] msgs = new String[4];
 				msgs[3] = "**BOOM**";
-				for (int i = 3; i > -1; i--)
+				for (int i = 2; i > -1; i--)
 				{
 					final char c = (i == 1 ? 'o' : 'i');
-					msgs[i-1] = String.format("Ricevuto. Le cariche di C4 sono state piantate su questo messaggio.\nDetonazione fra %d second%c.", i, c);
+					msgs[i] = String.format("Ricevuto. Le cariche di C4 sono state piantate su questo messaggio.\nDetonazione fra %d second%c.", i, c);
 				}
 				
 				message.reply(msgs[0]).queue(l ->
