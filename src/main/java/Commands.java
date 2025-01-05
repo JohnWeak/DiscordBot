@@ -558,7 +558,7 @@ public class Commands extends ListenerAdapter
 			else
 			{
 				final String[] msgs = new String[4];
-				msgs[3] = "**BOOM**";
+				msgs[3] = "💣 **BOOM** 💥";
 				for (int i = 0; i < 3; i++)
 				{
 					final int n = Math.abs(i-3);
@@ -568,15 +568,15 @@ public class Commands extends ListenerAdapter
 				
 				final Message toDelete = channel.retrieveMessageById(message.getId()).complete();
 				if (toDelete == null){gion.send(":("); return;}
-				toDelete.reply(".").queue(l ->
+				toDelete.reply(msgs[0]).queue(l ->
 				{
-					for (String m : msgs)
+					for (int i = 1; i < msgs.length; i++)
 					{
-						l.editMessage(m).queue();
 						try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
+						l.editMessage(msgs[i]).queue();
 						
 					}
-					try { Thread.sleep(2000); } catch (InterruptedException ignored) {}
+					try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
 					l.delete().queue();
 					toDelete.delete().queue();
 				});
