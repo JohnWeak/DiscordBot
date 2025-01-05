@@ -1334,12 +1334,10 @@ public class Commands extends ListenerAdapter
 				final OptionMapping optionHidden = event.getOption("segreto");
 				final boolean secret = optionHidden != null && optionHidden.getAsBoolean();
 				if (optionDomanda == null) { return; }
-				final String domandaString = optionDomanda.getAsString();
+				final String domandaString = optionDomanda.getAsString().strip();
 				
-				final String domanda = secret ? "*".repeat(domandaString.length()) : domandaString;
+				final String domanda = secret ? "•".repeat(domandaString.length()) : domandaString;
 				final String response = eightBall();
-				
-				gion.send(domandaString + "\n" + domandaString.length()+"\n"+domanda);
 				
 				final EmbedBuilder embed = new EmbedBuilder();
 				embed.setTitle(domanda);
