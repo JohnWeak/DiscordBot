@@ -423,9 +423,7 @@ public class Commands extends ListenerAdapter
 		switch (comando)
 		{
 			case "!info" -> info();
-			case "!pokemon" -> encounter();
 			case "!colpevolezza", "!colpevole" -> colpevolezza();
-			case "!carta" -> {new Card().sendCarta();}
 			case "!smh" -> new ThreadSmh(channel).start();
 			case "!certificazione" -> certificazione();
 			case "!pigeons" -> pigeons();
@@ -670,25 +668,6 @@ public class Commands extends ListenerAdapter
 			message.reply("***ULTIMO AVVISO: __NON FARLO MAI PIÙ__.***").queue();
 		
 	} // fine checkForKeywords()
-	
-	/**Ottiene le emote custom del canale*/
-	private void getEmotes()
-	{
-		final String emotesArray = Arrays.toString(canaleBot.getGuild().getEmojis().toArray());
-		// discord limita i messaggi a 2000 caratteri per messaggio
-		final String msg = emotesArray.length() > 2000 ? emotesArray.substring(0,1999) : emotesArray;
-		channel.sendMessage(msg).queue();
-		
-		/* ********
-		// discord limita i messaggi a 2000 caratteri per messaggio
-		if (emotesArray.length() > 2000)
-			 channel.sendMessage(emotesArray.substring(0, 1999)).queue();
-		else
-			channel.sendMessage(emotesArray).queue();
-			
-		************/
-		
-	} // fine getEmotes()
 	
 	private void pigeons()
 	{
@@ -1356,6 +1335,11 @@ public class Commands extends ListenerAdapter
 					embed.setFooter("Insoddisfatto della risposta? Usa il comando /refund per un rimborso!");
 					l.editOriginalEmbeds(embed.build()).queue();
 				});
+			}
+			case "carta" ->
+			{
+				final Card c = new Card();
+				event.replyEmbeds(c.getEmbed().build()).queue();
 			}
 		}
 	} // fine onSlashCommand()

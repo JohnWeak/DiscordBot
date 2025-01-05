@@ -169,6 +169,8 @@ public class Main
 				);
 			commands.add(newCommand);
 			
+			newCommand = new CommandDataImpl("carta", "pesca una carta dal mazzo");
+			commands.add(newCommand);
 			
 			jda.updateCommands().addCommands(commands).queue();
 			

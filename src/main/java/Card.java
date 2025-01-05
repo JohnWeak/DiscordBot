@@ -49,22 +49,19 @@ public class Card
 	} // fine costruttore
 	
 	
-	
-	
-	public void sendCarta()
+	public EmbedBuilder getEmbed()
 	{
 		final String titolo = titoloCarta();
 		final String immagineCartaAPI = linkImmagine();
-		final Color color= coloreCarta();
+		final Color color = coloreCarta();
 		final String seme = semeCarta();
-		final EmbedBuilder embed = new EmbedBuilder()
+		
+		return new EmbedBuilder()
 			.setTitle(titolo)
 			.setImage(immagineCartaAPI)
 			.setColor(color)
 			.setFooter(seme)
 		;
-		
-		Commands.channel.sendMessageEmbeds(embed.build()).queue();
 		
 	} // fine sendCarta
 	
