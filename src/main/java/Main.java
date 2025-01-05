@@ -172,11 +172,11 @@ public class Main
 			newCommand = new CommandDataImpl("carta", "pesca una carta dal mazzo");
 			commands.add(newCommand);
 			
-			jda.updateCommands().addCommands(commands).queue(l -> new PrivateMessage(Utente.getGion()).send("Fatto\n"+commands));
+			jda.updateCommands().addCommands(commands).queue();
 			
 		}catch (Exception e)
 		{
-			new Error<Exception>().print(object,e);
+			new Error<>().print(object,e);
 		}
 		
 	}
