@@ -383,7 +383,7 @@ public class Commands extends ListenerAdapter
 		
 		if (random.nextInt(500) == 42) // chance di reagire con emote personali
 		{
-			final var trigger = random.nextBoolean();
+			final boolean trigger = random.nextBoolean();
 			
 			if (trigger)
 			{
@@ -406,7 +406,7 @@ public class Commands extends ListenerAdapter
 				} // fine switch
 				
 				final String[] reazione = {"dansgame", "pigeon", "smh"};
-				final var scelta = random.nextInt(reazione.length);
+				final int scelta = random.nextInt(reazione.length);
 				
 				message.reply(Utilities.camelCase(messageRaw)).queue(lambda -> react(reazione[scelta]));
 				
@@ -419,16 +419,8 @@ public class Commands extends ListenerAdapter
 			canaleBot.sendMessage(Emotes.readyToSend(Emotes.pogey)).queue();
 		}
 		
-		switch (comando)
-		{
-			case "!info" -> info();
-			case "!colpevolezza", "!colpevole" -> colpevolezza();
-			case "!smh" -> new ThreadSmh(channel).start();
-		}
-		
 		// arraylist per contenere le reazioni da aggiungere al messaggio
 		final ArrayList<String> reazioni = new ArrayList<>();
-		// var emojis = findEmojis(msgStrippedLowerCase);
 		
 		if (msgStrippedLowerCase.contains("ehi modulo"))
 			ehiModulo();
@@ -565,6 +557,22 @@ public class Commands extends ListenerAdapter
 			}
 			else
 			{
+				final String[] msgs = new String[4];
+				msgs[3] = "**BOOM**";
+				for (int i = 0; i < 3; i++)
+				{
+					final char c = (i == 1 ? 'o' : 'i');
+					msgs[i] = String.format("Ricevuto. Le cariche di C4 sono state piantate su questo messaggio.\nDetonazione fra %d second%c.", i, c);
+				}
+				
+				message.reply(msgs[0]).queue(l ->
+				{
+					for (String m : msgs)
+					{
+						try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
+						l.editMessage(m).queue();
+					}
+				});
 				message.delete().queue();
 			}
 		}
@@ -1486,27 +1494,6 @@ public class Commands extends ListenerAdapter
 		
 	} // fine colpevolezza()
 	
-	/** Mostra un embed con le informazioni del bot */
-	public void info()
-	{
-		final EmbedBuilder embedBuilder = new EmbedBuilder();
-		final String urlOwO = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--amf4Rvt7--%2Ft_Preview%2Fb_rgb%3A191919%2Cc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1518097892%2Fproduction%2Fdesigns%2F2348593_0.jpg&f=1&nofb=1";
-		final String urlTitle = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-		
-		embedBuilder.setTitle("Informazioni", urlTitle);
-		embedBuilder.setDescription("Questo bot permette di lanciare monete, creare sondaggi e, soprattutto, essere un rompiballe.");
-
-		for (String s : commandsHashMap.keySet())
-			embedBuilder.addField("`"+s+"`", "*"+commandsHashMap.get(s)+"*", false);
-		
-		embedBuilder.setThumbnail(urlOwO)
-			.setColor(0xFF0000)
-			.addBlankField(false)
-			.setFooter("Creato con ❤️ da JohnWeak", urlOwO);
-		
-		channel.sendMessageEmbeds(embedBuilder.build()).queue();
-		
-	} // fine info()
 	
 	/** Genera un responso usando la magica palla 8 */
 	public String eightBall()
