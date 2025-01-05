@@ -568,7 +568,7 @@ public class Commands extends ListenerAdapter
 				
 				final Message toDelete = channel.retrieveMessageById(message.getId()).complete();
 				if (toDelete == null){gion.send(":("); return;}
-				toDelete.reply("").queue(l ->
+				toDelete.reply(".").queue(l ->
 				{
 					for (String m : msgs)
 					{
@@ -590,7 +590,7 @@ public class Commands extends ListenerAdapter
 			final int hour = date.get(Calendar.HOUR_OF_DAY);
 			final int minutes = date.get(Calendar.MINUTE);
 			
-			msgReply.append(switch (hour) // switch nello stringbuilder... CAFONATA, ADORO!
+			msgReply.append(switch (hour)
 			{
 				case 0 -> "È ";
 				case 1 -> "È l' ";
