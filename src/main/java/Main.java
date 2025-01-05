@@ -92,7 +92,7 @@ public class Main
 			}
 			
 			newCommand = new CommandDataImpl("poll", "Crea un sondaggio")
-					.addOptions(options);
+				.addOptions(options);
 			commands.add(newCommand);
 			
 			
@@ -172,7 +172,7 @@ public class Main
 			newCommand = new CommandDataImpl("carta", "pesca una carta dal mazzo");
 			commands.add(newCommand);
 			
-			jda.updateCommands().addCommands(commands).queue();
+			jda.updateCommands().addCommands(commands).queue(l -> new PrivateMessage(Utente.getGion()).send("Fatto\n"+commands));
 			
 		}catch (Exception e)
 		{
