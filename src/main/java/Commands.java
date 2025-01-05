@@ -562,7 +562,7 @@ public class Commands extends ListenerAdapter
 				for (int i = 2; i > -1; i--)
 				{
 					final char c = (i == 1 ? 'o' : 'i');
-					msgs[i] = String.format("Ricevuto. Le cariche di C4 sono state piantate su questo messaggio.\nDetonazione fra %d second%c.", Math.abs(i-2), c);
+					msgs[i] = String.format("Ricevuto. Le cariche di C4 sono state piantate su questo messaggio.\nDetonazione fra %d second%c.", i+1, c);
 				}
 				
 				message.reply(msgs[0]).queue(l ->
