@@ -218,7 +218,8 @@ public class Main
 			"Steins;Gate", "FullMetal Alchemist", "Gurren Lagann", "Demon Slayer",
 			"Attack on Titan", "The Promised Neverland", "Kill La Kill", "Death Parade", "Death Note",
 			"Cowboy Bebop", "Goblin Slayer", "ID: Invaded", "Jujutsu Kaisen", "ODDTAXI", "Noragami",
-			"My Hero Academia", "One-Punch Man", "HunterxHunter", "Chainsaw Man", "Gintama", "Dan Dan Dan"
+			"My Hero Academia", "One-Punch Man", "HunterxHunter", "Chainsaw Man", "Gintama", "Dan Dan Dan",
+			"Demons Layer"
 		};
 		
 		final String[] movies =
@@ -228,7 +229,7 @@ public class Main
 			"Kingsman: Secret Service", "Lupin III: The First", "Kubo e la spada magica", "Megamind",
 			"Shawn of the dead", "Star Trek", "Soul", "your name.", "Bullet Train", "Il diritto di contare",
 			"Up", "X-MEN", "Omicidio all'italiana", "Morbius", "L'era Glaciale", "Super Mario Bros. (2023)",
-			"Dungeons&Dragons: l'onore dei ladri"
+			"Dungeons&Dragons: l'onore dei ladri", "una schifezza Marvel", "una schifezza DC"
 		};
 		
 		final String[] series =
