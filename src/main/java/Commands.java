@@ -566,12 +566,12 @@ public class Commands extends ListenerAdapter
 					msgs[i] = String.format("Ricevuto. Le cariche di C4 sono state piantate su questo messaggio.\nDetonazione fra %d second%c.", n, c);
 				}
 				
-				message.reply(msgs[0]).queue(l ->
+				message.reply("").queue(l ->
 				{
 					for (String m : msgs)
 					{
-						try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
 						l.editMessage(m).queue();
+						try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
 						
 					}
 					try { Thread.sleep(2000); } catch (InterruptedException ignored) {}
