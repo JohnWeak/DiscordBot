@@ -574,8 +574,8 @@ public class Commands extends ListenerAdapter
 						
 					}
 					try { Thread.sleep(2000); } catch (InterruptedException ignored) {}
-					message.delete().queue();
 					l.delete().queue();
+					message.delete().queue();
 				});
 			}
 		}
