@@ -566,7 +566,7 @@ public class Commands extends ListenerAdapter
 					msgs[i] = String.format("Ricevuto. Le cariche di C4 sono state piantate su questo messaggio.\nDetonazione fra %d second%c.", n, c);
 				}
 				
-				final Message toDelete = channel.getHistory().getMessageById(message.getId());
+				final Message toDelete = channel.retrieveMessageById(message.getId()).complete();
 				if (toDelete == null){gion.send(":("); return;}
 				toDelete.reply("").queue(l ->
 				{
