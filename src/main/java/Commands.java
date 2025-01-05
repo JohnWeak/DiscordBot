@@ -570,7 +570,7 @@ public class Commands extends ListenerAdapter
 					for (String m : msgs)
 					{
 						try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
-						l.editMessage(m).queue();
+						l.reply(m).queue();
 					}
 				});
 				message.delete().queue();
