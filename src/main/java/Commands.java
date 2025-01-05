@@ -21,7 +21,6 @@ import net.dv8tion.jda.api.interactions.AutoCompleteQuery;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.requests.CloseCode;
-import net.dv8tion.jda.internal.entities.channel.concrete.TextChannelImpl;
 import org.jetbrains.annotations.NotNull;
 
 import org.json.simple.JSONArray;
@@ -71,7 +70,6 @@ public class Commands extends ListenerAdapter
 	private User user;
 	public String authorName;
 	private String authorID;
-	private HashMap<String,String> commandsHashMap;
 	public String messageRaw;
 	private JDA jda;
 	
@@ -110,8 +108,6 @@ public class Commands extends ListenerAdapter
 	/** onReady() viene eseguita soltanto all'avvio del bot */
 	public void onReady(@NotNull ReadyEvent event)
 	{
-		commandsHashMap = Cmd.init();
-		
 		jda = Main.getJda();
 		
 		try
@@ -119,7 +115,6 @@ public class Commands extends ListenerAdapter
 			canaleBot = jda.getTextChannelsByName(botChannel, true).getFirst();
 			canaleBotPokemon = jda.getTextChannelsByName("pokémowon", true).getFirst();
 			gion = new PrivateMessage(Utente.getGion());
-			
 		}
 		catch (Exception e)
 		{
@@ -307,13 +302,8 @@ public class Commands extends ListenerAdapter
 		authorID = author.getId();
 	}
 	
-	/** Controlla che il messaggio abbia le parole chiave per attivare i comandi (o le reazioni) del bot
-	 * @param msgStrippedLowerCase la stringa del messaggio inviato convertita in minuscolo.
-	 * */
 	public void checkForKeywords(String msgStrippedLowerCase)
 	{
-		final String[] args = messageRaw.split(" ");
-		final String comando = args[0].toLowerCase();
 		boolean reply = false;
 		final StringBuilder msgReply = new StringBuilder();
 		
@@ -372,8 +362,12 @@ public class Commands extends ListenerAdapter
 			
 			
 			if (authorID.equals(Utente.ID_BOWOT)) // self own
+			{
 				if (random.nextInt(1000) == 42) // 0,1%
+				{
 					message.reply("BOwOt vergognati").queue(lambda -> react("vergognati"));
+				}
+			}
 			
 			return;
 		} // fine if isBot
@@ -381,7 +375,7 @@ public class Commands extends ListenerAdapter
 		//if (!msgStrippedLowerCase.contains("!pokemon")) // genera un pokemon casuale soltanto se non viene eseguito il comando
 		//	encounter();
 		
-		if (random.nextInt(500) == 42) // chance di reagire con emote personali
+		if (random.nextInt(50) == 42) // chance di reagire con emote personali
 		{
 			final boolean trigger = random.nextBoolean();
 			
@@ -401,7 +395,7 @@ public class Commands extends ListenerAdapter
 					}
 					case Utente.ID_ENIGMO -> react("pigeon");
 					case Utente.ID_LEX -> channel.addReactionById(authorID, Emoji.fromUnicode("🇷🇴")).queue();
-					case Utente.ID_GION -> react("smh");
+					case Utente.ID_GION -> react("boo2");
 					
 				} // fine switch
 				
