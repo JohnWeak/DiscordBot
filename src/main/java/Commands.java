@@ -1237,6 +1237,7 @@ public class Commands extends ListenerAdapter
 			{
 				event.replyEmbeds(pigeons().build()).queue();
 			}
+			
 		}
 	} // fine onSlashCommand()
 	
@@ -1451,49 +1452,6 @@ public class Commands extends ListenerAdapter
 		}
 	} // fine react()
 	
-	/** Lascia che RNGesus decida quanto è colpevole l'utente taggato */
-	private void colpevolezza()
-	{
-		final List<User> utenteTaggato = message.getMentions().getUsers();
-		final String urlOwO = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fres.cloudinary.com%2Fteepublic%2Fimage%2Fprivate%2Fs--amf4Rvt7--%2Ft_Preview%2Fb_rgb%3A191919%2Cc_limit%2Cf_jpg%2Ch_630%2Cq_90%2Cw_630%2Fv1518097892%2Fproduction%2Fdesigns%2F2348593_0.jpg&f=1&nofb=1";
-		
-		if (utenteTaggato.isEmpty())
-		{
-			final EmbedBuilder emb = new EmbedBuilder()
-				.setColor(Color.red)
-				.setTitle("Scrivi `!colpevole <@utente> per usare questo comando`");
-			channel.sendMessageEmbeds(emb.build()).queue();
-		}
-		else if (utenteTaggato.getFirst().getDiscriminator().equals(author.getDiscriminator()))
-			message.reply("Congratulazioni, sei colpevole al 100%.").queue(lambda -> react("pigeon"));
-		else
-		{
-			final int colpa = random.nextInt(100);
-			final String utente = utenteTaggato.getFirst().getName();
-			final String[] particella = {"allo ", "all'", "al "};
-			final int index = switch (colpa)
-			{
-				case 0 -> 0;
-				case 1, 8, 11, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89 -> 1;
-				default -> 2;
-			};
-			
-			final String risposta = String.format("%s è colpevole %s%d%%", utente, particella[index], colpa);
-			
-			final EmbedBuilder embed = new EmbedBuilder()
-				.setTitle(risposta)
-				.setColor(Color.RED)
-				.setFooter("", urlOwO);
-			
-			channel.sendMessageEmbeds(embed.build()).queue(lambda ->
-			{
-				final String[] emotes = {"pigeon", "smh", "dansgame", "pogey"};
-				react(emotes[random.nextInt(emotes.length)]);
-			});
-		}
-		
-	} // fine colpevolezza()
-	
 	
 	/** Genera un responso usando la magica palla 8 */
 	public String eightBall()
@@ -1557,10 +1515,7 @@ public class Commands extends ListenerAdapter
 				mortiAnno += Integer.parseInt((String)((JSONObject) o).get("killed"));
 			}
 			
-			int scelta = 0; // se è anno corrente, prende più recente, altrimenti ne prende una a caso
-			
-			if (anno != currentYear)
-				scelta = random.nextInt(objs.size());
+			final int scelta = (anno != currentYear ? random.nextInt(objs.size()) : 0);
 			
 			if (objs.isEmpty())
 				return null;
@@ -1587,10 +1542,7 @@ public class Commands extends ListenerAdapter
 			
 			final StringBuilder finalResp = new StringBuilder();
 			
-			if (anno == currentYear)
-				finalResp.append(recente);
-			else
-				finalResp.append(caso);
+			finalResp.append(anno == currentYear ? recente : caso);
 			
 			finalResp.append(switch (Integer.parseInt(morti))
 			{
@@ -1610,7 +1562,7 @@ public class Commands extends ListenerAdapter
 			final MessageEmbed.Field daysField = new MessageEmbed.Field("Giorni dall'ultima", "**"+days+"**", true);
 			final MessageEmbed.Field vittimeField = new MessageEmbed.Field("Morti", "**"+mortiAnno+"**", true);
 			
-			embed.setColor(Color.RED).addField("Sparatorie negli USA", sparatorie, true);
+			embed.addField("Sparatorie negli USA", sparatorie, true);
 				
 			if (anno == currentYear)
 				embed.addField(daysField);
@@ -1620,6 +1572,7 @@ public class Commands extends ListenerAdapter
 			embed.addField("Cronaca",finalResp.toString(),false)
 				.setFooter(massShootingSite,avatar)
 				.setAuthor("Mass Shooting Tracker", massShootingSite)
+				.setColor(Color.RED)
 			;
 		}
 		catch (IOException | ParseException e)
@@ -1630,23 +1583,23 @@ public class Commands extends ListenerAdapter
 		return embed;
 	} // fine massShooting()
 	
-	/**<strong>
+	/**
+	 * <strong>
 	 * IL MODULO DI SICUREZZA SI OCCUPA DI MANTENERE IL BOT AL SICURO. STAI LONTANDO DAL BOT.
 	 * </strong>
+	 *
 	 * @return <strong>NIENTE.</strong>
-	 * @since QUELLA VOLTA IN CUI ENIGMO HA MOSSO DELLE AVANCE AL BOT.
 	 * @throws ENIGMO DALLA FINESTRA.
 	 * @apiNote QUELLE CHE FANNO BZZZ E IMPOLLINANO I FIORI.
 	 * @see <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">QUELLO CHE È SUCCESSO A CHI HA MOLESTATO IL BOT PRIMA DI TE.</a>
+	 * @since QUELLA VOLTA IN CUI ENIGMO HA MOSSO DELLE AVANCE AL BOT.
 	 */
-	public void moduloDiSicurezza()
+	public void moduloDiSicurezza() throws ENIGMO
 	{
 		final String active = "**IL MODULO DI SICUREZZA È ORA ATTIVO. GARANTISCE SICUREZZA AL BOT.\nTUTTE LE AZIONI SONO SORVEGLIATE E ALLA PRIMA INFRAZIONE VERRANNO ALLERTATE LE AUTORITÀ COMPETENTI E INCOMPETENTI.**";
 		final String inactive = "**IL MODULO DI SICUREZZA È STATO DISATTIVATO. LA SICUREZZA DEL BOT È ADESSO GARANTITA DALLA PRESENZA DI GION.**";
-		final String[] msg = {active, inactive};
-		final short toSend = moduloSicurezza ? 0 : 1;
 		
-		canaleBot.sendMessage(msg[toSend]).queue();
+		canaleBot.sendMessage(moduloSicurezza ? active : inactive).queue();
 		
 	} // fine moduloDiSicurezza()
 	
@@ -1656,7 +1609,7 @@ public class Commands extends ListenerAdapter
 		final String id = author.getId();
 		final int hotkey = "ehi modulo".length();
 		final boolean authorized = id.equals(Utente.ID_GION);
-		String reply;
+		final String reply;
 		
 		if (!moduloSicurezza)
 		{
