@@ -1317,7 +1317,7 @@ public class Commands extends ListenerAdapter
 	/** Infastidisce le persone */
 	public EmbedBuilder triggera(String id)
 	{
-		final String title, image, footer, color;
+		final String title, image, color;
 		final int risultato;
 		
 		final String titolo = "Get rekt ";
@@ -1346,8 +1346,49 @@ public class Commands extends ListenerAdapter
 			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.vox-cdn.com%2Fthumbor%2Fs3AsF2kLAo350xTuRsw7lxgs2Qg%3D%2F0x0%3A2000x1333%2F1200x800%2Ffilters%3Afocal(840x507%3A1160x827)%2Fcdn.vox-cdn.com%2Fuploads%2Fchorus_image%2Fimage%2F55188531%2Fhawaiian_pizza_sh.0.jpg&f=1&nofb=1"
 		};
 		
-		final String testoFooter = "";
 		final EmbedBuilder embedBuilder = new EmbedBuilder();
+		
+		switch (id)
+		{
+			case Utente.ID_OBITO ->
+			{
+				risultato = random.nextInt(immagineObito.length);
+				title = titolo.concat("Òbito");
+				image = immagineObito[risultato];
+				color = (risultato == 0) ? "0xFFFFFF" : "0xC59FC9";
+			}
+			
+			case Utente.ID_ENIGMO ->
+			{
+				risultato = random.nextInt(immagineEnigmo.length);
+				title = titolo.concat("Enigmo");
+				image = immagineEnigmo[risultato];
+				color = (risultato == 0) ? "0xCB4D4D" : "0xE5D152";
+			}
+			
+			case Utente.ID_LEX ->
+			{
+				risultato = random.nextInt(immagineLex.length);
+				title = titolo.concat("Lex");
+				image = immagineLex[risultato];
+				color = (risultato == 0) ? "0xD80000" : "0x207522";
+			}
+			
+			case Utente.ID_GION ->
+			{
+				risultato = random.nextInt(immagineGion.length);
+				title = titolo.concat("Gion");
+				image = immagineGion[risultato];
+				color = (risultato == 0) ? "0XDDCD4f" : "0xEAE28A";
+			}
+			
+			default ->
+			{
+				title = "Errore";
+				image = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F5%2F55%2FQuestion_Mark.svg%2F1200px-Question_Mark.svg.png&f=1&nofb=1";
+				color = "0x424242";
+			}
+		}
 		
 		class A extends EmbedBuilder
 		{
@@ -1362,68 +1403,18 @@ public class Commands extends ListenerAdapter
 				return sb.toString();
 			}
 		}
-		
-		switch (id)
-		{
-			case Utente.ID_OBITO ->
-			{
-				risultato = random.nextInt(immagineObito.length);
-				title = titolo.concat("Òbito");
-				image = immagineObito[risultato];
-				footer = testoFooter;
-				color = (risultato == 0) ? "0xFFFFFF" : "0xC59FC9";
-			}
-			
-			case Utente.ID_ENIGMO ->
-			{
-				risultato = random.nextInt(immagineEnigmo.length);
-				title = titolo.concat("Enigmo");
-				image = immagineEnigmo[risultato];
-				footer = testoFooter;
-				color = (risultato == 0) ? "0xCB4D4D" : "0xE5D152";
-			}
-			
-			case Utente.ID_LEX ->
-			{
-				risultato = random.nextInt(immagineLex.length);
-				title = titolo.concat("Lex");
-				image = immagineLex[risultato];
-				footer = testoFooter;
-				color = (risultato == 0) ? "0xD80000" : "0x207522";
-			}
-			
-			case Utente.ID_GION ->
-			{
-				risultato = random.nextInt(immagineGion.length);
-				title = titolo.concat("Gion");
-				image = immagineGion[risultato];
-				footer = testoFooter;
-				color = (risultato == 0) ? "0XDDCD4f" : "0xEAE28A";
-			}
-			
-			default ->
-			{
-				title = "Errore";
-				image = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F5%2F55%2FQuestion_Mark.svg%2F1200px-Question_Mark.svg.png&f=1&nofb=1";
-				footer = "Errore ingredibile";
-				color = "0x424242";
-			}
-		}
-		
 		final A a = new A();
 		a.setTitle(title);
 		a.setImage(image);
-		a.setFooter(footer);
 		a.setColor(Color.decode(color));
-		
-		gion.send(a.toString());
-		gion.send(embedBuilder.toString());
 		
 		embedBuilder.setTitle(title);
 		embedBuilder.setImage(image);
-		embedBuilder.setFooter(footer);
 		embedBuilder.setColor(Color.decode(color));
-
+		
+		gion.send(a.build().toString());
+		gion.send(embedBuilder.build().toString());
+		
 		return embedBuilder;
 	
 	} // fine triggera()
