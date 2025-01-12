@@ -1237,6 +1237,10 @@ public class Commands extends ListenerAdapter
 			{
 				event.replyEmbeds(pigeons().build()).queue();
 			}
+			case "test" ->
+			{
+				triggera(Utente.getEnigmo().getId());
+			}
 			
 		}
 	} // fine onSlashCommand()
@@ -1543,7 +1547,6 @@ public class Commands extends ListenerAdapter
 			final StringBuilder finalResp = new StringBuilder();
 			
 			finalResp.append(anno == currentYear ? recente : caso);
-			
 			finalResp.append(switch (Integer.parseInt(morti))
 			{
 				case 0 -> noVittime;
@@ -1563,7 +1566,7 @@ public class Commands extends ListenerAdapter
 			final MessageEmbed.Field vittimeField = new MessageEmbed.Field("Morti", "**"+mortiAnno+"**", true);
 			
 			embed.addField("Sparatorie negli USA", sparatorie, true);
-				
+			
 			if (anno == currentYear)
 				embed.addField(daysField);
 			else
@@ -1579,7 +1582,6 @@ public class Commands extends ListenerAdapter
 		{
 			error.print(object, e);
 		}
-		
 		return embed;
 	} // fine massShooting()
 	

@@ -175,6 +175,9 @@ public class Main
 			newCommand = new CommandDataImpl("pigeons", "ottieni una foto di un piccione");
 			commands.add(newCommand);
 			
+			newCommand = new CommandDataImpl("test", "non usare questo comando");
+			commands.add(newCommand);
+			
 			jda.updateCommands().addCommands(commands).queue();
 			
 		}catch (Exception e)
