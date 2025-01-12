@@ -1390,30 +1390,17 @@ public class Commands extends ListenerAdapter
 			}
 		}
 		
-		class A extends EmbedBuilder
-		{
-			@Override
-			public String toString()
-			{
-				final StringBuilder sb = new StringBuilder();
-				for (MessageEmbed.Field f : this.getFields())
-				{
-					sb.append(String.format("name: %s, value: %s\n", f.getName(), f.getValue()));
-				}
-				return sb.toString();
-			}
-		}
-		final A a = new A();
-		a.setTitle(title);
-		a.setImage(image);
-		a.setColor(Color.decode(color));
-		
 		embedBuilder.setTitle(title);
 		embedBuilder.setImage(image);
 		embedBuilder.setColor(Color.decode(color));
 		
-		gion.send(a.toString());
-		gion.send(embedBuilder.build().toString());
+		final var x = embedBuilder.build();
+		final StringBuilder sb = new StringBuilder();
+		for (var y : x.getFields())
+		{
+			sb.append(String.format("name:%s, value:%s\n",y.getName(),y.getValue()));
+		}
+		gion.send(sb.toString());
 		
 		return embedBuilder;
 	
