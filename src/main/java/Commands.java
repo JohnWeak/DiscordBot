@@ -1412,7 +1412,7 @@ public class Commands extends ListenerAdapter
 		embedBuilder.setImage(image);
 		embedBuilder.setColor(Color.decode(color));
 		
-		gion.send(a.build().toString());
+		gion.send(a.toString());
 		gion.send(embedBuilder.build().toString());
 		
 		return embedBuilder;
