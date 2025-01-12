@@ -1394,13 +1394,15 @@ public class Commands extends ListenerAdapter
 		embedBuilder.setImage(image);
 		embedBuilder.setColor(Color.decode(color));
 		
-		final var x = embedBuilder.build();
-		final StringBuilder sb = new StringBuilder();
-		for (var y : x.getFields())
-		{
-			sb.append(String.format("name:%s, value:%s\n",y.getName(),y.getValue()));
-		}
-		gion.send(sb.toString());
+		try {
+			final var x = embedBuilder.build();
+			final StringBuilder sb = new StringBuilder();
+			for (var y : x.getFields())
+			{
+				sb.append(String.format("name:`%s`, value:`%s`\n", y.getName(), y.getValue()));
+			}
+			gion.send(sb.toString());
+		} catch (Exception e) {error.print(object, e);}
 		
 		return embedBuilder;
 	
