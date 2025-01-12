@@ -1239,7 +1239,7 @@ public class Commands extends ListenerAdapter
 			}
 			case "test" ->
 			{
-				event.replyEmbeds(handsOnHips().build()).queue();
+				event.reply(handsOnHips()).queue();
 			}
 			
 		}
@@ -1446,14 +1446,9 @@ public class Commands extends ListenerAdapter
 	} // fine react()
 	
 	
-	private EmbedBuilder handsOnHips()
+	private String handsOnHips()
 	{
-		final EmbedBuilder embedBuilder = new EmbedBuilder();
-		final String url = "https://i.imgflip.com/4zap4m.jpg";
-		
-		embedBuilder.setColor(Color.RED);
-		embedBuilder.setImage(url);
-		return embedBuilder;
+		return "https://i.imgflip.com/4zap4m.jpg";
 	}
 	
 	/** Genera un responso usando la magica palla 8 */
