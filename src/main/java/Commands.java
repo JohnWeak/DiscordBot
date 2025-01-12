@@ -1239,7 +1239,7 @@ public class Commands extends ListenerAdapter
 			}
 			case "test" ->
 			{
-				event.replyEmbeds(triggera(Utente.getEnigmo().getId()).build()).queue();
+				event.replyEmbeds(handsOnHips().build()).queue();
 			}
 			
 		}
@@ -1393,17 +1393,7 @@ public class Commands extends ListenerAdapter
 		embedBuilder.setTitle(title);
 		embedBuilder.setImage(image);
 		embedBuilder.setColor(Color.decode(color));
-		
-		try {
-			final var x = embedBuilder.build();
-			final StringBuilder sb = new StringBuilder();
-			for (var y : x.getFields())
-			{
-				sb.append(String.format("name:`%s`, value:`%s`\n", y.getName(), y.getValue()));
-			}
-			gion.send(sb.toString());
-		} catch (Exception e) {error.print(object, e);}
-		
+	
 		return embedBuilder;
 	
 	} // fine triggera()
@@ -1455,6 +1445,16 @@ public class Commands extends ListenerAdapter
 		}
 	} // fine react()
 	
+	
+	private EmbedBuilder handsOnHips()
+	{
+		final EmbedBuilder embedBuilder = new EmbedBuilder();
+		final String url = "https://i.imgflip.com/4zap4m.jpg";
+		
+		embedBuilder.setColor(Color.RED);
+		embedBuilder.setImage(url);
+		return embedBuilder;
+	}
 	
 	/** Genera un responso usando la magica palla 8 */
 	public String eightBall()
