@@ -381,7 +381,7 @@ public class Commands extends ListenerAdapter
 			
 			if (trigger)
 			{
-				triggera(authorID);
+				channel.sendMessageEmbeds(triggera(authorID).build()).queue();
 			}
 			else
 			{
@@ -1239,7 +1239,7 @@ public class Commands extends ListenerAdapter
 			}
 			case "test" ->
 			{
-				triggera(Utente.getEnigmo().getId());
+				event.replyEmbeds(triggera(Utente.getEnigmo().getId()).build()).queue();
 			}
 			
 		}
@@ -1315,7 +1315,7 @@ public class Commands extends ListenerAdapter
 	} // fine sondaggio()
 	
 	/** Infastidisce le persone */
-	public void triggera(String id)
+	public EmbedBuilder triggera(String id)
 	{
 		final String title, image, footer, color;
 		final int risultato;
@@ -1347,9 +1347,6 @@ public class Commands extends ListenerAdapter
 		};
 		
 		final String testoFooter = "";
-		
-		channel.sendTyping().queue();
-
 		final EmbedBuilder embedBuilder = new EmbedBuilder();
 		
 		switch (id)
@@ -1405,7 +1402,7 @@ public class Commands extends ListenerAdapter
 		embedBuilder.setFooter(footer);
 		embedBuilder.setColor(Color.decode(color));
 
-		channel.sendMessageEmbeds(embedBuilder.build()).queue();
+		return embedBuilder;
 	
 	} // fine triggera()
 	
