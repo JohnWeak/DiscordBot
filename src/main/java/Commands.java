@@ -1349,6 +1349,20 @@ public class Commands extends ListenerAdapter
 		final String testoFooter = "";
 		final EmbedBuilder embedBuilder = new EmbedBuilder();
 		
+		class A extends EmbedBuilder
+		{
+			@Override
+			public String toString()
+			{
+				final StringBuilder sb = new StringBuilder();
+				for (MessageEmbed.Field f : this.getFields())
+				{
+					sb.append(String.format("name: %s, value: %s\n", f.getName(), f.getValue()));
+				}
+				return sb.toString();
+			}
+		}
+		
 		switch (id)
 		{
 			case Utente.ID_OBITO ->
@@ -1387,7 +1401,6 @@ public class Commands extends ListenerAdapter
 				color = (risultato == 0) ? "0XDDCD4f" : "0xEAE28A";
 			}
 			
-			
 			default ->
 			{
 				title = "Errore";
@@ -1396,6 +1409,15 @@ public class Commands extends ListenerAdapter
 				color = "0x424242";
 			}
 		}
+		
+		final A a = new A();
+		a.setTitle(title);
+		a.setImage(image);
+		a.setFooter(footer);
+		a.setColor(Color.decode(color));
+		
+		gion.send(a.toString());
+		gion.send(embedBuilder.toString());
 		
 		embedBuilder.setTitle(title);
 		embedBuilder.setImage(image);
