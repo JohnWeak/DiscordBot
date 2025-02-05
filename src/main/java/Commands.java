@@ -1256,10 +1256,9 @@ public class Commands extends ListenerAdapter
 					default -> 0;
 				};
 				
-				reply = error ?
-					String.format("%d %s %d non fa %d, ma siccome il secondo operando è zero, hai distrutto la struttura fondamentale dello spazio-tempo. Grazie tante.", uno, operazione, due, result) :
-					String.format("%d %s %d = %d", uno, operazione, due, result);
-					
+				final String res = String.format("%d %s %d = %d", uno, operazione, due, result);
+				
+				reply = res.concat(error ? String.format("\nNo, aspetta... %d %s %d non fa %d, ma siccome il secondo operando è zero, hai distrutto la struttura fondamentale dello spazio-tempo. Grazie tante. ".concat(Emotes.readyToSend(Emotes.ragey)), uno, operazione, due, result) : "");
 				event.reply(reply).queue();
 			}
 			

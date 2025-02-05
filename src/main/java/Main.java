@@ -192,11 +192,11 @@ public class Main
 					"operazione da effettuare",
 					true
 					).addChoices(
-						new Command.Choice("addizione","+"),
-						new Command.Choice("sottrazione","-"),
-						new Command.Choice("moltiplicazione","*"),
-						new Command.Choice("divisione","/"),
-						new Command.Choice("modulo", "%")
+						new Command.Choice("[+] addizione","+"),
+						new Command.Choice("[-] sottrazione","-"),
+						new Command.Choice("[*] moltiplicazione","*"),
+						new Command.Choice("[/] divisione","/"),
+						new Command.Choice("[%] modulo", "%")
 					),
 					new OptionData(
 					OptionType.INTEGER,
