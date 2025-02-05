@@ -190,7 +190,6 @@ public class Main
 					OptionType.STRING,
 					"operatore",
 					"operazione da effettuare",
-					true,
 					true
 					).addChoices(
 						new Command.Choice("addizione","+"),
