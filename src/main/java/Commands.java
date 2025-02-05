@@ -797,15 +797,7 @@ public class Commands extends ListenerAdapter
 				{
 					try
 					{
-						final int min = 2;
-						
 						facce = Integer.parseInt(option.getAsString());
-						if (facce < min)
-						{
-							final String reply = String.format("Il dado deve avere almeno %d facce. Riprova con un numero valido.", min);
-							event.reply(reply).setEphemeral(true).queue();
-							return;
-						}
 					}catch (Exception e)
 					{
 						error.print(object, e);
@@ -1241,6 +1233,35 @@ public class Commands extends ListenerAdapter
 			{
 				event.reply(handsOnHips()).queue();
 			}
+			case "calcolatrice" ->
+			{
+				final int uno, due, result;
+				final String operazione, reply;
+				final boolean error;
+				
+				uno = event.getOption("primo").getAsInt();
+				due = event.getOption("secondo").getAsInt();
+				operazione = event.getOption("operatore").getAsString();
+				
+				error = (operazione.equals("/") || operazione.equals("%")) && due == 0;
+				
+				result = switch (operazione)
+				{
+					case "+" -> uno + due;
+					case "-" -> uno - due;
+					case "*" -> uno * due;
+					case "/" -> due != 0 ? uno / due : -1;
+					case "%" -> due != 0 ? uno % due : -1;
+					
+					default -> 0;
+				};
+				
+				reply = error ?
+					String.format("%d %s %d non fa %d, ma siccome il secondo operando è zero, hai distrutto la struttura fondamentale dello spazio-tempo. Grazie tante.", uno, operazione, due, result) :
+					String.format("%d %s %d = %d", uno, operazione, due, result);
+					
+				event.reply(reply).queue();
+			}
 			
 		}
 	} // fine onSlashCommand()
@@ -1279,7 +1300,6 @@ public class Commands extends ListenerAdapter
 		return headsOrTails ? heads : tails;
 	} // fine coinflip()
 	
-	/** Crea un sondaggio. Se non sono soddisfatte le condizioni, mostra un messaggio su come usare il comando !poll */
 	public EmbedBuilder creaSondaggio(String domanda, String[] risposte)
 	{
 		final EmbedBuilder embedBuilder = new EmbedBuilder();
@@ -1309,7 +1329,6 @@ public class Commands extends ListenerAdapter
 		
 		embedBuilder.setDescription(descrizione);
 		embedBuilder.setColor(0xFF0000);
-		
 		
 		return embedBuilder;
 	} // fine sondaggio()

@@ -128,17 +128,17 @@ public class Main
 				).setRequiredRange(0, 7),
 				
 				new OptionData(
-					OptionType.INTEGER,
-					"ore",
-					"il numero di ore",
-					true
+				OptionType.INTEGER,
+				"ore",
+				"il numero di ore",
+				true
 				).setRequiredRange(0,59),
 				
 				new OptionData(
-					OptionType.INTEGER,
-					"minuti",
-					"il numero di minuti",
-					true
+				OptionType.INTEGER,
+				"minuti",
+				"il numero di minuti",
+				true
 				).setRequiredRange(1, 59)
 			);
 			commands.add(newCommand);
@@ -161,10 +161,10 @@ public class Main
 					true
 					),
 					new OptionData(
-						OptionType.BOOLEAN,
-						"segreto",
-						"true, se non vuoi che la domanda non sia mostrata",
-						false
+					OptionType.BOOLEAN,
+					"segreto",
+					"true, se non vuoi che la domanda non sia mostrata",
+					false
 					)
 				);
 			commands.add(newCommand);
@@ -176,6 +176,37 @@ public class Main
 			commands.add(newCommand);
 			
 			newCommand = new CommandDataImpl("test", "⚠️TEST: non usare questo comando ⚠️");
+			commands.add(newCommand);
+			
+			newCommand = new CommandDataImpl("calcolatrice", "calcola un valore")
+				.addOptions(new OptionData(
+					OptionType.INTEGER,
+					"primo",
+					"il primo numero",
+					true,
+					false
+					).setRequiredRange(-9999999, 9999999),
+					new OptionData(
+					OptionType.STRING,
+					"operatore",
+					"operazione da effettuare",
+					true,
+					true
+					).addChoices(
+						new Command.Choice("addizione","+"),
+						new Command.Choice("sottrazione","-"),
+						new Command.Choice("moltiplicazione","*"),
+						new Command.Choice("divisione","/"),
+						new Command.Choice("modulo", "%")
+					),
+					new OptionData(
+					OptionType.INTEGER,
+					"secondo",
+					"il secondo numero",
+					true,
+					false
+					).setRequiredRange(-9999999, 9999999)
+				);
 			commands.add(newCommand);
 			
 			jda.updateCommands().addCommands(commands).queue();
