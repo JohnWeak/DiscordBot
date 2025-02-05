@@ -196,7 +196,8 @@ public class Main
 						new Command.Choice("[-] sottrazione","-"),
 						new Command.Choice("[*] moltiplicazione","*"),
 						new Command.Choice("[/] divisione","/"),
-						new Command.Choice("[%] modulo", "%")
+						new Command.Choice("[%] modulo", "%"),
+						new Command.Choice("[^] potenza","^")
 					),
 					new OptionData(
 					OptionType.INTEGER,

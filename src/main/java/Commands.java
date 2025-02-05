@@ -1247,7 +1247,6 @@ public class Commands extends ListenerAdapter
 				uno = event.getOption("primo").getAsInt();
 				due = event.getOption("secondo").getAsInt();
 				operazione = event.getOption("operatore").getAsString();
-				
 				negativo = due < 0;
 				error = (operazione.equals("/") || operazione.equals("%")) && due == 0;
 				
@@ -1256,9 +1255,9 @@ public class Commands extends ListenerAdapter
 					case "+" -> uno + due;
 					case "-" -> uno - due;
 					case "*" -> uno * due;
-					case "/" -> due != 0 ? uno / (double)due : -1;
-					case "%" -> due != 0 ? uno % (double)due : -1;
-					
+					case "/" -> due != 0 ? uno / (double)due : random.nextDouble();
+					case "%" -> due != 0 ? uno % (double)due : random.nextDouble();
+					case "^" -> Math.pow(uno, due);
 					default -> 0;
 				};
 				res = String.format("**%d %s %s%d%s = %s**", uno, operazione, negativo ? c[0] : "", due, negativo ? c[1] : "", df.format(result));
@@ -1266,7 +1265,6 @@ public class Commands extends ListenerAdapter
 				reply = res.concat(error ? String.format("\nNo, aspetta... **%d %s %d** non fa **%s**, ma siccome il secondo operando è zero, hai distrutto la struttura fondamentale dello spazio-tempo. Grazie tante. %s\n-# smh", uno, operazione, due, df.format(result), Emotes.readyToSend(Emotes.ragey)) : "");
 				event.reply(reply).queue();
 			}
-			
 		}
 	} // fine onSlashCommand()
 	
