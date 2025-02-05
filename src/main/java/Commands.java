@@ -1263,7 +1263,7 @@ public class Commands extends ListenerAdapter
 				};
 				res = String.format("**%d %s %s%d%s = %s**", uno, operazione, negativo ? c[0] : "", due, negativo ? c[1] : "", df.format(result));
 				
-				reply = res.concat(error ? String.format("\nNo, aspetta... **%d %s %s%d%s** non fa **%s**, ma siccome il secondo operando è zero, hai distrutto la struttura fondamentale dello spazio-tempo. Grazie tante. %s\n-# smh", uno, operazione, negativo ? c[0] : "", due, negativo ? c[1] : "", df.format(result), Emotes.readyToSend(Emotes.ragey)) : "");
+				reply = res.concat(error ? String.format("\nNo, aspetta... **%d %s %d** non fa **%s**, ma siccome il secondo operando è zero, hai distrutto la struttura fondamentale dello spazio-tempo. Grazie tante. %s\n-# smh", uno, operazione, due, df.format(result), Emotes.readyToSend(Emotes.ragey)) : "");
 				event.reply(reply).queue();
 			}
 			
