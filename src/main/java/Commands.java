@@ -34,6 +34,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -1235,9 +1236,11 @@ public class Commands extends ListenerAdapter
 			}
 			case "calcolatrice" ->
 			{
-				final int uno, due, result;
-				final String operazione, reply;
+				final int uno, due;
+				final double result;
+				final String operazione, reply, res;
 				final boolean error;
+				final DecimalFormat df = new DecimalFormat("#.##");
 				
 				uno = event.getOption("primo").getAsInt();
 				due = event.getOption("secondo").getAsInt();
@@ -1250,15 +1253,15 @@ public class Commands extends ListenerAdapter
 					case "+" -> uno + due;
 					case "-" -> uno - due;
 					case "*" -> uno * due;
-					case "/" -> due != 0 ? uno / due : -1;
-					case "%" -> due != 0 ? uno % due : -1;
+					case "/" -> due != 0 ? uno / (double)due : -1;
+					case "%" -> due != 0 ? uno % (double)due : -1;
 					
 					default -> 0;
 				};
 				
-				final String res = String.format("%d %s %d = %d", uno, operazione, due, result);
+				res = String.format("**%d %s %d = %s**", uno, operazione, due, df.format(result));
 				
-				reply = res.concat(error ? String.format("\nNo, aspetta... %d %s %d non fa %d, ma siccome il secondo operando è zero, hai distrutto la struttura fondamentale dello spazio-tempo. Grazie tante. ".concat(Emotes.readyToSend(Emotes.ragey)), uno, operazione, due, result) : "");
+				reply = res.concat(error ? String.format("\nNo, aspetta... **%d %s %d** non fa **%s**, ma siccome il secondo operando è zero, hai distrutto la struttura fondamentale dello spazio-tempo. Grazie tante. %s\n-# smh", uno, operazione, due, df.format(result), Emotes.readyToSend(Emotes.ragey)) : "");
 				event.reply(reply).queue();
 			}
 			
