@@ -1236,7 +1236,7 @@ public class Commands extends ListenerAdapter
 			}
 			case "calcolatrice" ->
 			{
-				final int uno, due;
+				final long uno, due;
 				final double result;
 				final String operazione, reply, res;
 				final boolean error;
@@ -1244,8 +1244,8 @@ public class Commands extends ListenerAdapter
 				final boolean negativo;
 				final char[] c = new char[]{'(',')'};
 				
-				uno = event.getOption("primo").getAsInt();
-				due = event.getOption("secondo").getAsInt();
+				uno = event.getOption("primo").getAsLong();
+				due = event.getOption("secondo").getAsLong();
 				operazione = event.getOption("operatore").getAsString();
 				negativo = due < 0;
 				error = (operazione.equals("/") || operazione.equals("%")) && due == 0;
