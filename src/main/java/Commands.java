@@ -1240,7 +1240,7 @@ public class Commands extends ListenerAdapter
 				final double result;
 				final String operazione, reply, res;
 				final boolean error;
-				final DecimalFormat df = new DecimalFormat("#.##");
+				final DecimalFormat df = new DecimalFormat("#,##");
 				
 				uno = event.getOption("primo").getAsInt();
 				due = event.getOption("secondo").getAsInt();
