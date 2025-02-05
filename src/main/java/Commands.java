@@ -1241,11 +1241,14 @@ public class Commands extends ListenerAdapter
 				final String operazione, reply, res;
 				final boolean error;
 				final DecimalFormat df = new DecimalFormat("#.##");
+				final boolean negativo;
+				final char[] c = new char[]{'(',')'};
 				
 				uno = event.getOption("primo").getAsInt();
 				due = event.getOption("secondo").getAsInt();
 				operazione = event.getOption("operatore").getAsString();
 				
+				negativo = due < 0;
 				error = (operazione.equals("/") || operazione.equals("%")) && due == 0;
 				
 				result = switch (operazione)
@@ -1258,10 +1261,9 @@ public class Commands extends ListenerAdapter
 					
 					default -> 0;
 				};
+				res = String.format("**%d %s %s%d%s = %s**", uno, operazione, negativo ? c[0] : "", due, negativo ? c[1] : "", df.format(result));
 				
-				res = String.format("**%d %s %d = %s**", uno, operazione, due, df.format(result));
-				
-				reply = res.concat(error ? String.format("\nNo, aspetta... **%d %s %d** non fa **%s**, ma siccome il secondo operando è zero, hai distrutto la struttura fondamentale dello spazio-tempo. Grazie tante. %s\n-# smh", uno, operazione, due, df.format(result), Emotes.readyToSend(Emotes.ragey)) : "");
+				reply = res.concat(error ? String.format("\nNo, aspetta... **%d %s %s%d%s** non fa **%s**, ma siccome il secondo operando è zero, hai distrutto la struttura fondamentale dello spazio-tempo. Grazie tante. %s\n-# smh", uno, operazione, negativo ? c[0] : "", due, negativo ? c[1] : "", df.format(result), Emotes.readyToSend(Emotes.ragey)) : "");
 				event.reply(reply).queue();
 			}
 			
