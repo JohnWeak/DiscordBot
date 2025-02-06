@@ -1,6 +1,7 @@
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.*;
@@ -50,6 +51,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+@Slf4j
 public class Commands extends ListenerAdapter
 {
 	private static final Object object = Commands.class;
@@ -1283,6 +1285,9 @@ public class Commands extends ListenerAdapter
 						{
 							response.append(inputLine);
 						}
+
+						System.out.println(response);
+
 
 						final JsonObject j = JsonParser.parseString(response.toString()).getAsJsonObject();
 						final boolean found = j.get("found").getAsBoolean();
