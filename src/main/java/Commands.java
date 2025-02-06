@@ -1,3 +1,6 @@
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.*;
@@ -205,7 +208,6 @@ public class Commands extends ListenerAdapter
 			gion.send(toSend.toString());
 		else
 			gion.send(toSend.toString(), attachments.getFirst());
-		
 		
 		if (moduloSicurezza)
 		{
@@ -1238,7 +1240,8 @@ public class Commands extends ListenerAdapter
 			{
 				final int uno, due;
 				final double result;
-				final String operazione, reply, res;
+				final StringBuilder reply = new StringBuilder();
+				final String operazione, res;
 				final boolean error;
 				final DecimalFormat df = new DecimalFormat("#.##");
 				final boolean negativo;
@@ -1261,9 +1264,43 @@ public class Commands extends ListenerAdapter
 					default -> 0;
 				};
 				res = String.format("**%d %s %s%d%s = %s**", uno, operazione, negativo ? c[0] : "", due, negativo ? c[1] : "", df.format(result));
-				
-				reply = res.concat(error ? String.format("\nNo, aspetta... **%d %s %d** non fa **%s**, ma siccome il secondo operando è zero, hai distrutto la struttura fondamentale dello spazio-tempo. Grazie tante. %s\n-# smh", uno, operazione, due, df.format(result), Emotes.readyToSend(Emotes.ragey)) : "");
-				event.reply(reply).queue();
+				reply.append(res.concat(error ? String.format("\nNo, aspetta... **%d %s %d** non fa **%s**, ma siccome il secondo operando è zero, hai distrutto la struttura fondamentale dello spazio-tempo. Grazie tante. %s\n-# smh", uno, operazione, due, df.format(result), Emotes.readyToSend(Emotes.ragey)) : ""));
+
+				if (!error && random.nextInt(4) == 0)
+				{
+					HttpURLConnection connection = null;
+					try
+					{
+						final String stringURL = String.format("http://www.numbersapi.com/%s?json", result);
+						final URL url = URI.create(stringURL).toURL();
+						connection = (HttpURLConnection) url.openConnection();
+						connection.setRequestProperty("Accept", "application/json");
+
+						final BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+						final StringBuilder response = new StringBuilder();
+						String inputLine;
+						while ((inputLine = in.readLine()) != null)
+						{
+							response.append(inputLine);
+						}
+
+						final JsonObject j = JsonParser.parseString(response.toString()).getAsJsonObject();
+						final boolean found = j.get("found").getAsBoolean();
+						if (!found) break;
+						final String text = j.get("text").getAsString();
+
+						reply.append(String.format("\n-# Did you know? %s", text));
+
+					}
+					catch (Exception ignored) {}
+					finally
+					{
+						if (connection != null)
+							connection.disconnect();
+					}
+				}
+
+				event.reply(reply.toString()).queue();
 			}
 		}
 	} // fine onSlashCommand()
