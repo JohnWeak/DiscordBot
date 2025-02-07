@@ -1260,15 +1260,17 @@ public class Commands extends ListenerAdapter
 					case "+" -> uno + (long) due;
 					case "-" -> uno - (long) due;
 					case "*" -> uno * (long) due;
-					case "/" -> due != 0 ? uno / (double) due : random.nextDouble();
-					case "%" -> due != 0 ? uno % (double) due : random.nextDouble();
+					case "/" -> due != 0 ? uno / (double) due : random.nextDouble() * 100;
+					case "%" -> due != 0 ? uno % (double) due : random.nextDouble() * 100;
 					case "^" -> Math.pow(uno, due);
 					default -> 0;
 				};
 				res = String.format("**%d %s %s%d%s = %s**", uno, operazione, negativo ? c[0] : "", due, negativo ? c[1] : "", df.format(result));
 				reply.append(res.concat(error ? String.format("\nNo, aspetta... **%d %s %d** non fa **%s**, ma siccome il secondo operando è zero, hai distrutto la struttura fondamentale dello spazio-tempo. Grazie tante. %s\n-# smh", uno, operazione, due, df.format(result), Emotes.readyToSend(Emotes.ragey)) : ""));
-
-				if (!error && random.nextInt(4) == 0)
+				
+				final int x = random.nextInt(4);
+				gion.send(String.format("error:**%s**\nx:**%d**\ncondizioni verificate per entrare nell'if:**%s**",error,x,(!error && x==0)));
+				if (!error && x == 0)
 				{
 					HttpURLConnection connection = null;
 					try
@@ -1292,7 +1294,6 @@ public class Commands extends ListenerAdapter
 						final String text = j.get("text").getAsString();
 
 						reply.append(String.format("\n-# %s", text));
-
 					}
 					catch (Exception e) { new Error<Exception>().print(object, e); }
 					finally
