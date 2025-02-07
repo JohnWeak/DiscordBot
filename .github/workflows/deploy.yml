@@ -13,6 +13,12 @@ jobs:
       - name: Checkout  # prima azione
         uses: actions/checkout@v3
 
+      - name: Set up QEMU # Serve per la build multi-architettura
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx # Serve per la build multi-architettura
+        uses: docker/setup-buildx-action@v3
+
       - name: Login to Docker Hub  # Effettua login su DockerHub
         uses: docker/login-action@v2
         with:
