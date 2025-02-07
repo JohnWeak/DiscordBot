@@ -1266,7 +1266,7 @@ public class Commands extends ListenerAdapter
 					default -> 0;
 				};
 				res = String.format("**%d %s %s%d%s = %s**", uno, operazione, negativo ? c[0] : "", due, negativo ? c[1] : "", df.format(result));
-				reply.append(res.concat(error ? String.format("\nNo, aspetta... **%d %s %d** non fa **%s**, ma siccome il secondo operando è zero, hai distrutto la struttura fondamentale dello spazio-tempo. Grazie tante. %s", uno, operazione, due, df.format(result), Emotes.readyToSend(Emotes.ragey)) : ""));
+				reply.append(res.concat(error ? String.format("\nNo, aspetta. **%d %s %d** non fa **%s**... il secondo operando è zero! Così facendo hai distrutto la struttura fondamentale dello spazio-tempo, grazie tante. %s", uno, operazione, due, df.format(result), Emotes.readyToSend(Emotes.ragey)) : ""));
 				
 				if (!error && (random.nextInt(4) == 0))
 				{
