@@ -23,10 +23,11 @@ jobs:
         run: git rev-parse --short HEAD | sed "s/^./CURRENT_VERSION=/g"  >> $GITHUB_ENV
 
       - name: Build and push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           context: .
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: gionweak/bot_discord:${{ env.CURRENT_VERSION }},gionweak/bot_discord:latest
 
       - name: Deploy on Remote Server  # Si connette in SSH ed esegue uno script
