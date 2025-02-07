@@ -1266,11 +1266,9 @@ public class Commands extends ListenerAdapter
 					default -> 0;
 				};
 				res = String.format("**%d %s %s%d%s = %s**", uno, operazione, negativo ? c[0] : "", due, negativo ? c[1] : "", df.format(result));
-				reply.append(res.concat(error ? String.format("\nNo, aspetta... **%d %s %d** non fa **%s**, ma siccome il secondo operando è zero, hai distrutto la struttura fondamentale dello spazio-tempo. Grazie tante. %s\n-# smh", uno, operazione, due, df.format(result), Emotes.readyToSend(Emotes.ragey)) : ""));
+				reply.append(res.concat(error ? String.format("\nNo, aspetta... **%d %s %d** non fa **%s**, ma siccome il secondo operando è zero, hai distrutto la struttura fondamentale dello spazio-tempo. Grazie tante. %s", uno, operazione, due, df.format(result), Emotes.readyToSend(Emotes.ragey)) : ""));
 				
-				final int x = random.nextInt(4);
-				gion.send(String.format("error:**%s**\nx:**%d**\ncondizioni verificate per entrare nell'if:**%s**",error,x,(!error && x==0)));
-				if (!error && x == 0)
+				if (!error && (random.nextInt(4) == 0))
 				{
 					HttpURLConnection connection = null;
 					try
