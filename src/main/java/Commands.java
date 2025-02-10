@@ -1306,14 +1306,15 @@ public class Commands extends ListenerAdapter
 					
 					l.editOriginalEmbeds(embed.build()).queue( ll ->
 					{
-						ll.editMessageEmbeds(embed.build()).queue();
 						try
 						{
 							Thread.sleep(random.nextInt(2000,4000));
 						}catch (InterruptedException e) { error.print(object,e); }
 						embed.setColor(Color.GRAY);
-						ll.addReaction(Emoji.fromUnicode("👎🏻")).queue();
+						ll.editMessageEmbeds(embed.build()).queue();
+						
 						ll.addReaction(Emoji.fromUnicode("👍🏻")).queue();
+						ll.addReaction(Emoji.fromUnicode("👎🏻")).queue();
 					});
 				});
 			}
