@@ -1286,7 +1286,6 @@ public class Commands extends ListenerAdapter
 				final EmbedBuilder embed = new EmbedBuilder();
 				final String url = "https://official-joke-api.appspot.com/random_joke";
 				final String setup, punchline;
-				final String refund = "Non ti è piaciuta la barzelletta o non l'hai capita? Usa /refund per un rimborso!";
 				final JsonObject j = Utilities.httpRequest(url);
 				
 				setup = j.get("setup").getAsString();
