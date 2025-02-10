@@ -1311,7 +1311,7 @@ public class Commands extends ListenerAdapter
 							Thread.sleep(random.nextInt(500,1000));
 						}catch (InterruptedException e) { error.print(object,e); }
 						embed.setFooter(refund, Utente.getUtenteFromID(Utente.ID_BOWOT).getAvatarUrl());
-						ll.editMessageEmbeds().queue();
+						ll.editMessageEmbeds(embed.build()).queue();
 					});
 				});
 			}
