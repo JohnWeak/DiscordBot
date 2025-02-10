@@ -1286,7 +1286,7 @@ public class Commands extends ListenerAdapter
 				final EmbedBuilder embed = new EmbedBuilder();
 				final String url = "https://official-joke-api.appspot.com/random_joke";
 				final String setup, punchline;
-				final String refund = "Non ti è piaciuta la barzelletta o non l'hai capita? Usa `/refund` per un rimborso!";
+				final String refund = "Non ti è piaciuta la barzelletta o non l'hai capita? Usa /refund per un rimborso!";
 				final JsonObject j = Utilities.httpRequest(url);
 				
 				setup = j.get("setup").getAsString();
@@ -1308,9 +1308,9 @@ public class Commands extends ListenerAdapter
 					l.editOriginalEmbeds(embed.build()).queue( ll -> {
 						try
 						{
-							Thread.sleep(random.nextInt(500,1000));
+							Thread.sleep(random.nextInt(2000,4000));
 						}catch (InterruptedException e) { error.print(object,e); }
-						embed.setFooter(refund, Utente.getUtenteFromID(Utente.ID_BOWOT).getAvatarUrl());
+						embed.setFooter(refund);
 						ll.editMessageEmbeds(embed.build()).queue();
 					});
 				});
