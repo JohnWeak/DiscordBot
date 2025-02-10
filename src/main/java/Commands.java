@@ -1292,29 +1292,35 @@ public class Commands extends ListenerAdapter
 				setup = j.get("setup").getAsString();
 				punchline = j.get("punchline").getAsString();
 				
-				embed.setColor(Color.GRAY);
+				embed.setColor(Color.RED);
 				embed.setTitle(setup);
 				embed.setDescription("");
 				
-				event.replyEmbeds(embed.build()).queue(l -> {
+				event.replyEmbeds(embed.build()).queue(l ->
+				{
 					try
 					{
 						Thread.sleep(random.nextInt(2000,3000));
 					}catch (InterruptedException e) { error.print(object,e); }
 					
-					embed.setColor(Color.RED);
 					embed.setDescription(punchline);
 					
-					l.editOriginalEmbeds(embed.build()).queue( ll -> {
+					l.editOriginalEmbeds(embed.build()).queue( ll ->
+					{
+						ll.editMessageEmbeds(embed.build()).queue();
 						try
 						{
 							Thread.sleep(random.nextInt(2000,4000));
 						}catch (InterruptedException e) { error.print(object,e); }
-						embed.setFooter(refund);
-						ll.editMessageEmbeds(embed.build()).queue();
+						embed.setColor(Color.GRAY);
+						ll.addReaction(Emoji.fromUnicode("👎🏻")).queue();
+						ll.addReaction(Emoji.fromUnicode("👍🏻")).queue();
 					});
 				});
 			}
+			
+			// case "" -> {}
+			
 		}
 	} // fine onSlashCommand()
 	
