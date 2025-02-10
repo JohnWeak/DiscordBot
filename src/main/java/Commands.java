@@ -1270,38 +1270,50 @@ public class Commands extends ListenerAdapter
 				
 				if (!error && (random.nextInt(4) == 0))
 				{
-					HttpURLConnection connection = null;
-					try
-					{
-						final String stringURL = String.format("http://www.numbersapi.com/%d?json", (int)result);
-						final URL url = URI.create(stringURL).toURL();
-
-						connection = (HttpURLConnection) url.openConnection();
-						connection.setRequestProperty("Accept", "application/json");
-
-						final BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-						final StringBuilder response = new StringBuilder();
-						String inputLine;
-						while ((inputLine = in.readLine()) != null) {
-							response.append(inputLine);
-						}
-
-						final JsonObject j = JsonParser.parseString(response.toString()).getAsJsonObject();
-						final boolean found = j.get("found").getAsBoolean();
-						if (!found) break;
-						final String text = j.get("text").getAsString();
-
-						reply.append(String.format("\n-# %s", text));
-					}
-					catch (Exception e) { new Error<Exception>().print(object, e); }
-					finally
-					{
-						if (connection != null)
-							connection.disconnect();
-					}
+					final String stringURL = String.format("http://www.numbersapi.com/%d?json", (int)result);
+					final JsonObject j = Utilities.httpRequest(stringURL);
+					
+					final boolean found = j.get("found").getAsBoolean();
+					if (!found) break;
+					final String text = j.get("text").getAsString();
+					reply.append(String.format("\n-# %s", text));
 				}
 
 				event.reply(reply.toString()).queue();
+			}
+			case "barzelletta" ->
+			{
+				final EmbedBuilder embed = new EmbedBuilder();
+				final String url = "https://official-joke-api.appspot.com/random_joke";
+				final String setup, punchline;
+				final String refund = "Non ti è piaciuta la barzelletta o non l'hai capita? Usa `/refund` per un rimborso!";
+				final JsonObject j = Utilities.httpRequest(url);
+				
+				setup = j.get("setup").getAsString();
+				punchline = j.get("punchline").getAsString();
+				
+				embed.setColor(Color.GRAY);
+				embed.setTitle(setup);
+				embed.setDescription("");
+				
+				event.replyEmbeds(embed.build()).queue(l -> {
+					try
+					{
+						Thread.sleep(random.nextInt(2000,3000));
+					}catch (InterruptedException e) { error.print(object,e); }
+					
+					embed.setColor(Color.RED);
+					embed.setDescription(punchline);
+					
+					l.editOriginalEmbeds(embed.build()).queue( ll -> {
+						try
+						{
+							Thread.sleep(random.nextInt(500,1000));
+						}catch (InterruptedException e) { error.print(object,e); }
+						embed.setFooter(refund, Utente.getUtenteFromID(Utente.ID_BOWOT).getAvatarUrl());
+						ll.editMessageEmbeds().queue();
+					});
+				});
 			}
 		}
 	} // fine onSlashCommand()

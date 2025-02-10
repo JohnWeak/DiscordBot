@@ -209,6 +209,12 @@ public class Main
 				);
 			commands.add(newCommand);
 			
+			newCommand = new CommandDataImpl("barzelletta","lascia che il bot ti racconti una barzelletta");
+			commands.add(newCommand);
+			
+			// newCommand = new CommandDataImpl("/refund","Ottieni un rimborso");
+			// commands.add(newCommand);
+			
 			jda.updateCommands().addCommands(commands).queue();
 			
 		}catch (Exception e)

@@ -1,7 +1,15 @@
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
 import java.util.*;
 
 /**Classe che contiene metodi utili e non intasare la classe Commands.*/
@@ -134,5 +142,43 @@ public abstract class Utilities
 		final TimeZone roma = TimeZone.getTimeZone("Europe/Rome");
 		return new GregorianCalendar(roma, Locale.ITALY);
 	} // fine getCurrentTime()
+	
+	
+	/**Metodo per effettuare richieste http
+	 * @param websiteAddress l'indirizzo URL del sito da contattatare
+	 * @return <code>JsonObject</code> della risposta <br/><code>null</code> in caso di fallimento
+	 * @see JsonObject
+	 * */
+	public static JsonObject httpRequest(String websiteAddress)
+	{
+		if (websiteAddress == null || websiteAddress.isBlank()) { return null; }
+		
+		final HttpURLConnection connection;
+		try
+		{
+			final EmbedBuilder eb = new EmbedBuilder();
+			final URL url = URI.create(websiteAddress).toURL();
+			
+			connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestProperty("Accept", "application/json");
+			
+			final BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			final StringBuilder response = new StringBuilder();
+			String inputLine;
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			
+			return JsonParser.parseString(response.toString()).getAsJsonObject();
+			
+		}catch (Exception e) { new Error<Exception>().print(Utilities.class, e); }
+		
+		return null;
+		
+	}
+	
+	
+	
+	
 	
 } // fine classe Utilities
