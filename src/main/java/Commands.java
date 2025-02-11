@@ -1240,18 +1240,11 @@ public class Commands extends ListenerAdapter
 			}
 			case "test" ->
 			{
-				final EmbedBuilder embed = new EmbedBuilder();
-				embed.setTitle("test");
-				embed.setColor(Color.RED);
+				final ThreadQuiz tq = new ThreadQuiz(event);
 				
-				final ActionRow actionRow = ActionRow.of(
-					Button.primary("1","PRIMO (1)"),
-					Button.secondary("2","SECONDO (2)"),
-					Button.danger("3","DANGER (3)")
-				);
+				tq.start();
 				
-				event.replyEmbeds(embed.build())
-					.setComponents(actionRow).queue();
+				
 				
 				// event.reply(handsOnHips()).queue();
 			}
@@ -1368,10 +1361,7 @@ public class Commands extends ListenerAdapter
 	@Override
 	public void onButtonInteraction(@NotNull ButtonInteractionEvent event)
 	{
-		System.out.printf("button label: %s\n", event.getButton().getLabel());
-		System.out.printf("button id: %s\n", event.getButton().getId());
-		System.out.printf("component id: %s\n", event.getComponent().getId());
-		
+		event.reply("cliccato").queue();
 	}
 	
 	/** Lancia una moneta */
