@@ -1361,7 +1361,7 @@ public class Commands extends ListenerAdapter
 	@Override
 	public void onButtonInteraction(@NotNull ButtonInteractionEvent event)
 	{
-		event.reply("cliccato").queue();
+		event.editButton(event.getButton().asDisabled()).queue();
 	}
 	
 	/** Lancia una moneta */

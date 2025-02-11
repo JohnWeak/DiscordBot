@@ -24,12 +24,10 @@ public class ThreadQuiz extends Thread
 		
 		embed.setTitle("test");
 		embed.setColor(Color.RED);
-		for (String s : options)
-			embed.addField("risposta", s, true);
 		
 		for (int i = 0; i < options.length; i++)
 		{
-			final String risp = String.format("risposta%d", i);
+			final String risp = String.format("risposta%d", i+1);
 			buttons.add(Button.primary(risp,options[i]));
 			embed.addField(risp, options[i], false);
 		}
