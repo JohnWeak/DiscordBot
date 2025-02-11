@@ -20,34 +20,41 @@ public class MessageTask extends TimerTask
 		final StringBuilder eventString = new StringBuilder();
 		int index = 1;
 		
-		if (random.nextInt(69420) == 42)
+		if (allEvents.isEmpty())
 		{
-			final String MESSAGES_ABOUND = "SIR, THE DAM HAS BEEN BREACHED! THE MESSAGES ARE OVERFLOWING, THE FLOOD IS IMMINENT!\n";
-			eventString.append(MESSAGES_ABOUND);
-			for (var event : allEvents)
+			eventString.append("No disconnection events found.\n");
+		}
+		else
+		{
+			if (random.nextInt(69420) == 42)
 			{
-				for (int i = 0; i < DUPLICATES; i++)
+				final String MESSAGES_ABOUND = "SIR, THE DAM HAS BEEN BREACHED! THE MESSAGES ARE OVERFLOWING, THE FLOOD IS IMMINENT!\n";
+				eventString.append(MESSAGES_ABOUND);
+				for (var event : allEvents)
 				{
-					for (PrivateMessage pm : usersToNotify)
+					for (int i = 0; i < DUPLICATES; i++)
 					{
-						pm.send(event.toString());
+						for (PrivateMessage pm : usersToNotify)
+						{
+							pm.send(event.toString());
+						}
 					}
 				}
+				eventString.setLength(0);
+				return;
 			}
-			eventString.setLength(0);
-			return;
+			
+			final String recap = String.format("Here's the recap of the `%d` disconnection events\n\n", allEvents.size());
+			eventString.append(recap);
+			
+			for (RegisteredEvent event : allEvents)
+			{
+				eventString.append(String.format("%d) %s", index++, event.toString()));
+			}
+			
+			final String closer = "\nEnd of recap. Enjoy the rest of the day. Or don't, I don't really care.";
+			eventString.append(closer);
 		}
-		
-		final String recap = String.format("Here's the recap of the `%d` disconnection events\n\n", allEvents.size());
-		eventString.append(recap);
-		
-		for (RegisteredEvent event : allEvents)
-		{
-			eventString.append(String.format("%d) %s", index++, event.toString()));
-		}
-		
-		final String closer = "\nEnd of recap. Enjoy the rest of the day. Or don't, I don't really care.";
-		eventString.append(closer);
 		
 		for (PrivateMessage pm : usersToNotify)
 		{

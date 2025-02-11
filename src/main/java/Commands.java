@@ -24,7 +24,10 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.AutoCompleteQuery;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import net.dv8tion.jda.api.interactions.components.ActionRow;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.requests.CloseCode;
+import net.dv8tion.jda.internal.interactions.component.ButtonImpl;
 import org.jetbrains.annotations.NotNull;
 
 import org.json.simple.JSONArray;
@@ -1236,7 +1239,20 @@ public class Commands extends ListenerAdapter
 			}
 			case "test" ->
 			{
-				event.reply(handsOnHips()).queue();
+				final EmbedBuilder embed = new EmbedBuilder();
+				embed.setTitle("test");
+				embed.setColor(Color.RED);
+				
+				final ActionRow actionRow = ActionRow.of(
+					Button.primary("1","PRIMO (1)"),
+					Button.secondary("2","SECONDO (2)"),
+					Button.danger("3","DANGER (3)")
+				);
+				
+				event.replyEmbeds(embed.build())
+					.setComponents(actionRow).queue();
+				
+				// event.reply(handsOnHips()).queue();
 			}
 			case "calcolatrice" ->
 			{
