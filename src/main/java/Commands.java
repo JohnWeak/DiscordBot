@@ -13,6 +13,7 @@ import net.dv8tion.jda.api.entities.emoji.CustomEmoji;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
@@ -1362,6 +1363,15 @@ public class Commands extends ListenerAdapter
 				event.replyChoices(options).queue();
 			} catch (Exception e) { new Error<Exception>().print(object,e);}
 		}
+	}
+	
+	@Override
+	public void onButtonInteraction(@NotNull ButtonInteractionEvent event)
+	{
+		System.out.printf("button label: %s\n", event.getButton().getLabel());
+		System.out.printf("button id: %s\n", event.getButton().getId());
+		System.out.printf("component id: %s\n", event.getComponent().getId());
+		
 	}
 	
 	/** Lancia una moneta */
