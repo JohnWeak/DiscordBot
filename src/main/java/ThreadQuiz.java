@@ -93,54 +93,27 @@ public class ThreadQuiz extends Thread
 			
 			actionRow = ActionRow.of(buttons);
 			
-			event
-				.replyEmbeds(embed.build())
-				.setComponents(actionRow)
-			.queue(l ->
+			if (seconds > 1)
 			{
-				final Timer timer = new Timer(true);
-				final ButtonListener listener = new ButtonListener(this);
-				final int timeout = 2 * 60 * 1000;
+				event.deferReply().queue();
 				
-				event.getJDA().addEventListener(listener);
-				// timer.schedule(new RemoveListenerTask(this, event, l, embed, actionRow), timeout);
-				
-			});
+				event.getHook()
+					.editOriginalEmbeds(embed.build())
+					.setComponents(actionRow)
+				.queue();
+			}
+			else
+			{
+				event
+					.replyEmbeds(embed.build())
+					.setComponents(actionRow)
+				.queue();
+			}
+			
+			
 			
 		}
 		catch (Exception e) { new Error<Exception>().print(this,e); }
 	}
 	
-}
-
-class RemoveListenerTask extends TimerTask
-{
-	private final SlashCommandInteractionEvent event;
-	private final EmbedBuilder embed;
-	private final InteractionHook hook;
-	private final ActionRow actionRow;
-	private final ThreadQuiz tq;
-	
-	public RemoveListenerTask(ThreadQuiz tq, SlashCommandInteractionEvent event, InteractionHook hook, EmbedBuilder embed, ActionRow actionRow)
-	{
-		this.tq = tq;
-		this.event = event;
-		this.embed = embed;
-		this.hook = hook;
-		this.actionRow = actionRow;
-	}
-	
-	@Override
-	public void run()
-	{
-		event.getJDA().removeEventListener(event.getJDA().getRegisteredListeners().getFirst());
-		embed.setColor(Color.GRAY);
-		
-		if (tq.isActive())
-		{
-			hook.editOriginalEmbeds(embed.build())
-				.setComponents(actionRow.asDisabled())
-			.queue();
-		}
-	}
 }
