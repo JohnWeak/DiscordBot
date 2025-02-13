@@ -177,7 +177,7 @@ public abstract class Utilities
 			htmlCodes.put("&eacute;", "é");
 			
 			final String newString = replaceEntities(response.toString(), htmlCodes);
-			// System.out.printf("response: %s\nnewString: %s", response, newString);
+			System.out.printf("\n\n\nRAW RESPONSE:\n%s\n\nSTRING WITHOUT HTML CODES:\n%s\n\n\n", response, newString);
 			return JsonParser.parseString(newString).getAsJsonObject();
 			
 		}catch (Exception e) { new Error<Exception>().print(Utilities.class, e); }

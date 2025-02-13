@@ -33,70 +33,80 @@ public class ThreadQuiz extends Thread
 	public void run()
 	{
 		final EmbedBuilder embed = new EmbedBuilder();
-		final JsonObject j;
+		JsonObject j;
 		final String url = "https://opentdb.com/api.php?amount=1";
 		final String category, difficulty, type;
 		
 		try
 		{
-		
-		j = Utilities.httpRequest(url);
-		
-		final JsonArray jsonArray = j.getAsJsonArray("results");
-		final JsonObject jsonObject = jsonArray.get(0).getAsJsonObject();
-		
-		final String question = jsonObject.getAsJsonObject().get("question").getAsString();
-		final JsonElement correctAnswer = jsonObject.getAsJsonObject().get("correct_answer");
-		final JsonArray incorrectAnswers = jsonObject.getAsJsonArray("incorrect_answers");
-		answer = correctAnswer.getAsString();
-		
-		category = jsonObject.get("category").getAsString();
-		difficulty = Utilities.capitalize(jsonObject.get("difficulty").getAsString());
-		type = Utilities.capitalize(jsonObject.get("type").getAsString());
-		
-		
-		final List<JsonElement> allAnswers = new ArrayList<>();
-		allAnswers.add(correctAnswer);
-		allAnswers.addAll(incorrectAnswers.asList());
-		
-		if (!type.equalsIgnoreCase("boolean"))
-			Collections.shuffle(allAnswers);
-		
-		final ArrayList<Button> buttons = new ArrayList<>();
-		final ActionRow actionRow;
-		final StringBuilder sb = new StringBuilder();
-		
-		embed.setTitle(question);
-		embed.setColor(Color.RED);
-		
-		for (int i = 0; i < allAnswers.size(); i++)
-		{
-			final String tempAnswer = allAnswers.get(i).getAsString();
-			buttons.add(Button.primary(String.valueOf(i), tempAnswer));
-			sb.append(String.format("• %s\n", tempAnswer));
-		}
-		
-		embed.addField("Category", category, true);
-		embed.addField("Difficulty", difficulty, true);
-		embed.addField("Type",  type, true);
-		embed.setDescription(sb.toString());
-		
-		actionRow = ActionRow.of(buttons);
-		
-		event
-			.replyEmbeds(embed.build())
-			.setComponents(actionRow)
-		.queue(l ->
-		{
-			final Timer timer = new Timer(true);
-			final ButtonListener listener = new ButtonListener(this);
-			final int timeout = 2 * 60 * 1000;
+			int i = 1;
+			do
+			{
+				j = Utilities.httpRequest(url);
+				if (j == null)
+				{
+					Thread.sleep(1000 * (long) i);
+					if (i < 5)
+						i+=1;
+				}
+			} while (j == null);
 			
-			event.getJDA().addEventListener(listener);
-			timer.schedule(new RemoveListenerTask(this, event, l, embed, actionRow), timeout);
 			
-		});
-		
+			final JsonArray jsonArray = j.getAsJsonArray("results");
+			final JsonObject jsonObject = jsonArray.get(0).getAsJsonObject();
+			
+			final String question = jsonObject.getAsJsonObject().get("question").getAsString();
+			final JsonElement correctAnswer = jsonObject.getAsJsonObject().get("correct_answer");
+			final JsonArray incorrectAnswers = jsonObject.getAsJsonArray("incorrect_answers");
+			answer = correctAnswer.getAsString();
+			
+			category = jsonObject.get("category").getAsString();
+			difficulty = Utilities.capitalize(jsonObject.get("difficulty").getAsString());
+			type = Utilities.capitalize(jsonObject.get("type").getAsString());
+			
+			
+			final List<JsonElement> allAnswers = new ArrayList<>();
+			allAnswers.add(correctAnswer);
+			allAnswers.addAll(incorrectAnswers.asList());
+			
+			if (!type.equalsIgnoreCase("boolean"))
+				Collections.shuffle(allAnswers);
+			
+			final ArrayList<Button> buttons = new ArrayList<>();
+			final ActionRow actionRow;
+			final StringBuilder sb = new StringBuilder();
+			
+			embed.setTitle(question);
+			embed.setColor(Color.RED);
+			
+			for (int i = 0; i < allAnswers.size(); i++)
+			{
+				final String tempAnswer = allAnswers.get(i).getAsString();
+				buttons.add(Button.primary(String.valueOf(i), tempAnswer));
+				sb.append(String.format("• %s\n", tempAnswer));
+			}
+			
+			embed.addField("Category", category, true);
+			embed.addField("Difficulty", difficulty, true);
+			embed.addField("Type",  type, true);
+			embed.setDescription(sb.toString());
+			
+			actionRow = ActionRow.of(buttons);
+			
+			event
+				.replyEmbeds(embed.build())
+				.setComponents(actionRow)
+			.queue(l ->
+			{
+				final Timer timer = new Timer(true);
+				final ButtonListener listener = new ButtonListener(this);
+				final int timeout = 2 * 60 * 1000;
+				
+				event.getJDA().addEventListener(listener);
+				timer.schedule(new RemoveListenerTask(this, event, l, embed, actionRow), timeout);
+				
+			});
+			
 		}
 		catch (Exception e) { new Error<Exception>().print(this,e); }
 	}
