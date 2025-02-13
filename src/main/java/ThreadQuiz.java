@@ -2,14 +2,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import lombok.Getter;
+import lombok.Setter;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.InteractionHook;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
-import net.dv8tion.jda.internal.interactions.component.ButtonImpl;
-import net.dv8tion.jda.internal.interactions.component.ButtonInteractionImpl;
 
 import java.awt.*;
 import java.util.*;
@@ -18,7 +16,13 @@ import java.util.List;
 public class ThreadQuiz extends Thread
 {
 	private final SlashCommandInteractionEvent event;
-	@Getter private static String answer;
+	
+	@Getter
+	@Setter
+	private volatile boolean active = true;
+	
+	@Getter
+	private static String answer;
 	
 	public ThreadQuiz(SlashCommandInteractionEvent event)
 	{
@@ -82,11 +86,11 @@ public class ThreadQuiz extends Thread
 		.queue(l ->
 		{
 			final Timer timer = new Timer(true);
-			final ButtonListener listener = new ButtonListener();
+			final ButtonListener listener = new ButtonListener(this);
 			final int timeout = 2 * 60 * 1000;
 			
 			event.getJDA().addEventListener(listener);
-			timer.schedule(new RemoveListenerTask(event, l, embed, actionRow), timeout);
+			timer.schedule(new RemoveListenerTask(this, event, l, embed, actionRow), timeout);
 			
 		});
 		
@@ -100,9 +104,11 @@ class RemoveListenerTask extends TimerTask
 	private final EmbedBuilder embed;
 	private final InteractionHook hook;
 	private final ActionRow actionRow;
+	private final ThreadQuiz tq;
 	
-	public RemoveListenerTask(SlashCommandInteractionEvent event, InteractionHook hook, EmbedBuilder embed, ActionRow actionRow)
+	public RemoveListenerTask(ThreadQuiz tq, SlashCommandInteractionEvent event, InteractionHook hook, EmbedBuilder embed, ActionRow actionRow)
 	{
+		this.tq = tq;
 		this.event = event;
 		this.embed = embed;
 		this.hook = hook;
@@ -115,9 +121,11 @@ class RemoveListenerTask extends TimerTask
 		event.getJDA().removeEventListener(event.getJDA().getRegisteredListeners().getFirst());
 		embed.setColor(Color.GRAY);
 		
-		hook.editOriginalEmbeds(embed.build())
-			.setComponents(actionRow.asDisabled())
+		if (tq.isActive())
+		{
+			hook.editOriginalEmbeds(embed.build())
+				.setComponents(actionRow.asDisabled())
 			.queue();
-		
+		}
 	}
 }

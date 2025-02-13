@@ -12,14 +12,21 @@ import java.util.stream.Collectors;
 public
 class ButtonListener extends ListenerAdapter
 {
+	private final ThreadQuiz tq;
+	public ButtonListener(ThreadQuiz tq)
+	{
+		this.tq = tq;
+	}
+	
 	@Override
-	public void onButtonInteraction(@NotNull ButtonInteractionEvent event) {
+	public void onButtonInteraction(@NotNull ButtonInteractionEvent event)
+	{
 		final String m = getString(event);
+		final String correctAnswer = ThreadQuiz.getAnswer();
 		
 		try
 		{
-			event.reply(m).queue();
-			
+			event.reply(m).queue(l -> tq.setActive(false));
 			final String clickedButtonId = event.getButton().getId();
 			
 			final List<ActionRow> updatedRows = event.getMessage().getActionRows().stream()
@@ -30,7 +37,10 @@ class ButtonListener extends ListenerAdapter
 						{
 							if (button.getId() != null && button.getId().equals(clickedButtonId))
 							{
-								return button.asDisabled().withStyle(ButtonStyle.SUCCESS);
+								return (button.getLabel().equals(correctAnswer) ?
+									button.asDisabled().withStyle(ButtonStyle.SUCCESS) :
+									button.asDisabled().withStyle(ButtonStyle.DANGER)
+								);
 							}
 							else
 							{
@@ -40,7 +50,7 @@ class ButtonListener extends ListenerAdapter
 						.collect(Collectors.toList());
 						
 						return ActionRow.of(updatedButtons);
-					}).collect(Collectors.toList());
+				}).collect(Collectors.toList());
 			
 			event.getInteraction().getChannel()
 				.editMessageComponentsById(event.getMessageId(), updatedRows)
