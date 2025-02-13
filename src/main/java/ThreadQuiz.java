@@ -39,15 +39,15 @@ public class ThreadQuiz extends Thread
 		
 		try
 		{
-			int i = 1;
+			int seconds = 1;
 			do
 			{
 				j = Utilities.httpRequest(url);
 				if (j == null)
 				{
-					Thread.sleep(1000 * (long) i);
-					if (i < 5)
-						i+=1;
+					Thread.sleep(1000 * (long) seconds);
+					if (seconds < 5)
+						seconds += 1;
 				}
 			} while (j == null);
 			
