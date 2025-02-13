@@ -20,7 +20,7 @@ class ButtonListener extends ListenerAdapter
 		final String correctAnswer = ThreadQuiz.getAnswer();
 		final String m = event.getButton().getLabel().equals(ThreadQuiz.getAnswer()) ?
 			String.format("Correct! The answer was \"%s\".\n-# %s", answer, author) :
-			String.format("%s is wrong. The correct answer was: \"%s\".", answer, correctAnswer);
+			String.format("%s is wrong. The correct answer was: \"%s\".\n-# %s", answer, correctAnswer, author);
 
 		event.reply(m).queue(l ->
 		{
