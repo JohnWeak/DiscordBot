@@ -103,7 +103,7 @@ public class ThreadQuiz extends Thread
 				final int timeout = 2 * 60 * 1000;
 				
 				event.getJDA().addEventListener(listener);
-				timer.schedule(new RemoveListenerTask(this, event, l, embed, actionRow), timeout);
+				// timer.schedule(new RemoveListenerTask(this, event, l, embed, actionRow), timeout);
 				
 			});
 			
