@@ -21,12 +21,14 @@ class ButtonListener extends ListenerAdapter
 	@Override
 	public void onButtonInteraction(@NotNull ButtonInteractionEvent event)
 	{
+		tq.setActive(false);
+		
 		final String m = getString(event);
 		final String correctAnswer = ThreadQuiz.getAnswer();
 		
 		try
 		{
-			event.reply(m).queue(l -> tq.setActive(false));
+			event.reply(m).queue();
 			final String clickedButtonId = event.getButton().getId();
 			
 			final List<ActionRow> updatedRows = event.getMessage().getActionRows().stream()
