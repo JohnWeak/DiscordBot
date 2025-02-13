@@ -15,12 +15,12 @@ import java.util.*;
 /**Classe che contiene metodi utili e non intasare la classe Commands.*/
 public abstract class Utilities
 {
-	/**Prende una stringa e la restituisce con la prima lettera maiuscola.
-	 * @param lowerCaseString la stringa con la prima lettera in minuscolo.
+	/** Rende maiuscola la prima lettera della stringa, le altre in minuscolo
+	 * @param s la stringa in input
 	 * @return la stringa con la prima lettera in maiuscolo.*/
-	public static String capitalize(String lowerCaseString)
+	public static String capitalize(String s)
 	{
-		return lowerCaseString.substring(0,1).toUpperCase() + lowerCaseString.substring(1).toLowerCase();
+		return String.format("%s%s", s.substring(0, 1).toUpperCase(), s.substring(1).toLowerCase());
 	}
 	
 	/**Recupera gli ultimi messaggi dal canale testuale desiderato.

@@ -28,6 +28,7 @@ public class ThreadQuiz extends Thread
 		final EmbedBuilder embed = new EmbedBuilder();
 		final JsonObject j;
 		final String url = "https://opentdb.com/api.php?amount=1";
+		final String category, difficulty, type;
 		
 		j = Utilities.httpRequest(url);
 		
@@ -38,6 +39,10 @@ public class ThreadQuiz extends Thread
 		final JsonElement correctAnswer = jsonObject.getAsJsonObject().get("correct_answer");
 		final JsonArray incorrectAnswers = jsonObject.getAsJsonArray("incorrect_answers");
 		answer = correctAnswer.getAsString();
+		category = Utilities.capitalize(jsonObject.get("category").getAsString());
+		difficulty = Utilities.capitalize(jsonObject.get("difficulty").getAsString());
+		type = Utilities.capitalize(jsonObject.get("type").getAsString());
+		
 		
 		final List<JsonElement> allAnswers = new ArrayList<>();
 		allAnswers.add(correctAnswer);
@@ -58,9 +63,9 @@ public class ThreadQuiz extends Thread
 			sb.append(String.format("%d) %s\n", i+1, allAnswers.get(i).getAsString()));
 		}
 		
-		embed.addField("Category", jsonObject.get("category").getAsString(), true);
-		embed.addField("Difficulty", jsonObject.get("difficulty").getAsString(), true);
-		embed.addField("Type", jsonObject.get("type").getAsString(), true);
+		embed.addField("Category", category, true);
+		embed.addField("Difficulty", difficulty, true);
+		embed.addField("Type",  type, true);
 		embed.setDescription(sb.toString());
 		
 		actionRow = ActionRow.of(buttons);

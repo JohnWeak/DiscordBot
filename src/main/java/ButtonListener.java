@@ -12,18 +12,21 @@ class ButtonListener extends ListenerAdapter
 	@Override
 	public void onButtonInteraction(@NotNull ButtonInteractionEvent event)
 	{
-		final String m = event.getButton().getLabel().equals(ThreadQuiz.getAnswer()) ? "Correct Answer!" :
-			String.format("Wrong! The correct answer was: \"%s\".", ThreadQuiz.getAnswer());
+		final String answer = ThreadQuiz.getAnswer();
+		final String m = event.getButton().getLabel().equals(ThreadQuiz.getAnswer()) ?
+			String.format("Correct! The answer was \"%s\".", answer) :
+			String.format("Wrong! The correct answer was: \"%s\".", answer);
 
 		event.reply(m).queue(l ->
 		{
 			final List<ActionRow> actionRows = event.getMessage().getActionRows();
 			event.getInteraction().getChannel().editMessageComponentsById(
-			event.getId(),
-			actionRows.stream()
-					.map(ActionRow::asDisabled)
-					.collect(Collectors.toList())
+			event.getMessageId(),
+			event.getMessage().getActionRows().stream()
+				.map(ActionRow::asDisabled)
+				.collect(Collectors.toList())
 			).queue();
+			
 		});
 	}
 }
