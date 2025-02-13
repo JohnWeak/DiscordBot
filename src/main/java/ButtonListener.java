@@ -21,7 +21,6 @@ class ButtonListener extends ListenerAdapter
 
 		event.reply(m).queue(l ->
 		{
-			event.getMessage().editMessageEmbeds(new EmbedBuilder().setColor(Color.GRAY).build()).queue();
 			event.getInteraction().getChannel().editMessageComponentsById(
 			event.getMessageId(),
 			event.getMessage().getActionRows().stream()
