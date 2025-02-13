@@ -1,22 +1,21 @@
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import lombok.Getter;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.InteractionHook;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
-import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
+import java.util.List;
 
 public class ThreadQuiz extends Thread
 {
 	private final SlashCommandInteractionEvent event;
+	@Getter private static String answer;
 	
 	public ThreadQuiz(SlashCommandInteractionEvent event)
 	{
@@ -27,20 +26,42 @@ public class ThreadQuiz extends Thread
 	public void run()
 	{
 		final EmbedBuilder embed = new EmbedBuilder();
-		final String[] options = {"foo", "bar", "baz", "lor"};
+		final JsonObject j;
+		final String url = "https://opentdb.com/api.php?amount=1";
+		
+		j = Utilities.httpRequest(url);
+		
+		final JsonArray jsonArray = j.getAsJsonArray("results");
+		final JsonObject jsonObject = jsonArray.get(0).getAsJsonObject();
+		
+		final String question = jsonObject.getAsJsonObject().get("question").getAsString();
+		final JsonElement correctAnswer = jsonObject.getAsJsonObject().get("correct_answer");
+		final JsonArray incorrectAnswers = jsonObject.getAsJsonArray("incorrect_answers");
+		answer = correctAnswer.getAsString();
+		
+		final List<JsonElement> allAnswers = new ArrayList<>();
+		allAnswers.add(correctAnswer);
+		allAnswers.addAll(incorrectAnswers.asList());
+		
+		Collections.shuffle(allAnswers);
+		
 		final ArrayList<Button> buttons = new ArrayList<>();
 		final ActionRow actionRow;
+		final StringBuilder sb = new StringBuilder();
 		
 		embed.setTitle("test");
 		embed.setColor(Color.RED);
-		
-		for (int i = 0; i < options.length; i++)
+		sb.append(question).append("\n");
+		for (int i = 0; i < allAnswers.size(); i++)
 		{
-			final String risp = String.format("risposta%d", i+1);
-			
-			buttons.add(Button.primary(risp,options[i]));
-			embed.addField(risp, options[i], false);
+			buttons.add(Button.primary(String.valueOf(i), allAnswers.get(i).getAsString()));
+			sb.append(String.format("%d) %s\n", i+1, allAnswers.get(i).getAsString()));
 		}
+		
+		embed.setDescription(sb.toString());
+		embed.addField("Category", jsonObject.get("category").getAsString(), true);
+		embed.addField("Difficulty", jsonObject.get("difficulty").getAsString(), true);
+		embed.addField("Type", jsonObject.get("type").getAsString(), true);
 		
 		actionRow = ActionRow.of(buttons);
 		
@@ -50,17 +71,15 @@ public class ThreadQuiz extends Thread
 		.queue(l ->
 		{
 			final Timer timer = new Timer(true);
-			final ButtonListener listener = new ButtonListener(event);
-			final int fiveMinutes = 5 * 60 * 1000;
+			final ButtonListener listener = new ButtonListener();
+			final int timeout = 3 * 60 * 1000;
 			
 			event.getJDA().addEventListener(listener);
-			timer.schedule(new RemoveListenerTask(event, l, embed, actionRow), fiveMinutes);
+			timer.schedule(new RemoveListenerTask(event, l, embed, actionRow), timeout);
 			
 		});
 		
 	}
-	
-	
 }
 
 class RemoveListenerTask extends TimerTask

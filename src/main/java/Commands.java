@@ -1231,13 +1231,7 @@ public class Commands extends ListenerAdapter
 			}
 			case "test" ->
 			{
-				final ThreadQuiz tq = new ThreadQuiz(event);
-				
-				tq.start();
-				
-				
-				
-				// event.reply(handsOnHips()).queue();
+				 event.reply(handsOnHips()).queue();
 			}
 			case "calcolatrice" ->
 			{
@@ -1319,8 +1313,12 @@ public class Commands extends ListenerAdapter
 					});
 				});
 			}
-			
-			// case "" -> {}
+			case "quiz" ->
+			{
+				final ThreadQuiz tq = new ThreadQuiz(event);
+				
+				tq.start();
+			}
 			
 		}
 	} // fine onSlashCommand()

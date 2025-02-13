@@ -156,7 +156,6 @@ public abstract class Utilities
 		final HttpURLConnection connection;
 		try
 		{
-			final EmbedBuilder eb = new EmbedBuilder();
 			final URL url = URI.create(websiteAddress).toURL();
 			
 			connection = (HttpURLConnection) url.openConnection();

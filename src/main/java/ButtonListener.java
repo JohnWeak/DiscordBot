@@ -1,23 +1,28 @@
-import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.components.ActionRow;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Timer;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public
 class ButtonListener extends ListenerAdapter
 {
-	private final SlashCommandInteractionEvent quiz;
-	
-	public ButtonListener(SlashCommandInteractionEvent event)
-	{
-		quiz = event;
-	}
-	
 	@Override
 	public void onButtonInteraction(@NotNull ButtonInteractionEvent event)
 	{
-		System.out.printf("event:%s\nquiz:%s\nbutton:%s\n", event, quiz, event.getButton());
+		final String m = event.getButton().getLabel().equals(ThreadQuiz.getAnswer()) ? "Correct Answer!" :
+			String.format("Wrong! The correct answer was: \"%s\".", ThreadQuiz.getAnswer());
+		
+		event.reply(m).queue();
+		List<ActionRow> actionRows = event.getMessage().getActionRows();
+		event.getInteraction().getChannel().editMessageComponentsById(
+		event.getId(),
+		actionRows.stream()
+				.map(ActionRow::asDisabled)
+				.collect(Collectors.toList())
+		).queue();
+
 	}
 }
