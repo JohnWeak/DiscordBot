@@ -109,8 +109,8 @@ public class ThreadQuiz extends Thread
 					.setComponents(actionRow)
 				.queue();
 			}
-			
-			
+			final ButtonListener buttonListener = new ButtonListener(this);
+			event.getJDA().addEventListener(buttonListener);
 			
 		}
 		catch (Exception e) { new Error<Exception>().print(this,e); }
