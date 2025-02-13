@@ -170,7 +170,7 @@ public abstract class Utilities
 			
 			final HashMap<String, String> htmlCodes = new HashMap<>();
 			htmlCodes.put("&amp;", "&");
-			htmlCodes.put("&quot;", "\"");
+			htmlCodes.put("&quot;", "'");
 			htmlCodes.put("&#039;", "'");
 			htmlCodes.put("&nbsp;", " ");
 			htmlCodes.put("&egrave;", "è");
