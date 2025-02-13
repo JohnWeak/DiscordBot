@@ -1,12 +1,8 @@
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public
@@ -21,16 +17,19 @@ class ButtonListener extends ListenerAdapter
 		final String m = event.getButton().getLabel().equals(ThreadQuiz.getAnswer()) ?
 			String.format("Correct! The answer was \"%s\".\n-# %s", answer, author) :
 			String.format("%s is wrong. The correct answer was: \"%s\".\n-# %s", answer, correctAnswer, author);
-
-		event.reply(m).queue(l ->
+		
+		try
 		{
+			event.getMessage().reply(m).queue();
 			event.getInteraction().getChannel().editMessageComponentsById(
-			event.getMessageId(),
-			event.getMessage().getActionRows().stream()
-				.map(ActionRow::asDisabled)
-				.collect(Collectors.toList())
+					event.getMessageId(),
+					event.getMessage().getActionRows().stream()
+							.map(ActionRow::asDisabled)
+							.collect(Collectors.toList())
 			).queue();
-			
-		});
+		}catch (IllegalStateException e)
+		{
+			new Error<Exception>().print(this,e);
+		}
 	}
 }
