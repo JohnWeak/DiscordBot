@@ -14,15 +14,16 @@ class ButtonListener extends ListenerAdapter
 	{
 		final String m = event.getButton().getLabel().equals(ThreadQuiz.getAnswer()) ? "Correct Answer!" :
 			String.format("Wrong! The correct answer was: \"%s\".", ThreadQuiz.getAnswer());
-		
-		event.reply(m).queue();
-		List<ActionRow> actionRows = event.getMessage().getActionRows();
-		event.getInteraction().getChannel().editMessageComponentsById(
-		event.getId(),
-		actionRows.stream()
-				.map(ActionRow::asDisabled)
-				.collect(Collectors.toList())
-		).queue();
 
+		event.reply(m).queue(l ->
+		{
+			final List<ActionRow> actionRows = event.getMessage().getActionRows();
+			event.getInteraction().getChannel().editMessageComponentsById(
+			event.getId(),
+			actionRows.stream()
+					.map(ActionRow::asDisabled)
+					.collect(Collectors.toList())
+			).queue();
+		});
 	}
 }

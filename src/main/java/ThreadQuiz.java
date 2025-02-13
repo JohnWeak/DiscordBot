@@ -34,7 +34,7 @@ public class ThreadQuiz extends Thread
 		final JsonArray jsonArray = j.getAsJsonArray("results");
 		final JsonObject jsonObject = jsonArray.get(0).getAsJsonObject();
 		
-		final String question = jsonObject.getAsJsonObject().get("question").getAsString();
+		final String question = jsonObject.getAsJsonObject().get("question").getAsString().replace("&quot;", "\"");
 		final JsonElement correctAnswer = jsonObject.getAsJsonObject().get("correct_answer");
 		final JsonArray incorrectAnswers = jsonObject.getAsJsonArray("incorrect_answers");
 		answer = correctAnswer.getAsString();
@@ -49,19 +49,19 @@ public class ThreadQuiz extends Thread
 		final ActionRow actionRow;
 		final StringBuilder sb = new StringBuilder();
 		
-		embed.setTitle("test");
+		embed.setTitle(question);
 		embed.setColor(Color.RED);
-		sb.append(question).append("\n");
+		
 		for (int i = 0; i < allAnswers.size(); i++)
 		{
 			buttons.add(Button.primary(String.valueOf(i), allAnswers.get(i).getAsString()));
 			sb.append(String.format("%d) %s\n", i+1, allAnswers.get(i).getAsString()));
 		}
 		
-		embed.setDescription(sb.toString());
 		embed.addField("Category", jsonObject.get("category").getAsString(), true);
 		embed.addField("Difficulty", jsonObject.get("difficulty").getAsString(), true);
 		embed.addField("Type", jsonObject.get("type").getAsString(), true);
+		embed.setDescription(sb.toString());
 		
 		actionRow = ActionRow.of(buttons);
 		
