@@ -176,6 +176,14 @@ public abstract class Utilities
 		
 	}
 	
+	public static String replaceEntities(String s, Map<String, String> map)
+	{
+		for (Map.Entry<String, String> entry : map.entrySet())
+		{
+			s = s.replace(entry.getKey(), entry.getValue());
+		}
+		return s;
+	}
 	
 	
 	

@@ -29,19 +29,25 @@ public class ThreadQuiz extends Thread
 		final JsonObject j;
 		final String url = "https://opentdb.com/api.php?amount=1";
 		final String category, difficulty, type;
+		final HashMap<String, String> map = new HashMap<>();
+		map.put("&amp;", "&");
+		map.put("&quot;", "\"");
+		map.put("&#039;", "'");
+		map.put("&nbsp;", " ");
 		
 		j = Utilities.httpRequest(url);
 		
 		final JsonArray jsonArray = j.getAsJsonArray("results");
 		final JsonObject jsonObject = jsonArray.get(0).getAsJsonObject();
 		
-		final String question = jsonObject.getAsJsonObject().get("question").getAsString().replace("&quot;", "\"");
+		final String question = Utilities.replaceEntities(jsonObject.getAsJsonObject().get("question").getAsString(), map);
 		final JsonElement correctAnswer = jsonObject.getAsJsonObject().get("correct_answer");
 		final JsonArray incorrectAnswers = jsonObject.getAsJsonArray("incorrect_answers");
-		answer = correctAnswer.getAsString();
-		category = jsonObject.get("category").getAsString().replace("&amp;","&");
-		difficulty = Utilities.capitalize(jsonObject.get("difficulty").getAsString());
-		type = Utilities.capitalize(jsonObject.get("type").getAsString());
+		answer = Utilities.replaceEntities(correctAnswer.getAsString(), map);
+		
+		category = Utilities.replaceEntities(jsonObject.get("category").getAsString(), map);
+		difficulty = Utilities.replaceEntities(Utilities.capitalize(jsonObject.get("difficulty").getAsString()), map);
+		type = Utilities.replaceEntities(Utilities.capitalize(jsonObject.get("type").getAsString()), map);
 		
 		
 		final List<JsonElement> allAnswers = new ArrayList<>();
@@ -59,8 +65,9 @@ public class ThreadQuiz extends Thread
 		
 		for (int i = 0; i < allAnswers.size(); i++)
 		{
-			buttons.add(Button.primary(String.valueOf(i), allAnswers.get(i).getAsString()));
-			sb.append(String.format("• %s\n", allAnswers.get(i).getAsString()));
+			final String tempAnswer = Utilities.replaceEntities(allAnswers.get(i).getAsString(), map);
+			buttons.add(Button.primary(String.valueOf(i), tempAnswer));
+			sb.append(String.format("• %s\n", tempAnswer));
 		}
 		
 		embed.addField("Category", category, true);
@@ -85,6 +92,7 @@ public class ThreadQuiz extends Thread
 		});
 		
 	}
+	
 }
 
 class RemoveListenerTask extends TimerTask
