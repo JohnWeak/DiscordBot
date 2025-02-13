@@ -39,7 +39,7 @@ public class ThreadQuiz extends Thread
 		final JsonElement correctAnswer = jsonObject.getAsJsonObject().get("correct_answer");
 		final JsonArray incorrectAnswers = jsonObject.getAsJsonArray("incorrect_answers");
 		answer = correctAnswer.getAsString();
-		category = Utilities.capitalize(jsonObject.get("category").getAsString());
+		category = jsonObject.get("category").getAsString();
 		difficulty = Utilities.capitalize(jsonObject.get("difficulty").getAsString());
 		type = Utilities.capitalize(jsonObject.get("type").getAsString());
 		

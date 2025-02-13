@@ -213,7 +213,7 @@ public class Main
 			newCommand = new CommandDataImpl("barzelletta","lascia che il bot ti racconti una barzelletta");
 			commands.add(newCommand);
 			
-			newCommand = new CommandDataImpl("quiz", "il bot ti proporrà un quiz");
+			newCommand = new CommandDataImpl("quiz", "questo quiz non prevede alcun premio in denaro");
 			commands.add(newCommand);
 			
 			// newCommand = new CommandDataImpl("/refund","Ottieni un rimborso");

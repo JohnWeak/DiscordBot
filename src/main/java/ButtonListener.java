@@ -19,7 +19,6 @@ class ButtonListener extends ListenerAdapter
 
 		event.reply(m).queue(l ->
 		{
-			final List<ActionRow> actionRows = event.getMessage().getActionRows();
 			event.getInteraction().getChannel().editMessageComponentsById(
 			event.getMessageId(),
 			event.getMessage().getActionRows().stream()
