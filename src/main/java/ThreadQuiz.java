@@ -37,6 +37,9 @@ public class ThreadQuiz extends Thread
 		final String url = "https://opentdb.com/api.php?amount=1";
 		final String category, difficulty, type;
 		
+		try
+		{
+		
 		j = Utilities.httpRequest(url);
 		
 		final JsonArray jsonArray = j.getAsJsonArray("results");
@@ -94,6 +97,8 @@ public class ThreadQuiz extends Thread
 			
 		});
 		
+		}
+		catch (Exception e) { new Error<Exception>().print(this,e); }
 	}
 	
 }
