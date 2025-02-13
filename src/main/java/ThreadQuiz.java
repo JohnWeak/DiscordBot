@@ -3,10 +3,13 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import lombok.Getter;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.InteractionHook;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
+import net.dv8tion.jda.internal.interactions.component.ButtonImpl;
+import net.dv8tion.jda.internal.interactions.component.ButtonInteractionImpl;
 
 import java.awt.*;
 import java.util.*;
@@ -29,35 +32,28 @@ public class ThreadQuiz extends Thread
 		final JsonObject j;
 		final String url = "https://opentdb.com/api.php?amount=1";
 		final String category, difficulty, type;
-		final HashMap<String, String> htmlCodes = new HashMap<>();
-		htmlCodes.put("&amp;", "&");
-		htmlCodes.put("&quot;", "\"");
-		htmlCodes.put("&#039;", "'");
-		htmlCodes.put("&nbsp;", " ");
-		htmlCodes.put("&egrave;", "è");
-		htmlCodes.put("&eacute;", "é");
-		
 		
 		j = Utilities.httpRequest(url);
 		
 		final JsonArray jsonArray = j.getAsJsonArray("results");
 		final JsonObject jsonObject = jsonArray.get(0).getAsJsonObject();
 		
-		final String question = Utilities.replaceEntities(jsonObject.getAsJsonObject().get("question").getAsString(), htmlCodes);
+		final String question = jsonObject.getAsJsonObject().get("question").getAsString();
 		final JsonElement correctAnswer = jsonObject.getAsJsonObject().get("correct_answer");
 		final JsonArray incorrectAnswers = jsonObject.getAsJsonArray("incorrect_answers");
-		answer = Utilities.replaceEntities(correctAnswer.getAsString(), htmlCodes);
+		answer = correctAnswer.getAsString();
 		
-		category = Utilities.replaceEntities(jsonObject.get("category").getAsString(), htmlCodes);
-		difficulty = Utilities.replaceEntities(Utilities.capitalize(jsonObject.get("difficulty").getAsString()), htmlCodes);
-		type = Utilities.replaceEntities(Utilities.capitalize(jsonObject.get("type").getAsString()), htmlCodes);
+		category = jsonObject.get("category").getAsString();
+		difficulty = Utilities.capitalize(jsonObject.get("difficulty").getAsString());
+		type = Utilities.capitalize(jsonObject.get("type").getAsString());
 		
 		
 		final List<JsonElement> allAnswers = new ArrayList<>();
 		allAnswers.add(correctAnswer);
 		allAnswers.addAll(incorrectAnswers.asList());
 		
-		Collections.shuffle(allAnswers);
+		if (!type.equalsIgnoreCase("boolean"))
+			Collections.shuffle(allAnswers);
 		
 		final ArrayList<Button> buttons = new ArrayList<>();
 		final ActionRow actionRow;
@@ -68,7 +64,7 @@ public class ThreadQuiz extends Thread
 		
 		for (int i = 0; i < allAnswers.size(); i++)
 		{
-			final String tempAnswer = Utilities.replaceEntities(allAnswers.get(i).getAsString(), htmlCodes);
+			final String tempAnswer = allAnswers.get(i).getAsString();
 			buttons.add(Button.primary(String.valueOf(i), tempAnswer));
 			sb.append(String.format("• %s\n", tempAnswer));
 		}

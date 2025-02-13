@@ -1315,9 +1315,8 @@ public class Commands extends ListenerAdapter
 			}
 			case "quiz" ->
 			{
-				final ThreadQuiz tq = new ThreadQuiz(event);
-				
-				tq.start();
+				final ThreadQuiz quiz = new ThreadQuiz(event);
+				quiz.start();
 			}
 			
 		}

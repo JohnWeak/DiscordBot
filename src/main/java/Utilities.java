@@ -168,7 +168,17 @@ public abstract class Utilities
 				response.append(inputLine);
 			}
 			
-			return JsonParser.parseString(response.toString()).getAsJsonObject();
+			final HashMap<String, String> htmlCodes = new HashMap<>();
+			htmlCodes.put("&amp;", "&");
+			htmlCodes.put("&quot;", "\"");
+			htmlCodes.put("&#039;", "'");
+			htmlCodes.put("&nbsp;", " ");
+			htmlCodes.put("&egrave;", "è");
+			htmlCodes.put("&eacute;", "é");
+			
+			final String newString = replaceEntities(response.toString(), htmlCodes);
+			
+			return JsonParser.parseString(newString).getAsJsonObject();
 			
 		}catch (Exception e) { new Error<Exception>().print(Utilities.class, e); }
 		

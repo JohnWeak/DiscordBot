@@ -2,39 +2,59 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
+import net.dv8tion.jda.api.interactions.components.buttons.ButtonStyle;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 public
 class ButtonListener extends ListenerAdapter
 {
 	@Override
-	public void onButtonInteraction(@NotNull ButtonInteractionEvent event)
-	{
+	public void onButtonInteraction(@NotNull ButtonInteractionEvent event) {
 		final String m = getString(event);
 		
 		try
 		{
-			event.deferReply(true).queue(v ->
-			{
-				event.getHook().sendMessage(m).queue();
-				event.getInteraction().getChannel().editMessageComponentsById(
-					event.getMessageId(),
-					event.getMessage().getActionRows().stream()
-						.map(ActionRow::asDisabled)
-						.collect(Collectors.toList())
-				).queue();
-			});
+			event.reply(m).queue();
+			
+			final String clickedButtonId = event.getButton().getId();
+			
+			final List<ActionRow> updatedRows = event.getMessage().getActionRows().stream()
+				.map(row ->
+				{
+					final List<Button> updatedButtons = row.getButtons().stream()
+						.map(button ->
+						{
+							if (button.getId() != null && button.getId().equals(clickedButtonId))
+							{
+								return button.asDisabled().withStyle(ButtonStyle.SUCCESS);
+							}
+							else
+							{
+								return button.asDisabled();
+							}
+						})
+						.collect(Collectors.toList());
+						
+						return ActionRow.of(updatedButtons);
+					}).collect(Collectors.toList());
+			
+			event.getInteraction().getChannel()
+				.editMessageComponentsById(event.getMessageId(), updatedRows)
+				.queue();
 		} catch (IllegalStateException e) { new Error<Exception>().print(this, e); }
 	}
+	
 	
 	@NotNull
 	private String getString(@NotNull ButtonInteractionEvent event)
 	{
 		final String label = event.getButton().getLabel().toLowerCase();
 		final Member member = event.getMember();
-		final String author = member == null ? "" : member.getUser().getName();
+		final String author = member == null ? "" : member.getEffectiveName();
 		final String userAnswer = event.getButton().getLabel();
 		final String correctAnswer = ThreadQuiz.getAnswer();
 		final String m;
@@ -43,7 +63,7 @@ class ButtonListener extends ListenerAdapter
 		{
 			m = event.getButton().getLabel().equals(ThreadQuiz.getAnswer()) ?
 				String.format("Correct! It is %s.\n -# %s", correctAnswer, author) :
-					String.format("Wrong, it was %s.\n -# %s", correctAnswer, author);
+				String.format("Wrong, it was %s.\n -# %s", correctAnswer, author);
 		}
 		else
 		{
