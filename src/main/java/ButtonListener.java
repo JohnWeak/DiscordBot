@@ -77,8 +77,8 @@ class ButtonListener extends ListenerAdapter
 		if (label.contains("true") || label.contains("false"))
 		{
 			m = event.getButton().getLabel().equals(ThreadQuiz.getAnswer()) ?
-				String.format("Correct! It is %s.\n -# %s", correctAnswer, author) :
-				String.format("Wrong, it was %s.\n -# %s", correctAnswer, author);
+				String.format("Correct! It is %s.\n-# %s", correctAnswer, author) :
+				String.format("Wrong, it was %s.\n-# %s", correctAnswer, author);
 		}
 		else
 		{
