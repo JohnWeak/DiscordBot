@@ -369,15 +369,6 @@ public class Commands extends ListenerAdapter
 				} // fine if daily streak
 			} // fine if equals bot
 			
-			
-			if (authorID.equals(Utente.ID_BOWOT)) // self own
-			{
-				if (random.nextInt(1000) == 42) // 0,1%
-				{
-					message.reply("BOwOt vergognati").queue(lambda -> react("vergognati"));
-				}
-			}
-			
 			return;
 		} // fine if isBot
 		
@@ -1356,12 +1347,6 @@ public class Commands extends ListenerAdapter
 				event.replyChoices(options).queue();
 			} catch (Exception e) { new Error<Exception>().print(object,e);}
 		}
-	}
-	
-	@Override
-	public void onButtonInteraction(@NotNull ButtonInteractionEvent event)
-	{
-		event.editButton(event.getButton().asDisabled()).queue();
 	}
 	
 	/** Lancia una moneta */
