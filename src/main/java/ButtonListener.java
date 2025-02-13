@@ -14,19 +14,19 @@ class ButtonListener extends ListenerAdapter
 	{
 		final String m = getString(event);
 		
-		try {
-			event.deferReply(true).queue(v -> {
-			event.getHook().sendMessage(m).queue();
-			event.getInteraction().getChannel().editMessageComponentsById(
-				event.getMessageId(),
-				event.getMessage().getActionRows().stream()
-					.map(ActionRow::asDisabled)
-					.collect(Collectors.toList())
+		try
+		{
+			event.deferReply(true).queue(v ->
+			{
+				event.getHook().sendMessage(m).queue();
+				event.getInteraction().getChannel().editMessageComponentsById(
+					event.getMessageId(),
+					event.getMessage().getActionRows().stream()
+						.map(ActionRow::asDisabled)
+						.collect(Collectors.toList())
 				).queue();
 			});
-		} catch (IllegalStateException e) {
-			new Error<Exception>().print(this, e);
-		}
+		} catch (IllegalStateException e) { new Error<Exception>().print(this, e); }
 	}
 	
 	@NotNull
