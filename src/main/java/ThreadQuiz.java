@@ -39,7 +39,7 @@ public class ThreadQuiz extends Thread
 		final JsonElement correctAnswer = jsonObject.getAsJsonObject().get("correct_answer");
 		final JsonArray incorrectAnswers = jsonObject.getAsJsonArray("incorrect_answers");
 		answer = correctAnswer.getAsString();
-		category = jsonObject.get("category").getAsString();
+		category = jsonObject.get("category").getAsString().replace("&amp;","&");
 		difficulty = Utilities.capitalize(jsonObject.get("difficulty").getAsString());
 		type = Utilities.capitalize(jsonObject.get("type").getAsString());
 		
@@ -60,7 +60,7 @@ public class ThreadQuiz extends Thread
 		for (int i = 0; i < allAnswers.size(); i++)
 		{
 			buttons.add(Button.primary(String.valueOf(i), allAnswers.get(i).getAsString()));
-			sb.append(String.format("%d) %s\n", i+1, allAnswers.get(i).getAsString()));
+			sb.append(String.format("• %s\n", allAnswers.get(i).getAsString()));
 		}
 		
 		embed.addField("Category", category, true);
