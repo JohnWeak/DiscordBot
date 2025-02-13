@@ -77,7 +77,7 @@ public class ThreadQuiz extends Thread
 		{
 			final Timer timer = new Timer(true);
 			final ButtonListener listener = new ButtonListener();
-			final int timeout = 3 * 60 * 1000;
+			final int timeout = 2 * 60 * 1000;
 			
 			event.getJDA().addEventListener(listener);
 			timer.schedule(new RemoveListenerTask(event, l, embed, actionRow), timeout);

@@ -1,8 +1,10 @@
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +21,7 @@ class ButtonListener extends ListenerAdapter
 
 		event.reply(m).queue(l ->
 		{
+			event.getMessage().editMessageEmbeds(new EmbedBuilder().setColor(Color.GRAY).build()).queue();
 			event.getInteraction().getChannel().editMessageComponentsById(
 			event.getMessageId(),
 			event.getMessage().getActionRows().stream()
