@@ -1,4 +1,5 @@
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
@@ -14,10 +15,12 @@ class ButtonListener extends ListenerAdapter
 	@Override
 	public void onButtonInteraction(@NotNull ButtonInteractionEvent event)
 	{
-		final String answer = ThreadQuiz.getAnswer();
+		final String author = event.getInteraction().getMember() == null ? "" : event.getInteraction().getMember().getUser().getName();
+		final String answer = event.getButton().getLabel();
+		final String correctAnswer = ThreadQuiz.getAnswer();
 		final String m = event.getButton().getLabel().equals(ThreadQuiz.getAnswer()) ?
-			String.format("Correct! The answer was \"%s\".", answer) :
-			String.format("Wrong! The correct answer was: \"%s\".", answer);
+			String.format("Correct! The answer was \"%s\".\n-# %s", answer, author) :
+			String.format("%s is wrong. The correct answer was: \"%s\".", answer, correctAnswer);
 
 		event.reply(m).queue(l ->
 		{

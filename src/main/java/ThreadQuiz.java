@@ -34,6 +34,9 @@ public class ThreadQuiz extends Thread
 		map.put("&quot;", "\"");
 		map.put("&#039;", "'");
 		map.put("&nbsp;", " ");
+		map.put("&egrave;","è");
+		map.put("&eacute;","é");
+		
 		
 		j = Utilities.httpRequest(url);
 		
