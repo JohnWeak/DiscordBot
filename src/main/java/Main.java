@@ -63,7 +63,7 @@ public class Main
 			);
 			commands.add(newCommand);
 			
-			newCommand = new CommandDataImpl("pokemon", "Genera un incontro con un pokemon!")
+			newCommand = new CommandDataImpl("pokemon", "Ottieni informazioni sui pokemon")
 				.addOptions(new OptionData(
 					OptionType.STRING,
 					"nome",
