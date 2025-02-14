@@ -1,10 +1,8 @@
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
-import org.jsoup.parser.Parser;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

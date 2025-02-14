@@ -1,10 +1,10 @@
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import lombok.Getter;
 import lombok.Setter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import java.awt.*;
 import java.io.*;
@@ -30,8 +30,7 @@ public class Pokemon
 	private static final Random random = new Random();
 	private final boolean pokedex;
 	public static final int ALL = 898;
-	private final JSONArray jsonArray = new JSONArray();
-	private static final JSONParser jsonParser = new JSONParser();
+	private final JsonArray jsonArray = new JsonArray();
 	private EmbedBuilder embedBuilder = null;
 	private ThreadPokemon t = null;
 	
@@ -49,7 +48,7 @@ public class Pokemon
 	@Getter @Setter private boolean catturabile = false;
 	@Getter @Setter private User owner;
 	@Getter @Setter private int id;
-	private JSONArray types;
+	private JsonArray types;
 	
 	// private static int pokemon_id = 261; -> Poochyena
 	// https://pokeapi.co/api/v2/pokemon/261/
@@ -120,20 +119,20 @@ public class Pokemon
 		
 		
 		// prendere i dati dal .json
-		final JSONObject data = getJsonObject(jsonFile);
+		final JsonObject data = getJsonObject(jsonFile);
 		
-		dexNumber = (String) data.get("id");
-		nome = Utilities.capitalize((String) data.get("name"));
-		types = (JSONArray) data.get("types");
-		descrizione = (String) data.get("flavor_text");
-		generazione = (String) data.get("generation");
+		dexNumber = data.get("id").getAsString();
+		nome = Utilities.capitalize(data.get("name").getAsString());
+		types = data.get("types").getAsJsonArray();
+		descrizione = data.get("flavor_text").getAsString();
+		generazione = data.get("generation").getAsString();
 		
-		tipo[0] = (String) types.get(0);
+		tipo[0] = types.get(0).getAsString();
 		tipo[0] = tipo[0].toUpperCase();
 		
 		if (types.size() > 1)
 		{
-			tipo[1] = (String) types.get(1);
+			tipo[1] = types.get(1).getAsString();
 			tipo[1] = tipo[1].toUpperCase();
 		}
 		
@@ -163,7 +162,7 @@ public class Pokemon
 	} // fine spawn()
 	
 	
-	private static JSONObject getJsonObject(File f)
+	private static JsonObject getJsonObject(File f)
 	{
 		String line;
 		final StringBuilder sb = new StringBuilder();
@@ -185,10 +184,10 @@ public class Pokemon
 			error.print(object, e);
 		}
 		
-		JSONObject rtrn = null;
+		JsonObject rtrn = null;
 		try
 		{
-			rtrn = (JSONObject) jsonParser.parse(String.valueOf(sb));
+			rtrn = JsonParser.parseString(sb.toString()).getAsJsonObject();
 		}catch (Exception e)
 		{
 			error.print(object,e);

@@ -1,6 +1,4 @@
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
@@ -13,7 +11,6 @@ import net.dv8tion.jda.api.entities.emoji.CustomEmoji;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
@@ -25,22 +22,12 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.AutoCompleteQuery;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
-import net.dv8tion.jda.api.interactions.components.ActionRow;
-import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.requests.CloseCode;
-import net.dv8tion.jda.internal.interactions.component.ButtonImpl;
 import org.jetbrains.annotations.NotNull;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.awt.*;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
 import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -1558,8 +1545,7 @@ public class Commands extends ListenerAdapter
 	/**Ottieni un resoconto della sparatoria più recente in USA oppure ottieni un resoconto di una sparatoria scelta casualmente nell'anno da te specificato.*/
 	private EmbedBuilder massShooting(int anno)
 	{
-		final JSONArray jsonArray;
-		final JSONParser jsonParser = new JSONParser();
+		final JsonArray jsonArray;
 		int mortiAnno = 0;
 		final String avatar = "https://www.massshootingtracker.site/logo-400.png";
 		final String massShootingSite = "https://www.massshootingtracker.site/";
@@ -1568,24 +1554,15 @@ public class Commands extends ListenerAdapter
 		try
 		{
 			final String link = String.format("https://mass-shooting-tracker-data.s3.us-east-2.amazonaws.com/%d-data.json", anno);
-			final URL url = URI.create(link).toURL();
+			final JsonObject j = Utilities.httpRequest(link);
+			jsonArray = j.getAsJsonArray();
 			
-			final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestProperty("Accept", "application/json");
+			final ArrayList<JsonObject> objs = new ArrayList<>();
 			
-			final BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			final StringBuilder response = new StringBuilder();
-			String inputLine;
-			while ((inputLine = in.readLine()) != null)
-				response.append(inputLine);
-			
-			jsonArray = (JSONArray) jsonParser.parse(String.valueOf(response));
-			final ArrayList<JSONObject> objs = new ArrayList<>();
-			
-			for (Object o : jsonArray)
+			for (JsonElement o : jsonArray)
 			{
-				objs.add((JSONObject) o);
-				mortiAnno += Integer.parseInt((String)((JSONObject) o).get("killed"));
+				objs.add(o.getAsJsonObject());
+				mortiAnno += Integer.parseInt((o.getAsJsonObject()).get("killed").getAsString());
 			}
 			
 			final int scelta = (anno != currentYear ? random.nextInt(objs.size()) : 0);
@@ -1593,11 +1570,11 @@ public class Commands extends ListenerAdapter
 			if (objs.isEmpty())
 				return null;
 			
-			final String citta = (String) objs.get(scelta).get("city");
-			final String stato = (String) objs.get(scelta).get("state");
-			final String morti = (String) objs.get(scelta).get("killed");
-			final String feriti = (String) objs.get(scelta).get("wounded");
-			final String x = (String) (objs).get(scelta).get("date"); // es.: 2022-01-05T12:23:34
+			final String citta = objs.get(scelta).get("city").getAsString();
+			final String stato = objs.get(scelta).get("state").getAsString();
+			final String morti = objs.get(scelta).get("killed").getAsString();
+			final String feriti = objs.get(scelta).get("wounded").getAsString();
+			final String x = (objs).get(scelta).get("date").getAsString(); // es.: 2022-01-05T12:23:34
 			final String[] annoMeseGiorno = x.split("T")[0].split("-");
 			final String year = annoMeseGiorno[0];
 			final String month = annoMeseGiorno[1];
@@ -1647,7 +1624,7 @@ public class Commands extends ListenerAdapter
 				.setColor(Color.RED)
 			;
 		}
-		catch (IOException | ParseException e)
+		catch (Exception e)
 		{
 			error.print(object, e);
 		}
