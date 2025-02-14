@@ -1,3 +1,4 @@
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.dv8tion.jda.api.entities.Message;
@@ -147,8 +148,9 @@ public abstract class Utilities
 	 * @param websiteAddress l'indirizzo URL del sito da contattatare
 	 * @return <code>JsonObject</code> della risposta <br/><code>null</code> in caso di fallimento
 	 * @see JsonObject
+	 * @see JsonElement
 	 * */
-	public static JsonObject httpRequest(String websiteAddress)
+	public static JsonElement httpRequest(String websiteAddress)
 	{
 		if (websiteAddress == null || websiteAddress.isBlank()) { return null; }
 		
@@ -170,7 +172,7 @@ public abstract class Utilities
 			final HashMap<String, String> htmlCodes = htmlCodes();
 			final String newString = replaceEntities(response.toString(), htmlCodes);
 			// System.out.printf("\n\n\nRAW RESPONSE:\n%s\n\nSTRING WITHOUT HTML CODES:\n%s\n\n\n", response, newString);
-			return JsonParser.parseString(newString).getAsJsonObject();
+			return JsonParser.parseString(newString);
 			
 		}catch (Exception e) { new Error<Exception>().print(Utilities.class, e); }
 		

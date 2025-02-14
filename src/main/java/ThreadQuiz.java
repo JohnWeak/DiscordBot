@@ -42,7 +42,7 @@ public class ThreadQuiz extends Thread
 			int seconds = 1;
 			do
 			{
-				j = Utilities.httpRequest(url);
+				j = Utilities.httpRequest(url).getAsJsonObject();
 				if (j == null)
 				{
 					Thread.sleep(1000 * (long) seconds);

@@ -1253,7 +1253,7 @@ public class Commands extends ListenerAdapter
 				if (!error && (random.nextInt(4) == 0))
 				{
 					final String stringURL = String.format("http://www.numbersapi.com/%d?json", (int)result);
-					final JsonObject j = Utilities.httpRequest(stringURL);
+					final JsonObject j = Utilities.httpRequest(stringURL).getAsJsonObject();
 					
 					final boolean found = j.get("found").getAsBoolean();
 					if (!found) break;
@@ -1268,7 +1268,7 @@ public class Commands extends ListenerAdapter
 				final EmbedBuilder embed = new EmbedBuilder();
 				final String url = "https://official-joke-api.appspot.com/random_joke";
 				final String setup, punchline;
-				final JsonObject j = Utilities.httpRequest(url);
+				final JsonObject j = Utilities.httpRequest(url).getAsJsonObject();
 				
 				setup = j.get("setup").getAsString();
 				punchline = j.get("punchline").getAsString();
@@ -1554,8 +1554,7 @@ public class Commands extends ListenerAdapter
 		try
 		{
 			final String link = String.format("https://mass-shooting-tracker-data.s3.us-east-2.amazonaws.com/%d-data.json", anno);
-			final JsonObject j = Utilities.httpRequest(link);
-			jsonArray = j.getAsJsonArray();
+			jsonArray = Utilities.httpRequest(link).getAsJsonArray();
 			
 			final ArrayList<JsonObject> objs = new ArrayList<>();
 			
