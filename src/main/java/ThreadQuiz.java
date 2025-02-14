@@ -66,11 +66,23 @@ public class ThreadQuiz extends Thread
 			
 			
 			final List<JsonElement> allAnswers = new ArrayList<>();
-			allAnswers.add(correctAnswer);
-			allAnswers.addAll(incorrectAnswers.asList());
 			
-			if (!type.equalsIgnoreCase("boolean"))
+			if (type.equalsIgnoreCase("boolean"))
+			{
+				allAnswers.addAll(incorrectAnswers.asList());
+				allAnswers.add(correctAnswer);
+				
+				if (correctAnswer.getAsBoolean())
+				{
+					Collections.reverse(allAnswers);
+				}
+			}
+			else
+			{
+				allAnswers.add(correctAnswer);
+				allAnswers.addAll(incorrectAnswers.asList());
 				Collections.shuffle(allAnswers);
+			}
 			
 			final ArrayList<Button> buttons = new ArrayList<>();
 			final ActionRow actionRow;
@@ -93,22 +105,13 @@ public class ThreadQuiz extends Thread
 			
 			actionRow = ActionRow.of(buttons);
 			
-			if (seconds > 1)
-			{
-				event.deferReply().queue();
-				
-				event.getHook()
-					.editOriginalEmbeds(embed.build())
-					.setComponents(actionRow)
-				.queue();
-			}
-			else
-			{
-				event
-					.replyEmbeds(embed.build())
-					.setComponents(actionRow)
-				.queue();
-			}
+			event.deferReply().queue();
+			
+			event.getHook()
+				.editOriginalEmbeds(embed.build())
+				.setComponents(actionRow)
+			.queue();
+			
 			final ButtonListener buttonListener = new ButtonListener(this);
 			event.getJDA().addEventListener(buttonListener);
 			

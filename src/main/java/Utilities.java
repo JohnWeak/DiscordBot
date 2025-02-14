@@ -177,7 +177,7 @@ public abstract class Utilities
 			htmlCodes.put("&eacute;", "é");
 			
 			final String newString = replaceEntities(response.toString(), htmlCodes);
-			System.out.printf("\n\n\nRAW RESPONSE:\n%s\n\nSTRING WITHOUT HTML CODES:\n%s\n\n\n", response, newString);
+			// System.out.printf("\n\n\nRAW RESPONSE:\n%s\n\nSTRING WITHOUT HTML CODES:\n%s\n\n\n", response, newString);
 			return JsonParser.parseString(newString).getAsJsonObject();
 			
 		}catch (Exception e) { new Error<Exception>().print(Utilities.class, e); }
@@ -186,6 +186,9 @@ public abstract class Utilities
 		
 	}
 	
+	/**@param s la stringa in input
+	 * @param map la map contenente gli elementi da sostituire nella stringa
+	 * @return la stringa con gli elementi sostituiti*/
 	public static String replaceEntities(String s, Map<String, String> map)
 	{
 		for (Map.Entry<String, String> entry : map.entrySet())
