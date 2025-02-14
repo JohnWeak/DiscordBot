@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
+import org.jsoup.parser.Parser;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -168,16 +169,11 @@ public abstract class Utilities
 				response.append(inputLine);
 			}
 			
-			final HashMap<String, String> htmlCodes = new HashMap<>();
-			htmlCodes.put("&amp;", "&");
-			htmlCodes.put("&quot;", "'");
-			htmlCodes.put("&#039;", "'");
-			htmlCodes.put("&nbsp;", " ");
-			htmlCodes.put("&egrave;", "è");
-			htmlCodes.put("&eacute;", "é");
+			// final HashMap<String, String> htmlCodes = htmlCodes();
 			
-			final String newString = replaceEntities(response.toString(), htmlCodes);
-			// System.out.printf("\n\n\nRAW RESPONSE:\n%s\n\nSTRING WITHOUT HTML CODES:\n%s\n\n\n", response, newString);
+			final String newString =  Parser.unescapeEntities(response.toString(), false);
+			// replaceEntities(response.toString(), htmlCodes);
+			System.out.printf("\n\n\nRAW RESPONSE:\n%s\n\nSTRING WITHOUT HTML CODES:\n%s\n\n\n", response, newString);
 			return JsonParser.parseString(newString).getAsJsonObject();
 			
 		}catch (Exception e) { new Error<Exception>().print(Utilities.class, e); }
@@ -198,7 +194,31 @@ public abstract class Utilities
 		return s;
 	}
 	
-	
+	private static HashMap<String, String> htmlCodes()
+	{
+		final HashMap<String, String> htmlCodes = new HashMap<>();
+		htmlCodes.put("&amp;", "&");
+		htmlCodes.put("&quot;", "'");
+		htmlCodes.put("&#039;", "'");
+		htmlCodes.put("&nbsp;", " ");
+		
+		htmlCodes.put("&agrave;", "à");
+		htmlCodes.put("&aacute;", "á");
+		
+		htmlCodes.put("&egrave;", "è");
+		htmlCodes.put("&eacute;", "é");
+		
+		htmlCodes.put("&igrave;", "ì");
+		htmlCodes.put("&iacute;", "í");
+		
+		htmlCodes.put("&ograve;", "ò");
+		htmlCodes.put("&oacute;", "ó");
+		
+		htmlCodes.put("&ugrave;", "ù");
+		htmlCodes.put("&uacute;", "ú");
+		
+		return htmlCodes;
+	}
 	
 	
 } // fine classe Utilities
