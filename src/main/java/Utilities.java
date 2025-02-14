@@ -169,11 +169,9 @@ public abstract class Utilities
 				response.append(inputLine);
 			}
 			
-			// final HashMap<String, String> htmlCodes = htmlCodes();
-			
-			final String newString =  Parser.unescapeEntities(response.toString(), false);
-			// replaceEntities(response.toString(), htmlCodes);
-			System.out.printf("\n\n\nRAW RESPONSE:\n%s\n\nSTRING WITHOUT HTML CODES:\n%s\n\n\n", response, newString);
+			final HashMap<String, String> htmlCodes = htmlCodes();
+			final String newString = replaceEntities(response.toString(), htmlCodes);
+			// System.out.printf("\n\n\nRAW RESPONSE:\n%s\n\nSTRING WITHOUT HTML CODES:\n%s\n\n\n", response, newString);
 			return JsonParser.parseString(newString).getAsJsonObject();
 			
 		}catch (Exception e) { new Error<Exception>().print(Utilities.class, e); }
