@@ -1355,7 +1355,7 @@ public class Commands extends ListenerAdapter
 			"\uD83C\uDDF2", "\uD83C\uDDF3", "\uD83C\uDDF4", "\uD83C\uDDF5", "\uD83C\uDDF6", "\uD83C\uDDF7",
 			"\uD83C\uDDF8", "\uD83C\uDDF9", "\uD83C\uDDFA", "\uD83C\uDDFB", "\uD83C\uDDFC", "\uD83C\uDDFD",
 			"\uD83C\uDDFE", "\uD83C\uDDFF"
-		}; // array di lettere emoji A -> Z
+		}; // array di lettere emoji [A] -> [Z]
 		
 		final StringBuilder title = new StringBuilder();
 		final StringBuilder descrizione = new StringBuilder();
@@ -1519,8 +1519,8 @@ public class Commands extends ListenerAdapter
 		final String[] risposte =
 		{
 			"Sì",
-			"È certo",
-			"È decisamente un sì",
+			"Certamente",
+			"Assolutamente sì",
 			"Senza dubbio",
 			"Puoi contarci",
 			"Probabile",
