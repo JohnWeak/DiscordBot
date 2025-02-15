@@ -21,7 +21,7 @@ public class Card
 	
 	public Card()
 	{
-		String[] linkTemp = {"https://www.deckofcardsapi.com/static/img/", "valore", "seme", ".png"};
+		final String[] linkTemp = {"https://www.deckofcardsapi.com/static/img/", "valore", "seme", ".png"};
 		seme = semi[random.nextInt(4)];
 		valore = valori[random.nextInt(13)];
 		
@@ -44,7 +44,7 @@ public class Card
 			default -> null;
 		};
 		
-		link = String.format("%s%s%s%s",linkTemp[0], linkTemp[1], linkTemp[2], linkTemp[3]);
+		link = String.format("%s%s%s%s", linkTemp[0], linkTemp[1], linkTemp[2], linkTemp[3]);
 		
 	} // fine costruttore
 	

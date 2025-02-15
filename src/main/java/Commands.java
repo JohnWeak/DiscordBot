@@ -963,87 +963,87 @@ public class Commands extends ListenerAdapter
 					});
 				});
 			}
-			case "history" ->
-			{
-				final int MAX = 10;
-				final List<Message> history, enigmosHistory, gionsHistory;
-				
-				history = canaleBot.getHistory()
-					.retrievePast(MAX)
-				.complete();
-				
-				final String romeString = "Europe/Rome";
-				final ZoneId romeZone = ZoneId.of(romeString);
-				final LocalDate oggi = LocalDate.now(romeZone);
-				
-				enigmosHistory = history
-					.stream().filter(message ->
-						message.getAuthor().getId().equals(Utente.ID_ENIGMO) &&
-						message.getTimeCreated().atZoneSameInstant(romeZone).toLocalDate().equals(oggi) &&
-						message.getContentRaw().strip().toLowerCase().contains("owo daily")
-					)
-				.toList();
-				
-				
-				gionsHistory = history
-					.stream()
-					.filter(message ->
-						message.getAuthor().getId().equals(Utente.ID_GION) &&
-						message.getTimeCreated().atZoneSameInstant(romeZone).toLocalDate().equals(oggi) &&
-						message.getContentRaw().strip().toLowerCase().contains("owo daily")
-					)
-				.toList();
-				
-				
-				final StringBuilder sb = new StringBuilder();
-				final String pattern = "{\n%s: \"%s\"\n%s\n}\n\n";
-				sb.append("TUTTA LA STORIA:\n");
-				for (Message m : history)
-				{
-					sb.append(String.format(pattern, m.getAuthor().getName(), m.getContentRaw(), m.getTimeCreated()));
-				}
-				
-				sb.append("\nI MESSAGGI DEL SIGNOR ENIGMO:\n");
-				for (Message m : enigmosHistory)
-				{
-					sb.append(String.format(pattern, m.getAuthor().getName(), m.getContentRaw(), m.getTimeCreated()));
-				}
-				
-				sb.append("\nI MESSAGGI DI GION:\n");
-				for (Message m : gionsHistory)
-				{
-					sb.append(String.format(pattern, m.getAuthor().getName(), m.getContentRaw(), m.getTimeCreated()));
-				}
-				sb.append("\nFINE DELLA STORIA.\n\n");
-				
-				event.reply("Check your dms my friend").setEphemeral(true).queue();
-				
-				List<String> chunks = new ArrayList<>();
-				StringBuilder sbCopy = new StringBuilder(sb); // Copia per sicurezza, si sa mai
-				final int maxChunkSize = 2000;
-				
-				while (!sbCopy.isEmpty())
-				{
-					if (sbCopy.length() > maxChunkSize)
-					{
-						chunks.add(sbCopy.substring(0, maxChunkSize));
-						sbCopy.delete(0, maxChunkSize);
-					} else
-					{
-						chunks.add(sbCopy.toString());
-						sbCopy.setLength(0);
-					}
-				}
-				
-				for (String s : chunks)
-					gion.send(s);
-				
-			}
+//			case "history" ->
+//			{
+//				final int MAX = 10;
+//				final List<Message> history, enigmosHistory, gionsHistory;
+//
+//				history = canaleBot.getHistory()
+//					.retrievePast(MAX)
+//				.complete();
+//
+//				final String romeString = "Europe/Rome";
+//				final ZoneId romeZone = ZoneId.of(romeString);
+//				final LocalDate oggi = LocalDate.now(romeZone);
+//
+//				enigmosHistory = history
+//					.stream().filter(message ->
+//						message.getAuthor().getId().equals(Utente.ID_ENIGMO) &&
+//						message.getTimeCreated().atZoneSameInstant(romeZone).toLocalDate().equals(oggi) &&
+//						message.getContentRaw().strip().toLowerCase().contains("owo daily")
+//					)
+//				.toList();
+//
+//
+//				gionsHistory = history
+//					.stream()
+//					.filter(message ->
+//						message.getAuthor().getId().equals(Utente.ID_GION) &&
+//						message.getTimeCreated().atZoneSameInstant(romeZone).toLocalDate().equals(oggi) &&
+//						message.getContentRaw().strip().toLowerCase().contains("owo daily")
+//					)
+//				.toList();
+//
+//
+//				final StringBuilder sb = new StringBuilder();
+//				final String pattern = "{\n%s: \"%s\"\n%s\n}\n\n";
+//				sb.append("TUTTA LA STORIA:\n");
+//				for (Message m : history)
+//				{
+//					sb.append(String.format(pattern, m.getAuthor().getName(), m.getContentRaw(), m.getTimeCreated()));
+//				}
+//
+//				sb.append("\nI MESSAGGI DEL SIGNOR ENIGMO:\n");
+//				for (Message m : enigmosHistory)
+//				{
+//					sb.append(String.format(pattern, m.getAuthor().getName(), m.getContentRaw(), m.getTimeCreated()));
+//				}
+//
+//				sb.append("\nI MESSAGGI DI GION:\n");
+//				for (Message m : gionsHistory)
+//				{
+//					sb.append(String.format(pattern, m.getAuthor().getName(), m.getContentRaw(), m.getTimeCreated()));
+//				}
+//				sb.append("\nFINE DELLA STORIA.\n\n");
+//
+//				event.reply("Check your dms my friend").setEphemeral(true).queue();
+//
+//				List<String> chunks = new ArrayList<>();
+//				StringBuilder sbCopy = new StringBuilder(sb); // Copia per sicurezza, si sa mai
+//				final int maxChunkSize = 2000;
+//
+//				while (!sbCopy.isEmpty())
+//				{
+//					if (sbCopy.length() > maxChunkSize)
+//					{
+//						chunks.add(sbCopy.substring(0, maxChunkSize));
+//						sbCopy.delete(0, maxChunkSize);
+//					} else
+//					{
+//						chunks.add(sbCopy.toString());
+//						sbCopy.setLength(0);
+//					}
+//				}
+//
+//				for (String s : chunks)
+//					gion.send(s);
+//
+//			}
 			case "coinflip" ->
 			{
-				final int minDelay = 1000, maxDelay = 3000;
+				final int minDelay = 1000, maxDelay = 2500;
 				
-				event.deferReply(false).queue();
+				event.deferReply().queue();
 				final Timer timer = new Timer();
 				final TimerTask task = new TimerTask()
 				{
@@ -1203,7 +1203,7 @@ public class Commands extends ListenerAdapter
 					
 					embed.setColor(Color.GRAY);
 					embed.setDescription(String.format("La magica palla 8 🎱 risponde:\n`%s`.", response));
-					embed.setFooter("Insoddisfatto della risposta? Usa il comando /refund per un rimborso!");
+					embed.setFooter("Insoddisfatto? Usa il comando /refund per un rimborso!");
 					l.editOriginalEmbeds(embed.build()).queue();
 				});
 			}
