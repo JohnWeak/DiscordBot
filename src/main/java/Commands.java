@@ -1314,7 +1314,7 @@ public class Commands extends ListenerAdapter
 					final JsonArray allNationsArray = JsonParser.parseString(nations).getAsJsonArray();
 					final JsonObject country = allNationsArray.get(random.nextInt(allNationsArray.size())).getAsJsonObject();
 					final JsonObject currency;
-					final String commonName, officialName, cca3, footer, landlocked, image;
+					final String commonName, officialName, cca3, footer, landlocked, image, population;
 					final JsonArray continents;
 					final Set<String> keys;
 					String nomeMoneta="", simboloMoneta="";
@@ -1327,6 +1327,7 @@ public class Commands extends ListenerAdapter
 					landlocked = country.get("landlocked").getAsString().equals("true") ? "Sì" : "No";
 					image = country.get("coatOfArms") != null? country.get("coatOfArms").getAsJsonObject().get("svg").getAsString() : "";
 					currency = country.get("currencies").getAsJsonObject();
+					population = String.format("%,d", country.get("population").getAsInt()).replace(",",".");
 					keys = currency.keySet();
 					for (String key : keys)
 					{
@@ -1346,7 +1347,7 @@ public class Commands extends ListenerAdapter
 					embed.setThumbnail(country.get("flags").getAsJsonObject().get("png").getAsString());
 					embed.setImage(image);
 					embed.addField("Capitale",country.get("capital").getAsJsonArray().get(0).getAsString(),true);
-					embed.addField("Popolazione",country.get("population").getAsString(),true);
+					embed.addField("Popolazione",population,true);
 					embed.addField("Landlocked",landlocked,true);
 					embed.setFooter(footer);
 					
