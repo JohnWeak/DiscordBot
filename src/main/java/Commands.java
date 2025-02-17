@@ -1305,7 +1305,7 @@ public class Commands extends ListenerAdapter
 			}
 			case "trivia" ->
 			{
-				final String fileName = "nations.json";
+				final String fileName = "./src/main/java/nations.json";
 				final File f = new File(fileName);
 				final EmbedBuilder embed = new EmbedBuilder();
 				try
