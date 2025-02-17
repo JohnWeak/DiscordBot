@@ -216,6 +216,9 @@ public class Main
 			newCommand = new CommandDataImpl("quiz", "questo quiz non prevede alcun premio in denaro");
 			commands.add(newCommand);
 			
+			newCommand = new CommandDataImpl("trivia","il bot ti darà informazioni su una nazione");
+			commands.add(newCommand);
+			
 			// newCommand = new CommandDataImpl("/refund","Ottieni un rimborso");
 			// commands.add(newCommand);
 			

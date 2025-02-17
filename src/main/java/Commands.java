@@ -258,8 +258,6 @@ public class Commands extends ListenerAdapter
 			messageID = event.getMessageIdLong();
 			message = channel.getHistoryAround(messageID,1).complete().getMessageById(messageID);
 			
-			// gion.send(messageID + "\n" + message);
-			
 			if (emote.getType().equals(Emoji.Type.UNICODE))
 			{
 				message.addReaction(Emoji.fromUnicode(emote.getAsReactionCode())).queue();
@@ -1304,6 +1302,63 @@ public class Commands extends ListenerAdapter
 			{
 				final ThreadQuiz quiz = new ThreadQuiz(event);
 				quiz.start();
+			}
+			case "trivia" ->
+			{
+				final String fileName = "nations.json";
+				final File f = new File(fileName);
+				final EmbedBuilder embed = new EmbedBuilder();
+				try
+				{
+					final String nations = new String(Files.readAllBytes(f.toPath()));
+					final JsonArray allNationsArray = JsonParser.parseString(nations).getAsJsonArray();
+					final JsonObject country = allNationsArray.get(random.nextInt(allNationsArray.size())).getAsJsonObject();
+					final JsonObject currency;
+					final String commonName, officialName, cca3, footer, landlocked;
+					final JsonArray continents;
+					final Set<String> keys;
+					String nomeMoneta="", simboloMoneta="";
+					
+					commonName = country.get("name").getAsJsonObject().get("common").getAsString();
+					officialName = country.get("name").getAsJsonObject().get("official").getAsString();
+					cca3 = country.get("cca3").getAsString();
+					continents = country.get("continents").getAsJsonArray();
+					footer = String.format("%s %s (%s)", country.get("flag").getAsString(), commonName, cca3);
+					landlocked = country.get("landlocked").getAsString().equals("true") ? "Sì" : "No";
+					
+					currency = country.get("currency").getAsJsonObject();
+					keys = currency.keySet();
+					for (String key : keys)
+					{
+						final JsonObject obj = currency.get(key).getAsJsonObject();
+						nomeMoneta = obj.get("name").getAsString();
+						simboloMoneta = obj.get("symbol").getAsString();
+						break;
+					}
+					
+					final String descr = commonName.equals(officialName) ?
+						String.format("La moneta usata in %s si chiama %s (%s)", commonName, nomeMoneta, simboloMoneta) :
+						String.format("Il nome completo di %s è \"%s\"", commonName, officialName);
+					
+					embed.setTitle(commonName);
+					embed.setDescription(descr);
+					embed.setColor(Color.RED);
+					embed.setThumbnail(country.get("flags").getAsJsonObject().get("png").getAsString());
+					embed.setImage(country.get("coatOfArms").getAsJsonObject().get("svg").getAsString());
+					embed.addField("Capitale",country.get("capital").getAsJsonArray().get(0).getAsString(),true);
+					embed.addField("Popolazione",country.get("population").getAsString(),true);
+					embed.addField("Landlocked",landlocked,true);
+					embed.setFooter(footer);
+					
+					event.replyEmbeds(embed.build()).queue();
+					
+				} catch (Exception e)
+				{
+					error.print(object,e);
+					final String errormsg = "Si è verificato un errore con il comando. Per favore attendi qualche minuto prima di riprovare.";
+					event.reply(errormsg).queue();
+				}
+				
 			}
 			
 		}
