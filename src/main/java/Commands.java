@@ -1326,7 +1326,7 @@ public class Commands extends ListenerAdapter
 					footer = String.format("%s %s (%s)", country.get("flag").getAsString(), commonName, cca3);
 					landlocked = country.get("landlocked").getAsString().equals("true") ? "Sì" : "No";
 					
-					currency = country.get("currency").getAsJsonObject();
+					currency = country.get("currencies").getAsJsonObject();
 					keys = currency.keySet();
 					for (String key : keys)
 					{
