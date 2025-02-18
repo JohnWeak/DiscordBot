@@ -198,6 +198,7 @@ public abstract class Utilities
 		htmlCodes.put("&amp;", "&");
 		htmlCodes.put("&quot;", "'");
 		htmlCodes.put("&#039;", "'");
+		htmlCodes.put("&rsquo;", "'");
 		htmlCodes.put("&nbsp;", " ");
 		
 		htmlCodes.put("&agrave;", "à");
@@ -214,6 +215,7 @@ public abstract class Utilities
 		
 		htmlCodes.put("&ugrave;", "ù");
 		htmlCodes.put("&uacute;", "ú");
+		
 		
 		return htmlCodes;
 	}
