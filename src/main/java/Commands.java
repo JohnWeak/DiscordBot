@@ -1329,6 +1329,7 @@ public class Commands extends ListenerAdapter
 					currency = country.get("currencies").getAsJsonObject();
 					population = String.format("%,d", country.get("population").getAsInt()).replace(",",".");
 					keys = currency.keySet();
+					
 					for (String key : keys)
 					{
 						final JsonObject obj = currency.get(key).getAsJsonObject();
@@ -1386,6 +1387,11 @@ public class Commands extends ListenerAdapter
 				
 				event.replyChoices(options).queue();
 			} catch (Exception e) { new Error<Exception>().print(object,e);}
+		}
+		else if (eventName.equals("trivia") && focused.getName().equalsIgnoreCase("nazione"))
+		{
+			
+			// event.replyChoices().queue();
 		}
 	}
 	
