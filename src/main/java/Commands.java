@@ -1327,7 +1327,7 @@ public class Commands extends ListenerAdapter
 						:
 						Stream.of(allNationsArray)
 							.map(JsonElement::getAsJsonObject)
-							.filter(tempCountry -> tempCountry.get("name").getAsJsonObject().get("common").getAsString().equals(opt))
+							.filter(tempCountry -> tempCountry.get("name").getAsJsonObject().get("common").getAsString().equalsIgnoreCase(opt))
 							.findFirst()
 							.orElse(allNationsArray.get(random.nextInt(allNationsArray.size())).getAsJsonObject());
 					
