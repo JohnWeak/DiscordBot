@@ -1321,27 +1321,16 @@ public class Commands extends ListenerAdapter
 					final Set<String> keys;
 					String nomeMoneta="", simboloMoneta="";
 					
-					if (opt.isEmpty())
-					{
-						country = allNationsArray.get(random.nextInt(allNationsArray.size())).getAsJsonObject();
-					}
-					else
-					{
-						for (JsonElement nation : allNationsArray)
-						{
-							final JsonObject tempCountry = nation.getAsJsonObject();
-							if (tempCountry.get("name").getAsJsonObject().get("common").getAsString().equals(opt))
-							{
-								country = tempCountry;
-								break;
-							}
-						}
-					}
-					if (country == null)
-					{
-						error.print(this,new Exception("country è null"));
-						return;
-					}
+					
+					country = opt.isEmpty() ?
+						allNationsArray.get(random.nextInt(allNationsArray.size())).getAsJsonObject()
+						:
+						Stream.of(allNationsArray)
+							.map(JsonElement::getAsJsonObject)
+							.filter(tempCountry -> tempCountry.get("name").getAsJsonObject().get("common").getAsString().equals(opt))
+							.findFirst()
+							.orElse(allNationsArray.get(random.nextInt(allNationsArray.size())).getAsJsonObject());
+					
 					
 					commonName = country.get("name").getAsJsonObject().get("common").getAsString();
 					officialName = country.get("name").getAsJsonObject().get("official").getAsString();
