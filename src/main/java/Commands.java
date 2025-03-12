@@ -1321,6 +1321,7 @@ public class Commands extends ListenerAdapter
 					final Set<String> keys;
 					String nomeMoneta="", simboloMoneta="";
 					
+					System.out.printf("opt=%s\n",opt);
 					
 					country = opt.isEmpty() ?
 						allNationsArray.get(random.nextInt(allNationsArray.size())).getAsJsonObject()
@@ -1331,6 +1332,8 @@ public class Commands extends ListenerAdapter
 							.findFirst()
 							.orElse(allNationsArray.get(random.nextInt(allNationsArray.size())).getAsJsonObject());
 					
+					
+					System.out.printf("country=%s\n", country);
 					
 					commonName = country.get("name").getAsJsonObject().get("common").getAsString();
 					officialName = country.get("name").getAsJsonObject().get("official").getAsString();
