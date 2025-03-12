@@ -1405,7 +1405,7 @@ public class Commands extends ListenerAdapter
 		}
 		else if (eventName.equals("trivia") && focused.getName().equalsIgnoreCase("nazione"))
 		{
-			NAMES_FILE = "./src/main/java/nations.json";
+			NAMES_FILE = "./src/main/java/nationsNames.txt";
 			options = getChoichesFromFile(NAMES_FILE, focused);
 		}
 		
