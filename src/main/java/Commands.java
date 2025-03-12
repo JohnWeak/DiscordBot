@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 @Slf4j
 public class Commands extends ListenerAdapter
@@ -1321,19 +1322,14 @@ public class Commands extends ListenerAdapter
 					final Set<String> keys;
 					String nomeMoneta="", simboloMoneta="";
 					
-					System.out.printf("opt=%s\n",opt);
-					
 					country = opt.isEmpty() ?
 						allNationsArray.get(random.nextInt(allNationsArray.size())).getAsJsonObject()
 						:
-						Stream.of(allNationsArray)
+						StreamSupport.stream(allNationsArray.spliterator(), false)
 							.map(JsonElement::getAsJsonObject)
 							.filter(tempCountry -> tempCountry.get("name").getAsJsonObject().get("common").getAsString().equalsIgnoreCase(opt))
 							.findFirst()
 							.orElse(allNationsArray.get(random.nextInt(allNationsArray.size())).getAsJsonObject());
-					
-					
-					System.out.printf("country=%s\n", country);
 					
 					commonName = country.get("name").getAsJsonObject().get("common").getAsString();
 					officialName = country.get("name").getAsJsonObject().get("official").getAsString();
