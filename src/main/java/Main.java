@@ -216,7 +216,14 @@ public class Main
 			newCommand = new CommandDataImpl("quiz", "questo quiz non prevede alcun premio in denaro");
 			commands.add(newCommand);
 			
-			newCommand = new CommandDataImpl("trivia","il bot ti darà informazioni su una nazione");
+			newCommand = new CommandDataImpl("trivia","il bot ti darà informazioni su una nazione")
+				.addOptions(new OptionData(
+					OptionType.STRING,
+					"nazione",
+					"la nazione da cercare",
+					false
+					)
+				);
 			commands.add(newCommand);
 			
 			// newCommand = new CommandDataImpl("/refund","Ottieni un rimborso");

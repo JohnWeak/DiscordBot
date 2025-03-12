@@ -1308,16 +1308,40 @@ public class Commands extends ListenerAdapter
 				final String fileName = "./src/main/java/nations.json";
 				final File f = new File(fileName);
 				final EmbedBuilder embed = new EmbedBuilder();
+				option = event.getOption("nazione");
+				final String opt = option == null ? "" : option.getAsString();
 				try
 				{
 					final String nations = new String(Files.readAllBytes(f.toPath()));
 					final JsonArray allNationsArray = JsonParser.parseString(nations).getAsJsonArray();
-					final JsonObject country = allNationsArray.get(random.nextInt(allNationsArray.size())).getAsJsonObject();
+					JsonObject country = null;
 					final JsonObject currency;
 					final String commonName, officialName, cca3, footer, landlocked, image, population;
 					final JsonArray continents;
 					final Set<String> keys;
 					String nomeMoneta="", simboloMoneta="";
+					
+					if (opt.isEmpty())
+					{
+						country = allNationsArray.get(random.nextInt(allNationsArray.size())).getAsJsonObject();
+					}
+					else
+					{
+						for (JsonElement nation : allNationsArray)
+						{
+							final JsonObject tempCountry = nation.getAsJsonObject();
+							if (tempCountry.get("name").getAsJsonObject().get("common").getAsString().equals(opt))
+							{
+								country = tempCountry;
+								break;
+							}
+						}
+					}
+					if (country == null)
+					{
+						error.print(this,new Exception("country è null"));
+						return;
+					}
 					
 					commonName = country.get("name").getAsJsonObject().get("common").getAsString();
 					officialName = country.get("name").getAsJsonObject().get("official").getAsString();
@@ -1371,28 +1395,35 @@ public class Commands extends ListenerAdapter
 	{
 		final String eventName = event.getName();
 		final AutoCompleteQuery focused = event.getFocusedOption();
+		final String NAMES_FILE;
+		List<Command.Choice> options = null;
 		
 		if (eventName.equalsIgnoreCase("pokemon") && focused.getName().equalsIgnoreCase("nome"))
 		{
-			final String NAMES_FILE = "./src/main/java/nomiPokemon.txt";
-			final File nomiPokemon = new File(NAMES_FILE);
-			
-			try (Stream<String> lines = Files.lines(nomiPokemon.toPath()))
-			{
-				final List<Command.Choice> options = lines.flatMap(line -> Stream.of(line.split("\\s+")))
-					.filter(word -> word.toLowerCase().contains(focused.getValue().toLowerCase()))
-					.limit(25)
-					.map(word -> new Command.Choice(word, word))
-					.toList();
-				
-				event.replyChoices(options).queue();
-			} catch (Exception e) { new Error<Exception>().print(object,e);}
+			NAMES_FILE = "./src/main/java/nomiPokemon.txt";
+			options = getChoichesFromFile(NAMES_FILE,focused);
 		}
 		else if (eventName.equals("trivia") && focused.getName().equalsIgnoreCase("nazione"))
 		{
-			
-			// event.replyChoices().queue();
+			NAMES_FILE = "./src/main/java/nations.json";
+			options = getChoichesFromFile(NAMES_FILE, focused);
 		}
+		
+		if (options != null)
+			event.replyChoices(options).queue();
+	}
+	
+	private List<Command.Choice> getChoichesFromFile(String fileName, AutoCompleteQuery query)
+	{
+		final File f = new File(fileName);
+		try (Stream<String> lines = Files.lines(f.toPath()))
+		{
+			return lines.filter(word -> word.toLowerCase().contains(query.getValue().toLowerCase()))
+				.limit(25)
+				.map(word -> new Command.Choice(word, word))
+				.toList();
+		} catch (Exception e) { new Error<Exception>().print(object,e);}
+		return null;
 	}
 	
 	/** Lancia una moneta */
