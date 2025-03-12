@@ -1314,7 +1314,7 @@ public class Commands extends ListenerAdapter
 				{
 					final String nations = new String(Files.readAllBytes(f.toPath()));
 					final JsonArray allNationsArray = JsonParser.parseString(nations).getAsJsonArray();
-					JsonObject country = null;
+					final JsonObject country;
 					final JsonObject currency;
 					final String commonName, officialName, cca3, footer, landlocked, image, population;
 					final JsonArray continents;
