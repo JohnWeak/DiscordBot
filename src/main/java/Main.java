@@ -221,7 +221,8 @@ public class Main
 					OptionType.STRING,
 					"nazione",
 					"la nazione da cercare",
-					false
+					false,
+					true
 					)
 				);
 			commands.add(newCommand);
