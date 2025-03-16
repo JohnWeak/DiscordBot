@@ -363,34 +363,25 @@ public class Commands extends ListenerAdapter
 		
 		if (random.nextInt(50) == 42) // chance di reagire con emote personali
 		{
-			final boolean trigger = random.nextBoolean();
-			
-			if (trigger)
+			switch (authorID)
 			{
-				channel.sendMessageEmbeds(triggera(authorID).build()).queue();
-			}
-			else
-			{
-				switch (authorID)
+				case Utente.ID_OBITO ->
 				{
-					case Utente.ID_OBITO ->
-					{
-						react("obito");
-						react("vergognati");
-						message.reply("Òbito vergognati").queue();
-					}
-					case Utente.ID_ENIGMO -> react("pigeon");
-					case Utente.ID_LEX -> channel.addReactionById(authorID, Emoji.fromUnicode("🇷🇴")).queue();
-					case Utente.ID_GION -> react("boo2");
-					
-				} // fine switch
+					react("obito");
+					react("vergognati");
+					message.reply("Òbito vergognati").queue();
+				}
+				case Utente.ID_ENIGMO -> react("pigeon");
+				case Utente.ID_LEX -> channel.addReactionById(authorID, Emoji.fromUnicode("🇷🇴")).queue();
+				case Utente.ID_GION -> react("boo2");
 				
-				final String[] reazione = {"dansgame", "pigeon", "smh"};
-				final int scelta = random.nextInt(reazione.length);
-				
-				message.reply(Utilities.camelCase(messageRaw)).queue(lambda -> react(reazione[scelta]));
-				
-			} // fine else
+			} // fine switch
+			
+			final String[] reazione = {"dansgame", "pigeon", "smh"};
+			final int scelta = random.nextInt(reazione.length);
+			
+			message.reply(Utilities.camelCase(messageRaw)).queue(lambda -> react(reazione[scelta]));
+			
 			
 		} // fine if reazioni
 		
@@ -1456,90 +1447,6 @@ public class Commands extends ListenerAdapter
 		
 		return embedBuilder;
 	} // fine sondaggio()
-	
-	/** Infastidisce le persone */
-	public EmbedBuilder triggera(String id)
-	{
-		final String title, image, color;
-		final int risultato;
-		
-		final String titolo = "Get rekt ";
-
-		final String[] immagineObito =
-		{
-			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstocks2.com%2Fassets%2Fstocks%2Fgm%2Fgme%2Fgme-daily-rsi.png&f=1&nofb=1",
-			"https://scontent.fnap5-1.fna.fbcdn.net/v/t1.6435-9/36686816_812263365633695_5089614023322763264_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=174925&_nc_ohc=sFL5GEX7jv4AX_KyE9g&_nc_ht=scontent.fnap5-1.fna&oh=00_AT_oGm-J17HN6LGRMIH_NOSDf3Fya36yAs9gtKmHKu-qxg&oe=6219896F"
-		};
-
-		final String[] immagineEnigmo =
-		{
-			"https://ramenparados.com/wp-content/uploads/2021/01/21.png"
-		};
-		
-		final String[] immagineLex =
-		{
-			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fst.motortrendenespanol.com%2Fuploads%2Fsites%2F5%2F2017%2F07%2FTesla-Model-3-lead-.jpg&f=1&nofb=1",
-			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fvitaitaliantours.com%2Fwp-content%2Fuploads%2F2016%2F03%2FNeapolitan-Pizza-Margherita.jpg&f=1&nofb=1"
-		};
-
-		
-		final String[] immagineGion =
-		{
-			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2F1.bp.blogspot.com%2F-9rnsA1ZxZy8%2FVetkw9DnL9I%2FAAAAAAAABA0%2F7h5Svdbg9zw%2Fs1600%2Fminions%2B2015%2Bscreenshot%2B4.jpg&f=1&nofb=1",
-			"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.vox-cdn.com%2Fthumbor%2Fs3AsF2kLAo350xTuRsw7lxgs2Qg%3D%2F0x0%3A2000x1333%2F1200x800%2Ffilters%3Afocal(840x507%3A1160x827)%2Fcdn.vox-cdn.com%2Fuploads%2Fchorus_image%2Fimage%2F55188531%2Fhawaiian_pizza_sh.0.jpg&f=1&nofb=1"
-		};
-		
-		final EmbedBuilder embedBuilder = new EmbedBuilder();
-		
-		switch (id)
-		{
-			case Utente.ID_OBITO ->
-			{
-				risultato = random.nextInt(immagineObito.length);
-				title = titolo.concat("Òbito");
-				image = immagineObito[risultato];
-				color = (risultato == 0) ? "0xFFFFFF" : "0xC59FC9";
-			}
-			
-			case Utente.ID_ENIGMO ->
-			{
-				risultato = random.nextInt(immagineEnigmo.length);
-				title = titolo.concat("Enigmo");
-				image = immagineEnigmo[risultato];
-				color = (risultato == 0) ? "0xCB4D4D" : "0xE5D152";
-			}
-			
-			case Utente.ID_LEX ->
-			{
-				risultato = random.nextInt(immagineLex.length);
-				title = titolo.concat("Lex");
-				image = immagineLex[risultato];
-				color = (risultato == 0) ? "0xD80000" : "0x207522";
-			}
-			
-			case Utente.ID_GION ->
-			{
-				risultato = random.nextInt(immagineGion.length);
-				title = titolo.concat("Gion");
-				image = immagineGion[risultato];
-				color = (risultato == 0) ? "0XDDCD4f" : "0xEAE28A";
-			}
-			
-			default ->
-			{
-				title = "Errore";
-				image = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F5%2F55%2FQuestion_Mark.svg%2F1200px-Question_Mark.svg.png&f=1&nofb=1";
-				color = "0x424242";
-			}
-		}
-		
-		embedBuilder.setTitle(title);
-		embedBuilder.setImage(image);
-		embedBuilder.setColor(Color.decode(color));
-	
-		return embedBuilder;
-	
-	} // fine triggera()
 	
 	
 	/** Aggiunge una reazione all'ultimo messaggio inviato */
