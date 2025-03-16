@@ -1336,7 +1336,7 @@ public class Commands extends ListenerAdapter
 					cca3 = country.get("cca3").getAsString();
 					continents = country.get("continents").getAsJsonArray();
 					footer = String.format("%s %s (%s)", country.get("flag").getAsString(), commonName, cca3);
-					landlocked = country.get("landlocked").getAsString().equals("true") ? "Sì" : "No";
+					landlocked = country.get("landlocked").getAsString().equals("true") ? "✓" : "✕";
 					image = country.get("coatOfArms") != null? country.get("coatOfArms").getAsJsonObject().get("svg").getAsString() : "";
 					currency = country.get("currencies").getAsJsonObject();
 					population = String.format("%,d", country.get("population").getAsInt()).replace(",",".");
