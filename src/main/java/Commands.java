@@ -1259,6 +1259,7 @@ public class Commands extends ListenerAdapter
 				final String url = "https://official-joke-api.appspot.com/random_joke";
 				final String setup, punchline;
 				final JsonObject j = Utilities.httpRequest(url).getAsJsonObject();
+				final String refund = "-# If you didn't like the joke, use the command `/refund` to get your money back!";
 				
 				setup = j.get("setup").getAsString();
 				punchline = j.get("punchline").getAsString();
@@ -1287,6 +1288,7 @@ public class Commands extends ListenerAdapter
 						
 						ll.addReaction(Emoji.fromUnicode("👍🏻")).queue();
 						ll.addReaction(Emoji.fromUnicode("👎🏻")).queue();
+						ll.editMessage(refund).queue();
 					});
 				});
 			}
@@ -1328,7 +1330,7 @@ public class Commands extends ListenerAdapter
 					continents = country.get("continents").getAsJsonArray();
 					footer = String.format("%s %s (%s)", country.get("flag").getAsString(), commonName, cca3);
 					landlocked = country.get("landlocked").getAsString().equals("true") ? "✓" : "✕";
-					image = country.get("coatOfArms") != null? country.get("coatOfArms").getAsJsonObject().get("svg").getAsString() : "";
+					image = country.get("coatOfArms") != null ? country.get("coatOfArms").getAsJsonObject().get("svg").getAsString() : "";
 					currency = country.get("currencies").getAsJsonObject();
 					population = String.format("%,d", country.get("population").getAsInt()).replace(",",".");
 					keys = currency.keySet();
@@ -1434,8 +1436,7 @@ public class Commands extends ListenerAdapter
 		
 		for (int i = 0; i < lenghtRisposte; i++)
 		{
-			risposte[i] = risposte[i].trim();
-			descrizione.append(reactionLetters[i]).append("\t").append(risposte[i]).append("\n");
+			descrizione.append(String.format("%s\t%s\n", reactionLetters[i], risposte[i].trim()));
 		}
 		
 		embedBuilder.setDescription(descrizione);
