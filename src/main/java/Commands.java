@@ -1429,12 +1429,8 @@ public class Commands extends ListenerAdapter
 			"\uD83C\uDDFE", "\uD83C\uDDFF"
 		}; // array di lettere emoji [A] -> [Z]
 		
-		final StringBuilder title = new StringBuilder();
 		final StringBuilder descrizione = new StringBuilder();
-		if (!domanda.contains("?"))
-			title.append("?");
-		
-		embedBuilder.setTitle(title.append(domanda).toString());
+		embedBuilder.setTitle(domanda.concat(domanda.contains("?") ? "" : "?"));
 		
 		for (int i = 0; i < lenghtRisposte; i++)
 		{
