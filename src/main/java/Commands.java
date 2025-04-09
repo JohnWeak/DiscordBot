@@ -409,14 +409,15 @@ public class Commands extends ListenerAdapter
 				sb.append(e).append("\n");
 			
 			
-			if (sb.length() > 2000)
+			final int MAX = 1999;
+			if (sb.length() > MAX)
 			{
-				String s;
-				do
+				String s = sb.substring(0, MAX);
+				while (s.length() > MAX)
 				{
-					s = sb.substring(0,2000);
+					s = s.substring(0, MAX);
 					message.reply(s).queue();
-				}while (s.length() > 2000);
+				}
 			}
 			else
 			{
