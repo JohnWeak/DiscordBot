@@ -403,7 +403,9 @@ public class Commands extends ListenerAdapter
 		
 		if (msgStrippedLowerCase.matches("abcde"))
 		{
-			final ArrayList<CustomEmoji> y = new ArrayList<>(Main.getJda().getEmojis());
+			System.out.println("abcde");
+			
+			final ArrayList<CustomEmoji> y = new ArrayList<>(jda.getEmojis());
 			final StringBuilder sb = new StringBuilder();
 			for (CustomEmoji e : y)
 				sb.append(e).append("\n");
