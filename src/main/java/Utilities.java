@@ -220,5 +220,21 @@ public abstract class Utilities
 		return htmlCodes;
 	}
 	
+	public static String[] divideString(String s)
+	{
+		final int MAX = 1999;
+		if (s.length() < MAX)
+			return new String[]{s};
+		
+		final ArrayList<String> list = new ArrayList<>();
+		
+		for (int i = 0; i < s.length(); i += MAX)
+		{
+			list.add(s.substring(i, Math.min(i+MAX, s.length())));
+		}
+		
+		return list.toArray(new String[0]);
+	}
+	
 	
 } // fine classe Utilities

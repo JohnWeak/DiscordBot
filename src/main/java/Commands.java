@@ -403,31 +403,13 @@ public class Commands extends ListenerAdapter
 		
 		if (msgStrippedLowerCase.matches("abcde"))
 		{
-			System.out.println("abcde");
-			
 			final ArrayList<CustomEmoji> y = new ArrayList<>(jda.getEmojis());
 			final StringBuilder sb = new StringBuilder();
 			for (CustomEmoji e : y)
 				sb.append(e).append("\n");
 			
-			System.out.printf("sb length: %d\n", sb.length());
-			
-			final int MAX = 1999;
-			if (sb.length() > MAX)
-			{
-				String s = sb.substring(0, MAX);
-				System.out.printf("s length: %d\n", s.length());
-				while (s.length() > MAX)
-				{
-					s = s.substring(0, MAX);
-					System.out.printf("s length: %d\n", s.length());
-					message.reply(s).queue();
-				}
-			}
-			else
-			{
-				message.reply(sb.toString()).queue();
-			}
+			for (String s : Utilities.divideString(sb.toString()))
+				message.reply(s).queue();
 		}
 		
 		if (msgStrippedLowerCase.matches(pigeonRegex))
