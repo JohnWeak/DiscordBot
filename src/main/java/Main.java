@@ -9,14 +9,9 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.internal.interactions.CommandDataImpl;
-import net.dv8tion.jda.internal.interactions.component.ButtonImpl;
-
-import java.io.File;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Random;
-import java.util.stream.Stream;
 
 
 public class Main

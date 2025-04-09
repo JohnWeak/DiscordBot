@@ -400,6 +400,17 @@ public class Commands extends ListenerAdapter
 		final String enigmoRegex = ".*igm[oa].*";
 		final String gionRegex = ".*gion.*|.*john.*";
 		
+		
+		if (msgStrippedLowerCase.matches("abcde"))
+		{
+			final ArrayList<CustomEmoji> y = new ArrayList<>(Main.getJda().getEmojis());
+			final StringBuilder sb = new StringBuilder();
+			for (CustomEmoji e : y)
+				sb.append(e).append("\n");
+			
+			message.reply(sb.toString()).queue();
+		}
+		
 		if (msgStrippedLowerCase.matches(pigeonRegex))
 			new ThreadPigeon(authorName, channel).start();
 		
@@ -556,6 +567,7 @@ public class Commands extends ListenerAdapter
 			
 		if (msgStrippedLowerCase.contains("non vedo l'ora") || msgStrippedLowerCase.contains("che ore sono") || msgStrippedLowerCase.contains("che ora è"))
 		{
+			
 			reply = true;
 			final GregorianCalendar date = Utilities.getLocalizedCalendar();
 			final int hour = date.get(Calendar.HOUR_OF_DAY);
@@ -721,7 +733,7 @@ public class Commands extends ListenerAdapter
 				
 				twitterDetected = true;
 				
-				firstHalf = m.split("//")[0]+"//";
+				firstHalf = m.split("//")[0].concat("//");
 				secondHalf = m.split("//")[1];
 				newURL = String.format("%sfx%s", firstHalf, secondHalf);
 				
@@ -731,8 +743,8 @@ public class Commands extends ListenerAdapter
 			{
 				twitterDetected = true;
 				
-				firstHalf = m.split("//")[0]+"//";
-				secondHalf = m.split("//")[1].substring(4) + "fx";
+				firstHalf = m.split("//")[0].concat("//");
+				secondHalf = m.split("//")[1].substring(4).concat("fx");
 				newURL = String.format("%sfx%s", firstHalf, secondHalf);
 				
 				break;
@@ -1193,8 +1205,8 @@ public class Commands extends ListenerAdapter
 					
 					embed.setColor(Color.GRAY);
 					embed.setDescription(String.format("La magica palla 8 🎱 risponde:\n`%s`.", response));
-					embed.setFooter("Insoddisfatto? Usa il comando /refund per un rimborso!");
-					l.editOriginalEmbeds(embed.build()).queue();
+					final String refund = "Insoddisfatto? Usa `/refund` per un rimborso!";
+					l.editOriginalEmbeds(embed.build()).queue(ll -> ll.editMessage(refund).queue());
 				});
 			}
 			case "carta" ->
