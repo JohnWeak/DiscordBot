@@ -412,6 +412,29 @@ public class Commands extends ListenerAdapter
 				message.reply(s).queue();
 		}
 		
+		if (msgStrippedLowerCase.matches("fghij"))
+		{
+			try
+			{
+				final ArrayList<CustomEmoji> y = new ArrayList<>(jda.getEmojis());
+				final ArrayList<CustomEmoji> z = new ArrayList<>();
+				for (CustomEmoji emoji : y)
+				{
+					if (emoji.getName().toLowerCase().contains("owo"))
+						z.add(emoji);
+				}
+				
+				for (CustomEmoji e : z)
+				{
+					message.reply(e.getFormatted()).queue();
+				}
+				
+			}catch (Exception e)
+			{
+				error.print(object, e);
+			}
+		}
+		
 		if (msgStrippedLowerCase.matches(pigeonRegex))
 			new ThreadPigeon(authorName, channel).start();
 		
