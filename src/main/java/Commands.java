@@ -408,6 +408,17 @@ public class Commands extends ListenerAdapter
 			for (CustomEmoji e : y)
 				sb.append(e).append("\n");
 			
+			
+			if (sb.length() > 2000)
+			{
+				String s;
+				do
+				{
+					s = sb.substring(0,2000);
+					message.reply(s).queue();
+				}while (s.length() > 2000);
+			}
+			
 			message.reply(sb.toString()).queue();
 		}
 		
