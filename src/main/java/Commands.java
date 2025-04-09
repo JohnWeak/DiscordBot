@@ -418,8 +418,10 @@ public class Commands extends ListenerAdapter
 					message.reply(s).queue();
 				}while (s.length() > 2000);
 			}
-			
-			message.reply(sb.toString()).queue();
+			else
+			{
+				message.reply(sb.toString()).queue();
+			}
 		}
 		
 		if (msgStrippedLowerCase.matches(pigeonRegex))
