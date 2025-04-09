@@ -410,14 +410,17 @@ public class Commands extends ListenerAdapter
 			for (CustomEmoji e : y)
 				sb.append(e).append("\n");
 			
+			System.out.printf("sb length: %d\n", sb.length());
 			
 			final int MAX = 1999;
 			if (sb.length() > MAX)
 			{
 				String s = sb.substring(0, MAX);
+				System.out.printf("s length: %d\n", s.length());
 				while (s.length() > MAX)
 				{
 					s = s.substring(0, MAX);
+					System.out.printf("s length: %d\n", s.length());
 					message.reply(s).queue();
 				}
 			}
