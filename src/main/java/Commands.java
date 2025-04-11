@@ -63,7 +63,6 @@ public class Commands extends ListenerAdapter
 	private final boolean moduloSicurezza = false;
 	private final ArrayList<ThreadReminder> remindersList = new ArrayList<>();
 	private final MessageTask disconnectMessageTask;
-	private final DailyTask dailyTask;
 	
 	private User user;
 	public String authorName;
@@ -75,8 +74,8 @@ public class Commands extends ListenerAdapter
 	{
 		final Timer timer = new Timer(true);
 		final long period = 24 * 60 * 60 * 1000; // 24 ore in millisecondi
+		final DailyTask dailyTask = new DailyTask();
 		disconnectMessageTask = new MessageTask();
-		dailyTask = new DailyTask();
 		
 		timer.schedule(disconnectMessageTask, calcDelay(22,0,0), period);
 		timer.schedule(dailyTask, calcDelay(21, 30, 0), period);
