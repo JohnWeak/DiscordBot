@@ -275,7 +275,9 @@ public class Commands extends ListenerAdapter
 	{
 		if (message != null)
 		{
+			
 			final List<CustomEmoji> emoteList = message.getMentions().getCustomEmojis();
+			gion.send(emoteList.toString());
 			
 			for (Emoji e : emoteList)
 			{
