@@ -198,27 +198,22 @@ public class Commands extends ListenerAdapter
 			return;
 		
 		final List<Message.Attachment> attachments = message.getAttachments();
-		final StringBuilder toSend = new StringBuilder();
-		toSend.append(authorName).append(" ha scritto \"").append(messageRaw).append("\"");
+		final String toSend = String.format("%s ha scritto: \"%s\"", authorName, messageRaw);
 		
 		if (attachments.isEmpty())
-			gion.send(toSend.toString());
+			gion.send(toSend);
 		else
-			gion.send(toSend.toString(), attachments.getFirst());
+			gion.send(toSend, attachments.getFirst());
 		
-		if (moduloSicurezza)
+		if (moduloSicurezza && author.getId().equals(Utente.ID_ENIGMO))
 		{
-			if (author.getId().equals(Utente.ID_ENIGMO))
-			{
-				final PrivateMessage enigmo = new PrivateMessage(Utente.getEnigmo());
-				enigmo.send(Emotes.readyToSend(Emotes.ragey));
-			}
+			final PrivateMessage enigmo = new PrivateMessage(Utente.getEnigmo());
+			enigmo.send(Emotes.readyToSend(Emotes.ragey));
 		}
 		
 		checkForKeywords(message.getContentStripped().toLowerCase());
 		
 	} // fine privateMessage()
-	
 	
 	
 	/** Questo metodo tiene conto di quale è l'ultimo messaggio che viene inviato/modificato.
