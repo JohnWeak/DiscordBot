@@ -28,29 +28,29 @@ public abstract class Utilities
 	 * @param debug booleano che manda come messaggio privato il risultato a Gion.
 	 * @param amount la quantità di messaggi da recuperare.
 	 *
-	 * @return la lista dei messaggi nella cronologia. list[0] = ultimo messaggio*/
+	 * @return la lista dei messaggi nella cronologia. <code>list[0]</code> = ultimo messaggio*/
 	public static List<Message> channelHistory(GuildMessageChannel channel, boolean debug, int amount)
 	{
 		final List<Message> history = channel.getHistory().retrievePast(amount).complete();
+		final StringBuilder historyMessages = new StringBuilder();
 		
 		if (debug)
 		{
 			final PrivateMessage pm = new PrivateMessage(Utente.getGion());
-			final StringBuilder msg = new StringBuilder();
-			int i = 0;
+			final int size = history.size();
 			
-			for (Message message : history)
+			for (int i = 0; i < size; i++)
 			{
+				final Message message = history.get(i);
 				final User auth = message.getAuthor();
 				final String name = auth.getName();
-				final String disc = auth.getDiscriminator(); // nota: possibilmente deprecato
+				final String disc = auth.getDiscriminator(); // nota: deprecato?
 				final String m = message.getContentStripped();
+				final String msg = String.format("Messaggio numero %d:\t%s --- %s (%s): %s\n", i, auth, name, disc, m);
 				
-				msg.append("Messaggio numero ").append(i).append(":\t").append(auth).append(" --- ").append(name).append(" (").append(disc).append("): ").append(m).append("\n");
-				i+=1;
+				historyMessages.append(msg);
 			}
-			
-			pm.send(msg.toString());
+			pm.send(historyMessages.toString());
 		}
 		return history;
 		
