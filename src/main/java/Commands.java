@@ -282,7 +282,10 @@ public class Commands extends ListenerAdapter
 				try
 				{
 					message.addReaction(e).queue();
-				} catch (Exception ignored) {}
+				} catch (Exception exc)
+				{
+					error.print(object, exc);
+				}
 			}
 		}
 		

@@ -11,7 +11,6 @@ public class Error <T>
 	{
 		final String type = exception.getClass().toString();
 		final PrivateMessage gion = new PrivateMessage(Utente.getGion());
-		String lessThan2k;
 		
 		if (type.contains("Exception"))
 		{
@@ -20,18 +19,14 @@ public class Error <T>
 			final String eMsg = e.getMessage();
 			final StackTraceElement[] stackTrace = e.getStackTrace();
 			final String stackTraceString = Arrays.toString(stackTrace);
-			String msgToSend = "`" +erClass + "\n" + eMsg + "`\n"+stackTraceString;
+			final String msgToSend = lessThan2K(String.format("`%s\n%s`\n%s", erClass, eMsg, stackTraceString));
 			
-			msgToSend = lessThan2K(msgToSend);
 			gion.send(msgToSend);
 		}
 		else if (type.equalsIgnoreCase("String"))
 		{
-			final String s = (String) exception;
-			
-			lessThan2k = lessThan2K(s);
-			
-			gion.send(lessThan2k);
+			final String s = lessThan2K((String) exception);
+			gion.send(s);
 		}
 		
 	} // fine print
