@@ -1,5 +1,6 @@
 
 import java.time.LocalDate;
+import java.util.Random;
 import java.util.TimerTask;
 
 public class DailyTask extends TimerTask
@@ -23,13 +24,31 @@ public class DailyTask extends TimerTask
 			if (!enigmosDaily)
 			{
 				final String tag = Utente.getEnigmo().getAsMention();
-				final String msg = "ENIGMO DOV'È IL TUO DAILY?!?!?!? PERCHÉ NON HAI FATTO ANCORA IL DAILY?!?!?!?!";
+				final String msg = EnigmoMSG.getMessage();
 				
 				final String msgToSend = String.format("%s %s", tag, msg);
 				
 				Commands.canaleBot.sendMessage(msgToSend).queue();
-				
 			}
 		} catch (Exception e) { new Error<Exception>().print(this, e); }
+	}
+}
+
+abstract class EnigmoMSG
+{
+	static final Random r = new Random();
+	static boolean gentile;
+	static final String[] msg = {
+		"ENIGMO DOV'È IL TUO DAILY?!?!?!? PERCHÉ NON HAI FATTO ANCORA IL DAILY?!?!?!?!",
+		String.format("Signor Enigmo, è %scortesemente pregrato di presentare il proprio daily", gentile ? "": "s"),
+		"Se continui a non fare il daily, Enigmo, sarò costretto a chiamare i carabinieri.",
+		"Dai Enigmo è solo un daily, dai, fallo su, dai ti prego. Fallo per me, solo stavolta. Dai.",
+		"È un daily, non un bonifico: non serve un giorno lavorativo per approvarlo >:(",
+	};
+	
+	public static String getMessage()
+	{
+		gentile = r.nextBoolean();
+		return msg[r.nextInt(msg.length)];
 	}
 }

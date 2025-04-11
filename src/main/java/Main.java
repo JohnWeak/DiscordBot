@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Random;
 
-
 public class Main
 {
 	private static final String token = System.getenv("TOKEN");
@@ -266,7 +265,7 @@ public class Main
 			"A Plague Tale", "Subnautica", "OneShot", "Child of Light", "Ghost Trick: Phantom Detective",
 			"XCOM 2", "Papers, Please", "Celeste", "The Stanley Parable", "To The Moon", "GTA: San Andreas",
 			"Fallout: New Vegas", "Half-Life 2", "Divinity: Original Sin 2", "Dark Souls", "Hollow Knight",
-			"Celeste", "Total War: Shogun 2", "Lawn Moving Simulator", "Tetris", "Outer Wilds"
+			"Celeste", "Total War: Shogun 2", "Lawn Moving Simulator", "Tetris", "Outer Wilds", "GTA V"
 		};
 		
 		final String[] anime =
@@ -274,8 +273,8 @@ public class Main
 			"Steins;Gate", "FullMetal Alchemist", "Gurren Lagann", "Demon Slayer",
 			"Attack on Titan", "The Promised Neverland", "Kill La Kill", "Death Parade", "Death Note",
 			"Cowboy Bebop", "Goblin Slayer", "ID: Invaded", "Jujutsu Kaisen", "ODDTAXI", "Noragami",
-			"My Hero Academia", "One-Punch Man", "HunterxHunter", "Chainsaw Man", "Gintama", "Dan Dan Dan",
-			"Demons Layer"
+			"My Hero Academia", "One-Punch Man", "HunterxHunter", "Chainsaw Man", "Gintama", "Dan Da Dan",
+			"Demons Layer", "Solo Leveling"
 		};
 		
 		final String[] movies =

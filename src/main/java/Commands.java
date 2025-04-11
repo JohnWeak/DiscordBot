@@ -163,7 +163,9 @@ public class Commands extends ListenerAdapter
 		identifyLatestMessage(event, null);
 		
 		if (event.isFromGuild())
+		{
 			guildMessage(event, author.isBot());
+		}
 		else
 		{
 			try
@@ -171,12 +173,14 @@ public class Commands extends ListenerAdapter
 				privateMessage(author.isBot());
 			} catch (IOException | InterruptedException e)
 			{
-				throw new RuntimeException(e);
+				error.print(object,e);
 			}
 		}
 	
 		if (random.nextInt(100) == 42)
+		{
 			jda.getPresence().setActivity(Main.selectActivity());
+		}
 		
 	} // fine onMessageReceived()
 	
