@@ -5,7 +5,6 @@ import java.util.TimerTask;
 
 public class DailyTask extends TimerTask
 {
-	
 	@Override
 	public void run()
 	{
@@ -25,7 +24,6 @@ public class DailyTask extends TimerTask
 			{
 				final String tag = Utente.getEnigmo().getAsMention();
 				final String msg = EnigmoMSG.getMessage();
-				
 				final String msgToSend = String.format("%s %s", tag, msg);
 				
 				Commands.canaleBot.sendMessage(msgToSend).queue();
