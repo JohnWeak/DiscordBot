@@ -90,17 +90,13 @@ public abstract class Utilities
 			default -> tramonto = 17;
 		}
 		
-		if (hour > 0 && hour < 7)
-			saluto = "Buona mattina";
-		else if (hour >= 7 && hour < 13)
-			saluto = "Buongiorno";
-		else if (hour >= 13 && hour < tramonto)
-			saluto = "Buon pomeriggio";
-		else if (hour >= tramonto && hour < 23)
-			saluto = "Buonasera";
-		else
-			saluto = "Buonanotte";
-		
+		saluto = (
+				hour > 0 && hour < 7 ? "Buona mattina" :
+				hour < 12 ? "Buongiorno" :
+				hour < tramonto ? " Buon pomeriggio" :
+				hour < 23 ? "Buonasera" :
+				"Buonanotte"
+		);
 		return saluto;
 	} // fine getSaluto()
 	
