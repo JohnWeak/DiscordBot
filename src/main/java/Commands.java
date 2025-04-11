@@ -275,19 +275,16 @@ public class Commands extends ListenerAdapter
 	{
 		if (message != null)
 		{
-			
 			final List<CustomEmoji> emoteList = message.getMentions().getCustomEmojis();
-			gion.send(emoteList.toString());
 			
-			for (Emoji e : emoteList)
+			for (CustomEmoji e : emoteList)
 			{
 				try
 				{
-					message.addReaction(e).queue();
-				} catch (Exception exc)
-				{
-					error.print(object, exc);
-				}
+					message.addReaction(jda.getEmojis().stream().filter(
+					em -> em.getName().contains(e.getName())
+					).findFirst().orElseThrow()).queue();
+				} catch (Exception ignored) {}
 			}
 		}
 		
