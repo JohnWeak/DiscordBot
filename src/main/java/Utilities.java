@@ -53,7 +53,6 @@ public abstract class Utilities
 			pm.send(historyMessages.toString());
 		}
 		return history;
-		
 	} // fine metodo channelHistory()
 	
 	/** Trasforma il testo da normale a parodia CaMeL cAsE.
@@ -79,25 +78,23 @@ public abstract class Utilities
 	public static String getSaluto()
 	{
 		final GregorianCalendar c = getLocalizedCalendar();
-		String saluto = "";
 		final int hour = c.get(Calendar.HOUR_OF_DAY);
 		final int month = c.get(Calendar.MONTH);
 		final short tramonto;
 		
-		switch (month) // se è estate, il tramonto avviene più tardi
+		switch (month)
 		{
 			case 4, 5, 6, 7 -> tramonto = 20;
 			default -> tramonto = 17;
 		}
 		
-		saluto = (
+		return (
 				hour > 0 && hour < 7 ? "Buona mattina" :
 				hour < 12 ? "Buongiorno" :
 				hour < tramonto ? " Buon pomeriggio" :
 				hour < 23 ? "Buonasera" :
 				"Buonanotte"
 		);
-		return saluto;
 	} // fine getSaluto()
 	
 	/** Metodo che restituisce il nome del mese a partire dal suo numero. Esempio:<br>
