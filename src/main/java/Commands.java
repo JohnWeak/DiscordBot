@@ -563,13 +563,14 @@ public class Commands extends ListenerAdapter
 			}
 			else
 			{
-				final String[] msgs = new String[4];
+				final int max = 6;
+				final String[] msgs = new String[max];
 				msgs[3] = "💣 **BOOM** 💥";
-				for (int i = 0; i < 3; i++)
+				for (int i = 0; i < max-1; i++)
 				{
-					final int n = Math.abs(i-3);
+					final int n = Math.abs(i-(max-1));
 					final char c = (n == 1 ? 'o' : 'i');
-					msgs[i] = String.format("Ricevuto. Le cariche di C4 sono state piantate su questo messaggio.\nDetonazione fra %d second%c.", n, c);
+					msgs[i] = String.format("Ricevuto. Le cariche di C4 sono state piantate su questo messaggio.\nDetonazione fra **%d** second%c.", n, c);
 				}
 				
 				final Message toDelete = channel.retrieveMessageById(message.getId()).complete();
@@ -580,9 +581,8 @@ public class Commands extends ListenerAdapter
 					{
 						try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
 						l.editMessage(msgs[i]).queue();
-						
 					}
-					try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
+					try { Thread.sleep(1500); } catch (InterruptedException ignored) {}
 					l.delete().queue();
 					toDelete.delete().queue();
 				});
@@ -591,7 +591,6 @@ public class Commands extends ListenerAdapter
 			
 		if (msgStrippedLowerCase.contains("non vedo l'ora") || msgStrippedLowerCase.contains("che ore sono") || msgStrippedLowerCase.contains("che ora è"))
 		{
-			
 			reply = true;
 			final GregorianCalendar date = Utilities.getLocalizedCalendar();
 			final int hour = date.get(Calendar.HOUR_OF_DAY);
@@ -616,14 +615,15 @@ public class Commands extends ListenerAdapter
 			{
 				final Ore orario = new Ore(hour, minutes);
 				
-				msgReply.append(orario.getOra());
-
-				msgReply.append(switch (minutes)
-				{
-					case 0 -> "";
-					case 1 -> " e uno";
-					default -> " e " + orario.getMinuti();
-				});
+				msgReply
+					.append(orario.getOra())
+					.append(switch (minutes)
+					{
+						case 0 -> "";
+						case 1 -> " e uno";
+						default -> " e " + orario.getMinuti();
+					}
+				);
 			}
 		}
 		
@@ -644,7 +644,7 @@ public class Commands extends ListenerAdapter
 			}
 		}
 		
-		if (msgStrippedLowerCase.matches("dammi il (?:cinque|5)") || msgStrippedLowerCase.contains("high five"))
+		if (msgStrippedLowerCase.matches("dammi il (?:cinque|5)") || msgStrippedLowerCase.matches("high five"))
 		{
 			reply = true;
 			msgReply.append("🤚🏻\n");
@@ -668,7 +668,7 @@ public class Commands extends ListenerAdapter
 		if (msgStrippedLowerCase.contains("deez nuts") && authorID.equals(Utente.ID_ENIGMO))
 		{
 			reply = true;
-			msgReply.append("DEEZ NUTS, Enigmo!\n");
+			msgReply.append("🥜\n");
 			reazioni.add(DefaultEmoji.ARACHIDI.getEmoji());
 		}
 		
@@ -683,7 +683,7 @@ public class Commands extends ListenerAdapter
 		if (reply)
 			message.reply(msgReply).queue();
 		else if (random.nextInt(1000000) == 42)
-			message.reply("***ULTIMO AVVISO: __NON FARLO MAI PIÙ__.***").queue();
+			message.reply("***ULTIMO AVVISO: __NON FARLO MAI PIÙ.__***").queue();
 		
 	} // fine checkForKeywords()
 	
@@ -1485,9 +1485,12 @@ public class Commands extends ListenerAdapter
 	/** Aggiunge una reazione all'ultimo messaggio inviato */
 	public static void react(String emote)
 	{
+		if (emote == null || emote.isBlank())
+			return;
+		
 		final String emoteDaUsare = Emotes.emoteDaUsare(emote.toLowerCase());
 		
-		if (emoteDaUsare.isEmpty())
+		if (emoteDaUsare == null || emoteDaUsare.isBlank())
 			return;
 		
 		try
@@ -1601,29 +1604,26 @@ public class Commands extends ListenerAdapter
 			final String day = (annoMeseGiorno[2].charAt(0) == '0' ? annoMeseGiorno[2].substring(1) : annoMeseGiorno[2]);
 			
 			final String data = String.format("%s %s %s", day, Utilities.getMese(Integer.parseInt(month)), year);
-			final String sparatorie = String.format("Nel %s ammontano a **%d**", anno, jsonArray.size());
-			final String recente = String.format("La più recente è avvenuta il %s in **%s, %s**\n",data, citta, stato);
-			final String caso = String.format("Una si è verificata il %s in **%s, %s**\n", data, citta, stato);
-			final String personeMorte = String.format("Sono morte **%s** persone\n", morti);
+			final String sparatorie = String.format("Nel %s ammontano a **%d**.", anno, jsonArray.size());
+			final String recente = String.format("La più recente è avvenuta il %s in **%s, %s.**\n",data, citta, stato);
+			final String caso = String.format("Una si è verificata il %s in **%s, %s.**\n", data, citta, stato);
+			final String personeMorte = String.format("Sono morte **%s** persone.\n", morti);
 			final String personaMorta = "È morta **1** persona.\n";
 			final String noVittime = "Per fortuna non ci sono state vittime.\n";
-			final String personeFerite = String.format("I feriti ammontano a **%s**\n", feriti);
-			final String totaleMorti = String.format("In totale sono morte **%s** persone durante l'anno\n", mortiAnno);
+			final String personeFerite = String.format("I feriti ammontano a **%s**.\n", feriti);
+			final String totaleMorti = String.format("In totale sono morte **%s** persone durante l'anno.\n", mortiAnno);
 			
-			final StringBuilder finalResp = new StringBuilder();
-			
-			finalResp.append(anno == currentYear ? recente : caso);
-			finalResp.append(switch (Integer.parseInt(morti))
-			{
-				case 0 -> noVittime;
-				case 1 -> personaMorta;
-				default -> personeMorte;
-			});
-			
-			finalResp.append(personeFerite);
-			
-			if (anno == currentYear)
-				finalResp.append(totaleMorti);
+			final String finalResp = String.format("%s %s %s %s",
+				anno == currentYear ? recente : caso,
+				switch (Integer.parseInt(morti))
+				{
+					case 0 -> noVittime;
+					case 1 -> personaMorta;
+					default -> personeMorte;
+				},
+				personeFerite,
+				anno == currentYear ? totaleMorti : ""
+			);
 			
 			final LocalDate start = LocalDate.of(anno, Integer.parseInt(month), Integer.parseInt(day));
 			final LocalDate stop = LocalDate.now();
@@ -1638,7 +1638,7 @@ public class Commands extends ListenerAdapter
 			else
 				embed.addField(vittimeField);
 				
-			embed.addField("Cronaca",finalResp.toString(),false)
+			embed.addField("Cronaca",finalResp,false)
 				.setFooter(massShootingSite,avatar)
 				.setAuthor("Mass Shooting Tracker", massShootingSite)
 				.setColor(Color.RED)
