@@ -563,9 +563,9 @@ public class Commands extends ListenerAdapter
 			}
 			else
 			{
-				final int max = 4;
+				final int max = 6;
 				final String[] msgs = new String[max];
-				msgs[3] = "💣 **BOOM** 💥";
+				msgs[max-1] = "💣 **BOOM** 💥";
 				for (int i = 0; i < max-1; i++)
 				{
 					final int n = Math.abs(i-(max-1));
@@ -579,10 +579,10 @@ public class Commands extends ListenerAdapter
 				{
 					for (int i = 1; i < msgs.length; i++)
 					{
-						try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
+						try { Thread.sleep(1000); } catch (InterruptedException e) { error.print(object, e); }
 						l.editMessage(msgs[i]).queue();
 					}
-					try { Thread.sleep(1500); } catch (InterruptedException ignored) {}
+					try { Thread.sleep(1500); } catch (InterruptedException e) { error.print(object, e); }
 					l.delete().queue();
 					toDelete.delete().queue();
 				});
