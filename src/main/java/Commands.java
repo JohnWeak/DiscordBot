@@ -563,7 +563,7 @@ public class Commands extends ListenerAdapter
 			}
 			else
 			{
-				final int max = 6;
+				final int max = 4;
 				final String[] msgs = new String[max];
 				msgs[3] = "💣 **BOOM** 💥";
 				for (int i = 0; i < max-1; i++)
