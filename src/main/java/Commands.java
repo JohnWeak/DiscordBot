@@ -112,6 +112,8 @@ public class Commands extends ListenerAdapter
 			canaleBot = jda.getTextChannelsByName(botChannel, true).getFirst();
 			canaleBotPokemon = jda.getTextChannelsByName("pokémowon", true).getFirst();
 			gion = new PrivateMessage(Utente.getGion());
+			
+			gion.send("Riavvio completato.");
 		}
 		catch (Exception e)
 		{
@@ -119,8 +121,6 @@ public class Commands extends ListenerAdapter
 		}
 		
 		// moduloDiSicurezza();
-		
-		gion.send("Riavvio completato.");
 		
 	} // fine onReady()
 	
