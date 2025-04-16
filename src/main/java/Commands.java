@@ -565,18 +565,20 @@ public class Commands extends ListenerAdapter
 			{
 				final int max = 6;
 				final String[] msgs = new String[max];
+				final String c4 = "Ricevuto. Le cariche di C4 sono state piantate su questo messaggio.";
+				msgs[0] = c4;
 				msgs[max-1] = "💣 **BOOM** 💥";
-				for (int i = 0; i < max-1; i++)
+				for (int i = 1; i < max-1; i++)
 				{
 					final int n = Math.abs(i-(max-1));
-					final char c = (n == 1 ? 'o' : 'i');
-					msgs[i] = String.format("Ricevuto. Le cariche di C4 sono state piantate su questo messaggio.\nDetonazione fra **%d** second%c.", n, c);
+					msgs[i] = String.format("%s\nDetonazione tra **%d**.", c4, n);
 				}
 				
 				final Message toDelete = channel.retrieveMessageById(message.getId()).complete();
 				if (toDelete == null){gion.send(":("); return;}
 				toDelete.reply(msgs[0]).queue(l ->
 				{
+					try { Thread.sleep(2000); } catch (InterruptedException e) { error.print(object, e); }
 					for (int i = 1; i < msgs.length; i++)
 					{
 						try { Thread.sleep(1000); } catch (InterruptedException e) { error.print(object, e); }
