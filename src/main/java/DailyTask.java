@@ -38,9 +38,9 @@ abstract class EnigmoMSG
 	static boolean gentile;
 	static final String[] msg = {
 		"ENIGMO DOV'È IL TUO DAILY?!?!?!? PERCHÉ NON HAI FATTO ANCORA IL DAILY?!?!?!?!",
-		String.format("Signor Enigmo, è %scortesemente pregrato di presentare il proprio daily", gentile ? "": "s"),
+		String.format("Il signor Enigmo è %scortesemente pregato di presentare il proprio daily. Pena la reclusione fino a 3 anni.", gentile ? "": "s"),
 		"Se continui a non fare il daily, Enigmo, sarò costretto a chiamare i carabinieri.",
-		"Dai Enigmo è solo un daily, dai, fallo su, dai ti prego. Fallo per me, solo stavolta. Dai.",
+		"Dai Enigmo è solo un daily, dai, fallo. Su, dai ti prego. Fallo per me, solo stavolta. Dai.",
 		"È un daily, non un bonifico: non serve un giorno lavorativo per approvarlo >:(",
 	};
 	
