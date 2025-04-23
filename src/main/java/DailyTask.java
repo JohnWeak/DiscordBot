@@ -10,7 +10,7 @@ public class DailyTask extends TimerTask
 	{
 		try
 		{
-			final boolean enigmosDaily = Commands.canaleBot.getHistory()
+			final boolean hasEnigmoClaimedDaily = Commands.canaleBot.getHistory()
 				.retrievePast(100)
 				.complete()
 				.stream()
@@ -20,7 +20,7 @@ public class DailyTask extends TimerTask
 					message.getContentRaw().strip().toLowerCase().contains("owo daily")
 				);
 			
-			if (!enigmosDaily)
+			if (!hasEnigmoClaimedDaily)
 			{
 				final String tag = Utente.getEnigmo().getAsMention();
 				final String msg = EnigmoMSG.getMessage();
@@ -34,14 +34,14 @@ public class DailyTask extends TimerTask
 
 abstract class EnigmoMSG
 {
-	static final Random r = new Random();
+	final static Random r = new Random();
 	static boolean gentile;
-	static final String[] msg = {
+	final static String[] msg = {
 		"ENIGMO DOV'È IL TUO DAILY?!?!?!? PERCHÉ NON HAI FATTO ANCORA IL DAILY?!?!?!?!",
 		String.format("Il signor Enigmo è %scortesemente pregato di presentare il proprio daily. Pena la reclusione fino a 3 anni.", gentile ? "": "s"),
 		"Se continui a non fare il daily, Enigmo, sarò costretto a chiamare i carabinieri.",
 		"Dai Enigmo è solo un daily, dai, fallo. Su, dai ti prego. Fallo per me, solo stavolta. Dai.",
-		"È un daily, non un bonifico: non serve un giorno lavorativo per approvarlo >:(",
+		"Se non fai il daily farai piangere Gesù.",
 	};
 	
 	public static String getMessage()

@@ -516,7 +516,7 @@ public class Commands extends ListenerAdapter
 		if (contains(msgStrippedLowerCase, new String[]{"ingredibile", "andonio gonde"}))
 			reazioni.add(Emotes.ingredibile);
 		
-		if (contains(msgStrippedLowerCase, new String[]{"wtf", "what the fuck"}))
+		if (contains(msgStrippedLowerCase, new String[]{"wtf", "what the fuck", "ma che cazzo", "ma cosa"}))
 			reazioni.add(Emotes.wtf);
 		
 		if (msgStrippedLowerCase.matches(".*(?:guid|sto.*guidando|monkasteer)"))
@@ -546,19 +546,17 @@ public class Commands extends ListenerAdapter
 		if (msgStrippedLowerCase.contains("http"))
 			detectTwitterLink();
 		
-		if (msgStrippedLowerCase.contains("random") || msgStrippedLowerCase.contains("numero casuale"))
+		if (msgStrippedLowerCase.contains("random") || msgStrippedLowerCase.contains("numero casuale") || msgStrippedLowerCase.contains("a caso"))
 		{
 			reply = true;
 			final int n = random.nextInt(0, 100);
-			msgReply.append("Numero casuale: **").append(n).append("**");
+			msgReply.append(String.format("Numero casuale: **%d**.", n));
 		}
 		
 		if (msgStrippedLowerCase.equalsIgnoreCase("cancella questo messaggio"))
 		{
 			if (random.nextInt(50) == 42)
 			{
-				channel.sendTyping().queue();
-				try { Thread.sleep(500); } catch (InterruptedException ignored) {}
 				message.reply("No.").queue(l -> react("getrekt"));
 			}
 			else
@@ -633,14 +631,10 @@ public class Commands extends ListenerAdapter
 		{
 			if (flag && msgStrippedLowerCase.contains(s))
 			{
-				final StringBuilder r = new StringBuilder();
-				
 				flag = false;
-				final int bound = 1000;
-				if (random.nextInt(bound) < bound - 1)
-					message.reply(r.append(Utilities.getSaluto()).append(" anche a te").toString()).queue();
-				else
-					message.reply(r.append("No, vaffanculo ").append(Emotes.readyToSend(Emotes.ragey)).toString()).queue();
+				
+				final String toReply = String.format("%s %s", Utilities.getSaluto(), random.nextInt(1000) == 1 ? " anche a te" : " un cazzo. ".concat(Emotes.readyToSend(Emotes.ragey)));
+				message.reply(toReply).queue();
 			}
 		}
 		
@@ -743,7 +737,8 @@ public class Commands extends ListenerAdapter
 	private void detectTwitterLink()
 	{
 		final String[] parts = messageRaw.split(" ");
-		String firstHalf, secondHalf, newURL = "";
+		final String firstHalf, secondHalf;
+		String newURL = "";
 		boolean twitterDetected = false;
 		
 		for (String m : parts)
@@ -775,7 +770,7 @@ public class Commands extends ListenerAdapter
 			}
 		}
 		
-		if (twitterDetected)
+		if (twitterDetected && !newURL.isBlank())
 			message.reply(newURL).queue();
 		
 	} // fine detectTwitterLink()
@@ -849,17 +844,21 @@ public class Commands extends ListenerAdapter
 						try
 						{
 							final User user = option.getAsUser();
+							final String userName = user.getEffectiveName();
+							final String authorName = author.getEffectiveName();
+							
 							if (user.isBot())
 							{
 								isEphemeral = true;
 								replyMessage = user.getId().equals(Utente.ID_BOWOT) ?
-									String.format("No, non uscirò a cena con te, %s.", author.getName()) :
-									String.format("Spiacente, %s non può uscire a cena con te.", user.getName());
+									String.format("No, non uscirò a cena con te, %s.", authorName) :
+									String.format("Spiacente, %s non può uscire a cena con te.", userName)
+								;
 							}
 							else
 							{
 								isEphemeral = false;
-								replyMessage = String.format("%s ti ha ufficialmente invitato a cena, <@%s>! Accetti?", author.getName(), user.getId());
+								replyMessage = String.format("%s ti ha ufficialmente invitato a cena, %s! Accetti?", authorName, user.getAsTag());
 							}
 							event.reply(replyMessage).setEphemeral(isEphemeral).queue();
 						}
@@ -1146,7 +1145,6 @@ public class Commands extends ListenerAdapter
 					{
 						new Error<String>().print(this,e.getMessage());
 					}
-					
 				}
 				else
 				{
@@ -1215,11 +1213,12 @@ public class Commands extends ListenerAdapter
 				final String domanda = secret ? "•".repeat(domandaString.length()) : domandaString;
 				final String response = eightBall();
 				
-				final EmbedBuilder embed = new EmbedBuilder();
-				embed.setTitle(domanda);
-				embed.setColor(Color.RED);
-				embed.setDescription("La magica palla 8 🎱 sta valutando la tua domanda...");
-				embed.setFooter("");
+				final EmbedBuilder embed = new EmbedBuilder()
+					.setTitle(domanda)
+					.setColor(Color.RED)
+					.setDescription("La magica palla 8 🎱 sta valutando la tua domanda...")
+					.setFooter("")
+				;
 				
 				event.replyEmbeds(embed.build()).queue(l ->
 				{
@@ -1358,7 +1357,8 @@ public class Commands extends ListenerAdapter
 							.map(JsonElement::getAsJsonObject)
 							.filter(tempCountry -> tempCountry.get("name").getAsJsonObject().get("common").getAsString().equalsIgnoreCase(opt))
 							.findFirst()
-							.orElse(allNationsArray.get(random.nextInt(allNationsArray.size())).getAsJsonObject());
+							.orElse(allNationsArray.get(random.nextInt(allNationsArray.size())).getAsJsonObject())
+					;
 					
 					commonName = country.get("name").getAsJsonObject().get("common").getAsString();
 					officialName = country.get("name").getAsJsonObject().get("official").getAsString();
@@ -1398,7 +1398,7 @@ public class Commands extends ListenerAdapter
 				} catch (Exception e)
 				{
 					error.print(object,e);
-					final String errormsg = "Si è verificato un errore con il comando. Per favore attendi qualche minuto prima di riprovare.";
+					final String errormsg = "Si è verificato un errore con il comando. Per favore attendi un minuto prima di riprovare.";
 					event.reply(errormsg).queue();
 				}
 				
