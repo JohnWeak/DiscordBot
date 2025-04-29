@@ -19,7 +19,7 @@ public class Pokemon
 {
 	// UNRELATED TO POKEMON
 	private static final Object object = Pokemon.class;
-	private static final Error<Exception> error = new Error<>();
+	private static final Errore<Exception> error = new Errore<>();
 	private static final String NAMES_FILE = "./src/main/java/nomiPokemon.txt";
 	private static final String JSON_FILES = "./src/main/java/json/";
 	private final boolean debug = false;

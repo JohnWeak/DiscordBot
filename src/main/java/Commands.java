@@ -47,8 +47,8 @@ import java.util.stream.StreamSupport;
 public class Commands extends ListenerAdapter
 {
 	private static final Object object = Commands.class;
-	private static final Error<Exception> error = new Error<>();
-	private static final Error<String> errorString = new Error<>();
+	private static final Errore<Exception> error = new Errore<>();
+	private static final Errore<String> errorString = new Errore<>();
 	public static final String botChannel = "\uD83E\uDD16bot-owo";
 	private static final Random random = new Random();
 	public static GuildMessageChannel channel;
@@ -75,10 +75,12 @@ public class Commands extends ListenerAdapter
 		final Timer timer = new Timer(true);
 		final long period = 24 * 60 * 60 * 1000; // 24 ore in millisecondi
 		final DailyTask dailyTask = new DailyTask();
+		final ChangeActivityTask activityTask = new ChangeActivityTask();
 		disconnectMessageTask = new MessageTask();
 		
 		timer.schedule(disconnectMessageTask, calcDelay(22,0,0), period);
 		timer.schedule(dailyTask, calcDelay(21, 30, 0), period);
+		timer.schedule(activityTask, calcDelay(10, 0, 0), period*2); // ogni 48 ore
 	}
 	
 	/**Calcola il ritardo iniziale fino al prossimo orario desiderato
@@ -1120,7 +1122,7 @@ public class Commands extends ListenerAdapter
 					}
 					catch (Exception e)
 					{
-						new Error<String>().print(this,e.getMessage());
+						new Errore<String>().print(this,e.getMessage());
 					}
 				}
 				else
@@ -1416,7 +1418,7 @@ public class Commands extends ListenerAdapter
 				.limit(25)
 				.map(word -> new Command.Choice(word, word))
 				.toList();
-		} catch (Exception e) { new Error<Exception>().print(object,e);}
+		} catch (Exception e) { new Errore<Exception>().print(object,e);}
 		return null;
 	}
 	

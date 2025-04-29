@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 /**@param <T> Gli unici tipi ammessi sono Exception e String.*/
-public class Error <T>
+public class Errore<T>
 {
 	/**Invia un messaggio privato a Gion contenente i dettagli dell'errore
 	 * @param object la classe che ha lanciato l'eccezione

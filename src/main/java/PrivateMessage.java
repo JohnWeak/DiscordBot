@@ -38,7 +38,7 @@ public class PrivateMessage
 		}
 		catch (Exception e)
 		{
-			new Error<Exception>().print(object, e);
+			new Errore<Exception>().print(object, e);
 		}
 	}
 	
@@ -62,7 +62,7 @@ public class PrivateMessage
 					return channel.sendMessage(content).addFiles(fileUpload);
 				} catch (Exception e)
 				{
-					new Error<Exception>().print(object, e);
+					new Errore<Exception>().print(object, e);
 					return null;
 				}
 			}).queue();

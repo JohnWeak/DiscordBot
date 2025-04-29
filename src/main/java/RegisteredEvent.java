@@ -1,3 +1,5 @@
+import org.jetbrains.annotations.NotNull;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -14,6 +16,7 @@ public record RegisteredEvent(String description, LocalDateTime timeItHappened)
 	 * @return a string detailing the event and the time it occurred
 	 * @see RegisteredEvent
 	 * */
+	@NotNull
 	@Override
 	public String toString()
 	{

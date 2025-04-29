@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import net.dv8tion.jda.api.interactions.InteractionHook;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
@@ -116,7 +115,7 @@ public class ThreadQuiz extends Thread
 			event.getJDA().addEventListener(buttonListener);
 			
 		}
-		catch (Exception e) { new Error<Exception>().print(this,e); }
+		catch (Exception e) { new Errore<Exception>().print(this,e); }
 	}
 	
 }
