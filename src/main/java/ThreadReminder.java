@@ -39,7 +39,7 @@ public class ThreadReminder extends Thread
 			
 		}catch (InterruptedException e)
 		{
-			new Error<>().print(this,e);
+			new Errore<>().print(this,e);
 		}
 		finally
 		{

@@ -23,7 +23,7 @@ public class Ore
 		}
 		else
 		{
-			new Error<String>().print(this, "Errore! Ore o minuti sbagliati.");
+			new Errore<String>().print(this, "Errore! Le ore o i minuti non sono validi.");
 		}
 	}
 	
