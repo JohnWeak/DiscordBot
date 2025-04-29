@@ -11,6 +11,7 @@ public class Ore
 		"quarantasette", "quarantotto", "quarantanove", "cinquanta", "cinquantuno", "cinquantadue", "cinquantatré",
 		"cinquantraquattro", "cinquantacinque", "cinquantasei", "cinquantasette", "cinquantotto", "cinquantanove"
 	};
+	
 	private int ore, minuti;
 	
 	public Ore(int ore, int minuti)
@@ -35,7 +36,7 @@ public class Ore
 	}
 	public String getMinuti()
 	{
-		return (minuti == 0 ? "" : numeriParole[minuti]);
+		return minuti == 0 ? "" : numeriParole[minuti];
 	}
 	
 	
