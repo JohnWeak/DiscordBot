@@ -1414,9 +1414,16 @@ public class Commands extends ListenerAdapter
 		{
 			return lines.filter(word -> word.toLowerCase().contains(query.getValue().toLowerCase()))
 				.limit(25)
-				.map(word -> new Command.Choice(word, word))
+				.map(word ->
+				{
+					final String newWord = word.replaceAll(
+						String.format("(?i)(%s)", Pattern.quote(query.getValue())),
+						"**$1**"
+					);
+					return new Command.Choice(newWord, word);
+				})
 				.toList();
-		} catch (Exception e) { new Error<Exception>().print(object,e);}
+		} catch (Exception e) { new Error<Exception>().print(object,e); }
 		return null;
 	}
 	
