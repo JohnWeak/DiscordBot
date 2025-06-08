@@ -231,7 +231,7 @@ public class Main
 			
 		}catch (Exception e)
 		{
-			new Error<>().print(object,e);
+			new Errore<>().print(object,e);
 		}
 		
 	}
@@ -248,7 +248,7 @@ public class Main
 				.build();
 		} catch (Exception e)
 		{
-			new Error<>().print(object, e);
+			new Errore<>().print(object, e);
 		}
 		return jda.awaitReady();
 	} // fine generateJDA()

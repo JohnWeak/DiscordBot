@@ -60,7 +60,7 @@ class ButtonListener extends ListenerAdapter
 			event.getInteraction().getChannel()
 				.editMessageComponentsById(event.getMessageId(), updatedRows)
 				.queue();
-		} catch (Exception e) { new Error<Exception>().print(this, e); }
+		} catch (Exception e) { new Errore<Exception>().print(this, e); }
 	}
 	
 	

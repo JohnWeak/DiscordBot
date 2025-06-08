@@ -8,7 +8,7 @@ public class ThreadPigeon extends Thread
 	private final GuildMessageChannel channel;
 	private final Random random;
 	private final Object object = this;
-	private final Error<Exception> error = new Error<>();
+	private final Errore<Exception> error = new Errore<>();
 	
 	/** Il pigeon avrà la sua vendetta
 	 * @param authorName colui che ha osato (o è stato sfortunato abbastanza da) evocare il <b>pigeon bazooka</b><br>

@@ -1,4 +1,4 @@
-
+import java.lang.Error;
 import java.time.LocalDate;
 import java.util.Random;
 import java.util.TimerTask;
@@ -28,7 +28,7 @@ public class DailyTask extends TimerTask
 				
 				Commands.canaleBot.sendMessage(msgToSend).queue();
 			}
-		} catch (Exception e) { new Error<Exception>().print(this, e); }
+		} catch (Exception e) { new Errore<Exception>().print(this, e); }
 	}
 }
 

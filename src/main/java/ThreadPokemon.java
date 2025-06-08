@@ -20,7 +20,7 @@ public class ThreadPokemon extends Thread
 	private final EmbedBuilder eb;
 	private Message m;
 	
-	private final Error<Exception> error = new Error<>();
+	private final Errore<Exception> error = new Errore<>();
 	private final PrivateMessage gion = new PrivateMessage(Utente.getGion());
 	
 	public ThreadPokemon(Pokemon pokemon, TextChannelImpl tc, EmbedBuilder eb)

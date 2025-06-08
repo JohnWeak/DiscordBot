@@ -167,7 +167,7 @@ public abstract class Utilities
 			// System.out.printf("\n\n\nRAW RESPONSE:\n%s\n\nSTRING WITHOUT HTML CODES:\n%s\n\n\n", response, newString);
 			return JsonParser.parseString(newString);
 			
-		}catch (Exception e) { new Error<Exception>().print(Utilities.class, e); }
+		}catch (Exception e) { new Errore<Exception>().print(Utilities.class, e); }
 		
 		return null;
 		
