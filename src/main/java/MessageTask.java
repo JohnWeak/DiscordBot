@@ -26,6 +26,8 @@ public class MessageTask extends TimerTask
 		}
 		else
 		{
+			final String recap, closer;
+			
 			if (random.nextInt(69420) == 42)
 			{
 				final String MESSAGES_ABOUND = "SIR, THE DAM HAS BEEN BREACHED! THE MESSAGES ARE OVERFLOWING, THE FLOOD IS IMMINENT!\n";
@@ -44,7 +46,7 @@ public class MessageTask extends TimerTask
 				return;
 			}
 			
-			final String recap = String.format("Here's the recap of the `%d` disconnection events\n\n", allEvents.size());
+			recap = String.format("Here's the recap of the `%d` disconnection events\n\n", allEvents.size());
 			eventString.append(recap);
 			
 			for (RegisteredEvent event : allEvents)
@@ -52,7 +54,7 @@ public class MessageTask extends TimerTask
 				eventString.append(String.format("%d) %s", index++, event.toString()));
 			}
 			
-			final String closer = "\nEnd of recap. Enjoy the rest of the day. Or don't, I don't really care.";
+			closer = String.format("\nEnd of recap.%s\n", random.nextInt(10) == 0 ? " Have a nice day.":"");
 			eventString.append(closer);
 		}
 		

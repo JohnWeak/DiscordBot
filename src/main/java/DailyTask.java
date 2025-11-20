@@ -1,4 +1,3 @@
-import java.lang.Error;
 import java.time.LocalDate;
 import java.util.Random;
 import java.util.TimerTask;
@@ -42,6 +41,9 @@ abstract class EnigmoMSG
 		"Se continui a non fare il daily, Enigmo, sarò costretto a chiamare i carabinieri.",
 		"Dai Enigmo è solo un daily, dai, fallo. Su, dai ti prego. Fallo per me, solo stavolta. Dai.",
 		"Se non fai il daily farai piangere Gesù.",
+		"Il contratto che hai sottoscritto prevede di fare il daily, Enigmo.",
+		"Io ho fatto il mio daily, e tu?!?!?",
+		"😡😡😡"
 	};
 	
 	public static String getMessage()
