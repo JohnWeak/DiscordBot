@@ -639,12 +639,13 @@ public class Commands extends ListenerAdapter
 			{
 				sb
 					.append("messaggio: ```")
-					.append(m.getContentRaw().substring(0,10))
+					.append(m.getContentRaw().substring(0,m.getContentRaw().length() > 50 ? 50 : 25))
 					.append("[...]```\n")
-					.append("ora creazione messaggio: ")
+					.append("ora creazione messaggio: `")
 					.append(m.getTimeCreated().toLocalDateTime().getHour())
 					.append(":")
 					.append(m.getTimeCreated().toLocalDateTime().getMinute())
+					.append("`\n")
 				;
 			}
 
