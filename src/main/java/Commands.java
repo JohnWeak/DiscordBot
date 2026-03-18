@@ -637,15 +637,16 @@ public class Commands extends ListenerAdapter
 			final StringBuilder sb = new StringBuilder();
 			for (Message m : history)
 			{
+				int hour, minute;
+				hour = m.getTimeCreated().atZoneSameInstant(ZoneId.of("Europe/Rome")).getHour();
+				minute = m.getTimeCreated().atZoneSameInstant(ZoneId.of("Europe/Rome")).getMinute();
 				sb
-					.append("messaggio: ```")
-					.append(m.getContentRaw().substring(0,m.getContentRaw().length() > 50 ? 50 : 25))
-					.append("[...]```\n")
-					.append("ora creazione messaggio: `")
-					.append(m.getTimeCreated().toLocalDateTime().getHour())
-					.append(":")
-					.append(m.getTimeCreated().toLocalDateTime().getMinute())
-					.append("`\n")
+					.append(m.getAuthor())
+					.append(": `")
+					.append(m.getContentRaw().substring(0,m.getContentRaw().length() > 50 ? 50 : m.getContentRaw().length()))
+					.append("[...]`\n")
+					.append(" - `")
+					.append(String.format("%d:%s`\n\n", hour, minute > 9 ? minute : "0"+minute))
 				;
 			}
 
