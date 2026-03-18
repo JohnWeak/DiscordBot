@@ -1,6 +1,10 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.TimerTask;
+
+import net.dv8tion.jda.api.entities.Message;
 
 public class DailyTask extends TimerTask
 {
@@ -26,7 +30,7 @@ public class DailyTask extends TimerTask
 				final String msg = EnigmoMSG.getMessage();
 				final String msgToSend = String.format("%s %s", tag, msg);
 				
-				Commands.canaleBot.sendMessage(msgToSend).queue();
+				Commands.canaleBot.sendMessage(msgToSend != null ? msgToSend : "uh oh").queue();
 			}
 		} catch (Exception e) { new Errore<Exception>().print(this, e); }
 		

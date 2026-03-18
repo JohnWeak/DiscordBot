@@ -629,6 +629,29 @@ public class Commands extends ListenerAdapter
 			}
 		}
 		
+		if (msgStrippedLowerCase.equals("canalebothistory"))
+		{
+			final List<Message> history = Commands.canaleBot.getHistory()
+				.retrievePast(10)
+				.complete();
+			final StringBuilder sb = new StringBuilder();
+			for (Message m : history)
+			{
+				sb
+					.append("messaggio: ```")
+					.append(m.getContentRaw().substring(0,10))
+					.append("[...]```\n")
+					.append("ora creazione messaggio: ")
+					.append(m.getTimeCreated().toLocalDateTime().getHour())
+					.append(":")
+					.append(m.getTimeCreated().toLocalDateTime().getMinute())
+				;
+			}
+
+
+			gion.send(sb.toString());
+		}
+
 		if (msgStrippedLowerCase.matches("dammi il (?:cinque|5)") || msgStrippedLowerCase.matches("high five"))
 		{
 			reply = true;
