@@ -628,7 +628,7 @@ public class Commands extends ListenerAdapter
 				message.reply(toReply).queue();
 			}
 		}
-		
+		/*
 		if (msgStrippedLowerCase.equals("canalebothistory"))
 		{
 			final List<Message> history = Commands.canaleBot.getHistory()
@@ -641,7 +641,7 @@ public class Commands extends ListenerAdapter
 				hour = m.getTimeCreated().atZoneSameInstant(ZoneId.of("Europe/Rome")).getHour();
 				minute = m.getTimeCreated().atZoneSameInstant(ZoneId.of("Europe/Rome")).getMinute();
 				sb
-					.append(m.getAuthor())
+					.append(m.getAuthor().getName())
 					.append(": `")
 					.append(m.getContentRaw().substring(0,m.getContentRaw().length() > 50 ? 50 : m.getContentRaw().length()))
 					.append("[...]`\n")
@@ -650,9 +650,9 @@ public class Commands extends ListenerAdapter
 				;
 			}
 
-
 			gion.send(sb.toString());
 		}
+		*/
 
 		if (msgStrippedLowerCase.matches("dammi il (?:cinque|5)") || msgStrippedLowerCase.matches("high five"))
 		{
