@@ -13,10 +13,11 @@ public class DailyTask extends TimerTask
 				.retrievePast(100)
 				.complete()
 				.stream()
-				.anyMatch(message ->
+				.anyMatch(message -> 
 					message.getTimeCreated().toLocalDate().equals(LocalDate.now()) &&
+					message.getTimeCreated().toLocalDateTime().getHour() > 9 &&
 					message.getAuthor().getId().equals(Utente.ID_ENIGMO) &&
-					message.getContentRaw().strip().toLowerCase().contains("owo daily")
+					message.getContentRaw().strip().toLowerCase().matches("(?<!\\w)owo(?!\\w)\\s+daily\\b")
 				);
 			
 			if (!hasEnigmoClaimedDaily)
@@ -28,6 +29,7 @@ public class DailyTask extends TimerTask
 				Commands.canaleBot.sendMessage(msgToSend).queue();
 			}
 		} catch (Exception e) { new Errore<Exception>().print(this, e); }
+		
 	}
 }
 
@@ -43,7 +45,12 @@ abstract class EnigmoMSG
 		"Se non fai il daily farai piangere Gesù.",
 		"Il contratto che hai sottoscritto prevede di fare il daily, Enigmo.",
 		"Io ho fatto il mio daily, e tu?!?!?",
-		"😡😡😡"
+		"😡😡😡",
+		"Fai il daily. Altrimenti mi arrabbio.",
+		"Se non fai il daily, chiederò il divorzio",
+		"In questo server ci sono due cose che vanno sempre rispettate: la seconda è il daily.",
+		"I L. D A I L Y.",
+		"Chi non fa il daily un vergognato è, è! Chi non fa il daily un vergognato è, è!"
 	};
 	
 	public static String getMessage()

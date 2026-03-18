@@ -373,7 +373,19 @@ public class Commands extends ListenerAdapter
 					react("vergognati");
 					message.reply("Òbito vergognati").queue();
 				}
-				case Utente.ID_ENIGMO -> react("pigeon");
+				case Utente.ID_ENIGMO -> 
+				{
+					if (random.nextBoolean())
+					{
+						react("pigeon");
+					}
+					else
+					{
+						final char[] consonanti = {'b', 'c', 'd', 'f', 'g', 'l', 'm', 'p', 'r', 's', 't', 'z'};
+						final String nomeStorpiato = String.format("E%cigmo", consonanti[random.nextInt(consonanti.length)]);
+						message.reply(String.format("🫵🏻 %s", nomeStorpiato)).queue();
+					}
+				}
 				case Utente.ID_LEX -> channel.addReactionById(authorID, Emoji.fromUnicode("🇷🇴")).queue();
 				case Utente.ID_GION -> react("boo2");
 				
@@ -528,7 +540,7 @@ public class Commands extends ListenerAdapter
 		if (msgStrippedLowerCase.contains("random") || msgStrippedLowerCase.contains("numero casuale") || msgStrippedLowerCase.contains("a caso"))
 		{
 			reply = true;
-			final int n = random.nextInt(0, 100);
+			final int n = random.nextInt(0, 500);
 			msgReply.append(String.format("Numero casuale: **%d**.", n));
 		}
 		
@@ -612,7 +624,7 @@ public class Commands extends ListenerAdapter
 			{
 				flag = false;
 				
-				final String toReply = String.format("%s %s", Utilities.getSaluto(), random.nextInt(1000) == 1 ? " anche a te" : " un cazzo. ".concat(Emotes.readyToSend(Emotes.ragey)));
+				final String toReply = String.format("%s %s", Utilities.getSaluto(), random.nextInt(1000) == 1 ? "anche a te" : "un cazzo. ".concat(Emotes.readyToSend(Emotes.ragey)));
 				message.reply(toReply).queue();
 			}
 		}
@@ -1639,7 +1651,7 @@ public class Commands extends ListenerAdapter
 	 * @throws ENIGMO DALLA FINESTRA.
 	 * @apiNote QUELLE CHE FANNO BZZZ E IMPOLLINANO I FIORI.
 	 * @see <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">QUELLO CHE È SUCCESSO A CHI HA MOLESTATO IL BOT PRIMA DI TE.</a>
-	 * @since QUELLA VOLTA IN CUI ENIGMO HA MOSSO DELLE AVANCE AL BOT.
+	 * @since QUELLA VOLTA IN CUI ENIGMO CI HA PROVATO CON IL BOT.
 	 */
 	public void moduloDiSicurezza() throws ENIGMO
 	{

@@ -5,7 +5,7 @@ public class Errore<T>
 {
 	/**Invia un messaggio privato a Gion contenente i dettagli dell'errore
 	 * @param object la classe che ha lanciato l'eccezione
-	 * @param exception l'eccezione (in formato Exception) o la stringa d'errore
+	 * @param exception l'eccezione o la stringa d'errore
 	 * */
 	public void print(Object object, T exception)
 	{
@@ -38,3 +38,5 @@ public class Errore<T>
 	}
 	
 } // fine classe Error
+
+

@@ -25,7 +25,6 @@ public class Main
 	{
 		jda = generateJDA();
 		cmds();
-		
 	} // fine metodo main()
 	
 	public static void cmds()
@@ -173,7 +172,7 @@ public class Main
 			newCommand = new CommandDataImpl("pigeons", "ottieni una foto di un piccione");
 			commands.add(newCommand);
 			
-			newCommand = new CommandDataImpl("test", "⚠️TEST: non usare questo comando ⚠️");
+			newCommand = new CommandDataImpl("test", "⚠️ COMANDO IN COSTRUZIONE: NON USARE ⚠️");
 			commands.add(newCommand);
 			
 			newCommand = new CommandDataImpl("calcolatrice", "calcola un valore")
