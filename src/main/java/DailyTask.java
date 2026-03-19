@@ -1,14 +1,18 @@
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Random;
 import java.util.TimerTask;
 
 public class DailyTask extends TimerTask
 {
+	
 	@Override
 	public void run()
 	{
 		final ZoneId zid = ZoneId.of("Europe/Rome");
+		ZonedDateTime zdt = ZonedDateTime.of(LocalDateTime.now(), zid);
 		try
 		{
 			final boolean hasEnigmoClaimedDaily = Commands.canaleBot.getHistory()
@@ -16,8 +20,8 @@ public class DailyTask extends TimerTask
 				.complete()
 				.stream()
 				.anyMatch(message -> 
-					message.getTimeCreated().toLocalDate().equals(LocalDate.now()) &&
-					message.getTimeCreated().atZoneSameInstant(zid).getHour() > 8 &&
+					message.getTimeCreated().atZoneSimilarLocal(zid).getDayOfYear() == ZonedDateTime.now().getDayOfYear() &&
+					message.getTimeCreated().atZoneSimilarLocal(zid).getHour() > 8 &&
 					message.getAuthor().getId().equals(Utente.ID_ENIGMO) &&
 					message.getContentRaw().strip().toLowerCase().matches("(?<!\\w)owo(?!\\w)\\s+daily\\b")
 				);
