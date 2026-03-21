@@ -647,14 +647,15 @@ public class Commands extends ListenerAdapter
 					hour = m.getTimeCreated().atZoneSameInstant(rome).getHour();
 					minute = m.getTimeCreated().atZoneSameInstant(rome).getMinute();
 					sb.append(
-						String.format("[%s] %s: `%s...` m.dayOfYear: %d  now.dayOfYear: %d -> m == now? %b\n", 
-							String.format("%s:%s", hour > 9 ? hour : "0"+hour, minute > 9 ? minute : "0"+minute),	
+						String.format("[%s:%s] %s: `%s...` m.dayOfYear: %d  now.dayOfYear: %d -> m == now? %b\n", 
+							hour > 9 ? ""+hour : "0"+hour,
+							minute > 9 ? ""+minute : "0"+minute,
 							m.getAuthor().getName(), 
 							msg.substring(0,msg.length() > 50 ? 50 : msg.length()),
 							day,
 							ZonedDateTime.now().getDayOfYear(),
 							m.getTimeCreated().atZoneSameInstant(rome).getDayOfYear() == ZonedDateTime.now().getDayOfYear()
-						)	
+						).replaceAll("*", "")
 					);
 				}
 
