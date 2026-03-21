@@ -647,6 +647,7 @@ public class Commands extends ListenerAdapter
 					dayOfMessage = m.getTimeCreated().atZoneSameInstant(rome).getDayOfYear();
 					hour = m.getTimeCreated().atZoneSameInstant(rome).getHour();
 					minute = m.getTimeCreated().atZoneSameInstant(rome).getMinute();
+
 					sb.append(
 						String.format("[%s:%s] %s: `%s...` dayOfMessage: %d  today: %d -> dayOfMessage == today? %b\n", 
 							hour > 9 ? ""+hour : "0"+hour,
@@ -656,7 +657,7 @@ public class Commands extends ListenerAdapter
 							dayOfMessage,
 							today,
 							dayOfMessage == today
-						).replaceAll("*", "")
+						).replaceAll("\\*", "")
 					);
 				}
 
