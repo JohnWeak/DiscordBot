@@ -642,7 +642,7 @@ public class Commands extends ListenerAdapter
 				hour = m.getTimeCreated().atZoneSameInstant(rome).getHour();
 				minute = m.getTimeCreated().atZoneSameInstant(rome).getMinute();
 				sb.append(
-					String.format("[%s] `%s` - %d:%s (hour>8:%b - m.ZoneSimiliarLocal()... > 8: %b)\n", 
+					String.format("[%s] `%s` - %s (hour>8:%b - m.ZoneSimiliarLocal()... > 8: %b)\n", 
 						m.getAuthor().getName(), 
 						m.getContentRaw().substring(0,m.getContentRaw().length() > 50 ? 50 : m.getContentRaw().length()),
 						String.format("%d:%s`\n\n", hour, minute > 9 ? minute : "0" + minute),
