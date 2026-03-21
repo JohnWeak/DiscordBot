@@ -641,7 +641,7 @@ public class Commands extends ListenerAdapter
 				
 				for (Message m : history)
 				{
-					String msg = m.getContentStripped();
+					String msg = m.getContentStripped().replaceAll("\\*", "");
 					int hour, minute, dayOfMessage, today;
 					today = ZonedDateTime.now().getDayOfYear();
 					dayOfMessage = m.getTimeCreated().atZoneSameInstant(rome).getDayOfYear();
@@ -657,7 +657,7 @@ public class Commands extends ListenerAdapter
 							dayOfMessage,
 							today,
 							dayOfMessage == today
-						).replaceAll("\\*", "")
+						)
 					);
 				}
 
