@@ -628,9 +628,10 @@ public class Commands extends ListenerAdapter
 				message.reply(toReply).queue();
 			}
 		}
-		/*
+		
 		if (msgStrippedLowerCase.equals("canalebothistory"))
 		{
+			final ZoneId rome = ZoneId.of("Europe/Rome");
 			final List<Message> history = Commands.canaleBot.getHistory()
 				.retrievePast(10)
 				.complete();
@@ -638,21 +639,22 @@ public class Commands extends ListenerAdapter
 			for (Message m : history)
 			{
 				int hour, minute;
-				hour = m.getTimeCreated().atZoneSameInstant(ZoneId.of("Europe/Rome")).getHour();
-				minute = m.getTimeCreated().atZoneSameInstant(ZoneId.of("Europe/Rome")).getMinute();
-				sb
-					.append(m.getAuthor().getName())
-					.append(": `")
-					.append(m.getContentRaw().substring(0,m.getContentRaw().length() > 50 ? 50 : m.getContentRaw().length()))
-					.append("[...]`\n")
-					.append(" - `")
-					.append(String.format("%d:%s`\n\n", hour, minute > 9 ? minute : "0"+minute))
-				;
+				hour = m.getTimeCreated().atZoneSameInstant(rome).getHour();
+				minute = m.getTimeCreated().atZoneSameInstant(rome).getMinute();
+				sb.append(
+					String.format("[%s] `%s` - %d:%s (hour>8:%b - m.ZoneSimiliarLocal()... > 8: %b)\n", 
+						m.getAuthor().getName(), 
+						m.getContentRaw().substring(0,m.getContentRaw().length() > 50 ? 50 : m.getContentRaw().length()),
+						String.format("%d:%s`\n\n", hour, minute > 9 ? minute : "0" + minute),
+						hour > 8,
+						m.getTimeCreated().atZoneSimilarLocal(rome).getHour() > 8
+					)	
+				);
 			}
 
 			gion.send(sb.toString());
 		}
-		*/
+		
 
 		if (msgStrippedLowerCase.matches("dammi il (?:cinque|5)") || msgStrippedLowerCase.matches("high five"))
 		{
