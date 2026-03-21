@@ -631,27 +631,31 @@ public class Commands extends ListenerAdapter
 		
 		if (msgStrippedLowerCase.equals("canalebothistory"))
 		{
-			final ZoneId rome = ZoneId.of("Europe/Rome");
-			final List<Message> history = Commands.canaleBot.getHistory()
-				.retrievePast(10)
-				.complete();
-			final StringBuilder sb = new StringBuilder();
-			for (Message m : history)
-			{
-				int hour, minute;
-				hour = m.getTimeCreated().atZoneSameInstant(rome).getHour();
-				minute = m.getTimeCreated().atZoneSameInstant(rome).getMinute();
-				sb.append(
-					String.format("[%s] %s: `%s...` m.dayOfYear == now.dayOfYear? %b\n", 
-						String.format("%d:%s", hour > 9 ? hour : "0"+hour, minute > 9 ? minute : "0"+minute),	
-						m.getAuthor().getName(), 
-						m.getContentRaw().substring(0,m.getContentRaw().length() > 50 ? 50 : m.getContentRaw().length()),
-						m.getTimeCreated().atZoneSameInstant(rome).getDayOfYear() == ZonedDateTime.now().getDayOfYear()
-					)	
-				);
-			}
+			try 
+			{	
+				final ZoneId rome = ZoneId.of("Europe/Rome");
+				final List<Message> history = Commands.canaleBot.getHistory()
+					.retrievePast(10)
+					.complete();
+				final StringBuilder sb = new StringBuilder();
+				for (Message m : history)
+				{
+					int hour, minute;
+					hour = m.getTimeCreated().atZoneSameInstant(rome).getHour();
+					minute = m.getTimeCreated().atZoneSameInstant(rome).getMinute();
+					sb.append(
+						String.format("[%s] %s: `%s...` m.dayOfYear == now.dayOfYear? %b\n", 
+							String.format("%s:%s", hour > 9 ? hour : "0"+hour, minute > 9 ? minute : "0"+minute),	
+							m.getAuthor().getName(), 
+							m.getContentRaw().substring(0,m.getContentRaw().length() > 50 ? 50 : m.getContentRaw().length()),
+							m.getTimeCreated().atZoneSameInstant(rome).getDayOfYear() == ZonedDateTime.now().getDayOfYear()
+						)	
+					);
+				}
 
-			gion.send(sb.toString());
+				gion.send(sb.toString());
+			}
+			catch (Exception e) {new Errore<Exception>().report(this, e);}
 		}
 		
 
