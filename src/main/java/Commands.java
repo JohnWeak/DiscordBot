@@ -642,19 +642,20 @@ public class Commands extends ListenerAdapter
 				for (Message m : history)
 				{
 					String msg = m.getContentStripped();
-					int hour, minute, day;
-					day = m.getTimeCreated().atZoneSameInstant(rome).getDayOfYear();
+					int hour, minute, dayOfMessage, today;
+					today = ZonedDateTime.now().getDayOfYear();
+					dayOfMessage = m.getTimeCreated().atZoneSameInstant(rome).getDayOfYear();
 					hour = m.getTimeCreated().atZoneSameInstant(rome).getHour();
 					minute = m.getTimeCreated().atZoneSameInstant(rome).getMinute();
 					sb.append(
-						String.format("[%s:%s] %s: `%s...` m.dayOfYear: %d  now.dayOfYear: %d -> m == now? %b\n", 
+						String.format("[%s:%s] %s: `%s...` dayOfMessage: %d  today: %d -> dayOfMessage == today? %b\n", 
 							hour > 9 ? ""+hour : "0"+hour,
 							minute > 9 ? ""+minute : "0"+minute,
 							m.getAuthor().getName(), 
 							msg.substring(0,msg.length() > 50 ? 50 : msg.length()),
-							day,
-							ZonedDateTime.now().getDayOfYear(),
-							m.getTimeCreated().atZoneSameInstant(rome).getDayOfYear() == ZonedDateTime.now().getDayOfYear()
+							dayOfMessage,
+							today,
+							dayOfMessage == today
 						).replaceAll("*", "")
 					);
 				}
