@@ -115,7 +115,7 @@ public class ThreadQuiz extends Thread
 			event.getJDA().addEventListener(buttonListener);
 			
 		}
-		catch (Exception e) { new Errore<Exception>().print(this,e); }
+		catch (Exception e) { new Errore<Exception>().report(this,e); }
 	}
 	
 }

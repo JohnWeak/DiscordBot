@@ -12,7 +12,8 @@ public class DailyTask extends TimerTask
 	public void run()
 	{
 		final ZoneId zid = ZoneId.of("Europe/Rome");
-		ZonedDateTime zdt = ZonedDateTime.of(LocalDateTime.now(), zid);
+		// ZonedDateTime zdt = ZonedDateTime.of(LocalDateTime.now(), zid);
+		// final ZonedDateTime zdt = ZonedDateTime.of(LocalDateTime.now(), zid);
 		try
 		{
 			final boolean hasEnigmoClaimedDaily = Commands.canaleBot.getHistory()
@@ -32,9 +33,15 @@ public class DailyTask extends TimerTask
 				final String msg = EnigmoMSG.getMessage();
 				final String msgToSend = String.format("%s %s", tag, msg);
 				
-				Commands.canaleBot.sendMessage(msgToSend != null ? msgToSend : "uh oh").queue();
+				if (msgToSend == null)
+				{
+					new Errore<String>().report(this, "il messaggio da inviare è nullo");
+					return;
+				}
+
+				Commands.canaleBot.sendMessage(msgToSend).queue();
 			}
-		} catch (Exception e) { new Errore<Exception>().print(this, e); }
+		} catch (Exception e) { new Errore<Exception>().report(this, e); }
 		
 	}
 }

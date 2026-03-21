@@ -7,7 +7,7 @@ public class Errore<T>
 	 * @param object la classe che ha lanciato l'eccezione
 	 * @param exception l'eccezione o la stringa d'errore
 	 * */
-	public void print(Object object, T exception)
+	public void report(Object object, T exception)
 	{
 		final String type = exception.getClass().toString();
 		final PrivateMessage gion = new PrivateMessage(Utente.getGion());

@@ -23,13 +23,13 @@ public class ChangeActivityTask extends TimerTask
 				{
 					Thread.sleep(1000*60*10); // 10 minuti
 					l.delete().queue();
-				}catch (InterruptedException e) { new Errore<Exception>().print(this,e); }
+				}catch (InterruptedException e) { new Errore<Exception>().report(this,e); }
 				
 			});
 		}
 		else
 		{
-			new Errore<String>().print(this,"jda is null");
+			new Errore<String>().report(this,"jda is null");
 		}
 	}
 }

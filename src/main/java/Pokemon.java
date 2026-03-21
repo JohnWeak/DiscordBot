@@ -94,7 +94,7 @@ public class Pokemon
 		}
 		catch (Exception e)
 		{
-			error.print(object,e);
+			error.report(object,e);
 			return;
 		}
 		finally
@@ -104,7 +104,7 @@ public class Pokemon
 				try
 				{
 					reader.close();
-				}catch (IOException e) { error.print(object,e); }
+				}catch (IOException e) { error.report(object,e); }
 			}
 		}
 		// determina se il pokemon sarà shiny
@@ -181,7 +181,7 @@ public class Pokemon
 		}
 		catch (FileNotFoundException e)
 		{
-			error.print(object, e);
+			error.report(object, e);
 		}
 		
 		JsonObject rtrn = null;
@@ -190,7 +190,7 @@ public class Pokemon
 			rtrn = JsonParser.parseString(sb.toString()).getAsJsonObject();
 		}catch (Exception e)
 		{
-			error.print(object,e);
+			error.report(object,e);
 		}
 		return rtrn;
 	}
@@ -217,7 +217,7 @@ public class Pokemon
 			{
 				embedBuilder.setTitle(nome.toUpperCase());
 			}
-			catch (Exception e) { error.print(object, e); }
+			catch (Exception e) { error.report(object, e); }
 			
 			if (descrizione != null)
 			{
@@ -275,7 +275,7 @@ public class Pokemon
 					break;
 				}
 			}
-		} catch (Exception e) { error.print(object, e); }
+		} catch (Exception e) { error.report(object, e); }
 		
 		
 		return trovato ? x : -1;

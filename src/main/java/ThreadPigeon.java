@@ -45,7 +45,7 @@ public class ThreadPigeon extends Thread
 		}
 		catch (Exception e)
 		{
-			error.print(object,e);
+			error.report(object,e);
 		}
 		
 	} // fine metodo run()

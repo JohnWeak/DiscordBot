@@ -85,14 +85,14 @@ public class ThreadPokemon extends Thread
 				m.addReaction(Emoji.fromFormatted("👎🏻")).queue();
 			}
 		}
-		catch (Exception e) { error.print(object,e); }
+		catch (Exception e) { error.report(object,e); }
 		
 		try
 		{
 			Thread.sleep(timeout);
 			runAway();
 			
-		}catch (Exception e) { error.print(object,e); }
+		}catch (Exception e) { error.report(object,e); }
 		
 	} // fine run()
 	

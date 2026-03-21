@@ -119,7 +119,7 @@ public class Commands extends ListenerAdapter
 		}
 		catch (Exception e)
 		{
-			error.print(object, e);
+			error.report(object, e);
 		}
 		
 		// moduloDiSicurezza();
@@ -174,7 +174,7 @@ public class Commands extends ListenerAdapter
 				privateMessage(author.isBot());
 			} catch (IOException | InterruptedException e)
 			{
-				error.print(object,e);
+				error.report(object,e);
 			}
 		}
 	
@@ -267,7 +267,7 @@ public class Commands extends ListenerAdapter
 			{
 				react(emote.getFormatted());
 			}
-		} catch (Exception e) { error.print(object, e); }
+		} catch (Exception e) { error.report(object, e); }
 	} // fine onMessageReactionAdd
 	
 	/**Inserisce come reazioni tutte le emote che trova nel messaggio*/
@@ -336,7 +336,7 @@ public class Commands extends ListenerAdapter
 					} // fine try
 					catch (Exception e)
 					{
-						error.print(object, e);
+						error.report(object, e);
 					} // fine catch
 					
 					if (numGiorni == 0 || !(numGiorni % 365 == 0))
@@ -347,7 +347,7 @@ public class Commands extends ListenerAdapter
 					{
 						if (auth.isEmpty())
 						{
-							errorString.print(object, "<@" + Utente.ID_GION + ">\n`auth è una stringa vuota.`");
+							errorString.report(object, "<@" + Utente.ID_GION + ">\n`auth è una stringa vuota.`");
 							return;
 						}
 						
@@ -568,10 +568,10 @@ public class Commands extends ListenerAdapter
 				{
 					for (int i = 1; i < msgs.length; i++)
 					{
-						try { Thread.sleep(1000); } catch (InterruptedException e) { error.print(object, e); }
+						try { Thread.sleep(1000); } catch (InterruptedException e) { error.report(object, e); }
 						l.editMessage(msgs[i]).queue();
 					}
-					try { Thread.sleep(1500); } catch (InterruptedException e) { error.print(object, e); }
+					try { Thread.sleep(1500); } catch (InterruptedException e) { error.report(object, e); }
 					l.delete().queue();
 					toDelete.delete().queue();
 				});
@@ -824,7 +824,7 @@ public class Commands extends ListenerAdapter
 						facce = Integer.parseInt(option.getAsString());
 					}catch (Exception e)
 					{
-						error.print(object, e);
+						error.report(object, e);
 					}
 				}
 				final int res = random.nextInt(1,facce+1);
@@ -841,7 +841,7 @@ public class Commands extends ListenerAdapter
 					try {
 						Thread.sleep(random.nextInt(1000, 2000));
 					} catch (InterruptedException e) {
-						error.print(object,e);
+						error.report(object,e);
 					}
 					m.editOriginal(sb.toString()).queue();
 				});
@@ -880,7 +880,7 @@ public class Commands extends ListenerAdapter
 						}
 						catch (Exception e)
 						{
-							error.print(object, e);
+							error.report(object, e);
 						}
 					}
 					else
@@ -1159,7 +1159,7 @@ public class Commands extends ListenerAdapter
 					}
 					catch (Exception e)
 					{
-						new Errore<String>().print(this,e.getMessage());
+						new Errore<String>().report(this,e.getMessage());
 					}
 				}
 				else
@@ -1240,7 +1240,7 @@ public class Commands extends ListenerAdapter
 				{
 					try {
 						Thread.sleep(random.nextInt(1000,2000));
-					} catch (InterruptedException e) {error.print(object, e);}
+					} catch (InterruptedException e) {error.report(object, e);}
 					
 					embed.setColor(Color.GRAY);
 					embed.setDescription(String.format("La magica palla 8 🎱 risponde:\n`%s`.", response));
@@ -1324,7 +1324,7 @@ public class Commands extends ListenerAdapter
 					try
 					{
 						Thread.sleep(random.nextInt(2000,3000));
-					}catch (InterruptedException e) { error.print(object,e); }
+					}catch (InterruptedException e) { error.report(object,e); }
 					
 					embed.setDescription(punchline);
 					
@@ -1333,7 +1333,7 @@ public class Commands extends ListenerAdapter
 						try
 						{
 							Thread.sleep(random.nextInt(2000,4000));
-						}catch (InterruptedException e) { error.print(object,e); }
+						}catch (InterruptedException e) { error.report(object,e); }
 						embed.setColor(Color.GRAY);
 						ll.editMessageEmbeds(embed.build()).queue();
 						
@@ -1413,7 +1413,7 @@ public class Commands extends ListenerAdapter
 					
 				} catch (Exception e)
 				{
-					error.print(object,e);
+					error.report(object,e);
 					final String errormsg = "Si è verificato un errore con il comando. Per favore attendi un minuto prima di riprovare.";
 					event.reply(errormsg).queue();
 				}
@@ -1455,7 +1455,7 @@ public class Commands extends ListenerAdapter
 				.limit(25)
 				.map(word -> new Command.Choice(word, word))
 				.toList();
-		} catch (Exception e) { new Errore<Exception>().print(object,e); }
+		} catch (Exception e) { new Errore<Exception>().report(object,e); }
 		return null;
 	}
 	
@@ -1543,7 +1543,7 @@ public class Commands extends ListenerAdapter
 		} // fine try
 		catch (ErrorResponseException e)
 		{
-			error.print(object, e);
+			error.report(object, e);
 		}
 	} // fine react()
 	
@@ -1662,7 +1662,7 @@ public class Commands extends ListenerAdapter
 		}
 		catch (Exception e)
 		{
-			error.print(object, e);
+			error.report(object, e);
 		}
 		return embed;
 	} // fine massShooting()
