@@ -1,5 +1,3 @@
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Random;
@@ -11,7 +9,7 @@ public class DailyTask extends TimerTask
 	@Override
 	public void run()
 	{
-		final ZoneId zid = ZoneId.of("Europe/Rome");
+		final ZoneId rome = ZoneId.of("Europe/Rome");
 		// ZonedDateTime zdt = ZonedDateTime.of(LocalDateTime.now(), zid);
 		// final ZonedDateTime zdt = ZonedDateTime.of(LocalDateTime.now(), zid);
 		try
@@ -21,8 +19,8 @@ public class DailyTask extends TimerTask
 				.complete()
 				.stream()
 				.anyMatch(message -> 
-					message.getTimeCreated().atZoneSameInstant(zid).getDayOfYear() == ZonedDateTime.now().getDayOfYear() &&
-					message.getTimeCreated().atZoneSameInstant(zid).getHour() > 8 &&
+					message.getTimeCreated().atZoneSameInstant(rome).getDayOfYear() == ZonedDateTime.now(rome).getDayOfYear() &&
+					message.getTimeCreated().atZoneSameInstant(rome).getHour() > 8 &&
 					message.getAuthor().getId().equals(Utente.ID_ENIGMO) &&
 					message.getContentRaw().strip().toLowerCase().matches("(?<!\\w)owo(?!\\w)\\s+daily\\b")
 				);
