@@ -641,7 +641,7 @@ public class Commands extends ListenerAdapter
 				
 				for (Message m : history)
 				{
-					String msg = m.getContentStripped().replaceAll("\\*", "");
+					String msg = m.getContentStripped();
 					int hour, minute, dayOfMessage, today;
 					today = ZonedDateTime.now().getDayOfYear();
 					dayOfMessage = m.getTimeCreated().atZoneSameInstant(rome).getDayOfYear();
@@ -653,7 +653,7 @@ public class Commands extends ListenerAdapter
 							hour > 9 ? ""+hour : "0"+hour,
 							minute > 9 ? ""+minute : "0"+minute,
 							m.getAuthor().getName(), 
-							msg.substring(0,msg.length() > 50 ? 50 : msg.length()),
+							msg.substring(0,msg.length() > 50 ? 50 : msg.length()).replaceAll("[\\\\*|_`]",""),
 							dayOfMessage,
 							today,
 							dayOfMessage == today
