@@ -638,16 +638,20 @@ public class Commands extends ListenerAdapter
 					.retrievePast(10)
 					.complete();
 				final StringBuilder sb = new StringBuilder();
+				
 				for (Message m : history)
 				{
-					int hour, minute;
+					int hour, minute, day;
+					day = m.getTimeCreated().atZoneSameInstant(rome).getDayOfYear();
 					hour = m.getTimeCreated().atZoneSameInstant(rome).getHour();
 					minute = m.getTimeCreated().atZoneSameInstant(rome).getMinute();
 					sb.append(
-						String.format("[%s] %s: `%s...` m.dayOfYear == now.dayOfYear? %b\n", 
+						String.format("[%s] %s: `%s...` m.dayOfYear: %d  now.dayOfYear: %d -> m == now? %b\n", 
 							String.format("%s:%s", hour > 9 ? hour : "0"+hour, minute > 9 ? minute : "0"+minute),	
 							m.getAuthor().getName(), 
-							m.getContentRaw().substring(0,m.getContentRaw().length() > 50 ? 50 : m.getContentRaw().length()),
+							m.getContentRaw().substring(0,m.getContentRaw().length() > 50 ? 50 : m.getContentRaw().length()).replaceAll("*", ""),
+							day,
+							ZonedDateTime.now().getDayOfYear(),
 							m.getTimeCreated().atZoneSameInstant(rome).getDayOfYear() == ZonedDateTime.now().getDayOfYear()
 						)	
 					);
