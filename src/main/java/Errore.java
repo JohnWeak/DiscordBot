@@ -29,7 +29,7 @@ public class Errore<T>
 			gion.send(s);
 		}
 		
-	} // fine print
+	} // fine report
 	
 	
 	private String lessThan2K(String s)
