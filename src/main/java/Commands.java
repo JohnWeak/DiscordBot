@@ -641,7 +641,7 @@ public class Commands extends ListenerAdapter
 				
 				for (Message m : history)
 				{
-					String msg = m.getContentStripped();
+					String msg = m.getContentStripped().replaceAll("[\\\\*|_`~]", "");
 					int hour, minute, dayOfMessage, today;
 					today = ZonedDateTime.now().getDayOfYear();
 					dayOfMessage = m.getTimeCreated().atZoneSameInstant(rome).getDayOfYear();
@@ -652,7 +652,7 @@ public class Commands extends ListenerAdapter
 						String.format("[%s:%s] %s: `%s...` dayOfMessage: %d  today: %d -> dayOfMessage == today? %b\n", 
 							hour > 9 ? ""+hour : "0"+hour,
 							minute > 9 ? ""+minute : "0"+minute,
-							m.getAuthor().getName(), 
+							m.getAuthor().getName().replaceAll("[\\\\*|_`]",""), 
 							msg.substring(0,msg.length() > 50 ? 50 : msg.length()).replaceAll("[\\\\*|_`]",""),
 							dayOfMessage,
 							today,
@@ -661,7 +661,7 @@ public class Commands extends ListenerAdapter
 					);
 				}
 
-				gion.send(sb.toString());
+				gion.send(sb.toString().replaceAll("[\\\\*|_`]", ""));
 			}
 			catch (Exception e) {new Errore<Exception>().report(this, e);}
 		}
