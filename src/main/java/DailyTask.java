@@ -22,7 +22,7 @@ public class DailyTask extends TimerTask
 					message.getTimeCreated().atZoneSameInstant(rome).getDayOfYear() == ZonedDateTime.now(rome).getDayOfYear() &&
 					message.getTimeCreated().atZoneSameInstant(rome).getHour() > 8 &&
 					message.getAuthor().getId().equals(Utente.ID_ENIGMO) &&
-					message.getContentRaw().strip().toLowerCase().matches("(?<!\\w)owo(?!\\w)\\s+daily\\b")
+					message.getContentRaw().strip().toLowerCase().contains("owo daily")
 				);
 			
 			if (!hasEnigmoClaimedDaily)
