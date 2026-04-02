@@ -935,7 +935,10 @@ public class Commands extends ListenerAdapter
 
 					event.replyEmbeds(p.spawn().build()).queue(m -> {
 						final String url = "https://pokemondb.net/pokedex/" + nome;
-						m.editOriginal(m.getId()).setActionRow(Button.link(url, nome)).queue();
+						m.editOriginal(m.getId()).setActionRow(
+							Button.link(url, "Pokedex").withEmoji(Emoji.fromUnicode("🎾")),
+							// Button.secondary("", "")
+						).queue();
 					});
 				}
 				else
