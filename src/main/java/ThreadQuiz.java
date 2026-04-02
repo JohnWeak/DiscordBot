@@ -97,6 +97,7 @@ public class ThreadQuiz extends Thread
 				sb.append(String.format("• %s\n", tempAnswer));
 			}
 			
+			
 			embed.addField("Category", category, true);
 			embed.addField("Difficulty", difficulty, true);
 			embed.addField("Type",  type, true);

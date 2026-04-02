@@ -22,6 +22,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.AutoCompleteQuery;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.requests.CloseCode;
 import org.jetbrains.annotations.NotNull;
 
@@ -40,6 +41,7 @@ import java.util.*;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -929,7 +931,12 @@ public class Commands extends ListenerAdapter
 				}
 				if (p != null)
 				{
-					event.replyEmbeds(p.spawn().build()).queue();
+					final String nome = p.getNome();
+
+					event.replyEmbeds(p.spawn().build()).queue(m -> {
+						final String url = "https://pokemondb.net/pokedex/" + nome;
+						m.editOriginal(m.getId()).setActionRow(Button.link(url, nome));
+					});
 				}
 				else
 					event.reply("Il pokedex non ha informazioni riguardo " + pkmnName).setEphemeral(true).queue();

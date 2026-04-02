@@ -65,7 +65,9 @@ public class Pokemon
 		final Path path;
 		
 		if (id > ALL)
+		{
 			return;
+		}
 		
 		if (id <= 0 && pokedex)
 		{
@@ -127,13 +129,13 @@ public class Pokemon
 		descrizione = data.get("flavor_text").getAsString();
 		generazione = data.get("generation").getAsString();
 		
-		tipo[0] = types.get(0).getAsString();
-		tipo[0] = tipo[0].toUpperCase();
+		tipo[0] = types.get(0).getAsString().toUpperCase();
+		// tipo[0] = tipo[0].toUpperCase();
 		
 		if (types.size() > 1)
 		{
-			tipo[1] = types.get(1).getAsString();
-			tipo[1] = tipo[1].toUpperCase();
+			tipo[1] = types.get(1).getAsString().toUpperCase();
+			// tipo[1] = tipo[1].toUpperCase();
 		}
 		
 		final String shinyString = shiny ? "shiny/" : "";
