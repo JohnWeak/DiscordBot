@@ -730,6 +730,7 @@ public class Commands extends ListenerAdapter
 		if (event.getComponentId().equals(id))
 		{
 			event.reply("Come hai osato cliccare 1?").queue();
+			
 		}
 	}
 
