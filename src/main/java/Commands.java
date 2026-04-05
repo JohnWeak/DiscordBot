@@ -724,13 +724,13 @@ public class Commands extends ListenerAdapter
 	} // fine checkForKeywords()
 	
 	@Override
-	public void onButtonInteraction(@Nonnull ButtonInteractionEvent event) 
+	public void onButtonInteraction(@NotNull ButtonInteractionEvent event) 
 	{
 		final String id = "1";
 		if (event.getComponentId().equals(id))
 		{
 			event.reply("Come hai osato cliccare 1?").queue();
-			
+
 		}
 	}
 
