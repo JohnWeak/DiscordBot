@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.entities.emoji.CustomEmoji;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
@@ -44,6 +45,8 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+
+import javax.annotation.Nonnull;
 
 @Slf4j
 public class Commands extends ListenerAdapter
@@ -706,6 +709,11 @@ public class Commands extends ListenerAdapter
 			msgReply.append("Nemico assente!\n");
 		}
 		
+		if (msgStrippedLowerCase.equals("giocotris"))
+		{
+			new ThreadTris(message.getChannel()).start();
+		}
+
 //		if (msgStrippedLowerCase.contains("") && random.nextInt(42) == 0){}
 		
 		if (reply)
@@ -715,6 +723,16 @@ public class Commands extends ListenerAdapter
 		
 	} // fine checkForKeywords()
 	
+	@Override
+	public void onButtonInteraction(@Nonnull ButtonInteractionEvent event) 
+	{
+		final String id = "1";
+		if (event.getComponentId().equals(id))
+		{
+			event.reply("Come hai osato cliccare 1?").queue();
+		}
+	}
+
 	private EmbedBuilder pigeons()
 	{
 		final String[] urls =
