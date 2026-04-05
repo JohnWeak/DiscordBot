@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.interactions.components.ItemComponent;
@@ -10,7 +10,7 @@ public class ThreadTris extends Thread
 {
 	private final MessageChannel channel;
 
-	public ThreadTris(@Nonnull MessageChannel channel)
+	public ThreadTris(@NotNull MessageChannel channel)
 	{
 		this.channel = channel;
 	}
