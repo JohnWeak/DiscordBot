@@ -25,13 +25,13 @@ public class ThreadTris extends Thread
 			b = Button.secondary(""+i, ""+(i+1));
 			buttons.add(b);
 		}
-		
+
 		channel
 			.sendMessage("Prova sa sa prova")
-			.setActionRow(buttons.subList(0, 3))
-			.setActionRow(buttons.subList(3, 6))
-			.setActionRow(buttons.subList(6, 9))
-			.queue();
+			.addActionRow(buttons.subList(0, 3))
+			.addActionRow(buttons.subList(3, 6))
+			.addActionRow(buttons.subList(6, 9))
+		.queue();
 
 	}
 }
