@@ -26,41 +26,41 @@ class ButtonListener extends ListenerAdapter
 		{
 			event.reply("Come hai osato cliccare 1?").queue();
 		}
-
-		final String m = getString(event);
-		final String correctAnswer = ThreadQuiz.getAnswer();
 		
-		try
+		if (ThreadQuiz.isActive())
 		{
-			event.reply(m).queue();
-			final String clickedButtonId = event.getButton().getId();
-			
-			final List<ActionRow> updatedRows = event.getMessage().getActionRows().stream()
-				.map(row ->
-				{
-					final List<Button> updatedButtons = row.getButtons().stream()
-						.map(button ->
-						{
-							if (button.getId() != null && button.getId().equals(clickedButtonId))
-							{
-								return (button.getLabel().equals(correctAnswer) ?
-									button.asDisabled().withStyle(ButtonStyle.SUCCESS) :
-									button.asDisabled().withStyle(ButtonStyle.DANGER)
-								);
-							}
-							else
-							{
-								return button.asDisabled();
-							}
-						})
-						.collect(Collectors.toList());
-						
+			final String m = getString(event);
+			final String correctAnswer = ThreadQuiz.getAnswer();
+
+			try {
+				event.reply(m).queue();
+				final String clickedButtonId = event.getButton().getId();
+
+				final List<ActionRow> updatedRows = event.getMessage().getActionRows().stream()
+					.map(row -> {
+						final List<Button> updatedButtons = row.getButtons().stream()
+								.map(button -> {
+									if (button.getId() != null && button.getId().equals(clickedButtonId)) {
+										return (button.getLabel().equals(correctAnswer)
+												? button.asDisabled().withStyle(ButtonStyle.SUCCESS)
+												: button.asDisabled().withStyle(ButtonStyle.DANGER));
+									} else {
+										return button.asDisabled();
+									}
+								})
+								.collect(Collectors.toList());
+
 						return ActionRow.of(updatedButtons);
-				}).collect(Collectors.toList());
-			
-			event.getHook().editOriginalComponents(updatedRows).queue(result -> {ThreadQuiz.quizFinished();});
-			
-		} catch (Exception e) { new Errore<Exception>().report(this, e); }
+					}).collect(Collectors.toList());
+
+				event.getInteraction().getChannel()
+					.editMessageComponentsById(event.getMessageId(), updatedRows)
+				.queue();
+				ThreadQuiz.setActive(false);
+
+			} catch (Exception e) { new Errore<Exception>().report(this, e); }
+		}
+		
 	}
 	
 	
