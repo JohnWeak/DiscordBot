@@ -18,12 +18,12 @@ import java.util.concurrent.TimeUnit;
 
 public class ThreadQuiz extends Thread
 {
-	private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 	private final SlashCommandInteractionEvent event;
 	
 	@Getter
 	@Setter
-	private volatile boolean active = true;
+	private volatile boolean active = false;
 	
 	@Getter
 	private static String answer;
