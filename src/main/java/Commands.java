@@ -706,11 +706,6 @@ public class Commands extends ListenerAdapter
 			reply = true;
 			msgReply.append("Nemico assente!\n");
 		}
-		
-		if (msgStrippedLowerCase.equals("giocotris"))
-		{
-			new ThreadTris(message.getChannel()).start();
-		}
 
 //		if (msgStrippedLowerCase.contains("") && random.nextInt(42) == 0){}
 		
@@ -721,16 +716,6 @@ public class Commands extends ListenerAdapter
 		
 	} // fine checkForKeywords()
 	
-	@Override
-	public void onButtonInteraction(@NotNull ButtonInteractionEvent event) 
-	{
-		final String id = "1";
-		if (event.getComponentId().equals(id))
-		{
-			event.reply("Come hai osato cliccare 1?").queue();
-
-		}
-	}
 
 	private EmbedBuilder pigeons()
 	{
@@ -1390,6 +1375,11 @@ public class Commands extends ListenerAdapter
 			{
 				final ThreadQuiz quiz = new ThreadQuiz(event);
 				quiz.start();
+			}
+			case "tris" ->
+			{
+				final ThreadTris tris = new ThreadTris(event);
+				tris.start();
 			}
 			case "trivia" ->
 			{

@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.Setter;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
@@ -11,9 +12,13 @@ import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class ThreadQuiz extends Thread
 {
+	private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 	private final SlashCommandInteractionEvent event;
 	
 	@Getter
@@ -31,6 +36,12 @@ public class ThreadQuiz extends Thread
 	@Override
 	public void run()
 	{
+		if (isActive())
+		{
+			event.reply("C'è già un quiz attivo.").queue();
+			return;
+		}
+
 		final EmbedBuilder embed = new EmbedBuilder();
 		JsonObject j;
 		final String url = "https://opentdb.com/api.php?amount=1";
@@ -114,9 +125,25 @@ public class ThreadQuiz extends Thread
 			
 			final ButtonListener buttonListener = new ButtonListener(this);
 			event.getJDA().addEventListener(buttonListener);
+
+			scheduler.schedule(() -> {
+				deactivateQuiz(event, embed, actionRow);
+			}, 45, TimeUnit.SECONDS);
 			
 		}
 		catch (Exception e) { new Errore<Exception>().report(this,e); }
 	}
 	
+	private void deactivateQuiz(SlashCommandInteractionEvent event, EmbedBuilder embed, ActionRow actionRow)
+	{
+		event.getHook().editOriginalEmbeds(
+			embed
+			.setColor(Color.GRAY)
+			.setFooter("Tempo scaduto. Questo quiz non è più attivo.")
+			.build()
+		).queue();
+		event.getHook().editOriginalComponents(actionRow.asDisabled()).queue();
+		setActive(false);
+	}
+
 }

@@ -21,11 +21,12 @@ class ButtonListener extends ListenerAdapter
 	@Override
 	public void onButtonInteraction(@NotNull ButtonInteractionEvent event)
 	{
-		if (!tq.isActive())
-			return;
-		
-		tq.setActive(false);
-		
+
+		if (event.getComponentId().equals("1")) 
+		{
+			event.reply("Come hai osato cliccare 1?").queue();
+		}
+
 		final String m = getString(event);
 		final String correctAnswer = ThreadQuiz.getAnswer();
 		

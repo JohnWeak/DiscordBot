@@ -212,6 +212,9 @@ public class Main
 			newCommand = new CommandDataImpl("quiz", "questo quiz non prevede alcun premio in denaro");
 			commands.add(newCommand);
 			
+			newCommand = new CommandDataImpl("tris", "Gioca a tris contro il bot!");
+			commands.add(newCommand);
+
 			newCommand = new CommandDataImpl("trivia","il bot ti darà informazioni su una nazione")
 				.addOptions(new OptionData(
 					OptionType.STRING,
