@@ -23,7 +23,7 @@ public class ThreadQuiz extends Thread
 	
 	@Getter
 	@Setter
-	private volatile boolean active = false;
+	private static volatile boolean active = false;
 	
 	@Getter
 	private static String answer;
@@ -126,8 +126,12 @@ public class ThreadQuiz extends Thread
 			final ButtonListener buttonListener = new ButtonListener(this);
 			event.getJDA().addEventListener(buttonListener);
 
-			scheduler.schedule(() -> {
-				deactivateQuiz(event, embed, actionRow);
+			scheduler.schedule(() -> 
+			{
+				if (isActive())
+				{
+					deactivateQuiz(event, embed, actionRow);
+				}
 			}, 45, TimeUnit.SECONDS);
 			
 		}

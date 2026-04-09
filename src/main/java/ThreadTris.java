@@ -22,7 +22,7 @@ public class ThreadTris extends Thread
 
 	@Getter
 	@Setter
-	private volatile boolean active = false;
+	private static volatile boolean active = false;
 
 	public ThreadTris(@NotNull SlashCommandInteractionEvent event)
 	{
