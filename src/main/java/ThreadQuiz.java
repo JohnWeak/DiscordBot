@@ -150,4 +150,8 @@ public class ThreadQuiz extends Thread
 		setActive(false);
 	}
 
+	public static void quizFinished()
+	{
+		setActive(false);
+	}
 }

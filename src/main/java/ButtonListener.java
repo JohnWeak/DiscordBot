@@ -58,9 +58,8 @@ class ButtonListener extends ListenerAdapter
 						return ActionRow.of(updatedButtons);
 				}).collect(Collectors.toList());
 			
-			event.getInteraction().getChannel()
-				.editMessageComponentsById(event.getMessageId(), updatedRows)
-				.queue();
+			event.getHook().editOriginalComponents(updatedRows).queue(result -> {ThreadQuiz.quizFinished();});
+			
 		} catch (Exception e) { new Errore<Exception>().report(this, e); }
 	}
 	
